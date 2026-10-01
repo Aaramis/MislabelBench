@@ -1,0 +1,59 @@
+# Sources for the benchmark. Everything a reader needs to obtain the same bytes.
+#
+# A note on why these are the "all" files and not the representative ones. SATIVA judges a
+# sequence by removing it and placing it back, so it needs at least one other sequence of the
+# same taxon to place it against. Any representative database has one sequence per species by
+# construction, which makes species-level leave-one-out impossible, not merely hard:
+#
+#   GTDB r226 ar53_ssu_reps : 4448 sequences, 4448 distinct species ->  0.0 % judgeable
+#   GTDB r226 ssu_all, archaea : 13754 sequences                    -> 81.5 % judgeable
+#   UNITE v10.0 RefS           : 20295 sequences                    ->  8.5 % judgeable
+#   UNITE v10.0 RepS           : 81842 sequences                    -> 85.7 % judgeable
+#
+# Measured on the released files, not assumed. The same reasoning rules out RefS despite it
+# being the more curated UNITE subset.
+
+datasets:
+
+  gtdb_archaea_ssu:
+    description: GTDB r226 SSU, archaea, every sequence rather than species representatives
+    release: r226 (226.0)
+    url: https://data.gtdb.ecogenomic.org/releases/release226/226.0/genomic_files_all/ssu_all_r226.fna.gz
+    sha256: 79aab42a3b0190c0913b697fc7e0b756a76b75668414fdce1f3aeae9569540ea
+    downloaded: 2026-10-01
+    citation: "Parks DH et al. GTDB: an ongoing census of bacterial and archaeal diversity. Nucleic Acids Res (2022)"
+    licence: CC BY-SA 4.0
+    # Taxonomy travels in the FASTA header, after the accession, as d__...;s__...
+    select: "lineage starts with d__Archaea"
+    counts:
+      in_release: 1053664
+      after_select: 13754
+    judgeable_pct:   # taxa with at least two members, by rank
+      domain: 100.0
+      phylum: 100.0
+      class: 100.0
+      order: 99.8
+      family: 99.1
+      genus: 95.7
+      species: 81.5
+
+  unite_fungi:
+    description: UNITE general FASTA release for Fungi, RepS subset
+    release: v10.0 (2025-02-19)
+    doi: 10.15156/BIO/3301229
+    url: https://s3.hpc.ut.ee/plutof-public/original/9489f7bc-7cc1-4e0a-84dc-c732476b9acd.tgz
+    sha256: a340864f947c517b671f1054a261e613a6619ef88dd8000de1699f5e1f21413b
+    downloaded: 2026-10-01
+    member: sh_general_release_dynamic_19.02.2025.fasta
+    licence: CC BY-SA 4.0
+    # Field 4 of the '|'-separated header is the subset marker.
+    select: "header field 4 == reps"
+    counts:
+      in_release: 102137
+      refs: 16120
+      refs_singleton: 4175
+      reps: 81842
+    judgeable_pct:
+      genus: 98.2
+      species: 85.7
+    status: secondary, needs an alignment step; ITS alignment is contested, see the protocol
