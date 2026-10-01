@@ -11,3 +11,7 @@ results/report.html
 results/concordance_details.tsv
 results/concordance_vs_gamma_details.tsv
 results/**/stdout.log
+work/
+.nextflow/
+.nextflow.log*
+results/nf/
