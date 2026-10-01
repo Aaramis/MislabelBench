@@ -24,10 +24,11 @@ datasets:
     citation: "Parks DH et al. GTDB: an ongoing census of bacterial and archaeal diversity. Nucleic Acids Res (2022)"
     licence: CC BY-SA 4.0
     # Taxonomy travels in the FASTA header, after the accession, as d__...;s__...
-    select: "lineage starts with d__Archaea"
+    select: "lineage starts with d__Archaea, then length >= 1200 nt"
     counts:
       in_release: 1053664
-      after_select: 13754
+      after_domain: 13754
+      after_length: 7051
     judgeable_pct:   # taxa with at least two members, by rank
       domain: 100.0
       phylum: 100.0
@@ -36,6 +37,20 @@ datasets:
       family: 99.1
       genus: 95.7
       species: 81.5
+
+  # Alignment model. A covariance model represents rRNA secondary structure; a profile HMM
+  # does not. Alignment is not what this paper is about, so the point is to use the method a
+  # reviewer cannot argue with.
+  rfam_ssu_archaea:
+    description: Rfam RF01959, SSU_rRNA_archaea, the covariance model the archaeal SSU is aligned against
+    release: Rfam 15.1
+    accession: RF01959
+    url: https://ftp.ebi.ac.uk/pub/databases/Rfam/15.1/Rfam.cm.gz
+    sha256: e2e636e9ce138dae506769aa74d067ce35466e94002818cfe125ea2a3cab8168
+    downloaded: 2026-10-01
+    built_with: INFERNAL 1.1.4
+    extract: "cmfetch Rfam.cm RF01959"
+    citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database. Nucleic Acids Res (2025)"
 
   unite_fungi:
     description: UNITE general FASTA release for Fungi, RepS subset
