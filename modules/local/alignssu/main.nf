@@ -27,20 +27,27 @@ process ALIGNSSU {
     script:
     def args = task.ext.args ?: ''
     """
-    # --outformat AFA writes aligned fasta, which is what SATIVA reads; --dnaout because the
-    # model is RNA and the data is DNA; --matchonly keeps the model's own columns, so the
-    # alignment is a fixed width rather than widened by every insertion in every sequence.
-    # The Infernal container ships no Easel binaries, so this has to be one call.
+    # --dnaout because the model is RNA and the data DNA; --matchonly keeps the model's own
+    # columns, so the alignment has a fixed width rather than one widened by every insertion
+    # in every sequence.
+    #
+    # Pfam rather than AFA: cmalign refuses the interleaved formats above 10000 sequences or
+    # 100000 residues, and the archaeal set is 7051 sequences but about 10 M residues. Pfam
+    # is non-interleaved Stockholm, one sequence per line, so awk converts it to the fasta
+    # SATIVA reads. Checked against AFA on a 50-sequence sample: byte identical.
     cmalign \\
         --cpu ${task.cpus} \\
         --dnaout \\
         --matchonly \\
-        --outformat AFA \\
-        -o ${meta.id}.aligned.fasta \\
+        --outformat Pfam \\
+        -o ${meta.id}.pfam \\
         --sfile ${meta.id}.cmalign.txt \\
         ${args} \\
         ${cm} \\
         ${fasta}
+
+    awk '!/^#/ && !/^\\/\\// && NF==2 {print ">"\$1"\\n"\$2}' ${meta.id}.pfam \\
+        > ${meta.id}.aligned.fasta
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
