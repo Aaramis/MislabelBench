@@ -8,21 +8,10 @@
 #SBATCH --output=%x-%j.log
 set -euo pipefail
 
-# Not every node here has singularity and no Slurm feature distinguishes them; land, check,
-# and let Slurm reschedule us if we drew one without it.
-if ! command -v singularity >/dev/null 2>&1; then
-    attempt="${SLURM_RESTART_COUNT:-0}"
-    if [ "$attempt" -lt 8 ]; then
-        echo "no singularity on $(hostname), requeueing (attempt $attempt)"
-        scontrol requeue "$SLURM_JOB_ID"
-        exit 0
-    fi
-    echo "no singularity after $attempt attempts, giving up" >&2
-    exit 1
-fi
+source "$(dirname "$0")/prelude.sh"
+require_singularity
 
-export PATH=/shared/software/miniconda_deployment/envs/nextflow-26.04.4/bin:$PATH
-export NXF_SINGULARITY_CACHEDIR=$HOME/.singularity_cache
+nextflow_env
 cd "$HOME/bench"
 
 echo "running on $(hostname)"
