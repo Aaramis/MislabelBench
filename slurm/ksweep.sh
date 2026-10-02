@@ -22,7 +22,7 @@ echo "running on $(hostname)"
 nextflow run . -profile singularity -resume \
   --datasets_json data/injected/datasets.json \
   --datasets inj_species_r0.05_k10_s1,inj_species_r0.05_k10_s2,inj_species_r0.05_k10_s3,inj_genus_r0.05_k10_s1,inj_genus_r0.05_k10_s2,inj_genus_r0.05_k10_s3 \
-  --conditions epang_T8_K5,epang_T8_K25,epang_T8_Kexact \
+  --conditions epang_T8_K5,epang_T8_K25 \
   --sativa_taxcode BAC \
   --timing_trusted false \
   --outdir "$HOME/bench/results/ksweep"
