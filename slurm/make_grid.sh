@@ -7,18 +7,22 @@ set -euo pipefail
 
 cd "$HOME/bench/data/gtdb"
 OUT="$HOME/bench/data/injected"
-rm -rf "$OUT"
 mkdir -p "$OUT"
+
+# Idempotent: a cell that already exists is left alone. The grid gained its class axis after
+# 150 cells had been computed, and rebuilding all of them to add 30 would have thrown away a
+# day of compute for nothing. A cell is a function of its name, so skipping is safe.
 
 ALN="$HOME/bench/data/gtdb/gtdb_arc2k.fasta"
 TAX="$HOME/bench/data/gtdb/gtdb_arc2k.tax"
 
-for dist in species genus family order phylum; do
+for dist in species genus family order class phylum; do
   for rate in 0.01 0.05; do
     for k in 1 2 3 5 10; do
       for seed in 1 2 3; do
         name="inj_${dist}_r${rate}_k${k}_s${seed}"
         d="$OUT/$name"
+        [ -s "$d/$name.tax" ] && continue
         mkdir -p "$d"
         python3 "$HOME/bench/bin/inject_mislabels.py" "$TAX" \
           --distance "$dist" --rate "$rate" --k "$k" --seed "$seed" \
