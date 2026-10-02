@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Wall clock, cores actually used, and CPU time, per dataset and condition.
+"""Wall clock, cores actually used, CPU time and peak memory, per dataset and condition.
 
 Two reasons this is not just a wall-clock table.
 
@@ -12,6 +12,11 @@ latter understates it.
 Medians over replicates, never a single run: upstream differs by a third between two nodes of the
 same CPU model while the fork differs by one percent across the same pair, so one run of upstream is
 not a measurement.
+
+Peak memory is ru_maxrss over the waited-for children, which is the maximum of any one child rather
+than the sum. That is the right number for both tools here, because upstream threads inside one RAxML
+and the fork places folds one after another, so only one memory-heavy process is ever live. It would
+understate a tool that ran several at once.
 """
 import json, glob, statistics as st
 from collections import defaultdict
@@ -19,7 +24,8 @@ g = defaultdict(list)
 for f in glob.glob("results/*/runs/*/run.json"):
     d = json.load(open(f))
     if d.get("timing_trusted") and d.get("wall_sec"):
-        g[(d["dataset"], d["condition"])].append((d["wall_sec"], d.get("user_cpu_sec") or 0))
+        g[(d["dataset"], d["condition"])].append(
+            (d["wall_sec"], d.get("user_cpu_sec") or 0, d.get("max_rss_mb") or 0))
 print(f"{'dataset':14}{'condition':20}{'n':>3}{'wall':>10}{'cores':>7}{'CPU-s':>9}")
 for (ds, c), v in sorted(g.items()):
     if not ds.startswith("gtdb"):
@@ -65,3 +71,23 @@ for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}
             continue
         w, c = st.median(x[0] for x in v), st.median(x[1] / x[0] for x in v)
         print(f"{tool:10}{t:>4}{w:9.1f}{c:8.2f}{b / w:15.2f}{100 * (b / w) / t:11.0f}%")
+
+print()
+print("peak memory, both tools at 8 threads, medians over replicates")
+print(f"{'sequences':>10}{'fork MB':>10}{'upstream MB':>13}{'ratio':>8}{'fork MB/kseq':>14}")
+for ds, n in sizes:
+    f, u = g.get((ds, "epang_T8_K25")), g.get((ds, "upstream_raxml_T8"))
+    if not (f and u):
+        continue
+    fm, um = st.median(x[2] for x in f), st.median(x[2] for x in u)
+    print(f"{n:>10}{fm:10.0f}{um:13.0f}{fm / um if um else float('nan'):8.2f}"
+          f"{1000 * fm / n:14.1f}")
+
+print()
+print("peak memory on the thread axis at 2023 sequences")
+print(f"{'tool':10}{'T':>4}{'MB':>9}")
+for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}")):
+    for t in (1, 8, 16):
+        v = g.get(("gtdb_arc2k", prefix.format(t)))
+        if v:
+            print(f"{tool:10}{t:>4}{st.median(x[2] for x in v):9.0f}")

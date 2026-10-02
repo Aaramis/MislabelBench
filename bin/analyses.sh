@@ -106,7 +106,7 @@ done
 
 step "timing: the staged scaling, and how many cores each tool actually uses"
 scaling_summary.py > results/scaling_summary.txt
-cpu_utilisation.py > results/cpu_utilisation.txt
+resource_usage.py > results/resource_usage.txt
 
 step "truth checks, which must pass rather than be read"
 verify_manifests.py
