@@ -28,6 +28,10 @@ FOLD_CONDITIONS="epang_T8_K25 epang_T8_K25_tree epang_T8_K5 epang_T8_K5_tree"
 
 step() { printf '\n== %s\n' "$*"; }
 
+# A gate, not a report: a run that did not finish cleanly must not reach any table below.
+step "every run finished cleanly"
+verify_runs.py
+
 step "grid summaries and the surviving-label law, per fold condition"
 for cond in $FOLD_CONDITIONS; do
     aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition "${cond}__rep1" \
