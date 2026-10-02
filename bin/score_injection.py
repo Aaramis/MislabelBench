@@ -69,6 +69,12 @@ def main():
     baseline = set(read_mis(args.baseline_mis)) if args.baseline_mis else set()
 
     distance_rank = RANKS.index(truth["distance"])
+    # Error kind 6 adds bacterial sequences under an archaeal label. The taxonomy the tool is
+    # given contains no bacteria, so it cannot name the true lineage at any rank and
+    # mismatch_rank can never reach the domain. "Was it flagged at all" is the only meaningful
+    # question there, so the at-rank metric is reported as absent rather than as zero.
+    kind = truth.get("kind", "relabel")
+    rank_metric_meaningful = kind != "foreign"
     thresholds = [float(t) for t in args.thresholds.split(",")]
     have_exclusion = any(r["OriginalLabelExclusion"] is not None for r in flagged.values())
 
@@ -84,7 +90,8 @@ def main():
             out.append({
                 "threshold": t,
                 "recall": len(hits) / len(injected) if injected else None,
-                "recall_at_injected_rank": len(at_rank) / len(injected) if injected else None,
+                "recall_at_injected_rank": (len(at_rank) / len(injected)
+                                            if injected and rank_metric_meaningful else None),
                 "flags_on_non_injected": len(others),
                 "added_vs_baseline": len(others - baseline) if baseline else None,
             })
@@ -93,9 +100,10 @@ def main():
     result = {
         "truth": args.truth,
         "mis": args.mis,
+        "kind": kind,
         "distance": truth["distance"],
-        "rate": truth["rate"],
-        "k": truth["k"],
+        "rate": truth.get("rate"),
+        "k": truth.get("k"),
         "seed": truth["seed"],
         "n_injected": len(injected),
         "n_flagged_total": len(flagged),
@@ -106,7 +114,7 @@ def main():
     }
     Path(args.out).write_text(json.dumps(result, indent=2))
 
-    head = f"{truth['distance']} k={truth['k']} rate={truth['rate']}"
+    head = f"{kind} {truth['distance']} k={truth.get('k')} rate={truth.get('rate')}"
     print(f"{head}: {len(injected)} injected, {len(flagged)} flagged")
     for row in result["by_confidence"]:
         print(f"  conf >= {row['threshold']:.2f}  recall {row['recall']:.3f}  "

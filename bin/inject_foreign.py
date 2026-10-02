@@ -78,6 +78,7 @@ def main():
         "kind": "foreign",
         "distance": "domain",
         "seed": args.seed,
+        "rate": round(args.n / len(base_tax), 6),
         "base_sequences": len(base_tax),
         "n_injected": args.n,
         "injected": injected,

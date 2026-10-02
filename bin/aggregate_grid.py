@@ -58,7 +58,9 @@ def main():
                 grouped[key].append(row)
 
     summary = []
-    for (dist, k, rate, metric, thr), rows in sorted(grouped.items()):
+    # The foreign cells carry no k, so the key can hold None next to an int. Sorting on the
+    # string form keeps that comparable without reordering anything that matters.
+    for (dist, k, rate, metric, thr), rows in sorted(grouped.items(), key=lambda kv: str(kv[0])):
         recalls = [r["recall"] for r in rows if r["recall"] is not None]
         others = [r["flags_on_non_injected"] for r in rows]
         added = [r["added_vs_baseline"] for r in rows if r["added_vs_baseline"] is not None]
