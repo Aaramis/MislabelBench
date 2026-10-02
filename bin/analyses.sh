@@ -76,6 +76,14 @@ background_stability.py --baseline "$BASE_FORK" --runs "$RUNS" --injected-dir "$
 collateral_locality.py --base-tax "$TAX" --baseline "$BASE_FORK" --injected-dir "$INJ" \
     --runs-dir "$RUNS" --condition epang_T8_K25__rep1 > results/collateral_locality.txt
 
+step "identical sequences under conflicting labels, in the reference itself"
+duplicate_conflicts.py --alignment data/gtdb/gtdb_arc1200.aligned.fasta \
+    --taxonomy data/gtdb/gtdb_arc1200.tax --unaligned data/gtdb/gtdb_arc1200.fasta \
+    --out results/duplicate_conflicts.json
+duplicate_conflicts.py --alignment "$ALN" --taxonomy "$TAX" \
+    --unaligned data/gtdb/gtdb_arc1200.fasta --baseline-mis "$BASE_FORK" \
+    --out results/duplicate_conflicts_2k.json
+
 step "what a cluster-level check would catch that leave-one-out misses"
 cluster_conflict.py --alignment "$ALN" --base-tax "$TAX" --injected-dir "$INJ" \
     --out results/cluster_conflict.json >/dev/null
