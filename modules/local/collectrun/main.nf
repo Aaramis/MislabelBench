@@ -4,10 +4,14 @@ process COLLECTRUN {
     tag "${meta.dataset}/${meta.condition}/rep${meta.rep}"
     label 'process_single'
 
-    conda "conda-forge::python=3.12"
+    // Pinned to a patch version, not the 3.12 tag. This module writes every run.json, so a floating
+    // tag would mean the parser that produced a result is not recoverable from the repo. 3.12.12
+    // exists on conda-forge, quay.io/biocontainers and depot.galaxyproject.org, so all three paths
+    // pin to the same thing; a digest would have pinned only the docker one.
+    conda "conda-forge::python=3.12.12"
     container "${ workflow.containerEngine in ['singularity', 'apptainer'] && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/python:3.12' :
-        'quay.io/biocontainers/python:3.12' }"
+        'https://depot.galaxyproject.org/singularity/python:3.12.12' :
+        'quay.io/biocontainers/python:3.12.12' }"
 
     input:
     tuple val(meta), path(mis), path(timing), path(runlog), path(stdoutlog)
