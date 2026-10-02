@@ -22,6 +22,26 @@ from pathlib import Path
 RANKS = ["domain", "phylum", "class", "order", "family", "genus", "species"]
 
 
+def check_aligned(seqs, path, allow_ragged):
+    """Every consumer of this output assumes a fixed-width alignment.
+
+    The source directory holds both gtdb_arc1200.fasta, which is ragged because it comes straight
+    out of the release, and gtdb_arc1200.aligned.fasta. Subsetting the first one produces a file
+    that looks right, loads fine, and silently gives SATIVA unaligned sequences. That happened
+    once; it is now refused.
+    """
+    widths = {len(v) for v in seqs.values()}
+    if len(widths) == 1:
+        return
+    lo, hi = min(widths), max(widths)
+    message = (f"{path} is not an alignment: lengths run from {lo} to {hi}. "
+               "Subsetting it gives unaligned sequences to a tool that expects an alignment. "
+               "Pass the aligned file, or --allow-ragged if that is really what you want.")
+    if not allow_ragged:
+        sys.exit(message)
+    print(f"warning: {message}", file=sys.stderr)
+
+
 def read_tax(path):
     tax = {}
     for line in Path(path).read_text().splitlines():
@@ -60,6 +80,8 @@ def main():
     p.add_argument("--target", type=int, required=True, help="approximate number of sequences")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--prefix", required=True)
+    p.add_argument("--allow-ragged", action="store_true",
+                   help="accept an input whose sequences are not all the same length")
     p.add_argument("--min-group", type=int, default=1,
                    help="only draw taxa with at least this many members. The default of 1 "
                         "keeps the subset representative; raising it builds a deliberately "
@@ -68,6 +90,7 @@ def main():
 
     tax = read_tax(args.taxonomy)
     seqs = read_fasta(args.fasta)
+    check_aligned(seqs, args.fasta, args.allow_ragged)
     missing = set(tax) - set(seqs)
     if missing:
         sys.exit(f"{len(missing)} names in the taxonomy are absent from the alignment")

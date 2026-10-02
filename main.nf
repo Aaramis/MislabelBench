@@ -11,6 +11,15 @@ include { SATIVA      } from './modules/local/sativa/main'
 include { SATIVAEPANG } from './modules/local/sativaepang/main'
 include { COLLECTRUN  } from './modules/local/collectrun/main'
 
+// A manifest's relative paths are relative to the project, not to wherever the job was launched
+// from. Each job now launches from its own directory so that several can run at once, and without
+// this a manifest written with repo-relative paths would be looked for under .nf/<job>/ instead.
+// checkIfExists turns that into a clear error rather than a silent one, but the right behaviour is
+// to find the file.
+def resolvePath(String p) {
+    file(p.startsWith('/') ? p : "${projectDir}/${p}", checkIfExists: true)
+}
+
 workflow {
 
     def manifest = new groovy.json.JsonSlurper().parse(file(params.datasets_json))
@@ -45,7 +54,7 @@ workflow {
                         run_name      : "${ds.name}__${cond}__rep${rep}",
                         timing_trusted: params.timed,
                     ] + spec
-                    [ meta, file(ds.fasta, checkIfExists: true), file(ds.tax, checkIfExists: true) ]
+                    [ meta, resolvePath(ds.fasta), resolvePath(ds.tax) ]
                 }
             }
         }
