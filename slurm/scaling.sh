@@ -5,6 +5,12 @@
 #SBATCH --time=12:00:00
 #SBATCH --output=%x-N%N-%j.log
 #
+# Pinned to one CPU model. The partition mixes xeon-e5-2695, epyc-7662, epyc-9554 and epyc-9754
+# nodes, and between the oldest and the newest there is roughly a factor of two per core, so two
+# timed runs that land on different models are not comparable. 18 nodes carry this feature, which
+# is enough for every node count the CPU quota allows.
+#SBATCH --constraint=epyc-9754
+#
 # Parallel efficiency of the staged leave-one-out, which is the one number upstream SATIVA
 # cannot produce at any cost: it has no way to place folds anywhere but in its own process.
 #
@@ -37,12 +43,13 @@ THREADS="${SCALING_THREADS:-8}"
 # to guess at a variable that may not exist.
 RESERVED="${SLURM_CPUS_PER_TASK:-$THREADS}"
 GOT_PER_NODE="${SLURM_JOB_CPUS_PER_NODE:-unknown}"
+CPU_MODEL=$(awk -F: '/^model name/ {gsub(/^ +/, "", $2); print $2; exit}' /proc/cpuinfo)
 ROOT="$HOME/bench"
 # Nextflow and `singularity pull` name their cached images differently, so find it rather
 # than spell it: the version is what must be pinned, not the file name.
 IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev/null | head -1)
 [ -n "$IMG" ] || { echo "sativa-epang 0.10.2 image not in $HOME/.singularity_cache" >&2; exit 1; }
-OUT="$ROOT/results/scaling/N${N}_c${SLURM_CPUS_PER_TASK:-8}"
+OUT="$ROOT/results/scaling/N${N}_c${SLURM_CPUS_PER_TASK:-8}_r${SCALING_REP:-1}"
 ALN="$ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$ROOT/data/gtdb/gtdb_arc2k.tax"
 
@@ -78,13 +85,14 @@ t3=$(now)
 se -r "$OUT/run.refjson" -C 0.4 -S -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"
 t4=$(now)
 
-python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" "$RESERVED" "$GOT_PER_NODE" <<'PY' > "$OUT/timing.json"
+python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" "$RESERVED" "$GOT_PER_NODE" "$CPU_MODEL" "$SLURM_JOB_NODELIST" <<'PY' > "$OUT/timing.json"
 import json, sys
 n, threads = int(sys.argv[1]), int(sys.argv[2])
 t = [float(x) for x in sys.argv[3:8]]
 print(json.dumps({
     "nodes": n, "threads_per_node": threads,
     "cores_requested_per_node": int(sys.argv[8]), "cores_allocated_per_node": sys.argv[9],
+    "cpu_model": sys.argv[10], "nodelist": sys.argv[11],
     "reference_sec": round(t[1] - t[0], 2),
     "loo_tasks_sec": round(t[2] - t[1], 2),
     "loo_place_sec": round(t[3] - t[2], 2),

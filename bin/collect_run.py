@@ -11,6 +11,7 @@ import argparse
 import json
 import re
 import socket
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -43,6 +44,18 @@ def parse_sativa_log(log_path):
     return {"sativa_total_sec": total, "reftree_sec": reftree, "l1out_sec": l1out}
 
 
+
+def cpu_model():
+    """The CPU model, read from /proc/cpuinfo, which needs no Slurm and no extra package."""
+    try:
+        for line in Path("/proc/cpuinfo").read_text().splitlines():
+            if line.startswith("model name"):
+                return line.split(":", 1)[1].strip()
+    except OSError:
+        pass
+    return subprocess.run(["uname", "-m"], capture_output=True, text=True).stdout.strip() or None
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--meta", required=True, help="JSON describing the condition")
@@ -56,6 +69,11 @@ def main():
     measured = json.loads(Path(args.timing).read_text())
 
     record["host"] = socket.gethostname()
+    # The cluster is heterogeneous: xeon-e5-2695, epyc-7662, epyc-9554 and epyc-9754 nodes all
+    # answer to the same partition, and between the oldest and the newest there is roughly a
+    # factor of two per core. Seconds from two runs are only comparable if they ran on the same
+    # model, so the model is recorded rather than left to be reconstructed from the hostname.
+    record["cpu_model"] = cpu_model()
     record["collected_at"] = datetime.now().isoformat(timespec="seconds")
     record["n_mislabels"] = count_mislabels(Path(args.mis))
     record.update(measured)

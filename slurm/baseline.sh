@@ -6,6 +6,12 @@
 #SBATCH --exclusive
 
 #SBATCH --output=%x-%j.log
+#
+# Pinned to one CPU model. The partition mixes xeon-e5-2695, epyc-7662, epyc-9554 and epyc-9754
+# nodes, and between the oldest and the newest there is roughly a factor of two per core, so two
+# timed runs that land on different models are not comparable. 18 nodes carry this feature, which
+# is enough for every node count the CPU quota allows.
+#SBATCH --constraint=epyc-9754
 set -euo pipefail
 
 # Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
