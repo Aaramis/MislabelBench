@@ -29,4 +29,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions upstream_raxml_T8,epang_T8_K25 \
   --sativa_taxcode BAC \
   --timing_trusted false \
+  --trace_tag kaxis_upstream \
   --outdir "$BENCH_ROOT/results/kaxis"

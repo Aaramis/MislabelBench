@@ -37,4 +37,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --sativa_taxcode BAC \
   --replicates 3 \
   --timing_trusted true \
+  --trace_tag sizes \
   --outdir "$BENCH_ROOT/results/sizes"

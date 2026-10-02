@@ -34,4 +34,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions epang_T8_K25_tree \
   --sativa_taxcode BAC \
   --timing_trusted false \
+  --trace_tag grid_tree \
   --outdir "$BENCH_ROOT/results/grid_fork"

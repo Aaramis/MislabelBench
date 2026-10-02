@@ -30,4 +30,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions epang_T8_K25,upstream_raxml_T8 \
   --sativa_taxcode BAC \
   --timing_trusted false \
+  --trace_tag foreign \
   --outdir "$BENCH_ROOT/results/foreign"

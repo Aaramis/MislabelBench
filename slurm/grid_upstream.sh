@@ -36,4 +36,5 @@ nextflow run . -profile singularity -resume \
   --conditions upstream_raxml_T8 \
   --sativa_taxcode BAC \
   --timing_trusted false \
+  --trace_tag grid_upstream \
   --outdir "$BENCH_ROOT/results/grid_fork"   # same tree: one run directory per cell and condition

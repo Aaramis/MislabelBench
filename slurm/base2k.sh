@@ -29,4 +29,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions upstream_raxml_T8,epang_T8_K25 \
   --sativa_taxcode BAC \
   --timing_trusted true \
+  --trace_tag base2k \
   --outdir "$BENCH_ROOT/results/baseline2k"
