@@ -44,7 +44,11 @@ se() { singularity exec -B "$OUT:$OUT" --pwd "$OUT" "$IMG" sativa-epang "$@"; }
 
 now() { date +%s.%N; }
 t0=$(now)
-se -s aln.fasta -t tax.tsv -x BAC -n run -o "$OUT" -T "$THREADS" -stage reference
+# Same tool flags as conf/modules.config. They are not cosmetic: -m defaults to `thorough`,
+# a full constrained RAxML search, so leaving it out measured a different algorithm and put
+# the reference build at 249 s against the 38 s the rest of the benchmark sees.
+ARGS=(-m ultrafast -C 0.4 -x BAC -p 42 -S)
+se -s aln.fasta -t tax.tsv "${ARGS[@]}" -n run -o "$OUT" -T "$THREADS" -stage reference
 t1=$(now)
 se -r "$OUT/run.refjson" -n run -o "$OUT" -T "$THREADS" -stage loo-tasks
 t2=$(now)
@@ -59,7 +63,7 @@ done
 wait
 t3=$(now)
 
-se -r "$OUT/run.refjson" -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"
+se -r "$OUT/run.refjson" -C 0.4 -S -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"
 t4=$(now)
 
 python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" <<'PY' > "$OUT/timing.json"
