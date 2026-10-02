@@ -43,7 +43,7 @@ workflow {
                         condition     : cond,
                         rep           : rep,
                         run_name      : "${ds.name}__${cond}__rep${rep}",
-                        timing_trusted: params.timing_trusted,
+                        timing_trusted: params.timed,
                     ] + spec
                     [ meta, file(ds.fasta, checkIfExists: true), file(ds.tax, checkIfExists: true) ]
                 }
