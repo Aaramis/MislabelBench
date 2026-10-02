@@ -143,3 +143,37 @@ class VerifyInjection(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class ColumnComparison(unittest.TestCase):
+    """column_comparison.py divided by the number of flags at the stem confidence without
+    checking there were any. On this grid 31.5 % of flags sit there, so it never bit; on a
+    dataset where the stem split never fires it would have raised ZeroDivisionError."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        cell = self.tmp / "inj" / "c1"
+        cell.mkdir(parents=True)
+        (cell / "c1.truth.json").write_text(json.dumps({
+            "distance": "family", "rate": 0.1, "k": 1, "seed": 1,
+            "injected": {"i1": {"true": TRUE, "wrong": WRONG}}}))
+        self.runs = self.tmp / "runs"
+        d = self.runs / "c1__cond"
+        d.mkdir(parents=True)
+        self.mis = d / "c1__cond.mis"
+
+    def run_it(self):
+        return run("column_comparison.py", "--injected-dir", self.tmp / "inj",
+                   "--runs-dir", self.runs, "--condition", "cond")
+
+    def test_no_flag_at_the_stem_confidence_reports_none(self):
+        self.mis.write_text(HEADER + "\n" + mis_row("i1", 0.900, 1.0) + "\n")
+        r = self.run_it()
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("none", r.stdout)
+
+    def test_a_flag_at_the_stem_confidence_is_still_reported(self):
+        self.mis.write_text(HEADER + "\n" + mis_row("i1", 0.510, 1.0) + "\n")
+        r = self.run_it()
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("100.0%", r.stdout)

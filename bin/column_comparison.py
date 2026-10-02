@@ -80,11 +80,16 @@ def main():
     hi = [r for r in stem if r["exclusion"] >= 0.99]
     print(f"\nflags reported at confidence {STEM}: {len(stem)} "
           f"({100 * len(stem) / len(rows):.1f}% of all flags)")
-    print(f"  of those, {len(hi)} ({100 * len(hi) / len(stem):.1f}%) have exclusion >= 0.99, "
-          "so the declared label holds essentially none of the placement weight")
-    print(f"  {sum(r['injected'] for r in stem)} are injected "
-          f"({100 * sum(r['injected'] for r in stem) / len(stem):.1f}%, against "
-          f"{100 * n_inj / len(rows):.1f}% over all flags)")
+    if stem:
+        print(f"  of those, {len(hi)} ({100 * len(hi) / len(stem):.1f}%) have exclusion >= 0.99, "
+              "so the declared label holds essentially none of the placement weight")
+        print(f"  {sum(r['injected'] for r in stem)} are injected "
+              f"({100 * sum(r['injected'] for r in stem) / len(stem):.1f}%, against "
+              f"{100 * n_inj / len(rows):.1f}% over all flags)")
+    else:
+        # Not an error: on this grid 31.5 % of flags sit at 0.510, but a dataset where none does is
+        # a dataset where parent_lhw_coeff never bit, which is worth saying rather than crashing on.
+        print("  none, so the stem split never produced a call on this data")
 
     if args.out:
         Path(args.out).write_text(json.dumps({
