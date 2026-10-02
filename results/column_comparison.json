@@ -1,2671 +1,2861 @@
 {
-  "n_flags": 21944,
-  "n_injected_flags": 4608,
+  "n_flags": 25772,
+  "n_injected_flags": 5446,
   "untouched_floor": {
-    "confidence": 8785,
-    "exclusion": 16891
+    "confidence": 10320,
+    "exclusion": 19809
   },
-  "stem_flags": 6923,
-  "stem_exclusion_ge_099": 6923,
-  "stem_injected": 394,
+  "stem_flags": 8057,
+  "stem_exclusion_ge_099": 8057,
+  "stem_injected": 399,
   "curves": {
     "confidence": [
       {
         "threshold": 0.404,
-        "injected_kept": 4608,
-        "untouched_kept": 17336
+        "injected_kept": 5446,
+        "untouched_kept": 20326
       },
       {
         "threshold": 0.405,
-        "injected_kept": 4608,
-        "untouched_kept": 17334
+        "injected_kept": 5446,
+        "untouched_kept": 20324
       },
       {
         "threshold": 0.406,
-        "injected_kept": 4608,
-        "untouched_kept": 17333
+        "injected_kept": 5446,
+        "untouched_kept": 20323
       },
       {
         "threshold": 0.408,
-        "injected_kept": 4608,
-        "untouched_kept": 17331
+        "injected_kept": 5446,
+        "untouched_kept": 20321
       },
       {
         "threshold": 0.41,
-        "injected_kept": 4608,
-        "untouched_kept": 17330
+        "injected_kept": 5446,
+        "untouched_kept": 20320
       },
       {
         "threshold": 0.413,
-        "injected_kept": 4608,
-        "untouched_kept": 17329
+        "injected_kept": 5446,
+        "untouched_kept": 20319
+      },
+      {
+        "threshold": 0.414,
+        "injected_kept": 5446,
+        "untouched_kept": 20318
       },
       {
         "threshold": 0.416,
-        "injected_kept": 4608,
-        "untouched_kept": 17328
+        "injected_kept": 5446,
+        "untouched_kept": 20317
       },
       {
         "threshold": 0.418,
-        "injected_kept": 4608,
-        "untouched_kept": 17327
+        "injected_kept": 5446,
+        "untouched_kept": 20316
       },
       {
         "threshold": 0.427,
-        "injected_kept": 4608,
-        "untouched_kept": 17326
+        "injected_kept": 5446,
+        "untouched_kept": 20315
       },
       {
         "threshold": 0.428,
-        "injected_kept": 4608,
-        "untouched_kept": 17325
+        "injected_kept": 5446,
+        "untouched_kept": 20314
       },
       {
         "threshold": 0.434,
-        "injected_kept": 4608,
-        "untouched_kept": 17322
+        "injected_kept": 5446,
+        "untouched_kept": 20311
       },
       {
         "threshold": 0.437,
-        "injected_kept": 4608,
-        "untouched_kept": 17321
+        "injected_kept": 5446,
+        "untouched_kept": 20310
       },
       {
         "threshold": 0.438,
-        "injected_kept": 4608,
-        "untouched_kept": 17319
+        "injected_kept": 5446,
+        "untouched_kept": 20308
       },
       {
         "threshold": 0.44,
-        "injected_kept": 4608,
-        "untouched_kept": 17318
+        "injected_kept": 5446,
+        "untouched_kept": 20307
+      },
+      {
+        "threshold": 0.442,
+        "injected_kept": 5446,
+        "untouched_kept": 20306
       },
       {
         "threshold": 0.443,
-        "injected_kept": 4608,
-        "untouched_kept": 17317
+        "injected_kept": 5446,
+        "untouched_kept": 20305
       },
       {
         "threshold": 0.446,
-        "injected_kept": 4606,
-        "untouched_kept": 17317
+        "injected_kept": 5444,
+        "untouched_kept": 20304
+      },
+      {
+        "threshold": 0.45,
+        "injected_kept": 5444,
+        "untouched_kept": 20303
       },
       {
         "threshold": 0.454,
-        "injected_kept": 4606,
-        "untouched_kept": 17316
+        "injected_kept": 5444,
+        "untouched_kept": 20302
       },
       {
         "threshold": 0.457,
-        "injected_kept": 4606,
-        "untouched_kept": 17315
+        "injected_kept": 5444,
+        "untouched_kept": 20301
       },
       {
         "threshold": 0.458,
-        "injected_kept": 4605,
-        "untouched_kept": 17315
+        "injected_kept": 5443,
+        "untouched_kept": 20301
+      },
+      {
+        "threshold": 0.461,
+        "injected_kept": 5443,
+        "untouched_kept": 20298
       },
       {
         "threshold": 0.462,
-        "injected_kept": 4605,
-        "untouched_kept": 17313
+        "injected_kept": 5443,
+        "untouched_kept": 20297
       },
       {
         "threshold": 0.463,
-        "injected_kept": 4605,
-        "untouched_kept": 17312
+        "injected_kept": 5443,
+        "untouched_kept": 20296
       },
       {
         "threshold": 0.465,
-        "injected_kept": 4605,
-        "untouched_kept": 17311
+        "injected_kept": 5443,
+        "untouched_kept": 20295
+      },
+      {
+        "threshold": 0.469,
+        "injected_kept": 5443,
+        "untouched_kept": 20292
       },
       {
         "threshold": 0.472,
-        "injected_kept": 4605,
-        "untouched_kept": 17308
+        "injected_kept": 5443,
+        "untouched_kept": 20291
       },
       {
         "threshold": 0.473,
-        "injected_kept": 4605,
-        "untouched_kept": 17307
+        "injected_kept": 5443,
+        "untouched_kept": 20290
       },
       {
         "threshold": 0.474,
-        "injected_kept": 4605,
-        "untouched_kept": 17306
+        "injected_kept": 5443,
+        "untouched_kept": 20289
       },
       {
         "threshold": 0.48,
-        "injected_kept": 4605,
-        "untouched_kept": 17305
+        "injected_kept": 5443,
+        "untouched_kept": 20288
       },
       {
         "threshold": 0.482,
-        "injected_kept": 4605,
-        "untouched_kept": 17304
+        "injected_kept": 5443,
+        "untouched_kept": 20287
       },
       {
         "threshold": 0.483,
-        "injected_kept": 4605,
-        "untouched_kept": 17302
+        "injected_kept": 5443,
+        "untouched_kept": 20285
       },
       {
         "threshold": 0.485,
-        "injected_kept": 4605,
-        "untouched_kept": 17301
+        "injected_kept": 5443,
+        "untouched_kept": 20284
       },
       {
         "threshold": 0.486,
-        "injected_kept": 4605,
-        "untouched_kept": 17300
+        "injected_kept": 5443,
+        "untouched_kept": 20283
       },
       {
         "threshold": 0.487,
-        "injected_kept": 4605,
-        "untouched_kept": 17298
+        "injected_kept": 5443,
+        "untouched_kept": 20281
+      },
+      {
+        "threshold": 0.489,
+        "injected_kept": 5443,
+        "untouched_kept": 20280
       },
       {
         "threshold": 0.49,
-        "injected_kept": 4605,
-        "untouched_kept": 17297
+        "injected_kept": 5443,
+        "untouched_kept": 20279
       },
       {
         "threshold": 0.491,
-        "injected_kept": 4605,
-        "untouched_kept": 17296
+        "injected_kept": 5443,
+        "untouched_kept": 20278
       },
       {
         "threshold": 0.492,
-        "injected_kept": 4605,
-        "untouched_kept": 17287
+        "injected_kept": 5443,
+        "untouched_kept": 20269
       },
       {
         "threshold": 0.493,
-        "injected_kept": 4605,
-        "untouched_kept": 17280
+        "injected_kept": 5443,
+        "untouched_kept": 20261
       },
       {
         "threshold": 0.494,
-        "injected_kept": 4605,
-        "untouched_kept": 17270
+        "injected_kept": 5443,
+        "untouched_kept": 20250
       },
       {
         "threshold": 0.495,
-        "injected_kept": 4605,
-        "untouched_kept": 17261
+        "injected_kept": 5443,
+        "untouched_kept": 20239
       },
       {
         "threshold": 0.496,
-        "injected_kept": 4605,
-        "untouched_kept": 17252
+        "injected_kept": 5443,
+        "untouched_kept": 20230
       },
       {
         "threshold": 0.497,
-        "injected_kept": 4605,
-        "untouched_kept": 17244
+        "injected_kept": 5443,
+        "untouched_kept": 20221
       },
       {
         "threshold": 0.498,
-        "injected_kept": 4604,
-        "untouched_kept": 17239
+        "injected_kept": 5442,
+        "untouched_kept": 20213
       },
       {
         "threshold": 0.499,
-        "injected_kept": 4604,
-        "untouched_kept": 17233
+        "injected_kept": 5442,
+        "untouched_kept": 20204
       },
       {
         "threshold": 0.5,
-        "injected_kept": 4604,
-        "untouched_kept": 17219
+        "injected_kept": 5442,
+        "untouched_kept": 20189
       },
       {
         "threshold": 0.501,
-        "injected_kept": 4602,
-        "untouched_kept": 17210
+        "injected_kept": 5440,
+        "untouched_kept": 20175
       },
       {
         "threshold": 0.502,
-        "injected_kept": 4600,
-        "untouched_kept": 17189
+        "injected_kept": 5438,
+        "untouched_kept": 20152
       },
       {
         "threshold": 0.503,
-        "injected_kept": 4596,
-        "untouched_kept": 17169
+        "injected_kept": 5434,
+        "untouched_kept": 20128
       },
       {
         "threshold": 0.504,
-        "injected_kept": 4595,
-        "untouched_kept": 17143
+        "injected_kept": 5433,
+        "untouched_kept": 20099
       },
       {
         "threshold": 0.505,
-        "injected_kept": 4593,
-        "untouched_kept": 17110
+        "injected_kept": 5431,
+        "untouched_kept": 20060
       },
       {
         "threshold": 0.506,
-        "injected_kept": 4590,
-        "untouched_kept": 17067
+        "injected_kept": 5428,
+        "untouched_kept": 20011
       },
       {
         "threshold": 0.507,
-        "injected_kept": 4584,
-        "untouched_kept": 17025
+        "injected_kept": 5422,
+        "untouched_kept": 19951
       },
       {
         "threshold": 0.508,
-        "injected_kept": 4578,
-        "untouched_kept": 16921
+        "injected_kept": 5416,
+        "untouched_kept": 19830
       },
       {
         "threshold": 0.509,
-        "injected_kept": 4568,
-        "untouched_kept": 16841
+        "injected_kept": 5406,
+        "untouched_kept": 19734
       },
       {
         "threshold": 0.51,
-        "injected_kept": 4559,
-        "untouched_kept": 16579
+        "injected_kept": 5397,
+        "untouched_kept": 19438
       },
       {
         "threshold": 0.511,
-        "injected_kept": 4165,
-        "untouched_kept": 10050
+        "injected_kept": 4998,
+        "untouched_kept": 11780
       },
       {
         "threshold": 0.512,
-        "injected_kept": 4155,
-        "untouched_kept": 9984
+        "injected_kept": 4987,
+        "untouched_kept": 11706
       },
       {
         "threshold": 0.513,
-        "injected_kept": 4151,
-        "untouched_kept": 9946
+        "injected_kept": 4983,
+        "untouched_kept": 11659
       },
       {
         "threshold": 0.514,
-        "injected_kept": 4150,
-        "untouched_kept": 9907
+        "injected_kept": 4982,
+        "untouched_kept": 11618
       },
       {
         "threshold": 0.515,
-        "injected_kept": 4149,
-        "untouched_kept": 9885
+        "injected_kept": 4981,
+        "untouched_kept": 11593
       },
       {
         "threshold": 0.516,
-        "injected_kept": 4147,
-        "untouched_kept": 9855
+        "injected_kept": 4979,
+        "untouched_kept": 11560
       },
       {
         "threshold": 0.517,
-        "injected_kept": 4147,
-        "untouched_kept": 9843
+        "injected_kept": 4979,
+        "untouched_kept": 11548
       },
       {
         "threshold": 0.518,
-        "injected_kept": 4147,
-        "untouched_kept": 9836
+        "injected_kept": 4979,
+        "untouched_kept": 11538
       },
       {
         "threshold": 0.519,
-        "injected_kept": 4145,
-        "untouched_kept": 9826
+        "injected_kept": 4977,
+        "untouched_kept": 11527
       },
       {
         "threshold": 0.52,
-        "injected_kept": 4144,
-        "untouched_kept": 9817
+        "injected_kept": 4976,
+        "untouched_kept": 11517
       },
       {
         "threshold": 0.521,
-        "injected_kept": 4143,
-        "untouched_kept": 9810
+        "injected_kept": 4975,
+        "untouched_kept": 11509
       },
       {
         "threshold": 0.522,
-        "injected_kept": 4143,
-        "untouched_kept": 9799
+        "injected_kept": 4975,
+        "untouched_kept": 11496
       },
       {
         "threshold": 0.523,
-        "injected_kept": 4143,
-        "untouched_kept": 9790
+        "injected_kept": 4975,
+        "untouched_kept": 11487
       },
       {
         "threshold": 0.524,
-        "injected_kept": 4143,
-        "untouched_kept": 9787
+        "injected_kept": 4975,
+        "untouched_kept": 11484
       },
       {
         "threshold": 0.525,
-        "injected_kept": 4143,
-        "untouched_kept": 9776
+        "injected_kept": 4975,
+        "untouched_kept": 11470
       },
       {
         "threshold": 0.527,
-        "injected_kept": 4143,
-        "untouched_kept": 9775
+        "injected_kept": 4975,
+        "untouched_kept": 11469
       },
       {
         "threshold": 0.528,
-        "injected_kept": 4143,
-        "untouched_kept": 9772
+        "injected_kept": 4975,
+        "untouched_kept": 11466
       },
       {
         "threshold": 0.529,
-        "injected_kept": 4143,
-        "untouched_kept": 9769
+        "injected_kept": 4975,
+        "untouched_kept": 11463
       },
       {
         "threshold": 0.53,
-        "injected_kept": 4142,
-        "untouched_kept": 9766
+        "injected_kept": 4974,
+        "untouched_kept": 11460
       },
       {
         "threshold": 0.531,
-        "injected_kept": 4141,
-        "untouched_kept": 9762
+        "injected_kept": 4973,
+        "untouched_kept": 11455
       },
       {
         "threshold": 0.532,
-        "injected_kept": 4140,
-        "untouched_kept": 9762
+        "injected_kept": 4972,
+        "untouched_kept": 11455
       },
       {
         "threshold": 0.533,
-        "injected_kept": 4140,
-        "untouched_kept": 9755
+        "injected_kept": 4972,
+        "untouched_kept": 11443
       },
       {
         "threshold": 0.534,
-        "injected_kept": 4140,
-        "untouched_kept": 9735
+        "injected_kept": 4972,
+        "untouched_kept": 11423
       },
       {
         "threshold": 0.535,
-        "injected_kept": 4139,
-        "untouched_kept": 9731
+        "injected_kept": 4970,
+        "untouched_kept": 11419
       },
       {
         "threshold": 0.536,
-        "injected_kept": 4135,
-        "untouched_kept": 9726
+        "injected_kept": 4965,
+        "untouched_kept": 11414
       },
       {
         "threshold": 0.537,
-        "injected_kept": 4135,
-        "untouched_kept": 9725
+        "injected_kept": 4965,
+        "untouched_kept": 11413
       },
       {
         "threshold": 0.538,
-        "injected_kept": 4135,
-        "untouched_kept": 9720
+        "injected_kept": 4965,
+        "untouched_kept": 11408
       },
       {
         "threshold": 0.539,
-        "injected_kept": 4134,
-        "untouched_kept": 9719
+        "injected_kept": 4964,
+        "untouched_kept": 11407
       },
       {
         "threshold": 0.54,
-        "injected_kept": 4134,
-        "untouched_kept": 9717
+        "injected_kept": 4964,
+        "untouched_kept": 11405
       },
       {
         "threshold": 0.541,
-        "injected_kept": 4134,
-        "untouched_kept": 9716
+        "injected_kept": 4964,
+        "untouched_kept": 11404
       },
       {
         "threshold": 0.543,
-        "injected_kept": 4134,
-        "untouched_kept": 9715
+        "injected_kept": 4964,
+        "untouched_kept": 11403
       },
       {
         "threshold": 0.544,
-        "injected_kept": 4134,
-        "untouched_kept": 9713
+        "injected_kept": 4964,
+        "untouched_kept": 11401
       },
       {
         "threshold": 0.545,
-        "injected_kept": 4134,
-        "untouched_kept": 9712
+        "injected_kept": 4964,
+        "untouched_kept": 11400
+      },
+      {
+        "threshold": 0.546,
+        "injected_kept": 4964,
+        "untouched_kept": 11396
       },
       {
         "threshold": 0.547,
-        "injected_kept": 4134,
-        "untouched_kept": 9708
+        "injected_kept": 4964,
+        "untouched_kept": 11395
       },
       {
         "threshold": 0.548,
-        "injected_kept": 4134,
-        "untouched_kept": 9706
+        "injected_kept": 4964,
+        "untouched_kept": 11393
       },
       {
         "threshold": 0.549,
-        "injected_kept": 4134,
-        "untouched_kept": 9705
+        "injected_kept": 4964,
+        "untouched_kept": 11392
       },
       {
         "threshold": 0.55,
-        "injected_kept": 4134,
-        "untouched_kept": 9702
+        "injected_kept": 4964,
+        "untouched_kept": 11388
       },
       {
         "threshold": 0.551,
-        "injected_kept": 4133,
-        "untouched_kept": 9700
+        "injected_kept": 4963,
+        "untouched_kept": 11386
       },
       {
         "threshold": 0.552,
-        "injected_kept": 4133,
-        "untouched_kept": 9699
+        "injected_kept": 4963,
+        "untouched_kept": 11385
+      },
+      {
+        "threshold": 0.553,
+        "injected_kept": 4963,
+        "untouched_kept": 11384
       },
       {
         "threshold": 0.555,
-        "injected_kept": 4133,
-        "untouched_kept": 9698
+        "injected_kept": 4963,
+        "untouched_kept": 11382
       },
       {
         "threshold": 0.556,
-        "injected_kept": 4133,
-        "untouched_kept": 9697
+        "injected_kept": 4963,
+        "untouched_kept": 11380
+      },
+      {
+        "threshold": 0.56,
+        "injected_kept": 4963,
+        "untouched_kept": 11379
       },
       {
         "threshold": 0.561,
-        "injected_kept": 4133,
-        "untouched_kept": 9696
+        "injected_kept": 4963,
+        "untouched_kept": 11378
       },
       {
         "threshold": 0.562,
-        "injected_kept": 4133,
-        "untouched_kept": 9695
+        "injected_kept": 4963,
+        "untouched_kept": 11377
+      },
+      {
+        "threshold": 0.563,
+        "injected_kept": 4963,
+        "untouched_kept": 11373
       },
       {
         "threshold": 0.564,
-        "injected_kept": 4133,
-        "untouched_kept": 9692
+        "injected_kept": 4963,
+        "untouched_kept": 11372
       },
       {
         "threshold": 0.565,
-        "injected_kept": 4133,
-        "untouched_kept": 9685
+        "injected_kept": 4963,
+        "untouched_kept": 11365
       },
       {
         "threshold": 0.566,
-        "injected_kept": 4133,
-        "untouched_kept": 9682
+        "injected_kept": 4963,
+        "untouched_kept": 11361
       },
       {
         "threshold": 0.567,
-        "injected_kept": 4133,
-        "untouched_kept": 9680
+        "injected_kept": 4963,
+        "untouched_kept": 11359
       },
       {
         "threshold": 0.568,
-        "injected_kept": 4133,
-        "untouched_kept": 9679
+        "injected_kept": 4963,
+        "untouched_kept": 11358
       },
       {
         "threshold": 0.569,
-        "injected_kept": 4133,
-        "untouched_kept": 9672
+        "injected_kept": 4963,
+        "untouched_kept": 11351
       },
       {
         "threshold": 0.57,
-        "injected_kept": 4133,
-        "untouched_kept": 9667
+        "injected_kept": 4963,
+        "untouched_kept": 11346
       },
       {
         "threshold": 0.571,
-        "injected_kept": 4133,
-        "untouched_kept": 9666
+        "injected_kept": 4963,
+        "untouched_kept": 11345
       },
       {
         "threshold": 0.573,
-        "injected_kept": 4133,
-        "untouched_kept": 9665
+        "injected_kept": 4963,
+        "untouched_kept": 11343
       },
       {
         "threshold": 0.574,
-        "injected_kept": 4133,
-        "untouched_kept": 9664
+        "injected_kept": 4963,
+        "untouched_kept": 11342
       },
       {
         "threshold": 0.576,
-        "injected_kept": 4132,
-        "untouched_kept": 9661
+        "injected_kept": 4962,
+        "untouched_kept": 11339
       },
       {
         "threshold": 0.577,
-        "injected_kept": 4131,
-        "untouched_kept": 9660
+        "injected_kept": 4961,
+        "untouched_kept": 11338
       },
       {
         "threshold": 0.578,
-        "injected_kept": 4131,
-        "untouched_kept": 9659
+        "injected_kept": 4961,
+        "untouched_kept": 11337
       },
       {
         "threshold": 0.58,
-        "injected_kept": 4131,
-        "untouched_kept": 9657
+        "injected_kept": 4961,
+        "untouched_kept": 11334
       },
       {
         "threshold": 0.581,
-        "injected_kept": 4131,
-        "untouched_kept": 9656
+        "injected_kept": 4961,
+        "untouched_kept": 11332
       },
       {
         "threshold": 0.582,
-        "injected_kept": 4131,
-        "untouched_kept": 9654
+        "injected_kept": 4961,
+        "untouched_kept": 11330
       },
       {
         "threshold": 0.583,
-        "injected_kept": 4131,
-        "untouched_kept": 9653
+        "injected_kept": 4961,
+        "untouched_kept": 11329
+      },
+      {
+        "threshold": 0.584,
+        "injected_kept": 4961,
+        "untouched_kept": 11328
       },
       {
         "threshold": 0.586,
-        "injected_kept": 4131,
-        "untouched_kept": 9652
+        "injected_kept": 4961,
+        "untouched_kept": 11327
       },
       {
         "threshold": 0.588,
-        "injected_kept": 4129,
-        "untouched_kept": 9650
+        "injected_kept": 4959,
+        "untouched_kept": 11325
       },
       {
         "threshold": 0.589,
-        "injected_kept": 4129,
-        "untouched_kept": 9648
+        "injected_kept": 4959,
+        "untouched_kept": 11323
       },
       {
         "threshold": 0.59,
-        "injected_kept": 4128,
-        "untouched_kept": 9648
+        "injected_kept": 4958,
+        "untouched_kept": 11323
       },
       {
         "threshold": 0.591,
-        "injected_kept": 4128,
-        "untouched_kept": 9647
+        "injected_kept": 4958,
+        "untouched_kept": 11322
       },
       {
         "threshold": 0.593,
-        "injected_kept": 4127,
-        "untouched_kept": 9645
+        "injected_kept": 4957,
+        "untouched_kept": 11320
       },
       {
         "threshold": 0.595,
-        "injected_kept": 4127,
-        "untouched_kept": 9644
+        "injected_kept": 4957,
+        "untouched_kept": 11318
       },
       {
         "threshold": 0.596,
-        "injected_kept": 4127,
-        "untouched_kept": 9643
+        "injected_kept": 4957,
+        "untouched_kept": 11317
       },
       {
         "threshold": 0.597,
-        "injected_kept": 4127,
-        "untouched_kept": 9641
+        "injected_kept": 4957,
+        "untouched_kept": 11315
       },
       {
         "threshold": 0.598,
-        "injected_kept": 4127,
-        "untouched_kept": 9639
+        "injected_kept": 4957,
+        "untouched_kept": 11313
       },
       {
         "threshold": 0.599,
-        "injected_kept": 4127,
-        "untouched_kept": 9636
+        "injected_kept": 4957,
+        "untouched_kept": 11310
       },
       {
         "threshold": 0.6,
-        "injected_kept": 4127,
-        "untouched_kept": 9634
+        "injected_kept": 4957,
+        "untouched_kept": 11308
       },
       {
         "threshold": 0.601,
-        "injected_kept": 4127,
-        "untouched_kept": 9632
+        "injected_kept": 4957,
+        "untouched_kept": 11306
       },
       {
         "threshold": 0.603,
-        "injected_kept": 4126,
-        "untouched_kept": 9632
+        "injected_kept": 4956,
+        "untouched_kept": 11306
       },
       {
         "threshold": 0.604,
-        "injected_kept": 4126,
-        "untouched_kept": 9630
+        "injected_kept": 4956,
+        "untouched_kept": 11304
+      },
+      {
+        "threshold": 0.605,
+        "injected_kept": 4956,
+        "untouched_kept": 11302
       },
       {
         "threshold": 0.609,
-        "injected_kept": 4126,
-        "untouched_kept": 9628
+        "injected_kept": 4956,
+        "untouched_kept": 11301
       },
       {
         "threshold": 0.61,
-        "injected_kept": 4126,
-        "untouched_kept": 9627
+        "injected_kept": 4956,
+        "untouched_kept": 11300
+      },
+      {
+        "threshold": 0.611,
+        "injected_kept": 4956,
+        "untouched_kept": 11299
       },
       {
         "threshold": 0.614,
-        "injected_kept": 4126,
-        "untouched_kept": 9626
+        "injected_kept": 4956,
+        "untouched_kept": 11297
+      },
+      {
+        "threshold": 0.615,
+        "injected_kept": 4956,
+        "untouched_kept": 11296
       },
       {
         "threshold": 0.617,
-        "injected_kept": 4126,
-        "untouched_kept": 9625
+        "injected_kept": 4956,
+        "untouched_kept": 11295
       },
       {
         "threshold": 0.618,
-        "injected_kept": 4126,
-        "untouched_kept": 9623
+        "injected_kept": 4955,
+        "untouched_kept": 11293
       },
       {
         "threshold": 0.619,
-        "injected_kept": 4126,
-        "untouched_kept": 9622
+        "injected_kept": 4955,
+        "untouched_kept": 11292
       },
       {
         "threshold": 0.62,
-        "injected_kept": 4125,
-        "untouched_kept": 9622
+        "injected_kept": 4954,
+        "untouched_kept": 11292
       },
       {
         "threshold": 0.621,
-        "injected_kept": 4124,
-        "untouched_kept": 9621
+        "injected_kept": 4953,
+        "untouched_kept": 11291
       },
       {
         "threshold": 0.622,
-        "injected_kept": 4123,
-        "untouched_kept": 9621
+        "injected_kept": 4952,
+        "untouched_kept": 11291
       },
       {
         "threshold": 0.623,
-        "injected_kept": 4122,
-        "untouched_kept": 9620
+        "injected_kept": 4951,
+        "untouched_kept": 11290
       },
       {
         "threshold": 0.624,
-        "injected_kept": 4122,
-        "untouched_kept": 9619
+        "injected_kept": 4951,
+        "untouched_kept": 11289
       },
       {
         "threshold": 0.626,
-        "injected_kept": 4122,
-        "untouched_kept": 9618
+        "injected_kept": 4951,
+        "untouched_kept": 11288
       },
       {
         "threshold": 0.627,
-        "injected_kept": 4122,
-        "untouched_kept": 9617
+        "injected_kept": 4951,
+        "untouched_kept": 11286
       },
       {
         "threshold": 0.63,
-        "injected_kept": 4122,
-        "untouched_kept": 9616
+        "injected_kept": 4951,
+        "untouched_kept": 11285
       },
       {
         "threshold": 0.631,
-        "injected_kept": 4122,
-        "untouched_kept": 9615
+        "injected_kept": 4951,
+        "untouched_kept": 11284
+      },
+      {
+        "threshold": 0.632,
+        "injected_kept": 4951,
+        "untouched_kept": 11283
       },
       {
         "threshold": 0.633,
-        "injected_kept": 4122,
-        "untouched_kept": 9614
+        "injected_kept": 4951,
+        "untouched_kept": 11282
       },
       {
         "threshold": 0.635,
-        "injected_kept": 4122,
-        "untouched_kept": 9613
+        "injected_kept": 4951,
+        "untouched_kept": 11281
       },
       {
         "threshold": 0.636,
-        "injected_kept": 4121,
-        "untouched_kept": 9611
+        "injected_kept": 4950,
+        "untouched_kept": 11279
       },
       {
         "threshold": 0.637,
-        "injected_kept": 4121,
-        "untouched_kept": 9610
+        "injected_kept": 4950,
+        "untouched_kept": 11278
       },
       {
         "threshold": 0.641,
-        "injected_kept": 4121,
-        "untouched_kept": 9609
+        "injected_kept": 4950,
+        "untouched_kept": 11277
       },
       {
         "threshold": 0.642,
-        "injected_kept": 4121,
-        "untouched_kept": 9606
+        "injected_kept": 4950,
+        "untouched_kept": 11273
       },
       {
         "threshold": 0.643,
-        "injected_kept": 4121,
-        "untouched_kept": 9604
+        "injected_kept": 4950,
+        "untouched_kept": 11271
       },
       {
         "threshold": 0.644,
-        "injected_kept": 4121,
-        "untouched_kept": 9603
+        "injected_kept": 4950,
+        "untouched_kept": 11270
       },
       {
         "threshold": 0.646,
-        "injected_kept": 4121,
-        "untouched_kept": 9601
+        "injected_kept": 4950,
+        "untouched_kept": 11267
       },
       {
         "threshold": 0.648,
-        "injected_kept": 4121,
-        "untouched_kept": 9599
+        "injected_kept": 4950,
+        "untouched_kept": 11265
       },
       {
         "threshold": 0.649,
-        "injected_kept": 4121,
-        "untouched_kept": 9598
+        "injected_kept": 4950,
+        "untouched_kept": 11264
       },
       {
         "threshold": 0.652,
-        "injected_kept": 4121,
-        "untouched_kept": 9597
+        "injected_kept": 4950,
+        "untouched_kept": 11262
       },
       {
         "threshold": 0.658,
-        "injected_kept": 4121,
-        "untouched_kept": 9594
+        "injected_kept": 4950,
+        "untouched_kept": 11259
       },
       {
         "threshold": 0.659,
-        "injected_kept": 4120,
-        "untouched_kept": 9593
+        "injected_kept": 4949,
+        "untouched_kept": 11258
       },
       {
         "threshold": 0.662,
-        "injected_kept": 4120,
-        "untouched_kept": 9591
+        "injected_kept": 4949,
+        "untouched_kept": 11256
       },
       {
         "threshold": 0.663,
-        "injected_kept": 4119,
-        "untouched_kept": 9589
+        "injected_kept": 4948,
+        "untouched_kept": 11254
       },
       {
         "threshold": 0.664,
-        "injected_kept": 4119,
-        "untouched_kept": 9587
+        "injected_kept": 4948,
+        "untouched_kept": 11252
       },
       {
         "threshold": 0.665,
-        "injected_kept": 4119,
-        "untouched_kept": 9585
+        "injected_kept": 4948,
+        "untouched_kept": 11250
       },
       {
         "threshold": 0.666,
-        "injected_kept": 4119,
-        "untouched_kept": 9583
+        "injected_kept": 4948,
+        "untouched_kept": 11248
       },
       {
         "threshold": 0.667,
-        "injected_kept": 4119,
-        "untouched_kept": 9582
+        "injected_kept": 4948,
+        "untouched_kept": 11247
       },
       {
         "threshold": 0.67,
-        "injected_kept": 4119,
-        "untouched_kept": 9581
+        "injected_kept": 4948,
+        "untouched_kept": 11246
       },
       {
         "threshold": 0.671,
-        "injected_kept": 4119,
-        "untouched_kept": 9579
+        "injected_kept": 4948,
+        "untouched_kept": 11244
+      },
+      {
+        "threshold": 0.672,
+        "injected_kept": 4948,
+        "untouched_kept": 11242
+      },
+      {
+        "threshold": 0.673,
+        "injected_kept": 4948,
+        "untouched_kept": 11241
+      },
+      {
+        "threshold": 0.676,
+        "injected_kept": 4948,
+        "untouched_kept": 11240
       },
       {
         "threshold": 0.677,
-        "injected_kept": 4119,
-        "untouched_kept": 9577
+        "injected_kept": 4948,
+        "untouched_kept": 11239
       },
       {
         "threshold": 0.679,
-        "injected_kept": 4119,
-        "untouched_kept": 9575
+        "injected_kept": 4948,
+        "untouched_kept": 11237
       },
       {
         "threshold": 0.68,
-        "injected_kept": 4119,
-        "untouched_kept": 9574
+        "injected_kept": 4948,
+        "untouched_kept": 11236
       },
       {
         "threshold": 0.681,
-        "injected_kept": 4119,
-        "untouched_kept": 9573
+        "injected_kept": 4948,
+        "untouched_kept": 11235
       },
       {
         "threshold": 0.682,
-        "injected_kept": 4119,
-        "untouched_kept": 9572
+        "injected_kept": 4948,
+        "untouched_kept": 11234
       },
       {
         "threshold": 0.683,
-        "injected_kept": 4119,
-        "untouched_kept": 9570
+        "injected_kept": 4948,
+        "untouched_kept": 11232
       },
       {
         "threshold": 0.684,
-        "injected_kept": 4119,
-        "untouched_kept": 9568
+        "injected_kept": 4948,
+        "untouched_kept": 11230
       },
       {
         "threshold": 0.685,
-        "injected_kept": 4118,
-        "untouched_kept": 9568
+        "injected_kept": 4947,
+        "untouched_kept": 11230
       },
       {
         "threshold": 0.686,
-        "injected_kept": 4117,
-        "untouched_kept": 9568
+        "injected_kept": 4946,
+        "untouched_kept": 11230
       },
       {
         "threshold": 0.687,
-        "injected_kept": 4117,
-        "untouched_kept": 9567
+        "injected_kept": 4946,
+        "untouched_kept": 11229
       },
       {
         "threshold": 0.688,
-        "injected_kept": 4115,
-        "untouched_kept": 9567
+        "injected_kept": 4944,
+        "untouched_kept": 11229
       },
       {
         "threshold": 0.689,
-        "injected_kept": 4115,
-        "untouched_kept": 9566
+        "injected_kept": 4944,
+        "untouched_kept": 11227
       },
       {
         "threshold": 0.69,
-        "injected_kept": 4115,
-        "untouched_kept": 9561
+        "injected_kept": 4944,
+        "untouched_kept": 11222
       },
       {
         "threshold": 0.691,
-        "injected_kept": 4115,
-        "untouched_kept": 9560
+        "injected_kept": 4944,
+        "untouched_kept": 11220
       },
       {
         "threshold": 0.692,
-        "injected_kept": 4114,
-        "untouched_kept": 9560
+        "injected_kept": 4943,
+        "untouched_kept": 11220
       },
       {
         "threshold": 0.693,
-        "injected_kept": 4114,
-        "untouched_kept": 9559
+        "injected_kept": 4943,
+        "untouched_kept": 11219
       },
       {
         "threshold": 0.694,
-        "injected_kept": 4114,
-        "untouched_kept": 9557
+        "injected_kept": 4943,
+        "untouched_kept": 11217
       },
       {
         "threshold": 0.695,
-        "injected_kept": 4114,
-        "untouched_kept": 9553
+        "injected_kept": 4943,
+        "untouched_kept": 11213
       },
       {
         "threshold": 0.696,
-        "injected_kept": 4114,
-        "untouched_kept": 9552
+        "injected_kept": 4943,
+        "untouched_kept": 11212
       },
       {
         "threshold": 0.7,
-        "injected_kept": 4114,
-        "untouched_kept": 9551
+        "injected_kept": 4943,
+        "untouched_kept": 11211
       },
       {
         "threshold": 0.701,
-        "injected_kept": 4114,
-        "untouched_kept": 9550
+        "injected_kept": 4943,
+        "untouched_kept": 11209
+      },
+      {
+        "threshold": 0.702,
+        "injected_kept": 4943,
+        "untouched_kept": 11208
       },
       {
         "threshold": 0.703,
-        "injected_kept": 4114,
-        "untouched_kept": 9549
+        "injected_kept": 4943,
+        "untouched_kept": 11207
       },
       {
         "threshold": 0.704,
-        "injected_kept": 4114,
-        "untouched_kept": 9548
+        "injected_kept": 4943,
+        "untouched_kept": 11206
       },
       {
         "threshold": 0.709,
-        "injected_kept": 4112,
-        "untouched_kept": 9548
+        "injected_kept": 4941,
+        "untouched_kept": 11206
       },
       {
         "threshold": 0.71,
-        "injected_kept": 4111,
-        "untouched_kept": 9548
+        "injected_kept": 4940,
+        "untouched_kept": 11206
       },
       {
         "threshold": 0.711,
-        "injected_kept": 4110,
-        "untouched_kept": 9548
+        "injected_kept": 4939,
+        "untouched_kept": 11206
       },
       {
         "threshold": 0.714,
-        "injected_kept": 4109,
-        "untouched_kept": 9546
+        "injected_kept": 4938,
+        "untouched_kept": 11204
       },
       {
         "threshold": 0.715,
-        "injected_kept": 4109,
-        "untouched_kept": 9545
+        "injected_kept": 4938,
+        "untouched_kept": 11203
       },
       {
         "threshold": 0.716,
-        "injected_kept": 4109,
-        "untouched_kept": 9542
+        "injected_kept": 4938,
+        "untouched_kept": 11200
       },
       {
         "threshold": 0.718,
-        "injected_kept": 4108,
-        "untouched_kept": 9540
+        "injected_kept": 4937,
+        "untouched_kept": 11198
       },
       {
         "threshold": 0.72,
-        "injected_kept": 4108,
-        "untouched_kept": 9539
+        "injected_kept": 4937,
+        "untouched_kept": 11197
       },
       {
         "threshold": 0.722,
-        "injected_kept": 4108,
-        "untouched_kept": 9537
+        "injected_kept": 4937,
+        "untouched_kept": 11195
       },
       {
         "threshold": 0.723,
-        "injected_kept": 4108,
-        "untouched_kept": 9535
+        "injected_kept": 4937,
+        "untouched_kept": 11193
       },
       {
         "threshold": 0.724,
-        "injected_kept": 4108,
-        "untouched_kept": 9533
+        "injected_kept": 4937,
+        "untouched_kept": 11191
       },
       {
         "threshold": 0.725,
-        "injected_kept": 4108,
-        "untouched_kept": 9531
+        "injected_kept": 4937,
+        "untouched_kept": 11188
       },
       {
         "threshold": 0.727,
-        "injected_kept": 4108,
-        "untouched_kept": 9529
+        "injected_kept": 4937,
+        "untouched_kept": 11186
       },
       {
         "threshold": 0.729,
-        "injected_kept": 4107,
-        "untouched_kept": 9528
+        "injected_kept": 4936,
+        "untouched_kept": 11184
       },
       {
         "threshold": 0.73,
-        "injected_kept": 4107,
-        "untouched_kept": 9527
+        "injected_kept": 4936,
+        "untouched_kept": 11182
+      },
+      {
+        "threshold": 0.734,
+        "injected_kept": 4936,
+        "untouched_kept": 11181
       },
       {
         "threshold": 0.735,
-        "injected_kept": 4107,
-        "untouched_kept": 9526
+        "injected_kept": 4936,
+        "untouched_kept": 11179
       },
       {
         "threshold": 0.736,
-        "injected_kept": 4107,
-        "untouched_kept": 9525
+        "injected_kept": 4936,
+        "untouched_kept": 11177
       },
       {
         "threshold": 0.739,
-        "injected_kept": 4107,
-        "untouched_kept": 9524
+        "injected_kept": 4936,
+        "untouched_kept": 11175
       },
       {
         "threshold": 0.74,
-        "injected_kept": 4107,
-        "untouched_kept": 9523
+        "injected_kept": 4936,
+        "untouched_kept": 11174
+      },
+      {
+        "threshold": 0.741,
+        "injected_kept": 4936,
+        "untouched_kept": 11173
       },
       {
         "threshold": 0.742,
-        "injected_kept": 4107,
-        "untouched_kept": 9522
+        "injected_kept": 4936,
+        "untouched_kept": 11172
+      },
+      {
+        "threshold": 0.743,
+        "injected_kept": 4936,
+        "untouched_kept": 11168
       },
       {
         "threshold": 0.745,
-        "injected_kept": 4107,
-        "untouched_kept": 9519
+        "injected_kept": 4936,
+        "untouched_kept": 11167
+      },
+      {
+        "threshold": 0.751,
+        "injected_kept": 4934,
+        "untouched_kept": 11166
       },
       {
         "threshold": 0.752,
-        "injected_kept": 4105,
-        "untouched_kept": 9518
+        "injected_kept": 4934,
+        "untouched_kept": 11165
       },
       {
         "threshold": 0.753,
-        "injected_kept": 4105,
-        "untouched_kept": 9517
+        "injected_kept": 4934,
+        "untouched_kept": 11164
       },
       {
         "threshold": 0.754,
-        "injected_kept": 4105,
-        "untouched_kept": 9514
+        "injected_kept": 4934,
+        "untouched_kept": 11161
       },
       {
         "threshold": 0.756,
-        "injected_kept": 4105,
-        "untouched_kept": 9512
+        "injected_kept": 4934,
+        "untouched_kept": 11159
       },
       {
         "threshold": 0.757,
-        "injected_kept": 4105,
-        "untouched_kept": 9511
+        "injected_kept": 4934,
+        "untouched_kept": 11155
+      },
+      {
+        "threshold": 0.76,
+        "injected_kept": 4933,
+        "untouched_kept": 11154
       },
       {
         "threshold": 0.761,
-        "injected_kept": 4104,
-        "untouched_kept": 9510
+        "injected_kept": 4933,
+        "untouched_kept": 11153
       },
       {
         "threshold": 0.763,
-        "injected_kept": 4103,
-        "untouched_kept": 9509
+        "injected_kept": 4932,
+        "untouched_kept": 11152
       },
       {
         "threshold": 0.764,
-        "injected_kept": 4103,
-        "untouched_kept": 9506
+        "injected_kept": 4932,
+        "untouched_kept": 11149
       },
       {
         "threshold": 0.767,
-        "injected_kept": 4102,
-        "untouched_kept": 9506
+        "injected_kept": 4931,
+        "untouched_kept": 11149
       },
       {
         "threshold": 0.768,
-        "injected_kept": 4102,
-        "untouched_kept": 9504
+        "injected_kept": 4931,
+        "untouched_kept": 11147
+      },
+      {
+        "threshold": 0.769,
+        "injected_kept": 4931,
+        "untouched_kept": 11144
       },
       {
         "threshold": 0.77,
-        "injected_kept": 4102,
-        "untouched_kept": 9502
+        "injected_kept": 4931,
+        "untouched_kept": 11143
       },
       {
         "threshold": 0.771,
-        "injected_kept": 4102,
-        "untouched_kept": 9500
+        "injected_kept": 4931,
+        "untouched_kept": 11141
       },
       {
         "threshold": 0.773,
-        "injected_kept": 4101,
-        "untouched_kept": 9497
+        "injected_kept": 4930,
+        "untouched_kept": 11137
       },
       {
         "threshold": 0.774,
-        "injected_kept": 4099,
-        "untouched_kept": 9495
+        "injected_kept": 4928,
+        "untouched_kept": 11135
       },
       {
         "threshold": 0.775,
-        "injected_kept": 4097,
-        "untouched_kept": 9495
+        "injected_kept": 4926,
+        "untouched_kept": 11135
       },
       {
         "threshold": 0.776,
-        "injected_kept": 4093,
-        "untouched_kept": 9495
+        "injected_kept": 4922,
+        "untouched_kept": 11135
       },
       {
         "threshold": 0.779,
-        "injected_kept": 4092,
-        "untouched_kept": 9495
+        "injected_kept": 4921,
+        "untouched_kept": 11135
       },
       {
         "threshold": 0.782,
-        "injected_kept": 4092,
-        "untouched_kept": 9493
+        "injected_kept": 4921,
+        "untouched_kept": 11133
       },
       {
         "threshold": 0.783,
-        "injected_kept": 4091,
-        "untouched_kept": 9493
+        "injected_kept": 4920,
+        "untouched_kept": 11133
       },
       {
         "threshold": 0.784,
-        "injected_kept": 4091,
-        "untouched_kept": 9491
+        "injected_kept": 4920,
+        "untouched_kept": 11130
       },
       {
         "threshold": 0.785,
-        "injected_kept": 4090,
-        "untouched_kept": 9489
+        "injected_kept": 4919,
+        "untouched_kept": 11128
       },
       {
         "threshold": 0.787,
-        "injected_kept": 4089,
-        "untouched_kept": 9489
+        "injected_kept": 4918,
+        "untouched_kept": 11128
       },
       {
         "threshold": 0.788,
-        "injected_kept": 4089,
-        "untouched_kept": 9488
+        "injected_kept": 4918,
+        "untouched_kept": 11127
       },
       {
         "threshold": 0.789,
-        "injected_kept": 4089,
-        "untouched_kept": 9486
+        "injected_kept": 4918,
+        "untouched_kept": 11125
       },
       {
         "threshold": 0.79,
-        "injected_kept": 4089,
-        "untouched_kept": 9483
+        "injected_kept": 4918,
+        "untouched_kept": 11121
       },
       {
         "threshold": 0.791,
-        "injected_kept": 4089,
-        "untouched_kept": 9481
+        "injected_kept": 4918,
+        "untouched_kept": 11119
       },
       {
         "threshold": 0.793,
-        "injected_kept": 4088,
-        "untouched_kept": 9481
+        "injected_kept": 4917,
+        "untouched_kept": 11119
+      },
+      {
+        "threshold": 0.794,
+        "injected_kept": 4917,
+        "untouched_kept": 11117
       },
       {
         "threshold": 0.795,
-        "injected_kept": 4088,
-        "untouched_kept": 9480
+        "injected_kept": 4917,
+        "untouched_kept": 11116
       },
       {
         "threshold": 0.796,
-        "injected_kept": 4087,
-        "untouched_kept": 9480
+        "injected_kept": 4916,
+        "untouched_kept": 11116
       },
       {
         "threshold": 0.797,
-        "injected_kept": 4087,
-        "untouched_kept": 9479
+        "injected_kept": 4916,
+        "untouched_kept": 11114
       },
       {
         "threshold": 0.799,
-        "injected_kept": 4087,
-        "untouched_kept": 9478
+        "injected_kept": 4916,
+        "untouched_kept": 11113
       },
       {
         "threshold": 0.801,
-        "injected_kept": 4087,
-        "untouched_kept": 9477
+        "injected_kept": 4916,
+        "untouched_kept": 11112
       },
       {
         "threshold": 0.803,
-        "injected_kept": 4087,
-        "untouched_kept": 9476
+        "injected_kept": 4916,
+        "untouched_kept": 11111
       },
       {
         "threshold": 0.804,
-        "injected_kept": 4087,
-        "untouched_kept": 9475
+        "injected_kept": 4916,
+        "untouched_kept": 11110
       },
       {
         "threshold": 0.805,
-        "injected_kept": 4085,
-        "untouched_kept": 9472
+        "injected_kept": 4914,
+        "untouched_kept": 11107
       },
       {
         "threshold": 0.806,
-        "injected_kept": 4085,
-        "untouched_kept": 9471
+        "injected_kept": 4914,
+        "untouched_kept": 11105
       },
       {
         "threshold": 0.807,
-        "injected_kept": 4085,
-        "untouched_kept": 9466
+        "injected_kept": 4914,
+        "untouched_kept": 11099
       },
       {
         "threshold": 0.808,
-        "injected_kept": 4085,
-        "untouched_kept": 9460
+        "injected_kept": 4914,
+        "untouched_kept": 11091
       },
       {
         "threshold": 0.809,
-        "injected_kept": 4085,
-        "untouched_kept": 9458
+        "injected_kept": 4914,
+        "untouched_kept": 11088
       },
       {
         "threshold": 0.813,
-        "injected_kept": 4084,
-        "untouched_kept": 9456
+        "injected_kept": 4913,
+        "untouched_kept": 11086
       },
       {
         "threshold": 0.814,
-        "injected_kept": 4083,
-        "untouched_kept": 9456
+        "injected_kept": 4912,
+        "untouched_kept": 11086
       },
       {
         "threshold": 0.815,
-        "injected_kept": 4083,
-        "untouched_kept": 9455
+        "injected_kept": 4912,
+        "untouched_kept": 11085
       },
       {
         "threshold": 0.816,
-        "injected_kept": 4083,
-        "untouched_kept": 9454
+        "injected_kept": 4912,
+        "untouched_kept": 11084
       },
       {
         "threshold": 0.817,
-        "injected_kept": 4083,
-        "untouched_kept": 9453
+        "injected_kept": 4912,
+        "untouched_kept": 11083
       },
       {
         "threshold": 0.818,
-        "injected_kept": 4083,
-        "untouched_kept": 9452
+        "injected_kept": 4912,
+        "untouched_kept": 11082
       },
       {
         "threshold": 0.819,
-        "injected_kept": 4083,
-        "untouched_kept": 9451
+        "injected_kept": 4912,
+        "untouched_kept": 11081
       },
       {
         "threshold": 0.821,
-        "injected_kept": 4081,
-        "untouched_kept": 9451
+        "injected_kept": 4910,
+        "untouched_kept": 11081
       },
       {
         "threshold": 0.823,
-        "injected_kept": 4081,
-        "untouched_kept": 9450
+        "injected_kept": 4910,
+        "untouched_kept": 11080
       },
       {
         "threshold": 0.824,
-        "injected_kept": 4081,
-        "untouched_kept": 9449
+        "injected_kept": 4910,
+        "untouched_kept": 11079
       },
       {
         "threshold": 0.826,
-        "injected_kept": 4081,
-        "untouched_kept": 9448
+        "injected_kept": 4910,
+        "untouched_kept": 11077
       },
       {
         "threshold": 0.832,
-        "injected_kept": 4081,
-        "untouched_kept": 9446
+        "injected_kept": 4910,
+        "untouched_kept": 11075
       },
       {
         "threshold": 0.833,
-        "injected_kept": 4081,
-        "untouched_kept": 9444
+        "injected_kept": 4910,
+        "untouched_kept": 11073
       },
       {
         "threshold": 0.834,
-        "injected_kept": 4080,
-        "untouched_kept": 9443
+        "injected_kept": 4909,
+        "untouched_kept": 11071
       },
       {
         "threshold": 0.835,
-        "injected_kept": 4080,
-        "untouched_kept": 9442
+        "injected_kept": 4909,
+        "untouched_kept": 11070
       },
       {
         "threshold": 0.836,
-        "injected_kept": 4080,
-        "untouched_kept": 9441
+        "injected_kept": 4909,
+        "untouched_kept": 11068
       },
       {
         "threshold": 0.837,
-        "injected_kept": 4080,
-        "untouched_kept": 9437
+        "injected_kept": 4909,
+        "untouched_kept": 11064
       },
       {
         "threshold": 0.838,
-        "injected_kept": 4073,
-        "untouched_kept": 9436
+        "injected_kept": 4902,
+        "untouched_kept": 11063
       },
       {
         "threshold": 0.839,
-        "injected_kept": 4073,
-        "untouched_kept": 9434
+        "injected_kept": 4902,
+        "untouched_kept": 11061
       },
       {
         "threshold": 0.842,
-        "injected_kept": 4072,
-        "untouched_kept": 9432
+        "injected_kept": 4901,
+        "untouched_kept": 11059
       },
       {
         "threshold": 0.843,
-        "injected_kept": 4066,
-        "untouched_kept": 9431
+        "injected_kept": 4895,
+        "untouched_kept": 11058
       },
       {
         "threshold": 0.844,
-        "injected_kept": 4065,
-        "untouched_kept": 9429
+        "injected_kept": 4894,
+        "untouched_kept": 11056
       },
       {
         "threshold": 0.845,
-        "injected_kept": 4064,
-        "untouched_kept": 9429
+        "injected_kept": 4893,
+        "untouched_kept": 11056
       },
       {
         "threshold": 0.846,
-        "injected_kept": 4063,
-        "untouched_kept": 9429
+        "injected_kept": 4892,
+        "untouched_kept": 11056
+      },
+      {
+        "threshold": 0.847,
+        "injected_kept": 4890,
+        "untouched_kept": 11055
       },
       {
         "threshold": 0.848,
-        "injected_kept": 4061,
-        "untouched_kept": 9428
+        "injected_kept": 4890,
+        "untouched_kept": 11054
+      },
+      {
+        "threshold": 0.849,
+        "injected_kept": 4889,
+        "untouched_kept": 11054
       },
       {
         "threshold": 0.85,
-        "injected_kept": 4060,
-        "untouched_kept": 9428
+        "injected_kept": 4889,
+        "untouched_kept": 11053
       },
       {
         "threshold": 0.852,
-        "injected_kept": 4059,
-        "untouched_kept": 9427
+        "injected_kept": 4888,
+        "untouched_kept": 11052
       },
       {
         "threshold": 0.853,
-        "injected_kept": 4058,
-        "untouched_kept": 9425
+        "injected_kept": 4887,
+        "untouched_kept": 11049
       },
       {
         "threshold": 0.854,
-        "injected_kept": 4058,
-        "untouched_kept": 9423
+        "injected_kept": 4887,
+        "untouched_kept": 11047
+      },
+      {
+        "threshold": 0.855,
+        "injected_kept": 4886,
+        "untouched_kept": 11043
       },
       {
         "threshold": 0.856,
-        "injected_kept": 4057,
-        "untouched_kept": 9420
+        "injected_kept": 4886,
+        "untouched_kept": 11042
       },
       {
         "threshold": 0.857,
-        "injected_kept": 4057,
-        "untouched_kept": 9416
+        "injected_kept": 4886,
+        "untouched_kept": 11038
       },
       {
         "threshold": 0.86,
-        "injected_kept": 4053,
-        "untouched_kept": 9414
+        "injected_kept": 4882,
+        "untouched_kept": 11036
       },
       {
         "threshold": 0.861,
-        "injected_kept": 4053,
-        "untouched_kept": 9413
+        "injected_kept": 4882,
+        "untouched_kept": 11033
       },
       {
         "threshold": 0.864,
-        "injected_kept": 4053,
-        "untouched_kept": 9412
+        "injected_kept": 4882,
+        "untouched_kept": 11032
       },
       {
         "threshold": 0.866,
-        "injected_kept": 4052,
-        "untouched_kept": 9411
+        "injected_kept": 4881,
+        "untouched_kept": 11031
       },
       {
         "threshold": 0.867,
-        "injected_kept": 4052,
-        "untouched_kept": 9410
+        "injected_kept": 4881,
+        "untouched_kept": 11030
       },
       {
         "threshold": 0.868,
-        "injected_kept": 4052,
-        "untouched_kept": 9409
+        "injected_kept": 4881,
+        "untouched_kept": 11029
       },
       {
         "threshold": 0.869,
-        "injected_kept": 4052,
-        "untouched_kept": 9408
+        "injected_kept": 4881,
+        "untouched_kept": 11027
       },
       {
         "threshold": 0.87,
-        "injected_kept": 4052,
-        "untouched_kept": 9405
+        "injected_kept": 4881,
+        "untouched_kept": 11024
       },
       {
         "threshold": 0.872,
-        "injected_kept": 4052,
-        "untouched_kept": 9402
+        "injected_kept": 4881,
+        "untouched_kept": 11021
       },
       {
         "threshold": 0.873,
-        "injected_kept": 4052,
-        "untouched_kept": 9401
+        "injected_kept": 4881,
+        "untouched_kept": 11020
       },
       {
         "threshold": 0.874,
-        "injected_kept": 4049,
-        "untouched_kept": 9398
+        "injected_kept": 4878,
+        "untouched_kept": 11017
       },
       {
         "threshold": 0.875,
-        "injected_kept": 4049,
-        "untouched_kept": 9390
+        "injected_kept": 4878,
+        "untouched_kept": 11008
       },
       {
         "threshold": 0.876,
-        "injected_kept": 4049,
-        "untouched_kept": 9389
+        "injected_kept": 4878,
+        "untouched_kept": 11007
       },
       {
         "threshold": 0.877,
-        "injected_kept": 4049,
-        "untouched_kept": 9386
+        "injected_kept": 4878,
+        "untouched_kept": 11003
       },
       {
         "threshold": 0.878,
-        "injected_kept": 4049,
-        "untouched_kept": 9380
+        "injected_kept": 4878,
+        "untouched_kept": 10997
       },
       {
         "threshold": 0.879,
-        "injected_kept": 4048,
-        "untouched_kept": 9380
+        "injected_kept": 4877,
+        "untouched_kept": 10996
       },
       {
         "threshold": 0.88,
-        "injected_kept": 4048,
-        "untouched_kept": 9377
+        "injected_kept": 4877,
+        "untouched_kept": 10993
       },
       {
         "threshold": 0.883,
-        "injected_kept": 4046,
-        "untouched_kept": 9372
+        "injected_kept": 4875,
+        "untouched_kept": 10988
       },
       {
         "threshold": 0.884,
-        "injected_kept": 4046,
-        "untouched_kept": 9370
+        "injected_kept": 4875,
+        "untouched_kept": 10986
       },
       {
         "threshold": 0.885,
-        "injected_kept": 4046,
-        "untouched_kept": 9369
+        "injected_kept": 4875,
+        "untouched_kept": 10985
       },
       {
         "threshold": 0.886,
-        "injected_kept": 4046,
-        "untouched_kept": 9368
+        "injected_kept": 4875,
+        "untouched_kept": 10984
       },
       {
         "threshold": 0.887,
-        "injected_kept": 4045,
-        "untouched_kept": 9368
+        "injected_kept": 4874,
+        "untouched_kept": 10984
       },
       {
         "threshold": 0.888,
-        "injected_kept": 4044,
-        "untouched_kept": 9367
+        "injected_kept": 4873,
+        "untouched_kept": 10983
       },
       {
         "threshold": 0.889,
-        "injected_kept": 4042,
-        "untouched_kept": 9367
+        "injected_kept": 4871,
+        "untouched_kept": 10983
       },
       {
         "threshold": 0.89,
-        "injected_kept": 4042,
-        "untouched_kept": 9366
+        "injected_kept": 4871,
+        "untouched_kept": 10982
       },
       {
         "threshold": 0.891,
-        "injected_kept": 4042,
-        "untouched_kept": 9365
+        "injected_kept": 4871,
+        "untouched_kept": 10981
       },
       {
         "threshold": 0.892,
-        "injected_kept": 4042,
-        "untouched_kept": 9361
+        "injected_kept": 4871,
+        "untouched_kept": 10977
       },
       {
         "threshold": 0.893,
-        "injected_kept": 4042,
-        "untouched_kept": 9360
+        "injected_kept": 4871,
+        "untouched_kept": 10975
       },
       {
         "threshold": 0.894,
-        "injected_kept": 4040,
-        "untouched_kept": 9360
+        "injected_kept": 4869,
+        "untouched_kept": 10975
       },
       {
         "threshold": 0.895,
-        "injected_kept": 4037,
-        "untouched_kept": 9360
+        "injected_kept": 4866,
+        "untouched_kept": 10975
       },
       {
         "threshold": 0.896,
-        "injected_kept": 4033,
-        "untouched_kept": 9359
+        "injected_kept": 4862,
+        "untouched_kept": 10973
       },
       {
         "threshold": 0.897,
-        "injected_kept": 4031,
-        "untouched_kept": 9359
+        "injected_kept": 4860,
+        "untouched_kept": 10973
       },
       {
         "threshold": 0.898,
-        "injected_kept": 4025,
-        "untouched_kept": 9359
+        "injected_kept": 4854,
+        "untouched_kept": 10972
       },
       {
         "threshold": 0.899,
-        "injected_kept": 4024,
-        "untouched_kept": 9359
+        "injected_kept": 4853,
+        "untouched_kept": 10972
       },
       {
         "threshold": 0.9,
-        "injected_kept": 4022,
-        "untouched_kept": 9357
+        "injected_kept": 4851,
+        "untouched_kept": 10970
       },
       {
         "threshold": 0.901,
-        "injected_kept": 4021,
-        "untouched_kept": 9352
+        "injected_kept": 4850,
+        "untouched_kept": 10965
       },
       {
         "threshold": 0.902,
-        "injected_kept": 4021,
-        "untouched_kept": 9351
+        "injected_kept": 4850,
+        "untouched_kept": 10964
       },
       {
         "threshold": 0.903,
-        "injected_kept": 4015,
-        "untouched_kept": 9351
+        "injected_kept": 4844,
+        "untouched_kept": 10964
       },
       {
         "threshold": 0.904,
-        "injected_kept": 4012,
-        "untouched_kept": 9345
+        "injected_kept": 4841,
+        "untouched_kept": 10958
       },
       {
         "threshold": 0.905,
-        "injected_kept": 4007,
-        "untouched_kept": 9344
+        "injected_kept": 4836,
+        "untouched_kept": 10957
       },
       {
         "threshold": 0.906,
-        "injected_kept": 4005,
-        "untouched_kept": 9344
+        "injected_kept": 4834,
+        "untouched_kept": 10957
       },
       {
         "threshold": 0.907,
-        "injected_kept": 4003,
-        "untouched_kept": 9342
+        "injected_kept": 4832,
+        "untouched_kept": 10955
       },
       {
         "threshold": 0.908,
-        "injected_kept": 3998,
-        "untouched_kept": 9335
+        "injected_kept": 4827,
+        "untouched_kept": 10948
       },
       {
         "threshold": 0.909,
-        "injected_kept": 3995,
-        "untouched_kept": 9333
+        "injected_kept": 4824,
+        "untouched_kept": 10946
       },
       {
         "threshold": 0.91,
-        "injected_kept": 3994,
-        "untouched_kept": 9332
+        "injected_kept": 4823,
+        "untouched_kept": 10945
       },
       {
         "threshold": 0.911,
-        "injected_kept": 3993,
-        "untouched_kept": 9332
+        "injected_kept": 4822,
+        "untouched_kept": 10945
       },
       {
         "threshold": 0.913,
-        "injected_kept": 3985,
-        "untouched_kept": 9332
+        "injected_kept": 4814,
+        "untouched_kept": 10944
       },
       {
         "threshold": 0.914,
-        "injected_kept": 3985,
-        "untouched_kept": 9331
+        "injected_kept": 4814,
+        "untouched_kept": 10943
       },
       {
         "threshold": 0.915,
-        "injected_kept": 3985,
-        "untouched_kept": 9330
+        "injected_kept": 4814,
+        "untouched_kept": 10941
       },
       {
         "threshold": 0.916,
-        "injected_kept": 3984,
-        "untouched_kept": 9330
+        "injected_kept": 4813,
+        "untouched_kept": 10941
       },
       {
         "threshold": 0.918,
-        "injected_kept": 3984,
-        "untouched_kept": 9329
+        "injected_kept": 4813,
+        "untouched_kept": 10940
       },
       {
         "threshold": 0.919,
-        "injected_kept": 3984,
-        "untouched_kept": 9327
+        "injected_kept": 4813,
+        "untouched_kept": 10938
       },
       {
         "threshold": 0.92,
-        "injected_kept": 3984,
-        "untouched_kept": 9326
+        "injected_kept": 4813,
+        "untouched_kept": 10937
       },
       {
         "threshold": 0.921,
-        "injected_kept": 3983,
-        "untouched_kept": 9325
+        "injected_kept": 4812,
+        "untouched_kept": 10936
       },
       {
         "threshold": 0.922,
-        "injected_kept": 3982,
-        "untouched_kept": 9324
+        "injected_kept": 4811,
+        "untouched_kept": 10935
       },
       {
         "threshold": 0.923,
-        "injected_kept": 3982,
-        "untouched_kept": 9315
+        "injected_kept": 4811,
+        "untouched_kept": 10926
       },
       {
         "threshold": 0.924,
-        "injected_kept": 3981,
-        "untouched_kept": 9314
+        "injected_kept": 4810,
+        "untouched_kept": 10924
       },
       {
         "threshold": 0.925,
-        "injected_kept": 3980,
-        "untouched_kept": 9314
+        "injected_kept": 4809,
+        "untouched_kept": 10924
       },
       {
         "threshold": 0.926,
-        "injected_kept": 3980,
-        "untouched_kept": 9313
+        "injected_kept": 4809,
+        "untouched_kept": 10923
       },
       {
         "threshold": 0.927,
-        "injected_kept": 3978,
-        "untouched_kept": 9310
+        "injected_kept": 4807,
+        "untouched_kept": 10920
       },
       {
         "threshold": 0.929,
-        "injected_kept": 3978,
-        "untouched_kept": 9309
+        "injected_kept": 4807,
+        "untouched_kept": 10919
       },
       {
         "threshold": 0.93,
-        "injected_kept": 3976,
-        "untouched_kept": 9309
+        "injected_kept": 4805,
+        "untouched_kept": 10919
       },
       {
         "threshold": 0.931,
-        "injected_kept": 3967,
-        "untouched_kept": 9305
+        "injected_kept": 4796,
+        "untouched_kept": 10914
       },
       {
         "threshold": 0.932,
-        "injected_kept": 3965,
-        "untouched_kept": 9301
+        "injected_kept": 4794,
+        "untouched_kept": 10910
       },
       {
         "threshold": 0.933,
-        "injected_kept": 3963,
-        "untouched_kept": 9301
+        "injected_kept": 4792,
+        "untouched_kept": 10910
       },
       {
         "threshold": 0.934,
-        "injected_kept": 3961,
-        "untouched_kept": 9301
+        "injected_kept": 4790,
+        "untouched_kept": 10910
       },
       {
         "threshold": 0.935,
-        "injected_kept": 3956,
-        "untouched_kept": 9299
+        "injected_kept": 4785,
+        "untouched_kept": 10908
       },
       {
         "threshold": 0.936,
-        "injected_kept": 3953,
-        "untouched_kept": 9297
+        "injected_kept": 4782,
+        "untouched_kept": 10906
       },
       {
         "threshold": 0.937,
-        "injected_kept": 3950,
-        "untouched_kept": 9295
+        "injected_kept": 4779,
+        "untouched_kept": 10904
       },
       {
         "threshold": 0.938,
-        "injected_kept": 3949,
-        "untouched_kept": 9293
+        "injected_kept": 4778,
+        "untouched_kept": 10902
       },
       {
         "threshold": 0.939,
-        "injected_kept": 3949,
-        "untouched_kept": 9291
+        "injected_kept": 4778,
+        "untouched_kept": 10900
       },
       {
         "threshold": 0.94,
-        "injected_kept": 3946,
-        "untouched_kept": 9290
+        "injected_kept": 4775,
+        "untouched_kept": 10899
       },
       {
         "threshold": 0.941,
-        "injected_kept": 3945,
-        "untouched_kept": 9286
+        "injected_kept": 4774,
+        "untouched_kept": 10895
       },
       {
         "threshold": 0.943,
-        "injected_kept": 3942,
-        "untouched_kept": 9286
+        "injected_kept": 4771,
+        "untouched_kept": 10895
       },
       {
         "threshold": 0.944,
-        "injected_kept": 3942,
-        "untouched_kept": 9282
+        "injected_kept": 4771,
+        "untouched_kept": 10891
       },
       {
         "threshold": 0.945,
-        "injected_kept": 3941,
-        "untouched_kept": 9279
+        "injected_kept": 4770,
+        "untouched_kept": 10888
       },
       {
         "threshold": 0.946,
-        "injected_kept": 3927,
-        "untouched_kept": 9277
+        "injected_kept": 4756,
+        "untouched_kept": 10886
       },
       {
         "threshold": 0.947,
-        "injected_kept": 3917,
-        "untouched_kept": 9272
+        "injected_kept": 4746,
+        "untouched_kept": 10881
       },
       {
         "threshold": 0.948,
-        "injected_kept": 3913,
-        "untouched_kept": 9272
+        "injected_kept": 4742,
+        "untouched_kept": 10881
       },
       {
         "threshold": 0.949,
-        "injected_kept": 3909,
-        "untouched_kept": 9271
+        "injected_kept": 4738,
+        "untouched_kept": 10879
       },
       {
         "threshold": 0.95,
-        "injected_kept": 3909,
-        "untouched_kept": 9269
+        "injected_kept": 4738,
+        "untouched_kept": 10876
       },
       {
         "threshold": 0.951,
-        "injected_kept": 3906,
-        "untouched_kept": 9268
+        "injected_kept": 4735,
+        "untouched_kept": 10875
       },
       {
         "threshold": 0.952,
-        "injected_kept": 3906,
-        "untouched_kept": 9266
+        "injected_kept": 4735,
+        "untouched_kept": 10873
       },
       {
         "threshold": 0.953,
-        "injected_kept": 3905,
-        "untouched_kept": 9265
+        "injected_kept": 4734,
+        "untouched_kept": 10872
       },
       {
         "threshold": 0.954,
-        "injected_kept": 3905,
-        "untouched_kept": 9261
+        "injected_kept": 4734,
+        "untouched_kept": 10868
       },
       {
         "threshold": 0.956,
-        "injected_kept": 3903,
-        "untouched_kept": 9257
+        "injected_kept": 4732,
+        "untouched_kept": 10864
       },
       {
         "threshold": 0.957,
-        "injected_kept": 3900,
-        "untouched_kept": 9256
+        "injected_kept": 4729,
+        "untouched_kept": 10863
       },
       {
         "threshold": 0.958,
-        "injected_kept": 3897,
-        "untouched_kept": 9256
+        "injected_kept": 4726,
+        "untouched_kept": 10862
       },
       {
         "threshold": 0.959,
-        "injected_kept": 3891,
-        "untouched_kept": 9253
+        "injected_kept": 4720,
+        "untouched_kept": 10859
       },
       {
         "threshold": 0.96,
-        "injected_kept": 3891,
-        "untouched_kept": 9251
+        "injected_kept": 4720,
+        "untouched_kept": 10857
       },
       {
         "threshold": 0.961,
-        "injected_kept": 3889,
-        "untouched_kept": 9250
+        "injected_kept": 4718,
+        "untouched_kept": 10855
       },
       {
         "threshold": 0.962,
-        "injected_kept": 3888,
-        "untouched_kept": 9245
+        "injected_kept": 4717,
+        "untouched_kept": 10850
       },
       {
         "threshold": 0.963,
-        "injected_kept": 3879,
-        "untouched_kept": 9234
+        "injected_kept": 4708,
+        "untouched_kept": 10839
       },
       {
         "threshold": 0.964,
-        "injected_kept": 3877,
-        "untouched_kept": 9232
+        "injected_kept": 4706,
+        "untouched_kept": 10837
       },
       {
         "threshold": 0.965,
-        "injected_kept": 3875,
-        "untouched_kept": 9229
+        "injected_kept": 4704,
+        "untouched_kept": 10834
       },
       {
         "threshold": 0.966,
-        "injected_kept": 3874,
-        "untouched_kept": 9227
+        "injected_kept": 4703,
+        "untouched_kept": 10831
       },
       {
         "threshold": 0.967,
-        "injected_kept": 3867,
-        "untouched_kept": 9225
+        "injected_kept": 4696,
+        "untouched_kept": 10828
       },
       {
         "threshold": 0.968,
-        "injected_kept": 3861,
-        "untouched_kept": 9219
+        "injected_kept": 4690,
+        "untouched_kept": 10821
       },
       {
         "threshold": 0.969,
-        "injected_kept": 3860,
-        "untouched_kept": 9215
+        "injected_kept": 4689,
+        "untouched_kept": 10817
       },
       {
         "threshold": 0.97,
-        "injected_kept": 3855,
-        "untouched_kept": 9201
+        "injected_kept": 4684,
+        "untouched_kept": 10802
       },
       {
         "threshold": 0.971,
-        "injected_kept": 3854,
-        "untouched_kept": 9197
+        "injected_kept": 4683,
+        "untouched_kept": 10798
       },
       {
         "threshold": 0.972,
-        "injected_kept": 3853,
-        "untouched_kept": 9190
+        "injected_kept": 4682,
+        "untouched_kept": 10791
       },
       {
         "threshold": 0.973,
-        "injected_kept": 3853,
-        "untouched_kept": 9187
+        "injected_kept": 4682,
+        "untouched_kept": 10788
       },
       {
         "threshold": 0.974,
-        "injected_kept": 3853,
-        "untouched_kept": 9181
+        "injected_kept": 4682,
+        "untouched_kept": 10781
       },
       {
         "threshold": 0.975,
-        "injected_kept": 3849,
-        "untouched_kept": 9176
+        "injected_kept": 4678,
+        "untouched_kept": 10776
       },
       {
         "threshold": 0.976,
-        "injected_kept": 3848,
-        "untouched_kept": 9168
+        "injected_kept": 4677,
+        "untouched_kept": 10768
       },
       {
         "threshold": 0.977,
-        "injected_kept": 3846,
-        "untouched_kept": 9160
+        "injected_kept": 4675,
+        "untouched_kept": 10758
       },
       {
         "threshold": 0.978,
-        "injected_kept": 3843,
-        "untouched_kept": 9159
+        "injected_kept": 4672,
+        "untouched_kept": 10757
       },
       {
         "threshold": 0.979,
-        "injected_kept": 3838,
-        "untouched_kept": 9157
+        "injected_kept": 4667,
+        "untouched_kept": 10753
       },
       {
         "threshold": 0.98,
-        "injected_kept": 3837,
-        "untouched_kept": 9153
+        "injected_kept": 4666,
+        "untouched_kept": 10749
       },
       {
         "threshold": 0.981,
-        "injected_kept": 3832,
-        "untouched_kept": 9148
+        "injected_kept": 4661,
+        "untouched_kept": 10742
       },
       {
         "threshold": 0.982,
-        "injected_kept": 3821,
-        "untouched_kept": 9145
+        "injected_kept": 4650,
+        "untouched_kept": 10738
       },
       {
         "threshold": 0.983,
-        "injected_kept": 3816,
-        "untouched_kept": 9142
+        "injected_kept": 4645,
+        "untouched_kept": 10733
       },
       {
         "threshold": 0.984,
-        "injected_kept": 3815,
-        "untouched_kept": 9136
+        "injected_kept": 4644,
+        "untouched_kept": 10727
       },
       {
         "threshold": 0.985,
-        "injected_kept": 3811,
-        "untouched_kept": 9127
+        "injected_kept": 4640,
+        "untouched_kept": 10716
       },
       {
         "threshold": 0.986,
-        "injected_kept": 3802,
-        "untouched_kept": 9118
+        "injected_kept": 4631,
+        "untouched_kept": 10707
       },
       {
         "threshold": 0.987,
-        "injected_kept": 3793,
-        "untouched_kept": 9113
+        "injected_kept": 4622,
+        "untouched_kept": 10699
       },
       {
         "threshold": 0.988,
-        "injected_kept": 3784,
-        "untouched_kept": 9108
+        "injected_kept": 4613,
+        "untouched_kept": 10693
       },
       {
         "threshold": 0.989,
-        "injected_kept": 3774,
-        "untouched_kept": 9103
+        "injected_kept": 4602,
+        "untouched_kept": 10685
       },
       {
         "threshold": 0.99,
-        "injected_kept": 3767,
-        "untouched_kept": 9098
+        "injected_kept": 4595,
+        "untouched_kept": 10680
       },
       {
         "threshold": 0.991,
-        "injected_kept": 3759,
-        "untouched_kept": 9076
+        "injected_kept": 4587,
+        "untouched_kept": 10654
       },
       {
         "threshold": 0.992,
-        "injected_kept": 3754,
-        "untouched_kept": 9045
+        "injected_kept": 4581,
+        "untouched_kept": 10617
       },
       {
         "threshold": 0.993,
-        "injected_kept": 3741,
-        "untouched_kept": 9001
+        "injected_kept": 4568,
+        "untouched_kept": 10565
       },
       {
         "threshold": 0.994,
-        "injected_kept": 3734,
-        "untouched_kept": 8972
+        "injected_kept": 4561,
+        "untouched_kept": 10530
       },
       {
         "threshold": 0.995,
-        "injected_kept": 3732,
-        "untouched_kept": 8954
+        "injected_kept": 4559,
+        "untouched_kept": 10508
       },
       {
         "threshold": 0.996,
-        "injected_kept": 3721,
-        "untouched_kept": 8901
+        "injected_kept": 4548,
+        "untouched_kept": 10452
       },
       {
         "threshold": 0.997,
-        "injected_kept": 3709,
-        "untouched_kept": 8887
+        "injected_kept": 4535,
+        "untouched_kept": 10435
       },
       {
         "threshold": 0.998,
-        "injected_kept": 3702,
-        "untouched_kept": 8871
+        "injected_kept": 4528,
+        "untouched_kept": 10416
       },
       {
         "threshold": 0.999,
-        "injected_kept": 3695,
-        "untouched_kept": 8843
+        "injected_kept": 4521,
+        "untouched_kept": 10382
       },
       {
         "threshold": 1.0,
-        "injected_kept": 3675,
-        "untouched_kept": 8785
+        "injected_kept": 4501,
+        "untouched_kept": 10320
       }
     ],
     "exclusion": [
       {
         "threshold": 0.463,
-        "injected_kept": 4608,
-        "untouched_kept": 17336
+        "injected_kept": 5446,
+        "untouched_kept": 20326
       },
       {
         "threshold": 0.465,
-        "injected_kept": 4608,
-        "untouched_kept": 17335
+        "injected_kept": 5446,
+        "untouched_kept": 20325
       },
       {
         "threshold": 0.53,
-        "injected_kept": 4608,
-        "untouched_kept": 17334
+        "injected_kept": 5446,
+        "untouched_kept": 20324
       },
       {
         "threshold": 0.545,
-        "injected_kept": 4607,
-        "untouched_kept": 17334
+        "injected_kept": 5445,
+        "untouched_kept": 20324
       },
       {
         "threshold": 0.596,
-        "injected_kept": 4607,
-        "untouched_kept": 17333
+        "injected_kept": 5445,
+        "untouched_kept": 20323
       },
       {
         "threshold": 0.601,
-        "injected_kept": 4607,
-        "untouched_kept": 17332
+        "injected_kept": 5445,
+        "untouched_kept": 20322
       },
       {
         "threshold": 0.617,
-        "injected_kept": 4606,
-        "untouched_kept": 17332
+        "injected_kept": 5444,
+        "untouched_kept": 20322
       },
       {
         "threshold": 0.637,
-        "injected_kept": 4606,
-        "untouched_kept": 17331
+        "injected_kept": 5444,
+        "untouched_kept": 20321
       },
       {
         "threshold": 0.646,
-        "injected_kept": 4606,
-        "untouched_kept": 17330
+        "injected_kept": 5444,
+        "untouched_kept": 20320
       },
       {
         "threshold": 0.685,
-        "injected_kept": 4606,
-        "untouched_kept": 17329
+        "injected_kept": 5444,
+        "untouched_kept": 20319
       },
       {
         "threshold": 0.693,
-        "injected_kept": 4605,
-        "untouched_kept": 17329
+        "injected_kept": 5443,
+        "untouched_kept": 20319
       },
       {
         "threshold": 0.711,
-        "injected_kept": 4604,
-        "untouched_kept": 17329
+        "injected_kept": 5442,
+        "untouched_kept": 20319
       },
       {
         "threshold": 0.733,
-        "injected_kept": 4603,
-        "untouched_kept": 17329
+        "injected_kept": 5441,
+        "untouched_kept": 20319
+      },
+      {
+        "threshold": 0.741,
+        "injected_kept": 5440,
+        "untouched_kept": 20319
       },
       {
         "threshold": 0.75,
-        "injected_kept": 4602,
-        "untouched_kept": 17329
+        "injected_kept": 5440,
+        "untouched_kept": 20318
       },
       {
         "threshold": 0.757,
-        "injected_kept": 4601,
-        "untouched_kept": 17329
+        "injected_kept": 5439,
+        "untouched_kept": 20318
       },
       {
         "threshold": 0.762,
-        "injected_kept": 4600,
-        "untouched_kept": 17329
+        "injected_kept": 5438,
+        "untouched_kept": 20318
       },
       {
         "threshold": 0.767,
-        "injected_kept": 4600,
-        "untouched_kept": 17328
+        "injected_kept": 5438,
+        "untouched_kept": 20317
       },
       {
         "threshold": 0.771,
-        "injected_kept": 4600,
-        "untouched_kept": 17327
+        "injected_kept": 5438,
+        "untouched_kept": 20316
       },
       {
         "threshold": 0.772,
-        "injected_kept": 4600,
-        "untouched_kept": 17326
+        "injected_kept": 5438,
+        "untouched_kept": 20315
       },
       {
         "threshold": 0.773,
-        "injected_kept": 4600,
-        "untouched_kept": 17325
+        "injected_kept": 5438,
+        "untouched_kept": 20314
       },
       {
         "threshold": 0.784,
-        "injected_kept": 4599,
-        "untouched_kept": 17325
+        "injected_kept": 5437,
+        "untouched_kept": 20314
       },
       {
         "threshold": 0.793,
-        "injected_kept": 4599,
-        "untouched_kept": 17324
+        "injected_kept": 5437,
+        "untouched_kept": 20313
       },
       {
         "threshold": 0.795,
-        "injected_kept": 4599,
-        "untouched_kept": 17323
+        "injected_kept": 5437,
+        "untouched_kept": 20312
       },
       {
         "threshold": 0.796,
-        "injected_kept": 4599,
-        "untouched_kept": 17322
+        "injected_kept": 5437,
+        "untouched_kept": 20311
       },
       {
         "threshold": 0.801,
-        "injected_kept": 4597,
-        "untouched_kept": 17321
+        "injected_kept": 5435,
+        "untouched_kept": 20310
       },
       {
         "threshold": 0.804,
-        "injected_kept": 4597,
-        "untouched_kept": 17320
+        "injected_kept": 5435,
+        "untouched_kept": 20309
       },
       {
         "threshold": 0.807,
-        "injected_kept": 4597,
-        "untouched_kept": 17318
+        "injected_kept": 5435,
+        "untouched_kept": 20307
       },
       {
         "threshold": 0.809,
-        "injected_kept": 4597,
-        "untouched_kept": 17317
+        "injected_kept": 5435,
+        "untouched_kept": 20306
       },
       {
         "threshold": 0.81,
-        "injected_kept": 4597,
-        "untouched_kept": 17316
+        "injected_kept": 5435,
+        "untouched_kept": 20305
       },
       {
         "threshold": 0.812,
-        "injected_kept": 4597,
-        "untouched_kept": 17315
+        "injected_kept": 5435,
+        "untouched_kept": 20304
       },
       {
         "threshold": 0.813,
-        "injected_kept": 4597,
-        "untouched_kept": 17314
+        "injected_kept": 5435,
+        "untouched_kept": 20303
       },
       {
         "threshold": 0.816,
-        "injected_kept": 4596,
-        "untouched_kept": 17314
+        "injected_kept": 5434,
+        "untouched_kept": 20303
       },
       {
         "threshold": 0.817,
-        "injected_kept": 4596,
-        "untouched_kept": 17313
+        "injected_kept": 5434,
+        "untouched_kept": 20302
       },
       {
         "threshold": 0.821,
-        "injected_kept": 4596,
-        "untouched_kept": 17312
+        "injected_kept": 5434,
+        "untouched_kept": 20301
       },
       {
         "threshold": 0.828,
-        "injected_kept": 4596,
-        "untouched_kept": 17310
+        "injected_kept": 5434,
+        "untouched_kept": 20299
       },
       {
         "threshold": 0.831,
-        "injected_kept": 4596,
-        "untouched_kept": 17309
+        "injected_kept": 5434,
+        "untouched_kept": 20298
+      },
+      {
+        "threshold": 0.833,
+        "injected_kept": 5434,
+        "untouched_kept": 20297
+      },
+      {
+        "threshold": 0.836,
+        "injected_kept": 5434,
+        "untouched_kept": 20296
+      },
+      {
+        "threshold": 0.838,
+        "injected_kept": 5434,
+        "untouched_kept": 20295
       },
       {
         "threshold": 0.84,
-        "injected_kept": 4596,
-        "untouched_kept": 17308
+        "injected_kept": 5434,
+        "untouched_kept": 20294
       },
       {
         "threshold": 0.844,
-        "injected_kept": 4595,
-        "untouched_kept": 17307
+        "injected_kept": 5433,
+        "untouched_kept": 20293
       },
       {
         "threshold": 0.85,
-        "injected_kept": 4595,
-        "untouched_kept": 17306
+        "injected_kept": 5433,
+        "untouched_kept": 20292
       },
       {
         "threshold": 0.851,
-        "injected_kept": 4595,
-        "untouched_kept": 17304
+        "injected_kept": 5433,
+        "untouched_kept": 20290
       },
       {
         "threshold": 0.855,
-        "injected_kept": 4595,
-        "untouched_kept": 17303
+        "injected_kept": 5433,
+        "untouched_kept": 20289
       },
       {
         "threshold": 0.86,
-        "injected_kept": 4594,
-        "untouched_kept": 17303
+        "injected_kept": 5432,
+        "untouched_kept": 20289
       },
       {
         "threshold": 0.861,
-        "injected_kept": 4594,
-        "untouched_kept": 17302
+        "injected_kept": 5432,
+        "untouched_kept": 20288
       },
       {
         "threshold": 0.866,
-        "injected_kept": 4592,
-        "untouched_kept": 17302
+        "injected_kept": 5430,
+        "untouched_kept": 20288
       },
       {
         "threshold": 0.867,
-        "injected_kept": 4592,
-        "untouched_kept": 17301
+        "injected_kept": 5430,
+        "untouched_kept": 20287
       },
       {
         "threshold": 0.871,
-        "injected_kept": 4592,
-        "untouched_kept": 17298
+        "injected_kept": 5430,
+        "untouched_kept": 20283
       },
       {
         "threshold": 0.875,
-        "injected_kept": 4592,
-        "untouched_kept": 17297
+        "injected_kept": 5430,
+        "untouched_kept": 20282
       },
       {
         "threshold": 0.877,
-        "injected_kept": 4592,
-        "untouched_kept": 17296
+        "injected_kept": 5430,
+        "untouched_kept": 20281
+      },
+      {
+        "threshold": 0.882,
+        "injected_kept": 5428,
+        "untouched_kept": 20281
       },
       {
         "threshold": 0.883,
-        "injected_kept": 4590,
-        "untouched_kept": 17296
+        "injected_kept": 5428,
+        "untouched_kept": 20280
       },
       {
         "threshold": 0.89,
-        "injected_kept": 4590,
-        "untouched_kept": 17295
+        "injected_kept": 5428,
+        "untouched_kept": 20278
       },
       {
         "threshold": 0.892,
-        "injected_kept": 4590,
-        "untouched_kept": 17294
+        "injected_kept": 5428,
+        "untouched_kept": 20277
       },
       {
         "threshold": 0.893,
-        "injected_kept": 4589,
-        "untouched_kept": 17294
+        "injected_kept": 5427,
+        "untouched_kept": 20277
       },
       {
         "threshold": 0.894,
-        "injected_kept": 4589,
-        "untouched_kept": 17293
+        "injected_kept": 5427,
+        "untouched_kept": 20276
       },
       {
         "threshold": 0.895,
-        "injected_kept": 4589,
-        "untouched_kept": 17292
+        "injected_kept": 5427,
+        "untouched_kept": 20274
       },
       {
         "threshold": 0.896,
-        "injected_kept": 4589,
-        "untouched_kept": 17291
+        "injected_kept": 5427,
+        "untouched_kept": 20273
       },
       {
         "threshold": 0.901,
-        "injected_kept": 4589,
-        "untouched_kept": 17289
+        "injected_kept": 5427,
+        "untouched_kept": 20271
+      },
+      {
+        "threshold": 0.904,
+        "injected_kept": 5424,
+        "untouched_kept": 20271
       },
       {
         "threshold": 0.905,
-        "injected_kept": 4586,
-        "untouched_kept": 17289
+        "injected_kept": 5424,
+        "untouched_kept": 20270
       },
       {
         "threshold": 0.906,
-        "injected_kept": 4586,
-        "untouched_kept": 17288
+        "injected_kept": 5424,
+        "untouched_kept": 20269
+      },
+      {
+        "threshold": 0.907,
+        "injected_kept": 5423,
+        "untouched_kept": 20269
       },
       {
         "threshold": 0.909,
-        "injected_kept": 4585,
-        "untouched_kept": 17288
+        "injected_kept": 5423,
+        "untouched_kept": 20268
       },
       {
         "threshold": 0.91,
-        "injected_kept": 4585,
-        "untouched_kept": 17287
+        "injected_kept": 5423,
+        "untouched_kept": 20267
       },
       {
         "threshold": 0.911,
-        "injected_kept": 4584,
-        "untouched_kept": 17287
+        "injected_kept": 5422,
+        "untouched_kept": 20267
       },
       {
         "threshold": 0.912,
-        "injected_kept": 4584,
-        "untouched_kept": 17286
+        "injected_kept": 5422,
+        "untouched_kept": 20266
       },
       {
         "threshold": 0.913,
-        "injected_kept": 4584,
-        "untouched_kept": 17282
+        "injected_kept": 5422,
+        "untouched_kept": 20262
       },
       {
         "threshold": 0.915,
-        "injected_kept": 4584,
-        "untouched_kept": 17279
+        "injected_kept": 5422,
+        "untouched_kept": 20259
       },
       {
         "threshold": 0.916,
-        "injected_kept": 4584,
-        "untouched_kept": 17276
+        "injected_kept": 5422,
+        "untouched_kept": 20256
       },
       {
         "threshold": 0.919,
-        "injected_kept": 4583,
-        "untouched_kept": 17276
+        "injected_kept": 5421,
+        "untouched_kept": 20256
       },
       {
         "threshold": 0.925,
-        "injected_kept": 4583,
-        "untouched_kept": 17275
+        "injected_kept": 5421,
+        "untouched_kept": 20255
       },
       {
         "threshold": 0.926,
-        "injected_kept": 4583,
-        "untouched_kept": 17271
+        "injected_kept": 5421,
+        "untouched_kept": 20251
       },
       {
         "threshold": 0.927,
-        "injected_kept": 4583,
-        "untouched_kept": 17270
+        "injected_kept": 5421,
+        "untouched_kept": 20250
       },
       {
         "threshold": 0.931,
-        "injected_kept": 4582,
-        "untouched_kept": 17270
+        "injected_kept": 5420,
+        "untouched_kept": 20250
+      },
+      {
+        "threshold": 0.936,
+        "injected_kept": 5419,
+        "untouched_kept": 20250
       },
       {
         "threshold": 0.938,
-        "injected_kept": 4581,
-        "untouched_kept": 17270
+        "injected_kept": 5419,
+        "untouched_kept": 20248
       },
       {
         "threshold": 0.939,
-        "injected_kept": 4581,
-        "untouched_kept": 17265
+        "injected_kept": 5419,
+        "untouched_kept": 20242
       },
       {
         "threshold": 0.941,
-        "injected_kept": 4581,
-        "untouched_kept": 17264
+        "injected_kept": 5419,
+        "untouched_kept": 20241
       },
       {
         "threshold": 0.942,
-        "injected_kept": 4581,
-        "untouched_kept": 17263
+        "injected_kept": 5419,
+        "untouched_kept": 20240
       },
       {
         "threshold": 0.943,
-        "injected_kept": 4580,
-        "untouched_kept": 17263
+        "injected_kept": 5418,
+        "untouched_kept": 20240
       },
       {
         "threshold": 0.944,
-        "injected_kept": 4580,
-        "untouched_kept": 17260
+        "injected_kept": 5418,
+        "untouched_kept": 20237
       },
       {
         "threshold": 0.945,
-        "injected_kept": 4580,
-        "untouched_kept": 17251
+        "injected_kept": 5418,
+        "untouched_kept": 20225
       },
       {
         "threshold": 0.946,
-        "injected_kept": 4580,
-        "untouched_kept": 17245
+        "injected_kept": 5418,
+        "untouched_kept": 20219
       },
       {
         "threshold": 0.947,
-        "injected_kept": 4579,
-        "untouched_kept": 17245
+        "injected_kept": 5417,
+        "untouched_kept": 20219
       },
       {
         "threshold": 0.948,
-        "injected_kept": 4578,
-        "untouched_kept": 17245
+        "injected_kept": 5416,
+        "untouched_kept": 20218
       },
       {
         "threshold": 0.951,
-        "injected_kept": 4577,
-        "untouched_kept": 17244
+        "injected_kept": 5415,
+        "untouched_kept": 20217
       },
       {
         "threshold": 0.952,
-        "injected_kept": 4577,
-        "untouched_kept": 17243
+        "injected_kept": 5415,
+        "untouched_kept": 20216
       },
       {
         "threshold": 0.953,
-        "injected_kept": 4577,
-        "untouched_kept": 17242
+        "injected_kept": 5415,
+        "untouched_kept": 20215
       },
       {
         "threshold": 0.954,
-        "injected_kept": 4577,
-        "untouched_kept": 17241
+        "injected_kept": 5415,
+        "untouched_kept": 20214
       },
       {
         "threshold": 0.955,
-        "injected_kept": 4577,
-        "untouched_kept": 17239
+        "injected_kept": 5415,
+        "untouched_kept": 20212
       },
       {
         "threshold": 0.958,
-        "injected_kept": 4577,
-        "untouched_kept": 17237
+        "injected_kept": 5415,
+        "untouched_kept": 20210
+      },
+      {
+        "threshold": 0.959,
+        "injected_kept": 5414,
+        "untouched_kept": 20207
       },
       {
         "threshold": 0.96,
-        "injected_kept": 4576,
-        "untouched_kept": 17234
+        "injected_kept": 5414,
+        "untouched_kept": 20206
       },
       {
         "threshold": 0.962,
-        "injected_kept": 4576,
-        "untouched_kept": 17233
+        "injected_kept": 5414,
+        "untouched_kept": 20205
       },
       {
         "threshold": 0.963,
-        "injected_kept": 4576,
-        "untouched_kept": 17230
+        "injected_kept": 5414,
+        "untouched_kept": 20202
       },
       {
         "threshold": 0.964,
-        "injected_kept": 4576,
-        "untouched_kept": 17229
+        "injected_kept": 5414,
+        "untouched_kept": 20201
       },
       {
         "threshold": 0.965,
-        "injected_kept": 4575,
-        "untouched_kept": 17225
+        "injected_kept": 5413,
+        "untouched_kept": 20197
       },
       {
         "threshold": 0.966,
-        "injected_kept": 4572,
-        "untouched_kept": 17225
+        "injected_kept": 5410,
+        "untouched_kept": 20197
       },
       {
         "threshold": 0.967,
-        "injected_kept": 4572,
-        "untouched_kept": 17224
+        "injected_kept": 5410,
+        "untouched_kept": 20196
       },
       {
         "threshold": 0.968,
-        "injected_kept": 4572,
-        "untouched_kept": 17221
+        "injected_kept": 5410,
+        "untouched_kept": 20193
       },
       {
         "threshold": 0.969,
-        "injected_kept": 4571,
-        "untouched_kept": 17221
+        "injected_kept": 5409,
+        "untouched_kept": 20193
       },
       {
         "threshold": 0.971,
-        "injected_kept": 4562,
-        "untouched_kept": 17219
+        "injected_kept": 5400,
+        "untouched_kept": 20191
       },
       {
         "threshold": 0.972,
-        "injected_kept": 4562,
-        "untouched_kept": 17218
+        "injected_kept": 5400,
+        "untouched_kept": 20190
       },
       {
         "threshold": 0.973,
-        "injected_kept": 4558,
-        "untouched_kept": 17216
+        "injected_kept": 5396,
+        "untouched_kept": 20188
       },
       {
         "threshold": 0.974,
-        "injected_kept": 4556,
-        "untouched_kept": 17210
+        "injected_kept": 5394,
+        "untouched_kept": 20182
       },
       {
         "threshold": 0.976,
-        "injected_kept": 4555,
-        "untouched_kept": 17206
+        "injected_kept": 5393,
+        "untouched_kept": 20177
       },
       {
         "threshold": 0.977,
-        "injected_kept": 4554,
-        "untouched_kept": 17205
+        "injected_kept": 5392,
+        "untouched_kept": 20176
       },
       {
         "threshold": 0.978,
-        "injected_kept": 4553,
-        "untouched_kept": 17204
+        "injected_kept": 5391,
+        "untouched_kept": 20174
       },
       {
         "threshold": 0.98,
-        "injected_kept": 4553,
-        "untouched_kept": 17203
+        "injected_kept": 5391,
+        "untouched_kept": 20173
       },
       {
         "threshold": 0.981,
-        "injected_kept": 4550,
-        "untouched_kept": 17203
+        "injected_kept": 5388,
+        "untouched_kept": 20173
       },
       {
         "threshold": 0.982,
-        "injected_kept": 4550,
-        "untouched_kept": 17201
+        "injected_kept": 5388,
+        "untouched_kept": 20171
       },
       {
         "threshold": 0.983,
-        "injected_kept": 4550,
-        "untouched_kept": 17199
+        "injected_kept": 5388,
+        "untouched_kept": 20169
       },
       {
         "threshold": 0.984,
-        "injected_kept": 4549,
-        "untouched_kept": 17198
+        "injected_kept": 5387,
+        "untouched_kept": 20167
       },
       {
         "threshold": 0.985,
-        "injected_kept": 4548,
-        "untouched_kept": 17193
+        "injected_kept": 5386,
+        "untouched_kept": 20162
       },
       {
         "threshold": 0.986,
-        "injected_kept": 4546,
-        "untouched_kept": 17190
+        "injected_kept": 5384,
+        "untouched_kept": 20158
       },
       {
         "threshold": 0.987,
-        "injected_kept": 4542,
-        "untouched_kept": 17188
+        "injected_kept": 5380,
+        "untouched_kept": 20155
       },
       {
         "threshold": 0.988,
-        "injected_kept": 4540,
-        "untouched_kept": 17185
+        "injected_kept": 5378,
+        "untouched_kept": 20152
       },
       {
         "threshold": 0.989,
-        "injected_kept": 4536,
-        "untouched_kept": 17182
+        "injected_kept": 5374,
+        "untouched_kept": 20149
       },
       {
         "threshold": 0.99,
-        "injected_kept": 4534,
-        "untouched_kept": 17178
+        "injected_kept": 5372,
+        "untouched_kept": 20144
       },
       {
         "threshold": 0.991,
-        "injected_kept": 4533,
-        "untouched_kept": 17172
+        "injected_kept": 5371,
+        "untouched_kept": 20137
       },
       {
         "threshold": 0.992,
-        "injected_kept": 4532,
-        "untouched_kept": 17165
+        "injected_kept": 5370,
+        "untouched_kept": 20130
       },
       {
         "threshold": 0.993,
-        "injected_kept": 4532,
-        "untouched_kept": 17157
+        "injected_kept": 5370,
+        "untouched_kept": 20118
       },
       {
         "threshold": 0.994,
-        "injected_kept": 4527,
-        "untouched_kept": 17145
+        "injected_kept": 5365,
+        "untouched_kept": 20104
       },
       {
         "threshold": 0.995,
-        "injected_kept": 4527,
-        "untouched_kept": 17133
+        "injected_kept": 5365,
+        "untouched_kept": 20089
       },
       {
         "threshold": 0.996,
-        "injected_kept": 4527,
-        "untouched_kept": 17117
+        "injected_kept": 5365,
+        "untouched_kept": 20065
       },
       {
         "threshold": 0.997,
-        "injected_kept": 4519,
-        "untouched_kept": 17083
+        "injected_kept": 5356,
+        "untouched_kept": 20027
       },
       {
         "threshold": 0.998,
-        "injected_kept": 4511,
-        "untouched_kept": 17042
+        "injected_kept": 5348,
+        "untouched_kept": 19983
       },
       {
         "threshold": 0.999,
-        "injected_kept": 4500,
-        "untouched_kept": 17008
+        "injected_kept": 5337,
+        "untouched_kept": 19941
       },
       {
         "threshold": 1.0,
-        "injected_kept": 4475,
-        "untouched_kept": 16891
+        "injected_kept": 5312,
+        "untouched_kept": 19809
       }
     ]
   }

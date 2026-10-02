@@ -8,7 +8,10 @@ destabilising the whole tree and the background cannot be reasoned about locally
 import csv, json, re
 from pathlib import Path
 
-RANK = {"species": 6, "genus": 5, "family": 4, "order": 3, "phylum": 1}
+# The canonical order, not a hand-written map: the first version of this omitted "class" and
+# died on the cells that were added for it.
+RANKS = ["domain", "phylum", "class", "order", "family", "genus", "species"]
+RANK = {r: i for i, r in enumerate(RANKS)}
 
 def lineages(path):
     out = {}
@@ -55,6 +58,8 @@ for mis in sorted(Path("results/grid_fork/runs").glob("*/*.mis")):
 
 print(f"collateral flags: {tot_gained}, of which {tot_near} ({100*tot_near/tot_gained:.1f}%) "
       f"lie in a clade the injection touched")
-for d in ["species", "genus", "family", "order", "phylum"]:
+for d in RANKS[1:]:
+    if d not in per_dist:
+        continue
     n, t = per_dist[d]
     print(f"  {d:9} {n:5}/{t:<5} {100*n/t:5.1f}%")
