@@ -10,6 +10,12 @@ tool that died halfway would contribute the seconds it survived to a timing medi
 
 So this is a gate rather than a filter in twelve places: run it before the analyses and let a bad run
 stop them. All 927 runs were ok when it was written, which is why the hole had never cost anything.
+
+It also cross-checks the two fields collect_run.py derives rather than measures. n_mislabels is counted
+from the .mis, so the record and the file must agree. The three phase timings come from one regex over
+SATIVA's own log, and parse_sativa_log returns an empty dict and says nothing when that regex misses, so
+a future tool whose log is worded differently would lose them silently. A missing phase timing is not
+fatal, since wall_sec is measured independently, so that one is reported and does not fail the gate.
 """
 
 import argparse
@@ -29,7 +35,7 @@ def main():
     if not records:
         sys.exit(f"no run record matched {args.glob}")
 
-    seen, bad = Counter(), []
+    seen, bad, unparsed = Counter(), [], []
     for f in records:
         try:
             d = json.loads(f.read_text())
@@ -43,13 +49,29 @@ def main():
             bad.append(f"{f}: status {status}, returncode {d.get('returncode')}, "
                        f"wall {d.get('wall_sec')} s")
 
+        # n_mislabels is counted from the .mis, so the two must agree.
+        mis = sorted(f.parent.glob("*.mis"))
+        if mis:
+            real = sum(1 for line in mis[0].open(errors="replace")
+                       if line.strip() and not line.startswith(";"))
+            if d.get("n_mislabels") != real:
+                bad.append(f"{f}: n_mislabels says {d.get('n_mislabels')}, "
+                           f"{mis[0].name} holds {real}")
+
+        if not all(k in d for k in ("sativa_total_sec", "reftree_sec", "l1out_sec")):
+            unparsed.append(str(f))
+
     print(f"{len(records)} run records checked: "
           + ", ".join(f"{n} {s}" for s, n in sorted(seen.items())))
+    if unparsed:
+        print(f"  {len(unparsed)} without parsed phase timings, e.g. {unparsed[0]}; "
+              "the log wording may have changed. wall_sec is unaffected.", file=sys.stderr)
     for b in bad[:20]:
         print(f"  {b}", file=sys.stderr)
     if bad:
-        print(f"{len(bad)} run(s) did not finish cleanly; their numbers must not enter a table",
-              file=sys.stderr)
+        # Not "did not finish cleanly": the list also holds records whose derived fields disagree
+        # with the files they describe, which is a different fault with the same consequence.
+        print(f"{len(bad)} problem(s) found; these runs must not enter a table", file=sys.stderr)
         sys.exit(1)
 
 
