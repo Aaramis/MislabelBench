@@ -49,7 +49,12 @@ ROOT="$BENCH_ROOT"
 # than spell it: the version is what must be pinned, not the file name.
 IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev/null | head -1)
 [ -n "$IMG" ] || { echo "sativa-epang 0.10.2 image not in $HOME/.singularity_cache" >&2; exit 1; }
-OUT="$ROOT/results/scaling/N${N}_c${SLURM_CPUS_PER_TASK:-8}_r${SCALING_REP:-1}"
+# SCALING_TAG separates runs that differ in something the path does not already carry, which so far
+# means the CPU model. The allocation-mode comparison has to happen within one model, and on this
+# cluster it can only happen on the smaller one: an epyc-9754 node is dual socket with SMT, so Slurm
+# counts 512 CPUs and --exclusive bills all of them against a 600 quota, while an epyc-9554 counts
+# 256 and leaves room for other work to run alongside.
+OUT="$ROOT/results/scaling/N${N}_c${SLURM_CPUS_PER_TASK:-8}_r${SCALING_REP:-1}${SCALING_TAG:+_$SCALING_TAG}"
 ALN="$ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$ROOT/data/gtdb/gtdb_arc2k.tax"
 
