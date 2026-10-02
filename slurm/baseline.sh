@@ -21,6 +21,7 @@ echo "running on $(hostname), singularity at $(command -v singularity)"
 nextflow run . -profile singularity -resume \
   --datasets_json data/gtdb/datasets.json \
   --datasets gtdb_arc1200 \
+  --timing_trusted true \
   --conditions upstream_raxml_T8,epang_T8_K25 \
   --sativa_taxcode BAC \
   --outdir "$HOME/bench/results/baseline"

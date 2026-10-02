@@ -3,7 +3,11 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
 #SBATCH --time=24:00:00
-#SBATCH --exclusive
+#
+# Not --exclusive. These cells declare timing_trusted false, so exclusivity buys them nothing,
+# and on this cluster it costs everything: a node has 254 effective cores and --exclusive bills
+# all of them, so one such job takes 510 of the 600-CPU per-user quota and starves every other
+# job of our own. That is what serialised the whole queue for hours.
 
 #SBATCH --output=%x-%j.log
 set -euo pipefail

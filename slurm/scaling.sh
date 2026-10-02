@@ -1,18 +1,24 @@
 #!/bin/bash
 #SBATCH --job-name=scaling
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
 #SBATCH --time=12:00:00
-#SBATCH --exclusive
 #SBATCH --output=%x-N%N-%j.log
 #
 # Parallel efficiency of the staged leave-one-out, which is the one number upstream SATIVA
 # cannot produce at any cost: it has no way to place folds anywhere but in its own process.
 #
 # Submit once per node count:
-#   sbatch --nodes=1 slurm/scaling.sh
-#   sbatch --nodes=4 slurm/scaling.sh
+#   slurm/submit.sh slurm/scaling.sh --nodes=1 --exclusive --cpus-per-task=8
+#   slurm/submit.sh slurm/scaling.sh --nodes=4 --cpus-per-task=140
+#
+# The allocation is set by the caller, not by this script, because the two cannot be the same
+# thing here. The tool always runs on SCALING_THREADS cores (8); what the caller chooses is how
+# much of each node is held while it does. --exclusive is the measurement we trust, but a node has
+# 254 effective cores and --exclusive bills all of them against a 600-CPU per-user quota, so it
+# caps the experiment at two nodes. Reserving 140 cores per node instead fits four nodes inside
+# the quota, and whether that reservation is as trustworthy as exclusivity is something to check
+# at N=2, where both can be run, rather than to assume.
 #
 # The split is measured, not assumed to be free: reference and loo-tasks run once and are
 # timed separately, the N placement jobs are timed from the first starting to the last
@@ -24,13 +30,19 @@ source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 N="${SLURM_JOB_NUM_NODES:-1}"
-THREADS="${SLURM_CPUS_PER_TASK:-8}"
+# Threads the tool uses, which is a property of the condition and not of the allocation.
+THREADS="${SCALING_THREADS:-8}"
+# What Slurm actually gave us per node, rather than what was asked for. Under --exclusive this
+# comes back as the node's full core count, so the allocation records itself and there is no need
+# to guess at a variable that may not exist.
+RESERVED="${SLURM_CPUS_PER_TASK:-$THREADS}"
+GOT_PER_NODE="${SLURM_JOB_CPUS_PER_NODE:-unknown}"
 ROOT="$HOME/bench"
 # Nextflow and `singularity pull` name their cached images differently, so find it rather
 # than spell it: the version is what must be pinned, not the file name.
 IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev/null | head -1)
 [ -n "$IMG" ] || { echo "sativa-epang 0.10.2 image not in $HOME/.singularity_cache" >&2; exit 1; }
-OUT="$ROOT/results/scaling/N${N}"
+OUT="$ROOT/results/scaling/N${N}_c${SLURM_CPUS_PER_TASK:-8}"
 ALN="$ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$ROOT/data/gtdb/gtdb_arc2k.tax"
 
@@ -66,12 +78,13 @@ t3=$(now)
 se -r "$OUT/run.refjson" -C 0.4 -S -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"
 t4=$(now)
 
-python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" <<'PY' > "$OUT/timing.json"
+python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" "$RESERVED" "$GOT_PER_NODE" <<'PY' > "$OUT/timing.json"
 import json, sys
 n, threads = int(sys.argv[1]), int(sys.argv[2])
 t = [float(x) for x in sys.argv[3:8]]
 print(json.dumps({
     "nodes": n, "threads_per_node": threads,
+    "cores_requested_per_node": int(sys.argv[8]), "cores_allocated_per_node": sys.argv[9],
     "reference_sec": round(t[1] - t[0], 2),
     "loo_tasks_sec": round(t[2] - t[1], 2),
     "loo_place_sec": round(t[3] - t[2], 2),
