@@ -1,144 +1,99 @@
 # sativa-epang-benchmark
 
-Does replacing SATIVA's placement engine with EPA-ng change its answers?
+Does replacing SATIVA's placement engine with EPA-ng change its answers, and what does it cost?
 
-![Runtime and agreement](results/figures/fig_sativa_speedup.png)
+SATIVA (Kozlov *et al.* 2016) finds mislabelled sequences in a taxonomic reference by removing each
+one and placing it back into a tree built without it. Its leave-one-out uses RAxML, which bounds it
+to a few thousand sequences. [sativa-epang](https://github.com/Aaramis/sativa-epang) replaces the
+placement engine with EPA-ng (Barbera *et al.* 2019) and splits the leave-one-out into stages a
+workflow manager can distribute. The classification rule is upstream's, unchanged.
 
-Three results, measured against unmodified SATIVA v0.9.3 on ITS alignments of 100 to 5402
-sequences:
+This is a benchmark of that modification, not a new method.
 
-- **Speed.** 257 s to 15.4 s at 1600 sequences on 8 threads, 1536 s to 87 s at 5402 on 16.
-  The gain is parallelism over queries; RAxML gains little from threads on a 242 column
-  alignment.
-- **Agreement.** 0.98 recall and 0.90 precision at 800 sequences with K=25 folds, against
-  0.92 / 0.90 when unmodified SATIVA merely changes its own substitution model.
-- **Detection.** Of 33 mislabels injected into three clades, unmodified SATIVA finds 28 and
-  this version 33. Every miss happens when at least two sequences share the wrong label,
-  which a strict leave-one-out cannot see and a fold can.
+## What it measures, and what it found
 
-**Results and interpretation: [`RESULTS.md`](RESULTS.md).** The code: [`sativa_epang/`](sativa_epang/),
-also on the `epa-ng` branch of [Aaramis/sativa-epang](https://github.com/Aaramis/sativa-epang/tree/epa-ng),
-a fork of `amkozlov/sativa`, where the whole modification reads as one diff. The rest of this file says what
-is here and how to run it.
+Numbers below are medians over replicates on one pinned CPU model. GTDB r226 archaeal 16S, 7 051
+sequences for the headline and a 2 023-sequence subset drawn by whole taxa for the grid.
 
-SATIVA is Kozlov et al. 2016; EPA-ng is Barbera et al. 2019. This work is a benchmark of a
-modification, not a new method.
+**Speed.** 262 s against 2 950 s on the full set: 11.2x in wall clock. The more useful figure is
+16.2x in **CPU time**, because upstream saturates the eight threads it is given, 7.97 of 8, while the
+fork uses 5.5. On the 2 023-sequence subset the pair is 19.3x and 35.3x. At 402 sequences the fork
+uses 3.1 of 8 threads, so on a small reference it should be given fewer.
+
+**Reproducibility of the timings themselves.** The fork varies by 1 % across two nodes of the same
+model. Upstream agrees to 0.7 s on one node and differs by a third between two, which is why every
+number here is a median over replicates and why `run.json` records the CPU model.
+
+**Detection, and a claim this version of the benchmark does not support.** Version 1 reported that
+upstream found 28 of 33 injected mislabels and the fork 33, and attributed every miss to several
+sequences sharing one wrong label, which "a strict leave-one-out cannot see and a fold can". A
+180-cell grid does not bear that out. Recall falls with the number of sequences sharing the wrong
+label, *k*, for both tools alike: 0.94 at *k*=1 to 0.13 at *k*=10. What predicts detection is not *k*
+and not the fold count but the proportion of a sequence's surviving relatives that carry the wrong
+label, and recall runs 0.87 down to 0.01 across that range.
+
+The fold scheme does help, and the effect can be switched on and off, which is how it was pinned
+down. Comparing conditions cell by cell at *k*=10: five folds instead of twenty-five gains 0.035 and
+is better in 17 of the 18 cells where the two differ; dealing the folds in tree order instead of by
+sequence name removes 0.036 and is worse in 18 of 18. So fold co-removal is real and small, and only
+at the highest *k*. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
+sequence's true relatives with it.
+
+**Where those failures belong.** At *k*=10, 92 % of the sequences leave-one-out misses still have a
+correctly labelled neighbour above 99 % identity, so a label conflict inside a cluster catches them
+without any placement. That is a pipeline-level check rather than a tool-level one.
+
+## Running it
+
+Everything runs as a Nextflow workflow with each tool pinned by container and build string, and each
+dataset by sha256 (`assets/datasets.yml`). There is no conda environment to build.
+
+```bash
+export BENCH_ROOT=/path/to/a/working/copy      # defaults to $HOME/bench
+slurm/submit.sh slurm/baseline.sh              # both tools on the un-injected database, timed
+bash slurm/make_grid.sh                        # the injection grid, 180 cells
+slurm/submit.sh slurm/grid_fork.sh             # one condition over the grid
+bin/analyses.sh                                # rebuild every table in results/ from the runs
+python3 -m unittest discover -s tests          # the analysis layer's tests
+```
+
+`slurm/submit.sh` excludes the nodes recorded in `slurm/bad_nodes.txt`, which the jobs themselves
+append to when they land on one without singularity. Every path in every job script hangs off
+`BENCH_ROOT`, so a copy of this repo runs from anywhere.
+
+Two rules the scripts enforce, both learned by getting them wrong first.
+
+**A timed run pins the CPU model.** The cluster mixes four generations and the oldest is about half
+the per-core speed of the newest, so `--constraint` is not optional and `cpu_model` goes into every
+`run.json`. Untimed runs, which answer detection questions, do not pin and do not take the node:
+`--exclusive` bills all 510 cores of a node against a 600-core quota and starves every other job.
+
+**A run that is not trusted says so.** `--timing_trusted false` is recorded in `run.json`, and no
+figure reads seconds from a run that carries it.
 
 ## Layout
 
 ```
-config.sh              paths, interpreters, SATIVA parameters. Everything sources this.
-sativa_epang/          the modified SATIVA the report describes, with PROVENANCE.md
-env/                   the two unmodified upstream checkouts (see Setup)
-data_ascii/            the size gradient, n = 100 to 5402
-data_injected/         the same subsets with k sequences deliberately relabelled
-scripts/               eight scripts, below
-results/
-  runs/<dataset>__<condition>__rep<i>/   one measured run: run.json, .mis, .log
-  runs_injected/                         the same, for the injected mislabel test
-  summary.tsv                            one row per condition and size
-  concordance.tsv                        per sequence agreement
-  concordance_vs_gamma.tsv               the same, against the GTRGAMMA pinned reference
-  figures/fig_sativa_speedup.{png,pdf}   the figure in RESULTS.md
+main.nf  nextflow.config  conf/        the harness: grid as channel combines, one container per tool
+modules/local/                         sativa, sativaepang, collectrun, alignssu
+bin/                                   preparation, injection, scoring, analysis; analyses.sh runs them all
+slurm/                                 one script per measurement, plus prelude.sh and submit.sh
+tests/                                 unittest over the scripts that turn runs into numbers
+assets/datasets.yml                    every source with version, DOI, URL, date and sha256
+results/                               the measured runs and the tables built from them
 ```
 
-Tracked in git: the measured runs and the small tables, because they are the evidence and
-cost three hours of compute to produce. Not tracked, because a script rebuilds them in
-seconds from the runs: `concordance_details.tsv`, `concordance_vs_gamma_details.tsv`,
-`report.html`, and the `stdout.log` of each run, which duplicates SATIVA's own log.
+`results/` is tracked: the runs are the evidence, and the tables are rebuilt from them by
+`bin/analyses.sh`, so a change to any script shows up as a diff rather than as a number nobody can
+re-derive.
 
-```bash
-"$PY3" scripts/05_concordance.py --details   # the details tables
-"$PLOT_PY" scripts/08_build_report.py        # results/report.html
-```
+## Version 1
 
-`env/` and the compiled RAxML binaries are gitignored: both are rebuilt by the setup steps
-below, and neither belongs in a copy of this folder.
+`RESULTS.md`, `scripts/`, `data_ascii/`, `data_injected/` and `results/runs_injected/` are the earlier
+benchmark, on ITS data, driven by shell scripts over four hand-built conda environments. They are
+kept because `RESULTS.md` cites their numbers, and its setup instructions are in `scripts/README.md`.
+Where version 1 and this one disagree, as on detection above, this one supersedes it: it has three
+seeds, 180 cells and replicated timings where version 1 had one run per condition.
 
-## Scripts
-
-| | |
-|---|---|
-| `01_make_datasets.py` | Nested random subsets of one alignment, written as SATIVA's `.fasta` + `.tax`. `--ascii-taxonomy` transliterates taxon names, which the 2017 python 2 SATIVA needs. |
-| `02_bench.py` | One measured run of one condition. Owns the condition table: which SATIVA, which engine, how many threads, how many folds, which environment overrides. |
-| `03_plot.py` | `summary.tsv` and the three panel figure. |
-| `04_run_all.sh` | Every measurement in the report, in five phases. About 3 h on 32 cores. |
-| `05_concordance.py` | Which sequences each version flags, against a reference run. `--details` writes one row per disagreement. |
-| `06_cutoff_sensitivity.py` | The same agreement recomputed at stricter confidence cutoffs, from the `.mis` files already on disk. |
-| `07_injected_mislabels.py` | `build` writes the datasets with known wrong labels, `score` reads the runs back. |
-| `08_build_report.py` | Renders `RESULTS.md` into `results/report.html`, figure inlined, so the report can be shared on its own. |
-| `_timeit.py` | Runs one command in its own process group and reports wall time and peak RSS. |
-
-## Setup
-
-The two unmodified references are git checkouts of `amkozlov/sativa`:
-
-```bash
-(cd sativa_epang/raxml && make)                                                 # RAxML 8.2.3
-git clone https://github.com/amkozlov/sativa.git env/sativa_upstream          # v0.9.3, python 3
-git -C env/sativa_upstream worktree add --detach ../sativa_upstream_py2 8c31962 # last python 2 commit
-cp sativa_epang/raxml/raxmlHPC8-* env/sativa_upstream/raxml/
-cp sativa_epang/raxml/raxmlHPC8-* env/sativa_upstream_py2/raxml/
-mkdir -p env/sativa_upstream/tmp env/sativa_upstream_py2/tmp
-conda create -y -n sativa_py2 -c conda-forge python=2.7
-```
-
-Copying the RAxML binaries matters: all three versions must call the same ones, so the
-comparison never changes binary. The python 3 environment (`PY3` in `config.sh`) needs
-`ete3` and `epa-ng` 0.3.8, for instance:
-
-```bash
-conda create -y -n sativa_epang -c conda-forge -c bioconda python=3.10 ete3 epa-ng=0.3.8
-```
-
-`config.sh` holds no site specific path. Put yours in `config.local.sh`, which it sources
-if present and which `.gitignore` skips:
-
-```bash
-SATIVA_BENCH_PY3_ENV="/path/to/conda/envs/sativa_epang"      # python 3, ete3, epa-ng
-SATIVA_BENCH_PY2_ENV="/path/to/conda/envs/sativa_py2"        # bare python 2.7
-SATIVA_BENCH_PLOT_PY="/path/to/conda/envs/plot/bin/python"   # matplotlib, markdown, pillow
-SATIVA_BENCH_SOURCE_MSA="/path/to/alignment.fasta"
-```
-
-## Running
-
-```bash
-source config.sh
-"$PY3" scripts/01_make_datasets.py --source "$SOURCE_MSA" --outdir data_ascii \
-       --sizes 100,200,400,800,1600,full --seed 42 --ascii-taxonomy
-./scripts/04_run_all.sh
-"$PY3" scripts/07_injected_mislabels.py build
-"$PY3" scripts/02_bench.py --datasets-json data_injected/datasets.json \
-       --runs-dir results/runs_injected --datasets all \
-       --conditions upstream_py3_raxml_T1,port_py3_epang_T8,port_py3_epang_T8_K25 \
-       --repeat 1 --untimed
-"$PY3" scripts/07_injected_mislabels.py score
-```
-
-Two rules the runner enforces, both learned the hard way.
-
-**Timed runs work on local disk.** The project lives on a network filesystem where 200 MB
-take 14.0 s to write against 0.14 s locally. Measured there, the same run varied by 60 %;
-measured on local disk, by 2 %. `02_bench.py` puts the working directory and SATIVA's own
-`-tmpdir` under `--scratch` and copies back only `.mis` and `.log`.
-
-**Timed runs do not share the machine.** Runs that answer an agreement question pass
-`--untimed`, which records `timing_trusted: false` in `run.json`; `03_plot.py` refuses to
-draw those seconds. Several such batches can run at once on disjoint cores with `--cpus`.
-
-## Adding a condition
-
-Conditions live in one table at the top of `02_bench.py`. A condition names an
-implementation, an engine, a thread count, and optionally a fold count, environment
-overrides, or a `sativa.cfg` override:
-
-```python
-"port_py3_epang_T8_K25": {"impl": "port", "engine": "epang", "threads": 8, "folds": 25},
-"upstream_py3_raxml_T8_gamma": {"impl": "upstream_py3", "engine": "raxml", "threads": 8,
-                                "cfg": {"raxml_model": "GTRGAMMA",
-                                        "epa_use_heuristic": "FALSE"}},
-```
-
-The environment variables the EPA-ng version understands are listed in
-[`sativa_epang/PROVENANCE.md`](sativa_epang/PROVENANCE.md).
+`sativa_epang/` is version 1's copy of the modified tool and **is not what runs here** — see
+`sativa_epang/NOT_WHAT_RUNS.md`. The harness installs `bioconda::sativa-epang` in a container.
