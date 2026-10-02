@@ -87,6 +87,11 @@ results/                               the measured runs and the tables built fr
 `bin/analyses.sh`, so a change to any script shows up as a diff rather than as a number nobody can
 re-derive.
 
+**[`REVIEW.md`](REVIEW.md)** is a pass over every part of this repository looking for defects rather
+than confirming that it works. Twenty findings, three of which had produced a wrong number, with how
+each was found and how the fix was checked. It also lists what was checked and found correct, and the
+six defects introduced or missed by the review itself.
+
 ## Version 1
 
 `RESULTS.md`, `scripts/`, `data_ascii/`, `data_injected/` and `results/runs_injected/` are the earlier
