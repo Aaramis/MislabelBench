@@ -34,3 +34,34 @@ for ds in sorted({k[0] for k in g if k[0].startswith("gtdb")}):
         fw, fc = st.median(x[0] for x in fk), st.median(x[1] for x in fk)
         print(f"{ds:14} wall {uw / fw:5.1f}x   CPU-time {uc / fc:5.1f}x"
               f"   (n={len(up)} upstream, {len(fk)} fork)")
+
+print()
+print("size gradient, both tools at 8 threads: medians, and the pair of speedups")
+print(f"{'sequences':>10}{'fork':>9}{'upstream':>10}{'wall':>8}{'CPU':>8}"
+      f"{'fork cores':>12}{'up cores':>10}")
+sizes = [("gtdb_arc400", 402), ("gtdb_arc800", 801), ("gtdb_arc2k", 2023),
+         ("gtdb_arc4000", 4001), ("gtdb_arc1200", 7051)]
+for ds, n in sizes:
+    f, u = g.get((ds, "epang_T8_K25")), g.get((ds, "upstream_raxml_T8"))
+    if not (f and u):
+        continue
+    # x is (wall, user_cpu). Cores used is the ratio of the two; CPU seconds is user_cpu itself.
+    fw, uw = st.median(x[0] for x in f), st.median(x[0] for x in u)
+    fs, us = st.median(x[1] for x in f), st.median(x[1] for x in u)
+    fc, uc = st.median(x[1] / x[0] for x in f), st.median(x[1] / x[0] for x in u)
+    print(f"{n:>10}{fw:9.1f}{uw:10.1f}{uw / fw:8.1f}{us / fs:8.1f}{fc:12.2f}{uc:10.2f}")
+
+print()
+print("thread axis at 2023 sequences: what each tool does with the threads it is given")
+print(f"{'tool':10}{'T':>4}{'wall':>9}{'cores':>8}{'speedup vs T1':>15}{'efficiency':>12}")
+for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}")):
+    base = g.get(("gtdb_arc2k", prefix.format(1)))
+    if not base:
+        continue
+    b = st.median(x[0] for x in base)
+    for t in (1, 8, 16):
+        v = g.get(("gtdb_arc2k", prefix.format(t)))
+        if not v:
+            continue
+        w, c = st.median(x[0] for x in v), st.median(x[1] / x[0] for x in v)
+        print(f"{tool:10}{t:>4}{w:9.1f}{c:8.2f}{b / w:15.2f}{100 * (b / w) / t:11.0f}%")
