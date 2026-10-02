@@ -18,16 +18,35 @@ Three questions, in the order they have to be asked.
 
 import argparse
 import json
+import statistics as st
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 
 def by_k(path):
+    """Recall at threshold zero, averaged over every (distance, rate) cell, per k.
+
+    A summary holds one row per (distance, rate, k), so {r["k"]: r for r in rows} keeps whichever
+    row sorts last and silently reports a single slice. That was harmless on the 15-cell sweeps this
+    was written for, where one distance and one rate meant one row per k, and wrong the moment it
+    was pointed at the 180-cell grid: it reported the species/5% slice as if it were the whole grid.
+    """
     d = json.loads(Path(path).read_text())
     by_k.cells[path] = d.get("n_cells")
-    return {r["k"]: r for r in d["rows"]
-            if r["metric"] == "by_confidence" and r["threshold"] == 0.0
-            and r["recall_mean"] is not None}
+    groups = defaultdict(list)
+    for r in d["rows"]:
+        if r["metric"] == "by_confidence" and r["threshold"] == 0.0 \
+                and r["recall_mean"] is not None:
+            groups[r["k"]].append(r)
+    out = {}
+    for k, rows in groups.items():
+        out[k] = {"k": k, "n_rows": len(rows),
+                  "recall_mean": st.mean(r["recall_mean"] for r in rows),
+                  # Spread across cells, which is what a difference between conditions has to beat.
+                  "recall_sd": st.stdev([r["recall_mean"] for r in rows]) if len(rows) > 1
+                               else rows[0]["recall_sd"]}
+    return out
 
 
 by_k.cells = {}
