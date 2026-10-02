@@ -1,0 +1,11 @@
+{
+  "condition": "upstream_raxml_T8__rep1",
+  "flagged": {
+    "n": 376,
+    "median": 1009.25
+  },
+  "unflagged": {
+    "n": 17,
+    "median": 1008.65
+  }
+}

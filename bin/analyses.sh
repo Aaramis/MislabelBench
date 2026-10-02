@@ -88,6 +88,14 @@ step "what a cluster-level check would catch that leave-one-out misses"
 cluster_conflict.py --alignment "$ALN" --base-tax "$TAX" --injected-dir "$INJ" \
     --out results/cluster_conflict.json >/dev/null
 
+step "error kind 6: is the detection phylogenetic, or is it the alignment score?"
+for cond in epang_T8_K25 upstream_raxml_T8; do
+    foreign_score_vs_flag.py --donor-scores data/bacteria/donor_pool.cmalign.txt \
+        --base-scores data/gtdb/gtdb_arc1200.cmalign.txt --foreign-dir data/foreign \
+        --runs-dir results/foreign/runs --condition "${cond}__rep1" \
+        --out "results/foreign_score_vs_flag_${cond}.json"
+done
+
 step "error kind 6, both tools"
 for cond in epang_T8_K25 upstream_raxml_T8; do
     base=results/baseline2k/runs/gtdb_arc2k__${cond}__rep1/gtdb_arc2k__${cond}__rep1.mis

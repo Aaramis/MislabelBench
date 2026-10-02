@@ -1,0 +1,11 @@
+{
+  "condition": "epang_T8_K25__rep1",
+  "flagged": {
+    "n": 373,
+    "median": 1009.14
+  },
+  "unflagged": {
+    "n": 20,
+    "median": 1009.16
+  }
+}
