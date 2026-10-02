@@ -97,5 +97,18 @@ verify_manifests.py
 verify_injection.py --base "$TAX" --injected-dir "$INJ"
 verify_foreign.py
 
+# Every cell the grids should hold, enumerated from the same manifests and condition lists the jobs
+# were given. A join that dropped a cell would otherwise show up only as a smaller denominator.
+step "every grid is complete"
+verify_grid_complete.py --datasets-json "$INJ/datasets.json" --runs-dir "$RUNS" \
+    --conditions "$(echo $FOLD_CONDITIONS | tr ' ' ','),upstream_raxml_T8"
+verify_grid_complete.py --datasets-json data/foreign/datasets.json \
+    --runs-dir results/foreign/runs --conditions epang_T8_K25,upstream_raxml_T8
+verify_grid_complete.py --datasets-json data/gtdb/datasets_sizes.json \
+    --runs-dir results/sizes/runs --conditions epang_T8_K25,upstream_raxml_T8 --replicates 3
+verify_grid_complete.py --datasets-json data/gtdb/datasets2k.json --runs-dir results/threads/runs \
+    --conditions epang_T1_K25,epang_T8_K25,epang_T16_K25,upstream_raxml_T1,upstream_raxml_T8,upstream_raxml_T16 \
+    --replicates 3
+
 echo
 echo "done; results/ rebuilt from $BENCH_ROOT"
