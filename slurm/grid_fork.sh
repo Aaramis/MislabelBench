@@ -8,7 +8,8 @@
 #SBATCH --output=%x-%j.log
 set -euo pipefail
 
-source "$(dirname "$0")/prelude.sh"
+# Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 nextflow_env
