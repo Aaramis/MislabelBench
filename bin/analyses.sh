@@ -104,6 +104,16 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
         --out "results/foreign_summary_${cond}.json"
 done
 
+# The non-regression control, and the only reason an agreement measure is kept at all.
+step "agreement between the two tools on the un-injected sets"
+for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
+    d=${pair%%:*}; ds=${pair##*:}
+    up=results/$d/runs/${ds}__upstream_raxml_T8__rep1/${ds}__upstream_raxml_T8__rep1.mis
+    fk=results/$d/runs/${ds}__epang_T8_K25__rep1/${ds}__epang_T8_K25__rep1.mis
+    [ -f "$up" ] && [ -f "$fk" ] && agreement.py --a "$up" --b "$fk" \
+        --out "results/agreement_${ds}.json" || echo "   skipped $ds"
+done
+
 step "timing: the staged scaling, and how many cores each tool actually uses"
 scaling_summary.py > results/scaling_summary.txt
 resource_usage.py > results/resource_usage.txt

@@ -1,0 +1,13 @@
+{
+  "a": "results/baseline/runs/gtdb_arc1200__upstream_raxml_T8__rep1/gtdb_arc1200__upstream_raxml_T8__rep1.mis",
+  "b": "results/baseline/runs/gtdb_arc1200__epang_T8_K25__rep1/gtdb_arc1200__epang_T8_K25__rep1.mis",
+  "n_a": 401,
+  "n_b": 469,
+  "both": 350,
+  "only_a": 51,
+  "only_b": 119,
+  "jaccard": 0.6731,
+  "agree_rank": 344,
+  "agree_label": 318,
+  "agree_path": 279
+}
