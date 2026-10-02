@@ -1,0 +1,10 @@
+{
+  "taskdir": "/shared/home/agardette/bench/results/fold_order/run.l1o_tasks",
+  "n_folds": 25,
+  "sequences": 2023,
+  "fold_size_min": 80,
+  "fold_size_max": 81,
+  "same_species_pairs": 7483,
+  "pairs_sharing_a_fold": 193,
+  "co_location_rate": 0.02579
+}
