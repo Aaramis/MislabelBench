@@ -27,12 +27,18 @@ process SATIVAEPANG {
     // epang_l1o.py caps K at the leaf count, so a K above n means one sequence per fold,
     // which is the strict leave-one-out.
     def folds = meta.folds ? "export SATIVA_EPANG_FOLDS=${meta.folds}" : ''
+    // Fold composition, which the tool exposes and defaults to 'name'. By name the folds are
+    // random with respect to the tree, so two sequences of the same species sometimes leave the
+    // reference together and neither can be placed against the other. Round robin in tree order
+    // guarantees neighbours land in different folds. Left unset the tool's own default stands.
+    def foldOrder = meta.fold_order ? "export SATIVA_EPANG_FOLD_ORDER=${meta.fold_order}" : ''
     """
     mkdir -p run tmp
     cp ${fasta} ${tax} run/
 
     export SATIVA_L1O_ENGINE=${meta.engine}
     ${folds}
+    ${foldOrder}
     export OMP_NUM_THREADS=${meta.threads}
     export OPENBLAS_NUM_THREADS=${meta.threads}
     export MKL_NUM_THREADS=${meta.threads}
