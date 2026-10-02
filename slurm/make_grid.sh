@@ -5,16 +5,18 @@
 # its .tax. That also means a cell is reproducible from its seed alone.
 set -euo pipefail
 
-cd "$HOME/bench/data/gtdb"
-OUT="$HOME/bench/data/injected"
+BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+
+cd "$BENCH_ROOT/data/gtdb"
+OUT="$BENCH_ROOT/data/injected"
 mkdir -p "$OUT"
 
 # Idempotent: a cell that already exists is left alone. The grid gained its class axis after
 # 150 cells had been computed, and rebuilding all of them to add 30 would have thrown away a
 # day of compute for nothing. A cell is a function of its name, so skipping is safe.
 
-ALN="$HOME/bench/data/gtdb/gtdb_arc2k.fasta"
-TAX="$HOME/bench/data/gtdb/gtdb_arc2k.tax"
+ALN="$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
+TAX="$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax"
 
 for dist in species genus family order class phylum; do
   for rate in 0.01 0.05; do
@@ -24,7 +26,7 @@ for dist in species genus family order class phylum; do
         d="$OUT/$name"
         [ -s "$d/$name.tax" ] && continue
         mkdir -p "$d"
-        python3 "$HOME/bench/bin/inject_mislabels.py" "$TAX" \
+        python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
           --distance "$dist" --rate "$rate" --k "$k" --seed "$seed" \
           --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || {
             echo "FAILED $name" >&2; continue; }

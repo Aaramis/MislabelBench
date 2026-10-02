@@ -13,9 +13,9 @@
 # checked against the sha256 in assets/datasets.yml. One phylum, randomly subsampled to a pool
 # large enough for three disjoint seeds at the highest injection rate.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
 
-ROOT="$HOME/bench"
+ROOT="$BENCH_ROOT"
 RAW="$ROOT/data/raw"
 OUT="$ROOT/data/bacteria"
 SHA=79aab42a3b0190c0913b697fc7e0b756a76b75668414fdce1f3aeae9569540ea

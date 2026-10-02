@@ -13,6 +13,15 @@
 # log instead: without it the only surviving line is the last attempt's.
 
 BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+# Every path in every job script hangs off this one, so a wrong value is silent and total: the
+# scripts would read and write somewhere else entirely, or at the filesystem root. The ${VAR:-...}
+# form above already absorbs an empty value from the caller, so what this checks is the two cases
+# it cannot: a root that does not exist, which is the usual typo, and an empty one arriving from a
+# broken default, which a self-referential ${BENCH_ROOT:-$BENCH_ROOT} produced here once.
+[ -n "$BENCH_ROOT" ] && [ -d "$BENCH_ROOT" ] || {
+    echo "BENCH_ROOT does not name an existing directory: '$BENCH_ROOT'" >&2
+    exit 1
+}
 BAD_NODES="$BENCH_ROOT/slurm/bad_nodes.txt"
 NODE_LOG="$BENCH_ROOT/slurm/node_checks.log"
 
@@ -45,7 +54,7 @@ nextflow_env() {
 }
 
 # Nextflow keeps its resume cache in the launch directory and holds a lock on it, so two jobs
-# launched from $HOME/bench at once make the second die with "unable to acquire lock on session".
+# launched from the same directory at once make the second die with "unable to acquire lock on session".
 # That is what killed the kind 6 run when it was submitted alongside the class-axis run.
 #
 # The fix is to wait rather than to give each job its own launch directory: the session id is

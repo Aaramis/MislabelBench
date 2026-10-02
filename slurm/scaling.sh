@@ -44,7 +44,7 @@ THREADS="${SCALING_THREADS:-8}"
 RESERVED="${SLURM_CPUS_PER_TASK:-$THREADS}"
 GOT_PER_NODE="${SLURM_JOB_CPUS_PER_NODE:-unknown}"
 CPU_MODEL=$(awk -F: '/^model name/ {gsub(/^ +/, "", $2); print $2; exit}' /proc/cpuinfo)
-ROOT="$HOME/bench"
+ROOT="$BENCH_ROOT"
 # Nextflow and `singularity pull` name their cached images differently, so find it rather
 # than spell it: the version is what must be pinned, not the file name.
 IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev/null | head -1)

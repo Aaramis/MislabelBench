@@ -13,10 +13,10 @@
 # what that does to detection, this confirms the knob does what it says: the two fold partitions
 # must differ, and under tree order two members of one species must share a fold less often.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
 require_singularity
 
-ROOT="$HOME/bench"
+ROOT="$BENCH_ROOT"
 OUT="$ROOT/results/fold_order"
 IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev/null | head -1)
 [ -n "$IMG" ] || { echo "sativa-epang 0.10.2 image not in $HOME/.singularity_cache" >&2; exit 1; }

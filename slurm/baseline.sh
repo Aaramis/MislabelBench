@@ -15,12 +15,12 @@
 set -euo pipefail
 
 # Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
 require_singularity
 
 nextflow_env
 nf_serialise
-cd "$HOME/bench"
+cd "$BENCH_ROOT"
 
 echo "running on $(hostname), singularity at $(command -v singularity)"
 
@@ -30,4 +30,4 @@ nextflow run . -profile singularity -resume \
   --timing_trusted true \
   --conditions upstream_raxml_T8,epang_T8_K25 \
   --sativa_taxcode BAC \
-  --outdir "$HOME/bench/results/baseline"
+  --outdir "$BENCH_ROOT/results/baseline"
