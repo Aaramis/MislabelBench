@@ -1,0 +1,30 @@
+#!/bin/bash
+#SBATCH --job-name=foreign
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
+#SBATCH --exclusive
+
+#SBATCH --output=%x-%j.log
+set -euo pipefail
+
+# Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+require_singularity
+
+nextflow_env
+nf_serialise
+cd "$HOME/bench"
+
+echo "running on $(hostname)"
+
+# Error kind 6: bacterial sequences under an archaeal label. Both tools, because the question
+# is whether a foreign sequence is detected at all, and upstream is the reference for that.
+# Not a timed comparison, so timing_trusted is false and several cells run at once.
+nextflow run . -profile singularity -resume \
+  --datasets_json data/foreign/datasets.json \
+  --datasets all \
+  --conditions epang_T8_K25,upstream_raxml_T8 \
+  --sativa_taxcode BAC \
+  --timing_trusted false \
+  --outdir "$HOME/bench/results/foreign"

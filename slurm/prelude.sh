@@ -43,3 +43,17 @@ nextflow_env() {
     export NXF_SINGULARITY_CACHEDIR="$HOME/.singularity_cache"
     mkdir -p "$NXF_SINGULARITY_CACHEDIR"
 }
+
+# Nextflow keeps its resume cache in the launch directory and holds a lock on it, so two jobs
+# launched from $HOME/bench at once make the second die with "unable to acquire lock on session".
+# That is what killed the kind 6 run when it was submitted alongside the class-axis run.
+#
+# The fix is to wait rather than to give each job its own launch directory: the session id is
+# derived from that directory, so moving it would invalidate the resume cache that already holds
+# 180 computed cells. Sharing one cache also means a cell computed by one job resumes in another.
+# The waiting job holds its allocation, which the QOS already serialises anyway.
+nf_serialise() {
+    exec 9>"$BENCH_ROOT/.nf.lock"
+    flock 9 || { echo "could not take the nextflow lock" >&2; exit 1; }
+    echo "holding the nextflow lock"
+}

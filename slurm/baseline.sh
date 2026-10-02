@@ -13,6 +13,7 @@ source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 nextflow_env
+nf_serialise
 cd "$HOME/bench"
 
 echo "running on $(hostname), singularity at $(command -v singularity)"
