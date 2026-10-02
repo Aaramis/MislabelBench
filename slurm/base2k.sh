@@ -16,16 +16,15 @@
 # is read against, and the timed comparison at that size, so it takes the node to itself and
 # timing_trusted is true.
 set -euo pipefail
-source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 nextflow_env
-nf_serialise
-cd "$BENCH_ROOT"
+nf_launch_dir base2k
 
 echo "running on $(hostname)"
 
-nextflow run . -profile singularity -resume \
-  --datasets_json data/gtdb/datasets2k.json \
+nextflow run "$BENCH_ROOT" -profile singularity -resume \
+  --datasets_json "$BENCH_ROOT/data/gtdb/datasets2k.json" \
   --datasets gtdb_arc2k \
   --conditions upstream_raxml_T8,epang_T8_K25 \
   --sativa_taxcode BAC \

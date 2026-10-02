@@ -13,12 +13,11 @@
 set -euo pipefail
 
 # Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
-source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 nextflow_env
-nf_serialise
-cd "$BENCH_ROOT"
+nf_launch_dir grid_k5
 
 echo "running on $(hostname)"
 
@@ -29,8 +28,8 @@ echo "running on $(hostname)"
 # arm of the fold-count comparison over all 180 cells rather than the 15 the k sweep covered.
 #
 # Not a timed comparison, so timing_trusted is false and several cells run at once.
-nextflow run . -profile singularity -resume \
-  --datasets_json data/injected/datasets.json \
+nextflow run "$BENCH_ROOT" -profile singularity -resume \
+  --datasets_json "$BENCH_ROOT/data/injected/datasets.json" \
   --datasets all \
   --conditions epang_T8_K5,epang_T8_K5_tree \
   --sativa_taxcode BAC \

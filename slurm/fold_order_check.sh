@@ -13,7 +13,7 @@
 # what that does to detection, this confirms the knob does what it says: the two fold partitions
 # must differ, and under tree order two members of one species must share a fold less often.
 set -euo pipefail
-source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 ROOT="$BENCH_ROOT"

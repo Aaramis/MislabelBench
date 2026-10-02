@@ -13,11 +13,13 @@
 set -euo pipefail
 
 # Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
-source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 nextflow_env
-nf_serialise
+# The one job that still launches from the repo root. Every other job now uses its own directory
+# under .nf/, so there is no contention, and this one has a resume cache with cells already in it
+# that a new launch directory would discard.
 cd "$BENCH_ROOT"
 
 echo "running on $(hostname)"

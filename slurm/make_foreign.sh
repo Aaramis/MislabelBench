@@ -12,7 +12,7 @@
 # emits exactly the model's match columns. Two separate cmalign runs therefore produce the same
 # width and the alignments concatenate. inject_foreign.py asserts that rather than trusting it.
 set -euo pipefail
-source "${BENCH_ROOT:-$BENCH_ROOT}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 
 ROOT="$BENCH_ROOT"

@@ -17,7 +17,8 @@ BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
 # scripts would read and write somewhere else entirely, or at the filesystem root. The ${VAR:-...}
 # form above already absorbs an empty value from the caller, so what this checks is the two cases
 # it cannot: a root that does not exist, which is the usual typo, and an empty one arriving from a
-# broken default, which a self-referential ${BENCH_ROOT:-$BENCH_ROOT} produced here once.
+# broken default: a self-referential one, where the fallback is the variable itself, yields an
+# empty root. A mechanical rewrite produced exactly that in thirteen scripts here once.
 [ -n "$BENCH_ROOT" ] && [ -d "$BENCH_ROOT" ] || {
     echo "BENCH_ROOT does not name an existing directory: '$BENCH_ROOT'" >&2
     exit 1
@@ -54,15 +55,20 @@ nextflow_env() {
 }
 
 # Nextflow keeps its resume cache in the launch directory and holds a lock on it, so two jobs
-# launched from the same directory at once make the second die with "unable to acquire lock on session".
-# That is what killed the kind 6 run when it was submitted alongside the class-axis run.
+# launched from the same directory make the second die with "unable to acquire lock on session".
 #
-# The fix is to wait rather than to give each job its own launch directory: the session id is
-# derived from that directory, so moving it would invalidate the resume cache that already holds
-# 180 computed cells. Sharing one cache also means a cell computed by one job resumes in another.
-# The waiting job holds its allocation, which the QOS already serialises anyway.
-nf_serialise() {
-    exec 9>"$BENCH_ROOT/.nf.lock"
-    flock 9 || { echo "could not take the nextflow lock" >&2; exit 1; }
-    echo "holding the nextflow lock"
+# This used to be handled by making the second job wait on a flock, to keep one shared resume cache
+# across jobs. That cost more than it bought: it serialised every pipeline job, so an upstream run
+# of sixteen hours held a node for over an hour doing nothing while another job finished. And the
+# cache it protected is only worth sharing while cells are being recomputed, which they no longer
+# are. So each job now launches from its own directory and they run at once.
+#
+# The cost is that a new job cannot resume cells another job computed. For a job running a new
+# condition, which is every job from here on, there is nothing to resume anyway.
+nf_launch_dir() {
+    local name="${1:?nf_launch_dir needs a name}"
+    local dir="$BENCH_ROOT/.nf/$name"
+    mkdir -p "$dir"
+    cd "$dir"
+    echo "nextflow launching from $dir"
 }
