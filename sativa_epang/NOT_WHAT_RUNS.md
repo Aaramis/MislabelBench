@@ -20,5 +20,8 @@ IMG=$(ls ~/.singularity_cache/*sativa-epang*0.10.2*)
 singularity exec "$IMG" sed -n '710,732p' /usr/local/share/sativa-epang-0.10.2-0/epac/epang_l1o.py
 ```
 
-This directory is scheduled for removal once `README.md` is rewritten for the Nextflow harness;
-git history keeps it either way.
+This directory **stays**, and not only for the record. `scripts/README.md`, which holds version 1's
+setup, builds the RAxML binaries from `sativa_epang/raxml` and points at `PROVENANCE.md` for the
+environment variables, so removing it would make version 1's published figures unreproducible. An
+earlier version of this file said it was scheduled for removal once the top-level README was rewritten.
+That README has been rewritten, and the conclusion went the other way.
