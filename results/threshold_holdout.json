@@ -1,0 +1,118 @@
+{
+  "condition": "epang_T8_K25__rep1",
+  "select_seed": 1,
+  "baseline_flags": 93,
+  "n_cells_fit": 55,
+  "n_cells_held": 118,
+  "collateral_per_cell_unfiltered": 33.1,
+  "budgets": [
+    {
+      "budget_multiple": 1.0,
+      "budget_per_cell": 93.0,
+      "columns": {
+        "confidence": {
+          "threshold": 0.404,
+          "fit_recall": 0.4962,
+          "held_recall": 0.484,
+          "gap": -0.0123,
+          "held_collateral": 3904,
+          "held_collateral_per_cell": 33.08
+        },
+        "exclusion": {
+          "threshold": 0.463,
+          "fit_recall": 0.4962,
+          "held_recall": 0.484,
+          "gap": -0.0123,
+          "held_collateral": 3904,
+          "held_collateral_per_cell": 33.08
+        }
+      }
+    },
+    {
+      "budget_multiple": 0.5,
+      "budget_per_cell": 46.5,
+      "columns": {
+        "confidence": {
+          "threshold": 0.404,
+          "fit_recall": 0.4962,
+          "held_recall": 0.484,
+          "gap": -0.0123,
+          "held_collateral": 3904,
+          "held_collateral_per_cell": 33.08
+        },
+        "exclusion": {
+          "threshold": 0.463,
+          "fit_recall": 0.4962,
+          "held_recall": 0.484,
+          "gap": -0.0123,
+          "held_collateral": 3904,
+          "held_collateral_per_cell": 33.08
+        }
+      }
+    },
+    {
+      "budget_multiple": 0.3,
+      "budget_per_cell": 27.9,
+      "columns": {
+        "confidence": {
+          "threshold": 0.511,
+          "fit_recall": 0.4525,
+          "held_recall": 0.4436,
+          "gap": -0.0089,
+          "held_collateral": 1641,
+          "held_collateral_per_cell": 13.91
+        },
+        "exclusion": {
+          "threshold": null,
+          "reason": "budget unreachable"
+        }
+      }
+    },
+    {
+      "budget_multiple": 0.2,
+      "budget_per_cell": 18.6,
+      "columns": {
+        "confidence": {
+          "threshold": 0.511,
+          "fit_recall": 0.4525,
+          "held_recall": 0.4436,
+          "gap": -0.0089,
+          "held_collateral": 1641,
+          "held_collateral_per_cell": 13.91
+        },
+        "exclusion": {
+          "threshold": null,
+          "reason": "budget unreachable"
+        }
+      }
+    },
+    {
+      "budget_multiple": 0.1,
+      "budget_per_cell": 9.3,
+      "columns": {
+        "confidence": {
+          "threshold": null,
+          "reason": "budget unreachable"
+        },
+        "exclusion": {
+          "threshold": null,
+          "reason": "budget unreachable"
+        }
+      }
+    },
+    {
+      "budget_multiple": 0.05,
+      "budget_per_cell": 4.65,
+      "columns": {
+        "confidence": {
+          "threshold": null,
+          "reason": "budget unreachable"
+        },
+        "exclusion": {
+          "threshold": null,
+          "reason": "budget unreachable"
+        }
+      }
+    }
+  ]
+}
