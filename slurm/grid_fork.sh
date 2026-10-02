@@ -4,7 +4,7 @@
 #SBATCH --mem=64G
 #SBATCH --time=24:00:00
 #SBATCH --exclusive
-#SBATCH --requeue
+
 #SBATCH --output=%x-%j.log
 set -euo pipefail
 
