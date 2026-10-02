@@ -1,0 +1,13 @@
+{
+  "nodes": 1,
+  "threads_per_node": 8,
+  "cores_requested_per_node": 140,
+  "cores_allocated_per_node": "140",
+  "cpu_model": "AMD EPYC 9754 128-Core Processor",
+  "nodelist": "cpu-node-126",
+  "reference_sec": 10.41,
+  "loo_tasks_sec": 1.04,
+  "loo_place_sec": 25.48,
+  "loo_score_sec": 4.11,
+  "total_sec": 41.04
+}
