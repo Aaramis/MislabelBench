@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# Regenerate every analysis result in results/ from the run directories.
+#
+# The scripts in bin/ were in the repo from the start; the commands that produced each result were
+# not, so a reader could see what computed a number but not with which arguments. This closes that:
+# one command rebuilds every committed result, and a change to any script shows up as a diff.
+#
+#   BENCH_ROOT=/path/to/bench bin/analyses.sh
+#
+# It reads only run directories and writes only into results/. It does not run the pipeline, which is
+# what slurm/*.sh is for.
+set -euo pipefail
+
+BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+[ -d "$BENCH_ROOT" ] || { echo "BENCH_ROOT does not name a directory: '$BENCH_ROOT'" >&2; exit 1; }
+cd "$BENCH_ROOT"
+export PATH="$BENCH_ROOT/bin:$PATH"
+
+TAX=data/gtdb/gtdb_arc2k.tax
+ALN=data/gtdb/gtdb_arc2k.fasta
+INJ=data/injected
+RUNS=results/grid_fork/runs
+BASE_FORK=results/baseline2k/runs/gtdb_arc2k__epang_T8_K25__rep1/gtdb_arc2k__epang_T8_K25__rep1.mis
+
+# Conditions whose grid has been run. Each needs its own summary and its own recall-by-ratio table,
+# because the whole point of having four of them is comparing them.
+FOLD_CONDITIONS="epang_T8_K25 epang_T8_K25_tree epang_T8_K5 epang_T8_K5_tree"
+
+step() { printf '\n== %s\n' "$*"; }
+
+step "grid summaries and the surviving-label law, per fold condition"
+for cond in $FOLD_CONDITIONS; do
+    aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition "${cond}__rep1" \
+        --baseline-mis "$BASE_FORK" --out "results/grid_summary_${cond}.json"
+    detection_law.py --base-tax "$TAX" --injected-dir "$INJ" --runs-dir "$RUNS" \
+        --condition "${cond}__rep1" --out "results/detection_law_${cond}.json" >/dev/null
+done
+
+step "the comparator on the same grid, when it has run"
+if ls "$RUNS"/*__upstream_raxml_T8__rep1 >/dev/null 2>&1; then
+    base_up=results/baseline2k/runs/gtdb_arc2k__upstream_raxml_T8__rep1/gtdb_arc2k__upstream_raxml_T8__rep1.mis
+    aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition upstream_raxml_T8__rep1 \
+        --baseline-mis "$base_up" --out results/grid_summary_upstream_raxml_T8.json
+else
+    echo "   skipped: no upstream cells yet"
+fi
+
+step "paired comparisons, which is how two conditions may be compared at all"
+paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
+    --a epang_T8_K25__rep1 --b epang_T8_K5__rep1 \
+    --out results/paired_epang_T8_K25_vs_epang_T8_K5.json
+paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
+    --a epang_T8_K25__rep1 --b epang_T8_K25_tree__rep1 \
+    --out results/paired_epang_T8_K25_vs_epang_T8_K25_tree.json
+paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
+    --a epang_T8_K5__rep1 --b epang_T8_K5_tree__rep1 \
+    --out results/paired_epang_T8_K5_vs_epang_T8_K5_tree.json
+
+step "the two columns, and where the stem calls sit"
+column_comparison.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition epang_T8_K25__rep1 \
+    --out results/column_comparison.json >/dev/null
+threshold_holdout.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition epang_T8_K25__rep1 \
+    --baseline-mis "$BASE_FORK" --out results/threshold_holdout.json >/dev/null
+stem_flags.py > results/stem_flags.txt
+
+step "the background, and whether the collateral flags are local"
+# Both take --condition. Without it their globs match every condition in the runs directory at
+# once, which was harmless while only one had been run and mixes four fold conditions and the
+# comparator now: the first rebuild after the K=5 grid landed reported 772 cells instead of 180.
+background_stability.py --baseline "$BASE_FORK" --runs "$RUNS" --injected-dir "$INJ" \
+    --condition epang_T8_K25__rep1 --out results/background_stability.tsv
+collateral_locality.py --base-tax "$TAX" --baseline "$BASE_FORK" --injected-dir "$INJ" \
+    --runs-dir "$RUNS" --condition epang_T8_K25__rep1 > results/collateral_locality.txt
+
+step "what a cluster-level check would catch that leave-one-out misses"
+cluster_conflict.py --alignment "$ALN" --base-tax "$TAX" --injected-dir "$INJ" \
+    --out results/cluster_conflict.json >/dev/null
+
+step "error kind 6, both tools"
+for cond in epang_T8_K25 upstream_raxml_T8; do
+    base=results/baseline2k/runs/gtdb_arc2k__${cond}__rep1/gtdb_arc2k__${cond}__rep1.mis
+    aggregate_grid.py --injected-dir data/foreign --runs-dir results/foreign/runs \
+        --condition "${cond}__rep1" --baseline-mis "$base" \
+        --out "results/foreign_summary_${cond}.json"
+done
+
+step "timing: the staged scaling, and how many cores each tool actually uses"
+scaling_summary.py > results/scaling_summary.txt
+cpu_utilisation.py > results/cpu_utilisation.txt
+
+step "truth checks, which must pass rather than be read"
+verify_injection.py --base "$TAX" --injected-dir "$INJ"
+verify_foreign.py
+
+echo
+echo "done; results/ rebuilt from $BENCH_ROOT"

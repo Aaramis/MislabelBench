@@ -1,0 +1,7 @@
+collateral flags: 5917, of which 4623 (78.1%) lie in a clade the injection touched
+  phylum      949/995    95.4%
+  class       911/1039   87.7%
+  order       711/977    72.8%
+  family      827/1000   82.7%
+  genus       703/1006   69.9%
+  species     522/900    58.0%

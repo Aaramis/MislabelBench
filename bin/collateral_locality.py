@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Are the collateral flags neighbours of the injected sequences?
 
 If `gained` is perturbation, the newly flagged sequences should sit in the clades the
@@ -5,8 +6,18 @@ injection touched: either the donor taxon (where the wrong label points) or the 
 taxon (which lost a member to a wrong label). If instead they are scattered, the injection is
 destabilising the whole tree and the background cannot be reasoned about locally.
 """
-import csv, json, re
+import argparse
+import json
 from pathlib import Path
+
+p = argparse.ArgumentParser()
+p.add_argument("--base-tax", default="data/gtdb/gtdb_arc2k.tax")
+p.add_argument("--baseline", required=True, help=".mis of the un-injected run for this condition")
+p.add_argument("--injected-dir", default="data/injected")
+p.add_argument("--runs-dir", default="results/grid_fork/runs")
+p.add_argument("--condition", required=True, help="condition suffix; without it the glob would mix "
+                                                 "every condition in the runs directory")
+args = p.parse_args()
 
 # The canonical order, not a hand-written map: the first version of this omitted "class" and
 # died on the cells that were added for it.
@@ -25,14 +36,14 @@ def flagged(p):
     return {l.split("\t")[0] for l in Path(p).read_text().splitlines()
             if l.strip() and not l.startswith(";")}
 
-base_tax = lineages("data/gtdb/gtdb_arc2k.tax")
-base = flagged(next(Path("results/baseline2k/runs").glob("*epang*/*.mis")))
+base_tax = lineages(args.base_tax)
+base = flagged(args.baseline)
 
 tot_near = tot_gained = 0
 per_dist = {}
-for mis in sorted(Path("results/grid_fork/runs").glob("*/*.mis")):
+for mis in sorted(Path(args.runs_dir).glob(f"*__{args.condition}/*.mis")):
     cell = mis.parent.name.split("__")[0]
-    truth_p = Path("data/injected") / cell / f"{cell}.truth.json"
+    truth_p = Path(args.injected_dir) / cell / f"{cell}.truth.json"
     if not truth_p.exists():
         continue
     truth = json.loads(truth_p.read_text())

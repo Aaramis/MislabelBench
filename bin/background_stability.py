@@ -35,14 +35,18 @@ def flagged(mis_path):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--baseline", required=True, help=".mis of the un-injected run")
-    p.add_argument("--runs", required=True, help="directory of <cell>/<cell>.mis")
+    p.add_argument("--runs", required=True, help="directory of <cell>__<condition>/")
+    p.add_argument("--condition", required=True,
+                   help="condition suffix. Without it the glob below matches every condition in the "
+                        "runs directory at once, which was harmless while only one had been run and "
+                        "silently mixes four fold conditions and the comparator now that they have")
     p.add_argument("--injected-dir", required=True, help="directory of <cell>/<cell>.truth.json")
     p.add_argument("--out", required=True)
     args = p.parse_args()
 
     base = set(flagged(args.baseline))
     rows = []
-    for mis in sorted(Path(args.runs).glob("*/*.mis")):
+    for mis in sorted(Path(args.runs).glob(f"*__{args.condition}/*.mis")):
         cell = mis.parent.name.split("__")[0]
         truth = Path(args.injected_dir) / cell / f"{cell}.truth.json"
         if not truth.exists():
