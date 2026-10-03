@@ -23,7 +23,10 @@ process STAGEDLOOSCORE {
     task.ext.when == null || task.ext.when
 
     script:
-    def args = task.ext.args ?: ''
+    // Empty args is a bug, not a default. Without -x the tool prints its usage message and exits 0,
+    // so the stage reports success and produces nothing; a withName selector that failed to match
+    // this process did exactly that.
+    def args = task.ext.args ?: error("${task.process} has no ext.args; check conf/modules.config")
     """
     mkdir -p run.l1o_tasks
     cp ${manifest} run.l1o_tasks/manifest.json
