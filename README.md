@@ -125,6 +125,10 @@ brought back from the cluster — only `run.json` had been kept for them, and ev
 is computed from the `.mis` beside it. `results/pipeline_info/` holds one Nextflow trace per
 submission, with its gaps listed.
 
+**[`DISTRIBUTION.md`](DISTRIBUTION.md)** is why the distributed leave-one-out is measured by a shell
+script and not by the pipeline, what the fold task directory actually contains, and the design that
+fits it.
+
 **[`REVIEW.md`](REVIEW.md)** is a pass over every part of this repository looking for defects rather
 than confirming that it works. Twenty findings, three of which had produced a wrong number, with how
 each was found and how the fix was checked. It also lists what was checked and found correct, and the
