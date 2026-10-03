@@ -114,6 +114,18 @@ for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
         --out "results/agreement_${ds}.json" || echo "   skipped $ds"
 done
 
+# The only truth un-injected data offers, used to ask whether each tool's unique calls find anything.
+step "are the tools' unique flags enriched in the reference's own label conflicts?"
+up7=results/baseline/runs/gtdb_arc1200__upstream_raxml_T8__rep1/gtdb_arc1200__upstream_raxml_T8__rep1.mis
+fk7=results/baseline/runs/gtdb_arc1200__epang_T8_K25__rep1/gtdb_arc1200__epang_T8_K25__rep1.mis
+if [ -f "$up7" ] && [ -f "$fk7" ]; then
+    conflict_enrichment.py --alignment data/gtdb/gtdb_arc1200.aligned.fasta \
+        --taxonomy data/gtdb/gtdb_arc1200.tax --mis-a "$up7" --mis-b "$fk7" \
+        --out results/conflict_enrichment.json
+else
+    echo "   skipped: the full-set baseline is not both there"
+fi
+
 step "timing: the staged scaling, and how many cores each tool actually uses"
 scaling_summary.py > results/scaling_summary.txt
 resource_usage.py > results/resource_usage.txt
