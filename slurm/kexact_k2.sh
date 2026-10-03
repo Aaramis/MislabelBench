@@ -25,8 +25,16 @@ require_singularity
 nextflow_env
 nf_launch_dir kexact_k2
 
-cells=$(ls "$BENCH_ROOT/data/injected" | grep '^inj_family_r[0-9.]*_k2_' | paste -sd, -)
-echo "running on $(hostname), cells: $cells"
+# One cell per submission, controlled by KEXACT_CELL, because the file cost has to be measured before
+# it is multiplied. One sequence per fold on 2023 sequences means 2023 fold directories of about seven
+# files each, which is roughly 14000 files per cell against a 100000-file quota -- an estimate that
+# killed the six-cell version of this job before it ran, and an estimate is not a measurement.
+cell=${KEXACT_CELL:-inj_family_r0.05_k2_s1}
+[ -d "$BENCH_ROOT/data/injected/$cell" ] || { echo "no such cell: $cell" >&2; exit 1; }
+before=$(getfattr --only-values -n ceph.dir.rfiles "$HOME" 2>/dev/null)
+echo "running on $(hostname), cell $cell, home holds $before files"
+trap 'echo "home now holds $(getfattr --only-values -n ceph.dir.rfiles "$HOME" 2>/dev/null) files, was $before"' EXIT
+cells=$cell
 
 nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --datasets_json "$BENCH_ROOT/data/injected/datasets.json" \
