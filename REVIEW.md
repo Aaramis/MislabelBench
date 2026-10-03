@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-one more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-two more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -369,6 +369,27 @@ others were a `cmp -s` on two paths neither of which existed and a `set -- $pair
 word-split. D90's rule was about shell checks and it generalises: **an absent field, like a passing
 check, is not evidence until something has been shown to fail.** The fix belongs in the record, not
 only in the reader.
+
+**42. A range was published as a plus-or-minus.** `scaling_summary.py` computes `max(v) - min(v)`
+over the replicates and printed it as `195.59 ± 0.67`, which reads as a standard deviation or a
+symmetric uncertainty and is neither; `scaling.sh`'s comment went further and called 7.8 on a mean of
+27.9 "a standard deviation of 28%". With three replicates the range is the honest summary and the
+sign was not. The figures are unchanged, now bracketed with the column labelled and the header
+stating what they are, and `DISTRIBUTION.md` says it once for the tables it carries.
+
+Found by sweeping comments that state a number — the mandate's comment-against-code class made
+checkable, since a numeric claim can be tested and a prose one argued about. 218 such lines. The
+sweep found one stale figure beside the mislabelling: `column_comparison.py` said 31.5 % of the
+grid's flags sit at 0.510, measured when the grid was partial, where the complete grid gives 31.3 %.
+That comment no longer carries a copy of a number the script computes four lines above it.
+
+Two claims checked and holding, which is the more useful half: `subset_taxa.py` says preferring taxa
+that have siblings produced a subset judgeable at 100 % against a source at 72.7 %, and that taking
+groups as they come reproduces the source profile to within a few points — the source measures
+72.7 % at species and the subset 74.9 %, so 2.2 points, and that comment predates
+`bin/dataset_shape.py` and agrees with it, which makes each a check on the other.
+`confidence_shape.py`'s 355, 391 and 405 flags and its 88 % are the baseline measurements, and
+355/405 is 87.7 %.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
