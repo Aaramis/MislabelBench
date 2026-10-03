@@ -16,5 +16,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -w work_det \
   --datasets inj_species_r0.05_k3_s1 \
   --conditions epang_T8_K25 \
   --sativa_taxcode BAC --timing_trusted false \
-  --trace_tag determinism \
+  --trace_tag "determinism_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/determinism"

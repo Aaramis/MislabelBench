@@ -29,5 +29,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --timing_trusted true \
   --conditions upstream_raxml_T8,epang_T8_K25 \
   --sativa_taxcode BAC \
-  --trace_tag baseline \
+  --trace_tag "baseline_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/baseline"

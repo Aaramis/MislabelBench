@@ -37,5 +37,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --sativa_taxcode BAC \
   --replicates 3 \
   --timing_trusted true \
-  --trace_tag sizes \
+  --trace_tag "sizes_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/sizes"

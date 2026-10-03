@@ -29,5 +29,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions epang_T8_K5,epang_T8_K25 \
   --sativa_taxcode BAC \
   --timing_trusted false \
-  --trace_tag ksweep \
+  --trace_tag "ksweep_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/ksweep"

@@ -42,5 +42,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions epang_T8_Kexact \
   --sativa_taxcode BAC \
   --timing_trusted false \
-  --trace_tag kexact_k2 \
+  --trace_tag "kexact_k2_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/grid_fork"

@@ -41,5 +41,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions "$COND" \
   --sativa_taxcode BAC \
   --timing_trusted false \
-  --trace_tag grid_up_missing \
+  --trace_tag "grid_up_missing_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/grid_fork"

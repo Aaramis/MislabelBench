@@ -34,5 +34,5 @@ nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --conditions epang_T8_K5,epang_T8_K5_tree \
   --sativa_taxcode BAC \
   --timing_trusted false \
-  --trace_tag grid_k5 \
+  --trace_tag "grid_k5_${SLURM_JOB_ID:-local}" \
   --outdir "$BENCH_ROOT/results/grid_fork"
