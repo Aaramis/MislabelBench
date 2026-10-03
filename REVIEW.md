@@ -160,14 +160,18 @@ Worth stating, because an audit that only lists faults does not say what it cove
 
 ## Deferred, with reasons
 
-Two pipeline-side improvements wait for the upstream grid to finish, because `bin/` is staged into
-every task and `main.nf` sets the project revision, so changing either now would cost that job its
-resume — which editing the pipeline between a failure and its retry has already cost once.
+Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
+changing `bin/` or `main.nf` would cost that job its resume — which editing the pipeline between a
+failure and its retry has already cost once. That was stated too broadly: the cluster copy of the
+repository is an rsync of it and not a checkout, so a commit here cannot reach a running job. Both
+are done, and what waits for the grid is the sync, not the edit.
 
-- `collect_run.py` should record explicitly whether the phase-timing regex matched, rather than
-  leaving its absence to be inferred. The analysis-side gate already reports it.
-- `main.nf` should compare the cell count against what `COLLECTRUN` emitted, so the pipeline notices a
-  dropped join itself rather than relying on a later check.
+- `collect_run.py` records the parse outcome as `sativa_timing`: `parsed`, `no match` or
+  `log missing`. An absent phase timing used to mean either, and the second — a reworded log line —
+  would empty the timings of every run at once with nothing failing.
+- `main.nf` compares the number of `COLLECTRUN` records against datasets x conditions x replicates
+  and exits 1 if they differ, so a dropped join fails the run instead of quietly shortening the grid.
+  Checked with `-stub-run` on four cells, including a deliberately filtered timing channel.
 
 `sativa_epang/` stays despite not being what runs: `scripts/README.md` builds version 1's RAxML
 binaries from it, so removing it would make version 1's published figures unreproducible. It carries a
