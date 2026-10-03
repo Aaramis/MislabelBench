@@ -58,14 +58,19 @@ def main():
                 bad.append(f"{f}: n_mislabels says {d.get('n_mislabels')}, "
                            f"{mis[0].name} holds {real}")
 
-        if not all(k in d for k in ("sativa_total_sec", "reftree_sec", "l1out_sec")):
-            unparsed.append(str(f))
+        # sativa_timing says which of the two causes applies; records written before it
+        # existed carry neither it nor the timings, so absence of the keys still counts.
+        if "sativa_timing" in d:
+            if d["sativa_timing"] != "parsed":
+                unparsed.append(f"{f} ({d['sativa_timing']})")
+        elif not all(k in d for k in ("sativa_total_sec", "reftree_sec", "l1out_sec")):
+            unparsed.append(f"{f} (cause not recorded)")
 
     print(f"{len(records)} run records checked: "
           + ", ".join(f"{n} {s}" for s, n in sorted(seen.items())))
     if unparsed:
         print(f"  {len(unparsed)} without parsed phase timings, e.g. {unparsed[0]}; "
-              "the log wording may have changed. wall_sec is unaffected.", file=sys.stderr)
+              "wall_sec is unaffected.", file=sys.stderr)
     for b in bad[:20]:
         print(f"  {b}", file=sys.stderr)
     if bad:

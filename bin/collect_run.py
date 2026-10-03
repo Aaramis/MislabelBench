@@ -34,14 +34,21 @@ def count_mislabels(mis_path):
 
 
 def parse_sativa_log(log_path):
-    """Pull SATIVA's own phase timings out of its log."""
+    """Pull SATIVA's own phase timings out of its log.
+
+    Why the outcome is recorded and not just the numbers: a record without sativa_total_sec
+    could mean the log was never written or that the line it is read from has been reworded,
+    and the second would make every phase timing vanish from every run at once without
+    anything failing. wall_sec is measured outside the tool and is unaffected either way.
+    """
     if not log_path.exists():
-        return {}
+        return {"sativa_timing": "log missing"}
     match = TIMING_RE.search(log_path.read_text(errors="replace"))
     if not match:
-        return {}
+        return {"sativa_timing": "no match"}
     total, reftree, l1out = (float(g) for g in match.groups())
-    return {"sativa_total_sec": total, "reftree_sec": reftree, "l1out_sec": l1out}
+    return {"sativa_timing": "parsed", "sativa_total_sec": total,
+            "reftree_sec": reftree, "l1out_sec": l1out}
 
 
 
