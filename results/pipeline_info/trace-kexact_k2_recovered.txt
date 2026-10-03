@@ -1,0 +1,3 @@
+process	name	status	exit	submit	duration	realtime	peak_rss	peak_vmem	container
+SATIVAEPANG	SATIVAEPANG (inj_family_r0.05_k2_s1/epang_T8_Kexact/rep1)	COMPLETED	0	1791000549285	4259271	4259000	9826488320	10778918912	/shared/home/agardette/.singularity_cache/depot.galaxyproject.org-singularity-sativa-epang-0.10.2--py314hab16a5f_0.img
+COLLECTRUN	COLLECTRUN (inj_family_r0.05_k2_s1/epang_T8_Kexact/rep1)	COMPLETED	0	1791004808690	848	0	3366912	4489216	/shared/home/agardette/.singularity_cache/depot.galaxyproject.org-singularity-python-3.12.12.img

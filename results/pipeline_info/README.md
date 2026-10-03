@@ -27,3 +27,18 @@ does not silently shorten a trace. Checked with `-stub-run`: six cached and two 
 None of these files is read by any script in `bin/`. Every number in `results/` comes from
 `run.json`, which records wall clock, CPU time, peak RSS, host and CPU model independently of the
 trace. These are provenance, not measurements.
+
+## One trace recovered from its report
+
+`trace-kexact_k2_recovered.txt` is not a trace file. The Kexact run that produced
+`inj_family_r0.05_k2_s1__epang_T8_Kexact__rep1` wrote no trace, having found its predecessor's file
+already there, but it did write `report-kexact_k2.html` at completion, and that embeds the same task
+records as JSON under `window.data`. `bin/recover_trace_from_report.py` extracts them: 4 259 s for
+the placement at a process-tree peak of 9.83 GB, 0.85 s for the collection, and the two container
+images by path. `submit` is epoch milliseconds and the durations are milliseconds, which is how the
+report stores them; `%cpu` is not recoverable, being empty or uninterpretable there.
+
+The report's `peak_rss` is calibrated against the text traces rather than assumed to mean the same
+thing: for a fork-grid task the report gives 9 968 144 384 where `trace-grid_fork.txt` gives 9.3 GB.
+So the 9.83 GB here is comparable, and it is what started the peak-memory finding in `REVIEW.md` —
+the `run.json` for the same run says 2.49 GB.
