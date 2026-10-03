@@ -9,10 +9,11 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Eleven more came later, from repatriating the results, cloning the
+done during the review itself. Thirteen more came later, from repatriating the results, cloning the
 repository to see whether it still worked, and reading the traces of runs already published, rather
-than from reading the code; they are at the end under their own heading. One of those eleven changes
-a published number by a factor of three.
+than from reading the code; they are at the end under their own heading. One of those thirteen
+changes a published number by a factor of three, and one of them is a job that the corrected number
+predicted would run out of memory, which it then did.
 
 ## What was reviewed
 
@@ -253,9 +254,25 @@ practical consequence is the largest database that fits in 64 GB: 58 850 sequenc
 `process_timed` was also asking for a flat `16.GB`, below the real peak above about 3 400 sequences;
 only the job scripts' `--mem` kept those runs alive.
 
+**32. A failed placement task was ignored, and surfaced two minutes later as a JSON error.**
+`scaling.sh` launched its N placement tasks with `&` and then a bare `wait`, which returns the status
+of the last background job only; `set -e` does not fire for a background one either. An OOM-killed
+task therefore left its folds unplaced, the tool wrote empty placement files, logged
+`EPA-ng FAIL fold 5:` with nothing after the colon, carried on, and the run died four stages later in
+scoring on `JSONDecodeError: Expecting value: line 1 column 1`. Each task is waited on by pid now,
+with the status captured in the `||` branch — inside an `if ! wait` it is the status of the negation,
+which was checked and did report "failed with status 0" for a task that exited 7.
+
+**33. Two job scripts asked for less memory than the real peak.** `scaling.sh` carried `--mem=32G`,
+fine on 2 023 sequences and not on 7 051, where the measured tree peak is 36 GB: every N=2 job was
+OOM-killed within three minutes. `baseline.sh` asked 48G for the same set and survived on 33 %
+headroom, chosen when the only figure available said 9.4 GB. Both raised; the other twenty scripts
+were checked against the measured peak of what they run and none is within a factor of two.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
-directory and rebuild, and read the traces of runs already published rather than the records derived
-from them. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
+directory and rebuild, read the traces of runs already published rather than the records derived from
+them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
+measurement predicted before the cluster confirmed it. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
 committed tables come back byte-identical, the two that move being the ones that read the upstream
 grid while it is still growing.
 
