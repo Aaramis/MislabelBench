@@ -5,7 +5,7 @@
   "condition": "upstream_raxml_T8",
   "rep": 1,
   "run_name": "fgn_r0.005_s3__upstream_raxml_T8__rep1",
-  "timing_trusted": "false",
+  "timing_trusted": false,
   "impl": "sativa",
   "engine": "raxml",
   "threads": 8,

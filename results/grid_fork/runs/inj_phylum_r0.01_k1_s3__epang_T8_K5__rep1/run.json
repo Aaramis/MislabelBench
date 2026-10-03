@@ -5,7 +5,7 @@
   "condition": "epang_T8_K5",
   "rep": 1,
   "run_name": "inj_phylum_r0.01_k1_s3__epang_T8_K5__rep1",
-  "timing_trusted": "false",
+  "timing_trusted": false,
   "impl": "sativaepang",
   "engine": "epang",
   "threads": 8,
