@@ -32,6 +32,10 @@ def main():
     p.add_argument("--injected-dir", required=True)
     p.add_argument("--runs-dir", required=True)
     p.add_argument("--condition", required=True)
+    p.add_argument("--also-present", metavar="CONDITION",
+                   help="restrict to cells that also have this condition. Needed whenever one arm of "
+                        "the grid lags: comparing a curve over 180 cells against one over 99 compares "
+                        "the cell sets as much as the tools.")
     p.add_argument("--bins", type=int, default=5)
     p.add_argument("--out")
     args = p.parse_args()
@@ -48,6 +52,11 @@ def main():
         mis = Path(args.runs_dir) / f"{cell}__{args.condition}" / f"{cell}__{args.condition}.mis"
         if not mis.exists():
             continue
+        if args.also_present:
+            other = (Path(args.runs_dir) / f"{cell}__{args.also_present}"
+                     / f"{cell}__{args.also_present}.mis")
+            if not other.exists():
+                continue
         hits = flagged(mis)
         t = json.loads(truth_p.read_text())
         k = t["k"]
@@ -62,6 +71,8 @@ def main():
                 d[1] += 1
 
     width = 1 / args.bins
+    print(f"condition {args.condition}"
+          + (f", restricted to cells that also have {args.also_present}" if args.also_present else ""))
     print("recall by the fraction of surviving relatives that carry the wrong label")
     out = {"by_ratio": [], "by_k": []}
     for b in range(args.bins):
