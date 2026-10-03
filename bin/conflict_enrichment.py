@@ -49,8 +49,16 @@ def tail_ge(k, n, p):
     """
     if k <= 0:
         return 1.0
-    if p <= 0.0 or p >= 1.0 or k > n:
-        return 0.0 if k > n else 1.0
+    if k > n:
+        return 0.0
+    # The two degenerate rates were folded into one return and one of them was wrong: with p = 0
+    # and k >= 1 the answer is 0, not 1. Latent, because p is a flagged fraction and a tool that
+    # flags nothing gives k = 0 too, which the branch above already catches -- but a conservative
+    # wrong answer in a significance test is the kind that goes unnoticed.
+    if p <= 0.0:
+        return 0.0
+    if p >= 1.0:
+        return 1.0
     total = 0.0
     for i in range(k, n + 1):
         logp = (lgamma(n + 1) - lgamma(i + 1) - lgamma(n - i + 1)

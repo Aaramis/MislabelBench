@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Sixteen more came later, from repatriating the results, cloning the
+done during the review itself. Eighteen more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -24,10 +24,15 @@ under the wrong substitution model.
 | `main.nf` | grid construction, the branch by implementation, the four-way join into `COLLECTRUN` |
 | `nextflow.config`, `conf/` | parameters, profiles, trace files, publishing |
 | `modules/local/` | all four modules: containers, declared outputs against stub blocks, tool flags |
-| `bin/` | 29 scripts: paths, error handling, division guards, condition selection |
-| `slurm/` | 20 job scripts, the prelude, the submit wrapper |
-| `assets/`, manifests | five dataset manifests against the files they describe |
-| the results | 927 run records, cross-checked against the files they summarise |
+| `bin/` | 42 scripts: paths, error handling, division guards, condition selection |
+| `slurm/` | 29 job scripts, the prelude, the submit wrapper |
+| `assets/`, manifests | five dataset manifests against the files they describe, and the judgeability they claim |
+| the results | 1 226 run records, cross-checked against the files they summarise |
+
+The counts above were 29, 20 and 927 until they were compared against the repository: twenty-eight
+files had been added since this table was written, including the four staged modules and fifteen
+`bin/` scripts, and a review that states a coverage it no longer has is worse than one that states
+none. The second pass over the added files produced findings 37 and 38.
 
 ## Findings that produced a wrong number
 
@@ -303,6 +308,27 @@ comparison, and the matched-versus-unmatched check that compared two paths neith
 all *passed* while testing nothing — twice because zsh does not word-split an unquoted variable and
 once because `cmp -s` on two missing files returns 0. A shell check that passes is not evidence
 until it has been shown to fail when it should.
+
+**37. `agreement.py` drops a short row without saying so.** `read_mis` keeps a line only if it has
+seven fields or more, silently, where `score_injection.py` warns in the same situation. A malformed
+row would move a Jaccard figure with no trace. **Latent and shown to be latent**: across the 1 190
+committed `.mis` files, 158 098 data rows are 8 or 9 fields wide — upstream's eight and the fork's
+nine — and none is shorter.
+
+**38. The binomial tail answered 1.0 where it should answer 0.** `conflict_enrichment.py` folded
+`p <= 0` and `p >= 1` into one return, and with a rate of zero and `k >= 1` the upper tail is 0, not
+1. Latent, because a tool that flags nothing gives `k = 0` as well, which an earlier branch catches
+— but a conservative wrong answer in a significance test is the kind nobody questions. The function
+is otherwise exact: checked against rational arithmetic with `Fraction` and `comb`, it reproduces
+the published 0.000538 for 8 of 51 at p = 0.037, and `tests/test_scoring.py` now holds that check
+along with the two degenerate rates and the n = 6531 case that overflowed once.
+
+Also checked on the added files and found correct: `duplicate_conflicts.py`'s
+`first_disagreement`, which would raise on a single-label group and is only ever called on groups
+filtered to have two, and its `all(n in raw for n in g)` guard, without which a name missing from
+the unaligned file would have counted as an identical pair; and its percentage denominator, which
+comes from the alignment while the groups come from the alignment intersected with the taxonomy —
+the two cover exactly the same 7 051 and 2 023 names.
 
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from

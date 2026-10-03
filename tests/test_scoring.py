@@ -177,3 +177,45 @@ class ColumnComparison(unittest.TestCase):
         r = self.run_it()
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn("100.0%", r.stdout)
+
+
+class BinomialTail(unittest.TestCase):
+    """bin/conflict_enrichment.py's tail, which carries the enrichment p-values.
+
+    Checked against exact rational arithmetic rather than against another approximation, and
+    including the two degenerate rates, one of which used to return 1.0 where the answer is 0.
+    """
+
+    @staticmethod
+    def _tail():
+        import importlib.util
+        from pathlib import Path
+        path = Path(__file__).resolve().parent.parent / "bin" / "conflict_enrichment.py"
+        spec = importlib.util.spec_from_file_location("conflict_enrichment", path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.tail_ge
+
+    @staticmethod
+    def _exact(k, n, p):
+        from fractions import Fraction
+        from math import comb
+        q = Fraction(p).limit_denominator(10 ** 6)
+        return float(sum(comb(n, i) * q ** i * (1 - q) ** (n - i) for i in range(k, n + 1)))
+
+    def test_matches_exact_arithmetic(self):
+        tail = self._tail()
+        for k, n, p in [(3, 10, 0.5), (8, 51, 0.037), (25, 350, 0.038), (1, 200, 0.01)]:
+            self.assertAlmostEqual(tail(k, n, p), self._exact(k, n, p), places=9,
+                                   msg=f"tail_ge({k}, {n}, {p})")
+
+    def test_edges(self):
+        tail = self._tail()
+        self.assertEqual(tail(0, 10, 0.5), 1.0)
+        self.assertEqual(tail(11, 10, 0.5), 0.0)
+        self.assertEqual(tail(3, 10, 0.0), 0.0)
+        self.assertEqual(tail(3, 10, 1.0), 1.0)
+
+    def test_large_n_does_not_overflow(self):
+        """n = 6531 is the unflagged group, where the comb() form overflowed on the first run."""
+        self.assertLess(self._tail()(250, 6531, 0.0376), 1.0000001)
