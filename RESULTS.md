@@ -1,3 +1,20 @@
+> **This is version 1's report, and one of its claims has since been refuted.** It is kept as the
+> record of what version 1 measured; see `README.md` for where the benchmark now stands.
+>
+> **Refuted.** The detection section below reports that unmodified SATIVA finds 28 of 33 injected
+> mislabels and the EPA-ng version 33 of 33, and that every miss happens when sequences share a wrong
+> label, "which a strict leave-one-out cannot see and a fold can". A 180-cell grid with three seeds does
+> not bear that out. Recall falls with the number of carriers *k* for both tools alike, 0.94 at *k*=1 to
+> 0.13 at *k*=10, and what predicts detection is the proportion of a sequence's surviving relatives that
+> carry the wrong label rather than *k* or the fold count. The fold scheme does help, and the effect can
+> be switched on and off, but it is 0.035 and only at *k*=10. Version 1 had one replicate per scenario
+> and 33 injected sequences in three clades.
+>
+> **Not superseded, just a different experiment.** The speed and agreement figures below are on ITS data
+> at 100 to 5402 sequences; the current benchmark is on GTDB archaeal 16S at 402 to 7051, so the numbers
+> are not comparable either way. The byte-identical replicates reported below are confirmed: determinism
+> still holds, now across nodes and separate working directories.
+
 # SATIVA with EPA-ng: speed, agreement, and where the differences come from
 
 Context. I am cleaning a large reference database and applying SATIVA to it, on Daniel's
