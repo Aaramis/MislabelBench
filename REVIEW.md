@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Eighteen more came later, from repatriating the results, cloning the
+done during the review itself. Twenty more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -332,6 +332,24 @@ concentration is a lower bound, understating the artefact's reach by 6 % for the
 upstream. Both figures are reported now, because the spike is what the mechanism predicts and the
 shoulder is what it does not — a few thousandths of placement weight landing somewhere the 0.51/0.49
 split does not account for. No committed number changed; the band is an addition.
+
+**40. A defaulting `.get` fabricated a published claim.** The README and the decision log said no
+cell in 180 favours upstream at any *k*, with a column of zeros to show it. Eight do: five at *k*=1,
+one at *k*=5, two at *k*=10. The zeros came from a throwaway script that built that table by reading
+`paired_upstream_vs_epang_T8_K25.json` with `.get("cells_a_greater", 0)` — a field the record never
+had, since it stores `cells_b_greater` and `cells_compared` and leaves the losses to be derived.
+
+The sign test is sound, which is what the audit was for: recomputed with exact rational arithmetic
+from the counts the record does hold, all five p-values match to three figures, and it takes `n` as
+the non-tied pairs and `min(wins, n - wins)` as the tail, both correctly. What was wrong was the
+reading. `paired_conditions.py` records and prints the losses and the ties now, because a field that
+has to be derived is a field someone will default to zero.
+
+This is the third instance of one shape in this review — an absent thing read as a benign value. The
+others were a `cmp -s` on two paths neither of which existed and a `set -- $pair` that did not
+word-split. D90's rule was about shell checks and it generalises: **an absent field, like a passing
+check, is not evidence until something has been shown to fail.** The fix belongs in the record, not
+only in the reader.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
