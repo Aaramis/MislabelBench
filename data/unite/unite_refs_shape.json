@@ -1,0 +1,61 @@
+{
+  "n_sequences": 20295,
+  "n_with_lineage": 20295,
+  "length": {
+    "min": 148,
+    "p5": 439,
+    "median": 533,
+    "p95": 689,
+    "max": 3173,
+    "p95_over_p5": 1.57
+  },
+  "lineage_depths": {
+    "7": 20295
+  },
+  "empty_lineages": 0,
+  "placeholder_by_rank": {
+    "kingdom": 0,
+    "phylum": 0,
+    "class": 72,
+    "order": 291,
+    "family": 971,
+    "genus": 206,
+    "species": 971
+  },
+  "judgeable_pct_of_labelled": {
+    "kingdom": 100.0,
+    "phylum": 100.0,
+    "class": 99.9,
+    "order": 99.8,
+    "family": 99.2,
+    "genus": 90.6,
+    "species": 4.5
+  },
+  "judgeable_pct_of_all": {
+    "kingdom": 100.0,
+    "phylum": 100.0,
+    "class": 99.6,
+    "order": 98.4,
+    "family": 94.5,
+    "genus": 89.7,
+    "species": 4.3
+  },
+  "judgeable_denominator": {
+    "kingdom": 20295,
+    "phylum": 20295,
+    "class": 20223,
+    "order": 20004,
+    "family": 19324,
+    "genus": 20089,
+    "species": 19324
+  },
+  "n_taxa": {
+    "kingdom": 1,
+    "phylum": 16,
+    "class": 69,
+    "order": 242,
+    "family": 799,
+    "genus": 3952,
+    "species": 18846
+  }
+}
