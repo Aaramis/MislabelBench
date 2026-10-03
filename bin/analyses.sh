@@ -104,6 +104,16 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
         --out "results/foreign_summary_${cond}.json"
 done
 
+# Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.
+step "the shape of the Confidence column, both tools"
+for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
+    d=${pair%%:*}; ds=${pair##*:}
+    up=results/$d/runs/${ds}__upstream_raxml_T8__rep1/${ds}__upstream_raxml_T8__rep1.mis
+    fk=results/$d/runs/${ds}__epang_T8_K25__rep1/${ds}__epang_T8_K25__rep1.mis
+    [ -f "$up" ] && [ -f "$fk" ] && confidence_shape.py --mis "upstream=$up" --mis "fork=$fk" \
+        --out "results/confidence_shape_${ds}.json" || echo "   skipped $ds"
+done
+
 # The non-regression control, and the only reason an agreement measure is kept at all.
 step "agreement between the two tools on the un-injected sets"
 for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do

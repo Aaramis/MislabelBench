@@ -1,0 +1,19 @@
+{
+  "stem_value": 0.51,
+  "tools": [
+    {
+      "tool": "upstream",
+      "flags": 401,
+      "at_stem": 129,
+      "at_one": 165,
+      "share_at_two_values": 0.7332
+    },
+    {
+      "tool": "fork",
+      "flags": 469,
+      "at_stem": 155,
+      "at_one": 271,
+      "share_at_two_values": 0.9083
+    }
+  ]
+}
