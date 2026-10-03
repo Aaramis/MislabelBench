@@ -21,7 +21,7 @@ tool that ran several at once." The fork does. At one thread the two measures ag
 eight the tree peak is 3.7 times the largest child. Both are printed, because the gap is the finding
 and hiding one of them would bury it.
 """
-import csv, json, glob, re, statistics as st
+import csv, json, glob, re, sys, statistics as st
 from collections import defaultdict
 
 UNITS = {"B": 1 / 1048576, "KB": 1 / 1024, "MB": 1, "GB": 1024, "TB": 1048576}
@@ -44,11 +44,23 @@ def trace_peaks():
 
 peaks = trace_peaks()
 g = defaultdict(list)
+# A record missing a field is excluded and named, not defaulted to zero. The previous form was
+# `d.get("user_cpu_sec") or 0`, which would have put a zero into a median of CPU time or of memory
+# and shifted a published figure down without a word. All 56 trusted records carry all three
+# fields, so this has never fired -- which is the reason to make it loud rather than to leave it.
+incomplete = []
 for f in glob.glob("results/*/runs/*/run.json"):
     d = json.load(open(f))
-    if d.get("timing_trusted") and d.get("wall_sec"):
-        g[(d["dataset"], d["condition"])].append(
-            (d["wall_sec"], d.get("user_cpu_sec") or 0, d.get("max_rss_mb") or 0))
+    if not (d.get("timing_trusted") and d.get("wall_sec")):
+        continue
+    if any(d.get(k) in (None, 0, 0.0) for k in ("user_cpu_sec", "max_rss_mb")):
+        incomplete.append(f)
+        continue
+    g[(d["dataset"], d["condition"])].append(
+        (d["wall_sec"], d["user_cpu_sec"], d["max_rss_mb"]))
+if incomplete:
+    print(f"excluded {len(incomplete)} trusted runs with no CPU time or no peak memory, "
+          f"e.g. {incomplete[0]}", file=sys.stderr)
 print(f"{'dataset':14}{'condition':20}{'n':>3}{'wall':>10}{'cores':>7}{'CPU-s':>9}")
 for (ds, c), v in sorted(g.items()):
     if not ds.startswith("gtdb"):
