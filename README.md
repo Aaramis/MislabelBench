@@ -32,11 +32,31 @@ label, *k*, for both tools alike: 0.94 at *k*=1 to 0.13 at *k*=10. What predicts
 and not the fold count but the proportion of a sequence's surviving relatives that carry the wrong
 label, and recall runs 0.87 down to 0.01 across that range.
 
-The fold scheme does help, and the effect can be switched on and off, which is how it was pinned
-down. Comparing conditions cell by cell at *k*=10: five folds instead of twenty-five gains 0.035 and
-is better in 17 of the 18 cells where the two differ; dealing the folds in tree order instead of by
-sequence name removes 0.036 and is worse in 18 of 18. So fold co-removal is real and small, and only
-at the highest *k*. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
+**What the fork does find, which version 1 missed.** On the complete 180-cell grid the fork detects
+more than upstream at intermediate *k*, and **no cell in 180 favours upstream at any *k***:
+
+| *k* | cells | mean difference | fork better | upstream better | sign test |
+|---|---|---|---|---|---|
+| 1 | 36 | +0.006 | 14 | 0 | 0.064 |
+| 2 | 36 | **+0.240** | 34 | 0 | 1.2e-10 |
+| 3 | 36 | +0.152 | 34 | 0 | 1.2e-10 |
+| 5 | 36 | +0.104 | 28 | 0 | 1.1e-07 |
+| 10 | 36 | +0.005 | 9 | 0 | 0.065 |
+
+Both ends are flat for opposite reasons: *k*=1 is a ceiling, where one relabelled sequence per group
+leaves the rest of the group correct and both tools detect 0.92 and 0.94, and *k*=10 is a floor,
+0.12 and 0.13. Where the two disagree on an injected sequence, across all 11 178 injections, the
+fork alone is right 1 243 times against upstream's 115.
+
+**And the cause is the engine, not the fold scheme.** `epang_T8_Kexact` places one sequence per
+fold, which is upstream's own leave-one-out protocol run through EPA-ng, so it separates the two
+changes. On two *k*=2 cells the engine with the folds removed is worth +0.284 and +0.177, while the
+fold scheme with the engine held fixed is worth −0.020 and 0.000.
+
+The fold scheme does something, but only at the highest *k* and only a little. Comparing conditions
+cell by cell at *k*=10: five folds instead of twenty-five gains 0.035 and is better in 17 of the 18
+cells where the two differ; dealing the folds in tree order instead of by sequence name removes 0.036
+and is worse in 18 of 18. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
 sequence's true relatives with it.
 
 **Where those failures belong.** At *k*=10, 92 % of the sequences leave-one-out misses still have a
