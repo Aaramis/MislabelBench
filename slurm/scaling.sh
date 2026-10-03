@@ -1,7 +1,12 @@
 #!/bin/bash
 #SBATCH --job-name=scaling
 #SBATCH --ntasks-per-node=1
-#SBATCH --mem=32G
+# 64G, not 32. The first round ran on 2023 sequences, where the fork's process-tree peak is 9.3 GB
+# and 32G was ample. On gtdb_arc1200, 7051 sequences, the measured peak is 36 GB and every N=2 job
+# was OOM-killed inside three minutes: six oom_kill events on one node, seven on the other. The
+# tree peak is 4.76 MB per sequence at eight threads and it does not fall with the fold count,
+# because what holds the memory is the reference tree and the alignment, not the folds.
+#SBATCH --mem=64G
 #SBATCH --time=12:00:00
 #SBATCH --output=%x-N%N-%j.log
 #
@@ -93,12 +98,28 @@ t2=$(now)
 
 # One placement task per node, each taking every Nth fold. -folds i/N needs no knowledge of
 # how many folds there are, which is the point of the stride form for a fan-out.
+pids=()
 for i in $(seq 0 $((N - 1))); do
     srun --exclusive -N1 -n1 -c "$THREADS" \
         singularity exec -B "$OUT:$OUT" --pwd "$OUT" "$IMG" \
         sativa-epang -stage loo-place -taskdir "$OUT/run.l1o_tasks" -T "$THREADS" -folds "${i}/${N}" &
+    pids+=($!)
 done
-wait
+# Every placement task is waited on by pid and its status checked. A bare `wait` returns the status
+# of the last job only and set -e does not fire for a background one, so a task killed by the OOM
+# reaper left its folds unplaced, the tool wrote empty placement files, logged "EPA-ng FAIL fold 5:"
+# with no message, carried on, and the run died two minutes later in the scoring stage on
+# "JSONDecodeError: Expecting value: line 1 column 1". The cause was four stages and two minutes
+# away from the symptom.
+failed=0
+for i in "${!pids[@]}"; do
+    # st captured in the || branch, not inside an `if ! wait`: there $? is the status of the
+    # negation and always 0, which was checked and did report "failed with status 0".
+    st=0
+    wait "${pids[$i]}" || st=$?
+    [ "$st" = "0" ] || { echo "placement task $i failed with status $st" >&2; failed=1; }
+done
+[ "$failed" = "0" ] || { echo "a placement task failed; the timings below would be meaningless" >&2; exit 1; }
 t3=$(now)
 
 se -r "$OUT/run.refjson" -C 0.4 -S -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"
