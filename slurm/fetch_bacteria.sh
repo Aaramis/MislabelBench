@@ -14,12 +14,15 @@
 # large enough for three disjoint seeds at the highest injection rate.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+export PATH="$BENCH_ROOT/bin:$PATH"
 
 ROOT="$BENCH_ROOT"
 RAW="$ROOT/data/raw"
 OUT="$ROOT/data/bacteria"
-SHA=79aab42a3b0190c0913b697fc7e0b756a76b75668414fdce1f3aeae9569540ea
-URL=https://data.gtdb.ecogenomic.org/releases/release226/226.0/genomic_files_all/ssu_all_r226.fna.gz
+# From assets/datasets.yml, not copied here: two places holding one checksum is how the
+# judgeability figure in that same file came to disagree with the data for days.
+SHA=$(dataset_field.py gtdb_archaea_ssu sha256)
+URL=$(dataset_field.py gtdb_archaea_ssu url)
 mkdir -p "$RAW" "$OUT"
 cd "$RAW"
 

@@ -68,7 +68,28 @@ datasets:
       refs: 16120
       refs_singleton: 4175
       reps: 81842
+    # Two denominators, because one of them alone is wrong and was published. UNITE marks an
+    # unresolved rank with a form of its own at each level -- Ascomycota_phy_Incertae_sedis,
+    # ..._cls_, ..._ord_, ..._fam_, Ascomycota_gen_Incertae_sedis, and Cortinarius_sp at species,
+    # plus bare GS codes at class and order. A sequence labelled Cortinarius_sp shares that label
+    # with 62128 others and is not thereby known to be the same species as any of them, so
+    # leave-one-out judging one against another is not judging a species label at all.
+    #
+    # of_labelled is among sequences with a resolved label at the rank; of_all is out of all 81842,
+    # which is the ceiling any recall figure has to be read against. Measured by
+    # bin/unite_shape.py, whose counts reproduce the label inventory exactly.
     judgeable_pct:
-      genus: 98.2
-      species: 85.7
+      phylum:  {of_labelled: 100.0, of_all: 97.7, unresolved: 1846}
+      class:   {of_labelled: 100.0, of_all: 90.4, unresolved: 7828}
+      order:   {of_labelled: 100.0, of_all: 86.1, unresolved: 11332}
+      family:  {of_labelled: 99.8,  of_all: 71.7, unresolved: 23016}
+      genus:   {of_labelled: 97.4,  of_all: 59.9, unresolved: 31482}
+      species: {of_labelled: 45.3,  of_all: 10.9, unresolved: 62129}
+    # ITS is not as length-variable as its reputation: 421 to 666 nt between the 5th and 95th
+    # percentiles, a ratio of 1.58, median 524. So an alignment of this set is not mostly gap.
+    # That bounds one failure mode and not the other -- equal length is not homology, and ITS has
+    # no conserved structure to align against the way 16S has a covariance model.
+    length_nt: {min: 140, p5: 421, median: 524, p95: 666, max: 1491, p95_over_p5: 1.58}
+    lineages: all 7 ranks deep, none empty
+    sha256_rechecked: 2026-10-03, unchanged
     status: secondary, needs an alignment step; ITS alignment is contested, see the protocol

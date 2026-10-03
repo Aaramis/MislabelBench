@@ -27,8 +27,10 @@ export PATH="$BENCH_ROOT/bin:$PATH"
 ROOT="$BENCH_ROOT"
 RAW="$ROOT/data/raw"
 OUT="$ROOT/data/unite"
-SHA=a340864f947c517b671f1054a261e613a6619ef88dd8000de1699f5e1f21413b
-URL=https://s3.hpc.ut.ee/plutof-public/original/9489f7bc-7cc1-4e0a-84dc-c732476b9acd.tgz
+# From assets/datasets.yml, not copied here: two places holding one checksum is how the
+# judgeability figure in that same file came to disagree with the data for days.
+SHA=$(dataset_field.py unite_fungi sha256)
+URL=$(dataset_field.py unite_fungi url)
 MEMBER=sh_general_release_dynamic_19.02.2025.fasta
 mkdir -p "$RAW" "$OUT"
 cd "$RAW"
