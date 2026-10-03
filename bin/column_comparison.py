@@ -87,8 +87,10 @@ def main():
               f"({100 * sum(r['injected'] for r in stem) / len(stem):.1f}%, against "
               f"{100 * n_inj / len(rows):.1f}% over all flags)")
     else:
-        # Not an error: on this grid 31.5 % of flags sit at 0.510, but a dataset where none does is
-        # a dataset where parent_lhw_coeff never bit, which is worth saying rather than crashing on.
+        # Not an error. About a third of this grid's flags sit at 0.510 -- the figure this script
+        # computes above, and the reason not to repeat it here is that a copy drifts: it said 31.5 %
+        # from a partial grid and the complete one gives 31.3 %. A dataset where none does is a
+        # dataset where parent_lhw_coeff never bit, which is worth saying rather than crashing on.
         print("  none, so the stem split never produced a call on this data")
 
     if args.out:

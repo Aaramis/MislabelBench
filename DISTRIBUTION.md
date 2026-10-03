@@ -78,13 +78,16 @@ So the design above stands as written, with **12 MB staged per fold**.
 
 ## What the shard-shaped version actually measures
 
-The `srun` fan-out was run on this dataset, three replicates per node count:
+The `srun` fan-out was run on this dataset, three replicates per node count. Every spread quoted
+here and in `results/scaling_summary.txt` is max minus min over those three, not a standard
+deviation — `bin/scaling_summary.py` computes the range, and printing it after a plus-or-minus sign
+invited the other reading until it was relabelled.
 
-| N | placement | total |
+| N | placement, mean and spread | total |
 |---|---|---|
-| 1 | 195.59 ± 0.67 | 265.93 |
-| 2 | 123.93 ± 27.14 | 193.95 |
-| 4 | 197.57 ± 134.08 | 267.99 |
+| 1 | 195.59 (spread 0.67) | 265.93 |
+| 2 | 123.93 (spread 27.14) | 193.95 |
+| 4 | 197.57 (spread 134.08) | 267.99 |
 
 **N=4 is no faster than N=1**, and the per-shard logs say why: in all three replicates three shards
 finish in 56 to 62 s, which is what six folds at 9.3 s each predicts, and one takes 124, 207 or
@@ -101,11 +104,11 @@ One replicate per shard count, `gtdb_arc1200`, `-profile ifb`, every stage its o
 
 | shards | placement | speedup | efficiency | the `srun` version | its speedup |
 |---|---|---|---|---|---|
-| 1 | 194.5 | 1.00 | — | 195.59 ± 0.67 | 1.00 |
-| 2 | 111.2 | **1.75** | 87 % | 123.93 ± 27.14 | 1.58 |
-| 4 | **56.4** | **3.45** | 86 % | 197.57 ± 134.08 | 0.99 |
+| 1 | 194.5 | 1.00 | — | 195.59 (spread 0.67) | 1.00 |
+| 2 | 111.2 | **1.75** | 87 % | 123.93 (spread 27.14) | 1.58 |
+| 4 | **56.4** | **3.45** | 86 % | 197.57 (spread 134.08) | 0.99 |
 
-**At one shard the two agree to 0.6 %** — 194.5 s against 195.59 ± 0.67 — which is the check that
+**At one shard the two agree to 0.6 %** — 194.5 s against 195.59 with a spread of 0.67 over three replicates — which is the check that
 the staged pipeline does the same placement work as the `srun` version rather than something
 cheaper.
 

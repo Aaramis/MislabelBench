@@ -66,7 +66,7 @@ IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev
 # The dataset is a parameter because the first round of this experiment used gtdb_arc2k, where the
 # placement step is 16 to 26 seconds and the serial parts are 38.5% of the total. At that size there
 # is almost nothing to divide: the Amdahl ceiling is 2.60x, N=1 to N=2 came out at 1.47x, and N=4
-# regressed to 27.9 +/- 7.8 s against 17.4 at N=2 -- a standard deviation of 28%, which is four
+# regressed to 27.9 s with a spread of 7.8 against 17.4 at N=2 -- 28% of the mean, which is four
 # singularity containers starting rather than a property of the distribution. gtdb_arc1200 is the
 # answer and not a bigger allocation: the fork's whole run there is 262 s against 38.5 at 2023, so
 # placement has something to spread.

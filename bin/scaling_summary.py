@@ -20,18 +20,23 @@ for f in sorted(Path("results/scaling").glob("*/timing.json")):
     d = json.loads(f.read_text())
     g[(d.get("dataset") or "unrecorded, 2023 seqs", d["nodes"],
        d["cores_requested_per_node"])].append(d)
-print(f"{'dataset':24}{'cond':14}{'reps':>5}{'ref':>15}{'tasks':>8}{'place':>15}"
-      f"{'score':>8}{'total':>15}")
+# Every bracketed figure is max minus min over the replicates, not a standard deviation.
+print(f"{'dataset':24}{'cond':14}{'reps':>5}{'ref(spread)':>15}{'tasks':>8}"
+      f"{'place(spread)':>17}{'score':>8}{'total(spread)':>17}")
 for key in sorted(g):
     rs = g[key]
     def ms(f):
+        # Mean and the full spread, max minus min. Printed in brackets and not after a plus-or-minus
+        # sign, which is what it used to be: "195.59 +/- 0.67" reads as a standard deviation or a
+        # symmetric uncertainty and is neither, and the comment in scaling.sh did call it a standard
+        # deviation. With three replicates the spread is the honest summary and the sign was not.
         v = [r[f] for r in rs]
         return (st.mean(v), (max(v) - min(v)))
     r, t, p, s, tot = (ms(f) for f in ("reference_sec", "loo_tasks_sec", "loo_place_sec",
                                        "loo_score_sec", "total_sec"))
     print(f"{key[0]:24}N={key[1]} c={key[2]:<8}{len(rs):>5}"
-          f"{r[0]:9.2f}±{r[1]:4.2f}{t[0]:8.2f}{p[0]:9.2f}±{p[1]:4.2f}{s[0]:8.2f}"
-          f"{tot[0]:9.2f}±{tot[1]:4.2f}")
+          f"{r[0]:8.2f}({r[1]:5.2f}){t[0]:8.2f}{p[0]:8.2f}({p[1]:6.2f}){s[0]:8.2f}"
+          f"{tot[0]:8.2f}({tot[1]:6.2f})")
     print(f"{'':24}models: {sorted({r['cpu_model'][:28] for r in rs})}")
 
 for ds in sorted({k[0] for k in g}):
