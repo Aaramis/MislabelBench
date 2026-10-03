@@ -1,23 +1,23 @@
 {
   "condition_a": "upstream_raxml_T8__rep1",
   "condition_b": "epang_T8_K25__rep1",
-  "cells": 94,
-  "injected_total": 5669,
+  "cells": 180,
+  "injected_total": 11178,
   "buckets": {
     "both": {
-      "injected": 2251,
-      "untouched": 8884
+      "injected": 4203,
+      "untouched": 16883
     },
     "a only": {
-      "injected": 40,
-      "untouched": 1304
+      "injected": 115,
+      "untouched": 2557
     },
     "b only": {
-      "injected": 642,
-      "untouched": 1795
+      "injected": 1243,
+      "untouched": 3443
     }
   },
-  "missed_by_both": 2736,
+  "missed_by_both": 5617,
   "distances": {
     "class": {
       "cells": 30,
@@ -71,19 +71,53 @@
       }
     },
     "order": {
-      "cells": 4,
+      "cells": 30,
       "buckets": {
         "both": {
-          "injected": 43,
-          "untouched": 333
+          "injected": 730,
+          "untouched": 2803
         },
         "a only": {
-          "injected": 0,
-          "untouched": 44
+          "injected": 17,
+          "untouched": 479
         },
         "b only": {
-          "injected": 0,
-          "untouched": 60
+          "injected": 245,
+          "untouched": 566
+        }
+      }
+    },
+    "phylum": {
+      "cells": 30,
+      "buckets": {
+        "both": {
+          "injected": 712,
+          "untouched": 2818
+        },
+        "a only": {
+          "injected": 10,
+          "untouched": 465
+        },
+        "b only": {
+          "injected": 219,
+          "untouched": 559
+        }
+      }
+    },
+    "species": {
+      "cells": 30,
+      "buckets": {
+        "both": {
+          "injected": 553,
+          "untouched": 2711
+        },
+        "a only": {
+          "injected": 48,
+          "untouched": 353
+        },
+        "b only": {
+          "injected": 137,
+          "untouched": 583
         }
       }
     }

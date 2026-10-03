@@ -3,8 +3,11 @@
 
 The fork beats upstream by a wide margin at k=2 and the cause was not identified: the engine
 measured at k=1 looked worth 0.018 and the fold count 0.035, which leaves most of the gap
-unaccounted for. k=1 is the worst place to look, because no sibling keeps the correct label and
-neither tool can detect anything, so both sit on the floor.
+unaccounted for. k=1 is the worst place to look, and not for the reason first given here. It is a
+ceiling, not a floor: with one sequence relabelled per group the rest of the group keeps the right
+label and both tools detect over 92% of injections, so there is no headroom for either to differ.
+k=10 is the other end, both near 12%, where there is nothing left to find. The fork's advantage
+lives in between and peaks at k=2.
 
 epang_T8_Kexact separates the two cleanly. One sequence per fold is upstream's own leave-one-out
 protocol run through EPA-ng, so:

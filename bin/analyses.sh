@@ -51,6 +51,11 @@ if ls "$RUNS"/*__upstream_raxml_T8__rep1 >/dev/null 2>&1; then
     base_up=results/baseline2k/runs/gtdb_arc2k__upstream_raxml_T8__rep1/gtdb_arc2k__upstream_raxml_T8__rep1.mis
     aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition upstream_raxml_T8__rep1 \
         --baseline-mis "$base_up" --out results/grid_summary_upstream_raxml_T8.json
+    # The comparator's own detection law. It was built by hand once and left out of this script, so
+    # it kept saying what a 105-cell grid said after the grid had reached 180.
+    detection_law.py --base-tax "$TAX" --injected-dir "$INJ" --runs-dir "$RUNS" \
+        --condition upstream_raxml_T8__rep1 \
+        --out results/detection_law_upstream_raxml_T8.json >/dev/null
 else
     echo "   skipped: no upstream cells yet"
 fi
