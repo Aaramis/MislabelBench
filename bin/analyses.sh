@@ -32,6 +32,12 @@ step() { printf '\n== %s\n' "$*"; }
 step "every run finished cleanly"
 verify_runs.py
 
+# And a run must say truthfully whether its seconds are usable. 737 of 949 records once said they
+# were when their job had said otherwise, and nothing noticed because the only consumer also
+# happened to skip anything not named gtdb*.
+step "every run's timing flag agrees with the job that produced it"
+verify_timing_flags.py
+
 step "grid summaries and the surviving-label law, per fold condition"
 for cond in $FOLD_CONDITIONS; do
     aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition "${cond}__rep1" \
