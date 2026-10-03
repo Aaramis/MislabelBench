@@ -1,0 +1,101 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_species_r0.05_k10_s3.fasta -t inj_species_r0.05_k10_s3.tax -T 8 -n inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_k5/work/ad/0c85fd9a0d11b39ff7f13927542ebf/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: inj_species_r0.05_k10_s3.tax ...
+
+==> Loading reference alignment from file: inj_species_r0.05_k10_s3.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Cuniculiplasma;s__Cuniculiplasma sp027316895
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Cuniculiplasma;s__Cuniculiplasma divulgatum
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Cuniculiplasma;__TAXCLUSTER1__s__Cuniculiplasma sp027316895
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;s__Methanobacterium sp013403005
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_A;s__Methanobacterium_A sp002067325
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;__TAXCLUSTER2__s__Methanobacterium sp013403005
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum
+d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium wangiae
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;__TAXCLUSTER3__s__Halobacterium salinarum
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028344155
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028345575
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;__TAXCLUSTER4__s__Nitrosopelagicus sp028344155
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Methanomethylicia;o__Culexarchaeales;f__Culexarchaeaceae;g__Culexarchaeum;s__Culexarchaeum nevadense
+d__Archaea;p__Thermoproteota;c__Methanomethylicia;o__Culexarchaeales;f__Culexarchaeaceae;g__Culexarchaeum;s__Culexarchaeum sp038727515
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Methanomethylicia;o__Culexarchaeales;f__Culexarchaeaceae;g__Culexarchaeum;__TAXCLUSTER5__s__Culexarchaeum nevadense
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus sp000211475
+d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;__TAXCLUSTER6__s__Pyrococcus sp000211475
+
+WARNING: 12 indistinguishable taxa have been merged into 6 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2023 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/grid_k5/work/ad/0c85fd9a0d11b39ff7f13927542ebf/tmp/inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1_1790946082462/RAxML_info.mfresolv_inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1
+[epang-l1o] wrote 5 fold tasks to /shared/home/agardette/bench/.nf/grid_k5/work/ad/0c85fd9a0d11b39ff7f13927542ebf/tmp/inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1_1790946082462/epang_l1out_seq_inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1 (0.1s)
+[epang-l1o] placed 5/5 folds (4 at a time, 2 threads each, 9.3s)
+[epang-l1o] placements produits: 2022 (K=5 folds, remap 0.2s)
+[epang-l1o] timing: fold prep 0.2s, epa-ng 9.3s, remap 0.2s, elapsed 9.6s
+Leave-one-out test identified 129 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 129 suspects re-placed (model RAxML_info.mfresolv_inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1)
+Mislabeled sequences by rank:
+Phylum      :	30
+Class       :	9
+Order       :	3
+Family      :	6
+Genus       :	22
+Species     :	34
+
+Total mislabels: 104 / 5.14 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grid_k5/work/ad/0c85fd9a0d11b39ff7f13927542ebf/run/inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grid_k5/work/ad/0c85fd9a0d11b39ff7f13927542ebf/run/inj_species_r0.05_k10_s3__epang_T8_K5_tree__rep1.log
+
+Analysis completed successfully, elapsed time: 29 seconds (16s reftree, 13s leave-one-out)
+

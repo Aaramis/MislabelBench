@@ -1,0 +1,5 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+4	51/e9528d	1754446	SATIVAEPANG (inj_genus_r0.05_k10_s2/epang_T8_K5/rep1)	COMPLETED	0	2026-10-02 04:09:16.204	25.9s	25s	483.2%	2.1 GB	2.6 GB	120.6 MB	39.5 MB
+19	51/4e014f	1758050	COLLECTRUN (inj_genus_r0.05_k10_s2/epang_T8_K5/rep1)	COMPLETED	0	2026-10-02 04:09:43.122	2s	2s	25.9%	20.5 MB	25.6 MB	2.1 MB	66.6 KB
+11	0b/469bb9	1757855	SATIVAEPANG (inj_species_r0.05_k10_s1/epang_T8_K25/rep1)	COMPLETED	0	2026-10-02 04:09:42.107	39.2s	39s	539.4%	9.5 GB	10.1 GB	361.6 MB	103.8 MB
+20	0f/e9d856	1762143	COLLECTRUN (inj_species_r0.05_k10_s1/epang_T8_K25/rep1)	COMPLETED	0	2026-10-02 04:10:22.351	911ms	1s	67.7%	6.7 MB	14.6 MB	2.1 MB	63.6 KB

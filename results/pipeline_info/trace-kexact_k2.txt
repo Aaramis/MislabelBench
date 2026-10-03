@@ -1,0 +1,3 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+3	c7/f9ea81	205043	SATIVAEPANG (inj_family_r0.01_k2_s3/epang_T8_Kexact/rep1)	FAILED	1	2026-10-03 04:39:50.579	29.2s	29.2s	-	-	-	-	-
+6	79/443611	205023	SATIVAEPANG (inj_family_r0.05_k2_s3/epang_T8_Kexact/rep1)	ABORTED	-	2026-10-03 04:39:50.557	-	-	-	-	-	-	-

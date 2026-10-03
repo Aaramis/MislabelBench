@@ -1,0 +1,29 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/results/scaling/N1_c8_r1_9554/run.refjson -C 0.4 -S -n run -o /shared/home/agardette/bench/results/scaling/N1_c8_r1_9554 -T 8 -stage loo-score -taskdir /shared/home/agardette/bench/results/scaling/N1_c8_r1_9554/run.l1o_tasks
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] placements produits: 2021 (K=25 folds, remap 0.5s)
+Leave-one-out test identified 109 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 109 suspects re-placed (model model)
+Mislabeled sequences by rank:
+Phylum      :	30
+Class       :	8
+Order       :	3
+Family      :	7
+Genus       :	26
+Species     :	19
+
+Total mislabels: 93 / 4.60 %
+
+Results were saved to: /shared/home/agardette/bench/results/scaling/N1_c8_r1_9554/run.mis
+Execution log was saved to: /shared/home/agardette/bench/results/scaling/N1_c8_r1_9554/run.log
+
+Analysis completed successfully, elapsed time: 2 seconds (0s reftree, 2s leave-one-out)
+

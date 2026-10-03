@@ -1,0 +1,55 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc400.fasta -t gtdb_arc400.tax -T 8 -n gtdb_arc400__epang_T8_K25__rep3 -tmpdir /shared/home/agardette/bench/.nf/sizes/work/94/7b6a7cc6824a672d58397af9ef18f5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: gtdb_arc400.tax ...
+
+==> Loading reference alignment from file: gtdb_arc400.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+====> Building a multifurcating tree from taxonomy with 402 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./gtdb_arc400__epang_T8_K25__rep3.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/sizes/work/94/7b6a7cc6824a672d58397af9ef18f5/tmp/gtdb_arc400__epang_T8_K25__rep3_1790942950933/RAxML_info.mfresolv_gtdb_arc400__epang_T8_K25__rep3
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/sizes/work/94/7b6a7cc6824a672d58397af9ef18f5/tmp/gtdb_arc400__epang_T8_K25__rep3_1790942950933/epang_l1out_seq_gtdb_arc400__epang_T8_K25__rep3 (0.1s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 5.1s)
+[epang-l1o] placements produits: 402 (K=25 folds, remap 0.1s)
+[epang-l1o] timing: fold prep 0.1s, epa-ng 5.1s, remap 0.1s, elapsed 5.3s
+Leave-one-out test identified 13 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 13 suspects re-placed (model RAxML_info.mfresolv_gtdb_arc400__epang_T8_K25__rep3)
+Mislabeled sequences by rank:
+Phylum      :	9
+Family      :	1
+Genus       :	1
+Species     :	1
+
+Total mislabels: 12 / 2.99 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/sizes/work/94/7b6a7cc6824a672d58397af9ef18f5/run/gtdb_arc400__epang_T8_K25__rep3.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/sizes/work/94/7b6a7cc6824a672d58397af9ef18f5/run/gtdb_arc400__epang_T8_K25__rep3.log
+
+Analysis completed successfully, elapsed time: 9 seconds (2s reftree, 6s leave-one-out)
+

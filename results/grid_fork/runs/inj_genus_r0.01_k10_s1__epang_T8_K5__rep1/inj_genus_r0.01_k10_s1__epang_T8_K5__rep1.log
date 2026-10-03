@@ -1,0 +1,73 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_genus_r0.01_k10_s1.fasta -t inj_genus_r0.01_k10_s1.tax -T 8 -n inj_genus_r0.01_k10_s1__epang_T8_K5__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_k5/work/f3/efd2e97a171f8d5299de661d8e2f8f/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: inj_genus_r0.01_k10_s1.tax ...
+
+==> Loading reference alignment from file: inj_genus_r0.01_k10_s1.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;s__Methanobacterium sp013403005
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_A;s__Methanobacterium_A sp002067325
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;__TAXCLUSTER1__s__Methanobacterium sp013403005
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028344155
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028345575
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;__TAXCLUSTER2__s__Nitrosopelagicus sp028344155
+
+WARNING: 4 indistinguishable taxa have been merged into 2 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2023 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./inj_genus_r0.01_k10_s1__epang_T8_K5__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/grid_k5/work/f3/efd2e97a171f8d5299de661d8e2f8f/tmp/inj_genus_r0.01_k10_s1__epang_T8_K5__rep1_1790943065351/RAxML_info.mfresolv_inj_genus_r0.01_k10_s1__epang_T8_K5__rep1
+[epang-l1o] wrote 5 fold tasks to /shared/home/agardette/bench/.nf/grid_k5/work/f3/efd2e97a171f8d5299de661d8e2f8f/tmp/inj_genus_r0.01_k10_s1__epang_T8_K5__rep1_1790943065351/epang_l1out_seq_inj_genus_r0.01_k10_s1__epang_T8_K5__rep1 (0.2s)
+[epang-l1o] placed 5/5 folds (4 at a time, 2 threads each, 9.0s)
+[epang-l1o] placements produits: 2023 (K=5 folds, remap 0.2s)
+[epang-l1o] timing: fold prep 0.2s, epa-ng 9.0s, remap 0.2s, elapsed 9.4s
+Leave-one-out test identified 140 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 140 suspects re-placed (model RAxML_info.mfresolv_inj_genus_r0.01_k10_s1__epang_T8_K5__rep1)
+Mislabeled sequences by rank:
+Phylum      :	32
+Class       :	8
+Order       :	5
+Family      :	11
+Genus       :	39
+Species     :	19
+
+Total mislabels: 114 / 5.64 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grid_k5/work/f3/efd2e97a171f8d5299de661d8e2f8f/run/inj_genus_r0.01_k10_s1__epang_T8_K5__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grid_k5/work/f3/efd2e97a171f8d5299de661d8e2f8f/run/inj_genus_r0.01_k10_s1__epang_T8_K5__rep1.log
+
+Analysis completed successfully, elapsed time: 24 seconds (12s reftree, 12s leave-one-out)
+

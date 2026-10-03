@@ -1,0 +1,115 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_order_r0.05_k5_s3.fasta -t inj_order_r0.05_k5_s3.tax -T 8 -n inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1 -tmpdir /shared/home/agardette/bench/work/7b/930da6eace6d769f85280f3b413d67/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: inj_order_r0.05_k5_s3.tax ...
+
+==> Loading reference alignment from file: inj_order_r0.05_k5_s3.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum
+d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermoproteales;f__Thermoproteaceae;g__Pyrobaculum;s__Pyrobaculum calidifontis
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;__TAXCLUSTER1__s__Thermofilum adornatum
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;s__Methanobacterium sp013403005
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_A;s__Methanobacterium_A sp002067325
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;__TAXCLUSTER2__s__Methanobacterium sp013403005
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JAKAFX01;s__JAKAFX01 sp021785735
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JAKAFX01;__TAXCLUSTER3__s__JAKAFX01 sp021785735
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__SG8-5;f__JAGLSY01;g__JAGLSY01;s__JAGLSY01 sp020696385
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;__TAXCLUSTER4__s__JAJYEA01 sp021809545
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__Bilamarchaeaceae;g__JBGFRY01;s__JBGFRY01 sp041694845
+d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__Bilamarchaeaceae;g__JBGFRY01;__TAXCLUSTER5__s__JBGFRY01 sp041694845
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__JAPDLS01;f__Haiyanarchaeaceae;g__Haiyanarchaeum;s__Haiyanarchaeum thermophilum
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__GCA-2687815;g__GCA-2687815;s__GCA-2687815 sp002687815
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__JAPDLS01;f__Haiyanarchaeaceae;g__Haiyanarchaeum;__TAXCLUSTER6__s__Haiyanarchaeum thermophilum
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028344155
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028345575
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;__TAXCLUSTER7__s__Nitrosopelagicus sp028344155
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii
+d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Methanofastidiosales;f__Methanofastidiosaceae;g__Methanofastidiosum;s__Methanofastidiosum sp039679445
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;__TAXCLUSTER8__s__Pyrococcus kukulkanii
+
+WARNING: 16 indistinguishable taxa have been merged into 8 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2023 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/work/7b/930da6eace6d769f85280f3b413d67/tmp/inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1_1790935305483/RAxML_info.mfresolv_inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/work/7b/930da6eace6d769f85280f3b413d67/tmp/inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1_1790935305483/epang_l1out_seq_inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1 (0.4s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 25.3s)
+[epang-l1o] placements produits: 2022 (K=25 folds, remap 0.8s)
+[epang-l1o] timing: fold prep 0.4s, epa-ng 25.3s, remap 0.8s, elapsed 26.4s
+Leave-one-out test identified 182 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 182 suspects re-placed (model RAxML_info.mfresolv_inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1)
+Mislabeled sequences by rank:
+Phylum      :	30
+Class       :	8
+Order       :	57
+Family      :	7
+Genus       :	30
+Species     :	22
+
+Total mislabels: 154 / 7.61 %
+
+Results were saved to: /shared/home/agardette/bench/work/7b/930da6eace6d769f85280f3b413d67/run/inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/work/7b/930da6eace6d769f85280f3b413d67/run/inj_order_r0.05_k5_s3__epang_T8_K25_tree__rep1.log
+
+Analysis completed successfully, elapsed time: 41 seconds (12s reftree, 29s leave-one-out)
+

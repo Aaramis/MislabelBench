@@ -1,0 +1,5 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	ab/b0af13	1734157	SATIVAEPANG (gtdb_arc2k/epang_T8_K25/rep1)	COMPLETED	0	2026-10-02 03:00:12.095	38.9s	38s	536.9%	9.4 GB	10.1 GB	361.4 MB	103.6 MB
+3	e2/09895b	1738620	COLLECTRUN (gtdb_arc2k/epang_T8_K25/rep1)	COMPLETED	0	2026-10-02 03:00:51.098	851ms	0ms	66.4%	3.2 MB	4.3 MB	2.1 MB	42.3 KB
+2	2d/ae665b	1734143	SATIVA (gtdb_arc2k/upstream_raxml_T8/rep1)	COMPLETED	0	2026-10-02 03:00:12.074	12m 16s	12m 15s	796.6%	209.4 MB	648.1 MB	50.8 MB	427.7 MB
+4	51/001775	1752919	COLLECTRUN (gtdb_arc2k/upstream_raxml_T8/rep1)	COMPLETED	0	2026-10-02 03:12:27.861	1s	0ms	61.9%	3.2 MB	4.3 MB	2.1 MB	40.8 KB
