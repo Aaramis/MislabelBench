@@ -235,15 +235,23 @@ row with no error. An absent baseline was worse: it came back as nought baseline
 have counted every flag in the run as added. Both fatal now; `aggregate_grid.py` over all 180 cells
 still reproduces its committed summary unchanged, so nothing depended on the tolerance.
 
-**31. Peak memory was the largest child, not the process tree.** `run.json`'s `max_rss_mb` is
-`ru_maxrss` over the waited-for children. The comment defending that in `resource_usage.py` stated
-its own undoing in the next sentence — "it would understate a tool that ran several at once" — and
-the fork does, as soon as it has more than one thread. Against the Nextflow traces the tree peak is
-**1.07x the largest child at T1, 3.55x at T8, 3.15x at T16** for the fork, and a flat 1.44 to 1.48
-for upstream, so the gap appears exactly where concurrency does. At 7 051 sequences the fork peaks
-at **36 GB, not 9.4**, and the memory ratio against upstream is about **45x rather than 16x**. Both
-measures are printed now. `process_timed` was also asking for a flat `16.GB`, below the real peak
-above about 3 400 sequences; only the job scripts' `--mem` kept those runs alive.
+**31. Peak memory measured one process where the figure was read as the machine.** `run.json`'s
+`max_rss_mb` is `ru_maxrss` over the waited-for children, so the largest single child. The comment
+defending that in `resource_usage.py` stated its own undoing in the next sentence — "it would
+understate a tool that ran several at once" — and the fork does, as soon as it has more than one
+thread. Against the Nextflow traces the tree peak is **1.07x the largest child at T1, 3.55x at T8,
+3.15x at T16** for the fork, and a flat 1.44 to 1.48 for upstream, so the gap appears exactly where
+concurrency does.
+
+Both figures are real and they answer different questions, so both are printed now. Per process it
+is 1.3 MB per sequence, flat across a seventeen-fold size range and across thread counts. Per
+machine it is 1.11 MB per sequence at one thread and 4.61 at eight, which is **36 GB at 7 051
+sequences rather than 9.4** and a ratio against upstream of about **45x rather than 16x**. The
+practical consequence is the largest database that fits in 64 GB: 58 850 sequences single-threaded,
+**14 227 at the eight threads every run here uses**.
+
+`process_timed` was also asking for a flat `16.GB`, below the real peak above about 3 400 sequences;
+only the job scripts' `--mem` kept those runs alive.
 
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, and read the traces of runs already published rather than the records derived
