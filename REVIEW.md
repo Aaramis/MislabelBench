@@ -9,11 +9,12 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Thirteen more came later, from repatriating the results, cloning the
+done during the review itself. Fourteen more came later, from repatriating the results, cloning the
 repository to see whether it still worked, and reading the traces of runs already published, rather
-than from reading the code; they are at the end under their own heading. One of those thirteen
-changes a published number by a factor of three, and one of them is a job that the corrected number
-predicted would run out of memory, which it then did.
+than from reading the code; they are at the end under their own heading. One of those fourteen
+changes a published number by a factor of three, one is a job that the corrected number predicted
+would run out of memory and then did, and one was introduced by the review itself and ran the whole
+repository on a login node.
 
 ## What was reviewed
 
@@ -268,6 +269,23 @@ fine on 2 023 sequences and not on 7 051, where the measured tree peak is 36 GB:
 OOM-killed within three minutes. `baseline.sh` asked 48G for the same set and survived on 33 %
 headroom, chosen when the only figure available said 9.4 GB. Both raised; the other twenty scripts
 were checked against the measured peak of what they run and none is within a factor of two.
+
+**34. A file list interpolated into an ssh command string ran the repository on the login node.**
+`bin/push_code.sh` compared checksums with `ssh host "cd ~/bench && md5sum $files"`, and `$files` is
+newline-separated, so the remote shell took every filename after the first as a command. The login
+node ran `slurm/submit.sh`, `slurm/scaling.sh` and the rest in sequence; `scaling.sh` built a
+reference tree and placed folds there for fourteen minutes before failing. Nothing was lost, and
+that was luck: `determinism.sh` and `make_foreign.sh` both begin with `rm -rf`, and both targets
+happen to be committed and deterministic. The list goes over stdin now.
+
+This one was introduced during the review, in tooling written an hour earlier to make a different
+hazard safer.
+
+**A rule that came out of three false passes.** This check, the `set -- $pair` in the detection-law
+comparison, and the matched-versus-unmatched check that compared two paths neither of which existed
+all *passed* while testing nothing — twice because zsh does not word-split an unquoted variable and
+once because `cmp -s` on two missing files returns 0. A shell check that passes is not evidence
+until it has been shown to fail when it should.
 
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
