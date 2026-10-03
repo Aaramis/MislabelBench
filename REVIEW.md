@@ -9,8 +9,9 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Four more came later, from repatriating the results rather than from
-reading the code, and they are at the end under their own heading.
+done during the review itself. Six more came later, from repatriating the results and then cloning
+the repository to see whether it still worked, rather than from reading the code; they are at the end
+under their own heading.
 
 ## What was reviewed
 
@@ -191,6 +192,24 @@ and the column written.
 A fifth suspicion did not survive. `trace-baseline.txt` has a header and no rows, and the natural
 explanation was that a resumed run lists only what it recomputed. A resumed stub run writes eight
 rows, six of them `CACHED`: resuming does not shorten a trace, and that file is simply lost.
+
+**25. Two manifests named one machine.** `data/injected/datasets.json` carried
+`/shared/home/agardette/bench/...` in all 360 of its path fields and `data/foreign/datasets.json` in
+all 18, while `data/gtdb`'s had always been relative — which is what `main.nf`'s `resolvePath` is
+for. `verify_manifests.py` had the opposite of a check: it saw `is_absolute()` and used the path as
+given. It rejects one now, and its count, which assumed at most one problem per dataset, no longer
+reports 196 datasets as minus 371 sound.
+
+**26. `make_foreign.sh` required an image it was about to skip.** Singularity and Infernal were
+demanded at the top, then used only inside a branch that does not run when
+`donor_pool.aligned.fasta` exists — and it exists, in the repository. So a clone could not rebuild
+the nine foreign cells with everything needed present. Required inside the branch now, and the nine
+cells rebuilt on a Mac with no singularity come back with the Linux md5s.
+
+All of these came out of one test that should have been run a day earlier: clone the repository into
+an empty directory and rebuild. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
+committed tables come back byte-identical, the two that move being the ones that read the upstream
+grid while it is still growing.
 
 ## Deferred, with reasons
 
