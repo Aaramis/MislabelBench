@@ -13,18 +13,22 @@
 # width and the alignments concatenate. inject_foreign.py asserts that rather than trusting it.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
-require_singularity
 
 ROOT="$BENCH_ROOT"
 BAC="$ROOT/data/bacteria"
 OUT="$ROOT/data/foreign"
 ALN="$ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$ROOT/data/gtdb/gtdb_arc2k.tax"
-IMG=$(ls "$HOME"/.singularity_cache/*infernal*1.1.5* 2>/dev/null | head -1)
-[ -n "$IMG" ] || { echo "no infernal image in $HOME/.singularity_cache" >&2; exit 1; }
 
 cd "$BAC"
+# Singularity and the Infernal image are needed for the alignment and for nothing else, so they are
+# required inside the branch that uses them. donor_pool.aligned.fasta is in the repository, so a
+# clone rebuilds the nine foreign cells from the committed alignment with python alone -- which it
+# could not do while this script demanded an image it was about to skip.
 if [ ! -s donor_pool.aligned.fasta ]; then
+    require_singularity
+    IMG=$(ls "$HOME"/.singularity_cache/*infernal*1.1.5* 2>/dev/null | head -1)
+    [ -n "$IMG" ] || { echo "no infernal image in $HOME/.singularity_cache" >&2; exit 1; }
     singularity exec -B "$BAC:$BAC" --pwd "$BAC" "$IMG" \
         cmalign --cpu "${SLURM_CPUS_PER_TASK:-8}" --dnaout --matchonly --outformat Pfam \
         -o donor_pool.pfam --sfile donor_pool.cmalign.txt \
@@ -50,10 +54,11 @@ for rate in 0.005 0.01 0.05; do
     done
 done
 
-python3 - "$OUT" <<'PY'
+# Relative to BENCH_ROOT, for the reason spelled out in make_grid.sh.
+python3 - "$OUT" "$BENCH_ROOT" <<'PY'
 import json, sys
 from pathlib import Path
-out = Path(sys.argv[1])
+out, root = Path(sys.argv[1]), Path(sys.argv[2])
 sets = []
 for d in sorted(out.iterdir()):
     if not d.is_dir():
@@ -61,7 +66,8 @@ for d in sorted(out.iterdir()):
     fa, tax = d / f"{d.name}.fasta", d / f"{d.name}.tax"
     n = sum(1 for l in fa.open() if l.startswith(">"))
     w = len("".join(fa.read_text().split(">")[1].split("\n")[1:]))
-    sets.append({"name": d.name, "n_seqs": n, "aln_len": w, "fasta": str(fa), "tax": str(tax)})
+    sets.append({"name": d.name, "n_seqs": n, "aln_len": w,
+                 "fasta": str(fa.relative_to(root)), "tax": str(tax.relative_to(root))})
 json.dump({"source": "gtdb_arc2k plus bacterial donors under archaeal labels",
            "datasets": sets}, open(out / "datasets.json", "w"), indent=2)
 print(f"{len(sets)} foreign-sequence datasets, {sets[0]['n_seqs']}-{sets[-1]['n_seqs']} sequences")
