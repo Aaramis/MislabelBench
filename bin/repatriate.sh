@@ -23,13 +23,16 @@ set -euo pipefail
 REMOTE="${1:-agardette@core.cluster.france-bioinformatique.fr}"
 cd "$(dirname "$0")/.."
 
-rsync -a --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
+# --exclude='._*' in both directions. A Mac rsync leaves an AppleDouble resource fork beside
+# every file it copies, and eighteen of them landed in ~/bench once: harmless to bash, fatal to
+# any python that globs *.sh, and inodes against a 100 000-file quota.
+rsync -a --exclude='._*' --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
       --exclude='stdout.log' --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
-rsync -a --include='*/' --include='trace*.txt' --exclude='*' "$REMOTE:~/bench/results/" "$tmp/"
+rsync -a --exclude='._*' --include='*/' --include='trace*.txt' --exclude='*' "$REMOTE:~/bench/results/" "$tmp/"
 mkdir -p results/pipeline_info
 for f in "$tmp"/*/pipeline_info/trace*.txt; do
     [ -e "$f" ] || continue

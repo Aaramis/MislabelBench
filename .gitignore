@@ -15,6 +15,15 @@ results/**/stdout.log
 # from the .mis and the cell's truth.json, which are both committed, and rebuilt for all 854 cells
 # in seconds by bin/analyses.sh. Spot-checked byte-identical against the cluster's copies.
 results/**/score.json
+
+# The per-cell datasets, rebuilt from their seeds by slurm/make_grid.sh and slurm/make_foreign.sh in
+# under a minute with no cluster and no container. 86 MB of near-copies of one taxonomy and one
+# alignment; what is committed is the truth.json each is scored against, and data/README.md records
+# the check that they come back byte-identical.
+data/injected/*/*.tax
+data/injected/*/*.fasta
+data/foreign/*/*.tax
+data/foreign/*/*.fasta
 work/
 .nextflow/
 .nextflow.log*

@@ -27,7 +27,11 @@ def intent(slurm_dir):
     """outdir name -> {declared value: [scripts that declare it]}, from the job scripts."""
     out = defaultdict(lambda: defaultdict(list))
     for script in sorted(Path(slurm_dir).glob("*.sh")):
-        text = script.read_text()
+        # errors="replace" because *.sh also matches ._baseline.sh and the like: AppleDouble
+        # resource forks, which an rsync from a Mac leaves beside every file it copies and which
+        # are binary. They match neither regex below, so tolerating them is the whole fix; dying
+        # on one stopped the gate from running at all on the cluster.
+        text = script.read_text(errors="replace")
         od, tr = OUTDIR_RE.search(text), TRUST_RE.search(text)
         if od and tr:
             out[od.group(1)][tr.group(1) == "true"].append(script.name)
