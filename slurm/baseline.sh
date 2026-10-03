@@ -1,7 +1,11 @@
 #!/bin/bash
 #SBATCH --job-name=baseline
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=48G
+# 128G, matching sizes.sh, which runs the same 7051-sequence set. 48G was 33% headroom over a
+# measured process-tree peak of 36 GB, and the peak was not known when 48 was chosen: run.json's
+# max_rss_mb said 9.4 GB. The scaling job on the same dataset was OOM-killed at 32G, which is how
+# close this was.
+#SBATCH --mem=128G
 #SBATCH --time=24:00:00
 #SBATCH --exclusive
 
