@@ -9,9 +9,10 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Nine more came later, from repatriating the results, cloning the
+done during the review itself. Eleven more came later, from repatriating the results, cloning the
 repository to see whether it still worked, and reading the traces of runs already published, rather
-than from reading the code; they are at the end under their own heading.
+than from reading the code; they are at the end under their own heading. One of those eleven changes
+a published number by a factor of three.
 
 ## What was reviewed
 
@@ -227,8 +228,26 @@ trusted runs, which is the case that matters at a factor of two per core between
 `verify_runs.py` names them with their host now; `cpu-node-123`, which carries the four baselines,
 reports `epyc-9754` to Slurm, the model their script pinned.
 
-All of these came out of one test that should have been run a day earlier: clone the repository into
-an empty directory and rebuild. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
+**30. A missing `.mis` scored as nought flags rather than failing.** `score_injection.py` tolerated a
+path that did not exist, which was meant to make `--baseline-mis` optional and applied to the run
+being scored too. An unexpanded shell glob therefore produced recall 0.000 for six conditions in a
+row with no error. An absent baseline was worse: it came back as nought baseline flags, which would
+have counted every flag in the run as added. Both fatal now; `aggregate_grid.py` over all 180 cells
+still reproduces its committed summary unchanged, so nothing depended on the tolerance.
+
+**31. Peak memory was the largest child, not the process tree.** `run.json`'s `max_rss_mb` is
+`ru_maxrss` over the waited-for children. The comment defending that in `resource_usage.py` stated
+its own undoing in the next sentence — "it would understate a tool that ran several at once" — and
+the fork does, as soon as it has more than one thread. Against the Nextflow traces the tree peak is
+**1.07x the largest child at T1, 3.55x at T8, 3.15x at T16** for the fork, and a flat 1.44 to 1.48
+for upstream, so the gap appears exactly where concurrency does. At 7 051 sequences the fork peaks
+at **36 GB, not 9.4**, and the memory ratio against upstream is about **45x rather than 16x**. Both
+measures are printed now. `process_timed` was also asking for a flat `16.GB`, below the real peak
+above about 3 400 sequences; only the job scripts' `--mem` kept those runs alive.
+
+All of these came out of tests that should have been run earlier: clone the repository into an empty
+directory and rebuild, and read the traces of runs already published rather than the records derived
+from them. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
 committed tables come back byte-identical, the two that move being the ones that read the upstream
 grid while it is still growing.
 
