@@ -58,16 +58,41 @@ Staging is then 11 MB per fold and 275 MB in total however many tasks there are,
 multiplied by the shard count. `--folds_per_job` becomes the group size, Nextflow's own scheduler
 replaces the `srun` loop, and the Slurm executor places the tasks.
 
-## The one thing that has to be checked first
+## Checked: a one-fold task directory is enough
 
 `-folds i/N` is a stride over the fold list in `manifest.json`, and the manifest names all 25 folds
-whatever the taskdir holds. **Does `-stage loo-place -taskdir X -folds i/25` work when X contains
-`manifest.json`, `model` and only `fold_i`?** If it does, the design above stands as written. If the
-tool insists on finding every fold the manifest lists, the fold directories have to be staged
-together and the choice is between the 275 MB-per-shard copy and patching the manifest per task.
+whatever the taskdir holds, so it was not obvious that a subset would work. `slurm/fold_subset_probe.sh`
+builds a directory holding `manifest.json`, `model` and `fold_007` only and runs
+`-stage loo-place -folds 7/25` against it:
 
-That is a two-minute test on the cluster and it has not been run, because a one-core job landing on
-the node of a timed scaling run would contaminate the measurement it is there to support.
+```
+staged for fold_007: 12M against 284M for the whole directory
+[epang-l1o] placed 1/1 folds (1 at a time, 8 threads each, 22.1s)
+exit status: 0
+jplace: 786803 bytes
+```
+
+So the design above stands as written, with **12 MB staged per fold**.
+
+## What the shard-shaped version actually measures
+
+The `srun` fan-out was run on this dataset, three replicates per node count:
+
+| N | placement | total |
+|---|---|---|
+| 1 | 195.59 ± 0.67 | 265.93 |
+| 2 | 123.93 ± 27.14 | 193.95 |
+| 4 | 197.57 ± 134.08 | 267.99 |
+
+**N=4 is no faster than N=1**, and the per-shard logs say why: in all three replicates three shards
+finish in 56 to 62 s, which is what six folds at 9.3 s each predicts, and one takes 124, 207 or
+258 s. One straggling node per allocation sets the step time. At 140 of a node's ~510 cores the
+other 370 go to other tenants, and `--exclusive` on four nodes is 2 040 CPUs against a 600-CPU
+quota, so this is not fixable by asking for the nodes.
+
+That is an argument *for* the per-fold design rather than against it: Nextflow retries a failed or
+lost task and reschedules, where a shard that lands on a slow node holds the whole step. It is not
+an argument that the pipeline will beat 1.58x at N=2, which remains the number to match.
 
 ## What this does not change
 
