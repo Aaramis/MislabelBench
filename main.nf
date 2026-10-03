@@ -86,6 +86,7 @@ workflow {
         STAGEDREFERENCE(ch_by_impl.fork)
         STAGEDLOOTASKS(
             STAGEDREFERENCE.out.refjson
+                .join(STAGEDREFERENCE.out.model)
                 .join(ch_by_impl.fork.map { meta, fasta, tax -> tuple(meta, fasta, tax) })
         )
 

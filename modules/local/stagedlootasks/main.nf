@@ -14,7 +14,13 @@ process STAGEDLOOTASKS {
         'quay.io/biocontainers/sativa-epang:0.10.2--py314hab16a5f_0' }"
 
     input:
-    tuple val(meta), path(refjson), path(fasta), path(tax)
+    // run.model is not optional and not cosmetic. The tool looks for <name>.model beside the
+    // refjson, and without it the log says "EPA-ng model: GTR+G" instead of naming the file: it
+    // falls back to a default substitution model, writes no model into the task directory, and
+    // exits 0. Every fold would then be placed under a model the reference stage did not fit, and
+    // the .mis would differ from the single-process path for a reason that has nothing to do with
+    // distributing anything. The declared output run.l1o_tasks/model is what caught it.
+    tuple val(meta), path(refjson), path(model), path(fasta), path(tax)
 
     output:
     tuple val(meta), path("run.l1o_tasks/manifest.json"), emit: manifest
@@ -40,11 +46,20 @@ process STAGEDLOOTASKS {
     _timeit.py --stdout stage.log -- \\
         sativa-epang -r ${refjson} -T ${meta.threads} -n run -o . -stage loo-tasks \\
         > timing.json
+
+    # Said plainly here rather than left to Nextflow's missing-output message, because the cause
+    # and the symptom are far apart: a fallback model produces no model file at all.
+    grep -q 'EPA-ng model: .*run.model' stage.log || {
+        echo 'loo-tasks did not use the fitted model; stage.log says:' >&2
+        grep 'EPA-ng model' stage.log >&2
+        exit 1
+    }
     """
 
     stub:
     """
     mkdir -p run.l1o_tasks
+    echo '[epang-l1o] EPA-ng model: run.model' > stage.log
     echo '{"n_folds": 3}' > run.l1o_tasks/manifest.json
     echo 'model' > run.l1o_tasks/model
     for i in 000 001 002; do
@@ -53,6 +68,5 @@ process STAGEDLOOTASKS {
         echo 'query' > run.l1o_tasks/fold_\$i/query.fasta
     done
     echo '{"wall_sec": 0.0, "returncode": 0, "timed_out": false, "max_rss_mb": 0.0}' > timing.json
-    touch stage.log
     """
 }
