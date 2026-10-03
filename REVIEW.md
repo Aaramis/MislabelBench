@@ -9,12 +9,13 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Fourteen more came later, from repatriating the results, cloning the
-repository to see whether it still worked, and reading the traces of runs already published, rather
-than from reading the code; they are at the end under their own heading. One of those fourteen
-changes a published number by a factor of three, one is a job that the corrected number predicted
-would run out of memory and then did, and one was introduced by the review itself and ran the whole
-repository on a login node.
+done during the review itself. Sixteen more came later, from repatriating the results, cloning the
+repository to see whether it still worked, reading the traces of runs already published, and running
+newly written code for the first time, rather than from reading it; they are at the end under their
+own heading. One of those sixteen changes a published number by a factor of three, one is a job that
+the corrected number predicted would run out of memory and then did, one was introduced by the
+review itself and ran the whole repository on a login node, and one would have placed every fold
+under the wrong substitution model.
 
 ## What was reviewed
 
@@ -280,6 +281,22 @@ happen to be committed and deterministic. The list goes over stdin now.
 
 This one was introduced during the review, in tooling written an hour earlier to make a different
 hazard safer.
+
+**35. `determinism.sh` cleared a directory that was not there.** `rm -rf work_det
+results/determinism` runs after `nf_launch_dir` has changed the working directory, so the relative
+path resolved under `.nf/determinism`, where nothing of the sort exists; the outdir the job promises
+to clear was never cleared. Found from the other side, when a stray run wrote a trace file into
+`results/determinism` and left every other file in it dated three days earlier. Absolute now, and
+the other twenty-one scripts were checked: every other `rm -rf` already uses an absolute path.
+
+**36. The staged path's flags never arrived, and then its model did not either.** Both found on the
+first real runs of the new code, both exiting 0. `withName: 'SATIVA|SATIVAEPANG'` does not match
+`STAGEDREFERENCE`, so the tool ran without `-x`, printed its usage and stopped after 0.21 s — and
+would have run `-m thorough`. Then `loo-tasks` was given no `run.model`, fell back to `GTR+G`, and
+would have placed every fold under a model the reference stage never fitted, producing a `.mis`
+that differs from the single-process one for a reason unrelated to distribution. What caught both
+was a declared output, `run.refjson` and `run.l1o_tasks/model`; nothing in this repository would
+have. After the fixes the two routes give byte-identical output, 93 flags and the same md5.
 
 **A rule that came out of three false passes.** This check, the `set -- $pair` in the detection-law
 comparison, and the matched-versus-unmatched check that compared two paths neither of which existed
