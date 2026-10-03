@@ -137,6 +137,17 @@ for i in "${!pids[@]}"; do
     [ "$st" = "0" ] || { echo "placement task $i failed with status $st" >&2; failed=1; }
 done
 [ "$failed" = "0" ] || { echo "a placement task failed; the timings below would be meaningless" >&2; exit 1; }
+
+# And a check that does not depend on the tool, because the tool does not fail when folds fail. An
+# OOM-killed run logged "[epang-l1o] EPA-ng FAIL fold 18:" with nothing after the colon, then
+# "placed 7/12 folds", and carried on; the only symptom was the scoring stage crashing on an empty
+# jplace. Every fold must have a placement and no placement may be empty.
+n_folds=$(python3 -c "import json; print(json.load(open('$OUT/run.l1o_tasks/manifest.json'))['n_folds'])")
+n_placed=$(ls "$OUT"/run.l1o_tasks/fold_*/epa_result.jplace 2>/dev/null | wc -l | tr -d ' ')
+n_empty=$(find "$OUT/run.l1o_tasks" -name epa_result.jplace -size 0 | wc -l | tr -d ' ')
+[ "$n_placed" = "$n_folds" ] || { echo "only $n_placed of $n_folds folds were placed" >&2; exit 1; }
+[ "$n_empty" = "0" ] || { echo "$n_empty placements are empty files" >&2; exit 1; }
+echo "all $n_folds folds placed, none empty"
 t3=$(now)
 
 se -r "$OUT/run.refjson" -C 0.4 -S -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"

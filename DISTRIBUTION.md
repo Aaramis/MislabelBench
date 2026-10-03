@@ -90,9 +90,36 @@ finish in 56 to 62 s, which is what six folds at 9.3 s each predicts, and one ta
 other 370 go to other tenants, and `--exclusive` on four nodes is 2 040 CPUs against a 600-CPU
 quota, so this is not fixable by asking for the nodes.
 
-That is an argument *for* the per-fold design rather than against it: Nextflow retries a failed or
-lost task and reschedules, where a shard that lands on a slow node holds the whole step. It is not
-an argument that the pipeline will beat 1.58x at N=2, which remains the number to match.
+That is an argument *for* splitting the work finer rather than against it: Nextflow reschedules a
+task that lands on a slow node, where a shard holds the whole step. It is not an argument that the
+pipeline will beat 1.58x at N=2, which remains the number to match.
+
+## One task per fold is too fine, and the logs say how fine is fine
+
+The tool reports its own concurrency, and at eight threads it is always the same:
+
+```
+placed 25/25 folds (4 at a time, 2 threads each, 194.4s)    7.8 s per fold
+placed  6/6  folds (4 at a time, 2 threads each,  55.9s)    9.3 s per fold
+placed  1/1  fold  (1 at a time, 8 threads each,  22.1s)   22.1 s per fold
+```
+
+**EPA-ng parallelises badly across threads and well across folds.** Given eight threads it runs four
+placements of two threads each; given one fold it can only run one placement on eight threads, and
+that costs **2.4 to 2.8 times more per fold**. So a task holding a single fold is the worst possible
+granularity, and `--folds_per_job` has a floor rather than being free to choose: at eight threads it
+should be at least four, which is the tool's own internal concurrency.
+
+Nothing here says what that internal number is at other thread counts — every run in this repository
+places with `-T 8`. That is the first thing the staged pipeline should measure.
+
+## The tool does not fail when folds fail
+
+An OOM-killed run logged `[epang-l1o] EPA-ng FAIL fold 18:`, with nothing after the colon, then
+`placed 7/12 folds`, and carried on. The only symptom was the scoring stage crashing later on an
+empty jplace. The fold count in the log is the sole signal, so `scaling.sh` now counts the
+placements itself before scoring — every fold must have one and none may be empty — and the staged
+pipeline needs the same check between its placement and scoring stages.
 
 ## What this does not change
 
