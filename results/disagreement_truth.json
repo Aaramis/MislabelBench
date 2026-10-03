@@ -1,0 +1,91 @@
+{
+  "condition_a": "upstream_raxml_T8__rep1",
+  "condition_b": "epang_T8_K25__rep1",
+  "cells": 94,
+  "injected_total": 5669,
+  "buckets": {
+    "both": {
+      "injected": 2251,
+      "untouched": 8884
+    },
+    "a only": {
+      "injected": 40,
+      "untouched": 1304
+    },
+    "b only": {
+      "injected": 642,
+      "untouched": 1795
+    }
+  },
+  "missed_by_both": 2736,
+  "distances": {
+    "class": {
+      "cells": 30,
+      "buckets": {
+        "both": {
+          "injected": 724,
+          "untouched": 2846
+        },
+        "a only": {
+          "injected": 9,
+          "untouched": 399
+        },
+        "b only": {
+          "injected": 238,
+          "untouched": 594
+        }
+      }
+    },
+    "family": {
+      "cells": 30,
+      "buckets": {
+        "both": {
+          "injected": 771,
+          "untouched": 2866
+        },
+        "a only": {
+          "injected": 5,
+          "untouched": 447
+        },
+        "b only": {
+          "injected": 200,
+          "untouched": 583
+        }
+      }
+    },
+    "genus": {
+      "cells": 30,
+      "buckets": {
+        "both": {
+          "injected": 713,
+          "untouched": 2839
+        },
+        "a only": {
+          "injected": 26,
+          "untouched": 414
+        },
+        "b only": {
+          "injected": 204,
+          "untouched": 558
+        }
+      }
+    },
+    "order": {
+      "cells": 4,
+      "buckets": {
+        "both": {
+          "injected": 43,
+          "untouched": 333
+        },
+        "a only": {
+          "injected": 0,
+          "untouched": 44
+        },
+        "b only": {
+          "injected": 0,
+          "untouched": 60
+        }
+      }
+    }
+  }
+}

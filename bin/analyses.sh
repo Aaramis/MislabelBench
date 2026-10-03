@@ -60,6 +60,20 @@ paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --a epang_T8_K5__rep1 --b epang_T8_K5_tree__rep1 \
     --out results/paired_epang_T8_K5_vs_epang_T8_K5_tree.json
 
+# Where the two tools disagree, injected truth says which one is right. On un-injected data this is not
+# answerable; here it is arithmetic.
+step "when the tools disagree on an injected cell, who is right?"
+if ls "$RUNS"/*__upstream_raxml_T8__rep1 >/dev/null 2>&1; then
+    disagreement_truth.py --injected-dir "$INJ" --runs-dir "$RUNS" \
+        --condition-a upstream_raxml_T8__rep1 --condition-b epang_T8_K25__rep1 \
+        --out results/disagreement_truth.json
+    paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
+        --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
+        --out results/paired_upstream_vs_epang_T8_K25.json
+else
+    echo "   skipped: no upstream cells yet"
+fi
+
 step "the two columns, and where the stem calls sit"
 column_comparison.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition epang_T8_K25__rep1 \
     --out results/column_comparison.json >/dev/null
