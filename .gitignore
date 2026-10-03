@@ -11,6 +11,10 @@ results/report.html
 results/concordance_details.tsv
 results/concordance_vs_gamma_details.tsv
 results/**/stdout.log
+# score.json is score_injection.py's per-cell output, written back into the run directory. Derived
+# from the .mis and the cell's truth.json, which are both committed, and rebuilt for all 854 cells
+# in seconds by bin/analyses.sh. Spot-checked byte-identical against the cluster's copies.
+results/**/score.json
 work/
 .nextflow/
 .nextflow.log*
