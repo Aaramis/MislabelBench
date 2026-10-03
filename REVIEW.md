@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-one more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -344,6 +344,25 @@ from the counts the record does hold, all five p-values match to three figures, 
 the non-tied pairs and `min(wins, n - wins)` as the tail, both correctly. What was wrong was the
 reading. `paired_conditions.py` records and prints the losses and the ties now, because a field that
 has to be derived is a field someone will default to zero.
+
+**41. One numeric default stood where a measurement belongs.** `resource_usage.py` read
+`d.get("user_cpu_sec") or 0` and `d.get("max_rss_mb") or 0` into the tuples behind the medians of
+CPU time and peak memory. A record missing either field would have put a zero into a published
+median and shifted it down silently. It has never fired — all 56 trusted records with a `wall_sec`
+carry both fields, none zero — which is the reason to make it loud rather than leave it, since the
+records added next are the ones nobody has checked. Such a record is now excluded and named.
+
+Found by sweeping for the shape rather than waiting for it: every defaulting `.get` in `bin/` was
+inventoried, and the rest are dict lookups on internal structures or accumulator initialisations —
+`collateral_locality.py`'s `.get(d, (0, 0))` is the starting value for a new key, not a substitute
+for data.
+
+Denominators were the other half of that sweep, since the judgeability error was a denominator and
+not a default. `conflict_enrichment.py`'s base rate uses `len(tax)` and draws its conflicts from the
+same population, and all 870 flagged names across both baseline runs are in that taxonomy, so the
+group sizes and the expected counts are over one population. The unguarded divisions that remain
+would raise `ZeroDivisionError` rather than print a wrong number, and a crash announces itself; six
+guards would be churn, and the class worth hunting is the silent one.
 
 This is the third instance of one shape in this review — an absent thing read as a benign value. The
 others were a `cmp -s` on two paths neither of which existed and a `set -- $pair` that did not
