@@ -33,15 +33,18 @@ and not the fold count but the proportion of a sequence's surviving relatives th
 label, and recall runs 0.87 down to 0.01 across that range.
 
 **What the fork does find, which version 1 missed.** On the complete 180-cell grid the fork detects
-more than upstream at intermediate *k*, and **no cell in 180 favours upstream at any *k***:
+more than upstream at intermediate *k*:
 
-| *k* | cells | mean difference | fork better | upstream better | sign test |
-|---|---|---|---|---|---|
-| 1 | 36 | +0.006 | 14 | 0 | 0.064 |
-| 2 | 36 | **+0.240** | 34 | 0 | 1.2e-10 |
-| 3 | 36 | +0.152 | 34 | 0 | 1.2e-10 |
-| 5 | 36 | +0.104 | 28 | 0 | 1.1e-07 |
-| 10 | 36 | +0.005 | 9 | 0 | 0.065 |
+| *k* | cells | mean difference | fork better | upstream better | tied | sign test |
+|---|---|---|---|---|---|---|
+| 1 | 36 | +0.006 | 14 | 5 | 17 | 0.064 |
+| 2 | 36 | **+0.240** | 34 | **0** | 2 | 1.2e-10 |
+| 3 | 36 | +0.152 | 34 | **0** | 2 | 1.2e-10 |
+| 5 | 36 | +0.104 | 28 | 1 | 7 | 1.1e-07 |
+| 10 | 36 | +0.005 | 9 | 2 | 25 | 0.065 |
+
+At *k*=2 and *k*=3 no cell of the 36 favours upstream. Over the whole grid the fork is better in
+119 cells, upstream in 8, and the two tie in 53.
 
 Both ends are flat for opposite reasons: *k*=1 is a ceiling, where one relabelled sequence per group
 leaves the rest of the group correct and both tools detect 0.92 and 0.94, and *k*=10 is a floor,

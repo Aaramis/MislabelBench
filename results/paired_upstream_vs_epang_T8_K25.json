@@ -9,6 +9,8 @@
       "mean_difference": 0.0063,
       "sd_of_difference": 0.0247,
       "cells_b_greater": 14,
+      "cells_a_greater": 5,
+      "cells_tied": 17,
       "cells_compared": 19,
       "sign_test_p": 0.0636,
       "reading": "no difference"
@@ -19,6 +21,8 @@
       "mean_difference": 0.2401,
       "sd_of_difference": 0.1281,
       "cells_b_greater": 34,
+      "cells_a_greater": 0,
+      "cells_tied": 2,
       "cells_compared": 34,
       "sign_test_p": 1.16e-10,
       "reading": "b better in most cells"
@@ -29,6 +33,8 @@
       "mean_difference": 0.1522,
       "sd_of_difference": 0.1003,
       "cells_b_greater": 34,
+      "cells_a_greater": 0,
+      "cells_tied": 2,
       "cells_compared": 34,
       "sign_test_p": 1.16e-10,
       "reading": "b better in most cells"
@@ -39,6 +45,8 @@
       "mean_difference": 0.1037,
       "sd_of_difference": 0.0896,
       "cells_b_greater": 28,
+      "cells_a_greater": 1,
+      "cells_tied": 7,
       "cells_compared": 29,
       "sign_test_p": 1.12e-07,
       "reading": "b better in most cells"
@@ -49,6 +57,8 @@
       "mean_difference": 0.0047,
       "sd_of_difference": 0.0189,
       "cells_b_greater": 9,
+      "cells_a_greater": 2,
+      "cells_tied": 25,
       "cells_compared": 11,
       "sign_test_p": 0.0654,
       "reading": "no difference"

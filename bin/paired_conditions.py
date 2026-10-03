@@ -75,7 +75,8 @@ def main():
     # informative statistic is how often the sign goes one way, not the mean over the spread. A
     # two-sided sign test needs no assumption about the shape of the differences, which is what
     # recommends it over a t-statistic on 36 cells of very unequal difficulty.
-    print(f"{'k':>3}{'cells':>7}{'mean b-a':>11}{'sd':>9}{'b>a':>9}{'sign p':>10}  reading")
+    print(f"{'k':>3}{'cells':>7}{'mean b-a':>11}{'sd':>9}{'b>a':>5}{'a>b':>5}{'tied':>6}"
+          f"{'sign p':>11}  reading")
     rows = []
     for k in sorted(groups):
         d = groups[k]
@@ -87,9 +88,15 @@ def main():
         pv = sign_test(wins, n)
         reading = ("no difference" if pv > 0.05 else
                    f"b {'better' if wins * 2 > n else 'worse'} in most cells")
-        print(f"{k:>3}{len(d):>7}{m:+11.4f}{sd:9.4f}{wins:>5}/{n:<3}{pv:10.2g}  {reading}")
+        print(f"{k:>3}{len(d):>7}{m:+11.4f}{sd:9.4f}{wins:>5}{n - wins:>5}{len(d) - n:>6}"
+              f"{pv:11.2g}  {reading}")
+        # cells_a_greater is recorded even though it is n - wins, because it was not, and a
+        # throwaway script reading these records with .get("cells_a_greater", 0) produced a
+        # published claim that no cell in 180 favours the comparator at any k. Eight do. A field
+        # that has to be derived is a field someone will default to zero.
         rows.append({"k": k, "cells": len(d), "mean_difference": round(m, 4),
                      "sd_of_difference": round(sd, 4), "cells_b_greater": wins,
+                     "cells_a_greater": n - wins, "cells_tied": len(d) - n,
                      "cells_compared": n, "sign_test_p": float(f"{pv:.3g}"),
                      "reading": reading})
     if args.out:
