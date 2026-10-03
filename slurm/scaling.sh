@@ -98,11 +98,28 @@ t2=$(now)
 
 # One placement task per node, each taking every Nth fold. -folds i/N needs no knowledge of
 # how many folds there are, which is the point of the stride form for a fan-out.
+# Each shard says which node it ran on and how long it took, into its own file. Without that a
+# straggler is invisible: at N=4 three shards finish in 56 to 62 s, exactly what six folds predict,
+# and one takes 124 to 258 s, in all three replicates. Which node that is decides whether the cause
+# is the allocation sharing a node with another tenant or something about the shard itself, and the
+# combined log cannot say because the four shards interleave.
 pids=()
 for i in $(seq 0 $((N - 1))); do
-    srun --exclusive -N1 -n1 -c "$THREADS" \
-        singularity exec -B "$OUT:$OUT" --pwd "$OUT" "$IMG" \
-        sativa-epang -stage loo-place -taskdir "$OUT/run.l1o_tasks" -T "$THREADS" -folds "${i}/${N}" &
+    (
+        s0=$(now)
+        srun --exclusive -N1 -n1 -c "$THREADS" \
+            singularity exec -B "$OUT:$OUT" --pwd "$OUT" "$IMG" \
+            sativa-epang -stage loo-place -taskdir "$OUT/run.l1o_tasks" -T "$THREADS" \
+            -folds "${i}/${N}" > "$OUT/place_shard${i}.log" 2>&1
+        st=$?
+        node=$(srun --exclusive -N1 -n1 -c1 hostname 2>/dev/null || echo unknown)
+        python3 -c "
+import json, sys
+json.dump({'shard': int(sys.argv[1]), 'node': sys.argv[2], 'sec': round(float(sys.argv[3]), 2),
+           'status': int(sys.argv[4])}, open(sys.argv[5], 'w'))
+" "$i" "$node" "$(echo "$(now) - $s0" | bc)" "$st" "$OUT/shard${i}.json"
+        exit $st
+    ) &
     pids+=($!)
 done
 # Every placement task is waited on by pid and its status checked. A bare `wait` returns the status
