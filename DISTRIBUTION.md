@@ -1,13 +1,15 @@
-# Distributing the leave-one-out, and why it is not in the harness yet
+# Distributing the leave-one-out
 
 The one thing upstream SATIVA cannot do at any price is place folds outside its own process. The
 fork splits the leave-one-out into four stages — `reference`, `loo-tasks`, `loo-place`, `loo-score` —
-and only the third distributes. Protocol.md claims "a mode that distributes across jobs", and the
-evidence for it comes from `slurm/scaling.sh`, which drives the tool directly with `srun`. The
-pipeline has no staged mode: `grep -rn "folds_per_job\|loo-place\|taskdir\|stage" main.nf modules/
-nextflow.config conf/` returns nothing.
+and only the third distributes. Protocol.md claims "a mode that distributes across jobs".
 
-This is what the design has to account for, measured rather than assumed.
+The pipeline now has the staged mode: `STAGEDREFERENCE`, `STAGEDLOOTASKS`, `STAGEDLOOPLACE` and
+`STAGEDLOOSCORE`, behind `--staged`, with `--folds_per_job` setting the shard size and the `ifb`
+profile putting each task in its own Slurm job. `slurm/scaling.sh` keeps the `srun` version, because
+it is the measurement the pipeline has to match.
+
+The rest of this file is what the design had to account for, measured rather than assumed.
 
 ## What `loo-tasks` actually produces
 
