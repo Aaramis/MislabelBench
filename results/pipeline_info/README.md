@@ -18,7 +18,7 @@ noticed:
 | `trace-threads.txt` | 36 | the thread sweep, complete |
 | `trace-baseline2k.txt`, `trace-ksweep.txt` | 4 | complete |
 | `trace-determinism.txt`, `trace-nf.txt` | 2 | complete |
-| `trace-grid_up_species.txt`, `trace-kexact_k2.txt` | 2 | the two jobs that died within a minute and a half on 3 October |
+| `trace-grid_up_species.txt`, `trace-kexact_k2_attempt1.txt` | 2 | the two jobs that died within a minute and a half on 3 October. The Kexact one is renamed because the successful run an hour later found it already there and wrote nothing, which is the collision the job id in the tag now prevents; the file was moved aside so the next Kexact submission can write its own |
 | `trace-baseline.txt` | 0 | header only. The baseline job's trace was lost before per-tag naming existed, and nothing can recover it |
 
 A resumed run does list its cached tasks, with status `CACHED` rather than `COMPLETED`, so resuming
