@@ -5,17 +5,26 @@
 # same taxon to place it against. Any representative database has one sequence per species by
 # construction, which makes species-level leave-one-out impossible, not merely hard:
 #
-#   GTDB r226 ar53_ssu_reps : 4448 sequences, 4448 distinct species ->  0.0 % judgeable
-#   GTDB r226 ssu_all, archaea : 13754 sequences                    -> 81.5 % judgeable
-#   UNITE v10.0 RefS           : 20295 sequences                    ->  4.3 % judgeable
-#   UNITE v10.0 RepS           : 81842 sequences                    -> 10.9 % judgeable
+# Judgeable at species, every row by one rule in bin/dataset_shape.py, as a fraction of the whole
+# set. The two sets the benchmark actually runs on are the two GTDB subsets:
 #
-# Those two were 8.5 % and 85.7 % until the unresolved-label forms were counted properly; see
-# unite_fungi below. RepS is still the right choice and by a much smaller margin than it looked,
-# and 10.9 % is a weak instrument rather than a strong one.
+#   GTDB r226 ar53_ssu_reps     :  4448 sequences ->  0.0 %   one sequence per species
+#   gtdb_arc2k, the grid's set  :  2023 sequences -> 74.9 %
+#   gtdb_arc1200, the headline  :  7051 sequences -> 72.7 %
+#   UNITE v10.0 RefS            : 20295 sequences ->  4.3 %
+#   UNITE v10.0 RepS, secondary : 81842 sequences -> 10.9 %
 #
-# Measured on the released files, not assumed. The same reasoning rules out RefS despite it
-# being the more curated UNITE subset.
+# The two UNITE rows were published as 8.5 % and 85.7 % until the unresolved-label forms were
+# counted properly; see unite_fungi below. RepS is still the right choice of the two and by a much
+# smaller margin than it looked, and 10.9 % is a weak instrument rather than a strong one.
+#
+# The primary sets were checked for the same defect and do not have it. GTDB writes an unnamed
+# species per cluster -- s__JAJYEA01 sp021809545, 595 such labels over 1235 sequences at 2023, the
+# largest holding 32 -- so two sequences sharing one are conspecific by GTDB's own definition.
+# There is no catch-all label at any rank, no empty rank, and every lineage is seven deep. That is
+# the opposite of Cortinarius_sp, which 62129 sequences share and which asserts nothing.
+#
+# Measured on the released files, not assumed.
 
 datasets:
 

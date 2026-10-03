@@ -19,7 +19,11 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-OUTDIR_RE = re.compile(r'--outdir\s+"\$BENCH_ROOT/results/([A-Za-z0-9_]+)"')
+# The outdir may carry a shell variable -- results/staged_timed_f${FPJ} -- in which case the
+# literal prefix before it is what identifies the family of directories the script writes. Without
+# this the three staged_timed outdirs went unclaimed, which is harmless when their flag happens to
+# be right and silent when it is not.
+OUTDIR_RE = re.compile(r'--outdir\s+"\$BENCH_ROOT/results/([A-Za-z0-9_]*)(\$\{[^}]+\})?"')
 TRUST_RE = re.compile(r"--timing_trusted\s+(true|false)")
 
 
@@ -34,7 +38,9 @@ def intent(slurm_dir):
         text = script.read_text(errors="replace")
         od, tr = OUTDIR_RE.search(text), TRUST_RE.search(text)
         if od and tr:
-            out[od.group(1)][tr.group(1) == "true"].append(script.name)
+            # A trailing variable makes this a prefix claim rather than an exact name.
+            key = od.group(1) + ("*" if od.group(2) else "")
+            out[key][tr.group(1) == "true"].append(script.name)
     return out
 
 
@@ -55,10 +61,12 @@ def main():
     wrong, unknown, checked, fixed = defaultdict(int), defaultdict(int), 0, 0
     for f in sorted(Path(".").glob(args.glob)):
         name = f.parts[1]
-        if name not in declared:
+        key = name if name in declared else next(
+            (k for k in declared if k.endswith("*") and name.startswith(k[:-1])), None)
+        if key is None:
             unknown[name] += 1
             continue
-        want = next(iter(declared[name]))
+        want = next(iter(declared[key]))
         rec = json.loads(f.read_text())
         checked += 1
         if bool(rec.get("timing_trusted")) != want:

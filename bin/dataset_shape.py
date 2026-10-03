@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """What a dataset looks like before anything is aligned, and whether leave-one-out can judge it.
 
-Written for UNITE RepS, where the open question is the alignment, and useful for any unaligned
-reference. Two things decide whether the dataset is usable at all, and neither needs an aligner:
+One tool for every dataset here, so that the judgeability table in the protocol is computed one way
+rather than per dataset. What differs between references is only how they write an unresolved rank,
+which --convention selects. Two things decide whether the dataset is usable at all, and neither needs an aligner:
 
 Length spread. ITS is not 16S: it has no conserved secondary structure to align against, and the
 argument about which aligner to trust is really an argument about how much of the result is gap.
@@ -24,7 +25,8 @@ import statistics as st
 from collections import Counter
 from pathlib import Path
 
-RANKS = ["kingdom", "phylum", "class", "order", "family", "genus", "species"]
+RANKS_UNITE = ["kingdom", "phylum", "class", "order", "family", "genus", "species"]
+RANKS_GTDB = ["domain", "phylum", "class", "order", "family", "genus", "species"]
 
 # What counts as a label one cannot have a sibling in, taken from the full inventory of label forms
 # in UNITE v10.0 RepS. One family of forms per rank, and it took three passes to get right, so the
@@ -42,21 +44,39 @@ RANKS = ["kingdom", "phylum", "class", "order", "family", "genus", "species"]
 # found nothing at any rank, and that is how a judgeability of 85.7 % at species came to be
 # published for a dataset where three sequences in four have no species name. The second pass
 # caught the bare forms and missed Ascomycota_gen_Incertae_sedis, which is the common one.
-UNRESOLVED = re.compile(
+UNRESOLVED_UNITE = re.compile(
     r"^(?:Incertae_sedis|GS\d+|unidentified|unclassified)$"
     r"|_(?:phy|cls|ord|fam|gen|sp)_Incertae_sedis$",
     re.I,
 )
 
+# GTDB has nothing of the kind, which was checked rather than assumed: in gtdb_arc2k and
+# gtdb_arc1200 every lineage is seven ranks deep, no rank is empty, and no label is a catch-all.
+# Its unnamed species are written per cluster -- s__JAJYEA01 sp021809545, 595 such labels over 1235
+# sequences at 2023, the largest holding 32 -- so two sequences sharing one are conspecific by
+# GTDB's own definition and the sibling relation is real. That is the opposite of UNITE's
+# Cortinarius_sp, which 62129 sequences share and which asserts nothing.
+UNRESOLVED_GTDB = re.compile(r"^(?:sp|unidentified|unclassified|Incertae_sedis)$", re.I)
 
-def is_unresolved(label):
-    """label is the part after the x__ prefix."""
-    if not label:
-        return True
-    if UNRESOLVED.search(label):
-        return True
-    # Cortinarius_sp, Fungi_sp: the final token alone, so that _spathulata survives.
-    return label.rsplit("_", 1)[-1].lower() in ("sp", "unidentified", "unclassified")
+CONVENTIONS = {
+    "unite": (RANKS_UNITE, UNRESOLVED_UNITE, True),
+    "gtdb": (RANKS_GTDB, UNRESOLVED_GTDB, False),
+}
+
+
+def make_is_unresolved(pattern, tail_test):
+    def is_unresolved(label):
+        """label is the part after the x__ prefix."""
+        if not label:
+            return True
+        if pattern.search(label):
+            return True
+        # UNITE writes Cortinarius_sp and Fungi_sp, so the final token alone, which leaves
+        # _spathulata and _sporotrichioides standing. GTDB needs no such test.
+        if tail_test:
+            return label.rsplit("_", 1)[-1].lower() in ("sp", "unidentified", "unclassified")
+        return False
+    return is_unresolved
 
 
 def read_fasta_lengths(path):
@@ -75,8 +95,13 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--fasta", required=True)
     p.add_argument("--tax", required=True)
+    p.add_argument("--convention", default="unite", choices=sorted(CONVENTIONS),
+                   help="how this reference writes an unresolved rank")
     p.add_argument("--out", default="shape.json")
     args = p.parse_args()
+
+    RANKS, pattern, tail_test = CONVENTIONS[args.convention]
+    is_unresolved = make_is_unresolved(pattern, tail_test)
 
     lengths = read_fasta_lengths(args.fasta)
     vals = sorted(lengths.values())
@@ -121,6 +146,7 @@ def main():
         judgeable[r] = round(100 * with_sibling / total, 1) if total else None
 
     shape = {
+        "convention": args.convention,
         "n_sequences": len(lengths),
         "n_with_lineage": len(lineages),
         "length": {

@@ -51,4 +51,5 @@ cd "$OUT"
 prepare_unite.py "$src" --subset reps --prefix unite_reps
 echo
 echo "=== what the subset looks like, before any alignment question"
-unite_shape.py --fasta unite_reps.fasta --tax unite_reps.tax --out "$OUT/unite_shape.json"
+dataset_shape.py --convention unite --fasta unite_reps.fasta --tax unite_reps.tax \
+    --out "$OUT/unite_shape.json"

@@ -175,6 +175,22 @@ step "timing: the staged scaling, and how many cores each tool actually uses"
 scaling_summary.py > results/scaling_summary.txt
 resource_usage.py > results/resource_usage.txt
 
+# What each reference can be judged on at all, which is a ceiling on any recall figure and a
+# property of the database rather than of either tool. One rule for every dataset, so that the
+# protocol's table is computed one way: the UNITE rows were published at 85.7 % and 8.5 % when
+# they were not.
+step "judgeability of every reference, by one rule"
+dataset_shape.py --convention gtdb --fasta "$ALN" --tax "$TAX" \
+    --out results/shape_gtdb_arc2k.json
+dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_arc1200.aligned.fasta \
+    --tax data/gtdb/gtdb_arc1200.tax --out results/shape_gtdb_arc1200.json
+if [ -s data/unite/unite_reps.tax ]; then
+    dataset_shape.py --convention unite --fasta data/unite/unite_reps.fasta \
+        --tax data/unite/unite_reps.tax --out results/shape_unite_reps.json
+else
+    echo "    UNITE not fetched here; slurm/fetch_unite.sh gets it"
+fi
+
 step "truth checks, which must pass rather than be read"
 verify_manifests.py
 verify_injection.py --base "$TAX" --injected-dir "$INJ"
