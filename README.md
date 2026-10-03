@@ -69,9 +69,18 @@ append to when they land on one without singularity. Every path in every job scr
 Two rules the scripts enforce, both learned by getting them wrong first.
 
 **A timed run pins the CPU model.** The cluster mixes four generations and the oldest is about half
-the per-core speed of the newest, so `--constraint` is not optional and `cpu_model` goes into every
-`run.json`. Untimed runs, which answer detection questions, do not pin and do not take the node:
-`--exclusive` bills all 510 cores of a node against a 600-core quota and starves every other job.
+the per-core speed of the newest, so `--constraint` is not optional and `cpu_model` goes into
+`run.json` — into 641 of the 949 records, the rest predating the field. Five of those are trusted
+runs, and `verify_runs.py` says so every time it runs; the four baselines among them are on
+`cpu-node-123`, which Slurm reports as `epyc-9754`, the model their script asked for. Untimed runs,
+which answer detection questions, do not pin and do not take the node: `--exclusive` bills all 510
+cores of a node against a 600-core quota and starves every other job.
+
+**A timed run has the machine to itself.** `executor.queueSize = 1` when `params.timed`, which is
+the only cap Nextflow applies across processes: `maxForks` is per process, so setting it through a
+label let one SATIVA and one SATIVAEPANG run side by side, as the baseline trace shows them doing
+for 38 seconds. The allocation was six times larger than the two of them needed, so no published
+number moved, which is luck and not a guarantee.
 
 **A run that is not trusted says so.** `--timing_trusted false` is recorded in `run.json`, and no
 figure reads seconds from a run that carries it.

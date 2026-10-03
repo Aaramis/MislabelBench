@@ -35,7 +35,7 @@ def main():
     if not records:
         sys.exit(f"no run record matched {args.glob}")
 
-    seen, bad, unparsed = Counter(), [], []
+    seen, bad, unparsed, modelless = Counter(), [], [], []
     for f in records:
         try:
             d = json.loads(f.read_text())
@@ -58,6 +58,13 @@ def main():
                 bad.append(f"{f}: n_mislabels says {d.get('n_mislabels')}, "
                            f"{mis[0].name} holds {real}")
 
+        # A trusted run whose CPU model was not recorded cannot be compared with another: the
+        # cluster mixes four generations at about a factor of two per core. Not fatal, because
+        # five such records predate the field and their model is recoverable from the node's
+        # Slurm features, but it has to be visible rather than left to be noticed.
+        if d.get("timing_trusted") and not d.get("cpu_model"):
+            modelless.append(f"{f} (host {d.get('host')})")
+
         # sativa_timing says which of the two causes applies; records written before it
         # existed carry neither it nor the timings, so absence of the keys still counts.
         if "sativa_timing" in d:
@@ -71,6 +78,10 @@ def main():
     if unparsed:
         print(f"  {len(unparsed)} without parsed phase timings, e.g. {unparsed[0]}; "
               "wall_sec is unaffected.", file=sys.stderr)
+    if modelless:
+        print(f"  {len(modelless)} trusted runs with no recorded cpu_model, e.g. {modelless[0]}; "
+              "their seconds are not comparable without the node's Slurm features.",
+              file=sys.stderr)
     for b in bad[:20]:
         print(f"  {b}", file=sys.stderr)
     if bad:
