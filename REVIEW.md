@@ -169,6 +169,27 @@ Worth stating, because an audit that only lists faults does not say what it cove
   directories, and five of six come back byte-identical; the sixth is a timing table still gaining
   replicates.
 
+## The whole of it, reproduced from a clone
+
+The claim the rest of this report rests on, tested rather than asserted, and retested after forty
+commits had changed four output formats:
+
+```
+git clone -b nextflow <repo> fresh && cd fresh
+bash slurm/make_grid.sh && bash slurm/make_foreign.sh
+bin/analyses.sh
+git status --short | grep -v '^??'      # 0 lines
+```
+
+**Zero of the 5 231 tracked files under `results/` differs.** Twenty analysis steps run, the gates
+among them: 1 019 run records checked clean, the same 1 019 agreeing with the `--timing_trusted`
+their job script declared, 196 datasets across five manifests sound, 180 injected cells and 9
+foreign cells verified against their truth, and every grid complete at 180 of 180.
+
+No cluster, no container, no network. The two `make_` scripts rebuild the 189 generated cells from
+their seeds, which is why they are not committed, and `data/README.md` records the check that they
+come back byte-identical.
+
 ## Found after this report was written
 
 The review stopped at the code. Four defects were in what the code produces, and they came out of
