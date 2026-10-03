@@ -24,10 +24,16 @@ BASE_COLUMNS = ["SeqID", "MislabeledLevel", "OriginalLabel", "ProposedLabel", "C
 
 
 def read_mis(path):
-    """Rows of a SATIVA .mis. ';' lines are the header; the column count varies by version."""
+    """Rows of a SATIVA .mis. ';' lines are the header; the column count varies by version.
+
+    A path that does not exist is an error, including for the baseline. It used to give an empty
+    dict, so a glob that never expanded came out as nought flags and a recall of zero rather than
+    as a failure, and an absent baseline came out as nought baseline flags, which would have
+    counted every flag as added. What is optional is passing --baseline-mis at all.
+    """
     rows = {}
     if not Path(path).exists():
-        return rows
+        sys.exit(f"no such .mis: {path}")
     for line in Path(path).read_text(errors="replace").splitlines():
         if not line.strip() or line.startswith(";"):
             continue
