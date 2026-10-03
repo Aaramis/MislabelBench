@@ -59,6 +59,21 @@ cells where the two differ; dealing the folds in tree order instead of by sequen
 and is worse in 18 of 18. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
 sequence's true relatives with it.
 
+**Distribution, which is the one thing upstream cannot do at any price.** Upstream places folds only
+inside its own process. The fork splits the leave-one-out into four stages and the harness runs them
+as separate Slurm jobs, one per group of folds. On 7 051 sequences, 25 folds, one replicate each:
+
+| shards | placement | speedup | efficiency | end-to-end span |
+|---|---|---|---|---|
+| 1 | 194.5 s | 1.00 | — | 374 s |
+| 2 | 111.2 s | 1.75 | 87 % | 320 s |
+| 4 | 56.4 s | 3.45 | 86 % | 314 s |
+
+Two things have to be said together. The placement step distributes at about 86 % efficiency, and
+the end-to-end wall clock saturates near 314 s because Nextflow's scheduling and staging grow with
+the task count, reaching 163 s at four shards. At one shard the pipeline agrees with the `srun`
+version to 0.6 %, which is what shows it does the same work.
+
 **Where those failures belong.** At *k*=10, 92 % of the sequences leave-one-out misses still have a
 correctly labelled neighbour above 99 % identity, so a label conflict inside a cluster catches them
 without any placement. That is a pipeline-level check rather than a tool-level one.
@@ -125,9 +140,9 @@ brought back from the cluster — only `run.json` had been kept for them, and ev
 is computed from the `.mis` beside it. `results/pipeline_info/` holds one Nextflow trace per
 submission, with its gaps listed.
 
-**[`DISTRIBUTION.md`](DISTRIBUTION.md)** is why the distributed leave-one-out is measured by a shell
-script and not by the pipeline, what the fold task directory actually contains, and the design that
-fits it.
+**[`DISTRIBUTION.md`](DISTRIBUTION.md)** is the distributed leave-one-out: what a fold task
+directory actually contains, why the fan-out is one task per group of folds and not per shard or per
+fold, and the measurements on both the `srun` version and the pipeline.
 
 **[`REVIEW.md`](REVIEW.md)** is a pass over every part of this repository looking for defects rather
 than confirming that it works. Twenty findings, three of which had produced a wrong number, with how
