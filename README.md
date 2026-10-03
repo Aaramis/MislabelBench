@@ -45,8 +45,13 @@ more than upstream at intermediate *k*, and **no cell in 180 favours upstream at
 
 Both ends are flat for opposite reasons: *k*=1 is a ceiling, where one relabelled sequence per group
 leaves the rest of the group correct and both tools detect 0.92 and 0.94, and *k*=10 is a floor,
-0.12 and 0.13. Where the two disagree on an injected sequence, across all 11 178 injections, the
-fork alone is right 1 243 times against upstream's 115.
+0.12 and 0.13.
+
+Where the two disagree on an injected sequence, across all 11 178 injections, the fork alone is
+right 1 243 times against upstream's 115. That ratio is the wrong thing to quote alone, so: both
+tools find 4 203, **neither finds 5 617 — half of every mislabel injected**. The fork finds 48.7 %
+of them and upstream 38.6 %. The gap between the tools is real and smaller than the gap between
+either tool and the truth.
 
 **And the cause is the engine, not the fold scheme.** `epang_T8_Kexact` places one sequence per
 fold, which is upstream's own leave-one-out protocol run through EPA-ng, so it separates the two
