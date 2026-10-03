@@ -9,9 +9,9 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Six more came later, from repatriating the results and then cloning
-the repository to see whether it still worked, rather than from reading the code; they are at the end
-under their own heading.
+done during the review itself. Nine more came later, from repatriating the results, cloning the
+repository to see whether it still worked, and reading the traces of runs already published, rather
+than from reading the code; they are at the end under their own heading.
 
 ## What was reviewed
 
@@ -205,6 +205,27 @@ demanded at the top, then used only inside a branch that does not run when
 `donor_pool.aligned.fasta` exists — and it exists, in the repository. So a clone could not rebuild
 the nine foreign cells with everything needed present. Required inside the branch now, and the nine
 cells rebuilt on a Mac with no singularity come back with the Linux md5s.
+
+**27. A timed run was never alone on the machine.** `maxForks` is a per-process directive, so one
+set through `withLabel: process_timed` gives SATIVA one fork and SATIVAEPANG one fork — two tasks at
+a time, not one. `trace-baseline2k.txt` has both submitted at 03:00:12, 0.021 s apart, running
+together for 38 s at 537% and 797% CPU. `executor.queueSize = 1` when timed is the cap that counts
+across processes; verified from two stub runs' traces, where the timed one has no overlap among its
+eight tasks and the untimed one has three. Peak concurrency in the committed traces is 3 tasks and
+23.2 cores, against 140 reserved and a 510-core exclusive node, so no published number moved.
+
+**28. 737 of 949 records said the opposite of their job about their own timings.**
+`--timing_trusted false` arrives as the String `"false"`, which is a true Groovy boolean, so every
+grid and foreign cell recorded `true`. The coercion was fixed earlier and the 115 upstream cells run
+since are right. What protected the tables was `resource_usage.py` skipping anything not named
+`gtdb*` — a name convention doing the work of the flag designed for it. Flags corrected, with
+`resource_usage.txt` unchanged, and `bin/verify_timing_flags.py` added as a gate that reads the
+intent out of `slurm/*.sh` rather than restating it.
+
+**29. `cpu_model` is in 641 of 949 records, and the README said all of them.** Five absentees are
+trusted runs, which is the case that matters at a factor of two per core between generations.
+`verify_runs.py` names them with their host now; `cpu-node-123`, which carries the four baselines,
+reports `epyc-9754` to Slurm, the model their script pinned.
 
 All of these came out of one test that should have been run a day earlier: clone the repository into
 an empty directory and rebuild. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
