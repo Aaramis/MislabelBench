@@ -5,6 +5,12 @@
       "tool": "upstream",
       "flags": 92,
       "at_stem": 37,
+      "near_stem": 39,
+      "stem_band": 0.005,
+      "shoulder_values": [
+        0.507,
+        0.513
+      ],
       "at_one": 33,
       "share_at_two_values": 0.7609
     },
@@ -12,6 +18,12 @@
       "tool": "fork",
       "flags": 93,
       "at_stem": 34,
+      "near_stem": 36,
+      "stem_band": 0.005,
+      "shoulder_values": [
+        0.507,
+        0.509
+      ],
       "at_one": 52,
       "share_at_two_values": 0.9247
     }

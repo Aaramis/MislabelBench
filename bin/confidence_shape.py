@@ -17,6 +17,12 @@ from collections import Counter
 from pathlib import Path
 
 STEM = 0.510
+# The artefact is a spike with a thin shoulder, not a single value, and counting only the spike
+# understates it. On the two baseline sets: 355 flags at exactly 0.510, 391 within 0.005 of it, 405
+# within 0.04 -- the neighbours being 0.507 to 0.511 in ones and twos. So exact equality catches 88 %
+# of the cluster and the band is the better measure of its reach. Both are reported, because the
+# spike is what parent_lhw_coeff predicts and the shoulder is what it does not.
+BAND = 0.005
 
 
 def confidences(path):
@@ -35,14 +41,19 @@ def describe(label, path):
         return {"tool": label, "flags": 0}
     c = Counter(v)
     stem, certain = c.get(STEM, 0), c.get(1.0, 0)
+    near = sum(n for x, n in c.items() if abs(x - STEM) <= BAND)
+    shoulder = sorted(x for x in c if x != STEM and abs(x - STEM) <= BAND)
     print(f"{label}: {len(v)} flags")
-    print(f"  at exactly {STEM}        {stem:5} ({100 * stem / len(v):5.1f}%)")
+    print(f"  at exactly {STEM:.3f}      {stem:5} ({100 * stem / len(v):5.1f}%)")
+    print(f"  within {BAND} of it      {near:5} ({100 * near / len(v):5.1f}%)"
+          + (f", the shoulder at {', '.join(f'{x:.3f}' for x in shoulder)}" if shoulder else ""))
     print(f"  at exactly 1.000        {certain:5} ({100 * certain / len(v):5.1f}%)")
     print(f"  at one of those two     {stem + certain:5} "
           f"({100 * (stem + certain) / len(v):5.1f}%)")
     print(f"  anywhere else           {len(v) - stem - certain:5} "
           f"({100 * (len(v) - stem - certain) / len(v):5.1f}%)")
-    return {"tool": label, "flags": len(v), "at_stem": stem, "at_one": certain,
+    return {"tool": label, "flags": len(v), "at_stem": stem, "near_stem": near,
+            "stem_band": BAND, "shoulder_values": shoulder, "at_one": certain,
             "share_at_two_values": round((stem + certain) / len(v), 4)}
 
 

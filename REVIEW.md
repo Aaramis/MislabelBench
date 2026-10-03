@@ -323,6 +323,24 @@ is otherwise exact: checked against rational arithmetic with `Fraction` and `com
 the published 0.000538 for 8 of 51 at p = 0.037, and `tests/test_scoring.py` now holds that check
 along with the two degenerate rates and the n = 6531 case that overflowed once.
 
+**39. The stem artefact was counted by exact equality and is a cluster.** `confidence_shape.py`
+counts flags at exactly 0.510, which is what `parent_lhw_coeff` predicts — 0.51 to the parent, 0.49
+to the taxon — and the column does spike there. It also has a thin shoulder that exact equality
+misses: on the 7 051-sequence set upstream has 129 flags at exactly 0.510 and **148 within 0.005**,
+the fork 155 and 164, with neighbours at 0.506 to 0.514 in ones and twos. So the published
+concentration is a lower bound, understating the artefact's reach by 6 % for the fork and 15 % for
+upstream. Both figures are reported now, because the spike is what the mechanism predicts and the
+shoulder is what it does not — a few thousandths of placement weight landing somewhere the 0.51/0.49
+split does not account for. No committed number changed; the band is an addition.
+
+**The headline disagreement figure was audited by reimplementation**, not by rereading the script
+that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
+`results/disagreement_truth.json` exactly — 180 cells, 11 178 injected, and the four buckets. The
+recount also surfaced what the README was not saying: **both tools miss 5 617 of the 11 178
+injections, 50.3 %**. The fork finds 48.7 % and upstream 38.6 %, so the gap between the tools is
+real and smaller than the gap between either tool and the truth. Quoting 1 243 against 115 alone
+invited the opposite impression.
+
 Also checked on the added files and found correct: `duplicate_conflicts.py`'s
 `first_disagreement`, which would raise on a single-label group and is only ever called on groups
 filtered to have two, and its `all(n in raw for n in g)` guard, without which a name missing from
