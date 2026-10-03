@@ -112,12 +112,21 @@ for ds, n in sizes:
           f"{fm / um if um else float('nan'):13.1f}{ft / n:13.2f}")
 
 print()
+# The two footprints answer different questions and the thread axis is where they separate. The
+# largest child is what one process needs and is flat in the thread count; the tree is what the
+# machine needs and is not. Which one a reader wants depends on whether they are sizing a node or
+# wondering how large a database they can handle, so the last column says the second outright.
 print("peak memory on the thread axis at 2023 sequences, tree against largest child")
-print(f"{'tool':10}{'T':>4}{'tree MB':>10}{'child MB':>10}{'ratio':>8}")
+print(f"{'tool':10}{'T':>4}{'wall s':>8}{'tree MB':>10}{'child MB':>10}{'ratio':>7}"
+      f"{'tree MB/seq':>13}{'max seqs in 64 GB':>19}")
 for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}")):
     for t in (1, 8, 16):
         v, tr = g.get(("gtdb_arc2k", prefix.format(t))), peaks.get(("gtdb_arc2k", prefix.format(t)))
-        if v:
-            child = st.median(x[2] for x in v)
-            tree = st.median(tr) if tr else float("nan")
-            print(f"{tool:10}{t:>4}{tree:10.0f}{child:10.0f}{tree / child:8.2f}")
+        if not v:
+            continue
+        child = st.median(x[2] for x in v)
+        tree = st.median(tr) if tr else float("nan")
+        wall = st.median(x[0] for x in v)
+        per = tree / 2023
+        print(f"{tool:10}{t:>4}{wall:8.0f}{tree:10.0f}{child:10.0f}{tree / child:7.2f}"
+              f"{per:13.2f}{int(65536 / per):>19,}")

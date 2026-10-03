@@ -47,10 +47,10 @@ tree is the Nextflow trace's process-tree peak; child is run.json's ru_maxrss.
       7051      36250        9396      727       603        49.8         15.6         5.14
 
 peak memory on the thread axis at 2023 sequences, tree against largest child
-tool         T   tree MB  child MB   ratio
-fork         1      2253      2103    1.07
-fork         8      9318      2626    3.55
-fork        16      8397      2668    3.15
-upstream     1       205       138    1.48
-upstream     8       209       142    1.47
-upstream    16       217       150    1.44
+tool         T  wall s   tree MB  child MB  ratio  tree MB/seq  max seqs in 64 GB
+fork         1     152      2253      2103   1.07         1.11             58,850
+fork         8      38      9318      2626   3.55         4.61             14,227
+fork        16      30      8397      2668   3.15         4.15             15,789
+upstream     1    1405       205       138   1.48         0.10            646,728
+upstream     8     636       209       142   1.47         0.10            633,744
+upstream    16     582       217       150   1.44         0.11            610,402
