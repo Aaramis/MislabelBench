@@ -1,0 +1,15 @@
+{
+  "dataset": "gtdb_arc1200",
+  "n_seqs": 7051,
+  "nodes": 2,
+  "threads_per_node": 8,
+  "cores_requested_per_node": 140,
+  "cores_allocated_per_node": "140(x2)",
+  "cpu_model": "AMD EPYC 9754 128-Core Processor",
+  "nodelist": "cpu-node-[121-122]",
+  "reference_sec": 45.71,
+  "loo_tasks_sec": 3.25,
+  "loo_place_sec": 114.57,
+  "loo_score_sec": 21.06,
+  "total_sec": 184.6
+}

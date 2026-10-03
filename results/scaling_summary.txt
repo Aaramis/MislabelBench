@@ -1,4 +1,8 @@
 dataset                 cond           reps            ref   tasks          place   score          total
+gtdb_arc1200            N=1 c=140         3    46.52±1.15    3.15   195.59±0.67   20.66   265.93±1.18
+                        models: ['AMD EPYC 9754 128-Core Proce']
+gtdb_arc1200            N=2 c=140         3    46.00±0.46    2.98   123.93±27.14   21.03   193.95±26.39
+                        models: ['AMD EPYC 9754 128-Core Proce']
 unrecorded, 2023 seqs   N=1 c=8           3     9.98±3.15    0.88    16.39±0.54    2.54    29.78±3.68
                         models: ['AMD EPYC 9554 64-Core Proces']
 unrecorded, 2023 seqs   N=1 c=120         3     8.63±0.23    0.82    16.25±0.17    2.61    28.32±0.41
@@ -9,6 +13,11 @@ unrecorded, 2023 seqs   N=2 c=140         3    10.48±0.05    1.14    17.41±2.5
                         models: ['AMD EPYC 9754 128-Core Proce']
 unrecorded, 2023 seqs   N=4 c=140         3    11.96±1.51    0.97    27.87±7.83    5.78    46.58±8.28
                         models: ['AMD EPYC 9754 128-Core Proce']
+
+gtdb_arc1200:
+  placement speedup N=1->N=2: 1.58x of an ideal 2.00 (79% efficiency)
+  total speedup:              1.37x
+  serial share at N=1:        26.5%  -> Amdahl ceiling 3.78x
 
 unrecorded, 2023 seqs:
   placement speedup N=1->N=2: 1.47x of an ideal 2.00 (73% efficiency)
