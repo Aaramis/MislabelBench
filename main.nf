@@ -74,4 +74,14 @@ workflow {
         .join(SATIVA.out.stdout.mix(SATIVAEPANG.out.stdout))
 
     COLLECTRUN(ch_runs)
+
+    // join() pairs on the meta map and silently drops whatever finds no partner, so a cell that
+    // lost one of its four outputs would never reach COLLECTRUN and the grid would look complete
+    // with one cell missing from it. Counting what arrived is the only place that shows.
+    def expected = datasets.size() * conds.size() * (params.replicates as int)
+    COLLECTRUN.out.run.count().subscribe { n ->
+        if (n != expected) {
+            error "collected ${n} run records for ${expected} cells: a cell lost an output before COLLECTRUN"
+        }
+    }
 }
