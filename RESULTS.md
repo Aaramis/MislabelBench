@@ -67,7 +67,7 @@ badges above each panel of the figure state the regime.
 heuristic off, the reference takes 397 s instead of 214 s at n=1600 and reports 119
 mislabels instead of 118.
 
-Memory: 23 to 308 MB for RAxML, 232 MB to 3.1 GB for EPA-ng. The gain is bought with RAM.
+Memory: 23 to 308 MB for RAxML, 232 MB to 3.1 GB for EPA-ng. The gain is bought with RAM. **Both EPA-ng figures are understated**: they are ru_maxrss over the waited-for children, the largest single child and not the process tree, and the fork runs several at once when threaded. Measured from the Nextflow traces the tree peak is 3.6 times the largest child at eight threads and 1.07 times at one, so the ratio against RAxML is about 45 rather than 18. See `results/resource_usage.txt`, which now prints both.
 
 ## Agreement with unmodified SATIVA
 

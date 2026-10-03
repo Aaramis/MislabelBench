@@ -13,13 +13,36 @@ Medians over replicates, never a single run: upstream differs by a third between
 same CPU model while the fork differs by one percent across the same pair, so one run of upstream is
 not a measurement.
 
-Peak memory is ru_maxrss over the waited-for children, which is the maximum of any one child rather
-than the sum. That is the right number for both tools here, because upstream threads inside one RAxML
-and the fork places folds one after another, so only one memory-heavy process is ever live. It would
-understate a tool that ran several at once.
+Peak memory is read from the Nextflow traces, not from run.json. run.json's max_rss_mb is ru_maxrss
+over the waited-for children, which is the largest single child rather than the process tree, and the
+comment that used to be here said that was fine "because the fork places folds one after another, so
+only one memory-heavy process is ever live" -- while naming its own undoing: "it would understate a
+tool that ran several at once." The fork does. At one thread the two measures agree within 7%; at
+eight the tree peak is 3.7 times the largest child. Both are printed, because the gap is the finding
+and hiding one of them would bury it.
 """
-import json, glob, statistics as st
+import csv, json, glob, re, statistics as st
 from collections import defaultdict
+
+UNITS = {"B": 1 / 1048576, "KB": 1 / 1024, "MB": 1, "GB": 1024, "TB": 1048576}
+TASK = re.compile(r"\w+ \((.+?)/(.+?)/rep(\d+)\)")
+
+
+def trace_peaks():
+    """Process-tree peak RSS in MB, per (dataset, condition), from every trace file."""
+    out = defaultdict(list)
+    for path in glob.glob("results/pipeline_info/trace-*.txt"):
+        for r in csv.DictReader(open(path), delimiter="\t"):
+            if r["status"] != "COMPLETED" or r["name"].startswith("COLLECTRUN"):
+                continue
+            m, raw = TASK.match(r["name"]), r.get("peak_rss", "-")
+            unit = re.match(r"([\d.]+)\s*(B|KB|MB|GB|TB)", raw or "")
+            if m and unit:
+                out[(m.group(1), m.group(2))].append(float(unit.group(1)) * UNITS[unit.group(2)])
+    return out
+
+
+peaks = trace_peaks()
 g = defaultdict(list)
 for f in glob.glob("results/*/runs/*/run.json"):
     d = json.load(open(f))
@@ -73,21 +96,28 @@ for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}
         print(f"{tool:10}{t:>4}{w:9.1f}{c:8.2f}{b / w:15.2f}{100 * (b / w) / t:11.0f}%")
 
 print()
-print("peak memory, both tools at 8 threads, medians over replicates")
-print(f"{'sequences':>10}{'fork MB':>10}{'upstream MB':>13}{'ratio':>8}{'fork MB/kseq':>14}")
+print("peak memory, both tools at 8 threads, medians over replicates.")
+print("tree is the Nextflow trace's process-tree peak; child is run.json's ru_maxrss.")
+print(f"{'sequences':>10}{'fork tree':>11}{'fork child':>12}{'up tree':>9}{'up child':>10}"
+      f"{'tree ratio':>12}{'child ratio':>13}{'fork MB/seq':>13}")
 for ds, n in sizes:
     f, u = g.get((ds, "epang_T8_K25")), g.get((ds, "upstream_raxml_T8"))
+    tf, tu = peaks.get((ds, "epang_T8_K25")), peaks.get((ds, "upstream_raxml_T8"))
     if not (f and u):
         continue
     fm, um = st.median(x[2] for x in f), st.median(x[2] for x in u)
-    print(f"{n:>10}{fm:10.0f}{um:13.0f}{fm / um if um else float('nan'):8.2f}"
-          f"{1000 * fm / n:14.1f}")
+    ft = st.median(tf) if tf else float("nan")
+    ut = st.median(tu) if tu else float("nan")
+    print(f"{n:>10}{ft:11.0f}{fm:12.0f}{ut:9.0f}{um:10.0f}{ft / ut:12.1f}"
+          f"{fm / um if um else float('nan'):13.1f}{ft / n:13.2f}")
 
 print()
-print("peak memory on the thread axis at 2023 sequences")
-print(f"{'tool':10}{'T':>4}{'MB':>9}")
+print("peak memory on the thread axis at 2023 sequences, tree against largest child")
+print(f"{'tool':10}{'T':>4}{'tree MB':>10}{'child MB':>10}{'ratio':>8}")
 for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}")):
     for t in (1, 8, 16):
-        v = g.get(("gtdb_arc2k", prefix.format(t)))
+        v, tr = g.get(("gtdb_arc2k", prefix.format(t))), peaks.get(("gtdb_arc2k", prefix.format(t)))
         if v:
-            print(f"{tool:10}{t:>4}{st.median(x[2] for x in v):9.0f}")
+            child = st.median(x[2] for x in v)
+            tree = st.median(tr) if tr else float("nan")
+            print(f"{tool:10}{t:>4}{tree:10.0f}{child:10.0f}{tree / child:8.2f}")

@@ -37,19 +37,20 @@ upstream     1   1405.0    1.99           1.00        100%
 upstream     8    635.6    7.97           2.21         28%
 upstream    16    581.6   15.93           2.42         15%
 
-peak memory, both tools at 8 threads, medians over replicates
- sequences   fork MB  upstream MB   ratio  fork MB/kseq
-       402       454           99    4.59        1130.3
-       801      1052           57   18.49        1313.7
-      2023      2626          142   18.43        1298.3
-      4001      5359          302   17.77        1339.4
-      7051      9396          603   15.58        1332.5
+peak memory, both tools at 8 threads, medians over replicates.
+tree is the Nextflow trace's process-tree peak; child is run.json's ru_maxrss.
+ sequences  fork tree  fork child  up tree  up child  tree ratio  child ratio  fork MB/seq
+       402       1843         454      148        99        12.4          4.6         4.59
+       801       3584        1052      113        57        31.7         18.5         4.47
+      2023       9318        2626      209       142        44.5         18.4         4.61
+      4001      20582        5359      391       302        52.6         17.8         5.14
+      7051      36250        9396      727       603        49.8         15.6         5.14
 
-peak memory on the thread axis at 2023 sequences
-tool         T       MB
-fork         1     2103
-fork         8     2626
-fork        16     2668
-upstream     1      138
-upstream     8      142
-upstream    16      150
+peak memory on the thread axis at 2023 sequences, tree against largest child
+tool         T   tree MB  child MB   ratio
+fork         1      2253      2103    1.07
+fork         8      9318      2626    3.55
+fork        16      8397      2668    3.15
+upstream     1       205       138    1.48
+upstream     8       209       142    1.47
+upstream    16       217       150    1.44
