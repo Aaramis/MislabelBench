@@ -66,6 +66,16 @@ paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --a epang_T8_K5__rep1 --b epang_T8_K5_tree__rep1 \
     --out results/paired_epang_T8_K5_vs_epang_T8_K5_tree.json
 
+# Strict leave-one-out through EPA-ng, which is the one condition that tells the engine apart from
+# the fold scheme. Runs on whichever cells have it; it is expensive, so that is one or two.
+step "the engine against the fold scheme, on the cells with a Kexact run"
+if ls "$RUNS"/*__epang_T8_Kexact__rep1 >/dev/null 2>&1; then
+    kexact_decomposition.py --injected-dir "$INJ" --runs-dir "$RUNS" \
+        --out results/kexact_decomposition.json
+else
+    echo "    no Kexact run yet"
+fi
+
 # Where the two tools disagree, injected truth says which one is right. On un-injected data this is not
 # answerable; here it is arithmetic.
 step "when the tools disagree on an injected cell, who is right?"

@@ -1,0 +1,101 @@
+SATIVA v0.9.1, released on 2023-08-16. Last version: https://github.com/amkozlov/sativa 
+By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
+
+SATIVA was called as follows:
+
+/usr/local/bin/sativa.py -s inj_phylum_r0.05_k5_s2.fasta -t inj_phylum_r0.05_k5_s2.tax -T 8 -n inj_phylum_r0.05_k5_s2__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_up_missing/work/79/8aca2af79f4dc52eb75d788c5d4fda/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: inj_phylum_r0.05_k5_s2.tax ...
+
+==> Loading reference alignment from file: inj_phylum_r0.05_k5_s2.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Iainarchaeota;c__Iainarchaeia;o__Iainarchaeales;f__GW2011-AR10;g__JACQJF01;s__JACQJF01 sp030651515
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Iainarchaeota;c__Iainarchaeia;o__Iainarchaeales;f__GW2011-AR10;g__JACQJF01;__TAXCLUSTER1__s__JACQJF01 sp030651515
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosotenuis;s__Nitrosotenuis sp010028495
+d__Archaea;p__Halobacteriota;c__Syntropharchaeia;o__Syntropharchaeales;f__Syntropharchaeaceae;g__Syntropharchaeum;s__Syntropharchaeum caldarium
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosotenuis;__TAXCLUSTER2__s__Nitrosotenuis sp010028495
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;s__Methanobacterium sp013403005
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_A;s__Methanobacterium_A sp002067325
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;__TAXCLUSTER3__s__Methanobacterium sp013403005
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__JABMPP01;g__JAGVYD01;s__JAGVYD01 sp018303405
+d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__Aenigmatarchaeales;f__JAHLMR01;g__JAHLMR01;s__JAHLMR01 sp018920255
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__JABMPP01;g__JAGVYD01;__TAXCLUSTER4__s__JAGVYD01 sp018303405
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__JAPDLS01;f__Haiyanarchaeaceae;g__Haiyanarchaeum;s__Haiyanarchaeum thermophilum
+d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Halarchaeoplasmatales;f__Halarchaeoplasmataceae;g__Natronoplasma;s__Natronoplasma sp018334835
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Nanobdellota;c__Nanobdellia;o__JAPDLS01;f__Haiyanarchaeaceae;g__Haiyanarchaeum;__TAXCLUSTER5__s__Haiyanarchaeum thermophilum
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028344155
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028345575
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;__TAXCLUSTER6__s__Nitrosopelagicus sp028344155
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Desulfurococcus;s__Desulfurococcus sp038881575
+d__Archaea;p__Iainarchaeota;c__Iainarchaeia;o__Iainarchaeales;f__VGJJ01;g__VGJJ01;s__VGJJ01 sp030688545
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Desulfurococcus;__TAXCLUSTER7__s__Desulfurococcus sp038881575
+
+WARNING: 14 indistinguishable taxa have been merged into 7 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2023 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./inj_phylum_r0.05_k5_s2__upstream_raxml_T8__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+Leave-one-out test identified 170 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Phylum      :	81
+Class       :	8
+Order       :	3
+Family      :	10
+Genus       :	19
+Species     :	17
+
+Total mislabels: 138 / 6.82 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grid_up_missing/work/79/8aca2af79f4dc52eb75d788c5d4fda/run/inj_phylum_r0.05_k5_s2__upstream_raxml_T8__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grid_up_missing/work/79/8aca2af79f4dc52eb75d788c5d4fda/run/inj_phylum_r0.05_k5_s2__upstream_raxml_T8__rep1.log
+
+Analysis completed successfully, elapsed time: 517 seconds (5s reftree, 512s leave-one-out)
+
