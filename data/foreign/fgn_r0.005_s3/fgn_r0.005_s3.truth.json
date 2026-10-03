@@ -1,0 +1,60 @@
+{
+  "kind": "foreign",
+  "distance": "domain",
+  "seed": 3,
+  "base_sequences": 2023,
+  "n_injected": 10,
+  "injected": {
+    "RS_GCF_003951955.1_NZ_QQZE01000036.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Alphaproteobacteria;o__Sphingomonadales;f__Sphingomonadaceae;g__Sphingomonas;s__Sphingomonas koreensis",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865",
+      "target_sequence": "GB_GCA_038879075.1_JAVZUJ010000001.1"
+    },
+    "RS_GCF_900163485.1_NZ_FUGH01000257.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125",
+      "target_sequence": "GB_GCA_021844965.1_JAKBSK010000013.1"
+    },
+    "RS_GCF_001050755.1_NZ_HF933423.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Yersinia;s__Yersinia enterocolitica",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Sulfolobaceae;g__Saccharolobus;s__Saccharolobus islandicus",
+      "target_sequence": "RS_GCF_000024305.1_NC_013769.1"
+    },
+    "RS_GCF_022493975.1_NZ_CP058857.1-_4": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Klebsiella;s__Klebsiella pneumoniae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Fervidicoccaceae;g__ARK-14;s__ARK-14 sp038734945",
+      "target_sequence": "GB_GCA_038872875.1_JAVZFK010000004.1"
+    },
+    "RS_GCF_033337535.1_NZ_JAWOQX010000045.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Vibrionaceae;g__Vibrio;s__Vibrio alginolyticus",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermoproteales;f__Thermoproteaceae;g__Thermoproteus;s__Thermoproteus sp038893495",
+      "target_sequence": "GB_GCA_038877435.1_JAVZXN010000004.1"
+    },
+    "RS_GCF_963675395.1_NZ_OY776223.1-_8": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Vibrionaceae;g__Vibrio;s__Vibrio sp963675395",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__JACPBO01;g__JACPBO01;s__JACPBO01 sp030651135",
+      "target_sequence": "GB_GCA_030651135.1_JAUSCS010000006.1"
+    },
+    "GB_GCA_900477885.1_LS483453.1-_2": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Salmonella;s__Salmonella enterica",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloprofundus;s__Haloprofundus halobius",
+      "target_sequence": "RS_GCF_020097835.1_NZ_CP083666.1-_2"
+    },
+    "GB_GCA_003368025.1_CP027697.1-_8": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Klebsiella;s__Klebsiella pneumoniae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "target_sequence": "GB_GCA_025923495.1_JAICFT010000009.1"
+    },
+    "RS_GCF_032681205.1_NZ_CP136395.1-_5": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Pseudomonadales;f__Pseudomonadaceae;g__Pseudomonas_E;s__Pseudomonas_E alloputida",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__PNOQ01;g__JAHJUI01;s__JAHJUI01 sp018829185",
+      "target_sequence": "GB_GCA_018828805.1_JAHJVD010000015.1"
+    },
+    "RS_GCF_008694085.1_NZ_CP040911.1-_3": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Pseudomonadales;f__Moraxellaceae;g__Acinetobacter;s__Acinetobacter pittii",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
+      "target_sequence": "RS_GCF_030250245.1_NZ_JAQMIH010000007.1"
+    }
+  },
+  "rate": 0.004943
+}

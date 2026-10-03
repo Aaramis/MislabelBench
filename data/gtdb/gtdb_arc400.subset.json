@@ -1,0 +1,28 @@
+{
+  "source_fasta": "gtdb_arc1200.aligned.fasta",
+  "source_taxonomy": "gtdb_arc1200.tax",
+  "seed": 42,
+  "target": 400,
+  "n_source": 7051,
+  "n_subset": 402,
+  "n_taxa_source": 3067,
+  "n_taxa_subset": 171,
+  "judgeable_source": {
+    "domain": 100.0,
+    "phylum": 100.0,
+    "class": 99.9,
+    "order": 99.6,
+    "family": 98.0,
+    "genus": 91.7,
+    "species": 72.7
+  },
+  "judgeable_subset": {
+    "domain": 100.0,
+    "phylum": 99.5,
+    "class": 98.5,
+    "order": 96.3,
+    "family": 90.8,
+    "genus": 80.6,
+    "species": 74.6
+  }
+}

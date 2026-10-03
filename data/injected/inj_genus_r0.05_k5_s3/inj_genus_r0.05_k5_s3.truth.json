@@ -1,0 +1,538 @@
+{
+  "source": "gtdb_arc2k.tax",
+  "source_sha256": "500b2e19d1cf0f24b7df0011a88a9ffdddbd2a445fae88542dcfae39ce3535ac",
+  "distance": "genus",
+  "rate": 0.05,
+  "k": 5,
+  "seed": 3,
+  "allow_empty_donor": false,
+  "n_total": 2023,
+  "n_injected": 105,
+  "injected": {
+    "GB_GCA_021844965.1_JAKBSK010000013.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125"
+    },
+    "GB_GCA_027459265.1_DAIDOF010000099.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125"
+    },
+    "GB_GCA_021802125.1_JAKAAX010000003.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125"
+    },
+    "GB_GCA_027376635.1_DAIFFK010000376.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125"
+    },
+    "GB_GCA_027376555.1_DAIFFO010000056.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAKAAX01;s__JAKAAX01 sp021802125"
+    },
+    "GB_GCA_027338305.1_DAHXCZ010000014.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995"
+    },
+    "GB_GCA_027354025.1_DAHXDF010000028.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995"
+    },
+    "GB_GCA_027335565.1_DAHWHU010000030.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995"
+    },
+    "GB_GCA_021827995.1_JAKATK010000001.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995"
+    },
+    "GB_GCA_027353865.1_DAHXDM010000006.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKATK01;s__JAKATK01 sp021827995"
+    },
+    "RS_GCF_028275805.1_NZ_JAPWTY010000003.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__JANXEW01;s__JANXEW01 sp028275925",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum"
+    },
+    "GB_GCA_038883975.1_JAVZLB010000006.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__JANXEW01;s__JANXEW01 sp028275925",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum"
+    },
+    "RS_GCF_038731815.1_NZ_JAVYQK010000003.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__JANXEW01;s__JANXEW01 sp028275925",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum"
+    },
+    "RS_GCF_038872975.1_NZ_JAVZFF010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__JANXEW01;s__JANXEW01 sp028275925",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum"
+    },
+    "RS_GCF_028276695.1_NZ_JAPYVV010000009.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__JANXEW01;s__JANXEW01 sp028275925",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum"
+    },
+    "GB_GCA_938005485.1_CALLNV010000002.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JAKSHX01;s__JAKSHX01 sp024399155",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815"
+    },
+    "GB_GCA_902490875.1_CABUFL010000004.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JAKSHX01;s__JAKSHX01 sp024399155",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815"
+    },
+    "GB_GCA_905187815.1_CAJJJM010000028.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JAKSHX01;s__JAKSHX01 sp024399155",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815"
+    },
+    "GB_GCA_958422285.1_CATZOF010000004.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JAKSHX01;s__JAKSHX01 sp024399155",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815"
+    },
+    "GB_GCA_020907855.1_DZDL01000003.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JAKSHX01;s__JAKSHX01 sp024399155",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola;s__Methanoprimaticola sp905187815"
+    },
+    "GB_GCA_027380135.1_DAIEYN010000024.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Picrophilus;s__Picrophilus oshimae",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715"
+    },
+    "GB_GCA_027380185.1_DAIEYL010000053.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Picrophilus;s__Picrophilus oshimae",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715"
+    },
+    "GB_GCA_027380175.1_DAIEYM010000010.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Picrophilus;s__Picrophilus oshimae",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715"
+    },
+    "GB_GCA_021818715.1_JAKATN010000001.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Picrophilus;s__Picrophilus oshimae",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715"
+    },
+    "GB_GCA_027331235.1_DAHVWZ010000004.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Picrophilus;s__Picrophilus oshimae",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__JACWAH01;s__JACWAH01 sp021818715"
+    },
+    "GB_GCA_038842445.1_JAWBSR010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Terraquivivens;s__Terraquivivens yellowstonensis",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae"
+    },
+    "GB_GCA_023268075.1_JALNKR010000009.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Terraquivivens;s__Terraquivivens yellowstonensis",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae"
+    },
+    "GB_GCA_038895015.1_JAWAOD010000016.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Terraquivivens;s__Terraquivivens yellowstonensis",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae"
+    },
+    "GB_GCA_023252525.1_JALNLF010000023.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Terraquivivens;s__Terraquivivens yellowstonensis",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae"
+    },
+    "GB_GCA_038868835.1_JAWCSH010000014.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Terraquivivens;s__Terraquivivens yellowstonensis",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus dongiae"
+    },
+    "GB_GCA_027376155.1_DAIFHD010000006.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__UBA184;s__UBA184 sp027309555",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545"
+    },
+    "GB_GCA_027376135.1_DAIFHE010000027.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__UBA184;s__UBA184 sp027309555",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545"
+    },
+    "GB_GCA_027387225.1_DAHXSJ010000022.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__UBA184;s__UBA184 sp027309555",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545"
+    },
+    "GB_GCA_027382105.1_DAIFGK010000030.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__UBA184;s__UBA184 sp027309555",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545"
+    },
+    "GB_GCA_027376215.1_DAIFHB010000009.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__UBA184;s__UBA184 sp027309555",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJYEA01;s__JAJYEA01 sp021809545"
+    },
+    "GB_GCA_028097745.1_JAOHEZ010000017.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__Poseidonia;s__Poseidonia sp030828165",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275"
+    },
+    "GB_GCA_943841375.1_CALSXW010000002.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__Poseidonia;s__Poseidonia sp030828165",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275"
+    },
+    "GB_GCA_028102405.1_JAOHMH010000001.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__Poseidonia;s__Poseidonia sp030828165",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275"
+    },
+    "GB_GCA_943844695.1_CALTKU010000005.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__Poseidonia;s__Poseidonia sp030828165",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275"
+    },
+    "GB_GCA_905478145.1_CAJQHH010000021.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__Poseidonia;s__Poseidonia sp030828165",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Poseidoniaceae;g__MGIIa-L1;s__MGIIa-L1 sp002506275"
+    },
+    "GB_GCA_023473935.1_JAMCYL010000007.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535"
+    },
+    "GB_GCA_027372115.1_DAHXJS010000002.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535"
+    },
+    "GB_GCA_027338075.1_DAHXDZ010000003.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535"
+    },
+    "GB_GCA_027338125.1_DAHXDW010000002.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535"
+    },
+    "GB_GCA_023378925.1_JAMCSJ010000001.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZAB01;s__JAJZAB01 sp021791535"
+    },
+    "GB_GCA_041244445.1_JBESFD010000012.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-P;s__MGIIb-P sp002724815",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715"
+    },
+    "GB_GCA_964216775.1_CAXPFU010000072.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-P;s__MGIIb-P sp002724815",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715"
+    },
+    "GB_GCA_964224045.1_CAXQIP010000062.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-P;s__MGIIb-P sp002724815",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715"
+    },
+    "GB_GCA_041229985.1_JBERFD010000015.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-P;s__MGIIb-P sp002724815",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715"
+    },
+    "GB_GCA_964228115.1_CAXQYD010000018.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-P;s__MGIIb-P sp002724815",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-O1;s__MGIIb-O1 sp023268715"
+    },
+    "GB_GCA_027368935.1_DAICPR010000002.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__JAGDXO01;s__JAGDXO01 sp031961395",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005"
+    },
+    "GB_GCA_027369085.1_DAICPL010000003.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__JAGDXO01;s__JAGDXO01 sp031961395",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005"
+    },
+    "GB_GCA_021831005.1_JAKBNO010000067.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__JAGDXO01;s__JAGDXO01 sp031961395",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005"
+    },
+    "GB_GCA_027448365.1_DAIDNS010000004.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__JAGDXO01;s__JAGDXO01 sp031961395",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005"
+    },
+    "GB_GCA_027369035.1_DAICPM010000004.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__JAGDXO01;s__JAGDXO01 sp031961395",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005"
+    },
+    "RS_GCF_000009185.1_NC_008212.1-_2": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__JAHENP01;s__JAHENP01 sp041361465",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi"
+    },
+    "GB_GCA_903989525.1_CAJEJB010000020.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__JAHENP01;s__JAHENP01 sp041361465",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi"
+    },
+    "RS_GCF_903989505.1_NZ_CAJEIZ010000114.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__JAHENP01;s__JAHENP01 sp041361465",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi"
+    },
+    "RS_GCF_000237865.1_NC_017459.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__JAHENP01;s__JAHENP01 sp041361465",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi"
+    },
+    "RS_GCF_000237865.1_NC_017459.1-_2": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__JAHENP01;s__JAHENP01 sp041361465",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi"
+    },
+    "GB_GCA_028067175.1_JALCAW010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__TA-20;s__TA-20 sp035935115",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265"
+    },
+    "GB_GCA_963457515.1_OY734804.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__TA-20;s__TA-20 sp035935115",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265"
+    },
+    "GB_GCA_028066215.1_JALCBS010000003.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__TA-20;s__TA-20 sp035935115",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265"
+    },
+    "GB_GCA_900620265.3_UYNY03000033.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__TA-20;s__TA-20 sp035935115",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265"
+    },
+    "GB_GCA_028067205.1_JALCAV010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__TA-20;s__TA-20 sp035935115",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopumilus;s__Nitrosopumilus sp900620265"
+    },
+    "GB_GCA_002495965.1_DAHW01000025.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis"
+    },
+    "GB_GCA_036815945.1_DAISFK010000006.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis"
+    },
+    "GB_GCA_036805525.1_DAIRQJ010000003.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis"
+    },
+    "GB_GCA_036720895.1_DAIMMB010000006.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis"
+    },
+    "GB_GCA_036772115.1_DAIPFY010000003.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis"
+    },
+    "GB_GCA_031316275.1_JALDRD010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp005877075",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435"
+    },
+    "RS_GCF_008389435.1_NZ_VUYS01000006.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp005877075",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435"
+    },
+    "GB_GCA_031316275.1_JALDRD010000001.1-_2": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp005877075",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435"
+    },
+    "RS_GCF_009861625.1_NZ_SRPK01000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp005877075",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435"
+    },
+    "GB_GCA_041394965.1_JAWKHG010000001.1-_2": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp005877075",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435"
+    },
+    "RS_GCF_001315885.1_NZ_BBBD01000098.1": {
+      "true": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A",
+      "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanarmilla;s__Methanarmilla wolinii",
+      "donor_group": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A"
+    },
+    "RS_GCF_019669925.1_NZ_AP019779.1": {
+      "true": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A",
+      "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanarmilla;s__Methanarmilla wolinii",
+      "donor_group": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A"
+    },
+    "RS_GCF_000513315.1_NZ_HG794426.1": {
+      "true": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A",
+      "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanarmilla;s__Methanarmilla wolinii",
+      "donor_group": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A"
+    },
+    "RS_GCF_000513315.1_NZ_HG794426.1-_2": {
+      "true": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A",
+      "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanarmilla;s__Methanarmilla wolinii",
+      "donor_group": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A"
+    },
+    "GB_GCA_029975605.1_JARKOS010000111.1": {
+      "true": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A",
+      "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanarmilla;s__Methanarmilla wolinii",
+      "donor_group": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A"
+    },
+    "GB_GCA_038879995.1_JAVZSN010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Thermosphaera;s__Thermosphaera aggregans_B",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865"
+    },
+    "GB_GCA_038860855.1_JAWCDQ010000031.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Thermosphaera;s__Thermosphaera aggregans_B",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865"
+    },
+    "GB_GCA_038845865.1_JAWBQJ010000001.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Thermosphaera;s__Thermosphaera aggregans_B",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865"
+    },
+    "GB_GCA_038879255.1_JAVZTY010000002.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Thermosphaera;s__Thermosphaera aggregans_B",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865"
+    },
+    "GB_GCA_038741425.1_JAVYKZ010000015.1": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Thermosphaera;s__Thermosphaera aggregans_B",
+      "donor_group": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__UBA285;s__UBA285 sp038845865"
+    },
+    "RS_GCF_004126515.1_NZ_CP034940.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halobaculum;s__Halobaculum roseum",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense"
+    },
+    "RS_GCF_005435095.1_NZ_SGTY01000036.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halobaculum;s__Halobaculum roseum",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense"
+    },
+    "RS_GCF_005435235.1_NZ_SGUB01000055.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halobaculum;s__Halobaculum roseum",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense"
+    },
+    "RS_GCF_028211185.1_NZ_JAQLTX010000025.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halobaculum;s__Halobaculum roseum",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense"
+    },
+    "RS_GCF_028211175.1_NZ_JAQLUJ010000021.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halobaculum;s__Halobaculum roseum",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense"
+    },
+    "RS_GCF_041647975.1_NZ_JARRIC010000002.1": {
+      "true": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii",
+      "wrong": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Palaeococcus;s__Palaeococcus pacificus",
+      "donor_group": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii"
+    },
+    "RS_GCF_041647815.1_NZ_JARRII010000003.1": {
+      "true": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii",
+      "wrong": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Palaeococcus;s__Palaeococcus pacificus",
+      "donor_group": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii"
+    },
+    "RS_GCF_041647855.1_NZ_JARRIJ010000003.1": {
+      "true": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii",
+      "wrong": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Palaeococcus;s__Palaeococcus pacificus",
+      "donor_group": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii"
+    },
+    "RS_GCF_041647875.1_NZ_JARRIF010000003.1": {
+      "true": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii",
+      "wrong": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Palaeococcus;s__Palaeococcus pacificus",
+      "donor_group": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii"
+    },
+    "RS_GCF_041648035.1_NZ_JARRIA010000001.1": {
+      "true": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii",
+      "wrong": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Palaeococcus;s__Palaeococcus pacificus",
+      "donor_group": "d__Archaea;p__Methanobacteriota_B;c__Thermococci;o__Thermococcales;f__Thermococcaceae;g__Pyrococcus;s__Pyrococcus kukulkanii"
+    },
+    "GB_GCA_018670185.1_JABHRO010000014.1": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__UBA489;s__UBA489 sp002505585",
+      "donor_group": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955"
+    },
+    "GB_GCA_018693555.1_JABHMD010000032.1": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__UBA489;s__UBA489 sp002505585",
+      "donor_group": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955"
+    },
+    "GB_GCA_018694635.1_JABHNW010000017.1": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__UBA489;s__UBA489 sp002505585",
+      "donor_group": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955"
+    },
+    "GB_GCA_018660045.1_JABJLF010000033.1": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__UBA489;s__UBA489 sp002505585",
+      "donor_group": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955"
+    },
+    "GB_GCA_018660325.1_JABJKM010000007.1": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__UBA489;s__UBA489 sp002505585",
+      "donor_group": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__UBA489;g__JABIKK01;s__JABIKK01 sp018658955"
+    },
+    "GB_GCA_022653515.1_JALCSP010000001.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JALNYB01;s__JALNYB01 sp023230065",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295"
+    },
+    "GB_GCA_022482685.1_JAKVOS010000001.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JALNYB01;s__JALNYB01 sp023230065",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295"
+    },
+    "GB_GCA_006954385.1_LVVP01000002.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JALNYB01;s__JALNYB01 sp023230065",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295"
+    },
+    "GB_GCA_902781205.1_CACZIL010000027.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JALNYB01;s__JALNYB01 sp023230065",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295"
+    },
+    "RS_GCF_001481295.1_NZ_LOPS01000047.1": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JALNYB01;s__JALNYB01 sp023230065",
+      "donor_group": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295"
+    }
+  }
+}

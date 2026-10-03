@@ -1,0 +1,113 @@
+{
+  "source": "gtdb_arc2k.tax",
+  "source_sha256": "500b2e19d1cf0f24b7df0011a88a9ffdddbd2a445fae88542dcfae39ce3535ac",
+  "distance": "species",
+  "rate": 0.01,
+  "k": 5,
+  "seed": 1,
+  "allow_empty_donor": false,
+  "n_total": 2023,
+  "n_injected": 20,
+  "injected": {
+    "GB_GCA_027354725.1_DAHWVL010000061.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp035508815",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095"
+    },
+    "GB_GCA_027338815.1_DAHWRX010000039.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp035508815",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095"
+    },
+    "GB_GCA_027355015.1_DAHWVH010000002.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp035508815",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095"
+    },
+    "GB_GCA_027355125.1_DAHWVE010000041.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp035508815",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095"
+    },
+    "GB_GCA_027351965.1_DAHWVP010000042.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp035508815",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095"
+    },
+    "GB_GCA_027363995.1_DAHXQE010000003.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp028867025",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925"
+    },
+    "GB_GCA_027363955.1_DAHXQF010000018.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp028867025",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925"
+    },
+    "GB_GCA_027364155.1_DAHXPV010000008.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp028867025",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925"
+    },
+    "GB_GCA_027364115.1_DAHXPY010000002.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp028867025",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925"
+    },
+    "GB_GCA_027364035.1_DAHXQC010000017.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp028867025",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925"
+    },
+    "RS_GCF_030250225.1_NZ_JAQMIE010000028.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium sp037031165",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum"
+    },
+    "RS_GCF_030250285.1_NZ_JAQMIJ010000010.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium sp037031165",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum"
+    },
+    "RS_GCF_030250295.1_NZ_JAQMII010000010.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium sp037031165",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum"
+    },
+    "RS_GCF_030250325.1_NZ_JAQMIG010000028.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium sp037031165",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum"
+    },
+    "RS_GCF_016917855.1_NZ_CP070377.1": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium sp037031165",
+      "donor_group": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum"
+    },
+    "GB_GCA_038886335.1_JAVZYD010000011.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp013153395",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115"
+    },
+    "GB_GCA_030550115.1_JAUQPY010000013.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp013153395",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115"
+    },
+    "GB_GCA_038831675.1_JAWBKI010000014.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp013153395",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115"
+    },
+    "GB_GCA_038829125.1_JAWBMJ010000027.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp013153395",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115"
+    },
+    "GB_GCA_038885515.1_JAVZZU010000005.1": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp013153395",
+      "donor_group": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__J096;g__JAADEL01;s__JAADEL01 sp030550115"
+    }
+  }
+}

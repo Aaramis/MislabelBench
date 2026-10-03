@@ -1,0 +1,12 @@
+{
+  "source": "gtdb_arc2k, taxon-aware subset of the archaeal set",
+  "datasets": [
+    {
+      "name": "gtdb_arc2k",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc2k.fasta",
+      "tax": "data/gtdb/gtdb_arc2k.tax"
+    }
+  ]
+}

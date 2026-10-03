@@ -1,0 +1,68 @@
+{
+  "source": "gtdb_arc2k plus bacterial donors under archaeal labels",
+  "datasets": [
+    {
+      "name": "fgn_r0.005_s1",
+      "n_seqs": 2033,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.005_s1/fgn_r0.005_s1.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.005_s1/fgn_r0.005_s1.tax"
+    },
+    {
+      "name": "fgn_r0.005_s2",
+      "n_seqs": 2033,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.005_s2/fgn_r0.005_s2.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.005_s2/fgn_r0.005_s2.tax"
+    },
+    {
+      "name": "fgn_r0.005_s3",
+      "n_seqs": 2033,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.005_s3/fgn_r0.005_s3.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.005_s3/fgn_r0.005_s3.tax"
+    },
+    {
+      "name": "fgn_r0.01_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.01_s1/fgn_r0.01_s1.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.01_s1/fgn_r0.01_s1.tax"
+    },
+    {
+      "name": "fgn_r0.01_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.01_s2/fgn_r0.01_s2.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.01_s2/fgn_r0.01_s2.tax"
+    },
+    {
+      "name": "fgn_r0.01_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.01_s3/fgn_r0.01_s3.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.01_s3/fgn_r0.01_s3.tax"
+    },
+    {
+      "name": "fgn_r0.05_s1",
+      "n_seqs": 2124,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.05_s1/fgn_r0.05_s1.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.05_s1/fgn_r0.05_s1.tax"
+    },
+    {
+      "name": "fgn_r0.05_s2",
+      "n_seqs": 2124,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.05_s2/fgn_r0.05_s2.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.05_s2/fgn_r0.05_s2.tax"
+    },
+    {
+      "name": "fgn_r0.05_s3",
+      "n_seqs": 2124,
+      "aln_len": 1478,
+      "fasta": "/shared/home/agardette/bench/data/foreign/fgn_r0.05_s3/fgn_r0.05_s3.fasta",
+      "tax": "/shared/home/agardette/bench/data/foreign/fgn_r0.05_s3/fgn_r0.05_s3.tax"
+    }
+  ]
+}

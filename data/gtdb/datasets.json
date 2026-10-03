@@ -1,0 +1,12 @@
+{
+  "source": "GTDB r226 ssu_all, archaea, >=1200 nt, cmalign RF01959",
+  "datasets": [
+    {
+      "name": "gtdb_arc1200",
+      "n_seqs": 7051,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc1200.aligned.fasta",
+      "tax": "data/gtdb/gtdb_arc1200.tax"
+    }
+  ]
+}

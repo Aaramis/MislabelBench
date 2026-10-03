@@ -1,0 +1,45 @@
+{
+  "source": "gtdb archaea, size gradient, every subset drawn by whole taxa from the alignment",
+  "datasets": [
+    {
+      "name": "gtdb_arc400",
+      "n_seqs": 402,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc400.fasta",
+      "tax": "data/gtdb/gtdb_arc400.tax",
+      "judgeable_species": 74.6
+    },
+    {
+      "name": "gtdb_arc800",
+      "n_seqs": 801,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc800.fasta",
+      "tax": "data/gtdb/gtdb_arc800.tax",
+      "judgeable_species": 76.2
+    },
+    {
+      "name": "gtdb_arc2k",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc2k.fasta",
+      "tax": "data/gtdb/gtdb_arc2k.tax",
+      "judgeable_species": 74.9
+    },
+    {
+      "name": "gtdb_arc4000",
+      "n_seqs": 4001,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc4000.fasta",
+      "tax": "data/gtdb/gtdb_arc4000.tax",
+      "judgeable_species": 73.8
+    },
+    {
+      "name": "gtdb_arc1200",
+      "n_seqs": 7051,
+      "aln_len": 1478,
+      "fasta": "data/gtdb/gtdb_arc1200.aligned.fasta",
+      "tax": "data/gtdb/gtdb_arc1200.tax",
+      "judgeable_species": null
+    }
+  ]
+}

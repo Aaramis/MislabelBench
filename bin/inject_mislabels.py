@@ -13,6 +13,7 @@ than the tool. --allow-empty-donor lifts it, for measuring that limit on purpose
 """
 
 import argparse
+import hashlib
 import json
 import random
 import sys
@@ -102,7 +103,12 @@ def main():
             fh.write(f"{name}\t{lineage}\n")
 
     truth = {
-        "source": str(args.taxonomy),
+        # The input's name and digest rather than the path it was read from. An absolute path makes
+        # the record differ between two machines that produced the same cell, and names a file
+        # without identifying it. Everything else here is already machine-independent: the 180
+        # cells regenerate byte for byte from their seed, checked on macOS against Linux.
+        "source": Path(args.taxonomy).name,
+        "source_sha256": hashlib.sha256(Path(args.taxonomy).read_bytes()).hexdigest(),
         "distance": args.distance,
         "rate": args.rate,
         "k": args.k,

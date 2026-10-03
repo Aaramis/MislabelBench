@@ -1,0 +1,110 @@
+{
+  "kind": "foreign",
+  "distance": "domain",
+  "seed": 2,
+  "base_sequences": 2023,
+  "n_injected": 20,
+  "injected": {
+    "GB_GCA_041429575.1_CP167061.1-_10": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Aeromonadaceae;g__Aeromonas;s__Aeromonas veronii",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__UBA12276;s__UBA12276 sp028866575",
+      "target_sequence": "GB_GCA_028866575.1_JAGWHU010000002.1"
+    },
+    "RS_GCF_000297915.1_NZ_JH815559.1-_2": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Pseudomonadales;f__Moraxellaceae;g__Acinetobacter;s__Acinetobacter baumannii",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Natrialbaceae;g__Natrinema;s__Natrinema sp031626495",
+      "target_sequence": "RS_GCF_031626495.1_NZ_JAMQOJ010000016.1"
+    },
+    "RS_GCF_000191405.1_NZ_GL872342.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Pasteurellaceae;g__Haemophilus_D;s__Haemophilus_D parainfluenzae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei;o__Thermofilales;f__Thermofilaceae;g__Thermofilum;s__Thermofilum adornatum",
+      "target_sequence": "RS_GCF_028276695.1_NZ_JAPYVV010000009.1"
+    },
+    "RS_GCF_021502875.1_NZ_JAJABO010000001.1-_7": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__DSM-23052;g__Methanothermobacter_A;s__Methanothermobacter_A tenebrarum",
+      "target_sequence": "GB_GCA_034002765.1_JAVEZV010000006.1"
+    },
+    "RS_GCF_002162215.1_NZ_CP018804.1-_5": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Pasteurellaceae;g__Histophilus;s__Histophilus somni",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Methanomicrobia;o__Methanomicrobiales;f__Methanomicrobiaceae;g__Methanoplanus;s__Methanoplanus endosymbiosus",
+      "target_sequence": "RS_GCF_024662215.1_NZ_CP096115.1"
+    },
+    "RS_GCF_015687485.1_NZ_JAAALI010000038.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__ARS49;g__WJJT01;s__WJJT01 sp019323135",
+      "target_sequence": "GB_GCA_019323135.1_JAHWHT010000001.1"
+    },
+    "RS_GCF_005863885.1_NZ_VAVR01000063.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Pseudomonadales;f__Pseudomonadaceae;g__Pseudomonas;s__Pseudomonas aeruginosa",
+      "wrong": "d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia;o__JABLTI01;f__JABLTI01;g__JABLTI01;s__JABLTI01 sp019056785",
+      "target_sequence": "GB_GCA_021498085.1_JAIZWM010000010.1"
+    },
+    "RS_GCF_003358715.1_NZ_QOOE01000073.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455",
+      "target_sequence": "GB_GCA_025923415.1_JAICFZ010000030.1"
+    },
+    "GB_GCA_028614755.1_JAQAIA010000001.1-_3": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Pseudomonadales;f__Moraxellaceae;g__Acinetobacter;s__Acinetobacter baumannii",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__CSSed11-243R1;f__CSSed11-243R1;g__JAGGWW01;s__JAGGWW01 sp021163365",
+      "target_sequence": "GB_GCA_021163365.1_JAGGWW010000006.1"
+    },
+    "RS_GCF_963681055.1_NZ_CAVMGX010000065.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__NBVN01;g__Zestosphaera;s__Zestosphaera sp020833255",
+      "target_sequence": "GB_GCA_020833255.1_JAJHQR010000005.1-_2"
+    },
+    "RS_GCF_001973115.1_NZ_MTTH01000022.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Salmonella;s__Salmonella enterica",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Bathyarchaeia;o__40CM-2-53-6;f__DTDX01;g__DTDX01;s__DTDX01 sp018396775",
+      "target_sequence": "GB_GCA_038852005.1_JAWCKM010000002.1"
+    },
+    "RS_GCF_029719885.1_NZ_CP099328.1-_5": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia fergusonii",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__JAFCDX01;g__JAQUOT01;s__JAQUOT01 sp028716945",
+      "target_sequence": "GB_GCA_028716945.1_JAQUOT010000002.1"
+    },
+    "RS_GCF_025397455.1_NZ_JAIBOC010000001.1-_3": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Klebsiella;s__Klebsiella pneumoniae",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Methanomethylicia;o__Culexarchaeales;f__Culexarchaeaceae;g__Culexarchaeum;s__Culexarchaeum sp038727515",
+      "target_sequence": "GB_GCA_038854265.1_JAWCIW010000001.1"
+    },
+    "RS_GCF_040048575.1_NZ_JAQFKS010000045.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Thermoproteota;c__EX4484-205;o__EX4484-205;f__JAAOZO01;g__JAAOZO01;s__JAAOZO01 sp017601145",
+      "target_sequence": "GB_GCA_038882375.1_JAVZOK010000006.1"
+    },
+    "RS_GCF_022586635.1_NZ_JAKZLW010000001.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Methanosarcinia;o__Methanotrichales;f__Methanotrichaceae;g__Methanothrix;s__Methanothrix soehngenii",
+      "target_sequence": "RS_GCF_913757535.1_NZ_CAJYDL010000001.1"
+    },
+    "RS_GCF_900163485.1_NZ_FUGH01000257.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosopolaris;s__Nitrosopolaris nunavutensis",
+      "target_sequence": "GB_GCA_036720895.1_DAIMMB010000006.1"
+    },
+    "RS_GCF_030236725.1_NZ_JASKZJ010000095.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Vibrionaceae;g__Vibrio;s__Vibrio parahaemolyticus",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Aciduliprofundales;f__ARK-15;g__JAVRLH01;s__JAVRLH01 sp031961525",
+      "target_sequence": "GB_GCA_031961525.1_JAVRLI010000010.1"
+    },
+    "RS_GCF_038740035.1_NZ_JBBXKK010000001.1-_3": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Enterobacter;s__Enterobacter cloacae_M",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosocaldaceae;g__Nitrosocaldus;s__Nitrosocaldus schleperae",
+      "target_sequence": "GB_GCA_038866185.1_JAWBZM010000003.1"
+    },
+    "RS_GCF_009743245.1_NZ_WPFO01000269.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Escherichia;s__Escherichia coli",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
+      "target_sequence": "RS_GCF_028328625.1_NZ_JAQMRO010000026.1"
+    },
+    "GB_GCA_021782495.1_JAJXUV010000012.1": {
+      "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__UBA1113;f__UBA1113;g__VFKP01;s__VFKP01 sp021782495",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__UBA12276;s__UBA12276 sp028866575",
+      "target_sequence": "GB_GCA_028866575.1_JAGWHU010000002.1"
+    }
+  },
+  "rate": 0.009886
+}
