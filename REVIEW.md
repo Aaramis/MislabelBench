@@ -9,7 +9,8 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself.
+done during the review itself. Four more came later, from repatriating the results rather than from
+reading the code, and they are at the end under their own heading.
 
 ## What was reviewed
 
@@ -157,6 +158,39 @@ Worth stating, because an audit that only lists faults does not say what it cove
 - **Reproducibility of the tables.** `bin/analyses.sh` rebuilds every committed result from the run
   directories, and five of six come back byte-identical; the sixth is a timing table still gaining
   replicates.
+
+## Found after this report was written
+
+The review stopped at the code. Four defects were in what the code produces, and they came out of
+repatriating results from the cluster rather than reading anything.
+
+**21. The evidence behind every version 2 number was not in the repository.** `README.md` said
+`results/` is tracked because the runs are the evidence and the tables are rebuilt from them. True of
+version 1, whose 170 run directories carry `.log`, `.mis` and `run.json`. For version 2 only
+`run.json` had been kept, and every detection number is computed from the `.mis` beside it:
+`git ls-files | grep -c inj_` returned 0. A clone could not run `bin/analyses.sh`. 949 run
+directories brought back and checked on arrival — `n_mislabels` agrees with its own `.mis` in all
+949, which is also what would catch a file copied while a job was still publishing it.
+
+**22. `truth.json` recorded the absolute path of its input**, in all 180 injected cells, so two
+machines producing the same cell produced different files, and the field named the input without
+identifying it. Now the input's name and sha256. This surfaced only because the claim it breaks was
+tested: regenerating the grid on macOS reproduces the Linux `.tax` files byte for byte, and
+`source` was the one field that could not match.
+
+**23. A trace tag per job is not unique per submission.** `nextflow.config` names trace files by job
+tag, which fixed four jobs colliding in one outdir. A job resubmitted after a failure still finds its
+predecessor's file, warns once and writes nothing: the first Kexact run has no trace because the
+attempt that died thirty seconds earlier had created the file. The Slurm job id is now appended.
+
+**24. The container was never in the trace**, though the comment beside the trace block said
+`trace.txt` is the only record of which image ran each task. `container` is not a default Nextflow
+trace field. Appended to the default list, and confirmed with `-stub-run` that the field is accepted
+and the column written.
+
+A fifth suspicion did not survive. `trace-baseline.txt` has a header and no rows, and the natural
+explanation was that a resumed run lists only what it recomputed. A resumed stub run writes eight
+rows, six of them `CACHED`: resuming does not shorten a trace, and that file is simply lost.
 
 ## Deferred, with reasons
 
