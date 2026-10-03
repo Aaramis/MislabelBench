@@ -14,6 +14,10 @@
 # Parallel efficiency of the staged leave-one-out, which is the one number upstream SATIVA
 # cannot produce at any cost: it has no way to place folds anywhere but in its own process.
 #
+# The dataset matters as much as the node count. SCALING_DATASET defaults to gtdb_arc1200, 7051
+# sequences, because the first round ran on 2023 where placement is under half a minute and the
+# measurement was dominated by container startup; see the note beside DATASET below.
+#
 # Submit once per node count:
 #   slurm/submit.sh slurm/scaling.sh --nodes=1 --exclusive --cpus-per-task=8
 #   slurm/submit.sh slurm/scaling.sh --nodes=4 --cpus-per-task=140
@@ -54,9 +58,19 @@ IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev
 # cluster it can only happen on the smaller one: an epyc-9754 node is dual socket with SMT, so Slurm
 # counts 512 CPUs and --exclusive bills all of them against a 600 quota, while an epyc-9554 counts
 # 256 and leaves room for other work to run alongside.
-OUT="$ROOT/results/scaling/N${N}_c${SLURM_CPUS_PER_TASK:-8}_r${SCALING_REP:-1}${SCALING_TAG:+_$SCALING_TAG}"
-ALN="$ROOT/data/gtdb/gtdb_arc2k.fasta"
-TAX="$ROOT/data/gtdb/gtdb_arc2k.tax"
+# The dataset is a parameter because the first round of this experiment used gtdb_arc2k, where the
+# placement step is 16 to 26 seconds and the serial parts are 38.5% of the total. At that size there
+# is almost nothing to divide: the Amdahl ceiling is 2.60x, N=1 to N=2 came out at 1.47x, and N=4
+# regressed to 27.9 +/- 7.8 s against 17.4 at N=2 -- a standard deviation of 28%, which is four
+# singularity containers starting rather than a property of the distribution. gtdb_arc1200 is the
+# answer and not a bigger allocation: the fork's whole run there is 262 s against 38.5 at 2023, so
+# placement has something to spread.
+DATASET="${SCALING_DATASET:-gtdb_arc1200}"
+OUT="$ROOT/results/scaling/${DATASET}_N${N}_c${SLURM_CPUS_PER_TASK:-8}_r${SCALING_REP:-1}${SCALING_TAG:+_$SCALING_TAG}"
+ALN="$ROOT/data/gtdb/${DATASET}.aligned.fasta"
+TAX="$ROOT/data/gtdb/${DATASET}.tax"
+[ -s "$ALN" ] || ALN="$ROOT/data/gtdb/${DATASET}.fasta"
+[ -s "$ALN" ] && [ -s "$TAX" ] || { echo "no such dataset: $DATASET" >&2; exit 1; }
 
 rm -rf "$OUT"
 mkdir -p "$OUT"
@@ -90,11 +104,15 @@ t3=$(now)
 se -r "$OUT/run.refjson" -C 0.4 -S -n run -o "$OUT" -T "$THREADS" -stage loo-score -taskdir "$OUT/run.l1o_tasks"
 t4=$(now)
 
-python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" "$RESERVED" "$GOT_PER_NODE" "$CPU_MODEL" "$SLURM_JOB_NODELIST" <<'PY' > "$OUT/timing.json"
+N_SEQS=$(grep -c '^>' "$ALN")
+python3 - "$N" "$THREADS" "$t0" "$t1" "$t2" "$t3" "$t4" "$RESERVED" "$GOT_PER_NODE" "$CPU_MODEL" "$SLURM_JOB_NODELIST" "$DATASET" "$N_SEQS" <<'PY' > "$OUT/timing.json"
 import json, sys
 n, threads = int(sys.argv[1]), int(sys.argv[2])
 t = [float(x) for x in sys.argv[3:8]]
 print(json.dumps({
+    # Which set this was run on. Without it the first round on 2023 sequences and any later round
+    # on 7051 group together by node count and the summary averages two different experiments.
+    "dataset": sys.argv[12], "n_seqs": int(sys.argv[13]),
     "nodes": n, "threads_per_node": threads,
     "cores_requested_per_node": int(sys.argv[8]), "cores_allocated_per_node": sys.argv[9],
     "cpu_model": sys.argv[10], "nodelist": sys.argv[11],
