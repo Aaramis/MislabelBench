@@ -21,6 +21,10 @@ set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 nextflow_env
 
+# bin on PATH, as bin/analyses.sh does. Without it the summary at the end exits 127 -- which it
+# did, in all three runs, after the pipeline itself had succeeded.
+export PATH="$BENCH_ROOT/bin:$PATH"
+
 FPJ="${FOLDS_PER_JOB:-7}"
 nf_launch_dir "staged_timed_f${FPJ}"
 

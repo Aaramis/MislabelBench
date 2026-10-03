@@ -93,8 +93,42 @@ other 370 go to other tenants, and `--exclusive` on four nodes is 2 040 CPUs aga
 quota, so this is not fixable by asking for the nodes.
 
 That is an argument *for* splitting the work finer rather than against it: Nextflow reschedules a
-task that lands on a slow node, where a shard holds the whole step. It is not an argument that the
-pipeline will beat 1.58x at N=2, which remains the number to match.
+task that lands on a slow node, where a shard holds the whole step.
+
+## And the pipeline beats it
+
+One replicate per shard count, `gtdb_arc1200`, `-profile ifb`, every stage its own Slurm job:
+
+| shards | placement | speedup | efficiency | the `srun` version | its speedup |
+|---|---|---|---|---|---|
+| 1 | 194.5 | 1.00 | — | 195.59 ± 0.67 | 1.00 |
+| 2 | 111.2 | **1.75** | 87 % | 123.93 ± 27.14 | 1.58 |
+| 4 | **56.4** | **3.45** | 86 % | 197.57 ± 134.08 | 0.99 |
+
+**At one shard the two agree to 0.6 %** — 194.5 s against 195.59 ± 0.67 — which is the check that
+the staged pipeline does the same placement work as the `srun` version rather than something
+cheaper.
+
+**At four shards the pipeline's spread is 0.6 s** (55.8, 56.2, 56.3, 56.4) where the `srun`
+version's was 134 s. That is the whole difference and it has one cause: each task is its own Slurm
+allocation, so a shard cannot be slowed by another tenant holding 370 of a node's 510 cores. The
+expectation written here first — that a pipeline fan-out would land below 1.58x because of staging —
+was wrong, and wrong for an interesting reason: the staging it pays for is less than the contention
+it avoids.
+
+**What does not scale is the end-to-end wall clock.**
+
+| shards | stage sum | trace span | Nextflow's share |
+|---|---|---|---|
+| 1 | 288.2 | 374.3 | 86.1 |
+| 2 | 205.4 | 320.0 | 114.6 |
+| 4 | 151.1 | 314.2 | 163.1 |
+
+The placement step falls 194.5 → 56.4 and the span only 374 → 314, because scheduling and staging
+grow with the task count and reach 163 s at four shards. So the honest form of the claim is that
+the *placement step* distributes at about 86 % efficiency, and that a user's wall clock saturates
+near 314 s on this dataset however many shards are used. Reporting the stages separately, which the
+protocol already promises, is what makes that visible.
 
 ## One task per fold is too fine, and the logs say how fine is fine
 
