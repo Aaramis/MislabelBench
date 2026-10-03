@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 2,
+  "rate": 0.009886,
   "base_sequences": 2023,
   "n_injected": 20,
   "injected": {
@@ -105,6 +106,5 @@
       "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__UBA12276;s__UBA12276 sp028866575",
       "target_sequence": "GB_GCA_028866575.1_JAGWHU010000002.1"
     }
-  },
-  "rate": 0.009886
+  }
 }

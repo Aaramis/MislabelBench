@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 2,
+  "rate": 0.004943,
   "base_sequences": 2023,
   "n_injected": 10,
   "injected": {
@@ -55,6 +56,5 @@
       "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
       "target_sequence": "RS_GCF_028211175.1_NZ_JAQLUJ010000021.1"
     }
-  },
-  "rate": 0.004943
+  }
 }

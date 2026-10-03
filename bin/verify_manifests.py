@@ -43,15 +43,23 @@ def main():
     if not manifests:
         sys.exit(f"no manifest matched {args.glob}")
 
-    problems, checked = [], 0
+    problems, checked, unsound = [], 0, set()
     for man in manifests:
         for ds in json.loads(man.read_text()).get("datasets", []):
             checked += 1
+            before = len(problems)
+            # An absolute path in a manifest is a defect, not a style: it binds the file to one
+            # machine under one home. All 180 entries of data/injected/datasets.json named
+            # /shared/home/agardette/bench, and this check tolerated it, so nothing said so.
+            # main.nf resolves a relative path against projectDir.
+            for key in ("fasta", "tax"):
+                if Path(ds[key]).is_absolute():
+                    problems.append(f"{man.name}:{ds['name']}: {key} is an absolute path, "
+                                    f"{ds[key]}, which only resolves on one machine")
             fa = Path(ds["fasta"])
-            if not fa.is_absolute():
-                fa = Path(".") / fa
             if not fa.exists():
                 problems.append(f"{man.name}:{ds['name']}: {ds['fasta']} does not exist")
+                unsound.add((man.name, ds["name"]))
                 continue
             n, widths = measure(fa)
             if ds.get("n_seqs") != n:
@@ -63,8 +71,13 @@ def main():
             elif ds.get("aln_len") != widths.pop():
                 problems.append(f"{man.name}:{ds['name']}: aln_len says {ds.get('aln_len')}")
 
+            # One dataset can break several ways at once, so count datasets rather than
+            # problems: the old arithmetic reported minus 371 sound out of 196.
+            if len(problems) > before:
+                unsound.add((man.name, ds["name"]))
+
     print(f"{checked} datasets in {len(manifests)} manifests checked, "
-          f"{checked - len(problems)} sound")
+          f"{checked - len(unsound)} sound")
     for pb in problems:
         print(f"  {pb}", file=sys.stderr)
     if problems:

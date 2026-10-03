@@ -5,1261 +5,1261 @@
       "name": "inj_class_r0.01_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k10_s1/inj_class_r0.01_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k10_s1/inj_class_r0.01_k10_s1.tax"
+      "fasta": "data/injected/inj_class_r0.01_k10_s1/inj_class_r0.01_k10_s1.fasta",
+      "tax": "data/injected/inj_class_r0.01_k10_s1/inj_class_r0.01_k10_s1.tax"
     },
     {
       "name": "inj_class_r0.01_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k10_s2/inj_class_r0.01_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k10_s2/inj_class_r0.01_k10_s2.tax"
+      "fasta": "data/injected/inj_class_r0.01_k10_s2/inj_class_r0.01_k10_s2.fasta",
+      "tax": "data/injected/inj_class_r0.01_k10_s2/inj_class_r0.01_k10_s2.tax"
     },
     {
       "name": "inj_class_r0.01_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k10_s3/inj_class_r0.01_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k10_s3/inj_class_r0.01_k10_s3.tax"
+      "fasta": "data/injected/inj_class_r0.01_k10_s3/inj_class_r0.01_k10_s3.fasta",
+      "tax": "data/injected/inj_class_r0.01_k10_s3/inj_class_r0.01_k10_s3.tax"
     },
     {
       "name": "inj_class_r0.01_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.tax"
+      "fasta": "data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.fasta",
+      "tax": "data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.tax"
     },
     {
       "name": "inj_class_r0.01_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k1_s2/inj_class_r0.01_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k1_s2/inj_class_r0.01_k1_s2.tax"
+      "fasta": "data/injected/inj_class_r0.01_k1_s2/inj_class_r0.01_k1_s2.fasta",
+      "tax": "data/injected/inj_class_r0.01_k1_s2/inj_class_r0.01_k1_s2.tax"
     },
     {
       "name": "inj_class_r0.01_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k1_s3/inj_class_r0.01_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k1_s3/inj_class_r0.01_k1_s3.tax"
+      "fasta": "data/injected/inj_class_r0.01_k1_s3/inj_class_r0.01_k1_s3.fasta",
+      "tax": "data/injected/inj_class_r0.01_k1_s3/inj_class_r0.01_k1_s3.tax"
     },
     {
       "name": "inj_class_r0.01_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k2_s1/inj_class_r0.01_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k2_s1/inj_class_r0.01_k2_s1.tax"
+      "fasta": "data/injected/inj_class_r0.01_k2_s1/inj_class_r0.01_k2_s1.fasta",
+      "tax": "data/injected/inj_class_r0.01_k2_s1/inj_class_r0.01_k2_s1.tax"
     },
     {
       "name": "inj_class_r0.01_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k2_s2/inj_class_r0.01_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k2_s2/inj_class_r0.01_k2_s2.tax"
+      "fasta": "data/injected/inj_class_r0.01_k2_s2/inj_class_r0.01_k2_s2.fasta",
+      "tax": "data/injected/inj_class_r0.01_k2_s2/inj_class_r0.01_k2_s2.tax"
     },
     {
       "name": "inj_class_r0.01_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k2_s3/inj_class_r0.01_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k2_s3/inj_class_r0.01_k2_s3.tax"
+      "fasta": "data/injected/inj_class_r0.01_k2_s3/inj_class_r0.01_k2_s3.fasta",
+      "tax": "data/injected/inj_class_r0.01_k2_s3/inj_class_r0.01_k2_s3.tax"
     },
     {
       "name": "inj_class_r0.01_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k3_s1/inj_class_r0.01_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k3_s1/inj_class_r0.01_k3_s1.tax"
+      "fasta": "data/injected/inj_class_r0.01_k3_s1/inj_class_r0.01_k3_s1.fasta",
+      "tax": "data/injected/inj_class_r0.01_k3_s1/inj_class_r0.01_k3_s1.tax"
     },
     {
       "name": "inj_class_r0.01_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k3_s2/inj_class_r0.01_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k3_s2/inj_class_r0.01_k3_s2.tax"
+      "fasta": "data/injected/inj_class_r0.01_k3_s2/inj_class_r0.01_k3_s2.fasta",
+      "tax": "data/injected/inj_class_r0.01_k3_s2/inj_class_r0.01_k3_s2.tax"
     },
     {
       "name": "inj_class_r0.01_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k3_s3/inj_class_r0.01_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k3_s3/inj_class_r0.01_k3_s3.tax"
+      "fasta": "data/injected/inj_class_r0.01_k3_s3/inj_class_r0.01_k3_s3.fasta",
+      "tax": "data/injected/inj_class_r0.01_k3_s3/inj_class_r0.01_k3_s3.tax"
     },
     {
       "name": "inj_class_r0.01_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k5_s1/inj_class_r0.01_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k5_s1/inj_class_r0.01_k5_s1.tax"
+      "fasta": "data/injected/inj_class_r0.01_k5_s1/inj_class_r0.01_k5_s1.fasta",
+      "tax": "data/injected/inj_class_r0.01_k5_s1/inj_class_r0.01_k5_s1.tax"
     },
     {
       "name": "inj_class_r0.01_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k5_s2/inj_class_r0.01_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k5_s2/inj_class_r0.01_k5_s2.tax"
+      "fasta": "data/injected/inj_class_r0.01_k5_s2/inj_class_r0.01_k5_s2.fasta",
+      "tax": "data/injected/inj_class_r0.01_k5_s2/inj_class_r0.01_k5_s2.tax"
     },
     {
       "name": "inj_class_r0.01_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k5_s3/inj_class_r0.01_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.01_k5_s3/inj_class_r0.01_k5_s3.tax"
+      "fasta": "data/injected/inj_class_r0.01_k5_s3/inj_class_r0.01_k5_s3.fasta",
+      "tax": "data/injected/inj_class_r0.01_k5_s3/inj_class_r0.01_k5_s3.tax"
     },
     {
       "name": "inj_class_r0.05_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k10_s1/inj_class_r0.05_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k10_s1/inj_class_r0.05_k10_s1.tax"
+      "fasta": "data/injected/inj_class_r0.05_k10_s1/inj_class_r0.05_k10_s1.fasta",
+      "tax": "data/injected/inj_class_r0.05_k10_s1/inj_class_r0.05_k10_s1.tax"
     },
     {
       "name": "inj_class_r0.05_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k10_s2/inj_class_r0.05_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k10_s2/inj_class_r0.05_k10_s2.tax"
+      "fasta": "data/injected/inj_class_r0.05_k10_s2/inj_class_r0.05_k10_s2.fasta",
+      "tax": "data/injected/inj_class_r0.05_k10_s2/inj_class_r0.05_k10_s2.tax"
     },
     {
       "name": "inj_class_r0.05_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k10_s3/inj_class_r0.05_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k10_s3/inj_class_r0.05_k10_s3.tax"
+      "fasta": "data/injected/inj_class_r0.05_k10_s3/inj_class_r0.05_k10_s3.fasta",
+      "tax": "data/injected/inj_class_r0.05_k10_s3/inj_class_r0.05_k10_s3.tax"
     },
     {
       "name": "inj_class_r0.05_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k1_s1/inj_class_r0.05_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k1_s1/inj_class_r0.05_k1_s1.tax"
+      "fasta": "data/injected/inj_class_r0.05_k1_s1/inj_class_r0.05_k1_s1.fasta",
+      "tax": "data/injected/inj_class_r0.05_k1_s1/inj_class_r0.05_k1_s1.tax"
     },
     {
       "name": "inj_class_r0.05_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k1_s2/inj_class_r0.05_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k1_s2/inj_class_r0.05_k1_s2.tax"
+      "fasta": "data/injected/inj_class_r0.05_k1_s2/inj_class_r0.05_k1_s2.fasta",
+      "tax": "data/injected/inj_class_r0.05_k1_s2/inj_class_r0.05_k1_s2.tax"
     },
     {
       "name": "inj_class_r0.05_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k1_s3/inj_class_r0.05_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k1_s3/inj_class_r0.05_k1_s3.tax"
+      "fasta": "data/injected/inj_class_r0.05_k1_s3/inj_class_r0.05_k1_s3.fasta",
+      "tax": "data/injected/inj_class_r0.05_k1_s3/inj_class_r0.05_k1_s3.tax"
     },
     {
       "name": "inj_class_r0.05_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k2_s1/inj_class_r0.05_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k2_s1/inj_class_r0.05_k2_s1.tax"
+      "fasta": "data/injected/inj_class_r0.05_k2_s1/inj_class_r0.05_k2_s1.fasta",
+      "tax": "data/injected/inj_class_r0.05_k2_s1/inj_class_r0.05_k2_s1.tax"
     },
     {
       "name": "inj_class_r0.05_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k2_s2/inj_class_r0.05_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k2_s2/inj_class_r0.05_k2_s2.tax"
+      "fasta": "data/injected/inj_class_r0.05_k2_s2/inj_class_r0.05_k2_s2.fasta",
+      "tax": "data/injected/inj_class_r0.05_k2_s2/inj_class_r0.05_k2_s2.tax"
     },
     {
       "name": "inj_class_r0.05_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k2_s3/inj_class_r0.05_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k2_s3/inj_class_r0.05_k2_s3.tax"
+      "fasta": "data/injected/inj_class_r0.05_k2_s3/inj_class_r0.05_k2_s3.fasta",
+      "tax": "data/injected/inj_class_r0.05_k2_s3/inj_class_r0.05_k2_s3.tax"
     },
     {
       "name": "inj_class_r0.05_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k3_s1/inj_class_r0.05_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k3_s1/inj_class_r0.05_k3_s1.tax"
+      "fasta": "data/injected/inj_class_r0.05_k3_s1/inj_class_r0.05_k3_s1.fasta",
+      "tax": "data/injected/inj_class_r0.05_k3_s1/inj_class_r0.05_k3_s1.tax"
     },
     {
       "name": "inj_class_r0.05_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k3_s2/inj_class_r0.05_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k3_s2/inj_class_r0.05_k3_s2.tax"
+      "fasta": "data/injected/inj_class_r0.05_k3_s2/inj_class_r0.05_k3_s2.fasta",
+      "tax": "data/injected/inj_class_r0.05_k3_s2/inj_class_r0.05_k3_s2.tax"
     },
     {
       "name": "inj_class_r0.05_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k3_s3/inj_class_r0.05_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k3_s3/inj_class_r0.05_k3_s3.tax"
+      "fasta": "data/injected/inj_class_r0.05_k3_s3/inj_class_r0.05_k3_s3.fasta",
+      "tax": "data/injected/inj_class_r0.05_k3_s3/inj_class_r0.05_k3_s3.tax"
     },
     {
       "name": "inj_class_r0.05_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k5_s1/inj_class_r0.05_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k5_s1/inj_class_r0.05_k5_s1.tax"
+      "fasta": "data/injected/inj_class_r0.05_k5_s1/inj_class_r0.05_k5_s1.fasta",
+      "tax": "data/injected/inj_class_r0.05_k5_s1/inj_class_r0.05_k5_s1.tax"
     },
     {
       "name": "inj_class_r0.05_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k5_s2/inj_class_r0.05_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k5_s2/inj_class_r0.05_k5_s2.tax"
+      "fasta": "data/injected/inj_class_r0.05_k5_s2/inj_class_r0.05_k5_s2.fasta",
+      "tax": "data/injected/inj_class_r0.05_k5_s2/inj_class_r0.05_k5_s2.tax"
     },
     {
       "name": "inj_class_r0.05_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k5_s3/inj_class_r0.05_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_class_r0.05_k5_s3/inj_class_r0.05_k5_s3.tax"
+      "fasta": "data/injected/inj_class_r0.05_k5_s3/inj_class_r0.05_k5_s3.fasta",
+      "tax": "data/injected/inj_class_r0.05_k5_s3/inj_class_r0.05_k5_s3.tax"
     },
     {
       "name": "inj_family_r0.01_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k10_s1/inj_family_r0.01_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k10_s1/inj_family_r0.01_k10_s1.tax"
+      "fasta": "data/injected/inj_family_r0.01_k10_s1/inj_family_r0.01_k10_s1.fasta",
+      "tax": "data/injected/inj_family_r0.01_k10_s1/inj_family_r0.01_k10_s1.tax"
     },
     {
       "name": "inj_family_r0.01_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k10_s2/inj_family_r0.01_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k10_s2/inj_family_r0.01_k10_s2.tax"
+      "fasta": "data/injected/inj_family_r0.01_k10_s2/inj_family_r0.01_k10_s2.fasta",
+      "tax": "data/injected/inj_family_r0.01_k10_s2/inj_family_r0.01_k10_s2.tax"
     },
     {
       "name": "inj_family_r0.01_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k10_s3/inj_family_r0.01_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k10_s3/inj_family_r0.01_k10_s3.tax"
+      "fasta": "data/injected/inj_family_r0.01_k10_s3/inj_family_r0.01_k10_s3.fasta",
+      "tax": "data/injected/inj_family_r0.01_k10_s3/inj_family_r0.01_k10_s3.tax"
     },
     {
       "name": "inj_family_r0.01_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k1_s1/inj_family_r0.01_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k1_s1/inj_family_r0.01_k1_s1.tax"
+      "fasta": "data/injected/inj_family_r0.01_k1_s1/inj_family_r0.01_k1_s1.fasta",
+      "tax": "data/injected/inj_family_r0.01_k1_s1/inj_family_r0.01_k1_s1.tax"
     },
     {
       "name": "inj_family_r0.01_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k1_s2/inj_family_r0.01_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k1_s2/inj_family_r0.01_k1_s2.tax"
+      "fasta": "data/injected/inj_family_r0.01_k1_s2/inj_family_r0.01_k1_s2.fasta",
+      "tax": "data/injected/inj_family_r0.01_k1_s2/inj_family_r0.01_k1_s2.tax"
     },
     {
       "name": "inj_family_r0.01_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k1_s3/inj_family_r0.01_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k1_s3/inj_family_r0.01_k1_s3.tax"
+      "fasta": "data/injected/inj_family_r0.01_k1_s3/inj_family_r0.01_k1_s3.fasta",
+      "tax": "data/injected/inj_family_r0.01_k1_s3/inj_family_r0.01_k1_s3.tax"
     },
     {
       "name": "inj_family_r0.01_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k2_s1/inj_family_r0.01_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k2_s1/inj_family_r0.01_k2_s1.tax"
+      "fasta": "data/injected/inj_family_r0.01_k2_s1/inj_family_r0.01_k2_s1.fasta",
+      "tax": "data/injected/inj_family_r0.01_k2_s1/inj_family_r0.01_k2_s1.tax"
     },
     {
       "name": "inj_family_r0.01_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k2_s2/inj_family_r0.01_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k2_s2/inj_family_r0.01_k2_s2.tax"
+      "fasta": "data/injected/inj_family_r0.01_k2_s2/inj_family_r0.01_k2_s2.fasta",
+      "tax": "data/injected/inj_family_r0.01_k2_s2/inj_family_r0.01_k2_s2.tax"
     },
     {
       "name": "inj_family_r0.01_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k2_s3/inj_family_r0.01_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k2_s3/inj_family_r0.01_k2_s3.tax"
+      "fasta": "data/injected/inj_family_r0.01_k2_s3/inj_family_r0.01_k2_s3.fasta",
+      "tax": "data/injected/inj_family_r0.01_k2_s3/inj_family_r0.01_k2_s3.tax"
     },
     {
       "name": "inj_family_r0.01_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k3_s1/inj_family_r0.01_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k3_s1/inj_family_r0.01_k3_s1.tax"
+      "fasta": "data/injected/inj_family_r0.01_k3_s1/inj_family_r0.01_k3_s1.fasta",
+      "tax": "data/injected/inj_family_r0.01_k3_s1/inj_family_r0.01_k3_s1.tax"
     },
     {
       "name": "inj_family_r0.01_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k3_s2/inj_family_r0.01_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k3_s2/inj_family_r0.01_k3_s2.tax"
+      "fasta": "data/injected/inj_family_r0.01_k3_s2/inj_family_r0.01_k3_s2.fasta",
+      "tax": "data/injected/inj_family_r0.01_k3_s2/inj_family_r0.01_k3_s2.tax"
     },
     {
       "name": "inj_family_r0.01_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k3_s3/inj_family_r0.01_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k3_s3/inj_family_r0.01_k3_s3.tax"
+      "fasta": "data/injected/inj_family_r0.01_k3_s3/inj_family_r0.01_k3_s3.fasta",
+      "tax": "data/injected/inj_family_r0.01_k3_s3/inj_family_r0.01_k3_s3.tax"
     },
     {
       "name": "inj_family_r0.01_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k5_s1/inj_family_r0.01_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k5_s1/inj_family_r0.01_k5_s1.tax"
+      "fasta": "data/injected/inj_family_r0.01_k5_s1/inj_family_r0.01_k5_s1.fasta",
+      "tax": "data/injected/inj_family_r0.01_k5_s1/inj_family_r0.01_k5_s1.tax"
     },
     {
       "name": "inj_family_r0.01_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k5_s2/inj_family_r0.01_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k5_s2/inj_family_r0.01_k5_s2.tax"
+      "fasta": "data/injected/inj_family_r0.01_k5_s2/inj_family_r0.01_k5_s2.fasta",
+      "tax": "data/injected/inj_family_r0.01_k5_s2/inj_family_r0.01_k5_s2.tax"
     },
     {
       "name": "inj_family_r0.01_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k5_s3/inj_family_r0.01_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.01_k5_s3/inj_family_r0.01_k5_s3.tax"
+      "fasta": "data/injected/inj_family_r0.01_k5_s3/inj_family_r0.01_k5_s3.fasta",
+      "tax": "data/injected/inj_family_r0.01_k5_s3/inj_family_r0.01_k5_s3.tax"
     },
     {
       "name": "inj_family_r0.05_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k10_s1/inj_family_r0.05_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k10_s1/inj_family_r0.05_k10_s1.tax"
+      "fasta": "data/injected/inj_family_r0.05_k10_s1/inj_family_r0.05_k10_s1.fasta",
+      "tax": "data/injected/inj_family_r0.05_k10_s1/inj_family_r0.05_k10_s1.tax"
     },
     {
       "name": "inj_family_r0.05_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k10_s2/inj_family_r0.05_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k10_s2/inj_family_r0.05_k10_s2.tax"
+      "fasta": "data/injected/inj_family_r0.05_k10_s2/inj_family_r0.05_k10_s2.fasta",
+      "tax": "data/injected/inj_family_r0.05_k10_s2/inj_family_r0.05_k10_s2.tax"
     },
     {
       "name": "inj_family_r0.05_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k10_s3/inj_family_r0.05_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k10_s3/inj_family_r0.05_k10_s3.tax"
+      "fasta": "data/injected/inj_family_r0.05_k10_s3/inj_family_r0.05_k10_s3.fasta",
+      "tax": "data/injected/inj_family_r0.05_k10_s3/inj_family_r0.05_k10_s3.tax"
     },
     {
       "name": "inj_family_r0.05_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k1_s1/inj_family_r0.05_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k1_s1/inj_family_r0.05_k1_s1.tax"
+      "fasta": "data/injected/inj_family_r0.05_k1_s1/inj_family_r0.05_k1_s1.fasta",
+      "tax": "data/injected/inj_family_r0.05_k1_s1/inj_family_r0.05_k1_s1.tax"
     },
     {
       "name": "inj_family_r0.05_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k1_s2/inj_family_r0.05_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k1_s2/inj_family_r0.05_k1_s2.tax"
+      "fasta": "data/injected/inj_family_r0.05_k1_s2/inj_family_r0.05_k1_s2.fasta",
+      "tax": "data/injected/inj_family_r0.05_k1_s2/inj_family_r0.05_k1_s2.tax"
     },
     {
       "name": "inj_family_r0.05_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k1_s3/inj_family_r0.05_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k1_s3/inj_family_r0.05_k1_s3.tax"
+      "fasta": "data/injected/inj_family_r0.05_k1_s3/inj_family_r0.05_k1_s3.fasta",
+      "tax": "data/injected/inj_family_r0.05_k1_s3/inj_family_r0.05_k1_s3.tax"
     },
     {
       "name": "inj_family_r0.05_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k2_s1/inj_family_r0.05_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k2_s1/inj_family_r0.05_k2_s1.tax"
+      "fasta": "data/injected/inj_family_r0.05_k2_s1/inj_family_r0.05_k2_s1.fasta",
+      "tax": "data/injected/inj_family_r0.05_k2_s1/inj_family_r0.05_k2_s1.tax"
     },
     {
       "name": "inj_family_r0.05_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k2_s2/inj_family_r0.05_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k2_s2/inj_family_r0.05_k2_s2.tax"
+      "fasta": "data/injected/inj_family_r0.05_k2_s2/inj_family_r0.05_k2_s2.fasta",
+      "tax": "data/injected/inj_family_r0.05_k2_s2/inj_family_r0.05_k2_s2.tax"
     },
     {
       "name": "inj_family_r0.05_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k2_s3/inj_family_r0.05_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k2_s3/inj_family_r0.05_k2_s3.tax"
+      "fasta": "data/injected/inj_family_r0.05_k2_s3/inj_family_r0.05_k2_s3.fasta",
+      "tax": "data/injected/inj_family_r0.05_k2_s3/inj_family_r0.05_k2_s3.tax"
     },
     {
       "name": "inj_family_r0.05_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k3_s1/inj_family_r0.05_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k3_s1/inj_family_r0.05_k3_s1.tax"
+      "fasta": "data/injected/inj_family_r0.05_k3_s1/inj_family_r0.05_k3_s1.fasta",
+      "tax": "data/injected/inj_family_r0.05_k3_s1/inj_family_r0.05_k3_s1.tax"
     },
     {
       "name": "inj_family_r0.05_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k3_s2/inj_family_r0.05_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k3_s2/inj_family_r0.05_k3_s2.tax"
+      "fasta": "data/injected/inj_family_r0.05_k3_s2/inj_family_r0.05_k3_s2.fasta",
+      "tax": "data/injected/inj_family_r0.05_k3_s2/inj_family_r0.05_k3_s2.tax"
     },
     {
       "name": "inj_family_r0.05_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k3_s3/inj_family_r0.05_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k3_s3/inj_family_r0.05_k3_s3.tax"
+      "fasta": "data/injected/inj_family_r0.05_k3_s3/inj_family_r0.05_k3_s3.fasta",
+      "tax": "data/injected/inj_family_r0.05_k3_s3/inj_family_r0.05_k3_s3.tax"
     },
     {
       "name": "inj_family_r0.05_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k5_s1/inj_family_r0.05_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k5_s1/inj_family_r0.05_k5_s1.tax"
+      "fasta": "data/injected/inj_family_r0.05_k5_s1/inj_family_r0.05_k5_s1.fasta",
+      "tax": "data/injected/inj_family_r0.05_k5_s1/inj_family_r0.05_k5_s1.tax"
     },
     {
       "name": "inj_family_r0.05_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k5_s2/inj_family_r0.05_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k5_s2/inj_family_r0.05_k5_s2.tax"
+      "fasta": "data/injected/inj_family_r0.05_k5_s2/inj_family_r0.05_k5_s2.fasta",
+      "tax": "data/injected/inj_family_r0.05_k5_s2/inj_family_r0.05_k5_s2.tax"
     },
     {
       "name": "inj_family_r0.05_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k5_s3/inj_family_r0.05_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_family_r0.05_k5_s3/inj_family_r0.05_k5_s3.tax"
+      "fasta": "data/injected/inj_family_r0.05_k5_s3/inj_family_r0.05_k5_s3.fasta",
+      "tax": "data/injected/inj_family_r0.05_k5_s3/inj_family_r0.05_k5_s3.tax"
     },
     {
       "name": "inj_genus_r0.01_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k10_s1/inj_genus_r0.01_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k10_s1/inj_genus_r0.01_k10_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k10_s1/inj_genus_r0.01_k10_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k10_s1/inj_genus_r0.01_k10_s1.tax"
     },
     {
       "name": "inj_genus_r0.01_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k10_s2/inj_genus_r0.01_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k10_s2/inj_genus_r0.01_k10_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k10_s2/inj_genus_r0.01_k10_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k10_s2/inj_genus_r0.01_k10_s2.tax"
     },
     {
       "name": "inj_genus_r0.01_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k10_s3/inj_genus_r0.01_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k10_s3/inj_genus_r0.01_k10_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k10_s3/inj_genus_r0.01_k10_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k10_s3/inj_genus_r0.01_k10_s3.tax"
     },
     {
       "name": "inj_genus_r0.01_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k1_s1/inj_genus_r0.01_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k1_s1/inj_genus_r0.01_k1_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k1_s1/inj_genus_r0.01_k1_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k1_s1/inj_genus_r0.01_k1_s1.tax"
     },
     {
       "name": "inj_genus_r0.01_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k1_s2/inj_genus_r0.01_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k1_s2/inj_genus_r0.01_k1_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k1_s2/inj_genus_r0.01_k1_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k1_s2/inj_genus_r0.01_k1_s2.tax"
     },
     {
       "name": "inj_genus_r0.01_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k1_s3/inj_genus_r0.01_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k1_s3/inj_genus_r0.01_k1_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k1_s3/inj_genus_r0.01_k1_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k1_s3/inj_genus_r0.01_k1_s3.tax"
     },
     {
       "name": "inj_genus_r0.01_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k2_s1/inj_genus_r0.01_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k2_s1/inj_genus_r0.01_k2_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k2_s1/inj_genus_r0.01_k2_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k2_s1/inj_genus_r0.01_k2_s1.tax"
     },
     {
       "name": "inj_genus_r0.01_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k2_s2/inj_genus_r0.01_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k2_s2/inj_genus_r0.01_k2_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k2_s2/inj_genus_r0.01_k2_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k2_s2/inj_genus_r0.01_k2_s2.tax"
     },
     {
       "name": "inj_genus_r0.01_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k2_s3/inj_genus_r0.01_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k2_s3/inj_genus_r0.01_k2_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k2_s3/inj_genus_r0.01_k2_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k2_s3/inj_genus_r0.01_k2_s3.tax"
     },
     {
       "name": "inj_genus_r0.01_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k3_s1/inj_genus_r0.01_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k3_s1/inj_genus_r0.01_k3_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k3_s1/inj_genus_r0.01_k3_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k3_s1/inj_genus_r0.01_k3_s1.tax"
     },
     {
       "name": "inj_genus_r0.01_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k3_s2/inj_genus_r0.01_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k3_s2/inj_genus_r0.01_k3_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k3_s2/inj_genus_r0.01_k3_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k3_s2/inj_genus_r0.01_k3_s2.tax"
     },
     {
       "name": "inj_genus_r0.01_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k3_s3/inj_genus_r0.01_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k3_s3/inj_genus_r0.01_k3_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k3_s3/inj_genus_r0.01_k3_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k3_s3/inj_genus_r0.01_k3_s3.tax"
     },
     {
       "name": "inj_genus_r0.01_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k5_s1/inj_genus_r0.01_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k5_s1/inj_genus_r0.01_k5_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k5_s1/inj_genus_r0.01_k5_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k5_s1/inj_genus_r0.01_k5_s1.tax"
     },
     {
       "name": "inj_genus_r0.01_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k5_s2/inj_genus_r0.01_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k5_s2/inj_genus_r0.01_k5_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k5_s2/inj_genus_r0.01_k5_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k5_s2/inj_genus_r0.01_k5_s2.tax"
     },
     {
       "name": "inj_genus_r0.01_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k5_s3/inj_genus_r0.01_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.01_k5_s3/inj_genus_r0.01_k5_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.01_k5_s3/inj_genus_r0.01_k5_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.01_k5_s3/inj_genus_r0.01_k5_s3.tax"
     },
     {
       "name": "inj_genus_r0.05_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k10_s1/inj_genus_r0.05_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k10_s1/inj_genus_r0.05_k10_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k10_s1/inj_genus_r0.05_k10_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k10_s1/inj_genus_r0.05_k10_s1.tax"
     },
     {
       "name": "inj_genus_r0.05_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k10_s2/inj_genus_r0.05_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k10_s2/inj_genus_r0.05_k10_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k10_s2/inj_genus_r0.05_k10_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k10_s2/inj_genus_r0.05_k10_s2.tax"
     },
     {
       "name": "inj_genus_r0.05_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k10_s3/inj_genus_r0.05_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k10_s3/inj_genus_r0.05_k10_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k10_s3/inj_genus_r0.05_k10_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k10_s3/inj_genus_r0.05_k10_s3.tax"
     },
     {
       "name": "inj_genus_r0.05_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k1_s1/inj_genus_r0.05_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k1_s1/inj_genus_r0.05_k1_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k1_s1/inj_genus_r0.05_k1_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k1_s1/inj_genus_r0.05_k1_s1.tax"
     },
     {
       "name": "inj_genus_r0.05_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k1_s2/inj_genus_r0.05_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k1_s2/inj_genus_r0.05_k1_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k1_s2/inj_genus_r0.05_k1_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k1_s2/inj_genus_r0.05_k1_s2.tax"
     },
     {
       "name": "inj_genus_r0.05_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k1_s3/inj_genus_r0.05_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k1_s3/inj_genus_r0.05_k1_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k1_s3/inj_genus_r0.05_k1_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k1_s3/inj_genus_r0.05_k1_s3.tax"
     },
     {
       "name": "inj_genus_r0.05_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k2_s1/inj_genus_r0.05_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k2_s1/inj_genus_r0.05_k2_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k2_s1/inj_genus_r0.05_k2_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k2_s1/inj_genus_r0.05_k2_s1.tax"
     },
     {
       "name": "inj_genus_r0.05_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k2_s2/inj_genus_r0.05_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k2_s2/inj_genus_r0.05_k2_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k2_s2/inj_genus_r0.05_k2_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k2_s2/inj_genus_r0.05_k2_s2.tax"
     },
     {
       "name": "inj_genus_r0.05_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k2_s3/inj_genus_r0.05_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k2_s3/inj_genus_r0.05_k2_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k2_s3/inj_genus_r0.05_k2_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k2_s3/inj_genus_r0.05_k2_s3.tax"
     },
     {
       "name": "inj_genus_r0.05_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k3_s1/inj_genus_r0.05_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k3_s1/inj_genus_r0.05_k3_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k3_s1/inj_genus_r0.05_k3_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k3_s1/inj_genus_r0.05_k3_s1.tax"
     },
     {
       "name": "inj_genus_r0.05_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k3_s2/inj_genus_r0.05_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k3_s2/inj_genus_r0.05_k3_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k3_s2/inj_genus_r0.05_k3_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k3_s2/inj_genus_r0.05_k3_s2.tax"
     },
     {
       "name": "inj_genus_r0.05_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k3_s3/inj_genus_r0.05_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k3_s3/inj_genus_r0.05_k3_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k3_s3/inj_genus_r0.05_k3_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k3_s3/inj_genus_r0.05_k3_s3.tax"
     },
     {
       "name": "inj_genus_r0.05_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k5_s1/inj_genus_r0.05_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k5_s1/inj_genus_r0.05_k5_s1.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k5_s1/inj_genus_r0.05_k5_s1.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k5_s1/inj_genus_r0.05_k5_s1.tax"
     },
     {
       "name": "inj_genus_r0.05_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k5_s2/inj_genus_r0.05_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k5_s2/inj_genus_r0.05_k5_s2.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k5_s2/inj_genus_r0.05_k5_s2.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k5_s2/inj_genus_r0.05_k5_s2.tax"
     },
     {
       "name": "inj_genus_r0.05_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k5_s3/inj_genus_r0.05_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_genus_r0.05_k5_s3/inj_genus_r0.05_k5_s3.tax"
+      "fasta": "data/injected/inj_genus_r0.05_k5_s3/inj_genus_r0.05_k5_s3.fasta",
+      "tax": "data/injected/inj_genus_r0.05_k5_s3/inj_genus_r0.05_k5_s3.tax"
     },
     {
       "name": "inj_order_r0.01_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k10_s1/inj_order_r0.01_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k10_s1/inj_order_r0.01_k10_s1.tax"
+      "fasta": "data/injected/inj_order_r0.01_k10_s1/inj_order_r0.01_k10_s1.fasta",
+      "tax": "data/injected/inj_order_r0.01_k10_s1/inj_order_r0.01_k10_s1.tax"
     },
     {
       "name": "inj_order_r0.01_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k10_s2/inj_order_r0.01_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k10_s2/inj_order_r0.01_k10_s2.tax"
+      "fasta": "data/injected/inj_order_r0.01_k10_s2/inj_order_r0.01_k10_s2.fasta",
+      "tax": "data/injected/inj_order_r0.01_k10_s2/inj_order_r0.01_k10_s2.tax"
     },
     {
       "name": "inj_order_r0.01_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k10_s3/inj_order_r0.01_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k10_s3/inj_order_r0.01_k10_s3.tax"
+      "fasta": "data/injected/inj_order_r0.01_k10_s3/inj_order_r0.01_k10_s3.fasta",
+      "tax": "data/injected/inj_order_r0.01_k10_s3/inj_order_r0.01_k10_s3.tax"
     },
     {
       "name": "inj_order_r0.01_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k1_s1/inj_order_r0.01_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k1_s1/inj_order_r0.01_k1_s1.tax"
+      "fasta": "data/injected/inj_order_r0.01_k1_s1/inj_order_r0.01_k1_s1.fasta",
+      "tax": "data/injected/inj_order_r0.01_k1_s1/inj_order_r0.01_k1_s1.tax"
     },
     {
       "name": "inj_order_r0.01_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k1_s2/inj_order_r0.01_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k1_s2/inj_order_r0.01_k1_s2.tax"
+      "fasta": "data/injected/inj_order_r0.01_k1_s2/inj_order_r0.01_k1_s2.fasta",
+      "tax": "data/injected/inj_order_r0.01_k1_s2/inj_order_r0.01_k1_s2.tax"
     },
     {
       "name": "inj_order_r0.01_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k1_s3/inj_order_r0.01_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k1_s3/inj_order_r0.01_k1_s3.tax"
+      "fasta": "data/injected/inj_order_r0.01_k1_s3/inj_order_r0.01_k1_s3.fasta",
+      "tax": "data/injected/inj_order_r0.01_k1_s3/inj_order_r0.01_k1_s3.tax"
     },
     {
       "name": "inj_order_r0.01_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k2_s1/inj_order_r0.01_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k2_s1/inj_order_r0.01_k2_s1.tax"
+      "fasta": "data/injected/inj_order_r0.01_k2_s1/inj_order_r0.01_k2_s1.fasta",
+      "tax": "data/injected/inj_order_r0.01_k2_s1/inj_order_r0.01_k2_s1.tax"
     },
     {
       "name": "inj_order_r0.01_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k2_s2/inj_order_r0.01_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k2_s2/inj_order_r0.01_k2_s2.tax"
+      "fasta": "data/injected/inj_order_r0.01_k2_s2/inj_order_r0.01_k2_s2.fasta",
+      "tax": "data/injected/inj_order_r0.01_k2_s2/inj_order_r0.01_k2_s2.tax"
     },
     {
       "name": "inj_order_r0.01_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k2_s3/inj_order_r0.01_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k2_s3/inj_order_r0.01_k2_s3.tax"
+      "fasta": "data/injected/inj_order_r0.01_k2_s3/inj_order_r0.01_k2_s3.fasta",
+      "tax": "data/injected/inj_order_r0.01_k2_s3/inj_order_r0.01_k2_s3.tax"
     },
     {
       "name": "inj_order_r0.01_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k3_s1/inj_order_r0.01_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k3_s1/inj_order_r0.01_k3_s1.tax"
+      "fasta": "data/injected/inj_order_r0.01_k3_s1/inj_order_r0.01_k3_s1.fasta",
+      "tax": "data/injected/inj_order_r0.01_k3_s1/inj_order_r0.01_k3_s1.tax"
     },
     {
       "name": "inj_order_r0.01_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k3_s2/inj_order_r0.01_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k3_s2/inj_order_r0.01_k3_s2.tax"
+      "fasta": "data/injected/inj_order_r0.01_k3_s2/inj_order_r0.01_k3_s2.fasta",
+      "tax": "data/injected/inj_order_r0.01_k3_s2/inj_order_r0.01_k3_s2.tax"
     },
     {
       "name": "inj_order_r0.01_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k3_s3/inj_order_r0.01_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k3_s3/inj_order_r0.01_k3_s3.tax"
+      "fasta": "data/injected/inj_order_r0.01_k3_s3/inj_order_r0.01_k3_s3.fasta",
+      "tax": "data/injected/inj_order_r0.01_k3_s3/inj_order_r0.01_k3_s3.tax"
     },
     {
       "name": "inj_order_r0.01_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k5_s1/inj_order_r0.01_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k5_s1/inj_order_r0.01_k5_s1.tax"
+      "fasta": "data/injected/inj_order_r0.01_k5_s1/inj_order_r0.01_k5_s1.fasta",
+      "tax": "data/injected/inj_order_r0.01_k5_s1/inj_order_r0.01_k5_s1.tax"
     },
     {
       "name": "inj_order_r0.01_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k5_s2/inj_order_r0.01_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k5_s2/inj_order_r0.01_k5_s2.tax"
+      "fasta": "data/injected/inj_order_r0.01_k5_s2/inj_order_r0.01_k5_s2.fasta",
+      "tax": "data/injected/inj_order_r0.01_k5_s2/inj_order_r0.01_k5_s2.tax"
     },
     {
       "name": "inj_order_r0.01_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k5_s3/inj_order_r0.01_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.01_k5_s3/inj_order_r0.01_k5_s3.tax"
+      "fasta": "data/injected/inj_order_r0.01_k5_s3/inj_order_r0.01_k5_s3.fasta",
+      "tax": "data/injected/inj_order_r0.01_k5_s3/inj_order_r0.01_k5_s3.tax"
     },
     {
       "name": "inj_order_r0.05_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k10_s1/inj_order_r0.05_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k10_s1/inj_order_r0.05_k10_s1.tax"
+      "fasta": "data/injected/inj_order_r0.05_k10_s1/inj_order_r0.05_k10_s1.fasta",
+      "tax": "data/injected/inj_order_r0.05_k10_s1/inj_order_r0.05_k10_s1.tax"
     },
     {
       "name": "inj_order_r0.05_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k10_s2/inj_order_r0.05_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k10_s2/inj_order_r0.05_k10_s2.tax"
+      "fasta": "data/injected/inj_order_r0.05_k10_s2/inj_order_r0.05_k10_s2.fasta",
+      "tax": "data/injected/inj_order_r0.05_k10_s2/inj_order_r0.05_k10_s2.tax"
     },
     {
       "name": "inj_order_r0.05_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k10_s3/inj_order_r0.05_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k10_s3/inj_order_r0.05_k10_s3.tax"
+      "fasta": "data/injected/inj_order_r0.05_k10_s3/inj_order_r0.05_k10_s3.fasta",
+      "tax": "data/injected/inj_order_r0.05_k10_s3/inj_order_r0.05_k10_s3.tax"
     },
     {
       "name": "inj_order_r0.05_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k1_s1/inj_order_r0.05_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k1_s1/inj_order_r0.05_k1_s1.tax"
+      "fasta": "data/injected/inj_order_r0.05_k1_s1/inj_order_r0.05_k1_s1.fasta",
+      "tax": "data/injected/inj_order_r0.05_k1_s1/inj_order_r0.05_k1_s1.tax"
     },
     {
       "name": "inj_order_r0.05_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k1_s2/inj_order_r0.05_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k1_s2/inj_order_r0.05_k1_s2.tax"
+      "fasta": "data/injected/inj_order_r0.05_k1_s2/inj_order_r0.05_k1_s2.fasta",
+      "tax": "data/injected/inj_order_r0.05_k1_s2/inj_order_r0.05_k1_s2.tax"
     },
     {
       "name": "inj_order_r0.05_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k1_s3/inj_order_r0.05_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k1_s3/inj_order_r0.05_k1_s3.tax"
+      "fasta": "data/injected/inj_order_r0.05_k1_s3/inj_order_r0.05_k1_s3.fasta",
+      "tax": "data/injected/inj_order_r0.05_k1_s3/inj_order_r0.05_k1_s3.tax"
     },
     {
       "name": "inj_order_r0.05_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k2_s1/inj_order_r0.05_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k2_s1/inj_order_r0.05_k2_s1.tax"
+      "fasta": "data/injected/inj_order_r0.05_k2_s1/inj_order_r0.05_k2_s1.fasta",
+      "tax": "data/injected/inj_order_r0.05_k2_s1/inj_order_r0.05_k2_s1.tax"
     },
     {
       "name": "inj_order_r0.05_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k2_s2/inj_order_r0.05_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k2_s2/inj_order_r0.05_k2_s2.tax"
+      "fasta": "data/injected/inj_order_r0.05_k2_s2/inj_order_r0.05_k2_s2.fasta",
+      "tax": "data/injected/inj_order_r0.05_k2_s2/inj_order_r0.05_k2_s2.tax"
     },
     {
       "name": "inj_order_r0.05_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k2_s3/inj_order_r0.05_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k2_s3/inj_order_r0.05_k2_s3.tax"
+      "fasta": "data/injected/inj_order_r0.05_k2_s3/inj_order_r0.05_k2_s3.fasta",
+      "tax": "data/injected/inj_order_r0.05_k2_s3/inj_order_r0.05_k2_s3.tax"
     },
     {
       "name": "inj_order_r0.05_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k3_s1/inj_order_r0.05_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k3_s1/inj_order_r0.05_k3_s1.tax"
+      "fasta": "data/injected/inj_order_r0.05_k3_s1/inj_order_r0.05_k3_s1.fasta",
+      "tax": "data/injected/inj_order_r0.05_k3_s1/inj_order_r0.05_k3_s1.tax"
     },
     {
       "name": "inj_order_r0.05_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k3_s2/inj_order_r0.05_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k3_s2/inj_order_r0.05_k3_s2.tax"
+      "fasta": "data/injected/inj_order_r0.05_k3_s2/inj_order_r0.05_k3_s2.fasta",
+      "tax": "data/injected/inj_order_r0.05_k3_s2/inj_order_r0.05_k3_s2.tax"
     },
     {
       "name": "inj_order_r0.05_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k3_s3/inj_order_r0.05_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k3_s3/inj_order_r0.05_k3_s3.tax"
+      "fasta": "data/injected/inj_order_r0.05_k3_s3/inj_order_r0.05_k3_s3.fasta",
+      "tax": "data/injected/inj_order_r0.05_k3_s3/inj_order_r0.05_k3_s3.tax"
     },
     {
       "name": "inj_order_r0.05_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k5_s1/inj_order_r0.05_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k5_s1/inj_order_r0.05_k5_s1.tax"
+      "fasta": "data/injected/inj_order_r0.05_k5_s1/inj_order_r0.05_k5_s1.fasta",
+      "tax": "data/injected/inj_order_r0.05_k5_s1/inj_order_r0.05_k5_s1.tax"
     },
     {
       "name": "inj_order_r0.05_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k5_s2/inj_order_r0.05_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k5_s2/inj_order_r0.05_k5_s2.tax"
+      "fasta": "data/injected/inj_order_r0.05_k5_s2/inj_order_r0.05_k5_s2.fasta",
+      "tax": "data/injected/inj_order_r0.05_k5_s2/inj_order_r0.05_k5_s2.tax"
     },
     {
       "name": "inj_order_r0.05_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k5_s3/inj_order_r0.05_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_order_r0.05_k5_s3/inj_order_r0.05_k5_s3.tax"
+      "fasta": "data/injected/inj_order_r0.05_k5_s3/inj_order_r0.05_k5_s3.fasta",
+      "tax": "data/injected/inj_order_r0.05_k5_s3/inj_order_r0.05_k5_s3.tax"
     },
     {
       "name": "inj_phylum_r0.01_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k10_s1/inj_phylum_r0.01_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k10_s1/inj_phylum_r0.01_k10_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k10_s1/inj_phylum_r0.01_k10_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k10_s1/inj_phylum_r0.01_k10_s1.tax"
     },
     {
       "name": "inj_phylum_r0.01_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k10_s2/inj_phylum_r0.01_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k10_s2/inj_phylum_r0.01_k10_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k10_s2/inj_phylum_r0.01_k10_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k10_s2/inj_phylum_r0.01_k10_s2.tax"
     },
     {
       "name": "inj_phylum_r0.01_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k10_s3/inj_phylum_r0.01_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k10_s3/inj_phylum_r0.01_k10_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k10_s3/inj_phylum_r0.01_k10_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k10_s3/inj_phylum_r0.01_k10_s3.tax"
     },
     {
       "name": "inj_phylum_r0.01_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k1_s1/inj_phylum_r0.01_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k1_s1/inj_phylum_r0.01_k1_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k1_s1/inj_phylum_r0.01_k1_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k1_s1/inj_phylum_r0.01_k1_s1.tax"
     },
     {
       "name": "inj_phylum_r0.01_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k1_s2/inj_phylum_r0.01_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k1_s2/inj_phylum_r0.01_k1_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k1_s2/inj_phylum_r0.01_k1_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k1_s2/inj_phylum_r0.01_k1_s2.tax"
     },
     {
       "name": "inj_phylum_r0.01_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k1_s3/inj_phylum_r0.01_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k1_s3/inj_phylum_r0.01_k1_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k1_s3/inj_phylum_r0.01_k1_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k1_s3/inj_phylum_r0.01_k1_s3.tax"
     },
     {
       "name": "inj_phylum_r0.01_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k2_s1/inj_phylum_r0.01_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k2_s1/inj_phylum_r0.01_k2_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k2_s1/inj_phylum_r0.01_k2_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k2_s1/inj_phylum_r0.01_k2_s1.tax"
     },
     {
       "name": "inj_phylum_r0.01_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k2_s2/inj_phylum_r0.01_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k2_s2/inj_phylum_r0.01_k2_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k2_s2/inj_phylum_r0.01_k2_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k2_s2/inj_phylum_r0.01_k2_s2.tax"
     },
     {
       "name": "inj_phylum_r0.01_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k2_s3/inj_phylum_r0.01_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k2_s3/inj_phylum_r0.01_k2_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k2_s3/inj_phylum_r0.01_k2_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k2_s3/inj_phylum_r0.01_k2_s3.tax"
     },
     {
       "name": "inj_phylum_r0.01_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k3_s1/inj_phylum_r0.01_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k3_s1/inj_phylum_r0.01_k3_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k3_s1/inj_phylum_r0.01_k3_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k3_s1/inj_phylum_r0.01_k3_s1.tax"
     },
     {
       "name": "inj_phylum_r0.01_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k3_s2/inj_phylum_r0.01_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k3_s2/inj_phylum_r0.01_k3_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k3_s2/inj_phylum_r0.01_k3_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k3_s2/inj_phylum_r0.01_k3_s2.tax"
     },
     {
       "name": "inj_phylum_r0.01_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k3_s3/inj_phylum_r0.01_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k3_s3/inj_phylum_r0.01_k3_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k3_s3/inj_phylum_r0.01_k3_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k3_s3/inj_phylum_r0.01_k3_s3.tax"
     },
     {
       "name": "inj_phylum_r0.01_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k5_s1/inj_phylum_r0.01_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k5_s1/inj_phylum_r0.01_k5_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k5_s1/inj_phylum_r0.01_k5_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k5_s1/inj_phylum_r0.01_k5_s1.tax"
     },
     {
       "name": "inj_phylum_r0.01_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k5_s2/inj_phylum_r0.01_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k5_s2/inj_phylum_r0.01_k5_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k5_s2/inj_phylum_r0.01_k5_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k5_s2/inj_phylum_r0.01_k5_s2.tax"
     },
     {
       "name": "inj_phylum_r0.01_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k5_s3/inj_phylum_r0.01_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.01_k5_s3/inj_phylum_r0.01_k5_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.01_k5_s3/inj_phylum_r0.01_k5_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.01_k5_s3/inj_phylum_r0.01_k5_s3.tax"
     },
     {
       "name": "inj_phylum_r0.05_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k10_s1/inj_phylum_r0.05_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k10_s1/inj_phylum_r0.05_k10_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k10_s1/inj_phylum_r0.05_k10_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k10_s1/inj_phylum_r0.05_k10_s1.tax"
     },
     {
       "name": "inj_phylum_r0.05_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k10_s2/inj_phylum_r0.05_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k10_s2/inj_phylum_r0.05_k10_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k10_s2/inj_phylum_r0.05_k10_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k10_s2/inj_phylum_r0.05_k10_s2.tax"
     },
     {
       "name": "inj_phylum_r0.05_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k10_s3/inj_phylum_r0.05_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k10_s3/inj_phylum_r0.05_k10_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k10_s3/inj_phylum_r0.05_k10_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k10_s3/inj_phylum_r0.05_k10_s3.tax"
     },
     {
       "name": "inj_phylum_r0.05_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k1_s1/inj_phylum_r0.05_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k1_s1/inj_phylum_r0.05_k1_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k1_s1/inj_phylum_r0.05_k1_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k1_s1/inj_phylum_r0.05_k1_s1.tax"
     },
     {
       "name": "inj_phylum_r0.05_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k1_s2/inj_phylum_r0.05_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k1_s2/inj_phylum_r0.05_k1_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k1_s2/inj_phylum_r0.05_k1_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k1_s2/inj_phylum_r0.05_k1_s2.tax"
     },
     {
       "name": "inj_phylum_r0.05_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k1_s3/inj_phylum_r0.05_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k1_s3/inj_phylum_r0.05_k1_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k1_s3/inj_phylum_r0.05_k1_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k1_s3/inj_phylum_r0.05_k1_s3.tax"
     },
     {
       "name": "inj_phylum_r0.05_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k2_s1/inj_phylum_r0.05_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k2_s1/inj_phylum_r0.05_k2_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k2_s1/inj_phylum_r0.05_k2_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k2_s1/inj_phylum_r0.05_k2_s1.tax"
     },
     {
       "name": "inj_phylum_r0.05_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k2_s2/inj_phylum_r0.05_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k2_s2/inj_phylum_r0.05_k2_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k2_s2/inj_phylum_r0.05_k2_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k2_s2/inj_phylum_r0.05_k2_s2.tax"
     },
     {
       "name": "inj_phylum_r0.05_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k2_s3/inj_phylum_r0.05_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k2_s3/inj_phylum_r0.05_k2_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k2_s3/inj_phylum_r0.05_k2_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k2_s3/inj_phylum_r0.05_k2_s3.tax"
     },
     {
       "name": "inj_phylum_r0.05_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k3_s1/inj_phylum_r0.05_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k3_s1/inj_phylum_r0.05_k3_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k3_s1/inj_phylum_r0.05_k3_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k3_s1/inj_phylum_r0.05_k3_s1.tax"
     },
     {
       "name": "inj_phylum_r0.05_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k3_s2/inj_phylum_r0.05_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k3_s2/inj_phylum_r0.05_k3_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k3_s2/inj_phylum_r0.05_k3_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k3_s2/inj_phylum_r0.05_k3_s2.tax"
     },
     {
       "name": "inj_phylum_r0.05_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k3_s3/inj_phylum_r0.05_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k3_s3/inj_phylum_r0.05_k3_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k3_s3/inj_phylum_r0.05_k3_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k3_s3/inj_phylum_r0.05_k3_s3.tax"
     },
     {
       "name": "inj_phylum_r0.05_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k5_s1/inj_phylum_r0.05_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k5_s1/inj_phylum_r0.05_k5_s1.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k5_s1/inj_phylum_r0.05_k5_s1.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k5_s1/inj_phylum_r0.05_k5_s1.tax"
     },
     {
       "name": "inj_phylum_r0.05_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k5_s2/inj_phylum_r0.05_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k5_s2/inj_phylum_r0.05_k5_s2.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k5_s2/inj_phylum_r0.05_k5_s2.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k5_s2/inj_phylum_r0.05_k5_s2.tax"
     },
     {
       "name": "inj_phylum_r0.05_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k5_s3/inj_phylum_r0.05_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_phylum_r0.05_k5_s3/inj_phylum_r0.05_k5_s3.tax"
+      "fasta": "data/injected/inj_phylum_r0.05_k5_s3/inj_phylum_r0.05_k5_s3.fasta",
+      "tax": "data/injected/inj_phylum_r0.05_k5_s3/inj_phylum_r0.05_k5_s3.tax"
     },
     {
       "name": "inj_species_r0.01_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k10_s1/inj_species_r0.01_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k10_s1/inj_species_r0.01_k10_s1.tax"
+      "fasta": "data/injected/inj_species_r0.01_k10_s1/inj_species_r0.01_k10_s1.fasta",
+      "tax": "data/injected/inj_species_r0.01_k10_s1/inj_species_r0.01_k10_s1.tax"
     },
     {
       "name": "inj_species_r0.01_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k10_s2/inj_species_r0.01_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k10_s2/inj_species_r0.01_k10_s2.tax"
+      "fasta": "data/injected/inj_species_r0.01_k10_s2/inj_species_r0.01_k10_s2.fasta",
+      "tax": "data/injected/inj_species_r0.01_k10_s2/inj_species_r0.01_k10_s2.tax"
     },
     {
       "name": "inj_species_r0.01_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k10_s3/inj_species_r0.01_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k10_s3/inj_species_r0.01_k10_s3.tax"
+      "fasta": "data/injected/inj_species_r0.01_k10_s3/inj_species_r0.01_k10_s3.fasta",
+      "tax": "data/injected/inj_species_r0.01_k10_s3/inj_species_r0.01_k10_s3.tax"
     },
     {
       "name": "inj_species_r0.01_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k1_s1/inj_species_r0.01_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k1_s1/inj_species_r0.01_k1_s1.tax"
+      "fasta": "data/injected/inj_species_r0.01_k1_s1/inj_species_r0.01_k1_s1.fasta",
+      "tax": "data/injected/inj_species_r0.01_k1_s1/inj_species_r0.01_k1_s1.tax"
     },
     {
       "name": "inj_species_r0.01_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k1_s2/inj_species_r0.01_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k1_s2/inj_species_r0.01_k1_s2.tax"
+      "fasta": "data/injected/inj_species_r0.01_k1_s2/inj_species_r0.01_k1_s2.fasta",
+      "tax": "data/injected/inj_species_r0.01_k1_s2/inj_species_r0.01_k1_s2.tax"
     },
     {
       "name": "inj_species_r0.01_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k1_s3/inj_species_r0.01_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k1_s3/inj_species_r0.01_k1_s3.tax"
+      "fasta": "data/injected/inj_species_r0.01_k1_s3/inj_species_r0.01_k1_s3.fasta",
+      "tax": "data/injected/inj_species_r0.01_k1_s3/inj_species_r0.01_k1_s3.tax"
     },
     {
       "name": "inj_species_r0.01_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k2_s1/inj_species_r0.01_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k2_s1/inj_species_r0.01_k2_s1.tax"
+      "fasta": "data/injected/inj_species_r0.01_k2_s1/inj_species_r0.01_k2_s1.fasta",
+      "tax": "data/injected/inj_species_r0.01_k2_s1/inj_species_r0.01_k2_s1.tax"
     },
     {
       "name": "inj_species_r0.01_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k2_s2/inj_species_r0.01_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k2_s2/inj_species_r0.01_k2_s2.tax"
+      "fasta": "data/injected/inj_species_r0.01_k2_s2/inj_species_r0.01_k2_s2.fasta",
+      "tax": "data/injected/inj_species_r0.01_k2_s2/inj_species_r0.01_k2_s2.tax"
     },
     {
       "name": "inj_species_r0.01_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k2_s3/inj_species_r0.01_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k2_s3/inj_species_r0.01_k2_s3.tax"
+      "fasta": "data/injected/inj_species_r0.01_k2_s3/inj_species_r0.01_k2_s3.fasta",
+      "tax": "data/injected/inj_species_r0.01_k2_s3/inj_species_r0.01_k2_s3.tax"
     },
     {
       "name": "inj_species_r0.01_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k3_s1/inj_species_r0.01_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k3_s1/inj_species_r0.01_k3_s1.tax"
+      "fasta": "data/injected/inj_species_r0.01_k3_s1/inj_species_r0.01_k3_s1.fasta",
+      "tax": "data/injected/inj_species_r0.01_k3_s1/inj_species_r0.01_k3_s1.tax"
     },
     {
       "name": "inj_species_r0.01_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k3_s2/inj_species_r0.01_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k3_s2/inj_species_r0.01_k3_s2.tax"
+      "fasta": "data/injected/inj_species_r0.01_k3_s2/inj_species_r0.01_k3_s2.fasta",
+      "tax": "data/injected/inj_species_r0.01_k3_s2/inj_species_r0.01_k3_s2.tax"
     },
     {
       "name": "inj_species_r0.01_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k3_s3/inj_species_r0.01_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k3_s3/inj_species_r0.01_k3_s3.tax"
+      "fasta": "data/injected/inj_species_r0.01_k3_s3/inj_species_r0.01_k3_s3.fasta",
+      "tax": "data/injected/inj_species_r0.01_k3_s3/inj_species_r0.01_k3_s3.tax"
     },
     {
       "name": "inj_species_r0.01_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k5_s1/inj_species_r0.01_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k5_s1/inj_species_r0.01_k5_s1.tax"
+      "fasta": "data/injected/inj_species_r0.01_k5_s1/inj_species_r0.01_k5_s1.fasta",
+      "tax": "data/injected/inj_species_r0.01_k5_s1/inj_species_r0.01_k5_s1.tax"
     },
     {
       "name": "inj_species_r0.01_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k5_s2/inj_species_r0.01_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k5_s2/inj_species_r0.01_k5_s2.tax"
+      "fasta": "data/injected/inj_species_r0.01_k5_s2/inj_species_r0.01_k5_s2.fasta",
+      "tax": "data/injected/inj_species_r0.01_k5_s2/inj_species_r0.01_k5_s2.tax"
     },
     {
       "name": "inj_species_r0.01_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k5_s3/inj_species_r0.01_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.01_k5_s3/inj_species_r0.01_k5_s3.tax"
+      "fasta": "data/injected/inj_species_r0.01_k5_s3/inj_species_r0.01_k5_s3.fasta",
+      "tax": "data/injected/inj_species_r0.01_k5_s3/inj_species_r0.01_k5_s3.tax"
     },
     {
       "name": "inj_species_r0.05_k10_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k10_s1/inj_species_r0.05_k10_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k10_s1/inj_species_r0.05_k10_s1.tax"
+      "fasta": "data/injected/inj_species_r0.05_k10_s1/inj_species_r0.05_k10_s1.fasta",
+      "tax": "data/injected/inj_species_r0.05_k10_s1/inj_species_r0.05_k10_s1.tax"
     },
     {
       "name": "inj_species_r0.05_k10_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k10_s2/inj_species_r0.05_k10_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k10_s2/inj_species_r0.05_k10_s2.tax"
+      "fasta": "data/injected/inj_species_r0.05_k10_s2/inj_species_r0.05_k10_s2.fasta",
+      "tax": "data/injected/inj_species_r0.05_k10_s2/inj_species_r0.05_k10_s2.tax"
     },
     {
       "name": "inj_species_r0.05_k10_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k10_s3/inj_species_r0.05_k10_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k10_s3/inj_species_r0.05_k10_s3.tax"
+      "fasta": "data/injected/inj_species_r0.05_k10_s3/inj_species_r0.05_k10_s3.fasta",
+      "tax": "data/injected/inj_species_r0.05_k10_s3/inj_species_r0.05_k10_s3.tax"
     },
     {
       "name": "inj_species_r0.05_k1_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k1_s1/inj_species_r0.05_k1_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k1_s1/inj_species_r0.05_k1_s1.tax"
+      "fasta": "data/injected/inj_species_r0.05_k1_s1/inj_species_r0.05_k1_s1.fasta",
+      "tax": "data/injected/inj_species_r0.05_k1_s1/inj_species_r0.05_k1_s1.tax"
     },
     {
       "name": "inj_species_r0.05_k1_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k1_s2/inj_species_r0.05_k1_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k1_s2/inj_species_r0.05_k1_s2.tax"
+      "fasta": "data/injected/inj_species_r0.05_k1_s2/inj_species_r0.05_k1_s2.fasta",
+      "tax": "data/injected/inj_species_r0.05_k1_s2/inj_species_r0.05_k1_s2.tax"
     },
     {
       "name": "inj_species_r0.05_k1_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k1_s3/inj_species_r0.05_k1_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k1_s3/inj_species_r0.05_k1_s3.tax"
+      "fasta": "data/injected/inj_species_r0.05_k1_s3/inj_species_r0.05_k1_s3.fasta",
+      "tax": "data/injected/inj_species_r0.05_k1_s3/inj_species_r0.05_k1_s3.tax"
     },
     {
       "name": "inj_species_r0.05_k2_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k2_s1/inj_species_r0.05_k2_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k2_s1/inj_species_r0.05_k2_s1.tax"
+      "fasta": "data/injected/inj_species_r0.05_k2_s1/inj_species_r0.05_k2_s1.fasta",
+      "tax": "data/injected/inj_species_r0.05_k2_s1/inj_species_r0.05_k2_s1.tax"
     },
     {
       "name": "inj_species_r0.05_k2_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k2_s2/inj_species_r0.05_k2_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k2_s2/inj_species_r0.05_k2_s2.tax"
+      "fasta": "data/injected/inj_species_r0.05_k2_s2/inj_species_r0.05_k2_s2.fasta",
+      "tax": "data/injected/inj_species_r0.05_k2_s2/inj_species_r0.05_k2_s2.tax"
     },
     {
       "name": "inj_species_r0.05_k2_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k2_s3/inj_species_r0.05_k2_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k2_s3/inj_species_r0.05_k2_s3.tax"
+      "fasta": "data/injected/inj_species_r0.05_k2_s3/inj_species_r0.05_k2_s3.fasta",
+      "tax": "data/injected/inj_species_r0.05_k2_s3/inj_species_r0.05_k2_s3.tax"
     },
     {
       "name": "inj_species_r0.05_k3_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k3_s1/inj_species_r0.05_k3_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k3_s1/inj_species_r0.05_k3_s1.tax"
+      "fasta": "data/injected/inj_species_r0.05_k3_s1/inj_species_r0.05_k3_s1.fasta",
+      "tax": "data/injected/inj_species_r0.05_k3_s1/inj_species_r0.05_k3_s1.tax"
     },
     {
       "name": "inj_species_r0.05_k3_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k3_s2/inj_species_r0.05_k3_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k3_s2/inj_species_r0.05_k3_s2.tax"
+      "fasta": "data/injected/inj_species_r0.05_k3_s2/inj_species_r0.05_k3_s2.fasta",
+      "tax": "data/injected/inj_species_r0.05_k3_s2/inj_species_r0.05_k3_s2.tax"
     },
     {
       "name": "inj_species_r0.05_k3_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k3_s3/inj_species_r0.05_k3_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k3_s3/inj_species_r0.05_k3_s3.tax"
+      "fasta": "data/injected/inj_species_r0.05_k3_s3/inj_species_r0.05_k3_s3.fasta",
+      "tax": "data/injected/inj_species_r0.05_k3_s3/inj_species_r0.05_k3_s3.tax"
     },
     {
       "name": "inj_species_r0.05_k5_s1",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k5_s1/inj_species_r0.05_k5_s1.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k5_s1/inj_species_r0.05_k5_s1.tax"
+      "fasta": "data/injected/inj_species_r0.05_k5_s1/inj_species_r0.05_k5_s1.fasta",
+      "tax": "data/injected/inj_species_r0.05_k5_s1/inj_species_r0.05_k5_s1.tax"
     },
     {
       "name": "inj_species_r0.05_k5_s2",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k5_s2/inj_species_r0.05_k5_s2.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k5_s2/inj_species_r0.05_k5_s2.tax"
+      "fasta": "data/injected/inj_species_r0.05_k5_s2/inj_species_r0.05_k5_s2.fasta",
+      "tax": "data/injected/inj_species_r0.05_k5_s2/inj_species_r0.05_k5_s2.tax"
     },
     {
       "name": "inj_species_r0.05_k5_s3",
       "n_seqs": 2023,
       "aln_len": 1478,
-      "fasta": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k5_s3/inj_species_r0.05_k5_s3.fasta",
-      "tax": "/shared/home/agardette/bench/data/injected/inj_species_r0.05_k5_s3/inj_species_r0.05_k5_s3.tax"
+      "fasta": "data/injected/inj_species_r0.05_k5_s3/inj_species_r0.05_k5_s3.fasta",
+      "tax": "data/injected/inj_species_r0.05_k5_s3/inj_species_r0.05_k5_s3.tax"
     }
   ]
 }

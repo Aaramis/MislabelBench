@@ -36,10 +36,14 @@ for dist in species genus family order class phylum; do
   done
 done
 
-python3 - "$OUT" "$ALN" <<'PY'
+# Paths go in relative to BENCH_ROOT, the way data/gtdb/datasets.json already writes them. An
+# absolute path makes the manifest work on exactly one machine under exactly one home: the committed
+# one named /shared/home/agardette/bench in all 180 entries. main.nf resolves a relative path against
+# projectDir, which is what resolvePath is there for.
+python3 - "$OUT" "$ALN" "$BENCH_ROOT" <<'PY'
 import json, sys
 from pathlib import Path
-out, aln = Path(sys.argv[1]), sys.argv[2]
+out, aln, root = Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3])
 n_seqs = sum(1 for l in open(aln) if l.startswith(">"))
 w = len("".join(open(aln).read().split(">")[1].split("\n")[1:]))
 sets = []
@@ -47,7 +51,8 @@ for d in sorted(out.iterdir()):
     tax = d / f"{d.name}.tax"
     if tax.exists():
         sets.append({"name": d.name, "n_seqs": n_seqs, "aln_len": w,
-                     "fasta": str(d / f"{d.name}.fasta"), "tax": str(tax)})
+                     "fasta": str((d / f"{d.name}.fasta").relative_to(root)),
+                     "tax": str(tax.relative_to(root))})
 json.dump({"source": "gtdb_arc2k, injected grid", "datasets": sets},
           open(out / "datasets.json", "w"), indent=2)
 print(f"{len(sets)} injected datasets, {n_seqs} sequences each, width {w}")

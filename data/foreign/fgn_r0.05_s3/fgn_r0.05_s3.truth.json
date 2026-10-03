@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 3,
+  "rate": 0.049926,
   "base_sequences": 2023,
   "n_injected": 101,
   "injected": {
@@ -510,6 +511,5 @@
       "wrong": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobinarius;s__Methanobinarius arboriphilus_A",
       "target_sequence": "RS_GCF_000513315.1_NZ_HG794426.1"
     }
-  },
-  "rate": 0.049926
+  }
 }

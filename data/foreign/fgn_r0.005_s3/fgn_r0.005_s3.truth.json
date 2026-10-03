@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 3,
+  "rate": 0.004943,
   "base_sequences": 2023,
   "n_injected": 10,
   "injected": {
@@ -55,6 +56,5 @@
       "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium salinarum",
       "target_sequence": "RS_GCF_030250245.1_NZ_JAQMIH010000007.1"
     }
-  },
-  "rate": 0.004943
+  }
 }

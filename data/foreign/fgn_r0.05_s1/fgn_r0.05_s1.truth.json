@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 1,
+  "rate": 0.049926,
   "base_sequences": 2023,
   "n_injected": 101,
   "injected": {
@@ -510,6 +511,5 @@
       "wrong": "d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__CG10238-14;g__JAHLMN01;s__JAHLMN01 sp018920345",
       "target_sequence": "GB_GCA_038998695.1_JAWACU010000003.1"
     }
-  },
-  "rate": 0.049926
+  }
 }

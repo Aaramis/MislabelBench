@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 2,
+  "rate": 0.049926,
   "base_sequences": 2023,
   "n_injected": 101,
   "injected": {
@@ -510,6 +511,5 @@
       "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Cuniculiplasma;s__Cuniculiplasma divulgatum",
       "target_sequence": "GB_GCA_027366715.1_DAICVX010000027.1"
     }
-  },
-  "rate": 0.049926
+  }
 }

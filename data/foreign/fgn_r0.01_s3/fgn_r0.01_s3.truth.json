@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 3,
+  "rate": 0.009886,
   "base_sequences": 2023,
   "n_injected": 20,
   "injected": {
@@ -105,6 +106,5 @@
       "wrong": "d__Archaea;p__Halobacteriota;c__Methanosarcinia;o__Methanosarcinales;f__Methanosarcinaceae;g__Methanimicrococcus;s__Methanimicrococcus hacksteinii",
       "target_sequence": "RS_GCF_032714515.1_NZ_JAWDKC010000014.1"
     }
-  },
-  "rate": 0.009886
+  }
 }

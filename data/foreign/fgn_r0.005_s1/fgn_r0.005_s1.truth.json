@@ -2,6 +2,7 @@
   "kind": "foreign",
   "distance": "domain",
   "seed": 1,
+  "rate": 0.004943,
   "base_sequences": 2023,
   "n_injected": 10,
   "injected": {
@@ -55,6 +56,5 @@
       "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Desulfurococcaceae;g__Desulfurococcus;s__Desulfurococcus sp038881575",
       "target_sequence": "RS_GCF_038727035.1_NZ_JAVYWQ010000012.1"
     }
-  },
-  "rate": 0.004943
+  }
 }
