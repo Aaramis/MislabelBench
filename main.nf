@@ -7,9 +7,13 @@
  * one run.json, which is what the analysis scripts in bin/ already read.
  */
 
-include { SATIVA      } from './modules/local/sativa/main'
-include { SATIVAEPANG } from './modules/local/sativaepang/main'
-include { COLLECTRUN  } from './modules/local/collectrun/main'
+include { SATIVA            } from './modules/local/sativa/main'
+include { SATIVAEPANG       } from './modules/local/sativaepang/main'
+include { COLLECTRUN        } from './modules/local/collectrun/main'
+include { STAGEDREFERENCE   } from './modules/local/stagedreference/main'
+include { STAGEDLOOTASKS    } from './modules/local/stagedlootasks/main'
+include { STAGEDLOOPLACE    } from './modules/local/stagedlooplace/main'
+include { STAGEDLOOSCORE    } from './modules/local/stagedlooscore/main'
 
 // A manifest's relative paths are relative to the project, not to wherever the job was launched
 // from. Each job now launches from its own directory so that several can run at once, and without
@@ -67,6 +71,74 @@ workflow {
 
     SATIVA(ch_by_impl.upstream)
     SATIVAEPANG(ch_by_impl.fork)
+
+    // The same tool again, as four stages, which is the only way the distribution claim is
+    // exercised by the harness rather than by a shell script. Off by default: it produces the same
+    // .mis by a longer route, so it is a check and a measurement and not the way to run the grid.
+    if (params.staged) {
+        // A timed staged run needs each task in its own allocation, or the shards share a node and
+        // the seconds mean nothing -- and the queueSize cap that normally prevents that is lifted
+        // on this path precisely because serialising the shards would remove what is measured.
+        if (params.timed && !workflow.profile.tokenize(',').contains('ifb')) {
+            error "a timed staged run needs -profile ifb, so that each task is its own Slurm job"
+        }
+
+        STAGEDREFERENCE(ch_by_impl.fork)
+        STAGEDLOOTASKS(
+            STAGEDREFERENCE.out.refjson
+                .join(ch_by_impl.fork.map { meta, fasta, tax -> tuple(meta, fasta, tax) })
+        )
+
+        // Folds into shards, inside one flatMap over a cell's complete fold list. Grouping this way
+        // rather than with a join means there is nothing to lose: every shard of a cell is built
+        // from the one element that holds all of that cell's folds.
+        //
+        // The shards are strides -- shard i takes folds i, i+T, i+2T -- because that is the form
+        // -folds takes and it lets one invocation cover a whole shard. T is derived from
+        // folds_per_job rather than set directly, so that a cell with fewer folds than asked for
+        // still gets one shard.
+        ch_shards = STAGEDLOOTASKS.out.folds
+            .join(STAGEDLOOTASKS.out.manifest)
+            .join(STAGEDLOOTASKS.out.model)
+            // man and mod, not manifest and model: `manifest` is already a name in the workflow
+            // scope, taken by the config's manifest block, and the parser says so.
+            .flatMap { meta, folds, man, mod ->
+                def all = (folds instanceof List ? folds : [folds]).sort { it.name }
+                // Integer arithmetic, not a cast: the config parser rejects `(int) Math.ceil(...)`.
+                def per = Math.max(params.folds_per_job as int, 1)
+                def shards = Math.max((all.size() + per - 1).intdiv(per), 1)
+                (0..<shards).collect { i ->
+                    def mine = (i..<all.size()).step(shards).collect { all[it] }
+                    tuple(meta + [shard: i, n_shards: shards], man, mod, mine)
+                }
+            }
+
+        STAGEDLOOPLACE(ch_shards)
+
+        // Back to one element per cell, with the shard keys dropped so the groups re-form on the
+        // cell's own meta. groupTuple needs the size or it waits for the whole channel; n_shards
+        // is carried in the meta for exactly that.
+        ch_placed = STAGEDLOOPLACE.out.folds
+            .map { meta, folds -> tuple(meta.findAll { k, v -> !(k in ['shard', 'n_shards']) },
+                                        meta.n_shards, folds) }
+            .groupTuple(by: 0)
+            .map { meta, sizes, folds -> tuple(meta, folds.flatten()) }
+
+        STAGEDLOOSCORE(
+            STAGEDREFERENCE.out.refjson
+                .join(STAGEDLOOTASKS.out.manifest)
+                .join(STAGEDLOOTASKS.out.model)
+                .join(ch_placed)
+        )
+
+        // Same guarantee as the single-process path below: as many scored cells as were asked for.
+        def expected_staged = datasets.size() * conds.count { params.condition_specs[it].impl == 'sativaepang' } * (params.replicates as int)
+        STAGEDLOOSCORE.out.mis.count().subscribe { n ->
+            if (n != expected_staged) {
+                error "staged path scored ${n} cells for ${expected_staged} fork cells"
+            }
+        }
+    }
 
     ch_runs = SATIVA.out.mis.mix(SATIVAEPANG.out.mis)
         .join(SATIVA.out.timing.mix(SATIVAEPANG.out.timing))
