@@ -105,6 +105,30 @@ That is the measurement behind Q6 of the protocol, which asks whether reporting 
 the right rule. It is reported in both directions here, `results/background_stability.tsv`, because
 the answer turned out to matter: 12 % is not a rounding error on a baseline.
 
+**What the fork's new column is worth, which is not what it looks like.** `OriginalLabelExclusion` is
+the ninth `.mis` column and the fork's own addition, and the protocol asks for recall against it as well
+as against `Confidence`. It is not a better score and the paper must not claim it is. **99.0 % of the
+grid's 25 772 flags have exclusion >= 0.99**, so the column is saturated: no threshold on it brings the
+calls on untouched sequences below 19 809 of 20 326, where a threshold on confidence reaches 10 320.
+One column filters and the other does not.
+
+What it does settle is a third of the calls. **8 057 flags, 31.3 % of them, sit at confidence exactly
+0.510** — a point mass, not a cluster: 305 flags lie at 0.509 and 85 at 0.511, against a background two
+orders of magnitude below. That value is what `parent_lhw_coeff` produces when the declared taxon holds
+no placement weight at all, and **every one of the 8 057 carries exclusion >= 0.99**, which is the column
+saying so independently. Without it a user reading confidence alone down-weights a third of the fork's
+calls because of a stem geometry rather than because of the evidence. Both readings are right about
+different questions, and that is the honest claim about the column: it explains calls, it does not rank
+them. `results/stem_flags.txt`, `results/threshold_holdout.json`.
+
+The practical consequence is to run with `-C` above 0.51, and a held-out selection reaches it without
+being told: fitting on seed 1's 60 cells and reporting on the other 120, the tightest reachable budget
+picks **0.511** — immediately above the stem value — and held-out collateral falls from 3 960 to 1 656,
+a 58 % cut, for 4.0 points of recall. At the same budgets the exclusion column has no threshold to offer
+at all: "budget unreachable" at 27.9 collateral flags per cell and below, where confidence still has one.
+That is the same conclusion as the saturation above, by a route that never looks at the column's
+distribution.
+
 **What the marker cannot be asked, and where that bites.** The 7 051-sequence set contains 847
 groups of byte-identical alignment rows, and **54 of them carry conflicting labels** — 7 disagreeing
 first at phylum, 6 at class, 1 at order, 2 at family, 5 at genus, 33 at species, with 52 of the 54

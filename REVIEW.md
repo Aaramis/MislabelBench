@@ -1216,6 +1216,30 @@ counted rather than inferred from a clean `git status`, which over files nothing
 nothing at all -- the same trap as every other check in this review that reported success without having
 looked.
 
+**76. The one result the plan calls decisive was absent from the document that reports results.** The
+plan names the exclusion-column comparison as "the result that decides what the paper claims about the
+new column", and the mandate asks for recall against `Confidence` **and** against
+`OriginalLabelExclusion`. `README.md` carries fourteen findings -- speed, determinism, detection, engine
+versus folds, distribution, the *k* axis -- and mentions the column nowhere. Nor the 0.510 stem artefact,
+which is the root-cause work the fork exists to report. Both absent from the only summary a reader of the
+repository sees, while the data sits in every `grid_summary_*.json` as `metric: by_exclusion` and the
+conclusion sits in D19.
+
+Recounted from the raw `.mis` with independent code, no `score_injection.py` and no `aggregate_grid.py`,
+on the complete 180-cell grid: **99.0 % of the 25 772 flags have exclusion >= 0.99**, so no threshold on
+it brings the calls on untouched sequences below 19 809 of 20 326, where confidence reaches 10 320. One
+column filters and the other does not. **8 057 flags, 31.3 %, sit at confidence exactly 0.510, and all
+8 057 carry exclusion >= 0.99** -- the column saying independently that the declared taxon holds no
+placement weight. D19 reached that on a smaller grid, 6 923 of 21 944 and "all of them"; the share and
+the "all" both reproduce.
+
+So the column explains calls and does not rank them, and that is now in README with the numbers that
+support it. The held-out figures quoted alongside were checked against the committed record rather than
+copied from the log: confidence picks 0.511 and held-out collateral falls 3 960 to 1 656, a 58 % cut,
+while exclusion returns "budget unreachable" at the same budgets. D22 quotes 3 904 and 1 641 for that
+pair -- the percentage holds, the absolutes drifted when the record was rebuilt, which is the same
+stale-number class as findings 69, 70 and 73, this time in the decision log rather than in the repository.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
