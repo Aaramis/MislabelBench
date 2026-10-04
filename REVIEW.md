@@ -1291,6 +1291,24 @@ One near miss worth recording. `ref.nwk` was about to be written up as a file th
 directory does not have, on the strength of an `ls -la fold_000 | head -9` that cut the alphabetically
 last entry. There are 25 of them.
 
+**78. Three counts describing this report had drifted, and the command I was counting with was wrong
+too.** `README.md` described this file as "Twenty findings, three of which had produced a wrong number
+... and the six defects introduced or missed by the review itself". Three figures in one paragraph, all
+stale, in the document that tells a reader what the review contains. That is the defect this report
+records more often than any other, sitting in the description of the report.
+
+The counts are gone, replaced by the two commands that produce them, which is the rule the clone section
+of this file already states and this paragraph had not followed.
+
+The pattern is the part worth keeping. `grep -cE '^\*\*[0-9]+\.' REVIEW.md` -- what I had been quoting
+across several sessions -- returned 78 for 77 findings, because `**19.2 MB**` begins a line in finding 77
+and `19.` matches. Tightening it to require a capital after the number returns 65, because many findings
+open with a backtick or a digit. `^\*\*[0-9]+\. ` is the one that is right, and it says **77 findings,
+numbered 1 to 77, no duplicates and no gaps** -- which is also the first time the numbering itself has
+been checked rather than assumed. The over-count had been live for exactly one session, since
+`**19.2 MB**` was written an hour ago, and the figure I reported at the end of that session was wrong by
+one.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

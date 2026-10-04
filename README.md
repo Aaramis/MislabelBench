@@ -253,9 +253,15 @@ directory actually contains, why the fan-out is one task per group of folds and 
 fold, and the measurements on both the `srun` version and the pipeline.
 
 **[`REVIEW.md`](REVIEW.md)** is a pass over every part of this repository looking for defects rather
-than confirming that it works. Twenty findings, three of which had produced a wrong number, with how
-each was found and how the fix was checked. It also lists what was checked and found correct, and the
-six defects introduced or missed by the review itself.
+than confirming that it works. Each finding says how it was found and how the fix was checked, grouped
+by whether it had produced a wrong number, was latent, or was introduced by the review itself. It also
+lists what was checked and found correct, and what it does not cover.
+
+No count is quoted here. There were three in this paragraph -- findings, those that moved a number, and
+defects the review introduced -- and all three had drifted, which is the defect the report records most
+often. `bin/review_coverage.py` prints which files it never names, and
+`grep -cE '^\*\*[0-9]+\. ' REVIEW.md` counts the findings. The pattern matters: a looser one counts
+`**19.2 MB**` as a finding and a stricter one misses every finding whose first word is in backticks.
 
 ## Version 1
 
