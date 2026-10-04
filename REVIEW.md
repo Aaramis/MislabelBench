@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-six more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-seven more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -486,6 +486,28 @@ limitation and it removes a doubt about the grid that a reader would otherwise b
 exactly**: 82 of 103 flags shared at 2 023 with Jaccard 0.796, 350 of 520 at 7 051 with 0.673, 54
 conflicting groups, 265 sequences in one. Three other protocol figures were wrong this week, which
 is the reason to check the rest rather than the reason to assume they are too.
+
+**47. The `.mis` original-label column does not always describe the sequence beside it.** SATIVA
+collapses identical sequences into taxonomic clusters and reports the cluster representative's
+lineage, marked `__TAXCLUSTER<n>__`. Measured over the grid: **2 642 of 127 172 flagged rows, 2.08 %**,
+carry an `OriginalTaxonomyPath` that is not a prefix of the named sequence's own lineage in that
+cell's taxonomy; 185 of those are injected sequences, **0.71 % of all 25 996 injected rows**. The same
+sequence fails in all five conditions of a cell, which is what identified the cause as the tool's
+clustering rather than a run reading the wrong input.
+
+One function read that column — `mismatch_rank`, feeding `recall_at_injected_rank` — and it now
+prefers the lineage the cell's own taxonomy gives an injected sequence. **Nothing published is
+affected**, which is why 0.71 % is a bound and not a correction: that metric appears in no committed
+table, nothing aggregates it, and it lives only in the per-cell `score.json` that `.gitignore`
+excludes. The plain recall figure was never at risk — it matches names against names and reads no
+lineage.
+
+Found by testing a claim nothing records: Protocol.md 2.5 says both tools run on the identical
+database in every cell, and `run.json` does not record which bytes a run consumed. So the check had
+to be the claim's consequence — every flagged row's declared lineage must match the cell it claims —
+and the exceptions turned out to be the tool, not a mix-up. **The claim stands and is still
+unrecorded**, which is the next thing worth fixing: an input digest in `run.json` would make it
+provable rather than inferable.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
