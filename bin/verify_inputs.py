@@ -49,8 +49,13 @@ def main():
                                 f"conditions: {per_cond}")
 
     # And the stronger claim, which cross-condition agreement does not make: that the file the run
-    # read is the file in the repository. Two conditions can agree on a database neither of them got
-    # from here. Every recorded name is looked for under data/ and compared.
+    # read is the file here. Two conditions can agree on a database neither of them got from here.
+    # Every recorded name is looked for under data/ and compared.
+    #
+    # Not quite "the file in git": the per-cell datasets are gitignored and rebuilt from their seeds,
+    # so on a clone there is nothing to compare until make_grid.sh has run, and what a match proves
+    # is agreement with the regenerated file. data/README.md carries the check that regeneration is
+    # byte-identical, which is the step that connects the two. unmatched is reported for that reason.
     matched_repo = unmatched = 0
     for key, conds in sorted(by_cell.items()):
         for cond, inputs in conds.items():

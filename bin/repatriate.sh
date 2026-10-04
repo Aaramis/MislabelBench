@@ -6,10 +6,16 @@
 #
 # Three things this exists for rather than typing an rsync.
 #
-# The include list. Only run.json, the .mis and the tool's own log are wanted; stdout.log
-# duplicates the log and score.json is derived from committed inputs, so both stay out. Getting
-# that list wrong by hand is how 949 run directories first arrived with nothing but their
-# run.json.
+# The include list. Only run.json, the .mis and the tool's own log are wanted, and score.json is
+# derived from committed inputs so it stays out. Getting that list wrong by hand is how 949 run
+# directories first arrived with nothing but their run.json.
+#
+# stdout.log is a third thing and the rule below used to pretend otherwise. rsync takes the first
+# matching filter rule, --include='*.log' comes before --exclude='stdout.log', so the exclude was
+# dead and 1022 of them arrived anyway -- 6.2 MB. It did no harm, because .gitignore keeps them out
+# of git, which is where "stays out" actually mattered. But the claim that stdout.log duplicates the
+# .log is false: they differ in every run directory checked, the .log being the tool's own and
+# stdout.log the wrapper's. So it is included deliberately now and the dead rule is gone.
 #
 # The trace names. A job that writes into results/<outdir>/pipeline_info leaves either trace.txt
 # or trace-<tag>.txt there, and nine outdirs each holding a trace.txt cannot be collected under
@@ -27,7 +33,7 @@ cd "$(dirname "$0")/.."
 # every file it copies, and eighteen of them landed in ~/bench once: harmless to bash, fatal to
 # any python that globs *.sh, and inodes against a 100 000-file quota.
 rsync -a --exclude='._*' --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
-      --exclude='stdout.log' --exclude='score.json' --exclude='*' \
+      --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
 tmp=$(mktemp -d)

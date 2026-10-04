@@ -875,9 +875,24 @@ the repository now, which is also what makes the corrected gate pass for `bin/an
 
 And the check was made stronger while it was open, because cross-condition agreement does not say what
 it sounds like: two conditions can agree on a database neither of them got from here. Every recorded
-name is now looked for under `data/` and its digest compared against the file in git. All four match,
-so for that cell the published run provably read the committed input -- a link the records could not
-support before and that nothing else in the repository establishes.
+name is now looked for under `data/` and its digest compared against the file on disk. All four match.
+That is one step shorter than it first reads: `data/injected/*/*.tax` and `*.fasta` are gitignored and
+rebuilt from their seeds, so what the digest is compared against is the regenerated file, and the chain
+to the repository runs through data/README.md's check that regeneration is byte-identical rather than
+through a committed byte. On a fresh clone the comparison has nothing to compare until `make_grid.sh`
+has run, which the script now counts and reports rather than passing over.
+
+**64. A filter rule that never applied, and a comment that explained the wrong thing.**
+`bin/repatriate.sh` says only `run.json`, the `.mis` and the tool's log are wanted, "stdout.log
+duplicates the log and score.json is derived from committed inputs, so both stay out". rsync takes the
+first matching filter rule and `--include='*.log'` precedes `--exclude='stdout.log'`, so that exclude
+has never applied: 1022 stdout.logs are here, 6.2 MB. No harm done, because `.gitignore` carries
+`results/**/stdout.log` and git is where "stays out" mattered. But two statements were wrong. The rule
+was dead, and stdout.log does not duplicate the `.log` -- they differ in every run directory checked,
+one being the tool's own log and the other the wrapper's stdout. The rule is removed and the file is
+kept on purpose, which is what was happening anyway. `score.json`'s exclude is reached and does work.
+
+This surfaced from my own rsync pulling a `stdout.log` I had told it to skip, with the same rule order.
 
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
