@@ -38,6 +38,12 @@ verify_runs.py
 step "every run's timing flag agrees with the job that produced it"
 verify_timing_flags.py
 
+# And every condition of a cell read the same database, which the comparison between the two tools
+# rests on and which nothing recorded until the tool modules started writing the sha256 of what
+# they read. Records written before that field existed are named rather than passed over.
+step "every condition of a cell read the same database"
+verify_inputs.py
+
 step "grid summaries and the surviving-label law, per fold condition"
 for cond in $FOLD_CONDITIONS; do
     aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition "${cond}__rep1" \

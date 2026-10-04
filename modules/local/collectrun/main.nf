@@ -14,7 +14,7 @@ process COLLECTRUN {
         'quay.io/biocontainers/python:3.12.12' }"
 
     input:
-    tuple val(meta), path(mis), path(timing), path(runlog), path(stdoutlog)
+    tuple val(meta), path(mis), path(timing), path(runlog), path(stdoutlog), path(inputs)
 
     output:
     tuple val(meta), path("${meta.run_name}/run.json"), emit: run
@@ -35,6 +35,7 @@ process COLLECTRUN {
         --timing ${timing} \\
         --mis ${mis} \\
         --log ${runlog} \\
+        --inputs ${inputs} \\
         --out ${meta.run_name}/run.json
 
     cp ${mis} ${runlog} ${stdoutlog} ${meta.run_name}/

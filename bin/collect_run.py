@@ -69,6 +69,7 @@ def main():
     p.add_argument("--timing", required=True, help="timing.json from _timeit.py")
     p.add_argument("--mis", required=True)
     p.add_argument("--log", required=True)
+    p.add_argument("--inputs", help="sha256sum output for the files the run read")
     p.add_argument("--out", default="run.json")
     args = p.parse_args()
 
@@ -83,6 +84,17 @@ def main():
     record["cpu_model"] = cpu_model()
     record["collected_at"] = datetime.now().isoformat(timespec="seconds")
     record["n_mislabels"] = count_mislabels(Path(args.mis))
+    # What the run read, by digest. The dataset's name is a label; this is evidence, and it is what
+    # makes "both tools saw the identical database" checkable rather than inferable from the fact
+    # that main.nf resolves one path per cell.
+    if args.inputs:
+        inputs = {}
+        for line in Path(args.inputs).read_text().splitlines():
+            if line.strip():
+                digest, _, name = line.partition(" ")
+                inputs[name.strip().split("/")[-1]] = digest
+        record["inputs"] = inputs
+
     record.update(measured)
     record.update(parse_sativa_log(Path(args.log)))
     record["status"] = ("timeout" if measured.get("timed_out")

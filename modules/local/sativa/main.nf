@@ -16,6 +16,7 @@ process SATIVA {
     output:
     tuple val(meta), path("run/${meta.run_name}.mis"), emit: mis
     tuple val(meta), path("timing.json")             , emit: timing
+    tuple val(meta), path("inputs.txt")              , emit: inputs
     tuple val(meta), path("run/${meta.run_name}.log"), emit: log
     tuple val(meta), path("run/stdout.log")          , emit: stdout
     path "versions.yml"                              , emit: versions, topic: versions
@@ -30,6 +31,12 @@ process SATIVA {
     """
     mkdir -p run tmp
     cp ${fasta} ${tax} run/
+
+    # The sha256 of the two files this run actually read. Protocol.md 2.5 rests on both tools
+    # seeing the identical database in every cell, and nothing recorded it: run.json carried the
+    # dataset's name, which is a label and not evidence. The digests make the claim checkable and
+    # they cost milliseconds on a 10 MB alignment.
+    sha256sum ${fasta} ${tax} > inputs.txt
 
     export OMP_NUM_THREADS=${meta.threads}
     export OPENBLAS_NUM_THREADS=${meta.threads}
@@ -57,6 +64,7 @@ process SATIVA {
     mkdir -p run
     touch run/${meta.run_name}.mis run/${meta.run_name}.log run/stdout.log
     echo '{"wall_sec": 0.0, "returncode": 0, "timed_out": false, "max_rss_mb": 0.0}' > timing.json
+    printf 'stub  %s\nstub  %s\n' ${fasta} ${tax} > inputs.txt
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         sativa: 0.9.3

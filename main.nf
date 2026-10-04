@@ -145,6 +145,7 @@ workflow {
         .join(SATIVA.out.timing.mix(SATIVAEPANG.out.timing))
         .join(SATIVA.out.log.mix(SATIVAEPANG.out.log))
         .join(SATIVA.out.stdout.mix(SATIVAEPANG.out.stdout))
+        .join(SATIVA.out.inputs.mix(SATIVAEPANG.out.inputs))
 
     COLLECTRUN(ch_runs)
 
