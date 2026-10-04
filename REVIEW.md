@@ -711,6 +711,31 @@ lines in the same file name it correctly. And the comment added to `slurm/fetch_
 this review repeated the group error before it was caught, which is the argument for checking a
 mechanism even when the number it explains is already known to be right.
 
+**57. The one script with no arguments at all, and the equality test that turned out to be right.**
+`bin/stem_flags.py` had no `argparse`: the baseline directory, the injected directory, the runs
+directory and the condition were four literals in the body, so the script that answers whether the
+stem artefact explains the collateral flags could only ever be asked about one condition of one
+dataset, and the same question about UNITE would have meant editing it. Every sibling script takes
+these as flags. It now does too, with the former literals as defaults, so `bin/analyses.sh` is
+unchanged.
+
+It also picked its baseline with `next(Path(...).glob("*epang*/*.mis"))`. `Path.glob` yields
+directory order, not sorted order, so with a second epang condition under `results/baseline2k` the
+baseline would have been whichever the filesystem offered first and the published shares could differ
+between machines with nothing to show why. There is one match today, which is why this never fired.
+Now sorted, and it refuses anything but exactly one. Two further paths were silent: a group with no
+flags divided by zero, and a row with fewer than 9 columns was skipped one at a time, so an upstream
+`.mis` -- eight columns -- would have had every row skipped and then divided zero by zero. Pointed at
+`upstream_raxml_T8__rep1` it now names the file and the column count.
+
+The substance survived all of it. The artefact is identified by `abs(conf - 0.510) < 1e-9`, an
+equality test on a float, which is only sound if 0.510 is a point mass. Counted across the grid's
+25 772 flags: 8057 at exactly 0.510, 305 at 0.509, 85 at 0.511, against ten to a hundred per bin
+across the rest of the 0.49-0.53 band. Two orders of magnitude, so the window is right and widening
+it would add background. The three published shares reproduce byte-identically, and their group
+totals sum to 25 772 against an independent recount. The docstring's "31.5 % of all flags" was the
+one thing wrong: 8057 of 25 772 is 31.3 %.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

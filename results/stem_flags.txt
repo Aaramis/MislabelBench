@@ -1,3 +1,4 @@
+180 cells
 group         at 0.510  elsewhere  share at 0.510
 injected           399       5047            7.3%
 baseline          4753       9656           33.0%
