@@ -22,7 +22,11 @@ def main():
     p.add_argument("--condition", required=True, help="condition suffix of the run directories")
     p.add_argument("--baseline-mis", help=".mis of the same tool on the un-injected subset")
     p.add_argument("--scorer", default="score_injection.py")
-    p.add_argument("--out", default="grid_summary.json")
+    # No default. It used to be grid_summary.json, which is how a run without --out from the
+    # repository root created and then overwrote a committed file of that name -- one holding a
+    # 600-row snapshot of a 150-cell grid, superseded by the five per-condition summaries and read
+    # by nothing. That file is gone and this no longer has a name to clobber.
+    p.add_argument("--out", required=True)
     p.add_argument("--thresholds", default="0.0,0.5,0.7,0.9,0.95,0.99")
     args = p.parse_args()
 
@@ -58,9 +62,16 @@ def main():
                 grouped[key].append(row)
 
     summary = []
-    # The foreign cells carry no k, so the key can hold None next to an int. Sorting on the
-    # string form keeps that comparable without reordering anything that matters.
-    for (dist, k, rate, metric, thr), rows in sorted(grouped.items(), key=lambda kv: str(kv[0])):
+    # The foreign cells carry no k, so the key can hold None next to an int.
+    # Ordered numerically and None-safely. Sorting by str(key) put k=10 between 1 and 2 in every
+    # table a reader looks at, and it is how the committed k-axis records came to be in a different
+    # order from the grid summaries beside them: those records predate the str(), which was itself a
+    # fix for the foreign grid where k is null and None < int raises. Pairing each element with
+    # whether it is None orders ints as ints and sends null last.
+    def order(kv):
+        return tuple((x is None, x) for x in kv[0])
+
+    for (dist, k, rate, metric, thr), rows in sorted(grouped.items(), key=order):
         recalls = [r["recall"] for r in rows if r["recall"] is not None]
         others = [r["flags_on_non_injected"] for r in rows]
         added = [r["added_vs_baseline"] for r in rows if r["added_vs_baseline"] is not None]

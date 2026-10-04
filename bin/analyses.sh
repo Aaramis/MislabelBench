@@ -9,6 +9,12 @@
 #
 # It reads only run directories and writes only into results/. It does not run the pipeline, which is
 # what slurm/*.sh is for.
+#
+# Three committed files under results/ are deliberately outside its scope, all from version 1 on the
+# ITS sets: summary.tsv, concordance.tsv and concordance_vs_gamma.tsv, whose conditions are the
+# port_py3_* ones and whose datasets are n100 to n5402. They are cited as v1 measurements and there is
+# no v1 run tree here to rebuild them from. Everything else committed under results/ is rebuilt by
+# this script; that was not true until the k-axis and fold-sweep summaries were added below.
 set -euo pipefail
 
 BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
@@ -143,6 +149,25 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
     aggregate_grid.py --injected-dir data/foreign --runs-dir results/foreign/runs \
         --condition "${cond}__rep1" --baseline-mis "$base" \
         --out "results/foreign_summary_${cond}.json"
+done
+
+# The two side grids, which this script did not rebuild. Four committed records came out of them and
+# none was regenerated here, so "a change to any script shows up as a diff" was false for them: their
+# runs live under results/kaxis and results/ksweep, and the loops above read only results/grid_fork.
+# Their n_missing is counted against the injected directory as it is now, 180 cells, where the
+# committed records were written when it held 150 -- so n_missing moves from 135 and 144 to 165 and
+# 174 and the rows do not.
+step "the k axis and the fold sweep, whose runs are not under grid_fork"
+for cond in epang_T8_K25 upstream_raxml_T8; do
+    base=results/baseline2k/runs/gtdb_arc2k__${cond}__rep1/gtdb_arc2k__${cond}__rep1.mis
+    aggregate_grid.py --injected-dir "$INJ" --runs-dir results/kaxis/runs \
+        --condition "${cond}__rep1" --baseline-mis "$base" \
+        --out "results/kaxis_${cond}.json"
+done
+for cond in epang_T8_K25 epang_T8_K5; do
+    aggregate_grid.py --injected-dir "$INJ" --runs-dir results/ksweep/runs \
+        --condition "${cond}__rep1" --baseline-mis "$BASE_FORK" \
+        --out "results/ksweep_${cond}.json"
 done
 
 # Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.

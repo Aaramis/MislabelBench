@@ -1136,6 +1136,45 @@ would have run, placed nothing, and printed "VERDICT: not enough" -- a false neg
 decision, reached for the opposite reason to the one reported. The two essential files are now copied
 with a hard failure and the two optional ones say so when absent.
 
+**73. "One command rebuilds every committed result" was false for eight files, and the gate said
+nothing.** `bin/analyses.sh` opens with that claim and "a change to any script shows up as a diff".
+Running it and then counting what it actually rewrote -- 958 files, of which 40 tracked -- left eight
+committed files under `results/` untouched.
+
+Three are version 1 on the ITS sets: `summary.tsv`, `concordance.tsv`, `concordance_vs_gamma.tsv`,
+whose conditions are the `port_py3_*` ones over `n100` to `n5402`. There is no v1 run tree here to
+rebuild them from, so they are legitimately out of scope and the header now says so instead of
+claiming otherwise.
+
+Four are current and were simply never rebuilt: `kaxis_epang_T8_K25.json`,
+`kaxis_upstream_raxml_T8.json`, `ksweep_epang_T8_K25.json`, `ksweep_epang_T8_K5.json`. Their runs are
+under `results/kaxis/runs` and `results/ksweep/runs` and every loop in the script reads
+`results/grid_fork/runs`, so a change to `aggregate_grid.py` or `score_injection.py` could not have
+shown up in them. They are rebuilt now. Their `n_missing` moves from 135 and 144 to 165 and 174,
+because it counts cells in `data/injected` with no run and that directory held 150 when they were
+written and holds 180 now -- `15 + 135` and `6 + 144` both being 150 is what gave that away.
+
+The eighth, `results/grid_summary.json`, is deleted. It holds 600 rows against the 720 and 360 of the
+five per-condition summaries that supersede it, so it is a snapshot of a partial grid under the most
+authoritative-looking name in the directory. Nothing reads it; it exists because
+`aggregate_grid.py --out` defaulted to that filename, so a run without `--out` from the repository root
+created and then overwrote it. That default is gone, the same trap as `dataset_shape.py`'s `shape.json`
+earlier in this review.
+
+**74. Two committed records used one row order and five used another.** Rebuilding the k-axis summaries
+produced the same 60 keys with every value identical and the rows in a different sequence. The cause is
+`sorted(grouped.items(), key=lambda kv: str(kv[0]))`: stringifying the key sorts *k* lexicographically,
+so every grid summary a reader opens runs **1, 10, 2, 3, 5**. The committed k-axis records are in
+numeric order, because they predate that `str()` -- which was itself a reasonable fix, the foreign grid
+having `k: null` where `None < int` raises, and whose comment claimed it was done "without reordering
+anything that matters". It reordered *k*, and it left two of the repository's records ordered one way
+and five the other.
+
+Now `tuple((x is None, x) for x in kv[0])`, which orders ints as ints and sends null last. Nine records
+move and the change was checked to be order and nothing else: **key sets identical and every value
+identical in all nine**, the four k-axis and fold-sweep records landing back in exactly their committed
+order, which is what confirms the diagnosis rather than merely fitting it.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
