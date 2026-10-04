@@ -213,6 +213,18 @@ Worth stating, because an audit that only lists faults does not say what it cove
   against a committed reference and exits non-zero if it differs. Both references are tracked -- the v1
   `n800` run, the `baseline2k` run and the whole of `data_ascii` -- so both scripts work from a clone,
   which is what makes their verdicts worth anything.
+- **Both cardinality guards in `main.nf` are live, and `slurm/guard_probe.sh` is how that is known.**
+  `join()` pairs on the meta map and drops whatever finds no partner without a word, so a cell that lost
+  one of its outputs would never reach `COLLECTRUN` and a short grid would look complete. The only
+  protection is two counters that call `error()` inside a `.count().subscribe { }` closure -- on the
+  dataflow thread, where whether a thrown exception reaches the launcher is a property of the runtime and
+  not something to reason about. Four stub runs settle it: each path with its expected count untouched and
+  then off by one. Untouched, both pass, which also checks the arithmetic, since the staged guard counts
+  only the fork conditions and a wrong expression there would fail a correct run. Off by one, both fail,
+  **each through its own message** -- "collected 2 run records for 3 cells" and "staged path scored 1 cells
+  for 2 fork cells", read per file after a `grep` across both logs had been unable to tell them apart. A
+  stub run executes no tool, so the probe costs seconds and can be rerun against any Nextflow version,
+  which is the point: this is a guarantee about the runtime's behaviour, not about this repository's code.
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
