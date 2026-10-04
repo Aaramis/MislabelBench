@@ -44,6 +44,48 @@
       "recall": 0.0
     }
   ],
+  "by_within": [
+    {
+      "within_low": 0.7574,
+      "within_high": 0.9818,
+      "clades": 13,
+      "sequences": 50,
+      "detected": 14,
+      "recall": 0.28
+    },
+    {
+      "within_low": 0.9871,
+      "within_high": 0.9985,
+      "clades": 13,
+      "sequences": 60,
+      "detected": 0,
+      "recall": 0.0
+    },
+    {
+      "within_low": 0.9985,
+      "within_high": 0.9997,
+      "clades": 13,
+      "sequences": 55,
+      "detected": 0,
+      "recall": 0.0
+    },
+    {
+      "within_low": 1.0,
+      "within_high": 1.0,
+      "clades": 13,
+      "sequences": 54,
+      "detected": 0,
+      "recall": 0.0
+    },
+    {
+      "within_low": 1.0,
+      "within_high": 1.0,
+      "clades": 2,
+      "sequences": 7,
+      "detected": 0,
+      "recall": 0.0
+    }
+  ],
   "per_clade": [
     {
       "cell": "k3_family_s1",

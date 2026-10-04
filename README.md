@@ -279,7 +279,17 @@ members are each other's nearest neighbours and all now carry the wrong label, s
 rest confirming it — kind 2's mechanism with *k* equal to the whole taxon. A compact clade does not anchor
 itself against a wrong label; it anchors the wrong label. The two tools differ by 8 sequences in 226,
 which this design cannot call: 50 of 54 clades tie at zero and a sign test over the 4 untied pairs cannot
-report below 0.125. `results/clade_detection_*.json`.
+report below 0.125.
+
+Three things keep that from being read as more than it is. The 0.99 cut in the table was chosen after
+looking at the gradient, so it describes rather than tests; the test that chooses nothing is the median
+split, where the low half of clades by cohesion reaches **0.1695** against **0.0185** for the high half,
+Fisher **p = 7.9e-05**, and upstream **0.1186** against **0.0000**, **p = 9.6e-05**. Separation is not
+inert either — split at its own median it gives 0.1835 against 0.0171 — but the two variables correlate
+at **r = +0.55** across the 54 clades, and by quintile only cohesion has a threshold: **0.53, 0.05, 0.00,
+0.05, 0.00** as cohesion rises, against separation's gentler **0.16, 0.18, 0.12, 0.00, 0.04**. So the
+protocol's variable sorts because it travels with cohesion, not on its own account. Both gradients are in
+the record as `by_separation` and `by_within`. `results/clade_detection_*.json`.
 
 **Kind 4 tests resolution rather than detection** — correct to genus, wrong at species only — and the
 question is whether a detected mislabel is named at the rank the injection moved. It is, increasingly with

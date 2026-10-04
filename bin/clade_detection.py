@@ -94,19 +94,27 @@ def main():
             seqs, det = sum(x["size"] for x in g), sum(x["detected"] for x in g)
             print(f"  {lab:42} {len(g):3} clades {seqs:4} seqs  recall {det / seqs:.3f}")
 
-    # The json keeps the separation gradient, since it is the protocol's variable and a reader
-    # comparing against 2.2 needs it in the record even though it is not the one that predicts.
-    order = sorted(rows, key=lambda x: x["separation"])
-    per = max(1, len(order) // args.bins)
-    summary = []
-    for i in range(0, len(order), per):
-        band = order[i:i + per] if i + per < len(order) else order[i:]
-        seqs, det = sum(b["size"] for b in band), sum(b["detected"] for b in band)
-        summary.append({"separation_low": band[0]["separation"],
-                        "separation_high": band[-1]["separation"], "clades": len(band),
-                        "sequences": seqs, "detected": det, "recall": round(det / seqs, 4)})
-        if i + per >= len(order):
-            break
+    # The json keeps both gradients. It kept only the separation one, on the grounds that a reader
+    # comparing against Protocol.md 2.2 needs the protocol's variable in the record -- which is true
+    # and was half the requirement. The claim made from this record is about `within`, and a record
+    # that bins by the variable the claim does not use cannot support it; recomputing the within
+    # gradient from per_clade was possible but nobody checking the claim should have to.
+    def gradient(var):
+        order = sorted(rows, key=lambda x: x[var])
+        per = max(1, len(order) // args.bins)
+        out = []
+        for i in range(0, len(order), per):
+            band = order[i:i + per] if i + per < len(order) else order[i:]
+            seqs, det = sum(b["size"] for b in band), sum(b["detected"] for b in band)
+            out.append({f"{var}_low": band[0][var], f"{var}_high": band[-1][var],
+                        "clades": len(band), "sequences": seqs, "detected": det,
+                        "recall": round(det / seqs, 4)})
+            if i + per >= len(order):
+                break
+        return out
+
+    summary = gradient("separation")
+    within_summary = gradient("within")
 
     neg = [r for r in rows if r["separation"] < 0]
     if neg:
@@ -117,7 +125,8 @@ def main():
     if args.out:
         Path(args.out).write_text(json.dumps(
             {"condition": args.condition, "cells": cells, "clades": len(rows),
-             "by_separation": summary, "per_clade": rows}, indent=2))
+             "by_separation": summary, "by_within": within_summary,
+             "per_clade": rows}, indent=2))
 
 
 if __name__ == "__main__":

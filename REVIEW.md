@@ -2058,6 +2058,36 @@ rather than being resolved silently. Both paths tested on a fabricated tree. Its
 "all on one CPU model" above the lines naming the violations -- the same mistake `verify_fold_counts.py`
 made in finding 92, which is twice now that a gate of mine has claimed a result it had not established.
 
+**102. The contradiction reported to a co-author is confirmed, and the way it was stated overreached.**
+Kind 3 is the seventh place this benchmark contradicts what Protocol.md tells Stamatakis, and the only
+one about a mechanism, so it is the claim where being wrong would cost most. Recomputed from the primary
+files -- each clade cell's `truth.json` and the run's `.mis`, plus the compactness measures rebuilt from
+the alignment itself -- everything published reproduces: **54 clades, 226 sequences, 22 and 14 detected,
+recall 0.0973 and 0.0619**, and the per-clade `within` values agree to four decimals on the clades
+checked against a fresh pairwise-identity computation.
+
+The direction holds too, and strongly: by median split the low-cohesion half of clades reaches **0.1695**
+against **0.0185**, Fisher **p = 7.9e-05**, and upstream **0.1186** against **0.0000**, **p = 9.6e-05**.
+A compact clade is the undetectable one, which is the reverse of what 2.2 expects.
+
+**What was overstated is the other half of the sentence.** README said a clade that can be told apart
+from its recipient is "*not* the detectable case", and separation is not inert: split at its own median
+it gives 0.1835 against 0.0171, a contrast slightly *larger* than cohesion's. The two correlate at
+**r = +0.55** over the 54 clades, which is what the median split cannot separate. By quintile they come
+apart: cohesion has a threshold -- **0.53, 0.05, 0.00, 0.05, 0.00** -- and separation only drifts --
+**0.16, 0.18, 0.12, 0.00, 0.04**. So the protocol's variable sorts because it travels with cohesion, and
+saying it does not sort at all was wrong in a way a reader could have checked and I had not.
+
+**And the record could not support the claim made from it.** `clade_detection_*.json` kept the
+separation gradient only, deliberately, "since it is the protocol's variable and a reader comparing
+against 2.2 needs it" -- true, and half the requirement, because the claim is about cohesion and the
+record binned the other variable. Both gradients are in the record now.
+
+A note on the cuts, since this review has twice caught a statistic named loosely. The 0.99 in README's
+table and the 0.95 that gives the sharpest contrast (**18/34 against 4/192, p = 6.5e-14**) are both read
+off the gradient after seeing it, so they describe and do not test; the median split chooses nothing and
+is what the claim now rests on. The 6.5e-14 is not quoted in README for that reason.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
