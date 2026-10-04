@@ -107,6 +107,13 @@ class PairedComparison(Fixture):
         self.assertEqual(row["cells"], 2)
         self.assertEqual(row["cells_b_greater"], 1)
         self.assertAlmostEqual(row["mean_difference"], 0.0, places=6)
+        # cells_a_greater and cells_tied are asserted because they are the fields that were missing:
+        # a script reading them with .get(..., 0) published "no cell favours upstream" when eight
+        # did. Only cells_b_greater was pinned here, so the test could not have caught it.
+        self.assertEqual(row["cells_a_greater"], 1)
+        self.assertEqual(row["cells_tied"], 0)
+        self.assertEqual(row["cells_a_greater"] + row["cells_b_greater"] + row["cells_tied"],
+                         row["cells"], "the three counts must partition the cells")
 
     def test_a_condition_that_is_not_there_fails_rather_than_returning_nothing(self):
         r = run("paired_conditions.py", "--injected-dir", self.inj, "--runs-dir", self.runs,

@@ -841,6 +841,21 @@ makes a record missing `wall_sec` contribute 0 to the total, and the completenes
 cannot catch that because `[0.0]` is a non-empty list, so the stage looks present. All 16 committed
 records carry the field, which is why it has never fired.
 
+**62. The test suite pinned every field except the one that broke.** `tests/test_conditions.py` is
+the regression net for condition selection and it is a good one: it builds two cells under two
+conditions with deliberately different detections, insists each script sees one condition, and
+insists a missing condition fails rather than returning nothing. Its paired-comparison test asserted
+`cells`, `cells_b_greater` and `mean_difference`. It did not assert `cells_a_greater`, which is the
+field whose absence let a throwaway script read `.get("cells_a_greater", 0)` and publish "no cell in
+180 favours upstream" when eight do -- the error recorded in finding 20 and D84. The field was added
+to `paired_conditions.py`; nothing was added here, so the test suite would have passed either way.
+
+Now asserted, with `cells_tied`, and with the partition `a_greater + b_greater + tied == cells`,
+which is the shape of the error rather than one value of it. Mutation-checked rather than assumed
+live: changing the expected 1 to 99 fails the test and changing it back passes. The invariant also
+holds on every committed `results/paired_*.json` row, 0 mismatches, which is a check the records had
+never been put to.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
