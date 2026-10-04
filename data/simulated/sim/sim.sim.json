@@ -1,0 +1,28 @@
+{
+  "model": "Jukes-Cantor, sites independent, no indels",
+  "branching": [
+    3,
+    2,
+    2,
+    2,
+    2,
+    3
+  ],
+  "rates": [
+    0.3,
+    0.15,
+    0.08,
+    0.04,
+    0.02,
+    0.01,
+    0.004
+  ],
+  "per_species": 6,
+  "length": 1478,
+  "seed": 1,
+  "n_species": 144,
+  "n_sequences": 864,
+  "labels_certain": true,
+  "fasta_sha256": "9227be5fabdbcf3a24f4ef6a7d8c980a03a9f461f1147c25328e6ef594f9a4aa",
+  "tax_sha256": "48b0d1753b9780bbe39ae7cc5b0d839b79bd8c400749885e10ba6f663e3c5d9c"
+}

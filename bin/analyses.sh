@@ -169,6 +169,33 @@ for cond in epang_T8_K25 epang_T8_K5; do
         --out "results/ksweep_${cond}.json"
 done
 
+# Error kind 3, which Protocol.md 2.2 asks to characterise rather than score: whole taxa relabelled,
+# so nothing correct is left to confirm them, and detection reported against how well the clade can
+# be told apart from the taxon it was given. Guarded, because the runs arrive from the cluster.
+if ls results/clade/runs/*__epang_T8_K25__rep1 >/dev/null 2>&1; then
+    step "error kind 3: does detection track how compact the relabelled clade is?"
+    for cond in epang_T8_K25 upstream_raxml_T8; do
+        clade_detection.py --clade-dir data/clade --runs-dir results/clade/runs \
+            --condition "${cond}__rep1" --out "results/clade_detection_${cond}.json"
+    done
+fi
+
+# Protocol.md 2.1's control. The un-injected cell is the one number the injected grid cannot give:
+# on simulated data a flag on an untouched sequence is a false positive outright, because the
+# taxonomy is the tree.
+if ls results/simulated/runs/sim__epang_T8_K25__rep1 >/dev/null 2>&1; then
+    step "simulation: recall where every label is certain, and a strict false-positive rate"
+    for cond in epang_T8_K25 upstream_raxml_T8; do
+        base=results/simulated/runs/sim__${cond}__rep1/sim__${cond}__rep1.mis
+        n=$(grep -vc '^;' "$base" || true)
+        total=$(grep -c '^>' data/simulated/sim/sim.fasta)
+        echo "  ${cond}: ${n} flags on ${total} certainly-correct sequences"
+        aggregate_grid.py --injected-dir data/simulated --runs-dir results/simulated/runs \
+            --condition "${cond}__rep1" --baseline-mis "$base" \
+            --out "results/simulated_summary_${cond}.json"
+    done
+fi
+
 # Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.
 step "the shape of the Confidence column, both tools"
 for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
