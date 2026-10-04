@@ -1824,6 +1824,34 @@ twenty-five" and "dealing the folds in tree order" -- reported by its conclusion
 of the knob. That is the third time keyword search has suggested a gap README does not have, and it is
 why finding 89 refused to commit the coverage grep as a gate.
 
+**94. The one hard-coded path in the repository, and the version it pins recorded nowhere.** A sweep
+for absolute paths across every `.py`, `.sh`, `.nf` and `.config` returns exactly one line of executable
+code: `slurm/prelude.sh` exporting
+`/shared/software/miniconda_deployment/envs/nextflow-26.04.4/bin`. Nothing else in the repository names
+a machine. That is the right answer for a `slurm/` layer whose whole job is to be cluster-specific, and
+it is a pin rather than an assumption -- but three things about it were assumed and are now measured.
+
+**Would a stale pin fail loudly?** Twelve nextflow environments sit side by side on this cluster, 22.10.0
+through 26.04.4, and old ones get pruned. `export PATH=` to a directory that no longer exists succeeds
+silently. The question is what `nextflow` would then resolve to: on a login shell with no prelude,
+`command -v nextflow` finds **none**, so the failure is loud rather than a silent downgrade to another
+version. Loud but five lines and one confusing message from its cause, so `nextflow_env()` now checks the
+path at the line that names it and prints the available environments. Tested both ways -- a bogus pin
+exits 1 with the list, and the real file sourced on the cluster puts the pinned bin at the head of PATH
+and reports `nextflow version 26.04.4.12445`.
+
+**Is the orchestrator self-contained?** I thought I had found a second undeclared dependency when the
+pinned nextflow died with `java: command not found`. It did not: java is inside the same conda
+environment, and my test had invoked the launcher without putting its own bin on PATH. The environment
+carries its own JVM.
+
+**Which version produced the results?** Not recorded anywhere. A trace row names each task's container,
+which pins the tool to a build string; the manifest sets `nextflowVersion = '!>=24.10.0'`, which Nextflow
+enforces but which is a floor and not a record. Established from the evidence instead: **43 of 43 pipeline
+job logs report version 26.04.4 and none reports any other**, so the entire campaign ran on one
+orchestrator. That is now in `results/pipeline_info/README.md` with how it was established, along with the
+statement the floor cannot make -- that nothing below 26.04.4 was ever exercised here.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

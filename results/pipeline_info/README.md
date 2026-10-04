@@ -5,6 +5,21 @@ it used, and what it exited with. These lived only on the cluster until now, whi
 record at all. The HTML report and timeline Nextflow writes beside them are not kept: they are
 rendered from the same data and are two megabytes each.
 
+## The orchestrator's own version
+
+A trace row names the container each task ran in, which pins the tool. It says nothing about the
+Nextflow that ran it, and `nextflow.config`'s manifest only sets a floor -- `!>=24.10.0`, which Nextflow
+enforces by refusing to start below it, but which is a minimum requirement and not a statement of what
+was used. So the version was established from the evidence instead: **every one of the 43 pipeline job
+logs on the cluster reports `N E X T F L O W  ~  version 26.04.4`, and none reports any other.** The
+environment `slurm/prelude.sh` pins gives `nextflow version 26.04.4.12445`, checked on the cluster, and
+it ships its own java, so the orchestrator is self-contained rather than depending on a module nobody
+loads. Twelve such environments sit side by side there, from 22.10.0 up, and nothing else on the cluster
+provides `nextflow` at all -- so a pin that went stale would fail loudly, which `prelude.sh` now makes it
+do at the line that names the path.
+
+No result here was produced by any version below 26.04.4, and none was tested on one.
+
 Task rows per file, and the gaps, which are real and worth stating rather than leaving to be
 noticed:
 

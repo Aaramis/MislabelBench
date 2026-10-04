@@ -48,8 +48,23 @@ require_singularity() {
     exit 1
 }
 
+# The one absolute path in this repository's executable code, and it is a pin rather than an
+# assumption: twelve nextflow environments sit side by side on this cluster, from 22.10.0 to 26.04.4,
+# and the campaign's 43 pipeline jobs all ran the one named here. Checked rather than trusted, because
+# `export PATH=` to a directory that no longer exists succeeds, and the cluster prunes old environments
+# eventually. Nothing else on this cluster provides `nextflow` -- verified on a login shell, where
+# `command -v nextflow` finds none -- so the failure would be loud rather than a silent downgrade to
+# another version. It would also be five lines and one confusing message away from its cause.
+NEXTFLOW_ENV=/shared/software/miniconda_deployment/envs/nextflow-26.04.4
+
 nextflow_env() {
-    export PATH=/shared/software/miniconda_deployment/envs/nextflow-26.04.4/bin:$PATH
+    [ -x "$NEXTFLOW_ENV/bin/nextflow" ] || {
+        echo "no nextflow at $NEXTFLOW_ENV/bin: the pinned environment is gone. Available:" >&2
+        ls -d "$(dirname "$NEXTFLOW_ENV")"/nextflow-* 2>/dev/null >&2
+        echo "pick one, update NEXTFLOW_ENV in slurm/prelude.sh, and record the change" >&2
+        exit 1
+    }
+    export PATH="$NEXTFLOW_ENV/bin:$PATH"
     export NXF_SINGULARITY_CACHEDIR="$HOME/.singularity_cache"
     mkdir -p "$NXF_SINGULARITY_CACHEDIR"
 }
