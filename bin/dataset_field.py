@@ -9,6 +9,7 @@ fetch scripts each held their own copy of the sha256 and the url. Two places hol
 how the judgeability figure in that same file came to disagree with the data for days.
 """
 
+import json
 import sys
 from pathlib import Path
 
@@ -28,7 +29,10 @@ def main():
         sys.exit(f"no dataset {name} in {here}; known: {', '.join(sorted(data))}")
     if field not in data[name]:
         sys.exit(f"{name} has no field {field}; has: {', '.join(sorted(data[name]))}")
-    print(data[name][field])
+    value = data[name][field]
+    # JSON and not a Python repr, so a field like counts can be piped to jq instead of arriving as
+    # {'in_release': 1053664} with quotes no parser accepts.
+    print(value if isinstance(value, (str, int, float)) else json.dumps(value))
 
 
 if __name__ == "__main__":

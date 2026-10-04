@@ -169,6 +169,22 @@ Worth stating, because an audit that only lists faults does not say what it cove
   directories, and five of six come back byte-identical; the sixth is a timing table still gaining
   replicates.
 
+- **`bin/disagreement_truth.py`.** Covers all 180 cells with 30 at each of the six distances, so the
+  bias it warns about -- directory order over-representing whichever distances sort first -- is absent
+  here. Its arithmetic closes exactly: 4203 both + 115 upstream-only + 1243 fork-only + 5617 missed by
+  both = 11 178 injected. Its set-based flag counting agrees with a row count, 25 772 either way, with
+  no sequence listed twice in any of the 180 `.mis`. And the result is strong: 26.5 % of the fork's
+  unique flags are injected against 4.3 % of upstream's.
+- **The grid's provenance is uniform.** All 180 upstream cells were produced by three separate jobs --
+  the main grid, a species-first job, and a job for whatever was missing after the work directory was
+  deleted for quota -- and every one records `sativa`, `raxml`, 8 threads and `timing_trusted` false.
+  Assembling a grid out of three runs is the kind of thing that leaves a seam; this one has none.
+- **The donor pool is deterministic across machines.** Rebuilt on the cluster a day after the local
+  copies, `donor_pool.fasta`, `.tax` and `.aligned.fasta` all match by md5 with the same 600 names.
+- **`bin/dataset_field.py`.** Resolves the manifest relative to its own file rather than the working
+  directory, and names the known datasets or fields when asked for one that is absent. Its one trap
+  was cosmetic and is fixed: a non-scalar field printed as a Python repr, so `counts` could not be
+  piped to a parser.
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
