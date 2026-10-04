@@ -195,6 +195,24 @@ Worth stating, because an audit that only lists faults does not say what it cove
   and the launcher needs no container runtime. The one `rm -rf` with a relative operand is
   `determinism.sh`'s `work_det`, deliberate and documented beside the absolute outdir that the same
   line clears, which is where that bug was.
+- **The rest of `slurm/`, read rather than swept.** `slurm/grid_fork.sh`, `grid_upstream.sh`,
+  `grid_k5.sh`, `grid_treeorder.sh`, `grid_upstream_missing.sh`, `grid_upstream_species.sh` and
+  `kexact_k2.sh` all publish into one `--outdir`, from six different launch directories, concurrently
+  by design. That is safe and was checked rather than assumed: run directories are per (cell,
+  condition), and `timeline`, `report` and `trace` are all named by `--trace_tag`, which every job
+  passes -- so nothing collides. The grid they produced is complete: **180 cells in each of five
+  conditions plus the two Kexact cells, 902 run directories, every one holding a `run.json` and a
+  `.mis`, zero incomplete.** `grid_upstream` and `grid_up_species` are missing their report and
+  timeline because those are written at completion and both jobs died -- `sacct` and the log say
+  CANCELLED and "Disk quota exceeded", which is the documented event `grid_upstream_missing.sh` exists
+  to clean up after, not a hidden fault.
+- **`slurm/base2k.sh` and `slurm/foreign.sh`**: consistent with the timed/untimed policy -- base2k takes
+  the node exclusively with the model pinned and declares `timing_trusted true`, foreign does neither
+  and declares false.
+- **`slurm/m1_check.sh` and `slurm/staged_check.sh`** assert rather than report: each compares a `.mis`
+  against a committed reference and exits non-zero if it differs. Both references are tracked -- the v1
+  `n800` run, the `baseline2k` run and the whole of `data_ascii` -- so both scripts work from a clone,
+  which is what makes their verdicts worth anything.
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
@@ -206,12 +224,11 @@ count that had quietly stopped being true.
 
 The count is gone, replaced by a list that cannot drift. Run the script, not the prose.
 
-What it lists now is 21 job scripts under `slurm/` and `slurm/bad_nodes.txt`. Those were swept
-mechanically for the four faults that would be systematic across them -- shell strictness, prelude
-sourcing, `require_singularity`, and relative `rm -rf` operands -- and the sweep is recorded above with
-what it found. They have not been read line by line the way the scripts in `bin/` were, and they are
-deliberately left unnamed so the list keeps saying so. A sweep for four faults is not a review, and
-padding the report with twenty-one filenames would make the tool agree that it was.
+Every job script has since been read line by line, which is what that note had been waiting for, and
+the reading produced findings 67 through 71. What the list holds now is `slurm/bad_nodes.txt`, a
+generated file with no logic in it. The mechanical sweep for the four systematic faults is recorded
+above and still stands; it was a sweep and not a review, which is why the scripts were left unnamed
+until they had actually been read.
 
 ## The whole of it, reproduced from a clone
 
