@@ -1,6 +1,6 @@
 {
   "n_cells": 12,
-  "n_missing": 0,
+  "n_missing": 24,
   "baseline_mis": "results/simulated/runs/sim__upstream_raxml_T8__rep1/sim__upstream_raxml_T8__rep1.mis",
   "rows": [
     {

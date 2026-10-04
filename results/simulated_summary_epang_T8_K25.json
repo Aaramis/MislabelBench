@@ -1,6 +1,6 @@
 {
   "n_cells": 12,
-  "n_missing": 0,
+  "n_missing": 24,
   "baseline_mis": "results/simulated/runs/sim__epang_T8_K25__rep1/sim__epang_T8_K25__rep1.mis",
   "rows": [
     {
