@@ -910,6 +910,29 @@ kept on purpose, which is what was happening anyway. `score.json`'s exclude is r
 
 This surfaced from my own rsync pulling a `stdout.log` I had told it to skip, with the same rule order.
 
+**65. The baseline run has no task-level record, and its trusted seconds did not say which CPU they
+were measured on.** Two gaps in the same run, which is the one every "added flags against baseline"
+number is measured against and the source of the fork's published 263 s on 7 051 sequences.
+
+`results/pipeline_info/trace-baseline.txt` has a header and zero rows. That is the fault
+`bin/recover_trace_from_report.py` exists for -- a resubmitted job finds the trace already there,
+warns, and writes nothing -- so the report was the fallback. It is empty too: `window.data` parses and
+holds `trace: []`, `summary: []`, checked directly rather than inferred from the script's message, so
+the script is looking in the right key and there is nothing to find. The container digest and per-task
+timings for that outdir are gone. Nine trace files have zero rows in total; the other eight are
+`*_local.txt` stub runs where it is expected. Reports are also never repatriated -- `bin/repatriate.sh`
+copies `trace*.txt` only -- so for every other outdir the fallback exists solely on the cluster, 43 MB
+of it.
+
+The second gap closed. Of 1022 records, 4 carry `timing_trusted: true` with no `cpu_model`, and they
+are exactly the four baseline runs; all 54 other trusted timings record `AMD EPYC 9754 128-Core
+Processor`. Comparing seconds across CPU models is the hazard `--constraint=epyc-9754` exists for, so
+four trusted figures without one is not cosmetic. They are recoverable: all four record `host:
+cpu-node-123`, and Slurm reports that node as `ActiveFeatures=epyc-9754`. Same model as every other
+trusted timing, so the baseline seconds are comparable with the rest -- which had been assumed
+throughout and is now established. Not backfilled into the records, because a value inferred from a
+hostname would afterwards read as one the run measured.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
