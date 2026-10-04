@@ -1387,6 +1387,48 @@ are not being kept. What the episode still shows is unchanged: the recommendatio
 accident and wrong by method, reached from a search that excluded the dependent directory, and had the
 answer been "no, keep it" the method would have destroyed the evidence.
 
+**81. Two things Protocol.md requires and the repository did not have.** Asked to make the repository
+fulfil exactly what the protocol defines, the inventory ran in both directions, and the more important
+half was the protocol asking for more than was there. Sections 2.1 and 2.2 each name a deliverable
+with nothing behind it.
+
+**2.1's simulation control.** "We propose injection as the primary source and simulation as a sanity
+check." `git grep -in simulat` over `bin/`, `slurm/`, `modules/` and `assets/` returned nothing.
+`bin/simulate_reference.py` evolves sequences along a tree under Jukes-Cantor where the tree *is* the
+taxonomy, so a label cannot be wrong unless it was made wrong, and `slurm/make_simulation.sh` builds
+one un-injected reference plus twelve injected cells -- small, because 2.1 calls it a control and not a
+second set of results. In pure python rather than behind another pinned container: 2.7's pinning rule
+is for tools whose behaviour is being measured, and a simulator's model should be readable instead.
+Checked rather than assumed to be realistic enough: mean identity runs 0.9923 within a species, 0.9715
+to a sibling, then 0.9352, 0.8644, 0.7454, 0.5875 out to class, which is the gradient detection needs.
+
+The control earns its place by giving the one number the injected grid cannot. 2.4 says of real data
+that "a sequence we did not inject is not known to be correctly labelled ... so a flag on such a
+sequence cannot be called a false positive", which is why the whole benchmark reports collateral flags
+against a measured baseline. On the simulated reference it can be called one, and the un-injected cell
+measures it.
+
+**2.2's kind 3.** "Whole-clade mislabel: an entire taxon misannotated ... characterised, with the limit
+stated", and Q7 adds that the cells would have to vary compactness and not just distance. Nothing
+addressed it. `bin/inject_clade.py` relabels whole taxa, lifting by construction the donor-survivor
+rule that `inject_mislabels.py` refuses to lift -- which is why it is a separate script and not a flag.
+Compactness is measured as separation: identity within the clade minus identity to the recipient's
+members, against the recipient rather than the whole database, because that is the comparison 2.2's
+account is about and because all-against-all is 3 billion character comparisons in pure python.
+`bin/clade_detection.py` reports detection per clade against it, which is what makes the
+characterisation falsifiable.
+
+The separation range is itself a finding before either tool has run. At species distance -- "a wrong
+label inside the correct genus", the hard case 2.2 names -- it reaches **−0.078**, clades whose members
+resemble the taxon they have been mislabelled as more than they resemble each other. At phylum distance
+it is always positive. So distance and compactness are not independent axes, which is the premise Q7
+was asking about.
+
+One defect caught in the making, and worth recording because it is the shape of several above. The
+simulated reference first used three sequences per species; `inject_mislabels.py` needs *k*+1 members so
+one stays correct, so every *k*=3 cell injected **zero** sequences and said so in a `warn.txt` that was
+redirected and not read. Six per species fixed it. The warning existed; reading it did not.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
