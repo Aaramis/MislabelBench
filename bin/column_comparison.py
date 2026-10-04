@@ -97,6 +97,9 @@ def main():
         Path(args.out).write_text(json.dumps({
             "n_flags": len(rows), "n_injected_flags": n_inj,
             "untouched_floor": floor,
+            # Why the exclusion floor sits where it does: the column is saturated, so almost no
+            # threshold on it removes anything. README quotes this share and it needs a producer.
+            "flags_exclusion_ge_099": sum(1 for r in rows if r["exclusion"] >= 0.99),
             "stem_flags": len(stem), "stem_exclusion_ge_099": len(hi),
             "stem_injected": sum(r["injected"] for r in stem),
             "curves": curves,

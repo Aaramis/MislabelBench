@@ -1233,8 +1233,16 @@ column filters and the other does not. **8 057 flags, 31.3 %, sit at confidence 
 placement weight. D19 reached that on a smaller grid, 6 923 of 21 944 and "all of them"; the share and
 the "all" both reproduce.
 
+The recount also found its own producer. `bin/column_comparison.py` already computes every one of those
+figures and `bin/analyses.sh` already rebuilds it: `n_flags` 25 772, `untouched_floor` 10 320 and 19 809,
+`stem_flags` 8 057 and `stem_exclusion_ge_099` 8 057 -- identical to the independent recount, which makes
+the two implementations a check on each other rather than one being redundant. The only figure quoted in
+README that the record lacked was the saturation share, and a published number with no committed producer
+is finding 73's defect; it is now `flags_exclusion_ge_099`, 25 516 of 25 772, with every other key
+unchanged.
+
 So the column explains calls and does not rank them, and that is now in README with the numbers that
-support it. The held-out figures quoted alongside were checked against the committed record rather than
+support it and a pointer to the record that regenerates them. The held-out figures quoted alongside were checked against the committed record rather than
 copied from the log: confidence picks 0.511 and held-out collateral falls 3 960 to 1 656, a 58 % cut,
 while exclusion returns "budget unreachable" at the same budgets. D22 quotes 3 904 and 1 641 for that
 pair -- the percentage holds, the absolutes drifted when the record was rebuilt, which is the same

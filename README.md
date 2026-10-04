@@ -119,7 +119,8 @@ no placement weight at all, and **every one of the 8 057 carries exclusion >= 0.
 saying so independently. Without it a user reading confidence alone down-weights a third of the fork's
 calls because of a stem geometry rather than because of the evidence. Both readings are right about
 different questions, and that is the honest claim about the column: it explains calls, it does not rank
-them. `results/stem_flags.txt`, `results/threshold_holdout.json`.
+them. Every figure here is in `results/column_comparison.json`, with
+`results/stem_flags.txt` and `results/threshold_holdout.json` beside it.
 
 The practical consequence is to run with `-C` above 0.51, and a held-out selection reaches it without
 being told: fitting on seed 1's 60 cells and reporting on the other 120, the tightest reachable budget
