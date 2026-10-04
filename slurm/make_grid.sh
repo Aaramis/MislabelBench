@@ -18,14 +18,13 @@ mkdir -p "$OUT"
 ALN="$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax"
 
-# Rates. The mandate asks for 0.5, 1, 2 and 5 %; two were run and the axis is not flat -- at k=10
-# recall is 0.042 at 1 % and 0.148 at 5 %. 2 % is added because it fills the middle and is informative
-# at every k: on 2 023 sequences a cell holds 4 donor groups at k=10 and 40 at k=1. 0.5 % is not added,
-# and that is a measurement rather than a preference: a group of k needs k+1 members, so at 0.5 % a
-# cell holds 2 groups at k=5 and **1** at k=10, where recall is then one draw and not an estimate.
-# Adding it only at low k would make the grid ragged across the axis it is meant to vary.
+# Rates: the two Protocol.md 2.3 defines. A 2 % arm was generated and then removed, the repository
+# being scoped to exactly what the protocol defines. What that arm would have bought is recorded in
+# D125 and D128: the axis is not flat, 0.042 recall at 1 % against 0.148 at 5 % at k=10, and 2 % is the
+# only one of the two missing rates that is informative at every k -- at 0.5 % a cell holds one donor
+# group at k=10, where recall is a single draw. If the axis is ever widened, 2 % is the one to add.
 for dist in species genus family order class phylum; do
-  for rate in 0.01 0.02 0.05; do
+  for rate in 0.01 0.05; do
     for k in 1 2 3 5 10; do
       for seed in 1 2 3; do
         name="inj_${dist}_r${rate}_k${k}_s${seed}"
