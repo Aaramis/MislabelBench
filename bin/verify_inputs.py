@@ -47,6 +47,12 @@ def main():
                 problems.append(f"{key[0]}/{key[1]} rep{key[2]}: {name} differs between "
                                 f"conditions: {per_cond}")
 
+    # A gate that checked nothing must not report success. The first run of this script matched no
+    # files at all -- the job had left the working directory at the Nextflow launch dir, so the
+    # relative glob resolved under .nf/ -- and it printed "0 cells, 0 consistent" and exited 0.
+    if not by_cell and not without:
+        sys.exit(f"no run records matched {args.glob} from {Path('.').resolve()}")
+
     print(f"{len(by_cell)} cells with recorded input digests, "
           f"{len(by_cell) - len({p.split(':')[0] for p in problems})} consistent")
     if without:

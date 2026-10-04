@@ -48,4 +48,7 @@ if all(v == vals[0] for v in vals):
 else:
     sys.exit("VERDICT: the two tools read different files")
 PY
+# Back to the root: nf_launch_dir left us in $BENCH_ROOT/.nf/inputs_check, where the gate's
+# relative glob matches nothing -- which it did, reporting zero cells and exiting 0.
+cd "$BENCH_ROOT"
 verify_inputs.py --glob "results/inputs_check/runs/*/run.json"

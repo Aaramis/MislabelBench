@@ -76,6 +76,13 @@ def main():
                 f.write_text(json.dumps(rec, indent=2))
                 fixed += 1
 
+    # A gate that checked nothing must not report success. verify_inputs.py printed
+    # "0 cells, 0 consistent" and exited 0 when a job left the working directory at the
+    # Nextflow launch dir and the relative glob matched nothing.
+    if not checked:
+        sys.exit(f"no run record matched {args.glob} from {Path('.').resolve()}")
+    if not declared:
+        sys.exit(f"no job script in {args.slurm} declares an outdir and a trust flag")
     print(f"{checked} run records checked against {len(declared)} job scripts' declarations, "
           f"{checked - sum(wrong.values())} agree")
     for name, n in sorted(unknown.items()):

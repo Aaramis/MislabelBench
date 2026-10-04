@@ -85,6 +85,11 @@ def main():
                 problems.append(f"{name}/{n}: wrong label does not differ at {truth['distance']}")
                 break
 
+    # A gate that checked nothing must not report success. verify_inputs.py printed
+    # "0 cells, 0 consistent" and exited 0 when a job left the working directory at the
+    # Nextflow launch dir and the relative glob matched nothing.
+    if not checked:
+        sys.exit(f"no cell matched {args.injected_dir}/*/*.truth.json")
     print(f"{checked} cells checked, {checked - len(problems)} sound")
     for pb in problems[:10]:
         print(f"  {pb}", file=sys.stderr)

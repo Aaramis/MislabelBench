@@ -34,6 +34,10 @@ for truth_p in sorted(Path(args.foreign_dir).glob("*/*.truth.json")):
         if cur[n] != rec["wrong"] or rec["wrong"] not in base_lineages:
             problems.append(f"{name}/{n}: declared lineage is not one the base carries")
             break
+# A gate that checked nothing must not report success: see verify_inputs.py, which printed
+# "0 cells, 0 consistent" and exited 0 when its relative glob matched nothing.
+if not checked:
+    sys.exit(f"no cell matched {args.foreign_dir}/*/*.truth.json")
 print(f"{checked} cells checked, {checked - len(problems)} sound")
 for p in problems[:5]:
     print(" ", p, file=sys.stderr)
