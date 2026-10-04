@@ -198,13 +198,20 @@ Worth stating, because an audit that only lists faults does not say what it cove
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
-mentions. It reports **38 of 89**. That is not a claim those files were never read — most went
+mentions. That is not a claim those files were never read — most went
 through the first pass as a batch — but a file the report never names has at best been read without
 record, and this review found out what that costs: `bin/_timeit.py` produces every second and every
 memory figure here and went unexamined through forty-eight findings, because it sat inside a coverage
 count that had quietly stopped being true.
 
 The count is gone, replaced by a list that cannot drift. Run the script, not the prose.
+
+What it lists now is 21 job scripts under `slurm/` and `slurm/bad_nodes.txt`. Those were swept
+mechanically for the four faults that would be systematic across them -- shell strictness, prelude
+sourcing, `require_singularity`, and relative `rm -rf` operands -- and the sweep is recorded above with
+what it found. They have not been read line by line the way the scripts in `bin/` were, and they are
+deliberately left unnamed so the list keeps saying so. A sweep for four faults is not a review, and
+padding the report with twenty-one filenames would make the tool agree that it was.
 
 ## The whole of it, reproduced from a clone
 
