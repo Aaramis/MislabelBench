@@ -794,6 +794,36 @@ The default draw is unchanged, so the committed cells reproduce from this file -
 carries `n_shared_label_donors` and the group sizes, so a recall figure for kind 6 cannot be read
 without the stratum it belongs to.
 
+**60. The donor phylum was a parameter chosen by `head -1` and recorded nowhere.**
+`slurm/fetch_bacteria.sh` counts bacterial phyla in the release and takes the most abundant as the
+source of kind 6's foreign sequences. That resolves to `p__Pseudomonadota` at 543 726 sequences
+against `p__Bacillota`'s 306 490, and nothing declarative said so: not `assets/datasets.yml`, not any
+record under `data/bacteria`. The choice was recoverable only by reading the first line of a generated
+file or by counting the pool's own taxonomy. It is reproducible, because the release is pinned, but a
+future release in which Bacillota overtook Pseudomonadota would silently change what error kind 6
+means, and the paper's description of the construction would still read the same. The pool is now a
+declared dataset with its phylum, the rule that picked it, its counts and its seed, so the rule can
+stay -- it should stay, the largest pool is the right pool -- while a change in what it selects
+becomes visible.
+
+`bin/subsample_fasta.py` recorded `{source_sequences: 392425, drawn: 600, seed: 42}`: how many, not
+what from. `fetch_bacteria.sh` deletes `donor_full.fasta` immediately after drawing, so nothing
+downstream could name the file the pool came out of. This is finding 22's gap exactly, fixed there for
+`truth.json` and left here. The record now carries both source names and their sha256.
+
+What was checked and held: the pool reproduces. `donor_pool.fasta`, `.tax` and `.aligned.fasta` were
+rebuilt on the cluster a day after the committed copies were made, and all three md5 sums match the
+local ones with all 600 names agreeing across the three files -- so the seed and the pinned release do
+make the draw deterministic across machines, which had been designed for and never demonstrated. The
+timestamps are what prompted the check: the alignment on the cluster is a day older than the sequences
+beside it, which is what a stale alignment would also look like.
+
+One of this review's own checks was vacuous and had to be redone. `bin/push_code.sh` refuses to sync
+while a job is running and exits 1 saying so. Called as `push_code.sh >/dev/null 2>&1;` its message was
+hidden and its status ignored, so the manifest edits above were validated against the cluster's older
+copy. Re-validated locally in a throwaway virtual environment instead, which removes the dependency on
+a remote copy for a question about a local file. The script is not at fault and is unchanged.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

@@ -71,6 +71,33 @@ datasets:
       genus: 95.7
       species: 81.5
 
+  # The kind 6 donors. Declared here because the phylum was a parameter nothing recorded:
+  # slurm/fetch_bacteria.sh takes the most abundant bacterial phylum in the release, by counting
+  # headers, so the choice lived in `head -1` over a generated file and in nothing a reader could
+  # consult. It resolves to Pseudomonadota for r226 at 543726 sequences against Bacillota's 306490,
+  # and a release where that order changed would quietly change what error kind 6 means. Naming it
+  # makes the change visible; the rule stays as it is so the pool is still the largest pool
+  # available rather than a hand-picked clade.
+  gtdb_bacteria_donors:
+    description: GTDB r226 SSU, the bacterial pool error kind 6 draws its foreign sequences from
+    release: r226 (226.0)
+    source: gtdb_archaea_ssu's file, the same ssu_all_r226.fna.gz and the same sha256
+    phylum: p__Pseudomonadota
+    phylum_rule: the most abundant bacterial phylum in the release, counted from the headers
+    select: "lineage starts with d__Bacteria;p__Pseudomonadota, then length >= 1200 nt"
+    counts:
+      in_release: 1053664
+      after_domain: 543726
+      after_length: 392425
+      drawn: 600
+    seed: 42
+    # 600 is three seeds x 101 donors at the top rate of 5 % of 2023, with room over.
+    drawn_rule: random sample with seed 42, recorded in data/bacteria/donor_pool.subsample.json
+    aligned_with: the same Rfam RF01959 covariance model as the archaea, cmalign --matchonly, so
+      the two alignments have one width and concatenate
+    citation: "Parks DH et al. GTDB: an ongoing census of bacterial and archaeal diversity. Nucleic Acids Res (2022)"
+    licence: CC BY-SA 4.0
+
   # Alignment model. A covariance model represents rRNA secondary structure; a profile HMM
   # does not. Alignment is not what this paper is about, so the point is to use the method a
   # reviewer cannot argue with.
