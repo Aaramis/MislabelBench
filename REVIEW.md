@@ -225,10 +225,11 @@ count that had quietly stopped being true.
 The count is gone, replaced by a list that cannot drift. Run the script, not the prose.
 
 Every job script has since been read line by line, which is what that note had been waiting for, and
-the reading produced findings 67 through 71. What the list holds now is `slurm/bad_nodes.txt`, a
-generated file with no logic in it. The mechanical sweep for the four systematic faults is recorded
-above and still stands; it was a sweep and not a review, which is why the scripts were left unnamed
-until they had actually been read.
+the reading produced findings 67 through 72. **The list is now empty: 91 of 91.** The mechanical sweep
+for the four systematic faults is recorded above and still stands; it was a sweep and not a review,
+which is why the scripts were left unnamed until they had actually been read. An empty list is not a
+claim that nothing is left to find -- `bin/review_coverage.py` counts names, not understanding, and the
+faults in findings 67 to 72 sat in files that a previous pass had already walked past.
 
 ## The whole of it, reproduced from a clone
 
