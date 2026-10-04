@@ -14,6 +14,12 @@ directly comparable unless they are kept apart, so this prints both.
 The placement step ends when its slowest shard ends, so it is a maximum and not a sum, and the
 spread across shards is printed because at four shards the srun version found one straggler per
 allocation every time.
+
+Fold counts per shard are printed with them, because a speedup read against the shard count
+conflates two things. 25 folds over 4 shards split 7, 6, 6, 6, so the slowest shard carries 7 of 25
+and no distribution of them can beat 25/7 = 3.57x however free it is. Measured against 4 the
+pipeline is 86 % efficient; measured against the ceiling the fold split leaves it is 96.5 %, and the
+difference between those two numbers is arithmetic, not overhead.
 """
 
 import argparse
@@ -80,6 +86,14 @@ def main():
         if not all(secs.get(s) for s in STAGES):
             print(f"{cell.name:34}  incomplete: {sorted(secs)}")
             continue
+        # Folds per shard, from each shard's own log, so the ceiling below is read off the run and
+        # not off params.folds_per_job.
+        folds = []
+        for f in sorted(cell.glob("looplace_shard*.stage.log")):
+            m = re.search(r"placed (\d+)/", f.read_text(errors="replace"))
+            if m:
+                folds.append(int(m.group(1)))
+
         shards = secs["looplace"]
         place = max(shards)
         spread = (max(shards) - min(shards)) if len(shards) > 1 else 0.0
@@ -91,6 +105,10 @@ def main():
               + (f"{span:>9.1f}" if span else f"{'-':>9}"))
         if len(shards) > 1:
             print(f"{'':34}shards: " + ", ".join(f"{x:.1f}" for x in sorted(shards)))
+        if folds:
+            ceiling = sum(folds) / max(folds)
+            print(f"{'':34}folds: " + ", ".join(str(x) for x in folds)
+                  + f"  -> no split of these beats {ceiling:.2f}x on {len(folds)} shards")
 
 
 if __name__ == "__main__":

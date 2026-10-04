@@ -824,6 +824,23 @@ hidden and its status ignored, so the manifest edits above were validated agains
 copy. Re-validated locally in a throwaway virtual environment instead, which removes the dependency on
 a remote copy for a question about a local file. The script is not at fault and is unchanged.
 
+**61. The scaling efficiency was measured against a ceiling the fold count makes unreachable.**
+README.md reported the staged placement distributing at 87 % and 86 % efficiency on 2 and 4 shards.
+The timings reproduce exactly from `bin/staged_scaling.py` -- 194.5, 111.2 and 56.4 s, giving 1.75
+and 3.45 -- and the efficiency is the conventional speedup over shard count. It is also the wrong
+figure to quote alone. 25 folds over 4 shards split 7, 6, 6, 6, read off each shard's own log, and
+the step ends when the shard holding 7 ends, so no distribution however free beats 25/7 = 3.57. The
+86 % is mostly the arithmetic of 25 not dividing by 4. Against the ceiling the split leaves, the
+placement runs at 96.5 %, and the four shards finish within 0.6 s of each other where the `srun`
+version threw one straggler per allocation at 124 to 258 s against its own 56 to 62. The script now
+prints the fold counts and the ceiling beside the timings, and the README table carries both columns,
+because the two numbers answer different questions and only one of them is about overhead.
+
+One latent fault in the same script: `secs[stage].append(json.loads(...).get("wall_sec") or 0.0)`
+makes a record missing `wall_sec` contribute 0 to the total, and the completeness check above it
+cannot catch that because `[0.0]` is a non-empty list, so the stage looks present. All 16 committed
+records carry the field, which is why it has never fired.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
