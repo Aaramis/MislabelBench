@@ -982,6 +982,34 @@ can stop. And the staged path reproduces the monolithic path's `.mis` byte for b
 sequence, 2023 folds, which is a considerably harder case than the 25-fold equality already
 established and was not previously known.
 
+**67. One script's `rm -rf` destroyed another's results, and the dependency ran the other way.**
+`slurm/before_after.sh` answers whether taxmarker#40's trimmed lineage is a regression. It set
+`OUT=$BENCH_ROOT/results/ragged_check`, `cd`ed there and called `-s aln.fasta` relative to it -- so it
+could only run after `slurm/ragged_check.sh` had left an `aln.fasta` there, an undeclared dependency
+with no assertion. And `ragged_check.sh` opens with `rm -rf "$OUT"` on that same directory. The two
+scripts could never coexist: the only order that works is ragged first, and running ragged again
+deletes before_after's output.
+
+Not hypothetical. The repository commits `before_placeholders.{log,mis}`,
+`before_semicolons.{log,mis}` and `after_trimmed.log`; on the cluster that directory holds only
+`ragged_check`'s files, stamped 20:43 on 3 October. The before/after evidence survives solely because
+it had been committed, and nothing in the repository could regenerate it.
+
+`before_after.sh` now has its own output directory and its own copy of the alignment from the
+committed `gtdb_arc400`, with a guard on the source. Verified by rerunning it: 14 flags for
+`before_placeholders` and 14 for `before_semicolons`, both `.mis` **byte-identical to the committed
+ones**, `after_trimmed` failing as recorded, and `results/ragged_check` untouched. Either script can
+now run in any order, any number of times. The committed artefacts moved with `git mv`, so the
+evidence keeps its history.
+
+Rerunning it also produced something the repository did not have. For these two experiments the result
+*is* a failure, and `after_trimmed.log` stops at "Loading taxonomy from file" -- the traceback goes to
+stderr, which `bin/repatriate.sh` did not collect. So the fact of the failure was committed and its
+cause was not. It is `IndexError: list index out of range` at `epac/taxonomy_util.py` line 337 in
+`load_taxonomy`: an empty lineage crashes SATIVA inside its own taxonomy parser, which is a far more
+useful thing to say about taxmarker#40 than "it fails". Both stderr files are committed and
+`repatriate.sh` collects `.stderr` from now on.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

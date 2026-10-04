@@ -7,13 +7,24 @@
 # Is the empty lineage a regression from taxmarker#40, or did the input already fail?
 # Before the PR, an all-placeholder lineage reached SATIVA verbatim. After it, it is trimmed to
 # nothing. These are the two inputs, same tool, same everything else.
+#
+# Its own output directory, and its own copy of the alignment. This used to cd into
+# results/ragged_check and call `-s aln.fasta` relative to it, so it could only run after
+# ragged_check.sh had left one there -- an undeclared dependency with no assertion -- and
+# ragged_check.sh opens with `rm -rf` on that directory, so re-running it destroyed this script's
+# results. That is not hypothetical: on the cluster only ragged_check's outputs survive, and the
+# before/after evidence exists solely because it had been committed. Either script can now run in
+# any order, any number of times.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
 IMG=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* | head -1)
-OUT=$BENCH_ROOT/results/ragged_check
-cd "$OUT"
-python3 - "$BENCH_ROOT/data/gtdb/gtdb_arc400.tax" <<'PY'
+SRC=$BENCH_ROOT/data/gtdb/gtdb_arc400
+[ -s "$SRC.fasta" ] && [ -s "$SRC.tax" ] || { echo "missing $SRC.fasta or .tax" >&2; exit 1; }
+OUT=$BENCH_ROOT/results/before_after
+rm -rf "$OUT"; mkdir -p "$OUT"; cd "$OUT"
+cp "$SRC.fasta" aln.fasta
+python3 - "$SRC.tax" <<'PY'
 import sys
 from pathlib import Path
 rows = [l.split("\t", 1) for l in Path(sys.argv[1]).read_text().splitlines() if l.strip()]

@@ -10,6 +10,12 @@
 # derived from committed inputs so it stays out. Getting that list wrong by hand is how 949 run
 # directories first arrived with nothing but their run.json.
 #
+# .stderr is wanted too, for the experiments whose result is a failure. before_after.sh and
+# ragged_check.sh answer "does SATIVA accept this input" and the answer for two of their five
+# inputs is no; the .log stops at "Loading taxonomy from file" and the traceback -- IndexError in
+# epac/taxonomy_util.py line 337 -- is on stderr, which was not collected. So the fact of the
+# failure was committed and its diagnosis was not.
+#
 # stdout.log is a third thing and the rule below used to pretend otherwise. rsync takes the first
 # matching filter rule, --include='*.log' comes before --exclude='stdout.log', so the exclude was
 # dead and 1022 of them arrived anyway -- 6.2 MB. It did no harm, because .gitignore keeps them out
@@ -33,7 +39,7 @@ cd "$(dirname "$0")/.."
 # every file it copies, and eighteen of them landed in ~/bench once: harmless to bash, fatal to
 # any python that globs *.sh, and inodes against a 100 000-file quota.
 rsync -a --exclude='._*' --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
-      --exclude='score.json' --exclude='*' \
+      --include='*.stderr' --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
 tmp=$(mktemp -d)
