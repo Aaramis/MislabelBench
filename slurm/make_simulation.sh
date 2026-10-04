@@ -35,16 +35,25 @@ TAX="$OUT/sim/sim.tax"
 # Injected cells. Distances only to genus: deeper than that and the simulated tree has no
 # divergence left to tell the recipient from the donor, which is a property of the model and not a
 # finding, so the cells that would measure it are not made.
+#
+# Three injection seeds on one simulated reference, which is the real grid's design: one base, three
+# seeds. The first version used one seed, and the consequence was not visible until the paired test
+# ran -- three cells per k, where a two-sided sign test cannot report below 2 * (1/2)^3 = 0.25
+# however consistent the data. At k=3 the fork led in 3 of 3 cells by 0.185 and the test still said
+# 0.25, because the floor was the design and not the measurement. Nine cells per k puts the floor at
+# 0.004.
 for dist in species genus family; do
   for k in 1 2 3 5; do
-    name="sim_${dist}_k${k}_s1"
-    d="$OUT/$name"
-    [ -s "$d/$name.tax" ] && continue
-    mkdir -p "$d"
-    python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
-      --distance "$dist" --rate 0.05 --k "$k" --seed 1 \
-      --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
-    ln -sf "$ALN" "$d/$name.fasta"
+    for seed in 1 2 3; do
+      name="sim_${dist}_k${k}_s${seed}"
+      d="$OUT/$name"
+      [ -s "$d/$name.tax" ] && continue
+      mkdir -p "$d"
+      python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
+        --distance "$dist" --rate 0.05 --k "$k" --seed "$seed" \
+        --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
+      ln -sf "$ALN" "$d/$name.fasta"
+    done
   done
 done
 

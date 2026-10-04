@@ -1537,6 +1537,31 @@ per cell. Guarded per condition now, skipping the pending arm with a line that s
 also had `grep -vc` on a file with no data rows failing the step under `set -e`, where zero flags on the
 un-injected reference is the result the control exists to produce.
 
+**85. The simulation control's comparison could not have reached significance, and the floor was the
+design.** With the upstream arm finished, the control answers for both tools. **Neither flags anything on
+the un-injected simulated reference**: 0 of 864 certainly-correct sequences for the fork and 0 for
+upstream, where on the real 2 023-sequence set they flag 93 and 92, 4.6 % and 4.55 %, which 2.4 forbids
+calling false positives. So the strict rate is 0.00 % for both, and the 4.6 % on real data is the
+reference's own content rather than noise either method generates.
+
+Recall where every label is certain reproduces the archaeal grid's central finding. Both tools are at or
+near 1.000 at *k*=1 and *k*=2 and both at 0.000 at *k*=5, and **the fork leads in the middle**: +0.200 at
+species, +0.133 at genus, +0.222 at family, all at *k*=3, and +0.186 in the 0.4-0.6 band of the
+surviving-ratio law. That is the same shape as the real grid's +0.240 and +0.152 at *k*=2 and 3, on data
+where the labels are certain -- so the advantage is not an artefact of GTDB's pre-existing errors.
+
+**And then the paired test said p = 0.25 with three cells of three favouring the fork.** Not because the
+evidence is weak: because a two-sided sign test over three non-tied pairs cannot report below
+2 × (1/2)³ = **0.2500** however one-sided the data, and the control had one injection seed, so there were
+three cells per *k*. The floor was the design and not the measurement, and it was invisible until the
+statistic ran. The real grid has used three seeds throughout for exactly this reason; the control did not,
+and nothing in building it said so.
+
+Three seeds now, on the one simulated reference, which is the real grid's design -- one base, three seeds.
+Nine cells per *k* puts the floor at 2 × (1/2)⁹ = **0.0039**, computed rather than assumed. 36 injected
+cells against 12, all verified against their truth, and the 24 new ones byte-identical between macOS and
+the cluster.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

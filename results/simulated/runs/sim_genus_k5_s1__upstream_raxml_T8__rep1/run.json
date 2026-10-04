@@ -1,0 +1,31 @@
+{
+  "dataset": "sim_genus_k5_s1",
+  "n_seqs": 864,
+  "aln_len": 1478,
+  "condition": "upstream_raxml_T8",
+  "rep": 1,
+  "run_name": "sim_genus_k5_s1__upstream_raxml_T8__rep1",
+  "timing_trusted": false,
+  "impl": "sativa",
+  "engine": "raxml",
+  "threads": 8,
+  "host": "cpu-node-97",
+  "cpu_model": "AMD EPYC 7662 64-Core Processor",
+  "collected_at": "2026-10-04T12:51:48",
+  "n_mislabels": 9,
+  "inputs": {
+    "sim_genus_k5_s1.fasta": "9227be5fabdbcf3a24f4ef6a7d8c980a03a9f461f1147c25328e6ef594f9a4aa",
+    "sim_genus_k5_s1.tax": "ff9c1c715e70490759b8c6e8c0282c70a655a488e4045722624d4245637e93fc"
+  },
+  "wall_sec": 475.04,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 61.4,
+  "user_cpu_sec": 3791.59,
+  "sys_cpu_sec": 0.64,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 475.0,
+  "reftree_sec": 3.0,
+  "l1out_sec": 472.0,
+  "status": "ok"
+}

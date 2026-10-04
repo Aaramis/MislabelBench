@@ -1,0 +1,1 @@
+note: asked for 43, injected 45 -- whole groups of k=3, so the effective rate is 5.21% against 5.00% requested
