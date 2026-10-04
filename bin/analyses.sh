@@ -172,29 +172,39 @@ done
 # Error kind 3, which Protocol.md 2.2 asks to characterise rather than score: whole taxa relabelled,
 # so nothing correct is left to confirm them, and detection reported against how well the clade can
 # be told apart from the taxon it was given. Guarded, because the runs arrive from the cluster.
-if ls results/clade/runs/*__epang_T8_K25__rep1 >/dev/null 2>&1; then
-    step "error kind 3: does detection track how compact the relabelled clade is?"
-    for cond in epang_T8_K25 upstream_raxml_T8; do
+# Guarded per condition and not per experiment. The first version checked that the fork arm
+# existed and then looped over both, so the whole analysis failed the moment one arm had been
+# repatriated and the other was still running on the cluster -- which is the normal state while a
+# comparator catches up, upstream taking sixteen times as long per cell.
+step "error kind 3: does detection track how compact the relabelled clade is?"
+for cond in epang_T8_K25 upstream_raxml_T8; do
+    if ls results/clade/runs/*__${cond}__rep1 >/dev/null 2>&1; then
         clade_detection.py --clade-dir data/clade --runs-dir results/clade/runs \
             --condition "${cond}__rep1" --out "results/clade_detection_${cond}.json"
-    done
-fi
+    else
+        echo "  ${cond}: no runs yet, skipped"
+    fi
+done
 
 # Protocol.md 2.1's control. The un-injected cell is the one number the injected grid cannot give:
 # on simulated data a flag on an untouched sequence is a false positive outright, because the
 # taxonomy is the tree.
-if ls results/simulated/runs/sim__epang_T8_K25__rep1 >/dev/null 2>&1; then
-    step "simulation: recall where every label is certain, and a strict false-positive rate"
-    for cond in epang_T8_K25 upstream_raxml_T8; do
-        base=results/simulated/runs/sim__${cond}__rep1/sim__${cond}__rep1.mis
+step "simulation: recall where every label is certain, and a strict false-positive rate"
+for cond in epang_T8_K25 upstream_raxml_T8; do
+    base=results/simulated/runs/sim__${cond}__rep1/sim__${cond}__rep1.mis
+    if [ -s "$base" ]; then
+        # `grep -vc` exits 1 when it counts nothing, which is the expected answer here and not a
+        # failure: zero flags on the un-injected reference is the result this control exists for.
         n=$(grep -vc '^;' "$base" || true)
         total=$(grep -c '^>' data/simulated/sim/sim.fasta)
         echo "  ${cond}: ${n} flags on ${total} certainly-correct sequences"
         aggregate_grid.py --injected-dir data/simulated --runs-dir results/simulated/runs \
             --condition "${cond}__rep1" --baseline-mis "$base" \
             --out "results/simulated_summary_${cond}.json"
-    done
-fi
+    else
+        echo "  ${cond}: no un-injected run yet, skipped"
+    fi
+done
 
 # Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.
 step "the shape of the Confidence column, both tools"

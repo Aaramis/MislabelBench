@@ -73,6 +73,14 @@ def main():
 
     for (dist, k, rate, metric, thr), rows in sorted(grouped.items(), key=order):
         recalls = [r["recall"] for r in rows if r["recall"] is not None]
+        # Protocol.md 2.2's kind 4 is "correct to genus, wrong at species only ... tests resolution
+        # rather than detection", and this is the quantity that tests it: of the injected sequences,
+        # the share flagged *and* named at the rank the injection actually moved.
+        # score_injection.py has computed it per cell all along and this aggregator dropped it, so
+        # the one metric the protocol calls a separate error kind reached no record. None for the
+        # foreign cells, where the reference holds no bacteria and no rank can be named.
+        at_rank = [r["recall_at_injected_rank"] for r in rows
+                   if r.get("recall_at_injected_rank") is not None]
         others = [r["flags_on_non_injected"] for r in rows]
         added = [r["added_vs_baseline"] for r in rows if r["added_vs_baseline"] is not None]
         summary.append({
@@ -80,6 +88,7 @@ def main():
             "seeds": len(rows),
             "recall_mean": round(st.mean(recalls), 4) if recalls else None,
             "recall_sd": round(st.stdev(recalls), 4) if len(recalls) > 1 else 0.0,
+            "recall_at_injected_rank_mean": round(st.mean(at_rank), 4) if at_rank else None,
             "flags_on_non_injected_mean": round(st.mean(others), 1) if others else None,
             "added_vs_baseline_mean": round(st.mean(added), 1) if added else None,
         })

@@ -1507,6 +1507,36 @@ One design artefact to state rather than leave for a reader to find: the simulat
 0.6-0.8 band at all. Six sequences per species and *k* in 1, 2, 3, 5 give surviving-wrong ratios of
 exactly 0, 0.2, 0.4 and 0.8, so that band is empty by construction and not by measurement.
 
+**84. Kind 4's whole deliverable was computed for every cell and thrown away at aggregation.**
+Protocol.md 2.2 lists kind 4, "correct to genus, wrong at species only", with the note that it "tests
+resolution rather than detection" -- so its deliverable is not recall but whether the tool names the
+rank the injection actually moved. The previous session concluded that kind 4 was covered by the
+species-distance cells without being named. That was half right: the cells exist, and the measurement
+existed too.
+
+`bin/score_injection.py` computes `recall_at_injected_rank` for every cell and every threshold, using
+`mismatch_rank` against the cell's own declared lineage. `bin/aggregate_grid.py` never mentions the
+field. So the one metric the protocol calls a separate error kind was computed 180 times per condition
+and reached **no committed record**, which is the "computed but never reported" shape of finding 50 and
+the counterpart of finding 73's "reported but never rebuilt".
+
+Propagated, and it has a clean structure. Resolution -- the share of detections that name the right
+rank -- rises monotonically with taxonomic distance: about **0.90 at species**, 0.95 at genus, 0.97 at
+family, and **1.000 at phylum for every *k* >= 2**. So the rank-depth error costs roughly a tenth of the
+detections at species distance and nothing at all at phylum, which is kind 4's limit stated in the terms
+2.2 asks for. `None` for the foreign cells, where the reference holds no bacteria and no rank can be
+named -- a condition `score_injection.py` had already reasoned through and which propagates with it.
+
+Purely additive: eleven records gained the field with every pre-existing value unchanged.
+
+And a defect of my own, introduced two sessions earlier and caught by running the thing. The kind 3 and
+simulation steps added to `bin/analyses.sh` guarded on the experiment existing and then looped over both
+conditions, so the whole analysis failed the moment one arm had been repatriated and the other was still
+running -- which is the normal state while a comparator catches up, upstream taking sixteen times as long
+per cell. Guarded per condition now, skipping the pending arm with a line that says so. The same loop
+also had `grep -vc` on a file with no data rows failing the step under `set -e`, where zero flags on the
+un-injected reference is the result the control exists to produce.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
