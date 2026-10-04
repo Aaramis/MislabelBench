@@ -680,6 +680,24 @@ with no correctly labelled member. Both are empty on the real data, 0 of 11 178 
 so the five published rows are clean. With the guard in place the committed
 `results/cluster_conflict.json` reproduces identically.
 
+**55. The dataset the choice of dataset is argued against could not be rebuilt.** Protocol.md §2.6
+justifies RepS over RefS with a candidate table, and the RefS row -- 20 295 sequences, 4.3 %
+judgeable at species -- decides it. `data/unite/unite_refs.counts.json` and
+`data/unite/unite_refs_shape.json` are committed and carry exactly those figures.
+`slurm/fetch_unite.sh` builds only RepS. The RefS pair came from a `prepare_unite.py --subset
+refs_all` run by hand, so the dataset the benchmark uses was reproducible and the comparison that
+selected it was not. Both commands are now in the script. The committed counts are internally sound
+and were checked rather than taken on trust: 16 120 refs plus 4 175 singletons is the 20 295 published,
+the three subsets sum to the 102 137 records in the release, and `in_subset == too_short +
+name_collision + kept` holds for both subsets.
+
+`prepare_unite.py` also had the D110 shape, and a worse version of it than the others. The subset is
+selected by string equality on field 4 of the header, so a subset that matches nothing wrote an empty
+FASTA, an empty taxonomy and a counts file with no `kept` key, and exited 0 -- which is exactly how a
+rename in a future UNITE release would arrive, with the next step building a reference on an empty
+file. It now exits non-zero and names the subsets it did see, since those were already counted:
+`--subset reps matched nothing. subsets present: nosuchsubset=1`.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

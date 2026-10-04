@@ -53,3 +53,15 @@ echo
 echo "=== what the subset looks like, before any alignment question"
 dataset_shape.py --convention unite --fasta unite_reps.fasta --tax unite_reps.tax \
     --out "$OUT/unite_shape.json"
+
+# RefS as well, which this script did not build. The protocol's candidate table compares RepS
+# against RefS and the RefS row -- 20,295 sequences, which is 16,120 refs plus 4,175 singletons,
+# and 4.3 % judgeable at species -- came from a prepare_unite.py run by hand. Both records are
+# committed under data/unite and neither could be regenerated from anything here, so a figure the
+# dataset choice rests on was not reproducible while the dataset it justifies was. One more pass
+# over the same file.
+echo
+echo "=== RefS, the subset the choice of RepS is argued against"
+prepare_unite.py "$src" --subset refs_all --prefix unite_refs
+dataset_shape.py --convention unite --fasta unite_refs.fasta --tax unite_refs.tax \
+    --out "$OUT/unite_refs_shape.json"

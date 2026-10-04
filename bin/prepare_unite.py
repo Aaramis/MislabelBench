@@ -83,6 +83,15 @@ def main():
     out_fa.close()
     out_tx.close()
 
+    # A subset that matches nothing wrote two empty files and exited 0. That is how an upstream
+    # rename would arrive -- field 4 is a string this script compares by equality, and UNITE is
+    # free to spell it differently in v11 -- and the next step would build a reference on an empty
+    # FASTA. The subsets actually seen are already counted, so the error can name them.
+    if not counts["kept"]:
+        seen = ", ".join(f"{k[len('subset_'):]}={v}" for k, v in sorted(counts.items())
+                         if k.startswith("subset_")) or "none"
+        sys.exit(f"--subset {args.subset} matched nothing. subsets present: {seen}")
+
     if counts["malformed_header"] or counts["name_collision"]:
         print(f"warning: {counts['malformed_header']} malformed headers, "
               f"{counts['name_collision']} collisions", file=sys.stderr)
