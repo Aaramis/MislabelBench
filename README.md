@@ -94,6 +94,17 @@ cells where the two differ; dealing the folds in tree order instead of by sequen
 and is worse in 18 of 18. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
 sequence's true relatives with it.
 
+**The baseline is not a fixed reference point.** Reporting flags added above the un-injected
+baseline assumes the pre-existing flags stay put. They do not: injecting a wrong label moves a
+sequence in the tree and changes the placement of its neighbours. Over the 180 cells, against a
+baseline of 93 flags, a typical cell **loses 11 of them** (12 %, up to 21) while gaining 29 (31 %, up
+to 70). So the churn is about 40 flags where the net change is 18, and a count of added flags
+describes the smaller half of what injection does to the background.
+
+That is the measurement behind Q6 of the protocol, which asks whether reporting both directions is
+the right rule. It is reported in both directions here, `results/background_stability.tsv`, because
+the answer turned out to matter: 12 % is not a rounding error on a baseline.
+
 **What the marker cannot be asked, and where that bites.** The 7 051-sequence set contains 847
 groups of byte-identical alignment rows, and **54 of them carry conflicting labels** — 7 disagreeing
 first at phylum, 6 at class, 1 at order, 2 at family, 5 at genus, 33 at species, with 52 of the 54

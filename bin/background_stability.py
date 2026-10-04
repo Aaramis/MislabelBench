@@ -19,6 +19,7 @@ about, and a large `lost` would mean the baseline is not a fixed reference point
 
 import argparse
 import json
+import statistics as st
 from pathlib import Path
 
 
@@ -72,10 +73,15 @@ def main():
             fh.write("\t".join(str(r[h]) for h in hdr) + "\n")
 
     n = len(rows)
+    if not n:
+        raise SystemExit(f"no cell matched {args.runs}/*__{args.condition}/*.mis")
     print(f"{n} cells against a baseline of {len(base)} flags")
     for key in ("lost", "gained"):
         v = sorted(r[key] for r in rows)
-        print(f"  {key}: median {v[n // 2]}, max {v[-1]}, mean {sum(v) / n:.1f}")
+        # st.median, not v[n // 2], which is the upper middle element for an even n. It happens to
+        # agree on this grid for both columns and is not the median it is labelled.
+        print(f"  {key}: median {st.median(v):g}, max {v[-1]}, mean {sum(v) / n:.1f}"
+              f", {100 * st.median(v) / len(base):.0f}% of the baseline")
 
 
 if __name__ == "__main__":
