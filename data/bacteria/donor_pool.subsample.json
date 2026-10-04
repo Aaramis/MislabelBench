@@ -1,5 +1,11 @@
 {
   "source_sequences": 392425,
   "drawn": 600,
-  "seed": 42
+  "seed": 42,
+  "source": {
+    "fasta": "donor_full.fasta",
+    "fasta_sha256": "07151026d0f3eed895772d48ae833b7f49f4c261d484463a313639750b531ed5",
+    "tax": "donor_full.tax",
+    "tax_sha256": "5f1a0da5942564cc5907093c12fd833baacd07ba0878de5d40da0f30086bbb93"
+  }
 }

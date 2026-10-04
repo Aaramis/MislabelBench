@@ -1065,6 +1065,31 @@ The general hazard is worth stating: editing an analysis script between running 
 output decouples the two with nothing to detect it. That is what happened here, in two minutes, to a
 record whose job had already finished.
 
+**70. The same stale-format defect, twice more, and the reason it is systematic.** Finding 69 found a
+committed record written two minutes before its producer gained a field. Rerunning the two jobs that
+own the rest of the derived records found two more instances of the same shape and one that was mine.
+
+`data/unite/unite_shape.json` and `unite_refs_shape.json` were committed in `8c38bf6` at 22:15 on 3
+October; `bin/dataset_shape.py` gained its `convention` field in `2b1841c` at 22:43, 28 minutes later.
+Nothing crashed, because no consumer reads that key -- which is exactly why it was invisible, where the
+`membership` case announced itself with a `KeyError`. And `donor_pool.subsample.json` was one I created
+this session by adding source digests to `bin/subsample_fasta.py` without rerunning it, which would
+have left the repository in the state I had just written a finding about.
+
+So the rule, which is the useful part: **a committed record is only known to match its producer when
+the producer is rerun.** `bin/analyses.sh` does that for the 45 tables it rebuilds, which is why those
+never drift. Eight scripts in `bin/` are invoked only from job scripts and never from `analyses.sh` --
+`dataset_field`, `fold_composition`, `inject_foreign`, `inject_mislabels`, `prepare_gtdb`,
+`prepare_unite`, `staged_scaling`, `subsample_fasta` -- and every stale record found in this review
+came from that list. All eight have now been rerun.
+
+What the reruns confirmed, which is the other half: `fetch_unite.sh` reproduces RepS at 97.4/59.9 genus
+and 45.3/10.9 species and the unresolved counts 1846/7828/11332/23016/31482/62129 exactly, and the
+RefS branch added earlier in this review gives 20 295 = 16 120 + 4 175 with 90.6/89.7 and 4.5/4.3 --
+so the comparison that chose RepS is now reproducible and reproduces. `fetch_bacteria.sh` still selects
+`p__Pseudomonadota` at 543 726 against Bacillota's 306 490, its counts match to the record, and
+`donor_pool.fasta`, `.tax` and `.aligned.fasta` come back md5-identical for the third independent time.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

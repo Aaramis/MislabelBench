@@ -1,4 +1,5 @@
 {
+  "convention": "unite",
   "n_sequences": 20295,
   "n_with_lineage": 20295,
   "length": {
