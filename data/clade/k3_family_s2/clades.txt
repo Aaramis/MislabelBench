@@ -1,0 +1,7 @@
+6 whole clades relabelled at family, 26 sequences, separation -0.0508 to +0.3118
+   3 seqs  within 0.7574  recipient 0.8082  separation -0.0508  s__Thermocladium modestius
+   4 seqs  within 1.0000  recipient 0.9145  separation +0.0855  s__Methanoculleus thermophilus
+   3 seqs  within 0.9482  recipient 0.8329  separation +0.1154  s__JAKAFX01 sp021802055
+   4 seqs  within 0.9993  recipient 0.8679  separation +0.1315  s__Methanosarcina horonobensis
+   5 seqs  within 1.0000  recipient 0.8379  separation +0.1621  s__JAWCSA01 sp038868975
+   7 seqs  within 1.0000  recipient 0.6882  separation +0.3118  s__0-14-0-80-44-23 sp038874135

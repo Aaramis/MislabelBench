@@ -1,0 +1,7 @@
+6 whole clades relabelled at species, 30 sequences, separation -0.0734 to +0.2684
+   5 seqs  within 0.8081  recipient 0.8815  separation -0.0734  s__Haloarcula laminariae
+   3 seqs  within 1.0000  recipient 0.9938  separation +0.0062  s__CALIRQ01 sp038843675
+   4 seqs  within 0.9937  recipient 0.9777  separation +0.0159  s__Loki-b32 sp019057865
+   8 seqs  within 0.9985  recipient 0.9728  separation +0.0257  s__Halogeometricum borinquense
+   4 seqs  within 0.9744  recipient 0.9349  separation +0.0395  s__JAKAVK01 sp021791075
+   6 seqs  within 1.0000  recipient 0.7316  separation +0.2684  s__JAAOZP01 sp011363915

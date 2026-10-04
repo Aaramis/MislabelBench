@@ -1,0 +1,7 @@
+6 whole clades relabelled at phylum, 29 sequences, separation +0.0407 to +0.4098
+   3 seqs  within 0.7876  recipient 0.7470  separation +0.0407  s__JAVZGQ01 sp039000425
+   6 seqs  within 0.9871  recipient 0.7535  separation +0.2335  s__JACWAH01 sp021818715
+   3 seqs  within 0.9954  recipient 0.7279  separation +0.2675  s__Natrarchaeobius swarupiae
+   5 seqs  within 0.9997  recipient 0.7156  separation +0.2841  s__Thalassarchaeum sp002507125
+   8 seqs  within 0.9818  recipient 0.6813  separation +0.3006  s__JAJZYH01 sp021798195
+   4 seqs  within 0.9980  recipient 0.5882  separation +0.4098  s__Halorubrum sp002252755

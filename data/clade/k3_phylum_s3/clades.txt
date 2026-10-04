@@ -1,0 +1,7 @@
+6 whole clades relabelled at phylum, 22 sequences, separation +0.0187 to +0.4173
+   3 seqs  within 0.7938  recipient 0.7751  separation +0.0187  s__MGIIb-O2 sp030828405
+   3 seqs  within 1.0000  recipient 0.7604  separation +0.2396  s__CALIRQ01 sp038843675
+   3 seqs  within 0.9977  recipient 0.7353  separation +0.2624  s__Syntropharchaeum butanivorans
+   3 seqs  within 0.9891  recipient 0.7111  separation +0.2780  s__Halorubrum salipaludis
+   7 seqs  within 0.9984  recipient 0.6977  separation +0.3008  s__JABIAG01 sp018653365
+   3 seqs  within 1.0000  recipient 0.5827  separation +0.4173  s__JAWCQZ01 sp038869515

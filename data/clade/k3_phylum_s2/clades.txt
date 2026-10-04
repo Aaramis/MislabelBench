@@ -1,0 +1,7 @@
+6 whole clades relabelled at phylum, 20 sequences, separation +0.0555 to +0.3704
+   3 seqs  within 0.7938  recipient 0.7384  separation +0.0555  s__MGIIb-O2 sp030828405
+   4 seqs  within 0.9586  recipient 0.7193  separation +0.2394  s__Haloarcula sebkhae
+   4 seqs  within 0.9991  recipient 0.7368  separation +0.2622  s__Methanocorpusculum petauri
+   3 seqs  within 0.9944  recipient 0.7196  separation +0.2748  s__CAIXYX01 sp021814005
+   3 seqs  within 0.9973  recipient 0.7046  separation +0.2926  s__Natrinema sp020405225
+   3 seqs  within 1.0000  recipient 0.6296  separation +0.3704  s__CALIRQ01 sp038843675

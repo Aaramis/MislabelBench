@@ -1,0 +1,7 @@
+6 whole clades relabelled at family, 23 sequences, separation -0.0508 to +0.3628
+   3 seqs  within 0.7574  recipient 0.8082  separation -0.0508  s__Thermocladium modestius
+   3 seqs  within 0.9995  recipient 0.9057  separation +0.0938  s__Methanobrevibacter olleyae
+   3 seqs  within 0.9986  recipient 0.8789  separation +0.1197  s__Natronococcus sp023913515
+   4 seqs  within 1.0000  recipient 0.8625  separation +0.1375  s__Methanoculleus thermophilus
+   4 seqs  within 1.0000  recipient 0.8392  separation +0.1608  s__JAGDXO01 sp031961395
+   6 seqs  within 0.9987  recipient 0.6359  separation +0.3628  s__JAJZIZ01 sp021804095

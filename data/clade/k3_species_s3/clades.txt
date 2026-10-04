@@ -1,0 +1,7 @@
+6 whole clades relabelled at species, 25 sequences, separation -0.0734 to +0.2681
+   5 seqs  within 0.8081  recipient 0.8815  separation -0.0734  s__Haloarcula laminariae
+   3 seqs  within 1.0000  recipient 0.9938  separation +0.0062  s__AG1 sp003116855
+   3 seqs  within 0.9977  recipient 0.9837  separation +0.0140  s__Methanocaldococcus jannaschii
+   8 seqs  within 0.9985  recipient 0.9728  separation +0.0257  s__Halogeometricum borinquense
+   3 seqs  within 0.9995  recipient 0.9623  separation +0.0373  s__Nitrosopumilus sp028820595
+   3 seqs  within 0.9995  recipient 0.7315  separation +0.2681  s__SpSt-28 sp025057985

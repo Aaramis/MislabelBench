@@ -1,0 +1,7 @@
+6 whole clades relabelled at family, 24 sequences, separation -0.0534 to +0.2708
+   3 seqs  within 0.7574  recipient 0.8108  separation -0.0534  s__Thermocladium modestius
+   5 seqs  within 0.9997  recipient 0.9079  separation +0.0918  s__Methanoplanus endosymbiosus
+   3 seqs  within 1.0000  recipient 0.8872  separation +0.1128  s__Halosegnis rubeus
+   3 seqs  within 1.0000  recipient 0.8674  separation +0.1326  s__Halohasta litchfieldiae
+   7 seqs  within 0.9984  recipient 0.8361  separation +0.1623  s__JABIAG01 sp018653365
+   3 seqs  within 0.9991  recipient 0.7283  separation +0.2708  s__JAHLMN01 sp018920345

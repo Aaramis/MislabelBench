@@ -1,0 +1,7 @@
+6 whole clades relabelled at species, 27 sequences, separation -0.0777 to +0.2681
+   3 seqs  within 0.7938  recipient 0.8715  separation -0.0777  s__MGIIb-O2 sp030828405
+   6 seqs  within 1.0000  recipient 0.9952  separation +0.0048  s__Nitrosopolaris nunavutensis
+   4 seqs  within 1.0000  recipient 0.9855  separation +0.0145  s__JAKAAX01 sp028864975
+   5 seqs  within 0.9994  recipient 0.9756  separation +0.0238  s__UBA184 sp027309555
+   6 seqs  within 0.9983  recipient 0.9607  separation +0.0375  s__Methanomethylophilus sp002495325
+   3 seqs  within 0.9995  recipient 0.7315  separation +0.2681  s__SpSt-28 sp025057985

@@ -1,0 +1,68 @@
+{
+  "source": "gtdb_arc2k, whole-clade relabelling (error kind 3)",
+  "datasets": [
+    {
+      "name": "k3_family_s1",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_family_s1/k3_family_s1.fasta",
+      "tax": "data/clade/k3_family_s1/k3_family_s1.tax"
+    },
+    {
+      "name": "k3_family_s2",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_family_s2/k3_family_s2.fasta",
+      "tax": "data/clade/k3_family_s2/k3_family_s2.tax"
+    },
+    {
+      "name": "k3_family_s3",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_family_s3/k3_family_s3.fasta",
+      "tax": "data/clade/k3_family_s3/k3_family_s3.tax"
+    },
+    {
+      "name": "k3_phylum_s1",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_phylum_s1/k3_phylum_s1.fasta",
+      "tax": "data/clade/k3_phylum_s1/k3_phylum_s1.tax"
+    },
+    {
+      "name": "k3_phylum_s2",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_phylum_s2/k3_phylum_s2.fasta",
+      "tax": "data/clade/k3_phylum_s2/k3_phylum_s2.tax"
+    },
+    {
+      "name": "k3_phylum_s3",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_phylum_s3/k3_phylum_s3.fasta",
+      "tax": "data/clade/k3_phylum_s3/k3_phylum_s3.tax"
+    },
+    {
+      "name": "k3_species_s1",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_species_s1/k3_species_s1.fasta",
+      "tax": "data/clade/k3_species_s1/k3_species_s1.tax"
+    },
+    {
+      "name": "k3_species_s2",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_species_s2/k3_species_s2.fasta",
+      "tax": "data/clade/k3_species_s2/k3_species_s2.tax"
+    },
+    {
+      "name": "k3_species_s3",
+      "n_seqs": 2023,
+      "aln_len": 1478,
+      "fasta": "data/clade/k3_species_s3/k3_species_s3.fasta",
+      "tax": "data/clade/k3_species_s3/k3_species_s3.tax"
+    }
+  ]
+}
