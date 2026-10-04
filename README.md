@@ -109,6 +109,25 @@ the end-to-end wall clock saturates near 314 s because Nextflow's scheduling and
 the task count, reaching 163 s at four shards. At one shard the pipeline agrees with the `srun`
 version to 0.6 %, which is what shows it does the same work.
 
+**Why the *k* axis is not an independent variable.** Injecting *k* sequences from one taxon needs a
+taxon with at least *k*+1 members, so raising *k* shrinks the eligible pool and shifts it towards
+large taxa: at species distance 319 taxa qualify at *k*=1 and 31 at *k*=10. The donor groups actually
+used follow:
+
+| *k* | donor groups | median size | share of the group relabelled |
+|---|---|---|---|
+| 1 | 2 178 | 3 | 0.34 |
+| 2 | 1 098 | 4 | 0.44 |
+| 3 | 738 | 6 | 0.47 |
+| 5 | 450 | 9 | 0.54 |
+| 10 | 234 | 14 | **0.67** |
+
+So *k* is a proxy for the share of a sequence's relatives that carry the wrong label, which is the
+quantity that predicts detection. The two cannot be separated in this design — holding group size
+fixed while varying *k* would leave 31 taxa to draw from — and that is why the result is reported
+against the surviving-label ratio and not against *k*. The *k* table above is the same axis seen
+twice, which is also why recall falls from 0.92 to 0.13 along it.
+
 **Where those failures belong.** At *k*=10, 92 % of the sequences leave-one-out misses still have a
 correctly labelled neighbour above 99 % identity, so a label conflict inside a cluster catches them
 without any placement. That is a pipeline-level check rather than a tool-level one.
