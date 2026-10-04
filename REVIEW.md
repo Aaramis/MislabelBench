@@ -1010,6 +1010,36 @@ cause was not. It is `IndexError: list index out of range` at `epac/taxonomy_uti
 useful thing to say about taxmarker#40 than "it fails". Both stderr files are committed and
 `repatriate.sh` collects `.stderr` from now on.
 
+**68. The script that eliminated two mechanisms could not have reported its own failure.**
+`slurm/startcost.sh` produced the table in D49 that ruled out container startup and task-directory
+I/O as causes of the N=4 regression. Three faults, all latent, all of a kind the repository had already
+learned elsewhere.
+
+Its `TASKDIR` was hardcoded to `results/scaling/N4_c140_r1`, a directory name `scaling.sh` stopped
+producing when `SCALING_DATASET` put the dataset into the path (D82). It exists today only as a
+leftover of the first round on the cluster and is absent from a clone, with no existence check. Both
+`wait`s were bare -- the exact fault `scaling.sh` documents at length having been bitten by, where a
+killed task went unnoticed and surfaced four stages later. And the read was
+`cat fold_0*/ref.fasta 2>/dev/null || cat fold_0*/query.fasta`, which treats a missing directory as a
+successful fast read. Together: a missing task directory would have timed four tasks reading nothing,
+reported it as fast, and **inverted the conclusion the script exists to reach**.
+
+The published numbers are sound, checked rather than assumed. `startcost-2161299.log` matches D49's
+table to the hundredth -- 0.76/2.09, 0.51/0.90, 0.62/0.92 -- and contains zero error lines, so nothing
+failed and the directory was there. `TASKDIR` is now overridable with a default that exists,
+guarded against a directory with no `fold_0*` in it as well as against a missing one, the waits check
+each pid, and the read insists on a non-zero byte count. Worth noting for anyone rerunning it: the
+published figures were measured on the 82 MB arc2k task directory, and the current default is the
+arc1200 one at 268 MB over 25 folds.
+
+**And the conclusion that rested on it had been overturned without the log saying so.** D49 is titled
+"Four nodes are slower than two, and the mode's optimum is two" and ends by asking that Protocol.md be
+told "the measured optimum is two and that four regresses". D82 later found the regression was the
+dataset, and D95 measured the staged pipeline at 3.45x on four shards. Neither names D49, and nothing
+anywhere in 117 entries pointed at it, so a reader working through the log in order would have carried
+that correction to Stamatakis. D49 now opens with a superseded note naming D82 and D95, keeping its
+measurements and marking its consequence as not to be acted on.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
