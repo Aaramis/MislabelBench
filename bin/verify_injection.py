@@ -9,6 +9,13 @@ For each cell: the set of lines that differ from the base taxonomy must equal th
 injected names, the file must have the same number of entries as the base, and each injected
 line must carry the recorded wrong label while differing from the true one at the recorded
 rank and agreeing above it.
+
+And the invariant the whole design rests on: every donor taxon keeps at least one correctly
+labelled member. inject_mislabels.py enforces it with floor = k + 1, so leave-one-out always has
+something true to place an injected sequence against, and a fully relabelled group would be
+undetectable by construction -- its sequences sitting in the truth as misses no method could find.
+That was reasoned from the code and never measured until it was: 0 orphaned groups across all 180
+cells.
 """
 
 import argparse
@@ -51,6 +58,21 @@ def main():
         changed = {n for n in base if cur.get(n) != base[n]}
         if changed != set(injected):
             problems.append(f"{name}: {len(changed)} lines changed, {len(injected)} declared")
+            continue
+
+        # Every donor group keeps a correctly labelled member. Membership comes from the base
+        # taxonomy and not from the injected file: a wrong label is drawn from a real taxon at the
+        # same prefix, so a sequence relabelled *into* a group would make that group look populated
+        # when its own members had all been relabelled away.
+        by_group = {}
+        for seq, lineage in base.items():
+            by_group.setdefault(lineage, set()).add(seq)
+        orphaned = {rec.get("donor_group") or rec["true"] for rec in injected.values()}
+        orphaned = {g for g in orphaned
+                    if g in by_group and not (by_group[g] - set(injected))}
+        if orphaned:
+            problems.append(f"{name}: {len(orphaned)} donor group(s) left with no correctly "
+                            f"labelled member, e.g. {sorted(orphaned)[0][-40:]}")
             continue
 
         r = RANKS.index(truth["distance"])
