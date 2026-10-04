@@ -126,6 +126,15 @@ cells where the two differ; dealing the folds in tree order instead of by sequen
 and is worse in 18 of 18. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
 sequence's true relatives with it.
 
+Two checks stand behind those two sentences. The fold-order conditions differ from their base
+conditions in **180 cells of 180** -- the `.mis` files are not byte-identical anywhere -- so
+`SATIVA_EPANG_FOLD_ORDER` does reach the container and the comparison is not a condition against
+itself, which `run.json` could not have told you since it records what was declared. And the three
+paired comparisons of this family are 15 tests together, so the two claims above are stated at
+p = 0.000145 and p = 7.6e-06 against a Bonferroni threshold of 0.05/15 = 0.0033, which both clear by
+more than an order of magnitude. The *k*=3 effects in the same family, p = 0.0064 and 0.0025, do not
+clear it as decisively and are not claimed here.
+
 **The baseline is not a fixed reference point.** Reporting flags added above the un-injected
 baseline assumes the pre-existing flags stay put. They do not: injecting a wrong label moves a
 sequence in the tree and changes the placement of its neighbours. Over the 180 cells, against a

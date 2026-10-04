@@ -1797,6 +1797,33 @@ Its first wording was wrong in the way this review keeps finding in other people
 gate that reports agreement it has not established is worse than no gate, so the line now says checked,
 and says how many problems.
 
+**93. Two sentences of README rested on an assumption that had never been measured, and on 15 tests
+reported as if they were two.** The fold-scheme paragraph says five folds instead of twenty-five gains
+0.035 at *k*=10 and tree order removes 0.036. Both are paired comparisons between conditions that differ
+in **one environment variable**, exported inside the module's script block -- and `run.json`'s `folds` and
+`fold_order` are copied from the condition's meta, so neither is evidence the variable arrived. If
+`SATIVA_EPANG_FOLD_ORDER` had been dropped anywhere between `nextflow.config` and the container, the
+tree conditions would be the base conditions rerun, and a paired comparison of a condition against itself
+produces exactly what these produce: small, mostly tied, occasionally significant differences.
+
+Measured instead of assumed: the two conditions' `.mis` differ in **180 cells of 180**, not one identical
+pair. The variable arrives. Finding 92's gate covers the fold count the same way, and the same argument
+applies to any condition whose independent variable is an environment variable rather than a flag on the
+command line the tool echoes.
+
+The second gap is multiplicity. Those two claims come from a family of three paired comparisons over five
+*k* values, 15 tests, and README quoted the two smallest p-values with no mention of the other thirteen.
+They survive -- p = 0.000145 and 7.6e-06 against a Bonferroni threshold of 0.0033 -- so the claims stand
+as written, but a reader could not have known that from the document. README now states the family size,
+the threshold, and that the *k*=3 effects of the same family at 0.0064 and 0.0025 are not claimed.
+
+**And a false alarm of my own, recorded because its cause is a pattern.** I went looking for the fold
+scheme in README by grepping for `fold order`, `K5` and `_tree`, found nothing, and was about to report
+a measured result absent from the results document. It is there, under "five folds instead of
+twenty-five" and "dealing the folds in tree order" -- reported by its conclusion rather than by the name
+of the knob. That is the third time keyword search has suggested a gap README does not have, and it is
+why finding 89 refused to commit the coverage grep as a gate.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
