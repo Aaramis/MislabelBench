@@ -2151,6 +2151,39 @@ guard had been reasoned and commented and never quantified; a reader who takes c
 label gets 947 instead of 948, which is small enough to be mistaken for rounding and large enough to be
 wrong.
 
+**106. Every number the protocol quotes to a co-author is now computed twice, and the sweep that did it
+found six things.** Finding 98 started this: a published figure was wrong in a way that rereading its
+producer could never show, because the producer was right and the prose named the wrong quantity. Nine
+sessions of applying the same method to every claim the benchmark makes:
+
+| claim | second route says | outcome |
+|---|---|---|
+| grid recall and collateral, 5 conditions | 3 600 values | all agree |
+| the simulated control, kind 6 | 288 and 72 values | all agree |
+| the exclusion column | totals agree, floor does not | **the threshold was misnamed** |
+| agreement with upstream | 14 values | agree; **absent from README** |
+| the speed gradient | 8.2x to 16.5x, 10 values | agree |
+| kind 3's reversal | recall, cohesion, direction | agree; **half the claim overstated** |
+| kind 6's mechanism | 299/299 against 74/94 | agree; **holds for upstream too, in no record** |
+| kind 4's resolution | 6 rows | agree; **one row explained a documented hazard** |
+| duplicate groups and enrichment | 847, 54, 265, four rows | all agree |
+| the Kexact decomposition | engine +0.2843 and +0.1765 | all agree |
+
+Ten claims, roughly four thousand recomputed values, **one number wrong** -- the exclusion column's
+threshold -- and five things that were true but could not be checked from the repository as it stood: a
+control absent from the results document, two records binned or aggregated on quantities their claims do
+not use, a sentence that overstated half of a mechanism, and a statistic quoted without naming which of
+two it was.
+
+That ratio is the useful output. The arithmetic of this benchmark is sound; what needed correcting was
+almost entirely in the layer between a record and the sentence a reader meets, which is the layer no
+test covers and which rereading the code cannot reach. It is also where the earlier near-misses of
+findings 75, 79 and 88 lived.
+
+**What the sweep has not reached**, stated rather than left to look finished: `collateral_locality.py`'s
+78.1 % and `threshold_holdout.py`'s held-out selection. Both are README claims rather than protocol ones,
+both have one implementation, and neither is covered by a gate.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
