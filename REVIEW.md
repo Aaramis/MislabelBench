@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-nine more came later, from repatriating the results, cloning the
+done during the review itself. Thirty more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -526,6 +526,30 @@ would otherwise make every record unclaimed and nothing wrong. `verify_manifests
 **What this closed.** `inputs_check.sh` ran one cell under both tools and the digests are identical,
 so Protocol.md 2.5's premise — both tools read the identical database — is now evidence rather than a
 property of how `main.nf` happens to be written.
+
+**49. The script behind every second in the benchmark had not been read.** `bin/_timeit.py` produces
+every `wall_sec` and every `max_rss_mb`. Two faults, neither of which bit.
+
+It timed with `time.time()`, which NTP can step, where a duration needs `time.monotonic()`. At the
+precision quoted here — a spread of 0.67 s on 195.59 — a correction of a few hundred milliseconds
+would be visible.
+
+**And the check is worth more than the fix.** Across the 430 runs appearing in both a `run.json` and
+a Nextflow trace, keyed on `(outdir, run_name)`, the two independent measurements differ by more than
+2 s or 2 % in **three**: −21.8, +11.1, −2.1 s. A clock step shows as a one-sided outlier; this is the
+trace's integer-second rounding, and `_timeit` exceeds the trace in 85 of 430, which is the symmetry
+that says so. So every published second is now cross-validated against a measurement taken by other
+means.
+
+`ru_maxrss` is kilobytes on Linux and bytes on macOS, so the fixed divisor was wrong by 1024 on one
+platform. Nothing here measures on a Mac, and the wrong answer looks plausible: a `sleep 0.4`
+reported **11 808 MB** while demonstrating the timeout path. Divisor by platform now.
+
+The first attempt at the cross-validation keyed on `run_name` alone and reported 25 outliers up to
++911 s. `gtdb_arc1200__upstream_raxml_T8__rep1` exists under both `results/baseline` and
+`results/sizes`, so it compared different runs on different nodes — **the third time in this review
+that a check compared the wrong things**, and the reason the outliers were chased rather than
+reported.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
