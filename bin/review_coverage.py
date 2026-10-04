@@ -20,11 +20,13 @@ from pathlib import Path
 # What a defect could live in. Data, results and the generated cells are checked by the gates in
 # bin/analyses.sh rather than read, and listing them here would bury the signal.
 REVIEWABLE = ("bin/", "slurm/", "modules/", "conf/", "tests/")
-# Version 1's tree is outside the list above on purpose: it is frozen, and demanding that 45 files of
-# it be named in a report about this harness would bury the signal. Printed rather than passed over,
-# because the silence is load-bearing -- a search over REVIEWABLE alone finds no reference to
-# sativa_epang/ and invites the conclusion that it is dead, when scripts/README.md builds RAxML from it.
-FROZEN = ("scripts/", "sativa_epang/", "data_ascii/", "data_injected/", "config.sh")
+# Version 1 used to live outside the list above -- scripts/, sativa_epang/, data_ascii/, data_injected/
+# and config.sh, 97 files that were frozen rather than reviewed. It has been removed from the
+# repository, so there is nothing to exclude and nothing to print about the exclusion. The tuple is
+# kept empty rather than deleted because the lesson it carried is worth a line: a coverage tool that
+# silently omits a tree invites the inference that the tree is dead, and that inference was made here
+# about sativa_epang/ while scripts/README.md was building RAxML from it.
+FROZEN = ()
 # The documents at the root carry the claims, and they were outside this list while the code was
 # inside it -- so DISTRIBUTION.md could hold four aggregate figures measured wrong and PUBLISHING.md
 # could open by saying nothing was public when version 1 had been pushed, with the coverage list
@@ -64,7 +66,8 @@ def main():
             missing.append(f)
 
     print(f"{len(files)} reviewable files, {len(files) - len(missing)} named in {args.report}")
-    print(f"{len(frozen)} files of version 1 excluded on purpose: {', '.join(FROZEN)}")
+    if frozen:
+        print(f"{len(frozen)} files excluded on purpose: {', '.join(FROZEN)}")
     if missing:
         print(f"\n{len(missing)} not named anywhere in the report:")
         for f in missing:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Part of 18.sativa_speedup. What the numbers mean: ../RESULTS.md
+# What the numbers mean: ../README.md
 """Run one command, report wall time and peak child RSS as JSON on stdout.
 
 A fresh process per measured run, so `RUSAGE_CHILDREN.ru_maxrss` covers this

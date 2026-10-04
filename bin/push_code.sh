@@ -59,7 +59,7 @@ fi
 
 rsync -a --exclude='._*' --relative \
       main.nf nextflow.config conf modules bin slurm assets tests \
-      README.md REVIEW.md RESULTS.md "$REMOTE:~/bench/"
+      README.md REVIEW.md DISTRIBUTION.md "$REMOTE:~/bench/"
 rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \
       --exclude='*' data/injected/ "$REMOTE:~/bench/data/injected/"
 rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \

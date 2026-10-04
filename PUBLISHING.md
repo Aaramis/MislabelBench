@@ -1,66 +1,51 @@
 # Publishing this folder
 
 > **Version 1 is already public, and this file used to open by saying nothing was.** `origin` is
-> `https://github.com/Aaramis/sativa-epang-benchmark`, `origin/main` holds 8 commits, and GitHub's
-> default branch is `main`. Local `main` and `origin/main` are identical, 0 commits either way. So the
-> instructions this file used to give -- add the remote, push `main` -- describe a state that ended
-> some time ago.
+> `https://github.com/Aaramis/sativa-epang-benchmark`, `origin/main` holds 8 commits of the first
+> benchmark, and GitHub's default branch is `main`. So what is public is the version that has since
+> been removed from this branch.
 >
 > **One published claim is refuted and the refutation is not public.** `RESULTS.md` on `main` reports
 > that unmodified SATIVA finds 28 of 33 injected mislabels and the EPA-ng version 33 of 33, and
 > explains the gap by shared wrong labels that "a strict leave-one-out cannot see and a fold can". The
 > 180-cell grid with three seeds does not bear that out: recall falls with the number of carriers for
 > both tools alike, 0.94 at *k*=1 to 0.13 at *k*=10, and the fold scheme is worth 0.035 and only at
-> *k*=10. `RESULTS.md` on the `nextflow` branch carries that refutation in a banner at the top of the
-> file. On `main` it does not, so a reader of the public repository sees the refuted claim and no
-> correction beside it.
+> *k*=10. README on this branch says so; `main` does not, so a reader of the public repository sees the
+> refuted claim and no correction beside it.
 >
 > **This cannot be fixed from here.** The fix is a push, and nothing in this repository is pushed
-> without explicit agreement. The branch is ready: `nextflow` is 201 commits ahead of `origin/main`
-> and contains all of its history, so it is a fast-forward and not a rewrite.
+> without explicit agreement. `nextflow` contains all of `origin/main`'s history, so moving `main` to it
+> is a fast-forward and not a rewrite — and it would replace the refuted report with the work that
+> refuted it, since version 1 is no longer in the tree to contradict.
 
 ## What is where
 
 | | |
 |---|---|
-| `origin/main`, public | version 1: the ITS measurements, `scripts/`, the vendored `sativa_epang/`, `RESULTS.md` with no banner |
-| `nextflow`, local only | the Nextflow harness, the GTDB grid, `REVIEW.md`, and `RESULTS.md` with its banner |
+| `origin/main`, public | the first benchmark: ITS measurements, `scripts/`, the vendored `sativa_epang/`, `RESULTS.md` |
+| `nextflow`, local only | the Nextflow harness, the GTDB grid, `REVIEW.md`, and none of the above |
 
-## Decisions to take before any of it goes out
+## What removing version 1 settled
 
-**The refuted claim.** Either `main` moves to `nextflow`, or the banner is cherry-picked onto `main`,
-or the repository is left as it is deliberately. The first is the cheapest, being a fast-forward, and
-the only one that also publishes the work that did the refuting.
+Three of the four questions this file used to ask were about version 1, and they are closed because
+what raised them is gone.
 
-**The version 1 machinery still in the tree.** The plan says `sativa_epang/` is deleted because the
-tool now comes from bioconda, and that `config.sh` and `04_run_all.sh` disappear. All of it is still
-tracked on `nextflow`: `scripts/` 12 files, `sativa_epang/` 34, `data_ascii/` 13, `data_injected/` 37,
-`config.sh` 1 -- 97 files, about 6 MB. Two parts are load-bearing and must not simply be removed:
-`slurm/m1_check.sh` builds its comparison from `data_ascii/` and from the version 1 run under
-`results/runs/`, which is what shows the harness reproduces version 1's answer byte for byte. The rest
-is an open decision rather than an oversight.
+**Sequence redistribution.** `data_ascii/` and `data_injected/` held about 5 MB of ITS sequences drawn
+from the curated database, and whether they could be redistributed was open. They are removed. Every
+dataset the harness now uses is public and recorded in `assets/datasets.yml` with its DOI, URL and
+sha256: GTDB r226, UNITE v10.0, Rfam RF01959.
 
-**Sequence redistribution.** `data_ascii/` and `data_injected/` hold about 5 MB of ITS sequences drawn
-from the curated database. The question is unchanged from version 1 and still open. It now also bears
-on `m1_check.sh`, which cannot run without `data_ascii/`.
+**Licence.** `LICENSE` is GPL 3, which SATIVA required because `sativa_epang/` was a modified copy of
+GPL 3 code. That copy is gone and the harness vendors nothing — it calls `bioconda::sativa 0.9.3` and
+`bioconda::sativa-epang 0.10.2` in pinned containers. So the obligation that chose the licence no longer
+applies, and whether to keep GPL 3 anyway is now a free choice rather than a requirement. Left as it is,
+since nothing forces a change and a licence is not something to alter in passing.
 
-**Licence.** `LICENSE` is GPL 3, which SATIVA requires. It still applies while `sativa_epang/` is in
-the tree: that is a modified copy of GPL 3 code and `sativa_epang/PROVENANCE.md` states the
-modifications, as the licence asks. If the directory goes, this question goes with it, because the
-harness calls bioconda containers and vendors nothing.
-
-**Cluster paths in the records.** `config.local.sh` and `env/` are gitignored and no longer exist, and
-the version 1 runs were rewritten by `scripts/10_sanitise_paths.py`. For version 2 the question is
-narrower than it looks. `git grep -l '/shared/home\|/home/agardette'` matches **2 436 files under
-`results/`** -- run logs and records where the tool printed its own absolute paths -- and exactly four
-anywhere else: `REVIEW.md`, this file, a comment in `bin/verify_manifests.py` and a comment in
-`slurm/make_grid.sh`, all four quoting a path deliberately to explain something. No code depends on
-one; the two in comments were opened and read rather than counted. (The count here excludes nothing and
-includes this file, which is why it is quoted as 2 436 under `results/` and four elsewhere: a single
-total changes when this paragraph is edited.) So this is a decision about whether published logs
-should carry the cluster's layout, not a portability bug. The one place a path *was* a dependency was
-`truth.json`, which recorded the absolute path of its input in all 180 cells and now records the
-input's name and sha256; that is finding 22 of `REVIEW.md`.
+**Site-specific paths.** `config.local.sh`, `env/` and `scripts/10_sanitise_paths.py` are all gone.
+What remains is narrower than it reads: `git grep -l '/shared/home\|/home/agardette'` matches run logs
+where the tool printed its own absolute paths, plus a handful of documents and comments that quote one
+to explain something. No code depends on one — checked by opening them, not by counting. So this is a
+decision about whether published logs should carry the cluster's layout, not a portability bug.
 
 ## The fork
 
@@ -76,13 +61,15 @@ The branch holds one commit on top of v0.9.3 (`68284c2`), so GitHub shows the wh
 single readable diff: two hunks in `sativa.py`, one in `epac/config.py`, one new `epac/epang_l1o.py`,
 one config line. `CHANGES-epa-ng.md` at the root of the branch explains it and links back to this
 benchmark. Whether that is still accurate has not been rechecked: the fork is a separate repository and
-outside the review this file sits next to.
+outside the review this file sits next to. It matters more now than it did, because the copy of the
+modified code that used to live here has been removed, so the fork's own branch is the only record of
+what differs from upstream.
 
 ## Repository description and topics
 
-The public description names only what version 1 measured. What version 2 adds and it omits:
-distribution across jobs, which upstream cannot do at any price, and what the fork's
-`OriginalLabelExclusion` column is worth -- it explains a third of the calls and does not rank them.
+The public description names only what the first benchmark measured. What this one adds: distribution
+across jobs, which upstream cannot do at any price, and what the fork's `OriginalLabelExclusion` column
+is worth — it explains a third of the calls and does not rank them.
 
 Description: *Does replacing SATIVA's placement engine with EPA-ng change its answers? Speed,
 agreement, a ground-truth mislabel grid, distribution across jobs, and what the new confidence column

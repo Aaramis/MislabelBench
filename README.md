@@ -25,17 +25,22 @@ the two ever disagree. They did: this said 262, 2 950, 11.2x, and **19.3x and 35
 the last pair taken from one replicate before the others had run and 17 % and 19 % above the medians
 that replaced it.
 
-**The harness reproduces version 1's answer, which is what validated it.** The plan's first
-milestone asked for the new harness to land on v1's figure of ~109 s for upstream at one thread.
-It does not: on an exclusive epyc-9754 with the model pinned it measures **135.8 s, spread 0.9 s
-over three replicates**, against 109.0 s on v1's 32-core workstation. The measurement is tight, so
-the 24 % is the hardware and not the harness — single-threaded RAxML is bound by per-core speed and
-a 128-core part is not where that is found.
+**The harness was validated against version 1, which has since been removed.** The plan's first
+milestone asked for the new harness to land on version 1's figure of ~109 s for upstream at one thread.
+It did not: on an exclusive epyc-9754 with the model pinned it measured **135.8 s, spread 0.9 s over
+three replicates**, against 109.0 s on a 32-core workstation. The measurement is tight, so the 24 % was
+the hardware and not the harness — single-threaded RAxML is bound by per-core speed and a 128-core part
+is not where that is found.
 
-Seconds from two machines cannot be compared. The answer can, and it is identical: `a1aa0f35…`,
-48 flags, in all three replicates and in all three of v1's. v1 ran sativa 0.9.3 from a hand-built
-conda environment; this runs bioconda sativa 0.9.3 in a container pinned by build string.
-`slurm/m1_check.sh` is the check, and it fails if the two ever diverge.
+Seconds from two machines cannot be compared; the answer can, and it was identical: `a1aa0f35…`, 48
+flags, in all three replicates and in all three of version 1's. Version 1 ran sativa 0.9.3 from a
+hand-built conda environment, this runs bioconda sativa 0.9.3 in a container pinned by build string, and
+the two produced the same `.mis` to the byte.
+
+Version 1 and its ITS datasets have since been removed, so this is a measurement that was performed and
+recorded here, not a check that still stands: the job script, the n800 dataset it ran on and the version 1
+runs it compared against are all gone. Its three run records went with them rather than being left for a
+gate to report as belonging to no script, which is what `bin/verify_timing_flags.py` had begun doing.
 
 **Determinism, across CPU architectures and not only across runs.** The same cell and the same seed
 produce a byte-identical `.mis` on hardware nine years apart. Three independent productions of
@@ -62,15 +67,16 @@ re-runs it, and it is also the only check that exercises the pipeline rather tha
 model. Upstream agrees to 0.7 s on one node and differs by a third between two, which is why every
 number here is a median over replicates and why `run.json` records the CPU model.
 
-**Detection, and a claim this version of the benchmark does not support.** Version 1 reported that
-upstream found 28 of 33 injected mislabels and the fork 33, and attributed every miss to several
+**Detection, and a claim an earlier version of this benchmark does not support.** The first version,
+on ITS data with one replicate per scenario, reported that upstream found 28 of 33 injected mislabels
+and the fork 33, and attributed every miss to several
 sequences sharing one wrong label, which "a strict leave-one-out cannot see and a fold can". A
 180-cell grid does not bear that out. Recall falls with the number of sequences sharing the wrong
 label, *k*, for both tools alike: 0.94 at *k*=1 to 0.13 at *k*=10. What predicts detection is not *k*
 and not the fold count but the proportion of a sequence's surviving relatives that carry the wrong
 label, and recall runs 0.87 down to 0.01 across that range.
 
-**What the fork does find, which version 1 missed.** On the complete 180-cell grid the fork detects
+**What the fork does find, which the first version missed.** On the complete 180-cell grid the fork detects
 more than upstream at intermediate *k*:
 
 | *k* | cells | mean difference | fork better | upstream better | tied | sign test |
@@ -247,7 +253,8 @@ figure reads seconds from a run that carries it.
 
 ```
 main.nf  nextflow.config  conf/        the harness: grid as channel combines, one container per tool
-modules/local/                         sativa, sativaepang, collectrun, alignssu
+modules/local/                         sativa, sativaepang, collectrun, alignssu, and the four
+                                       staged stages: reference, lootasks, looplace, looscore
 bin/                                   preparation, injection, scoring, analysis; analyses.sh runs them all
 slurm/                                 one script per measurement, plus prelude.sh and submit.sh
 tests/                                 unittest over the scripts that turn runs into numbers
@@ -278,21 +285,3 @@ often. `bin/review_coverage.py` prints which files it never names, and
 `grep -cE '^\*\*[0-9]+\. ' REVIEW.md` counts the findings. The pattern matters: a looser one counts
 `**19.2 MB**` as a finding and a stricter one misses every finding whose first word is in backticks.
 
-## Version 1
-
-`RESULTS.md`, `scripts/`, `data_ascii/`, `data_injected/` and `results/runs_injected/` are the earlier
-benchmark, on ITS data, driven by shell scripts over four hand-built conda environments. They are
-kept because `RESULTS.md` cites their numbers, and its setup instructions are in `scripts/README.md`.
-Where version 1 and this one disagree, as on detection above, this one supersedes it: it has three
-seeds, 180 cells and replicated timings where version 1 had one run per condition.
-
-`sativa_epang/` is version 1's copy of the modified tool and **is not what runs here** — see
-`sativa_epang/NOT_WHAT_RUNS.md`. The harness installs `bioconda::sativa-epang` in a container.
-
-It is also the largest thing in the repository, 10 685 lines, and it **stays**. The plan says it is
-deleted because the tool comes from bioconda, and that instruction is superseded: `scripts/README.md`
-builds the RAxML 8.2.3 binaries from `sativa_epang/raxml`, whose source tarball is tracked there, and
-those are the binaries both of version 1's conditions ran. Removing the directory would make
-`RESULTS.md`'s figures unreproducible. Said here because searching `bin/`, `slurm/`, `modules/` and
-`main.nf` for references finds none — the dependency is in `scripts/`, and a search that omits version
-1's driver concludes that version 1's code is unused.

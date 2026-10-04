@@ -10,11 +10,10 @@
 # It reads only run directories and writes only into results/. It does not run the pipeline, which is
 # what slurm/*.sh is for.
 #
-# Three committed files under results/ are deliberately outside its scope, all from version 1 on the
-# ITS sets: summary.tsv, concordance.tsv and concordance_vs_gamma.tsv, whose conditions are the
-# port_py3_* ones and whose datasets are n100 to n5402. They are cited as v1 measurements and there is
-# no v1 run tree here to rebuild them from. Everything else committed under results/ is rebuilt by
-# this script; that was not true until the k-axis and fold-sweep summaries were added below.
+# Every committed file under results/ is rebuilt by this script. That was not true twice over until
+# recently: the k-axis and fold-sweep summaries were never rebuilt, and three files from version 1 on
+# the ITS sets sat outside its scope with no run tree to rebuild them from. Version 1 has been removed,
+# so the exception is gone with it and the claim in the line above is now exact.
 set -euo pipefail
 
 BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"

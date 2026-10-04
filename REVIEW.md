@@ -1156,10 +1156,11 @@ nothing.** `bin/analyses.sh` opens with that claim and "a change to any script s
 Running it and then counting what it actually rewrote -- 958 files, of which 40 tracked -- left eight
 committed files under `results/` untouched.
 
-Three are version 1 on the ITS sets: `summary.tsv`, `concordance.tsv`, `concordance_vs_gamma.tsv`,
-whose conditions are the `port_py3_*` ones over `n100` to `n5402`. There is no v1 run tree here to
-rebuild them from, so they are legitimately out of scope and the header now says so instead of
-claiming otherwise.
+Three were version 1 on the ITS sets: `summary.tsv`, `concordance.tsv`, `concordance_vs_gamma.tsv`,
+whose conditions were the `port_py3_*` ones over `n100` to `n5402`. There was no version 1 run tree to
+rebuild them from, so they were out of scope and the header said so instead of claiming otherwise. They
+have since been removed with the rest of version 1, which is the cleaner end: the script's claim to
+rebuild every committed result is now exact, with no exception to state.
 
 Four are current and were simply never rebuilt: `kaxis_epang_T8_K25.json`,
 `kaxis_upstream_raxml_T8.json`, `ksweep_epang_T8_K25.json`, `ksweep_epang_T8_K5.json`. Their runs are
@@ -1370,12 +1371,21 @@ ends: "An earlier version of this file said it was scheduled for removal once th
 rewritten. That README has been rewritten, and the conclusion went the other way." So the question had
 been examined and settled, in writing, and I reopened it without reading the file. Nothing was deleted.
 
-Two things changed instead. `README.md` now says the directory stays and why, next to where its size
-would prompt the question, since the reason was one file deeper than anyone sizing up the repository
-would look. And `bin/review_coverage.py` prints the version 1 tree as excluded on purpose rather than
-passing over it -- 97 files, the same count as the reviewable set -- because that silence is what let the
-wrong view form: a tool that reports coverage over the live harness invites the inference that what it
-omits is not load-bearing.
+Two things changed instead. `README.md` said the directory stays and why, next to where its size would
+prompt the question, since the reason was one file deeper than anyone sizing up the repository would
+look. And `bin/review_coverage.py` printed the version 1 tree as excluded on purpose rather than passing
+over it -- 97 files, the same count as the reviewable set -- because that silence is what let the wrong
+view form: a tool that reports coverage over the live harness invites the inference that what it omits is
+not load-bearing.
+
+**Overtaken within the hour, and on the owner's call rather than on the argument above.** Told that the
+first benchmark's code and figures could go because better ones will be made, version 1 was removed
+entirely: `scripts/`, `sativa_epang/`, `data_ascii/`, `data_injected/`, `config.sh`, `RESULTS.md`,
+`results/runs/`, `results/runs_injected/`, `results/figures/` and the three ITS tables, 722 files. The
+reproducibility argument that kept the directory was sound and stops applying once version 1's figures
+are not being kept. What the episode still shows is unchanged: the recommendation to delete was right by
+accident and wrong by method, reached from a search that excluded the dependent directory, and had the
+answer been "no, keep it" the method would have destroyed the evidence.
 
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from

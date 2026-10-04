@@ -1,5 +1,0 @@
-__pycache__/
-*.pyc
-tmp/*
-!tmp/.gitkeep
-raxml/raxmlHPC8-*

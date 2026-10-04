@@ -1,6 +1,6 @@
 {
   "n_cells": 15,
-  "n_missing": 165,
+  "n_missing": 255,
   "baseline_mis": "results/baseline2k/runs/gtdb_arc2k__epang_T8_K25__rep1/gtdb_arc2k__epang_T8_K25__rep1.mis",
   "rows": [
     {
