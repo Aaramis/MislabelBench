@@ -20,6 +20,21 @@ sequences for the headline and a 2 023-sequence subset drawn by whole taxa for t
 fork uses 5.5. On the 2 023-sequence subset the pair is 19.3x and 35.3x. At 402 sequences the fork
 uses 3.1 of 8 threads, so on a small reference it should be given fewer.
 
+**Determinism, across CPU architectures and not only across runs.** The same cell and the same seed
+produce a byte-identical `.mis` on hardware nine years apart. Three independent productions of
+`inj_species_r0.05_k3_s1` under `epang_T8_K25`, each a separate Slurm job with its own work
+directory:
+
+| run | node | CPU | wall | md5 of the `.mis` |
+|---|---|---|---|---|
+| grid cell | cpu-node-123 | AMD EPYC 9754 | 38.0 s | `b41934ad…` |
+| determinism, 2 Oct | cpu-node-37 | Intel Xeon E5-2695 v3 | 66.0 s | `b41934ad…` |
+| determinism, rerun | cpu-node-16 | Intel Xeon E5-2695 v3 | 56.3 s | `b41934ad…` |
+
+A 1.7-fold spread in seconds and the same 161 flags to the byte. `slurm/determinism.sh` is what
+re-runs it, and it is also the only check that exercises the pipeline rather than the analysis layer:
+`bin/analyses.sh` rebuilds every number from the run directories and never invokes Nextflow.
+
 **Reproducibility of the timings themselves.** The fork varies by 1 % across two nodes of the same
 model. Upstream agrees to 0.7 s on one node and differs by a third between two, which is why every
 number here is a median over replicates and why `run.json` records the CPU model.
