@@ -1122,6 +1122,16 @@ most of a node instead of holding it "is being checked separately at one node; u
 it landed, as D39, and `threads.sh` three directories away states the result as settled. Two scripts
 disagreeing about whether the same question is open is the shape worth noticing.
 
+**72. A probe that decided the fan-out's shape staged its inputs with `|| true`.**
+`slurm/fold_subset_probe.sh` answers the question DISTRIBUTION.md is built on: will the tool place
+fold *i* from a directory holding only `manifest.json`, the model and `fold_i`, so a Nextflow fan-out
+can stage 11 MB per fold instead of the whole 275 MB? It staged the fold's four files with
+`cp ... 2>/dev/null || true`. Two of them, `ref.nwk` and the per-fold model, genuinely are optional;
+the alignment and the query are not. With every copy's failure discarded, a probe that staged nothing
+would have run, placed nothing, and printed "VERDICT: not enough" -- a false negative on a design
+decision, reached for the opposite reason to the one reported. The two essential files are now copied
+with a hard failure and the two optional ones say so when absent.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
