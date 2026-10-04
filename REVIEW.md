@@ -953,6 +953,35 @@ trusted timing, so the baseline seconds are comparable with the rest -- which ha
 throughout and is now established. Not backfilled into the records, because a value inferred from a
 hostname would afterwards read as one the run measured.
 
+**66. A log line that reads like lost data and is not, and the engine/folds split checked against it.**
+`bin/kexact_decomposition.py` splits the fork's k=2 advantage into the engine (+0.284, +0.177) and the
+fold scheme (−0.020, 0.000), and README states "the cause is the engine, not the fold scheme". Reading
+the runs behind it turned up this, in both Kexact logs:
+
+    [epang-l1o] placed 2023/2023 folds
+    [epang-l1o] placements produits: 2021 (K=2023 folds, remap 50.7s)
+
+Every fold placed and two placements then vanished in the remap, with no warning and no FAIL line.
+`epang_T8_K5` loses none, `epang_T8_K25` loses two and one. The recall denominator is 102 injected
+sequences, so one lost sequence is worth 0.0098 of recall and the published fold term is −0.0196 and
+0.000 -- the same size as the loss. The engine term is 29 and 18 of 102 and an order of magnitude
+clear of it; the fold term was not.
+
+So it was measured rather than argued about. `slurm/kexact_lost_placements.sh` reruns the cell through
+the staged path, which keeps one jplace per fold, and counts the queries inside each rather than
+trusting the files to exist, since the loss is downstream of placement and every file does exist.
+Result: **2023 queries placed across 2023 folds, nothing lost**. Then scoring that task directory gives
+191 flags, and the `.mis` is **identical to the committed Kexact run's**, same md5 over sorted rows,
+zero differing rows.
+
+Three things follow. The fold term is not an artefact of placement loss -- the suspicion that prompted
+this is refuted, and the term stands as measured, with the caveat README already carries that it rests
+on two cells. `placements produits: N (K=M folds)` with N < M is not a loss of information: whatever it
+counts, it changed no flag here, so it should not be read as data lost and the next person to see it
+can stop. And the staged path reproduces the monolithic path's `.mis` byte for byte at one fold per
+sequence, 2023 folds, which is a considerably harder case than the 25-fold equality already
+established and was not previously known.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
