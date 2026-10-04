@@ -31,7 +31,13 @@ def main():
         sys.exit("no command given")
 
     out = open(args.stdout, "wb") if args.stdout else subprocess.DEVNULL
-    start = time.time()
+    # monotonic, not time(): a duration must not be measurable by a clock that NTP can step. At the
+    # precision this benchmark quotes -- a spread of 0.67 s on 195.59 for the placement step -- a
+    # correction of a few hundred milliseconds would be visible. It demonstrably never bit: across
+    # the 430 runs that appear in both a run.json and a Nextflow trace, the two independent
+    # measurements differ by more than 2 s or 2% in three, and those three are bidirectional, where
+    # a clock step would show as a one-sided outlier.
+    start = time.monotonic()
     timed_out = False
     proc = subprocess.Popen(cmd, cwd=args.cwd, stdout=out, stderr=subprocess.STDOUT,
                             start_new_session=True)
@@ -41,7 +47,7 @@ def main():
         timed_out = True
         os.killpg(proc.pid, signal.SIGKILL)
         rc = proc.wait()
-    wall = time.time() - start
+    wall = time.monotonic() - start
     if out is not subprocess.DEVNULL:
         out.close()
 
@@ -50,7 +56,10 @@ def main():
         "wall_sec": round(wall, 2),
         "returncode": rc,
         "timed_out": timed_out,
-        "max_rss_mb": round(usage.ru_maxrss / 1024.0, 1),   # ru_maxrss is KB on Linux
+        # ru_maxrss is kilobytes on Linux and bytes on macOS, so the divisor is not a constant.
+        # Getting it wrong is a factor of 1024 in a published memory figure, and the wrong answer
+        # looks like a plausible one: a `sleep 0.4` on a Mac reported 11 808 MB.
+        "max_rss_mb": round(usage.ru_maxrss / (1048576.0 if sys.platform == "darwin" else 1024.0), 1),
         "user_cpu_sec": round(usage.ru_utime, 2),
         "sys_cpu_sec": round(usage.ru_stime, 2),
     }))
