@@ -1303,9 +1303,10 @@ of this file already states and this paragraph had not followed.
 The pattern is the part worth keeping. `grep -cE '^\*\*[0-9]+\.' REVIEW.md` -- what I had been quoting
 across several sessions -- returned 78 for 77 findings, because `**19.2 MB**` begins a line in finding 77
 and `19.` matches. Tightening it to require a capital after the number returns 65, because many findings
-open with a backtick or a digit. `^\*\*[0-9]+\. ` is the one that is right, and it says **77 findings,
-numbered 1 to 77, no duplicates and no gaps** -- which is also the first time the numbering itself has
-been checked rather than assumed. The over-count had been live for exactly one session, since
+open with a backtick or a digit. `^\*\*[0-9]+\. ` is the one that is right. It said **77, numbered 1 to 77,
+no duplicates and no gaps** when the check was run, and this entry is the 78th -- a figure written into
+the file it counts is stale as soon as the file grows, which is why the number is not in the prose and
+the command is. The over-count had been live for exactly one session, since
 `**19.2 MB**` was written an hour ago, and the figure I reported at the end of that session was wrong by
 one.
 
