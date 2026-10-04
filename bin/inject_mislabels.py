@@ -95,6 +95,19 @@ def main():
         print(f"warning: asked for {need}, injected {len(injected)}; "
               f"not enough taxa with >= {floor} members at distance {args.distance}",
               file=sys.stderr)
+    elif len(injected) > need:
+        # The loop breaks after a group has pushed the count to or past `need`, so the last group
+        # always completes and the overshoot is up to k-1 sequences. That is the right semantics --
+        # k sequences sharing one wrong label is what k means, and a partial group would be a
+        # different experiment -- but it was silent, and the protocol says cells are "dropped rather
+        # than silently rounded". At k=10 and rate 0.05 on 2023 sequences it means 110 injections
+        # where 101 were asked, an effective rate of 5.44% against 5.00%. Averaged over the grid the
+        # effective rate rises with k: 2.99% at k=1 to 3.21% at k=10, which is a covariate on the
+        # axis the main result is measured along, small and in the direction that makes high k
+        # harder rather than easier.
+        print(f"note: asked for {need}, injected {len(injected)} -- whole groups of k={args.k}, "
+              f"so the effective rate is {100 * len(injected) / len(tax):.2f}% "
+              f"against {100 * args.rate:.2f}% requested", file=sys.stderr)
 
     out_tax = Path(f"{args.prefix}.tax")
     with out_tax.open("w") as fh:
@@ -111,6 +124,10 @@ def main():
         "source_sha256": hashlib.sha256(Path(args.taxonomy).read_bytes()).hexdigest(),
         "distance": args.distance,
         "rate": args.rate,
+        # What was asked and what whole groups of k could deliver. The second is the one a recall
+        # figure is a fraction of, and it is not the first.
+        "n_requested": need,
+        "rate_effective": round(len(injected) / len(tax), 6),
         "k": args.k,
         "seed": args.seed,
         "allow_empty_donor": args.allow_empty_donor,

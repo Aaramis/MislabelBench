@@ -3,6 +3,8 @@
   "source_sha256": "500b2e19d1cf0f24b7df0011a88a9ffdddbd2a445fae88542dcfae39ce3535ac",
   "distance": "class",
   "rate": 0.05,
+  "n_requested": 101,
+  "rate_effective": 0.05042,
   "k": 3,
   "seed": 2,
   "allow_empty_donor": false,
