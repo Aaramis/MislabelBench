@@ -1765,6 +1765,38 @@ file fails and is named, an empty `results/` fails instead of reporting success,
 fails. My first attempt to test the failure path was wrong and the gate was right: I backdated
 `stem_flags.txt`, which the script does rebuild, so it was simply rewritten.
 
+**92. The one file that defines what each condition actually runs had been read once, and the
+independent variable of four conditions was never checked against the tool.** `conf/modules.config` is
+cited a single time in this review, and it is where the flags every measured run received are assembled.
+Read line by line it holds up: both tools are called with exactly the same `-m ultrafast -C 0.4 -x BAC
+-p 42 -S`, confirmed against the command line SATIVA echoes into its own log for each -- upstream's
+`/usr/local/bin/sativa.py` and the fork's `/usr/local/share/sativa-epang-0.10.2-0/sativa.py` differ in
+nothing else -- so the speed and agreement comparisons are between the same settings. `STAGEDLOOSCORE`
+fails loudly if its `ext.args` is missing rather than running with defaults, and the two selectors that
+both match `STAGEDREFERENCE` do what the comment says. The `saveAs` closure that names the staged timings
+produces `looplace_shard0of4.timing.json`, and `staged_scaling.py` parses it with
+`split(".")[0].split("_shard")[0]`, which agrees.
+
+What was missing is one level deeper. Four conditions -- `epang_T8_K25`, `epang_T8_K5` and their `_tree`
+variants -- differ **only** in the fold count, so every comparison between them and the whole fold-split
+ceiling in the scaling report rest on K5 having run five folds. The `folds` field in `run.json` is not
+evidence of that: it is copied from the condition's meta, so it records the declaration and would read 5
+just as happily if `SATIVA_EPANG_FOLDS` had never reached the container. The tool's own line, `wrote N
+fold tasks`, is the only independent witness in the repository, and nothing had ever compared the two.
+
+They agree, everywhere: **1 671 fork runs where the condition name, the `run.json` field and the tool's
+own count are the same number**, and 0 that are not. The twelve apparent exceptions found on the way are
+all staged timing logs rather than runs -- the per-shard placement logs report their own share, 7+6+6+6
+and 13+12, **summing to 25 in both cases**, which is the partition `staged_scaling.py` reads its 96.5 %
+ceiling against and which was also never checked. `bin/verify_fold_counts.py` now checks all three on
+every rebuild, and its own failure paths were tested on a fabricated tree rather than reasoned about: a
+run whose log disagrees with its name, shards that do not sum, and an empty tree, all exit non-zero.
+
+Its first wording was wrong in the way this review keeps finding in other people's code -- it printed
+"1 671 fork runs agree" while naming the ones that did not, because the counter counts runs examined. A
+gate that reports agreement it has not established is worse than no gate, so the line now says checked,
+and says how many problems.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

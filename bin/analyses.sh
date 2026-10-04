@@ -279,6 +279,10 @@ fi
 
 step "truth checks, which must pass rather than be read"
 verify_manifests.py
+# The condition names are the benchmark's independent variable for four of its conditions, and
+# run.json records what was declared rather than what ran. This compares both against the tool's own
+# line, which is the only evidence of the fold count the harness did not write itself.
+verify_fold_counts.py
 verify_injection.py --base "$TAX" --injected-dir "$INJ"
 verify_foreign.py
 
