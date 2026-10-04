@@ -229,7 +229,10 @@ the reading produced findings 67 through 72. **The list is now empty: 91 of 91.*
 for the four systematic faults is recorded above and still stands; it was a sweep and not a review,
 which is why the scripts were left unnamed until they had actually been read. An empty list is not a
 claim that nothing is left to find -- `bin/review_coverage.py` counts names, not understanding, and the
-faults in findings 67 to 72 sat in files that a previous pass had already walked past.
+faults in findings 67 to 72 sat in files that a previous pass had already walked past. The one entry
+with no logic in it is `slurm/bad_nodes.txt`, which is generated: `prelude.sh` appends a node that
+turns out to lack singularity and `submit.sh` passes the list as `--exclude`, so the cluster is learned
+once instead of rediscovered by every job. It holds two nodes.
 
 ## The whole of it, reproduced from a clone
 
