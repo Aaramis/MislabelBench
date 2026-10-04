@@ -2180,9 +2180,36 @@ almost entirely in the layer between a record and the sentence a reader meets, w
 test covers and which rereading the code cannot reach. It is also where the earlier near-misses of
 findings 75, 79 and 88 lived.
 
-**What the sweep has not reached**, stated rather than left to look finished: `collateral_locality.py`'s
-78.1 % and `threshold_holdout.py`'s held-out selection. Both are README claims rather than protocol ones,
-both have one implementation, and neither is covered by a gate.
+**107 closes the two it had not reached.**
+
+**107. The last two claims verify, and the second one hides a sign.** `collateral_locality.py`'s
+locality measure reproduces exactly from the primary files -- **5 917 collateral flags, 4 623 of them
+(78.1 %) in a clade the injection touched**, and all six per-distance rows to the decimal, 95.4 % at
+phylum down to 58.0 % at species.
+
+`threshold_holdout.py` took three attempts, and each failure was informative. The first missed that
+collateral means "neither injected nor flagged in the un-injected baseline", which the docstring states
+plainly and I had not read closely enough: 112.1 collateral per cell instead of 32.6. With that
+corrected the thresholds and the collateral counts matched exactly -- **0.404 at the full budget, 0.511
+at 0.3x, held collateral 3 960 and 1 656**, which is README's "58 % cut" -- but the recalls did not, and
+they were wrong in both directions at once: my fit 0.4879 against the record's 0.4826, my held 0.4801
+against its 0.4895.
+
+The cause is the statistic. The record pools over injected sequences; I had averaged per-cell recalls.
+Pooled reproduces to four decimals. **And the two disagree about the sign of the number this script
+exists to report**: the fit-to-held gap is **+0.007 pooled and −0.008 averaged**. Both are small, so the
+conclusion that the threshold was not fitted to noise survives either way -- which is exactly why the
+sign flip would never have been noticed. The script named neither statistic; it names both now, in the
+record itself.
+
+A third field explained itself the same way: `collateral_per_cell_unfiltered` was 32.87 where I computed
+32.62, because it is taken over all 180 cells while every other field in that record is the fit/held
+split, so it reads as the fit set's rate sitting beside `n_cells_fit`. It is
+`collateral_per_cell_unfiltered_all_cells` now.
+
+That is the third time in this sweep that an unnamed statistic was the whole discrepancy, after kind 4's
+declared lineage and the exclusion column's threshold. Three for three: every disagreement between two
+implementations here has been a definition, never an arithmetic error.
 
 ## Deferred, with reasons
 

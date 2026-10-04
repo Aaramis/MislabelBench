@@ -1,10 +1,11 @@
 {
   "condition": "epang_T8_K25__rep1",
   "select_seed": 1,
+  "recall_statistic": "pooled over injected sequences, not the mean of per-cell recalls",
   "baseline_flags": 93,
   "n_cells_fit": 60,
   "n_cells_held": 120,
-  "collateral_per_cell_unfiltered": 32.87,
+  "collateral_per_cell_unfiltered_all_cells": 32.87,
   "budgets": [
     {
       "budget_multiple": 1.0,

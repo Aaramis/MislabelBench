@@ -107,9 +107,20 @@ def main():
     print(f"{'budget/cell':>12}{'column':>12}{'threshold':>11}{'fit recall':>12}"
           f"{'held recall':>13}{'gap':>8}{'held coll.':>12}")
 
+    # Both statistics are named in the record, because both have a plausible alternative that gives a
+    # different answer and a reader recomputing either would otherwise think the record is wrong.
+    # Recall is pooled over injected sequences, not the mean of per-cell recalls: the two differ by
+    # about half a point here, and the fit-to-held gap -- the quantity this script exists to report --
+    # changes sign between them, +0.007 pooled against -0.008 averaged. Both are small, so the
+    # conclusion that the threshold is not fitted to noise holds either way, which is exactly why the
+    # sign flip would otherwise go unnoticed. And the unfiltered collateral rate is over every cell,
+    # not over the 60 it fits on: 32.87 against 32.62, sitting beside n_cells_fit where it reads as
+    # the latter.
     report = {"condition": args.condition, "select_seed": args.select_seed,
+              "recall_statistic": "pooled over injected sequences, not the mean of per-cell recalls",
               "baseline_flags": n_baseline, "n_cells_fit": len(fit), "n_cells_held": len(held),
-              "collateral_per_cell_unfiltered": round(collateral_per_cell, 2), "budgets": []}
+              "collateral_per_cell_unfiltered_all_cells": round(collateral_per_cell, 2),
+              "budgets": []}
 
     # Candidate thresholds come from the selection seed only; the held-out cells are never
     # consulted when choosing one.
