@@ -38,5 +38,7 @@ That check named the `.tax` and the `truth.json` and stopped there, which is nar
 used to license: a cell also carries a `.fasta`, and that is the file SATIVA reads. Rerun from a fresh
 clone with nothing but the two `make_` scripts, **all 378 regenerated files are byte-identical** --
 180 injected `.tax`, 180 injected `.fasta`, and both for the nine foreign cells, which the earlier
-check did not cover either. The 180 injected `.fasta` are exact copies of `gtdb_arc2k.fasta`, because
-injection rewrites a taxonomy and never an alignment.
+check did not cover either. The 180 injected `.fasta` are *symlinks* to `gtdb_arc2k.fasta`, because
+injection rewrites a taxonomy and never an alignment, so comparing them compares one file to itself
+180 times; what the check establishes for those is that the link is remade and points where it should.
+The nine foreign `.fasta` are real files and are the ones that comparison bites on.

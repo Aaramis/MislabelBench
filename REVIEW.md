@@ -1204,11 +1204,18 @@ foreign cells were not covered either. Rerun from a fresh clone with nothing but
 The 180 injected `.fasta` turn out to be exact copies of `gtdb_arc2k.fasta`, because injection rewrites
 a taxonomy and never an alignment.
 
-`.gitignore` justified the exclusion with "86 MB of near-copies of one taxonomy and one alignment".
-Counted: **642 MB** -- 552 of injected `.fasta`, 58 of injected `.tax`, 31 for the foreign cells. Wrong
-by seven and in the direction that understates its own argument. "Near-copies" is also wrong for the
-larger half: 552 of the 642 MB are 180 byte-identical copies of one 3 MB file, which is worth knowing
-because it is the pipeline staging a whole alignment per cell when only the taxonomy varies.
+`.gitignore` justified the exclusion with "86 MB of near-copies of one taxonomy and one alignment",
+and this finding first reported that as **wrong by a factor of seven, 642 MB**. That correction was the
+error. An injected cell's `.fasta` is a **symlink** to `gtdb_arc2k.fasta`, 78 bytes of it, because
+injection rewrites a taxonomy and never an alignment. `os.path.getsize` follows a symlink, so summing it
+counted one 3 MB file 180 times. On disk it is **92 MB** -- 62 under `data/injected`, almost all of it
+`.tax`, and 30 for the nine foreign cells, whose `.fasta` carry appended donors and are real files. The
+original 86 MB measured the disk and was right, to within the growth of the grid since. "Near-copies of
+one taxonomy and one alignment" was right too, and more exactly than it reads: there is one alignment.
+
+The accusation was the same one being made: a figure asserted from the wrong measurement while
+correcting a figure taken from the right one. It was caught by reading `make_grid.sh`, which ends each
+cell with `ln -sf`, for an unrelated reason two sessions later.
 
 The clone run is the end of the chain rather than a step in it: clone, regenerate 378 files from seeds,
 rebuild 41 tables, **zero diffs**, 22 steps, every gate passing, no cluster and no container. The 41 was

@@ -17,14 +17,16 @@ results/**/stdout.log
 results/**/score.json
 
 # The per-cell datasets, rebuilt from their seeds by slurm/make_grid.sh and slurm/make_foreign.sh with
-# no cluster and no container. 642 MB, counted: 552 MB of injected .fasta, 58 MB of injected .tax,
-# 31 MB for the nine foreign cells. This comment said 86 MB, which was wrong by a factor of seven and
-# understated the reason not to commit them.
+# no cluster and no container. 92 MB on disk: 62 MB under data/injected, almost all of it .tax, and
+# 30 MB for the nine foreign cells, whose .fasta carry appended donors and are real files.
 #
-# 552 of those 642 MB are 180 byte-identical copies of gtdb_arc2k.fasta. Injection rewrites the
-# taxonomy and never the alignment, so only the .tax files are near-copies; the .fasta files are exact
-# ones. What is committed is the truth.json each cell is scored against, and data/README.md records the
-# check that all 378 come back byte-identical.
+# An injected cell's .fasta is a symlink to data/gtdb/gtdb_arc2k.fasta, because injection rewrites a
+# taxonomy and never an alignment, so there is one alignment on disk and not 180. This comment once
+# said 86 MB, which was right -- it measured the disk. A review then "corrected" it to 642 MB by
+# summing os.path.getsize over the symlinks, which counts one 3 MB file 180 times, and accused the
+# original of being wrong by a factor of seven while being wrong by that factor itself. What is
+# committed is the truth.json each cell is scored against, and data/README.md records the check that
+# all 378 regenerate byte-identically.
 data/injected/*/*.tax
 data/injected/*/*.fasta
 data/foreign/*/*.tax
