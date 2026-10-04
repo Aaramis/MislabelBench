@@ -57,9 +57,20 @@ if [ -n "$running" ]; then
     [ "${FORCE:-0}" = "1" ] || exit 1
 fi
 
-rsync -a --exclude='._*' --relative \
+# slurm/bad_nodes.txt is excluded from the wholesale sync because it is the one file here the
+# cluster writes and this machine does not. prelude.sh appends to it when a node turns out to lack
+# singularity, and submit.sh passes it as --exclude, which is what makes "the cluster is learned once
+# rather than rediscovered by every job" true. A plain `rsync -a slurm` sends the committed copy over
+# it, so any node learned since the last repatriation would be silently forgotten -- a deploy undoing
+# what the cluster knows. The two copies happen to be identical today, four nodes each, which is why
+# this had never shown itself.
+rsync -a --exclude='._*' --exclude='bad_nodes.txt' --relative \
       main.nf nextflow.config conf modules bin slurm assets tests \
       README.md REVIEW.md DISTRIBUTION.md "$REMOTE:~/bench/"
+
+# Sent only when the cluster has none, so a fresh ~/bench inherits what is known and an existing one
+# keeps what it has learned. bin/repatriate.sh brings the union back the other way.
+rsync -a --ignore-existing slurm/bad_nodes.txt "$REMOTE:~/bench/slurm/"
 for d in injected clade simulated; do
     rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \
           --exclude='*' "data/$d/" "$REMOTE:~/bench/data/$d/"

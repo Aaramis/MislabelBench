@@ -50,8 +50,22 @@ rsync -a --exclude='._*' --exclude='runs/' --exclude='runs_injected/' --exclude=
       --include='*.stderr' --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
+# The learned bad-node list comes back as a union, not a copy. It is written on the cluster, by
+# whichever job met the node, and committed here so the knowledge survives a fresh ~/bench. Taking the
+# union in this direction and never overwriting in the other means neither side can erase what the
+# other learned. Sorted, so the file has one order rather than an insertion order that depends on
+# which job failed first.
+remote_bad=$(mktemp)
+trap 'rm -f "$remote_bad"' EXIT
+if rsync -a "$REMOTE:~/bench/slurm/bad_nodes.txt" "$remote_bad" 2>/dev/null && [ -s "$remote_bad" ]; then
+    before=$(sort -u slurm/bad_nodes.txt 2>/dev/null | wc -l | tr -d ' ')
+    sort -u "$remote_bad" slurm/bad_nodes.txt -o slurm/bad_nodes.txt
+    after=$(wc -l < slurm/bad_nodes.txt | tr -d ' ')
+    echo "bad nodes: $after known, $((after - before)) learned on the cluster since last time"
+fi
+
 tmp=$(mktemp -d)
-trap 'rm -rf "$tmp"' EXIT
+trap 'rm -rf "$tmp"; rm -f "$remote_bad"' EXIT
 rsync -a --exclude='._*' --include='*/' --include='trace*.txt' --exclude='*' "$REMOTE:~/bench/results/" "$tmp/"
 mkdir -p results/pipeline_info
 for f in "$tmp"/*/pipeline_info/trace*.txt; do

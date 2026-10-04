@@ -1852,6 +1852,45 @@ job logs report version 26.04.4 and none reports any other**, so the entire camp
 orchestrator. That is now in `results/pipeline_info/README.md` with how it was established, along with the
 statement the floor cannot make -- that nothing below 26.04.4 was ever exercised here.
 
+**95. A deploy could silently undo what the cluster had learned.** Hunting race conditions turned up
+two candidate sites, one of which is a real defect of a different kind.
+
+**The append race, checked and left alone.** Every job appends a line to `slurm/node_checks.log`, and a
+job that finds no singularity appends its hostname to `slurm/bad_nodes.txt` through
+`grep -qxF "$host" || echo "$host" >>`, which is check-then-act across nodes on a shared filesystem.
+The window is real and it has been entered: three timestamps in the log carry appends from the same
+second. Nothing came of it -- **108 lines, none interleaved, and `bad_nodes.txt` holds 4 lines and 4
+distinct hostnames with no malformed entry**. The nine lines that failed my first pattern are the old
+`attempt=N` format from the eight requeues on cpu-node-130 that `prelude.sh`'s own comment describes, not
+damage. A single short `echo` to a file opened for append is the one write POSIX makes atomic, so this is
+behaving as designed; nothing was changed.
+
+**The defect is in the other direction.** `bin/push_code.sh` syncs the repository to the cluster with
+`rsync -a ... slurm ...`, and `slurm/bad_nodes.txt` is the one file in this repository that the cluster
+writes and this machine does not. So a deploy sent the committed copy over the learned one, and any node
+discovered since the last repatriation would be forgotten -- a deploy undoing the very thing
+`prelude.sh` says it makes unnecessary: "the cluster is learned once rather than rediscovered by every
+job". It had never shown itself because both copies hold the same four nodes, which is also why reading
+the comment was worth more than reading the file.
+
+Fixed in both directions so that neither side can erase the other: the file is excluded from the
+wholesale sync and sent with `--ignore-existing`, so a fresh `~/bench` inherits what is known while an
+existing one keeps what it learned, and `bin/repatriate.sh` brings back the **union**, sorted, so the
+knowledge accumulates in git instead of depending on which machine wrote last.
+
+Tested end to end rather than reasoned about, with a hostname no node can have: appended on the cluster,
+a deploy run -- it survived -- a repatriation run, which pulled it into the committed list and reported
+"5 known, 1 learned on the cluster since last time". Then removed from both sides and the two files
+checked identical again.
+
+**And one thing checked without changing it.** Eleven job scripts open with `rm -rf` on an output
+directory whose name carries no job id, and two collisions of that shape are already recorded here --
+`determinism.sh` wiping its predecessor's `.mis`, and `ragged_check.sh` destroying `before_after`'s
+output. The exposure is bounded by `results/` being committed: the evidence lives in git, so what a
+rerun can destroy is the cluster's copy and not the record. What it could still do is leave a partial
+set that a later repatriation copies over a good one, and that surfaces as a diff in `git status` before
+anything is committed, which is where it was caught the two times it happened.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
