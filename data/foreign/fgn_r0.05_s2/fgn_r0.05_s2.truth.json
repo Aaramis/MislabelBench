@@ -5,6 +5,14 @@
   "rate": 0.049926,
   "base_sequences": 2023,
   "n_injected": 101,
+  "distinct_labels": false,
+  "n_shared_label_donors": 26,
+  "label_group_sizes": {
+    "1": 75,
+    "2": 8,
+    "3": 2,
+    "4": 1
+  },
   "injected": {
     "GB_GCA_041429575.1_CP167061.1-_10": {
       "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Aeromonadaceae;g__Aeromonas;s__Aeromonas veronii",

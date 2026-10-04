@@ -5,6 +5,12 @@
   "rate": 0.009886,
   "base_sequences": 2023,
   "n_injected": 20,
+  "distinct_labels": false,
+  "n_shared_label_donors": 2,
+  "label_group_sizes": {
+    "1": 18,
+    "2": 1
+  },
   "injected": {
     "RS_GCF_003951955.1_NZ_QQZE01000036.1": {
       "true": "d__Bacteria;p__Pseudomonadota;c__Alphaproteobacteria;o__Sphingomonadales;f__Sphingomonadaceae;g__Sphingomonas;s__Sphingomonas koreensis",

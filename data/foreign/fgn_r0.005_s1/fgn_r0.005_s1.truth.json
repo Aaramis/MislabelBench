@@ -5,6 +5,11 @@
   "rate": 0.004943,
   "base_sequences": 2023,
   "n_injected": 10,
+  "distinct_labels": false,
+  "n_shared_label_donors": 0,
+  "label_group_sizes": {
+    "1": 10
+  },
   "injected": {
     "RS_GCF_001154045.1_NZ_CJNX01000014.1": {
       "true": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Enterobacterales;f__Enterobacteriaceae;g__Salmonella;s__Salmonella enterica",

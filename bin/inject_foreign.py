@@ -8,8 +8,18 @@ label says it belongs. Unlike a relabelling, the truth here is not a judgement a
 a bacterium under an archaeal label is wrong by construction.
 
 The donors are *added*, not substituted, so the base database is untouched and the baseline flag
-set stays comparable. The target species is drawn per donor rather than shared, which makes this
-the isolated case; a shared variant would be kind 2 crossed with this one.
+set stays comparable.
+
+The target species is drawn per donor, and by default with replacement, which does NOT make this the
+isolated case -- the claim this docstring used to make. 7051 sequences carry 3067 distinct species
+lineages, so drawing target *sequences* independently collides on the *label* far more often than a
+birthday estimate over sequences suggests: across the nine committed cells 94 of 393 donors share
+their archaeal label with another donor, 19 of 101 in the densest. Those donors are kind 2 crossed
+with this one, by accident, and that is where the whole of kind 6's miss rate lives -- 299 of 299
+isolated donors are detected by both tools and every one of the fork's 20 misses is a donor whose
+label is shared. --distinct-labels draws distinct lineages and gives the construction described here;
+the default is left as it was so the committed cells reproduce from this file. Either way the
+sharing is counted into truth.json, so a recall figure can no longer be read without it.
 
 Both alignments must come from the same covariance model with --matchonly, which emits exactly
 the model's match columns, so the two files have the same width and concatenate directly. That
@@ -19,6 +29,7 @@ is asserted rather than assumed.
 import argparse
 import json
 import random
+from collections import Counter
 from pathlib import Path
 
 
@@ -49,6 +60,8 @@ def main():
     p.add_argument("--n", type=int, required=True, help="number of foreign sequences to add")
     p.add_argument("--seed", type=int, required=True)
     p.add_argument("--prefix", required=True)
+    p.add_argument("--distinct-labels", action="store_true",
+                   help="one archaeal label per donor, the genuinely isolated case")
     args = p.parse_args()
 
     base_seq, base_tax = read_fasta(args.base_fasta), read_tax(args.base_tax)
@@ -61,7 +74,13 @@ def main():
 
     rng = random.Random(args.seed)
     donors = rng.sample(sorted(set(donor_seq) & set(donor_tax)), args.n)
-    targets = rng.choices(sorted(base_tax), k=args.n)
+    if args.distinct_labels:
+        first = {}
+        for n, lineage in sorted(base_tax.items()):
+            first.setdefault(lineage, n)
+        targets = [first[l] for l in rng.sample(sorted(first), args.n)]
+    else:
+        targets = rng.choices(sorted(base_tax), k=args.n)
 
     injected = {}
     out_fa = [f">{n}\n{base_seq[n]}\n" for n in sorted(base_seq)]
@@ -72,6 +91,10 @@ def main():
         out_tx.append(f"{donor}\t{label}\n")
         injected[donor] = {"true": donor_tax[donor], "wrong": label, "target_sequence": target}
 
+    groups = Counter(r["wrong"] for r in injected.values())
+    n_shared = sum(v for v in groups.values() if v > 1)
+    sizes = Counter(groups.values())
+
     Path(f"{args.prefix}.fasta").write_text("".join(out_fa))
     Path(f"{args.prefix}.tax").write_text("".join(out_tx))
     Path(f"{args.prefix}.truth.json").write_text(json.dumps({
@@ -81,10 +104,16 @@ def main():
         "rate": round(args.n / len(base_tax), 6),
         "base_sequences": len(base_tax),
         "n_injected": args.n,
+        "distinct_labels": args.distinct_labels,
+        # Donors sharing an archaeal label with another donor, and the group sizes. Without this a
+        # recall figure for this cell reads as a figure about foreign sequences when part of it is
+        # about shared mislabels.
+        "n_shared_label_donors": n_shared,
+        "label_group_sizes": {str(k): v for k, v in sorted(sizes.items())},
         "injected": injected,
     }, indent=2))
     print(f"{args.n} foreign sequences added to {len(base_tax)}, "
-          f"alignment width {widths.pop()}")
+          f"alignment width {widths.pop()}, {n_shared} sharing a label")
 
 
 if __name__ == "__main__":

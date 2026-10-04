@@ -759,6 +759,41 @@ confirmed against the `--sfile` header, and all 393 donor injections have a scor
 -- 373 + 20 and 376 + 17 -- so the silent `continue` for a donor missing from the score table never
 fires.
 
+**59. Error kind 6 is not the isolated case it says it is, and that is where its entire miss rate
+lives.** `bin/inject_foreign.py` drew its target labels with `rng.choices` -- with replacement -- while
+its docstring said "the target species is drawn per donor rather than shared, which makes this the
+isolated case; a shared variant would be kind 2 crossed with this one". It also draws a target
+*sequence* and takes that sequence's lineage, and 7051 sequences carry only 3067 distinct species
+lineages, so labels collide far more often than a birthday estimate over sequences suggests. Across
+the nine committed cells **94 of 393 donors share their archaeal label with another donor**, 32 of 101
+in the densest.
+
+Those donors are kind 2 crossed with kind 6, by accident, and the measurement says so unambiguously.
+Stratified by whether a donor's label is shared:
+
+| | isolated | shared |
+|---|---|---|
+| `epang_T8_K25` | **299/299 = 100.0 %** | 74/94 = 78.7 % |
+| `upstream_raxml_T8` | 298/299 = 99.7 % | 78/94 = 83.0 % |
+
+Fisher exact two-sided p < 0.001 for both. Every one of the fork's 20 misses is a shared-label donor
+and 16 of upstream's 17 are. The group sizes of the misses are the mechanism in miniature: 2, 3, 4 and
+7, with seven donors sitting in one group of seven that carries a single archaeal label, so
+leave-one-out removing any one of them leaves six anchoring it.
+
+This reinterprets the published table rather than contradicting it. `foreign_summary_*.json` records
+recall 1.000 at rate 0.005, 0.967 at 0.01 and 0.941 at 0.05, and the shared-donor counts across those
+same cells are 0, 0, 0, then 7, 2, 2, then 25, 26, 32. Kind 6 recall is 100 % wherever the
+construction is actually isolated; the decline with rate is the collision probability rising with *n*,
+not foreign sequences becoming harder to detect when there are more of them. It is also what explains
+finding 58's residual: the 20 donors that no alignment score distinguished are the shared ones.
+
+The default draw is unchanged, so the committed cells reproduce from this file -- verified, the
+`.fasta` and `.tax` of all nine are byte-identical and the regenerated `foreign_summary_*.json` match.
+`--distinct-labels` gives the construction the docstring describes, and every cell's `truth.json` now
+carries `n_shared_label_donors` and the group sizes, so a recall figure for kind 6 cannot be read
+without the stratum it belongs to.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
