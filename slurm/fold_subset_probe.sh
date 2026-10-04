@@ -33,8 +33,15 @@ mkdir -p "$OUT/subset"
 cp "$SRC/manifest.json" "$SRC/model" "$OUT/subset/"
 # Without the placement the fold already carries, so a jplace appearing is this run's work.
 mkdir -p "$OUT/subset/$name"
-for f in ref.fasta ref.nwk query.fasta model; do
-    cp "$SRC/$name/$f" "$OUT/subset/$name/" 2>/dev/null || true
+# ref.nwk and the per-fold model are optional, depending on where the tool keeps them; the
+# alignment and the query are not. They were all copied with `|| true`, so a subset that staged
+# nothing would have run, placed nothing and reported "not enough" -- a false negative on the
+# question that decides the shape of the fan-out.
+for f in ref.fasta query.fasta; do
+    cp "$SRC/$name/$f" "$OUT/subset/$name/" || { echo "cannot stage $name/$f from $SRC" >&2; exit 1; }
+done
+for f in ref.nwk model; do
+    cp "$SRC/$name/$f" "$OUT/subset/$name/" 2>/dev/null || echo "note: $name/$f not present, continuing"
 done
 echo "subset holds: $(ls "$OUT/subset" | tr '\n' ' ')"
 echo "staged for $name: $(du -sh "$OUT/subset" | cut -f1) against $(du -sh "$SRC" | cut -f1) for the whole directory"

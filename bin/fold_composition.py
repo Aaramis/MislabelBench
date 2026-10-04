@@ -74,14 +74,25 @@ def main():
     p.add_argument("--taskdir")
     p.add_argument("--tax")
     p.add_argument("--out")
+    # Both fold orders are measured from the same reused task directory, so the record's own
+    # taskdir cannot tell them apart and only the output filename did.
+    p.add_argument("--label", help="the condition this record describes, e.g. the fold order")
     p.add_argument("--compare", nargs=2, metavar=("A", "B"))
     args = p.parse_args()
 
     if args.compare:
         a, b = (json.loads(Path(f).read_text()) for f in args.compare)
-        ident = a["membership"] == b["membership"]
+        # A record written before `membership` existed crashed this with a bare KeyError. The two
+        # committed records are exactly that: the job ran against a copy of this script synced two
+        # minutes before the field was added, so the record does not have the format the code beside
+        # it produces, and the rates below were readable while the partition check was not.
+        missing = [f for f, d in zip(args.compare, (a, b)) if "membership" not in d]
+        if missing:
+            print(f"  cannot compare partitions: no 'membership' in {', '.join(missing)}; "
+                  "rerun slurm/fold_order_check.sh to regenerate a complete record")
+        ident = None if missing else a["membership"] == b["membership"]
         print(f"{Path(args.compare[0]).stem} vs {Path(args.compare[1]).stem}")
-        print(f"  identical partitions: {ident}")
+        print(f"  identical partitions: {'unknown' if ident is None else ident}")
         for d, label in ((a, args.compare[0]), (b, args.compare[1])):
             print(f"  {Path(label).stem:12} {d['n_folds']} folds, "
                   f"sizes {d['fold_size_min']}-{d['fold_size_max']}, "
@@ -89,6 +100,9 @@ def main():
                   f"/{d['same_species_pairs']} = {d['co_location_rate']}")
         if ident:
             raise SystemExit("the two orders produced the same partition; the option did nothing")
+        if ident is None and a.get("pairs_sharing_a_fold") == b.get("pairs_sharing_a_fold"):
+            raise SystemExit("same co-location in both orders and no partition to compare; "
+                             "the option may have done nothing")
         return
 
     if not (args.taskdir and args.tax):
@@ -99,6 +113,8 @@ def main():
           f"same-species pairs sharing a fold {d['pairs_sharing_a_fold']}"
           f"/{d['same_species_pairs']} = {d['co_location_rate']}")
     if args.out:
+        if args.label:
+            d = {"label": args.label, **d}
         Path(args.out).write_text(json.dumps(d, indent=2))
 
 

@@ -1040,6 +1040,31 @@ anywhere in 117 entries pointed at it, so a reader working through the log in or
 that correction to Stamatakis. D49 now opens with a superseded note naming D82 and D95, keeping its
 measurements and marking its consequence as not to be acted on.
 
+**69. A committed record did not have the format the committed code produces, and the check that
+depended on it had never run.** `bin/fold_composition.py --compare` is the last line of
+`slurm/fold_order_check.sh` and carries the assertion behind the fold-order work: if the two orders
+produce the same partition, the option did nothing and the script must fail. Run on the two committed
+records it raised `KeyError: 'membership'`.
+
+The cause is a two-minute window. `membership` entered `fold_composition.py` in `f00554a` at 09:45 on
+2 October; the records were committed in `7b0d674` at 09:47. The job that produced them had run on the
+cluster against the copy synced *before* that field existed, so the record and the code beside it in
+the same repository describe different formats, and nothing compares the two. The rates were readable,
+which is why this went unnoticed: the published 2.58 % and 0.64 % come from fields that were there.
+
+Both fixed and both verified. `--compare` now names the records missing the field instead of raising,
+and fails if the co-location counts are also equal, so a record it cannot fully check still cannot pass
+silently. Then the job was rerun to produce complete records: **193/7483 = 0.02579 and 48/7483 =
+0.00641**, the published figures to the digit, and `identical partitions: False` -- the assertion that
+had never been exercised now runs and passes, which is what shows the option changes the partition
+rather than only the rate. The records also carry a `label` now, because both were written from one
+reused task directory and their own `taskdir` field was identical; only the filename distinguished
+them.
+
+The general hazard is worth stating: editing an analysis script between running it and committing its
+output decouples the two with nothing to detect it. That is what happened here, in two minutes, to a
+record whose job had already finished.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

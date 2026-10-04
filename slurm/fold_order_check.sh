@@ -39,7 +39,7 @@ for order in name tree; do
         SINGULARITYENV_SATIVA_EPANG_FOLDS=25 \
         se -r "$OUT/run.refjson" -n run -o "$OUT" -T "$SLURM_CPUS_PER_TASK" -stage loo-tasks
     python3 "$ROOT/bin/fold_composition.py" --taskdir "$OUT/run.l1o_tasks" \
-        --tax tax.tsv --out "$OUT/folds_${order}.json"
+        --tax tax.tsv --label "$order" --out "$OUT/folds_${order}.json"
 done
 
 python3 "$ROOT/bin/fold_composition.py" --compare "$OUT/folds_name.json" "$OUT/folds_tree.json"
