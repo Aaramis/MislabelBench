@@ -49,10 +49,20 @@ def read_mis(path):
     return rows
 
 
-def mismatch_rank(row):
+def mismatch_rank(row, declared=None):
     """Rank index where declared and proposed first differ, from the paths rather than the
-    MislabeledLevel name, which is a rank name and not a position."""
-    a = row["OriginalTaxonomyPath"].split(";")
+    MislabeledLevel name, which is a rank name and not a position.
+
+    `declared` is the lineage the cell's own taxonomy gives this sequence, and it is preferred over
+    the row's OriginalTaxonomyPath because that column does not always describe the sequence in
+    column 1. SATIVA collapses identical sequences into taxonomic clusters and reports the
+    cluster representative's path, marked `__TAXCLUSTER<n>__` in the lineage: measured over the
+    whole grid, 2 642 of 127 172 flagged rows, 2.08 %, carry a path that is not a prefix of the
+    named sequence's own lineage, and 185 of those are injected sequences -- 0.71 % of all injected
+    rows. Nothing published reads this function's result, which is why the figure is a bound and
+    not a correction.
+    """
+    a = (declared or row["OriginalTaxonomyPath"]).split(";")
     b = row["ProposedTaxonomyPath"].split(";")
     for i, (x, y) in enumerate(zip(a, b)):
         if x != y:
@@ -71,6 +81,11 @@ def main():
 
     truth = json.loads(Path(args.truth).read_text())
     injected = truth["injected"]
+    # The label each injected sequence actually carries in this cell, which is the wrong one by
+    # definition. Used instead of the .mis row's OriginalTaxonomyPath wherever it is available,
+    # because that column reports the taxonomic cluster's representative and not always the
+    # sequence named beside it.
+    declared_of = {name: rec["wrong"] for name, rec in injected.items()}
     flagged = read_mis(args.mis)
     baseline = set(read_mis(args.baseline_mis)) if args.baseline_mis else set()
 
@@ -91,7 +106,8 @@ def main():
                 v = row["Confidence"] if metric == "confidence" else row["OriginalLabelExclusion"]
                 return v is not None and v >= t
             hits = {s for s in injected if s in flagged and passes(flagged[s])}
-            at_rank = {s for s in hits if mismatch_rank(flagged[s]) == distance_rank}
+            at_rank = {s for s in hits
+                       if mismatch_rank(flagged[s], declared_of.get(s)) == distance_rank}
             others = {s for s, r in flagged.items() if s not in injected and passes(r)}
             out.append({
                 "threshold": t,
