@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-two more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-three more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -416,6 +416,26 @@ groups as they come reproduces the source profile to within a few points — the
 `bin/dataset_shape.py` and agrees with it, which makes each a check on the other.
 `confidence_shape.py`'s 355, 391 and 405 flags and its 88 % are the baseline measurements, and
 355/405 is 87.7 %.
+
+**43. The injection rate is not the rate requested, and nothing said so.** The grid injects whole
+groups of *k* sequences sharing one wrong label, and the loop stops after a group has reached the
+target, so the last group always completes and the overshoot is up to *k*−1. The warning fired only
+on a shortfall. **90 of the 180 cells carry more injections than their rate asks**, by 9 of 101 at
+*k*=10 and rate 0.05 — an effective 5.44 % against 5.00 %. Averaged over the grid the effective rate
+rises with *k*: 2.99 % at *k*=1 to 3.21 % at *k*=10, a 7.1 % relative increase **on the axis that
+carries the main result**.
+
+Protocol.md says cells are "dropped rather than silently rounded"; they are rounded up. Whole groups
+are the right semantics — *k* sequences sharing a wrong label is what *k* means — so the behaviour
+stays and the record changed: `truth.json` carries `n_requested` and `rate_effective`, the script
+says so on stderr when it rounds, and the numbers are in the comment. The 180 truth files were
+regenerated and differ from their predecessors in those two fields alone; rebuilding every table
+changes nothing, because recall has always been a fraction of `n_injected`.
+
+Which direction it cuts, since a confound on the main axis has to be answered and not only declared:
+more corruption makes a cell harder, and the extra corruption is at high *k* where recall is already
+lowest. It reinforces the fall from 0.92 at *k*=1 to 0.13 at *k*=10 rather than producing it, and a
+7 % change in corruption cannot produce a sevenfold change in recall.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
