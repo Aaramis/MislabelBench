@@ -698,6 +698,19 @@ rename in a future UNITE release would arrive, with the next step building a ref
 file. It now exits non-zero and names the subsets it did see, since those were already counted:
 `--subset reps matched nothing. subsets present: nosuchsubset=1`.
 
+**56. The explanation of a corrected number was itself wrong, in three places.** `assets/datasets.yml`
+explains why UNITE RepS is 10.9 % judgeable at species and not the 85.7 % published, and the
+explanation is right: unresolved labels were counted as real taxa. Checked rather than accepted --
+scoring the same file with every label taken as resolved returns 98.2 % and 85.7 %, the two published
+figures reproduced to the decimal, so that is the whole of the difference and nothing else is hiding
+in it. But the comment said a sequence labelled `Cortinarius_sp` "shares that label with 62128
+others". 62129 is every unresolved sequence at species across all the `X_sp` forms; the largest
+single label is `Tomentella_sp` at 2727. A total was written as a group. The same comment credits
+`bin/unite_shape.py`, which was renamed to `dataset_shape.py` and does not exist, while two other
+lines in the same file name it correctly. And the comment added to `slurm/fetch_unite.sh` earlier in
+this review repeated the group error before it was caught, which is the argument for checking a
+mechanism even when the number it explains is already known to be right.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

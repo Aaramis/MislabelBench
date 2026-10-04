@@ -11,7 +11,14 @@
 #
 # RepS and not RefS, which is the more curated subset, for a reason that is measured rather than
 # preferred: leave-one-out cannot judge a sequence with no sibling of the same taxon, and RefS is
-# 8.5 % judgeable at species against RepS's 85.7 %. assets/datasets.yml carries both numbers.
+# 4.3 % judgeable at species against RepS's 10.9 %. The conclusion is unchanged and both numbers
+# are not the ones this comment used to carry, 8.5 % and 85.7 %. Those counted UNITE's unresolved
+# species labels as real taxa: a sequence labelled Tomentella_sp has 2726 others under the same
+# label and is not thereby the same species as any of them, and there are 62129 such sequences
+# across all the X_sp forms. Taking every label as resolved returns 98.2 % and 85.7 % exactly, so
+# that is the whole of the difference. dataset_shape.py derives the unresolved rule from the label
+# inventory instead; data/unite/*_shape.json holds both readings, and at species they are 45.3 %
+# of labelled sequences and 10.9 % of all 81842.
 #
 # This also re-tests the one verification the plan promises for provenance and that has never been
 # rerun: re-downloading an unchanged source must reproduce the recorded sha256. If it does not, the
