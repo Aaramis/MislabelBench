@@ -19,6 +19,14 @@ here is regenerable, and that claim is checked rather than asserted.
 **`raw/ssu_all_r226.fna.gz`**, 73 MB. Fetched by URL with its sha256 recorded in
 `assets/datasets.yml`, which is a stronger guarantee than a copy in git.
 
+**The per-cell `warn.txt`**, one per generated cell. Each generator redirects its stderr there, and
+225 of them were committed -- every one empty, while a full regeneration writes a real note into
+**90 of the 180 injected cells**: whole groups of *k* cannot be split, so a cell asked for 101
+injections at rate 0.05 and *k*=10 gets 110, an effective 5.44 %. A committed file asserting that no
+cell warned, where half of them do, is worse than no file. The note is a transcript of a run; the
+record is `truth.json`, which carries `n_requested`, `n_injected` and `rate_effective` for every cell
+and is checked by `verify_injection.py`.
+
 **`*.pfam`**, 23 MB. The Pfam-format output of `cmalign`; `*.aligned.fasta` is the same alignment in
 the form everything downstream reads.
 

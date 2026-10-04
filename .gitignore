@@ -34,3 +34,9 @@ work/
 .nextflow/
 .nextflow.log*
 results/nf/
+
+# The generators redirect their stderr per cell into warn.txt. 225 of them were committed, all
+# empty, while a full regeneration writes a real note into 90 -- a committed record asserting that no
+# cell warned when half of them do. The note is a transcript; the record is truth.json, which carries
+# n_requested, n_injected and rate_effective for every cell.
+warn.txt

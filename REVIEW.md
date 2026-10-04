@@ -1891,6 +1891,35 @@ rerun can destroy is the cluster's copy and not the record. What it could still 
 set that a later repatriation copies over a good one, and that surfaces as a diff in `git status` before
 anything is committed, which is where it was caught the two times it happened.
 
+**96. The clone test was rerun and found two defects, one of them a committed record that asserts the
+opposite of the truth.** The repository's strongest claim is that a reader clones it into an empty
+directory and rebuilds every table with no cluster, no container and no network. That was last checked at
+22 steps and 41 tables; `bin/analyses.sh` is now 27 steps and 46 tables, with four gates and a figure
+added since. Rerun from a fresh clone of `nextflow`:
+
+**The documented procedure does not work.** README's "Running it" lists `slurm/make_grid.sh` and no
+other generator. There are four. Following the document exactly, `analyses.sh` runs twenty-three steps
+and then **exits 1** at the truth checks, on nine foreign datasets whose `.fasta` was never built. A
+reader's first full run of the repository fails, after several minutes, on something the instructions
+omitted. All four generators are now listed, with the note that running only the first does not fail
+gracefully.
+
+**225 committed files assert that nothing warned, and 90 cells do.** Each generator redirects its stderr
+per cell into `warn.txt`, and every one of the 225 in git is empty. A full regeneration writes a real
+note into **90 of the 180 injected cells**: whole groups of *k* cannot be split, so a cell that asks for
+101 injections at rate 0.05 and *k*=10 gets 110, an effective **5.44 %** against the 5.00 % requested.
+The deviation itself is known, handled and recorded -- `truth.json` carries `n_requested`, `n_injected`
+and `rate_effective`, recall has always been a fraction of the achieved count, and the decision log works
+through it -- so no number moves. What is wrong is the artefact: a committed file that reads as "this
+cell generated cleanly" for ninety cells that did not. They are untracked now and `.gitignore`d, with
+`data/README.md` saying why and pointing at the record that is machine-readable and checked.
+
+**And with those two fixed, the claim holds exactly.** Running all four generators in the clone and then
+`analyses.sh`: every one of the 180 `truth.json` identical to its committed copy, the foreign, clade and
+simulated cells rebuilt, **27 steps, exit 0, and zero diffs across all 46 tables and the figure**. The
+only files the rebuild touched were the 90 `warn.txt`, and after this change there are none. No cluster,
+no container, no network, on a Mac under python 3.14 against records produced on Linux under 3.12.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

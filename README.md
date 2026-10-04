@@ -342,15 +342,21 @@ dataset by sha256 (`assets/datasets.yml`). There is no conda environment to buil
 ```bash
 export BENCH_ROOT=/path/to/a/working/copy      # defaults to $HOME/bench
 bash slurm/make_grid.sh                        # the injection grid, 180 cells, from their seeds
+bash slurm/make_foreign.sh                     # error kind 6, nine cells of foreign sequences
+bash slurm/make_clade.sh                       # error kind 3, nine whole-taxon relabellings
+bash slurm/make_simulation.sh                  # 2.1's control, 37 cells on a simulated reference
 slurm/submit.sh slurm/baseline.sh              # both tools on the un-injected database, timed
 slurm/submit.sh slurm/grid_fork.sh             # one condition over the grid
 bin/analyses.sh                                # rebuild every table in results/ from the runs
 python3 -m unittest discover -s tests          # the analysis layer's tests
 ```
 
-`make_grid.sh` comes first because the injected cells are not in the repository: they are the base
-taxonomy with a few hundred labels rewritten, and rebuilding all 180 from their seeds takes under a
-minute and needs neither cluster nor container. [`data/README.md`](data/README.md) says what is kept
+The four generators come first because the cells they make are not in the repository: they are the
+base taxonomy with a few hundred labels rewritten, or the same alignment with donors added, and
+rebuilding every one from its seed takes a couple of minutes and needs neither cluster nor container
+nor network. All four are listed because running only the first is not enough and does not fail
+gracefully: `bin/analyses.sh` reaches its truth checks and exits 1 on nine foreign datasets whose
+`.fasta` was never built, after doing twenty-three steps of work. [`data/README.md`](data/README.md) says what is kept
 and what is regenerated, with the check that the regenerated cells come back byte-identical.
 
 `slurm/submit.sh` excludes the nodes recorded in `slurm/bad_nodes.txt`, which the jobs themselves
