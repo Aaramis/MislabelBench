@@ -118,6 +118,12 @@ baseline of 93 flags, a typical cell **loses 11 of them** (12 %, up to 21) while
 to 70). So the churn is about 40 flags where the net change is 18, and a count of added flags
 describes the smaller half of what injection does to the background.
 
+**And they fall where the injection landed.** 2.4 asks for a locality measure beside the collateral
+count, because scattered collateral would mean injection destabilises the whole tree rather than its
+neighbourhood. Of 5 917 collateral flags, **4 623, or 78.1 %, lie in a clade the injection touched**, and
+the share tracks the distance injected: 95.4 % at phylum down to 58.0 % at species. So the effect is
+local and explainable, more so the coarser the error. `results/collateral_locality.txt`.
+
 That is the measurement behind Q6 of the protocol, which asks whether reporting both directions is
 the right rule. It is reported in both directions here, `results/background_stability.tsv`, because
 the answer turned out to matter: 12 % is not a rounding error on a baseline.
@@ -206,6 +212,92 @@ twice, which is also why recall falls from 0.92 to 0.13 along it.
 **Where those failures belong.** At *k*=10, 92 % of the sequences leave-one-out misses still have a
 correctly labelled neighbour above 99 % identity, so a label conflict inside a cluster catches them
 without any placement. That is a pipeline-level check rather than a tool-level one.
+
+**The other four error kinds, which the typology asks for separately.** Kinds 1 and 2 are the grid
+above. The protocol lists four more, each failing for a different reason, and each is reported here
+rather than left in the decision log.
+
+**Kind 3, a whole taxon misannotated**, removes leave-one-out's usual handle: with every member
+relabelled, nothing correct remains to confirm the label. Over 54 clades and 226 sequences recall is
+**0.097 for the fork and 0.062 for upstream**, and what governs it is not what the protocol expected. A
+clade that can be told apart from the taxon it was mislabelled as is *not* the detectable case — the
+variable is cohesion within the clade, and it runs the other way:
+
+| | fork | upstream |
+|---|---|---|
+| members nearly identical, 39 clades, 167 sequences | 0.012 | **0.000** |
+| diffuse clade, 15 clades, 59 sequences | 0.339 | 0.237 |
+
+Not one of upstream's 167 sequences in a cohesive clade is detected. The reason is that the clade's
+members are each other's nearest neighbours and all now carry the wrong label, so removing one leaves the
+rest confirming it — kind 2's mechanism with *k* equal to the whole taxon. A compact clade does not anchor
+itself against a wrong label; it anchors the wrong label. The two tools differ by 8 sequences in 226,
+which this design cannot call: 50 of 54 clades tie at zero and a sign test over the 4 untied pairs cannot
+report below 0.125. `results/clade_detection_*.json`.
+
+**Kind 4 tests resolution rather than detection** — correct to genus, wrong at species only — and the
+question is whether a detected mislabel is named at the rank the injection moved. It is, increasingly with
+distance, pooled over the grid's sequences:
+
+| distance | detected | named at the right rank | resolution |
+|---|---|---|---|
+| species | 690 | 619 | **0.897** |
+| genus | 917 | 863 | 0.941 |
+| family | 971 | 948 | 0.976 |
+| order | 975 | 948 | 0.972 |
+| class | 962 | 932 | 0.969 |
+| phylum | 931 | 927 | **0.996** |
+
+So a rank-depth error costs about a tenth of the detections at the shallowest distance and almost nothing
+at the deepest, and at phylum every detection names phylum for every *k* >= 2.
+
+Pooled over sequences, and the statistic is worth naming because the obvious alternative disagrees:
+averaging each cell's ratio gives 0.82 at species rather than 0.897, since it weights a rate-0.01 cell
+with a handful of detections the same as a rate-0.05 cell with ten times as many.
+`recall_at_injected_rank_mean` in every grid summary carries the per-cell figure.
+
+**Kind 5, incomplete lineages**, is a robustness case rather than a detection one, and it splits. Lineages
+of unequal depth are accepted: a file with a quarter truncated to genus and a quarter to family runs
+through and flags 11. An **empty** lineage is not: it raises `IndexError` in
+`epac/taxonomy_util.py` line 337 while loading the taxonomy, before any placement. Both of the untrimmed
+forms a placeholder-only lineage used to take — `d__;p__;…` and `;;;;;;` — run and flag 14, so what
+breaks the tool is the trimming rather than the missing information. That matters for
+nf-core/taxmarker#40, which produces the trimmed form. `results/ragged_check/`, `results/before_after/`.
+
+**Kind 6, a foreign sequence under a plausible label**, is detected almost always: bacterial donors given
+archaeal lineages are flagged at **1.000, 0.967 and 0.941** by the fork across the three injection rates
+and 1.000, 0.933 and 0.957 by upstream. The protocol's caveat was that poor alignment rather than
+placement might be doing the work, and it is not: within the donor pool the alignment score does not
+separate the flagged from the escaped, medians 1009.14 against 1009.16 bits, and below the 5th percentile
+of score 20 donors are flagged and 0 escape where 19.0 flagged is what independence predicts. The
+escapees are not the badly aligned ones; they are the ones whose archaeal label happens to be shared with
+another donor, which is kind 2 arriving by accident. `results/foreign_summary_*.json`,
+`results/foreign_score_vs_flag_*.json`.
+
+**A control where every label is certain.** Injection leaves one hole in itself: the sequences it did not
+touch are only assumed correct, so a flag on one of them cannot be called a false positive. A simulated
+reference closes it — sequences evolved along a tree that *is* the taxonomy, 864 of them — and the answer
+is that **neither tool flags anything**: 0 of 864 for the fork and 0 for upstream, against 93 and 92 of
+2 023 on the real set. So the 4.6 % on real data is the reference's own content and not noise the method
+generates.
+
+Recall there is **1.000 at *k*=1** at every distance with no collateral flags, against 0.746 and 133
+collateral on the real grid, so that gap is the reference's difficulty rather than the method's ceiling.
+And the surviving-ratio law reproduces out of sample, which is the stronger result: **1.000, 0.990, 0.822,
+0.000** across the ratio bands against the archaeal **0.867, 0.600, 0.327, 0.110, 0.011** — monotone on
+both, collapsing to nothing at the top of the range on both, offset by exactly the heterogeneity a simple
+model cannot reproduce. The law is therefore a statement about leave-one-out and not about GTDB.
+`results/simulated_summary_*.json`, `results/detection_law_simulated_*.json`.
+
+**Whether the fork's extra flags are better or noisier**, which the agreement control raises and cannot
+settle. The un-injected set offers one piece of truth: 54 groups of byte-identical sequences carrying
+conflicting labels, 265 sequences of which at least one member must be wrong, 3.76 % of the database.
+Calls the two tools agree on are enriched **1.9-fold** in those groups, p = 0.002, so both are finding
+something real. Upstream's 51 unique calls are enriched **4.2-fold**, p = 0.0006. The fork's 119 unique
+calls sit at **0.89**, 4 observed against 4.5 expected, p = 0.66 — the background rate, and a tight null
+rather than a small-sample shrug. On this measure upstream's extra flags are the better targeted. The
+evidence is weak per sequence, since group membership says one member is wrong and not which, but it is
+weak in the same way for both tools. `results/conflict_enrichment.json`.
 
 ## Running it
 

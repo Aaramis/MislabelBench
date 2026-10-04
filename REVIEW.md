@@ -1620,6 +1620,32 @@ README's determinism claim rests on one cell produced three times. This adds 26 
 without costing anything, and it is recorded because an accident that could have broken a claim and did
 not is worth as much as a test that was planned.
 
+**88. Six of the eight things measured were absent from the document that reports results.** Finding 76
+established the principle on the exclusion column: a result that lives in the decision log and not in
+README "reads as an oversight in a paper and as evasion in a review". Tested by topic rather than one case
+at a time, README covered speed, the M1 validation, determinism, timing reproducibility, kinds 1 and 2,
+the exclusion column, the baseline churn, the duplicate groups, distribution and the *k* axis -- and said
+nothing at all about **kind 3, kind 4, kind 5, kind 6, the simulation control, the collateral locality
+measure, or the conflict enrichment**. Four of the protocol's six error kinds, 2.1's control, and the
+locality measure 2.4 explicitly requires.
+
+All seven are in now, with their numbers and a pointer to the record each comes from: kind 3's reversal
+and its 0.097 against 0.062, kind 4's resolution table, kind 5 splitting between ragged lineages accepted
+and empty ones raising `IndexError`, kind 6's 1.000/0.967/0.941 with the alignment-score caveat measured
+dead, the control's 0 of 864 and the law reproducing out of sample, the 78.1 % of collateral flags falling
+in a clade the injection touched, and the enrichment that puts upstream's unique calls at 4.2-fold and the
+fork's at the background rate.
+
+**And the third near-miss of its kind, which is now a rule in the text.** Checking kind 4's figures before
+committing them, averaging each cell's resolution gave 0.82 at species where README said about 0.90, and
+0.87 at genus where it said 0.95 -- so the claim looked wrong in two places. It is not: pooled over
+sequences, which is the statistic a claim about *detections* needs, it is **619/690 = 0.897** and
+**863/917 = 0.941**. Averaging per-cell ratios weights a rate-0.01 cell with a handful of detections the
+same as a rate-0.05 cell with ten times as many. After the symlinks of finding 75 and the per-taxon median
+of finding 79, the lesson is no longer worth only recording: README now names the statistic beside the
+table and says what the alternative returns, so the next recomputation cannot mistake a different
+statistic for a different answer.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
