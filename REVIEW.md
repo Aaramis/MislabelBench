@@ -1983,6 +1983,28 @@ figures beside it. And the semantics are pinned by a test whose fixture makes th
 one collateral flag at exactly 0.99, kept there and dropped at 1.0, so a floor read as "the value at
 0.99" returns 2 where the floor is 1.
 
+**99. The paper's central number now has two independent implementations, and they agree on all 1 800
+of it.** Finding 98 established the method: a published figure was wrong in a way no amount of rereading
+its producer could show, because the producer was correct and the error was in what the prose called the
+quantity. The same method applied to the claim the paper actually rests on -- that the fork detects
+shared mislabels upstream misses -- is the strongest check available, because recall passes through
+`score_injection.py` and then `aggregate_grid.py`, both tested, but tested against fixtures written by
+the same hand that wrote them. A misreading of what the `.mis` means would sit in the code, in the
+fixture and in the paper at once, and every test would pass.
+
+Recomputed from the two primary files alone -- the cell's `truth.json` and the run's `.mis` -- in a few
+lines sharing nothing with either script. The headline table agrees to the fourth decimal on all ten
+values: at *k*=2 the fork's **0.6133** against upstream's **0.3747**, at *k*=3 **0.4635** against
+**0.3126**, at *k*=5 **0.3302** against **0.2339**, and the two ends where they meet, **0.9362/0.9235**
+at *k*=1 and **0.1480/0.1359** at *k*=10, over 90 cells per condition.
+
+Made permanent rather than left as a one-off, which is the difference between this and the coverage
+grep finding 89 declined to keep: that one measured citation style and was wrong four times in five;
+this is a second implementation of a computation, and a disagreement can only mean one of the two is
+wrong. `bin/verify_recall_independently.py` is a step of `analyses.sh` and checks **every by_confidence
+row of all five grid summaries: 1 800 published values, 1 800 agreeing.** Its failure path was tested on
+a tampered summary with one cell moved by 0.01, which it names and exits non-zero on.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
