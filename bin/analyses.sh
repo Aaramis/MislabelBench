@@ -200,6 +200,25 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
     fi
 done
 
+# Three committed records of this experiment were produced by hand and rebuilt by nothing, which is the
+# defect finding 73 found in the k-axis summaries and declared fixed. It was not: the law and the paired
+# test for the simulated set were outside every loop here, because those loops read the archaeal grid.
+# It mattered the moment upstream's arm finished -- it went from 12 cells on one seed to 36 on three, and
+# both records still described the twelve.
+step "the simulation's detection law and the paired comparison, on whichever arms have run"
+for cond in epang_T8_K25 upstream_raxml_T8; do
+    if [ -s "results/simulated/runs/sim__${cond}__rep1/sim__${cond}__rep1.mis" ]; then
+        detection_law.py --base-tax data/simulated/sim/sim.tax --injected-dir data/simulated \
+            --runs-dir results/simulated/runs --condition "${cond}__rep1" \
+            --out "results/detection_law_simulated_${cond}.json" >/dev/null
+    fi
+done
+if [ -s results/simulated/runs/sim__upstream_raxml_T8__rep1/sim__upstream_raxml_T8__rep1.mis ]; then
+    paired_conditions.py --injected-dir data/simulated --runs-dir results/simulated/runs \
+        --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
+        --out results/paired_simulated_upstream_vs_epang_T8_K25.json >/dev/null
+fi
+
 # Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.
 step "the shape of the Confidence column, both tools"
 for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do

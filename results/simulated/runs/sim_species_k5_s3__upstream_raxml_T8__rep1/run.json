@@ -1,0 +1,31 @@
+{
+  "dataset": "sim_species_k5_s3",
+  "n_seqs": 864,
+  "aln_len": 1478,
+  "condition": "upstream_raxml_T8",
+  "rep": 1,
+  "run_name": "sim_species_k5_s3__upstream_raxml_T8__rep1",
+  "timing_trusted": false,
+  "impl": "sativa",
+  "engine": "raxml",
+  "threads": 8,
+  "host": "cpu-node-36",
+  "cpu_model": "Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz",
+  "collected_at": "2026-10-04T16:54:37",
+  "n_mislabels": 0,
+  "inputs": {
+    "sim_species_k5_s3.fasta": "9227be5fabdbcf3a24f4ef6a7d8c980a03a9f461f1147c25328e6ef594f9a4aa",
+    "sim_species_k5_s3.tax": "8baacf651c32db9cd54bb02820d69c7949397f941ac0c3f3debd62ef1356b1a3"
+  },
+  "wall_sec": 745.3,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 55.9,
+  "user_cpu_sec": 5954.15,
+  "sys_cpu_sec": 0.71,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 745.0,
+  "reftree_sec": 4.0,
+  "l1out_sec": 741.0,
+  "status": "ok"
+}

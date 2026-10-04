@@ -302,7 +302,18 @@ And the surviving-ratio law reproduces out of sample, which is the stronger resu
 0.000** across the ratio bands against the archaeal **0.867, 0.600, 0.327, 0.110, 0.011** — monotone on
 both, collapsing to nothing at the top of the range on both, offset by exactly the heterogeneity a simple
 model cannot reproduce. The law is therefore a statement about leave-one-out and not about GTDB.
-`results/simulated_summary_*.json`, `results/detection_law_simulated_*.json`.
+
+**And it is here, where every label is certain, that the two tools separate.** With upstream's arm now
+complete at three seeds, the paired comparison has nine cells per *k* instead of three, and at *k*=3 --
+half of each group relabelled together -- the fork detects more in **9 cells of 9**, recall 0.822 against
+0.657, exact sign test **p = 0.0039**. That is the floor of the test at nine pairs, which is the point:
+at three pairs the floor was 0.25 and no outcome could have been significant, which is why the control
+was given three seeds rather than one. At *k*=1 and *k*=2 both tools are near perfect and the difference
+is not testable; at *k*=5 neither detects anything. So the protocol's claim in 2.2 -- that the fork finds
+shared mislabels upstream misses -- holds in the one setting where the ground truth is not an assumption,
+and it holds at exactly the *k* where the design predicts the margin is visible.
+`results/simulated_summary_*.json`, `results/detection_law_simulated_*.json`,
+`results/paired_simulated_upstream_vs_epang_T8_K25.json`.
 
 **Whether the fork's extra flags are better or noisier**, which the agreement control raises and cannot
 settle. The un-injected set offers one piece of truth: 54 groups of byte-identical sequences carrying

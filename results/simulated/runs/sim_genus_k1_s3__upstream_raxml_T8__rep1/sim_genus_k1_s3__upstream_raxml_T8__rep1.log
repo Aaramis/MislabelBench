@@ -1,0 +1,45 @@
+SATIVA v0.9.1, released on 2023-08-16. Last version: https://github.com/amkozlov/sativa 
+By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
+
+SATIVA was called as follows:
+
+/usr/local/bin/sativa.py -s sim_genus_k1_s3.fasta -t sim_genus_k1_s3.tax -T 8 -n sim_genus_k1_s3__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/simulation/work/1a/0a2cdd693394faf7f0d53b08726e1d/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: sim_genus_k1_s3.tax ...
+
+==> Loading reference alignment from file: sim_genus_k1_s3.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+====> Building a multifurcating tree from taxonomy with 864 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./sim_genus_k1_s3__upstream_raxml_T8__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+Leave-one-out test identified 43 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Genus       :	43
+
+Total mislabels: 43 / 4.98 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/1a/0a2cdd693394faf7f0d53b08726e1d/run/sim_genus_k1_s3__upstream_raxml_T8__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/1a/0a2cdd693394faf7f0d53b08726e1d/run/sim_genus_k1_s3__upstream_raxml_T8__rep1.log
+
+Analysis completed successfully, elapsed time: 821 seconds (4s reftree, 818s leave-one-out)
+

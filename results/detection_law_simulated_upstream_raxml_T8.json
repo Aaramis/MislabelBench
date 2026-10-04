@@ -3,62 +3,62 @@
     {
       "low": 0.0,
       "high": 0.2,
-      "detected": 128,
-      "injected": 129,
+      "detected": 384,
+      "injected": 387,
       "recall": 0.9922
     },
     {
       "low": 0.2,
       "high": 0.4,
-      "detected": 130,
-      "injected": 132,
-      "recall": 0.9848
+      "detected": 382,
+      "injected": 396,
+      "recall": 0.9646
     },
     {
       "low": 0.4,
       "high": 0.6,
-      "detected": 82,
-      "injected": 135,
-      "recall": 0.6074
+      "detected": 266,
+      "injected": 405,
+      "recall": 0.6568
     },
     {
       "low": 0.8,
       "high": 1.0,
       "detected": 0,
-      "injected": 135,
+      "injected": 405,
       "recall": 0.0
     }
   ],
   "by_k": [
     {
       "k": 1,
-      "detected": 128,
-      "injected": 129,
+      "detected": 384,
+      "injected": 387,
       "recall": 0.9922,
-      "donor_groups": 129,
-      "distinct_donor_taxa": 43,
+      "donor_groups": 387,
+      "distinct_donor_taxa": 93,
       "median_group_size": 6,
       "mean_share_relabelled": 0.17,
       "eligible_taxa": 144
     },
     {
       "k": 2,
-      "detected": 130,
-      "injected": 132,
-      "recall": 0.9848,
-      "donor_groups": 66,
-      "distinct_donor_taxa": 22,
+      "detected": 382,
+      "injected": 396,
+      "recall": 0.9646,
+      "donor_groups": 198,
+      "distinct_donor_taxa": 56,
       "median_group_size": 6.0,
       "mean_share_relabelled": 0.33,
       "eligible_taxa": 144
     },
     {
       "k": 3,
-      "detected": 82,
-      "injected": 135,
-      "recall": 0.6074,
-      "donor_groups": 45,
-      "distinct_donor_taxa": 15,
+      "detected": 266,
+      "injected": 405,
+      "recall": 0.6568,
+      "donor_groups": 135,
+      "distinct_donor_taxa": 42,
       "median_group_size": 6,
       "mean_share_relabelled": 0.5,
       "eligible_taxa": 144
@@ -66,10 +66,10 @@
     {
       "k": 5,
       "detected": 0,
-      "injected": 135,
+      "injected": 405,
       "recall": 0.0,
-      "donor_groups": 27,
-      "distinct_donor_taxa": 9,
+      "donor_groups": 81,
+      "distinct_donor_taxa": 25,
       "median_group_size": 6,
       "mean_share_relabelled": 0.83,
       "eligible_taxa": 144

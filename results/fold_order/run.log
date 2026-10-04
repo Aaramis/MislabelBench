@@ -7,7 +7,7 @@ SATIVA was called as follows:
 /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/results/fold_order/run.refjson -n run -o /shared/home/agardette/bench/results/fold_order -T 4 -stage loo-tasks
 
 [epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/fold_order/run.model
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/results/fold_order/run.l1o_tasks (0.6s)
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/results/fold_order/run.l1o_tasks (0.5s)
 
 25 leave-one-out folds written to: /shared/home/agardette/bench/results/fold_order/run.l1o_tasks
 Place them (any scheduler, one EPA-ng per fold directory), then:

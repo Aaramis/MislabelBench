@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s aln.fasta -t after_trimmed.tax -m ultrafast -C 0.4 -x BAC -p 42 -S -n after_trimmed -o /shared/home/agardette/bench/results/ragged_check -T 8
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s aln.fasta -t after_trimmed.tax -m ultrafast -C 0.4 -x BAC -p 42 -S -n after_trimmed -o /shared/home/agardette/bench/results/before_after -T 8
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 

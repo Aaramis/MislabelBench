@@ -38,7 +38,15 @@ cd "$(dirname "$0")/.."
 # --exclude='._*' in both directions. A Mac rsync leaves an AppleDouble resource fork beside
 # every file it copies, and eighteen of them landed in ~/bench once: harmless to bash, fatal to
 # any python that globs *.sh, and inodes against a 100 000-file quota.
-rsync -a --exclude='._*' --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
+# Version 1's run trees stay on the cluster. results/runs (170 directories), results/runs_injected (36)
+# and results/m1_check (3) are the `port_py3_*` conditions on the ITS sets, and the repository no longer
+# holds the datasets they ran on, the conditions that name them or the job scripts that produced them --
+# they were removed with version 1. Without this they arrive on every repatriation and have to be
+# recognised and deleted by hand each time, which is how something unwanted eventually gets committed.
+# They are excluded here rather than deleted there: they are the evidence behind version 1's published
+# figures, which are still on origin/main.
+rsync -a --exclude='._*' --exclude='runs/' --exclude='runs_injected/' --exclude='m1_check/' \
+      --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
       --include='*.stderr' --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
