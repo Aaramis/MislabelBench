@@ -58,12 +58,22 @@ def main():
     if not files:
         sys.exit("git ls-files matched nothing reviewable; run this from the benchmark root")
 
+    # A basename shared by several tracked files cannot stand for any of them. Nine files here are
+    # called main.nf -- the pipeline and eight modules -- so one mention of `main.nf` was certifying
+    # all nine, and two of the modules had in fact never been named at all. The rule is derived from
+    # the file list rather than listed by hand, so it cannot go stale the way an exemption list does.
+    shared = {n for n in (Path(f).name for f in files)
+              if sum(1 for g in files if Path(g).name == n) > 1}
+
     missing = []
     for f in files:
         name = Path(f).name
-        # By full path or by basename: the report writes `main.nf` and `bin/verify_runs.py` both.
-        if f not in text and not re.search(rf"\b{re.escape(name)}\b", text):
-            missing.append(f)
+        # By full path always; by basename only when that basename belongs to one file.
+        if f in text:
+            continue
+        if name not in shared and re.search(rf"\b{re.escape(name)}\b", text):
+            continue
+        missing.append(f)
 
     print(f"{len(files)} reviewable files, {len(files) - len(missing)} named in {args.report}")
     if frozen:

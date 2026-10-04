@@ -2211,6 +2211,46 @@ That is the third time in this sweep that an unnamed statistic was the whole dis
 declared lineage and the exclusion column's threshold. Three for three: every disagreement between two
 implementations here has been a definition, never an arithmetic error.
 
+**108. The coverage gate was certifying nine files on one mention, and eight of them were the pipeline
+modules.** `bin/review_coverage.py` counted a file as reviewed if the report named its full path **or its
+basename**. Nine tracked files are called `main.nf` -- the pipeline and its eight modules -- so a single
+mention of `main.nf` satisfied all nine, and the gate reported 108 of 108 while
+`modules/local/alignssu/main.nf` and `modules/local/stagedlootasks/main.nf` had never been named in any
+form at all. A gate stating a result it has not established is the third of its kind this review has
+found, and the first two were also mine.
+
+The rule is now derived rather than listed: a basename shared by more than one tracked file cannot stand
+for any of them, so those nine need their path. That cannot go stale the way an exemption list does,
+which is the same argument that keeps `FROZEN` empty. With it the honest number was **100 of 108**, and
+the eight were read.
+
+**`modules/local/stagedlootasks/main.nf`** carries the guard that matters most in the staged path: the
+tool silently falls back to a default substitution model when `run.model` is missing, placing every fold
+under a model the reference stage did not fit, and exiting 0. The module greps its own log for the fitted
+model's name and fails otherwise. Checked against the three real staged runs rather than read: all three
+log `EPA-ng model: …/run.model` and the guard passes on each.
+
+**`modules/local/alignssu/main.nf`** converts cmalign's Pfam output to FASTA with
+`awk '… NF==2 {print ">"$1"\n"$2}'`, which keeps lines of exactly two fields. A sequence whose name
+contained whitespace would be dropped silently and the alignment would simply be shorter than the input,
+with nothing downstream able to tell: SATIVA reads alignment and taxonomy separately and reports such a
+sequence as absent from the tree. It has not happened -- **7 051 in, 7 051 out, every taxonomy name
+present and none extra, no name with whitespace** -- and nothing was checking. The module now compares
+the two counts and fails on a difference; the shell logic was tested both ways on a fabricated Pfam, where
+a name with a space takes 3 in to 2 out and fires it.
+
+**`modules/local/stagedlooplace/main.nf`** was the one I expected to find a problem in, because it stages
+only its own shard's folds and then asks the tool for a stride. It counts what it placed against what it
+staged, with `-eq` rather than `=` because `wc -l` pads on some platforms, and the committed shard logs
+show `placed 7/7 folds` and the shards summing to 25.
+
+The remaining five hold no unguarded parsing, no `|| true` and no silent fallback:
+`modules/local/sativa/main.nf`, `modules/local/sativaepang/main.nf`,
+`modules/local/stagedreference/main.nf`, `modules/local/stagedlooscore/main.nf` and
+`modules/local/collectrun/main.nf`. The second of those runs `sha256sum` on the alignment and taxonomy it
+actually read, which is what makes "both tools saw the same database" checkable rather than asserted, and
+`bin/analyses.sh` checks it on every rebuild.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
