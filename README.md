@@ -15,10 +15,15 @@ This is a benchmark of that modification, not a new method.
 Numbers below are medians over replicates on one pinned CPU model. GTDB r226 archaeal 16S, 7 051
 sequences for the headline and a 2 023-sequence subset drawn by whole taxa for the grid.
 
-**Speed.** 262 s against 2 950 s on the full set: 11.2x in wall clock. The more useful figure is
-16.2x in **CPU time**, because upstream saturates the eight threads it is given, 7.97 of 8, while the
-fork uses 5.5. On the 2 023-sequence subset the pair is 19.3x and 35.3x. At 402 sequences the fork
-uses 3.1 of 8 threads, so on a small reference it should be given fewer.
+**Speed.** 263.4 s against 2 983.6 s on the full set: **11.3x** in wall clock, medians over 7 fork
+replicates and 4 upstream. The more useful figure is **16.2x** in **CPU time**, because upstream
+saturates the eight threads it is given, 7.97 of 8, while the fork uses 5.57. On the 2 023-sequence
+subset, 7 replicates each, the pair is **16.5x and 29.7x**. At 402 sequences the fork uses 3.09 of 8
+threads, so on a small reference it should be given fewer. Every figure here is a row or a line of
+`results/resource_usage.txt`, which `bin/analyses.sh` rebuilds; read it rather than this paragraph if
+the two ever disagree. They did: this said 262, 2 950, 11.2x, and **19.3x and 35.3x** for the subset,
+the last pair taken from one replicate before the others had run and 17 % and 19 % above the medians
+that replaced it.
 
 **The harness reproduces version 1's answer, which is what validated it.** The plan's first
 milestone asked for the new harness to land on v1's figure of ~109 s for upstream at one thread.
@@ -43,7 +48,13 @@ directory:
 | determinism, 2 Oct | cpu-node-37 | Intel Xeon E5-2695 v3 | 66.0 s | `b41934ad…` |
 | determinism, rerun | cpu-node-16 | Intel Xeon E5-2695 v3 | 56.3 s | `b41934ad…` |
 
-A 1.7-fold spread in seconds and the same 161 flags to the byte. `slurm/determinism.sh` is what
+A 1.7-fold spread in seconds and the same 161 flags to the byte. Two of the three rows are records you
+can open: the grid cell and the rerun. The 2 October row is not -- `determinism.sh` opens by clearing
+its own output directory, so its successor wiped that run's `.mis`, and what survives is
+`results/pipeline_info/trace-determinism.txt` giving the task 1m 9s against the rerun's 58.7 s. The
+cross-vendor claim does not rest on it: the surviving determinism record is the Intel one,
+`cpu-node-16`, and the grid cell is `cpu-node-123`, which Slurm reports as `epyc-9754`. That record
+carries no `cpu_model` of its own, which is the gap `bin/verify_runs.py` reports on every run. `slurm/determinism.sh` is what
 re-runs it, and it is also the only check that exercises the pipeline rather than the analysis layer:
 `bin/analyses.sh` rebuilds every number from the run directories and never invokes Nextflow.
 
@@ -175,6 +186,10 @@ used follow:
 | 3 | 738 | 6 | 0.47 |
 | 5 | 450 | 9 | 0.54 |
 | 10 | 234 | 14 | **0.67** |
+
+Every column of that table is in `by_k` of `results/detection_law_*.json`, weighted by injected
+sequence and not by taxon: at *k*=5 the median donor group holds 9 members per injected sequence and 10
+per distinct taxon, and the share is the mean of *k*/size over injections.
 
 So *k* is a proxy for the share of a sequence's relatives that carry the wrong label, which is the
 quantity that predicts detection. The two cannot be separated in this design — holding group size

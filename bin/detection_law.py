@@ -17,6 +17,7 @@ it explains why K=5 and K=25 find the same sequences.
 
 import argparse
 import json
+import statistics as st
 from collections import defaultdict
 from pathlib import Path
 
@@ -47,6 +48,16 @@ def main():
 
     buckets = defaultdict(lambda: [0, 0])
     by_k = defaultdict(lambda: [0, 0])
+    # The donor groups each k actually drew from. README explains that k is not an independent
+    # variable -- raising it shrinks the eligible pool and shifts it towards large taxa -- with a
+    # table of group counts, median sizes and shares relabelled that no record produced.
+    #
+    # Weighted by injected sequence and not by taxon, which is the choice that matters: the question
+    # is what a typical injected sequence sees, not what a typical taxon looks like. The two differ --
+    # at k=5 the median size is 9 per sequence and 10 per taxon -- and computing it per taxon here
+    # first made README's table look wrong when it was this statistic that was.
+    sizes_by_k = defaultdict(list)
+    groups_by_k = defaultdict(set)
     for truth_p in sorted(Path(args.injected_dir).glob("*/*.truth.json")):
         cell = truth_p.parent.name
         mis = Path(args.runs_dir) / f"{cell}__{args.condition}" / f"{cell}__{args.condition}.mis"
@@ -65,6 +76,8 @@ def main():
             wrong, right = k - 1, group_size[rec["true"]] - k
             if wrong + right == 0:
                 continue
+            groups_by_k[k].add(rec["true"])
+            sizes_by_k[k].append(group_size[rec["true"]])
             b = min(int(wrong / (wrong + right) * args.bins), args.bins - 1)
             for d in (buckets[b], by_k[k]):
                 d[0] += name in hits
@@ -86,8 +99,16 @@ def main():
     for k in sorted(by_k):
         hit, tot = by_k[k]
         print(f"  k={k:<3} {hit:5}/{tot:<6} {hit / tot:.3f}")
+        sizes = sizes_by_k[k]
         out["by_k"].append({"k": k, "detected": hit, "injected": tot,
-                            "recall": round(hit / tot, 4)})
+                            "recall": round(hit / tot, 4),
+                            "donor_groups": tot // k,
+                            "distinct_donor_taxa": len(groups_by_k[k]),
+                            "median_group_size": st.median(sizes) if sizes else None,
+                            "mean_share_relabelled": round(st.mean(k / n for n in sizes), 2) if sizes else None,
+                            # A taxon can host k injections only with k+1 members, which is what
+                            # shrinks the pool: the count is of the whole base, not of what was drawn.
+                            "eligible_taxa": sum(1 for n in group_size.values() if n >= k + 1)})
     # The two tables count the same injected sequences, so their totals must agree. They would not
     # if a sequence landed outside the printed bins: group_size is a defaultdict, so a true lineage
     # absent from the base taxonomy gives right = -k, a negative ratio, a negative bucket index, and

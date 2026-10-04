@@ -1310,6 +1310,42 @@ the command is. The over-count had been live for exactly one session, since
 `**19.2 MB**` was written an hour ago, and the figure I reported at the end of that session was wrong by
 one.
 
+**79. Every number in README checked against the record that produces it, and the headline speed
+paragraph had drifted.** The review had audited the code that computes the figures and never the figures
+themselves. Fourteen claims, read one at a time against `results/`.
+
+Thirteen are exact. The paired table reproduces row for row -- +0.006/14/5/17/0.064, +0.240/34/0/2/1.2e-10,
++0.152/34/0/2/1.2e-10, +0.104/28/1/7/1.1e-07, +0.005/9/2/25/0.065 -- and so do its totals, 119 cells to
+the fork, 8 to upstream, 53 tied, summing to 180. Recall 0.9348 at *k*=1 and 0.1316 at *k*=10 for the
+fork, 0.9242 and 0.1218 for upstream, against README's 0.94/0.13 and 0.92/0.12. The ratio gradient 0.8666
+to 0.0111 against "0.87 down to 0.01". The baseline churn: 93 flags un-injected, lost median 11 and max
+21, gained median 29 and max 70. 847 identical-row groups, 54 conflicting, 52 of them identical unaligned
+too. M1 at 135.8 s with a spread of 0.9 over three replicates, `a1aa0f35…`, 48 flags. Determinism at
+`b41934ad…` and 161 flags on both an Intel Xeon and `cpu-node-123`.
+
+**The speed paragraph was the exception, and it is the headline.** Against `results/resource_usage.txt`,
+which reports medians and which `bin/analyses.sh` rebuilds: 262 s is 263.4, 2 950 s is 2 983.6, 11.2x is
+11.3x -- and the 2 023-sequence pair, quoted as **19.3x and 35.3x, is 16.5x and 29.7x**. Those two come
+from a single replicate taken before the others had run, 17 % and 19 % above the medians that replaced
+them, in a paragraph whose own preamble says the numbers are medians over replicates. Corrected, with a
+line saying to read the record rather than the paragraph if they ever disagree again.
+
+Two smaller things. The determinism table's third row cannot be opened: `determinism.sh` clears its own
+output directory, so the rerun wiped the 2 October run's `.mis`, and what survives is the trace at 1m 9s.
+The cross-vendor claim does not rest on it -- the surviving record is the Intel one -- and the table now
+says which rows are records and which is a trace. And the *k*-axis table had no producer at all: five
+rows of donor-group counts, median sizes and shares relabelled, computed once by hand. `detection_law.py`
+already had `group_size`, so it emits them now, and all five records gained the fields with every
+pre-existing value unchanged.
+
+That addition is where this entry nearly became a false finding. Computing the median over distinct donor
+taxa gives 10 at *k*=5 where README says 9, and dividing *k* by that median gives 0.33/0.5/0.5/0.5/0.71
+where README says 0.34/0.44/0.47/0.54/0.67 -- so README looked wrong in six places. It is not: the
+statistic is weighted by injected sequence, median size per sequence and the mean of *k*/size over
+injections, which reproduces all five rows exactly. The lesson is the one `ref.nwk` taught in finding 77
+a few hours earlier: match the statistic before declaring a mismatch. The donor-group counts and the
+eligibility figures, 319 taxa at *k*=1 and 31 at *k*=10, confirmed on the first attempt.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
