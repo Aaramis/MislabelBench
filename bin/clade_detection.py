@@ -67,27 +67,46 @@ def main():
         print(f"{r['distance']:9}{r['size']:>5}{r['within']:>8.4f}{r['to_recipient']:>8.4f}"
               f"{r['separation']:>+11.4f}{r['detected']:>7}{r['recall']:>8.3f}")
 
-    # The prediction, as a gradient. Equal-count bins rather than equal-width, because separation
-    # is not uniformly distributed and a fixed grid would put most clades in one bin.
+    # Two gradients, because the first measurement showed the protocol's variable is not the one
+    # that predicts detection and `within` is. Equal-count bins rather than equal-width: neither
+    # quantity is uniformly distributed and a fixed grid would put most clades in one bin.
+    for var, label in (("separation", "separation from the recipient, Protocol.md 2.2's variable"),
+                       ("within", "cohesion within the clade")):
+        order = sorted(rows, key=lambda x: x[var])
+        per = max(1, len(order) // args.bins)
+        print(f"\nrecall by {label}")
+        print(f"{'range':>22}{'clades':>8}{'seqs':>7}{'detected':>10}{'recall':>8}")
+        for i in range(0, len(order), per):
+            band = order[i:i + per] if i + per < len(order) else order[i:]
+            seqs = sum(b["size"] for b in band)
+            det = sum(b["detected"] for b in band)
+            print(f"{f'{band[0][var]:+.4f} to {band[-1][var]:+.4f}':>22}"
+                  f"{len(band):>8}{seqs:>7}{det:>10}{det / seqs:>8.3f}")
+            if i + per >= len(order):
+                break
+
+    # The contrast the gradients come down to, as one line each way.
+    for lab, g in (("members nearly identical, within >= 0.99",
+                    [r for r in rows if r["within"] >= 0.99]),
+                   ("diffuse clade, within < 0.99",
+                    [r for r in rows if r["within"] < 0.99])):
+        if g:
+            seqs, det = sum(x["size"] for x in g), sum(x["detected"] for x in g)
+            print(f"  {lab:42} {len(g):3} clades {seqs:4} seqs  recall {det / seqs:.3f}")
+
+    # The json keeps the separation gradient, since it is the protocol's variable and a reader
+    # comparing against 2.2 needs it in the record even though it is not the one that predicts.
     order = sorted(rows, key=lambda x: x["separation"])
     per = max(1, len(order) // args.bins)
-    print(f"\nrecall by separation, {args.bins} bins of about {per} clades")
-    print(f"{'separation':>22}{'clades':>8}{'seqs':>7}{'detected':>10}{'recall':>8}")
-    bands = []
-    for i in range(0, len(order), per):
-        band = order[i:i + per]
-        if len(band) < per / 2 and bands:
-            bands[-1] += band
-        else:
-            bands.append(band)
     summary = []
-    for band in bands:
-        lo, hi = band[0]["separation"], band[-1]["separation"]
-        seqs = sum(b["size"] for b in band)
-        det = sum(b["detected"] for b in band)
-        print(f"{f'{lo:+.4f} to {hi:+.4f}':>22}{len(band):>8}{seqs:>7}{det:>10}{det / seqs:>8.3f}")
-        summary.append({"separation_low": lo, "separation_high": hi, "clades": len(band),
+    for i in range(0, len(order), per):
+        band = order[i:i + per] if i + per < len(order) else order[i:]
+        seqs, det = sum(b["size"] for b in band), sum(b["detected"] for b in band)
+        summary.append({"separation_low": band[0]["separation"],
+                        "separation_high": band[-1]["separation"], "clades": len(band),
                         "sequences": seqs, "detected": det, "recall": round(det / seqs, 4)})
+        if i + per >= len(order):
+            break
 
     neg = [r for r in rows if r["separation"] < 0]
     if neg:

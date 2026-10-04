@@ -1431,6 +1431,47 @@ simulated reference first used three sequences per species; `inject_mislabels.py
 one stays correct, so every *k*=3 cell injected **zero** sequences and said so in a `warn.txt` that was
 redirected and not read. Six per species fixed it. The warning existed; reading it did not.
 
+**82. Kind 3's first measurement contradicts the mechanism Protocol.md gives for it, with the sign
+reversed.** 2.2 says of a whole-clade mislabel: "Detectability therefore turns on whether the clade is
+compact enough to anchor itself." `bin/clade_detection.py` was written to make that falsifiable --
+"if detection does not track separation, compactness is not the variable and 2.2's account of the kind
+is wrong" -- and on the fork over 54 clades and 226 sequences it does not track it, in the direction
+that matters.
+
+Recall against separation from the recipient, which is 2.2's variable: **0.188, 0.190, 0.000, 0.033**
+from least separable to most. The six clades whose members resemble the taxon they were mislabelled as
+more than they resemble each other -- the extreme of "cannot anchor itself" -- are the **best** detected,
+0.273.
+
+The variable is cohesion *within* the clade, and it runs the other way:
+
+| | clades | sequences | recall |
+|---|---|---|---|
+| `within` >= 0.99, members nearly identical | 39 | 167 | **0.012** |
+| `within` < 0.99, diffuse clade | 15 | 59 | **0.339** |
+
+A twenty-eight-fold difference, and the gradient is monotone across four equal-count bins: 0.400 for
+`within` from 0.757 to 0.982, then 0.000, 0.036, 0.000 as the clades tighten to identity.
+
+**The reasoning 2.2 applies is right about compactness and wrong about what it buys.** A compact clade
+can indeed be told apart from its recipient -- that is what the separation column shows, and separation
+is high exactly where cohesion is high. But being distinguishable is not what produces a flag. The
+clade's members are each other's nearest neighbours and all now carry the recipient's label, so removing
+one leaves the rest confirming that label where the removed sequence belongs. That is kind 2's mechanism
+with *k* equal to the whole taxon, which is why overall kind 3 recall is **0.097** here against the
+grid's 0.13 at *k*=10. A compact clade does not anchor itself against the wrong label; it anchors the
+wrong label.
+
+So the limit 2.2 asks to state is sharper than the sentence it offers: whole-clade mislabels are
+undetectable in proportion to how tight the clade is, and the case that escapes is the diffuse clade,
+whose members cannot vouch for each other. Both halves of the protocol's own 2.2 reasoning survive
+intact -- "a wrong label is only exposed by removing its support, and a right label is only confirmed by
+keeping it" -- it is the application to kind 3 that has the sign backwards.
+
+Upstream's nine cells were still running when this was written, so this is the fork alone. The mechanism
+is a property of leave-one-out rather than of the placement engine, so it should hold for both, and that
+is a prediction the pending arm tests rather than an assumption it is allowed to make.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

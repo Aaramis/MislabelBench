@@ -1,0 +1,32 @@
+{
+  "dataset": "k3_phylum_s2",
+  "n_seqs": 2023,
+  "aln_len": 1478,
+  "condition": "epang_T8_K25",
+  "rep": 1,
+  "run_name": "k3_phylum_s2__epang_T8_K25__rep1",
+  "timing_trusted": false,
+  "impl": "sativaepang",
+  "engine": "epang",
+  "threads": 8,
+  "folds": 25,
+  "host": "cpu-node-44",
+  "cpu_model": "Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz",
+  "collected_at": "2026-10-04T12:10:39",
+  "n_mislabels": 107,
+  "inputs": {
+    "k3_phylum_s2.fasta": "81025f7aed2c5bf547c9aa01eae2879f9c114c8493df0b260e8b5275816248e5",
+    "k3_phylum_s2.tax": "eb5edfdaa3aef2d250a576a11402b4df29af8f96fc83f244c52b73b44823b64f"
+  },
+  "wall_sec": 96.13,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 2622.8,
+  "user_cpu_sec": 527.76,
+  "sys_cpu_sec": 59.28,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 96.0,
+  "reftree_sec": 32.0,
+  "l1out_sec": 64.0,
+  "status": "ok"
+}
