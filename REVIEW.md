@@ -856,6 +856,29 @@ live: changing the expected 1 to 99 fails the test and changing it back passes. 
 holds on every committed `results/paired_*.json` row, 0 mismatches, which is a check the records had
 never been put to.
 
+**63. The input-digest provenance covered 0 of 1022 published records, and its gate passed anyway.**
+Finding 20 added input digests: the tool modules write the sha256 of what they read, `collect_run.py`
+folds them into `run.json`, and `verify_inputs.py` compares them across a cell's conditions, which is
+what Protocol.md 2.5 rests on. Counted across the repository: **0 of 1022** `run.json` records carry
+the field. Every published result predates it, in all ten conditions.
+
+The gate did not say so, because its own empty-match guard had a second shape. It failed only when
+`not by_cell and not without` -- nothing matched at all -- which is the fault it was written for. With
+1022 records present and none carrying the field, `without` is long, `by_cell` is empty, nothing is
+compared, and it exits 0. That is the same defect it was created to fix, one level up. It now fails
+when `by_cell` is empty however many records matched, naming the count.
+
+The mechanism does work and was demonstrated -- `slurm/inputs_check.sh` ran one cell under both tools
+and both records carry identical digests -- but the two run directories were never repatriated, so the
+demonstration existed only on the cluster and a clone saw a gate with nothing to check. They are in
+the repository now, which is also what makes the corrected gate pass for `bin/analyses.sh`.
+
+And the check was made stronger while it was open, because cross-condition agreement does not say what
+it sounds like: two conditions can agree on a database neither of them got from here. Every recorded
+name is now looked for under `data/` and its digest compared against the file in git. All four match,
+so for that cell the published run provably read the committed input -- a link the records could not
+support before and that nothing else in the repository establishes.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

@@ -16,6 +16,7 @@ Records written before the field existed are counted and named rather than passe
 """
 
 import argparse
+import hashlib
 import json
 import sys
 from collections import defaultdict
@@ -47,14 +48,36 @@ def main():
                 problems.append(f"{key[0]}/{key[1]} rep{key[2]}: {name} differs between "
                                 f"conditions: {per_cond}")
 
+    # And the stronger claim, which cross-condition agreement does not make: that the file the run
+    # read is the file in the repository. Two conditions can agree on a database neither of them got
+    # from here. Every recorded name is looked for under data/ and compared.
+    matched_repo = unmatched = 0
+    for key, conds in sorted(by_cell.items()):
+        for cond, inputs in conds.items():
+            for name, digest in inputs.items():
+                here = next(Path("data").rglob(name), None)
+                if here is None:
+                    unmatched += 1
+                    continue
+                matched_repo += 1
+                have = hashlib.sha256(here.read_bytes()).hexdigest()
+                if have != digest:
+                    problems.append(f"{key[0]}/{key[1]} rep{key[2]} {cond}: {name} was read as "
+                                    f"{digest[:12]} and is {have[:12]} in the repository")
+
     # A gate that checked nothing must not report success. The first run of this script matched no
     # files at all -- the job had left the working directory at the Nextflow launch dir, so the
-    # relative glob resolved under .nf/ -- and it printed "0 cells, 0 consistent" and exited 0.
-    if not by_cell and not without:
-        sys.exit(f"no run records matched {args.glob} from {Path('.').resolve()}")
+    # relative glob resolved under .nf/ -- and it printed "0 cells, 0 consistent" and exited 0. The
+    # second shape of the same fault outlived that fix: with records present but none carrying the
+    # field, `not by_cell and not without` was false and nothing was compared, so 1022 published
+    # records all predating the field read as a pass.
+    if not by_cell:
+        sys.exit(f"{len(without)} run records matched {args.glob} from {Path('.').resolve()} and "
+                 f"none carries an input digest, so nothing was compared")
 
     print(f"{len(by_cell)} cells with recorded input digests, "
           f"{len(by_cell) - len({p.split(':')[0] for p in problems})} consistent")
+    print(f"{matched_repo} recorded input(s) found under data/ and compared, {unmatched} not found")
     if without:
         print(f"  {len(without)} records predate the field and cannot be checked, "
               f"e.g. {without[0]}", file=sys.stderr)
