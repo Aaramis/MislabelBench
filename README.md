@@ -288,3 +288,11 @@ seeds, 180 cells and replicated timings where version 1 had one run per conditio
 
 `sativa_epang/` is version 1's copy of the modified tool and **is not what runs here** — see
 `sativa_epang/NOT_WHAT_RUNS.md`. The harness installs `bioconda::sativa-epang` in a container.
+
+It is also the largest thing in the repository, 10 685 lines, and it **stays**. The plan says it is
+deleted because the tool comes from bioconda, and that instruction is superseded: `scripts/README.md`
+builds the RAxML 8.2.3 binaries from `sativa_epang/raxml`, whose source tarball is tracked there, and
+those are the binaries both of version 1's conditions ran. Removing the directory would make
+`RESULTS.md`'s figures unreproducible. Said here because searching `bin/`, `slurm/`, `modules/` and
+`main.nf` for references finds none — the dependency is in `scripts/`, and a search that omits version
+1's driver concludes that version 1's code is unused.

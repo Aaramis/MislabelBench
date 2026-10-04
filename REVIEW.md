@@ -1353,6 +1353,30 @@ injections, which reproduces all five rows exactly. The lesson is the one `ref.n
 a few hours earlier: match the statistic before declaring a mismatch. The donor-group counts and the
 eligibility figures, 319 taxa at *k*=1 and 31 at *k*=10, confirmed on the first attempt.
 
+**80. I proposed deleting the largest thing in the repository on the strength of a search that excluded
+the only directory depending on it.** Asked whether the project needs this many files, I measured: 7 277
+lines of live code against `sativa_epang/`'s 10 685, nothing in `bin/`, `slurm/`, `modules/`, `conf/`,
+`tests/`, `assets/`, `main.nf` or `nextflow.config` referencing it, and the plan saying it is deleted
+because the tool comes from bioconda. I reported that as dead code and "risque nul".
+
+The search omitted `scripts/`. `scripts/README.md:30` runs `(cd sativa_epang/raxml && make)` and lines
+33-34 copy the binaries into both upstream checkouts, the tarball `sativa-RAxML-8.2.3.tar.gz` being
+tracked there -- so those are the RAxML binaries both of version 1's conditions ran, and removing the
+directory makes `RESULTS.md`'s figures unreproducible. A search over the live harness alone concludes
+that version 1's code is unused, which is true and not the question.
+
+`sativa_epang/NOT_WHAT_RUNS.md` says all of this already, in the directory I was about to delete, and
+ends: "An earlier version of this file said it was scheduled for removal once the top-level README was
+rewritten. That README has been rewritten, and the conclusion went the other way." So the question had
+been examined and settled, in writing, and I reopened it without reading the file. Nothing was deleted.
+
+Two things changed instead. `README.md` now says the directory stays and why, next to where its size
+would prompt the question, since the reason was one file deeper than anyone sizing up the repository
+would look. And `bin/review_coverage.py` prints the version 1 tree as excluded on purpose rather than
+passing over it -- 97 files, the same count as the reviewable set -- because that silence is what let the
+wrong view form: a tool that reports coverage over the live harness invites the inference that what it
+omits is not load-bearing.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
