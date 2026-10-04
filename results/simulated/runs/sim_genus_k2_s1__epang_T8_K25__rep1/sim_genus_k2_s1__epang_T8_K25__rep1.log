@@ -32,11 +32,11 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/f5/b95597b212791f7e9d27c05fe8b475/tmp/sim_genus_k2_s1__epang_T8_K25__rep1_1791108599951/RAxML_info.mfresolv_sim_genus_k2_s1__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/f5/b95597b212791f7e9d27c05fe8b475/tmp/sim_genus_k2_s1__epang_T8_K25__rep1_1791108599951/epang_l1out_seq_sim_genus_k2_s1__epang_T8_K25__rep1 (0.2s)
-[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 14.0s)
-[epang-l1o] placements produits: 864 (K=25 folds, remap 0.5s)
-[epang-l1o] timing: fold prep 0.2s, epa-ng 14.0s, remap 0.5s, elapsed 14.6s
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/f5/b95597b212791f7e9d27c05fe8b475/tmp/sim_genus_k2_s1__epang_T8_K25__rep1_1791112606485/RAxML_info.mfresolv_sim_genus_k2_s1__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/f5/b95597b212791f7e9d27c05fe8b475/tmp/sim_genus_k2_s1__epang_T8_K25__rep1_1791112606485/epang_l1out_seq_sim_genus_k2_s1__epang_T8_K25__rep1 (0.3s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 21.4s)
+[epang-l1o] placements produits: 864 (K=25 folds, remap 0.6s)
+[epang-l1o] timing: fold prep 0.3s, epa-ng 21.4s, remap 0.6s, elapsed 22.3s
 Leave-one-out test identified 45 suspicious sequences; running final EPA test to check them...
 
 [epang-final] 45 suspects re-placed (model RAxML_info.mfresolv_sim_genus_k2_s1__epang_T8_K25__rep1)
@@ -48,5 +48,5 @@ Total mislabels: 44 / 5.09 %
 Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/f5/b95597b212791f7e9d27c05fe8b475/run/sim_genus_k2_s1__epang_T8_K25__rep1.mis
 Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/f5/b95597b212791f7e9d27c05fe8b475/run/sim_genus_k2_s1__epang_T8_K25__rep1.log
 
-Analysis completed successfully, elapsed time: 26 seconds (10s reftree, 16s leave-one-out)
+Analysis completed successfully, elapsed time: 38 seconds (13s reftree, 25s leave-one-out)
 

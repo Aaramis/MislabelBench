@@ -1597,6 +1597,29 @@ are **all of size 3**, with the fork taking 2 or 3 of the 3 where upstream takes
 the only route by which the fork can differ here, and with 25 folds over 2 023 sequences a clade of 3 has
 a modest chance of two members landing in one fold. Four cases is a consistent story, not evidence.
 
+**87. The control's published figures were checked against three times the data, and an accident gave
+determinism 26 more runs.** Findings 83 and 85 reported the simulation control on **one injection seed**
+for the fork, which D133 then fixed for the paired test's sake. The fork's three-seed arm finished first,
+so the figures already published could be re-measured rather than assumed to have been robust.
+
+They hold. Recall **1.000 at *k*=1 and 0.000 at *k*=5 unchanged at every distance**, which are the two
+claims the control rests on. The only material drift is species *k*=3, 0.467 to 0.548, which is the
+noisiest cell and the one expected to move. The surviving-ratio law drifts by at most **+0.030** on three
+times the data -- 1.000, 0.990, 0.822, 0.000 against the one-seed 1.000, 0.985, 0.793, 0.000 -- with the
+two anchors exact and *n* per band rising from about 132 to about 400. So the one-seed figures were
+under-powered for a sign test, as D133 said, and were not wrong.
+
+**And the second simulation job re-ran the seed-1 cells on a different CPU vendor**, which nothing asked
+it to do: the un-injected reference moved from an AMD EPYC 7662 to an Intel Xeon E5-2695 v3, 32.17 s to
+48.75 s. That makes 13 cells times two tools a determinism check nobody designed. **44 tracked files
+changed and not one is a `.mis`** -- only `run.json` and the tool logs, differing in host, CPU model,
+wall clock, memory and CPU seconds. Every answer is byte-identical across the two vendors, including the
+un-injected reference's md5 `c47a52a5…` with zero rows on both.
+
+README's determinism claim rests on one cell produced three times. This adds 26 runs over two vendors
+without costing anything, and it is recorded because an accident that could have broken a claim and did
+not is worth as much as a test that was planned.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

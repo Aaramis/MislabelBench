@@ -32,11 +32,11 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/c6/efdbfabd82d6242e8c7874b8b71d5c/tmp/sim_family_k5_s1__epang_T8_K25__rep1_1791108514844/RAxML_info.mfresolv_sim_family_k5_s1__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/c6/efdbfabd82d6242e8c7874b8b71d5c/tmp/sim_family_k5_s1__epang_T8_K25__rep1_1791108514844/epang_l1out_seq_sim_family_k5_s1__epang_T8_K25__rep1 (0.2s)
-[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 13.7s)
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/c6/efdbfabd82d6242e8c7874b8b71d5c/tmp/sim_family_k5_s1__epang_T8_K25__rep1_1791112440140/RAxML_info.mfresolv_sim_family_k5_s1__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/c6/efdbfabd82d6242e8c7874b8b71d5c/tmp/sim_family_k5_s1__epang_T8_K25__rep1_1791112440140/epang_l1out_seq_sim_family_k5_s1__epang_T8_K25__rep1 (0.3s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 20.8s)
 [epang-l1o] placements produits: 864 (K=25 folds, remap 0.4s)
-[epang-l1o] timing: fold prep 0.2s, epa-ng 13.7s, remap 0.4s, elapsed 14.3s
+[epang-l1o] timing: fold prep 0.3s, epa-ng 20.8s, remap 0.4s, elapsed 21.5s
 Leave-one-out test identified 9 suspicious sequences; running final EPA test to check them...
 
 [epang-final] 9 suspects re-placed (model RAxML_info.mfresolv_sim_family_k5_s1__epang_T8_K25__rep1)
@@ -48,5 +48,5 @@ Total mislabels: 9 / 1.04 %
 Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/c6/efdbfabd82d6242e8c7874b8b71d5c/run/sim_family_k5_s1__epang_T8_K25__rep1.mis
 Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/c6/efdbfabd82d6242e8c7874b8b71d5c/run/sim_family_k5_s1__epang_T8_K25__rep1.log
 
-Analysis completed successfully, elapsed time: 26 seconds (9s reftree, 17s leave-one-out)
+Analysis completed successfully, elapsed time: 39 seconds (15s reftree, 24s leave-one-out)
 

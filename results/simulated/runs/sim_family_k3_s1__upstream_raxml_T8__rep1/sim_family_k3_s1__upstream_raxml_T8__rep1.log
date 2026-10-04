@@ -41,5 +41,5 @@ Total mislabels: 43 / 4.98 %
 Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/2f/61dc23a6b134ab8044803c73721ace/run/sim_family_k3_s1__upstream_raxml_T8__rep1.mis
 Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/2f/61dc23a6b134ab8044803c73721ace/run/sim_family_k3_s1__upstream_raxml_T8__rep1.log
 
-Analysis completed successfully, elapsed time: 543 seconds (3s reftree, 540s leave-one-out)
+Analysis completed successfully, elapsed time: 905 seconds (5s reftree, 899s leave-one-out)
 

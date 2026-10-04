@@ -32,11 +32,11 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/74/c00349bce9518b15d878e1539e1e7f/tmp/sim_genus_k5_s1__epang_T8_K25__rep1_1791108515367/RAxML_info.mfresolv_sim_genus_k5_s1__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/74/c00349bce9518b15d878e1539e1e7f/tmp/sim_genus_k5_s1__epang_T8_K25__rep1_1791108515367/epang_l1out_seq_sim_genus_k5_s1__epang_T8_K25__rep1 (0.2s)
-[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 13.9s)
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/74/c00349bce9518b15d878e1539e1e7f/tmp/sim_genus_k5_s1__epang_T8_K25__rep1_1791112352564/RAxML_info.mfresolv_sim_genus_k5_s1__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/74/c00349bce9518b15d878e1539e1e7f/tmp/sim_genus_k5_s1__epang_T8_K25__rep1_1791112352564/epang_l1out_seq_sim_genus_k5_s1__epang_T8_K25__rep1 (0.2s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 20.9s)
 [epang-l1o] placements produits: 864 (K=25 folds, remap 0.4s)
-[epang-l1o] timing: fold prep 0.2s, epa-ng 13.9s, remap 0.4s, elapsed 14.5s
+[epang-l1o] timing: fold prep 0.2s, epa-ng 20.9s, remap 0.4s, elapsed 21.5s
 Leave-one-out test identified 9 suspicious sequences; running final EPA test to check them...
 
 [epang-final] 9 suspects re-placed (model RAxML_info.mfresolv_sim_genus_k5_s1__epang_T8_K25__rep1)
@@ -48,5 +48,5 @@ Total mislabels: 9 / 1.04 %
 Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/74/c00349bce9518b15d878e1539e1e7f/run/sim_genus_k5_s1__epang_T8_K25__rep1.mis
 Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/74/c00349bce9518b15d878e1539e1e7f/run/sim_genus_k5_s1__epang_T8_K25__rep1.log
 
-Analysis completed successfully, elapsed time: 28 seconds (11s reftree, 17s leave-one-out)
+Analysis completed successfully, elapsed time: 41 seconds (16s reftree, 24s leave-one-out)
 

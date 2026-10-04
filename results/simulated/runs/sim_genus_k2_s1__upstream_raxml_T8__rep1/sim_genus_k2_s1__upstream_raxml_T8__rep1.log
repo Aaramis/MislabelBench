@@ -41,5 +41,5 @@ Total mislabels: 44 / 5.09 %
 Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/a3/4c586b2a0ce899da3d82372e6ea491/run/sim_genus_k2_s1__upstream_raxml_T8__rep1.mis
 Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/a3/4c586b2a0ce899da3d82372e6ea491/run/sim_genus_k2_s1__upstream_raxml_T8__rep1.log
 
-Analysis completed successfully, elapsed time: 397 seconds (3s reftree, 395s leave-one-out)
+Analysis completed successfully, elapsed time: 814 seconds (4s reftree, 810s leave-one-out)
 
