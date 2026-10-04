@@ -181,10 +181,15 @@ bin/analyses.sh
 git status --short | grep -v '^??'      # 0 lines
 ```
 
-**Zero of the 5 231 tracked files under `results/` differs.** Twenty analysis steps run, the gates
-among them: 1 019 run records checked clean, the same 1 019 agreeing with the `--timing_trusted`
-their job script declared, 196 datasets across five manifests sound, 180 injected cells and 9
-foreign cells verified against their truth, and every grid complete at 180 of 180.
+**Zero of the tracked files under `results/` differs.** Twenty analysis steps run, the gates among
+them: every run record checked clean, every one agreeing with the `--timing_trusted` its job script
+declared and with no outdir unclaimed, 196 datasets across five manifests sound, 180 injected cells
+and 9 foreign cells verified against their truth, and every grid complete at 180 of 180.
+
+The counts are deliberately not written out here. They were — 5 231 files and 1 019 records — and
+two days of work moved them to 5 245 and 1 022, which is the drift this report has already recorded
+twice, in its own coverage table and in a comment quoting a figure the script beside it computes.
+The gates print their counts and `git status` prints the diff.
 
 No cluster, no container, no network. The two `make_` scripts rebuild the 189 generated cells from
 their seeds, which is why they are not committed, and `data/README.md` records the check that they
