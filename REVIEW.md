@@ -1472,6 +1472,41 @@ Upstream's nine cells were still running when this was written, so this is the f
 is a property of leave-one-out rather than of the placement engine, so it should hold for both, and that
 is a prediction the pending arm tests rather than an assumption it is allowed to make.
 
+**83. The simulation control returns both things 2.1 asks of it, and the second was not asked for.**
+2.1 proposes simulation as a sanity check: "Simulation shows that the method works where the answer is
+certain." On the fork, over 864 sequences whose taxonomy *is* the tree:
+
+**Zero flags on the un-injected reference.** 864 certainly-correct sequences, `n_mislabels: 0`, the run
+completing normally in 32 s. That is the number 2.4 says real data cannot give -- there, "a flag on such
+a sequence cannot be called a false positive", which is why the whole benchmark reports collateral flags
+against a measured baseline instead. The real archaeal sets flag 93 of 2 023 and 469 of 7 051, 4.6 % and
+6.7 %, and those are not false positives. Here the strict rate is **0.00 %**.
+
+**Recall 1.000 at k=1**, at species, genus and family distance alike, with zero collateral flags. The
+real grid at the same point gives 0.746 with 133 collateral flags per cell. So the distance between
+0.746 and 1.000 is the reference's own difficulty and not the method's ceiling, which is exactly the
+calibration 2.1 wants and the reason it calls this a control rather than a second set of results.
+
+**And the surviving-ratio law holds out of sample**, which was not among 2.1's stated purposes and is
+the more useful half. 2.2's falsifiable prediction -- that what predicts detection is the share of a
+sequence's surviving relatives carrying the wrong label, not *k* and not the fold count -- was fitted on
+the archaeal grid. On simulated data it reproduces in shape and sits uniformly above:
+
+| share carrying the wrong label | simulated | archaeal |
+|---|---|---|
+| 0.0-0.2 | **1.000** | 0.867 |
+| 0.2-0.4 | **0.985** | 0.600 |
+| 0.4-0.6 | **0.793** | 0.327 |
+| 0.8-1.0 | **0.000** | 0.011 |
+
+Monotone on both, collapsing to nothing at the top of the range on both. The offset is the heterogeneity
+2.1 predicts a simple model cannot reproduce, and the agreement in shape is what makes the law a
+statement about leave-one-out rather than about GTDB.
+
+One design artefact to state rather than leave for a reader to find: the simulated cells have no
+0.6-0.8 band at all. Six sequences per species and *k* in 1, 2, 3, 5 give surviving-wrong ratios of
+exactly 0, 0.2, 0.4 and 0.8, so that band is empty by construction and not by measurement.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
