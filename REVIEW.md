@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-five more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-six more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -470,6 +470,22 @@ not from the injected file. A wrong label is drawn from a real taxon at the same
 sequence relabelled *into* a group makes that group look populated when its own members have all
 been relabelled away — reading the injected file would have passed on exactly the case the check
 exists to catch.
+
+**46. The detectability ceiling was never localised to the set it bounds.** The 7 051-sequence set
+has 847 groups of byte-identical rows and 54 carrying conflicting labels — 7 first disagreeing at
+phylum, 6 at class — which the protocol presents, correctly, as a ceiling on what any method placing
+this marker can find. The grid does not run on that set. The 2 023-sequence subset has 241 identical
+groups and **3 conflicting, none above genus**, which is what chance gives: 54 groups each needing
+both members to survive a 29 % subsample is 4.4 expected.
+
+So the ceiling bounds the agreement figures, measured on the 7 051 set, and does not bound the recall
+figures, measured on the 2 023 one. Worth stating because it cuts both ways — it localises a
+limitation and it removes a doubt about the grid that a reader would otherwise be right to raise.
+
+**Four protocol figures checked against the committed results while finding this, all holding
+exactly**: 82 of 103 flags shared at 2 023 with Jaccard 0.796, 350 of 520 at 7 051 with 0.673, 54
+conflicting groups, 265 sequences in one. Three other protocol figures were wrong this week, which
+is the reason to check the rest rather than the reason to assume they are too.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
