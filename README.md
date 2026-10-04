@@ -185,6 +185,20 @@ at all: "budget unreachable" at 27.9 collateral flags per cell and below, where 
 That is the same conclusion as the saturation above, by a route that never looks at the column's
 distribution.
 
+**Agreement with upstream, the non-regression control, and what it actually returns.** On the
+un-injected sets the two tools share **82 of 103** flags at 2 023 sequences, Jaccard **0.80**, and
+**350 of 520** at 7 051, Jaccard **0.67**. The fork flags more and increasingly so with size: 93
+against 92 at 2 023, which is level, and 469 against 401 at 7 051, **17 % more**. Where both flag the
+same sequence they name the same wrong rank **95.1 %** and **98.3 %** of the time; they propose the
+same replacement **lineage** -- the whole path, which is the strict reading -- **85.4 %** and
+**79.7 %**, and the same replacement **label at the flagged rank alone 90.2 %** and **90.9 %**. Both
+statistics are in `results/agreement_*.json` as `agree_path` and `agree_label`, and they are named here
+because "they agree on what they propose" is two different numbers.
+
+That is weaker than "an unchanged decision rule" invites a reader to expect, and the explanation is not
+in the rule: the classification, the branch labelling and the confidence are upstream's, unchanged, and
+what differs is the placements handed to them.
+
 **What the marker cannot be asked, and where that bites.** The 7 051-sequence set contains 847
 groups of byte-identical alignment rows, and **54 of them carry conflicting labels** — 7 disagreeing
 first at phylum, 6 at class, 1 at order, 2 at family, 5 at genus, 33 at species, with 52 of the 54

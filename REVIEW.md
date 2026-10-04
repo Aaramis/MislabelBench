@@ -2005,6 +2005,31 @@ wrong. `bin/verify_recall_independently.py` is a step of `analyses.sh` and check
 row of all five grid summaries: 1 800 published values, 1 800 agreeing.** Its failure path was tested on
 a tampered summary with one cell moved by 0.01, which it names and exits non-zero on.
 
+**100. The control the protocol describes to Stamatakis in most detail was absent from README, which
+pointed at it anyway.** Recomputing the agreement figures from the two baseline `.mis` files, by the
+same second-route method as findings 98 and 99, confirms every number Protocol.md 2.8 quotes: **82 of
+103 shared at 2 023 sequences, Jaccard 0.7961**, **350 of 520 at 7 051, Jaccard 0.6731**, the fork level
+at the small set (+1.1 %) and **17.0 %** above at the large one, and the same wrong rank named **95.1 %**
+and **98.3 %** of the time. `agreement.py` agrees with an implementation that shares nothing with it, on
+all fourteen values.
+
+One phrase is doing quiet work in that sentence. "They agree on the lineage they propose instead, 80 to
+85 %" is the *whole path* -- 85.4 % and 79.7 % -- while the replacement *label at the flagged rank
+alone* is 90.2 % and 90.9 %. Both are in the record as `agree_path` and `agree_label`, and nothing said
+which the prose meant. README now gives both and names them, which is finding 88's rule about naming the
+statistic applied to a sentence rather than to a table.
+
+**And README did not carry the control at all.** It says at one point "it bounds the agreement figures
+above, which are measured on that set" -- and there were no agreement figures above, anywhere in the
+document. The non-regression control exists in `results/agreement_*.json` and in the protocol sent to a
+co-author, and the results document pointed at a paragraph it did not have. It has one now, with the
+dangling reference made true.
+
+**The recall gate grew the column it was missing.** Finding 99's check covered recall and not the
+collateral flags beside it in the same published rows, which is how a table ends up half verified. It
+now recomputes both for every `by_confidence` row of all five summaries: **3 600 published values, 3 600
+agreeing**, with the new column's failure path tested by moving one cell's collateral count by three.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

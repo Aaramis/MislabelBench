@@ -291,7 +291,7 @@ fi
 # fixtures written by the same hand, so a misreading of the .mis would sit in the code, the fixture and
 # the paper at once. Finding 98 is the precedent: rereading a correct script could not find an error
 # that recomputing from the format found at once.
-step "every published recall, recomputed by a second route"
+step "every published recall and collateral count, recomputed by a second route"
 verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --summary epang_T8_K25__rep1=results/grid_summary_epang_T8_K25.json \
     --summary epang_T8_K25_tree__rep1=results/grid_summary_epang_T8_K25_tree.json \

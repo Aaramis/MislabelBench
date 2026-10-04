@@ -28,7 +28,13 @@ from pathlib import Path
 CONFIDENCE = 4  # column 5 of the .mis, 0-based
 
 
-def cell_recall(truth_path, mis_path, threshold):
+def cell_counts(truth_path, mis_path, threshold):
+    """Recall and collateral flags for one cell, from the two primary files.
+
+    Both columns of the published table, because checking one of a pair is how a table ends up half
+    verified: recall is the share of injected sequences the run reports, collateral is every other
+    sequence it reports. A flag that is neither would mean a name in the .mis that is in no cell.
+    """
     injected = set(json.loads(truth_path.read_text())["injected"])
     flagged = set()
     for line in mis_path.read_text().splitlines():
@@ -37,7 +43,9 @@ def cell_recall(truth_path, mis_path, threshold):
         f = line.split("\t")
         if float(f[CONFIDENCE]) >= threshold:
             flagged.add(f[0])
-    return len(injected & flagged) / len(injected) if injected else None
+    if not injected:
+        return None, None
+    return len(injected & flagged) / len(injected), len(flagged - injected)
 
 
 def main():
@@ -64,9 +72,10 @@ def main():
                     continue
                 if (row["distance"], row["k"], row["rate"]) != (t["distance"], t["k"], t["rate"]):
                     continue
-                r = cell_recall(truth_path, mis, row["threshold"])
+                r, collateral = cell_counts(truth_path, mis, row["threshold"])
                 if r is not None:
-                    mine[(row["distance"], row["k"], row["rate"], row["threshold"])].append(r)
+                    mine[(row["distance"], row["k"], row["rate"], row["threshold"])].append(
+                        (r, collateral))
 
         for row in summary["rows"]:
             if row["metric"] != "by_confidence":
@@ -74,21 +83,29 @@ def main():
             key = (row["distance"], row["k"], row["rate"], row["threshold"])
             if key not in mine:
                 continue
-            checked += 1
+            checked += 2
+            recalls = [r for r, _ in mine[key]]
+            collateral = [c for _, c in mine[key]]
             # The summaries round to four places, so agreement is to that and not to float equality.
-            if abs(round(st.mean(mine[key]), 4) - row["recall_mean"]) > 5e-5:
-                problems.append(f"{cond} {key}: {round(st.mean(mine[key]), 4)} recomputed against "
-                                f"{row['recall_mean']} published")
+            if abs(round(st.mean(recalls), 4) - row["recall_mean"]) > 5e-5:
+                problems.append(f"{cond} {key}: recall {round(st.mean(recalls), 4)} recomputed "
+                                f"against {row['recall_mean']} published")
+            # The collateral column is a mean of integers and is published rounded to whole flags
+            # in some rows and to a fraction in others, so compare at the published precision.
+            published = row.get("flags_on_non_injected_mean")
+            if published is not None and abs(st.mean(collateral) - published) > 0.5:
+                problems.append(f"{cond} {key}: collateral {st.mean(collateral):.2f} recomputed "
+                                f"against {published} published")
 
     # A check that compared nothing must not report success.
     if not checked:
         sys.exit("no published recall could be recomputed; check --injected-dir and --runs-dir")
-    print(f"{checked} published recall values recomputed from truth.json and .mis, "
-          f"{checked - len(problems)} agree")
+    print(f"{checked} published values recomputed from truth.json and .mis -- recall and collateral "
+          f"flags for every by_confidence row -- {checked - len(problems)} agree")
     for pb in problems[:10]:
         print(f"  {pb}", file=sys.stderr)
     if problems:
-        sys.exit(f"{len(problems)} published recall value(s) a second implementation disagrees with")
+        sys.exit(f"{len(problems)} published value(s) a second implementation disagrees with")
 
 
 if __name__ == "__main__":
