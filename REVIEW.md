@@ -629,6 +629,35 @@ the unaligned file would have counted as an identical pair; and its percentage d
 comes from the alignment while the groups come from the alignment intersected with the taxonomy —
 the two cover exactly the same 7 051 and 2 023 names.
 
+**53. The primary dataset had no record of how it was built, and its judgeability was quoted for a
+set that was never benchmarked.** `bin/prepare_gtdb.py` writes a `{prefix}.counts.json` beside every
+dataset it builds. The bacterial donor pool has one, both UNITE subsets have one, and the archaeal
+set -- the one every number in this benchmark rests on -- had none, locally or on the cluster. So the
+only build record for the primary dataset was three figures typed into `assets/datasets.yml`.
+
+Checking them meant rebuilding, and rebuilding tested something stronger that nothing had tested.
+`data/README.md` justifies leaving the 73 MB GTDB release out of git by pinning it with a sha256, "a
+stronger guarantee than a copy in git". That guarantees the *input*. Whether the committed
+`gtdb_arc1200.fasta` and `.tax` actually follow from it was an assumption. `slurm/rebuild_primary.sh`
+re-runs the preparation on the pinned release and compares: both files come back **byte-identical**,
+and the counts confirm all three manifest figures, with the identity `in_domain == too_short +
+name_collision + kept` holding exactly at 13 754 = 6 703 + 0 + 7 051.
+
+What did not survive was the judgeability block beside those counts. Its comment read "taxa with at
+least two members, by rank" while the numbers were the share of *sequences* whose taxon has at least
+two members -- a different statistic on the same file, and at species they are 37.3 % and 72.7 %, so
+the label was wrong by 35 points while the numbers sat there looking right. And the numbers were
+right for the 13 754 sequences before the >= 1200 nt filter, not for the 7 051 that every measurement
+here was made on: genus 95.7 % against 91.7 %, species **81.5 % against 72.7 %**.
+
+The repository already knew, in three places. `results/shape_gtdb_arc1200.json` is committed, is
+produced by `bin/analyses.sh` on every run, and records genus 91.7 and species 72.7 outright;
+`bin/subset_taxa.py:103` reasons from "a source at 72.7 %"; REVIEW.md:424 quotes the same. Only
+`assets/datasets.yml` and the protocol said 81.5 %. Nothing read the YAML field programmatically, so
+a measured number and a typed one sat in the same repository without ever having to meet. Both stages are now recorded under names that say which set they describe, and both
+reproduce from `bin/dataset_shape.py`, whose output was checked against an independent count before
+either was written down.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

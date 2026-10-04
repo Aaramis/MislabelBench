@@ -97,7 +97,7 @@ def main():
     p.add_argument("--tax", required=True)
     p.add_argument("--convention", default="unite", choices=sorted(CONVENTIONS),
                    help="how this reference writes an unresolved rank")
-    p.add_argument("--out", default="shape.json")
+    p.add_argument("--out", help="write the record here; without it the table above is the output")
     args = p.parse_args()
 
     RANKS, pattern, tail_test = CONVENTIONS[args.convention]
@@ -166,7 +166,8 @@ def main():
         "judgeable_denominator": considered,
         "n_taxa": {r: len(members[r]) for r in RANKS},
     }
-    Path(args.out).write_text(json.dumps(shape, indent=2))
+    if args.out:
+        Path(args.out).write_text(json.dumps(shape, indent=2))
 
     L = shape["length"]
     print(f"{shape['n_sequences']} sequences, {shape['n_with_lineage']} with a lineage")

@@ -42,7 +42,27 @@ datasets:
       in_release: 1053664
       after_domain: 13754
       after_length: 7051
-    judgeable_pct:   # taxa with at least two members, by rank
+    # Share of SEQUENCES whose taxon has at least two members, which is what leave-one-out
+    # needs: a sequence that is the only member of its taxon cannot be judged at that rank.
+    # The comment here used to read "taxa with at least two members", which is a different
+    # statistic on the same file -- at species it is 37.3 % against the 72.7 % below, so the
+    # label was off by 35 points while the numbers stayed put.
+    #
+    # Recorded for both stages because the length filter is not free, and the figure that
+    # belongs beside a result is the one for the set that produced it. bin/subset_taxa.py and
+    # REVIEW.md already reason from 72.7 %; only this file and the protocol said 81.5 %.
+    # Both blocks reproduce with:
+    #   bin/dataset_shape.py --fasta data/gtdb/gtdb_arc1200.fasta \
+    #     --tax data/gtdb/gtdb_arc1200.tax --convention gtdb
+    judgeable_pct_after_length:   # the 7051 sequences every measurement here was made on
+      domain: 100.0
+      phylum: 100.0
+      class: 99.9
+      order: 99.6
+      family: 98.0
+      genus: 91.7
+      species: 72.7
+    judgeable_pct_after_domain:   # the 13754 before >= 1200 nt; the candidate comparison
       domain: 100.0
       phylum: 100.0
       class: 100.0
