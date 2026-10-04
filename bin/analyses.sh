@@ -299,6 +299,11 @@ verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --summary epang_T8_K5_tree__rep1=results/grid_summary_epang_T8_K5_tree.json \
     --summary upstream_raxml_T8__rep1=results/grid_summary_upstream_raxml_T8.json
 
+# Seconds from two machines cannot be compared, which is the rule this repository states for itself and
+# enforces at submission with --constraint. Nothing checked it afterwards against what the runs recorded.
+step "every published timing is a median over one CPU model"
+verify_timed_one_model.py
+
 step "truth checks, which must pass rather than be read"
 verify_manifests.py
 # The condition names are the benchmark's independent variable for four of its conditions, and

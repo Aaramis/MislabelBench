@@ -2030,6 +2030,34 @@ collateral flags beside it in the same published rows, which is how a table ends
 now recomputes both for every `by_confidence` row of all five summaries: **3 600 published values, 3 600
 agreeing**, with the new column's failure path tested by moving one cell's collateral count by three.
 
+**101. The paper's first claim is verified twice, and the rule protecting it was never checked.** Speed
+is what the Application Note leads with, and every figure behind it passes through `resource_usage.py`
+alone. Recomputed from `run.json` by a route written from the field names rather than from that script,
+the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequences (8.2x), 16.1/237.8
+(14.8x), 38.5/635.6 (16.5x), 129.0/1343.9 (10.4x), 263.4/2983.6 (11.3x)**, medians and speedups alike,
+which is README's headline and the committed table to the decimal.
+
+**The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
+figure reads seconds from a run marked untrusted. True: of **1 113 run records, 55 are trusted and
+1 058 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
+an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
+fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
+speedup at 16.5. So the discipline is real and the exposure was 0.1 s.
+
+**What was never checked is the rule the discipline exists for.** "Seconds from two machines cannot be
+compared" is enforced at submission by `--constraint` and verified nowhere afterwards. Four of the 14
+timed conditions span two values of `cpu_model`, and the second value is the empty one: **four trusted
+runs carry no `cpu_model` at all**, all four on `cpu-node-123`. They are not a mixture -- other records
+from that same host report `AMD EPYC 9754`, which settles it from the records rather than from Slurm's
+feature list or a sentence in README -- but nothing established that, and the four sit under the 11.3x
+and 16.5x the paper leads with.
+
+`bin/verify_timed_one_model.py` checks it on every rebuild: **14 timed conditions over 55 trusted runs,
+one CPU model each, 4 resolved through their host**. A host that reports two models, or none, fails
+rather than being resolved silently. Both paths tested on a fabricated tree. Its first wording said
+"all on one CPU model" above the lines naming the violations -- the same mistake `verify_fold_counts.py`
+made in finding 92, which is twice now that a gate of mine has claimed a result it had not established.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
