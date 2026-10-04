@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-four more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-five more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -452,6 +452,24 @@ independent sweep would be entitled to ask.
 
 This is the same class as finding 43 and came from the same question: what does the design promise,
 and does it deliver. Two in one pass, both on the axis the headline result is measured along.
+
+**45. The invariant the injection design rests on was never checked.** `inject_mislabels.py`
+enforces `floor = k + 1` so a donor taxon always retains a correctly labelled member — that is what
+gives leave-one-out something true to place an injected sequence against. A fully relabelled group
+would be undetectable by construction and its sequences would sit in the truth as misses no method
+could find: a silent ceiling on recall with no trace in any file. `verify_injection.py` checked that
+the labels are the ones truth records, which is a different claim.
+
+It holds: **0 orphaned donor groups across all 180 cells**, so the design's load-bearing assumption
+moves from reasoned to measured. It is a gate now rather than a measurement taken once, and shown to
+fail before being trusted to pass — on a fabricated cell where both members of a two-member group
+are relabelled, it names the group and exits 1.
+
+One detail decided whether the gate would work at all: membership comes from the base taxonomy and
+not from the injected file. A wrong label is drawn from a real taxon at the same prefix, so a
+sequence relabelled *into* a group makes that group look populated when its own members have all
+been relabelled away — reading the injected file would have passed on exactly the case the check
+exists to catch.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
