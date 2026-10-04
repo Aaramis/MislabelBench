@@ -1728,6 +1728,43 @@ the serial stages stay at 70 s and four nodes regress, exclusion still keeps **9
 at a 0.99 threshold where confidence keeps 51 %, and the fork's recall sits above upstream's at *k* = 2,
 3 and 5 and meets it at 1 and 10.
 
+**91. "Every committed file is rebuilt by this script" was false again, and this time it hid a
+contradiction between a record and the document that cites it.** Finding 73 found eight files
+`bin/analyses.sh` did not rebuild, fixed four, deleted one, and the header was rewritten to say the claim
+was now exact with no exception. Finding 89 removed the four. The claim was still false: the simulated
+set's detection law for each tool and the paired comparison between them -- three records -- were
+produced by hand and rebuilt by nothing, because every loop in the script reads the archaeal grid and
+these read `results/simulated/runs`.
+
+It stayed invisible while the records happened to be current and surfaced the moment they were not.
+Upstream's simulated arm finished at 37 of 37 and its grid went from 12 cells on one seed to 36 on three;
+the summary was rebuilt, the law and the paired test were not. Worse, the fork's law record had been
+stale for longer and nobody could have noticed from the repository alone: **README publishes 1.000,
+0.990, 0.822, 0.000 as the surviving-ratio law on the simulated set and the record behind it held 1.000,
+0.985, 0.793, 0.000** -- the one-seed values. The published figures were right, and a reader who opened
+the record they cite would have found different ones.
+
+All three are steps now, guarded per arm so that one tool finishing before the other does not fail the
+script -- the shape finding 83 arrived at for kind 3. Rebuilding them is also what produced the control's
+headline result, which no partial record could have shown: at *k*=3 the fork detects more in **9 cells of
+9**, p = 0.0039 against a floor of 0.0039, where the twelve-cell version gave 3 of 3 and a floor of 0.25.
+
+**And the gate, which is the part that matters.** Three findings have now been the same defect: a
+committed record with no producer in the one script that claims to produce everything. Each was found by
+hand, twice by noticing a number that should have moved and did not. `bin/verify_rebuild_coverage.py`
+ends that. The boundary needs no list to maintain and so cannot rot the way an exemption list would:
+files directly under `results/` are tables derived by `bin/`, everything deeper is evidence copied from
+the cluster, so every file at that top level must be newer than the marker `analyses.sh` stamps when it
+starts. **46 tables, 46 rebuilt**, and the claim the script opens with is now checked on every run
+instead of restated.
+
+A table that is not rebuilt fails the script even when the reason is legitimate -- an experiment with one
+arm still on the cluster leaves its tables at the other arm's values -- because that is exactly the state
+in which nothing here should be quoted. All three paths were tested rather than reasoned about: a stale
+file fails and is named, an empty `results/` fails instead of reporting success, and a missing marker
+fails. My first attempt to test the failure path was wrong and the gate was right: I backdated
+`stem_flags.txt`, which the script does rebuild, so it was simply rewritten.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

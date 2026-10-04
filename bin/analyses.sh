@@ -33,6 +33,12 @@ FOLD_CONDITIONS="epang_T8_K25 epang_T8_K25_tree epang_T8_K5 epang_T8_K5_tree"
 
 step() { printf '\n== %s\n' "$*"; }
 
+# Stamped before the first step so the last one can check that every table under results/ is newer
+# than it. Not in results/, which is what is being checked, and not committed.
+REBUILD_MARKER="${TMPDIR:-/tmp}/analyses_started.$$"
+: > "$REBUILD_MARKER"
+trap 'rm -f "$REBUILD_MARKER"' EXIT
+
 # A gate, not a report: a run that did not finish cleanly must not reach any table below.
 step "every run finished cleanly"
 verify_runs.py
@@ -295,6 +301,10 @@ verify_grid_complete.py --datasets-json data/gtdb/datasets2k.json --runs-dir res
 # upstream shows up as a diff in a table and not only as a change of ink.
 step "the Application Note's figure"
 make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/figure1_values.tsv
+
+# The claim this script opens with, checked rather than restated. It has been false three times.
+step "every table under results/ was rebuilt by this run"
+verify_rebuild_coverage.py --marker "$REBUILD_MARKER"
 
 echo
 echo "done; results/ rebuilt from $BENCH_ROOT"
