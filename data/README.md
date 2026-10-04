@@ -33,3 +33,10 @@ regenerating the grid on macOS under python 3.14 gives `.tax` files whose md5 ma
 field that moved was
 `source`, which recorded the absolute path of the input and therefore could not match between two
 machines; it now records the input's name and sha256, which can.
+
+That check named the `.tax` and the `truth.json` and stopped there, which is narrower than what it is
+used to license: a cell also carries a `.fasta`, and that is the file SATIVA reads. Rerun from a fresh
+clone with nothing but the two `make_` scripts, **all 378 regenerated files are byte-identical** --
+180 injected `.tax`, 180 injected `.fasta`, and both for the nine foreign cells, which the earlier
+check did not cover either. The 180 injected `.fasta` are exact copies of `gtdb_arc2k.fasta`, because
+injection rewrites a taxonomy and never an alignment.

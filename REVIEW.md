@@ -258,7 +258,7 @@ bin/analyses.sh
 git status --short | grep -v '^??'      # 0 lines
 ```
 
-**Zero of the tracked files under `results/` differs.** Twenty analysis steps run, the gates among
+**Zero of the tracked files under `results/` differs.** Twenty-two analysis steps run, the gates among
 them: every run record checked clean, every one agreeing with the `--timing_trusted` its job script
 declared and with no outdir unclaimed, 196 datasets across five manifests sound, 180 injected cells
 and 9 foreign cells verified against their truth, and every grid complete at 180 of 180.
@@ -269,8 +269,11 @@ twice, in its own coverage table and in a comment quoting a figure the script be
 The gates print their counts and `git status` prints the diff.
 
 No cluster, no container, no network. The two `make_` scripts rebuild the 189 generated cells from
-their seeds, which is why they are not committed, and `data/README.md` records the check that they
-come back byte-identical.
+their seeds, which is why they are not committed, and this run checked that directly instead of
+deferring to `data/README.md`: **all 378 regenerated files byte-identical**, and then every one of the
+41 tracked tables rewritten -- counted, because a clean `git status` over files nothing rewrote would
+say nothing at all. Only the three version 1 files are left alone, which is now stated rather than
+implied.
 
 ## Found after this report was written
 
@@ -1186,6 +1189,32 @@ Now `tuple((x is None, x) for x in kv[0])`, which orders ints as ints and sends 
 move and the change was checked to be order and nothing else: **key sets identical and every value
 identical in all nine**, the four k-axis and fold-sweep records landing back in exactly their committed
 order, which is what confirms the diagnosis rather than merely fitting it.
+
+**75. The reproducibility check was narrower than the claim it licenses, and the figure justifying it
+was wrong by a factor of seven.** The repository does not commit the per-cell datasets, on the grounds
+that they are regenerable from their seeds and that the regeneration is checked. Both halves needed
+looking at.
+
+`data/README.md` records the check as "`.tax` files whose md5 matches ... and `truth.json` files
+identical in all 180 cells". A cell also carries a `.fasta`, and that is the file SATIVA reads; a
+taxonomy matching while the alignment did not would be worse than the reverse, not better. The nine
+foreign cells were not covered either. Rerun from a fresh clone with nothing but `make_grid.sh` and
+`make_foreign.sh`: **378 of 378 regenerated files byte-identical** -- 180 injected `.tax`, 180 injected
+`.fasta`, and both for the nine foreign cells. The claim holds and now says what was actually checked.
+The 180 injected `.fasta` turn out to be exact copies of `gtdb_arc2k.fasta`, because injection rewrites
+a taxonomy and never an alignment.
+
+`.gitignore` justified the exclusion with "86 MB of near-copies of one taxonomy and one alignment".
+Counted: **642 MB** -- 552 of injected `.fasta`, 58 of injected `.tax`, 31 for the foreign cells. Wrong
+by seven and in the direction that understates its own argument. "Near-copies" is also wrong for the
+larger half: 552 of the 642 MB are 180 byte-identical copies of one 3 MB file, which is worth knowing
+because it is the pipeline staging a whole alignment per cell when only the taxonomy varies.
+
+The clone run is the end of the chain rather than a step in it: clone, regenerate 378 files from seeds,
+rebuild 41 tables, **zero diffs**, 22 steps, every gate passing, no cluster and no container. The 41 was
+counted rather than inferred from a clean `git status`, which over files nothing rewrote would have said
+nothing at all -- the same trap as every other check in this review that reported success without having
+looked.
 
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
