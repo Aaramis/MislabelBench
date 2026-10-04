@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Thirty-one more came later, from repatriating the results, cloning the
+done during the review itself. Thirty-two more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -172,7 +172,7 @@ Worth stating, because an audit that only lists faults does not say what it cove
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
-mentions. It reports **41 of 89**. That is not a claim those files were never read — most went
+mentions. It reports **40 of 89**. That is not a claim those files were never read — most went
 through the first pass as a batch — but a file the report never names has at best been read without
 record, and this review found out what that costs: `bin/_timeit.py` produces every second and every
 memory figure here and went unexamined through forty-eight findings, because it sat inside a coverage
@@ -577,6 +577,24 @@ tables disagreeing on their totals with nothing to say so. **Unreachable in the 
 injected sequences, 0 have a missing lineage, 0 sit in a group without a survivor, 0 give a negative
 denominator — so the fix is the comparison that would have caught it rather than a defensive branch:
 the two tables count the same sequences, and the script now stops if they disagree.
+
+**51. A format mismatch was reported as a measurement.** `threshold_holdout.py` supports a claim the
+protocol makes outright — thresholds chosen on one seed and reported on the others — and the coverage
+list said this report had never named it.
+
+**The hold-out is clean.** Candidate thresholds come from the selection seed alone, the choice is made
+by a budget evaluated on that seed alone, and the held-out cells are consulted only afterwards at the
+chosen threshold; the split is by seed over all 180 cells, 60 fit and 120 held, disjoint by
+construction. Its own diagnostic says the selection is not fitted to noise: **the gap between fit and
+held-out recall is +0.007 to +0.008** across every budget and both columns, and the sign is positive —
+held-out slightly above fit, the opposite of an optimistic bias.
+
+The fault is in what it does with the wrong input. `read_mis` keeps only rows carrying the ninth
+column, so a tool that writes no `OriginalLabelExclusion` yields nothing at all — not even its
+`Confidence` values. Run on an upstream condition it printed "baseline 0 flags", "unfiltered
+collateral flags per cell: 0.0" and "unreachable" for every budget, which reads as a measurement of a
+tool that flags nothing. It names the missing column and exits 1 now. Nothing published was affected:
+`analyses.sh` only ever runs it on the fork.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
