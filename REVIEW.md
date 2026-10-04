@@ -185,6 +185,16 @@ Worth stating, because an audit that only lists faults does not say what it cove
   directory, and names the known datasets or fields when asked for one that is absent. Its one trap
   was cosmetic and is fixed: a non-scalar field printed as a Python repr, so `counts` could not be
   piped to a parser.
+- **Every job script, swept for the four faults that would be systematic.** All 33 under `slurm/` set
+  `set -euo pipefail` except `prelude.sh`, which is sourced and must not impose `-e` on its caller.
+  All source the prelude except `submit.sh`, which runs from a login shell and needs nothing from it,
+  and `make_grid.sh`, which validates `BENCH_ROOT` by consequence: it `cd`s into it at line 10 under
+  `set -e`, so a wrong root fails at the first use rather than writing somewhere unintended. Every
+  omission of `require_singularity` is correct -- the fetch scripts and `rebuild_primary.sh` only
+  download and parse, and `staged_timed.sh` launches through Slurm, where each task gets its own node
+  and the launcher needs no container runtime. The one `rm -rf` with a relative operand is
+  `determinism.sh`'s `work_det`, deliberate and documented beside the absolute outdir that the same
+  line clears, which is where that bug was.
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
