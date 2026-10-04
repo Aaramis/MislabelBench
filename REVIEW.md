@@ -1162,13 +1162,14 @@ rebuild them from, so they were out of scope and the header said so instead of c
 have since been removed with the rest of version 1, which is the cleaner end: the script's claim to
 rebuild every committed result is now exact, with no exception to state.
 
-Four are current and were simply never rebuilt: `kaxis_epang_T8_K25.json`,
+Four were current and simply never rebuilt: `kaxis_epang_T8_K25.json`,
 `kaxis_upstream_raxml_T8.json`, `ksweep_epang_T8_K25.json`, `ksweep_epang_T8_K5.json`. Their runs are
 under `results/kaxis/runs` and `results/ksweep/runs` and every loop in the script reads
 `results/grid_fork/runs`, so a change to `aggregate_grid.py` or `score_injection.py` could not have
-shown up in them. They are rebuilt now. Their `n_missing` moves from 135 and 144 to 165 and 174,
-because it counts cells in `data/injected` with no run and that directory held 150 when they were
-written and holds 180 now -- `15 + 135` and `6 + 144` both being 150 is what gave that away.
+shown up in them. They were rebuilt, which moved their `n_missing` from 135 and 144 to 165 and 174:
+it counts cells in `data/injected` with no run, and that directory held 150 when they were written and
+holds 180 now -- `15 + 135` and `6 + 144` both being 150 is what gave that away. Finding 89 then found
+that rebuilding them was the wrong fix, the cells being a subset of the grid's, and they are gone.
 
 The eighth, `results/grid_summary.json`, is deleted. It holds 600 rows against the 720 and 360 of the
 five per-condition summaries that supersede it, so it is a snapshot of a partial grid under the most
@@ -1189,7 +1190,9 @@ and five the other.
 Now `tuple((x is None, x) for x in kv[0])`, which orders ints as ints and sends null last. Nine records
 move and the change was checked to be order and nothing else: **key sets identical and every value
 identical in all nine**, the four k-axis and fold-sweep records landing back in exactly their committed
-order, which is what confirms the diagnosis rather than merely fitting it.
+order, which is what confirms the diagnosis rather than merely fitting it. Those four were removed
+afterwards, under finding 89; the diagnosis they confirmed stands, and the five that remain carry the
+fix.
 
 **75. The reproducibility check was narrower than the claim it licenses, and the figure justifying it
 was wrong by a factor of seven.** The repository does not commit the per-cell datasets, on the grounds
@@ -1652,6 +1655,40 @@ them, and then watch what the corrected numbers predict. Finding 33 is the only 
 measurement predicted before the cluster confirmed it. After them, `bin/analyses.sh` runs to its last gate and 43 of the 45
 committed tables come back byte-identical, the two that move being the ones that read the upstream
 grid while it is still growing.
+
+**89. Two of the repository's result groups were not results, and the 42 runs behind them are the
+largest reproducibility check here.** Finding 88 asked which measurements README omits. Answering it by
+grepping for each result group's filename flagged 12 of 25 groups as uncited, most of them false alarms
+-- README reports `disagreement_truth` as "1 243 against 115" and `kexact_decomposition` as "+0.284 and
++0.177", by their conclusion rather than by the name of the file. Two of the twelve were not false
+alarms, and the reason they were uncited is better than the reason I expected.
+
+`results/kaxis` is species distance at every *k*, rate 0.05, three seeds, under both tools: 15 cells
+times 2 conditions, 30 run directories. `results/ksweep` is species and genus at *k*=10, three seeds,
+under `epang_T8_K25` and `epang_T8_K5`: 6 cells times 2, 12 directories. Both predate the full grid, and
+the full grid now covers **every one of those 21 cells** under every one of those conditions, from the
+same `data/injected` inputs and the same seeds -- `results/grid_fork/runs` holds all 180 cells for
+`epang_T8_K25`, `epang_T8_K5` and `upstream_raxml_T8` alike. The side grids are subsets, so their recalls
+cannot differ from the grid's and do not: **+0.000 on all five overlapping cells of the *k* axis**.
+
+Which makes rebuilding their four summary records, as finding 73 did, the wrong fix. It produced four
+committed files under names a reader would take for separate experiments, carrying numbers the grid
+already reports. Those four are deleted.
+
+What the 42 run directories *are* is 42 cells computed twice, in different Slurm jobs, at different times,
+into different work directories. Every one of the 42 `.mis` is byte-identical to its grid counterpart:
+**42 identical, 0 differing, 0 without a counterpart.** And the 42 pairs are demonstrably separate
+executions rather than copies -- **no pair shares a wall time**, the widest being 731.8 s against 526.2 s
+for one upstream cell, 39 % apart. README's determinism claim rests on one cell produced three times and
+finding 87 added 26 runs across two CPU vendors; this is 42 more, and it was sitting in the repository
+unexamined. `bin/verify_duplicate_runs.py` now checks it on every run of `bin/analyses.sh`, and exits
+non-zero if a pair ever disagrees, because a pair that disagrees invalidates every table here.
+
+The instrument that found this was not kept. A committed `results_coverage.py` would measure citation
+style, not coverage: 12 of 25 groups flagged and roughly ten of them reported by their conclusion is a
+false-positive rate that would train a reader to ignore the gate. A check that is wrong four times in
+five is worse than no check, because the one real failure arrives looking exactly like the other four.
+The one-off grep did its work and is not worth keeping.
 
 ## Deferred, with reasons
 

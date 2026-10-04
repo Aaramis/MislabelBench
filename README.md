@@ -53,6 +53,14 @@ directory:
 | determinism, 2 Oct | cpu-node-37 | Intel Xeon E5-2695 v3 | 66.0 s | `b41934ad…` |
 | determinism, rerun | cpu-node-16 | Intel Xeon E5-2695 v3 | 56.3 s | `b41934ad…` |
 
+And 42 more cells, which were run twice before anyone thought to compare them. `results/kaxis` and
+`results/ksweep` are earlier, smaller runs of cells the 180-cell grid also covers, so each of their 42
+run directories has a counterpart computed by a different Slurm job at a different time. All 42 `.mis`
+are byte-identical to that counterpart, and **no pair shares a wall time** -- the widest is 731.8 s
+against 526.2 s, 39 % apart -- so they are separate executions and not copies.
+`bin/verify_duplicate_runs.py` is the check; it is not a separate result, and the grid is where those
+cells' numbers are reported.
+
 A 1.7-fold spread in seconds and the same 161 flags to the byte. Two of the three rows are records you
 can open: the grid cell and the rerun. The 2 October row is not -- `determinism.sh` opens by clearing
 its own output directory, so its successor wiped that run's `.mis`, and what survives is

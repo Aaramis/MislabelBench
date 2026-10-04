@@ -150,24 +150,18 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
         --out "results/foreign_summary_${cond}.json"
 done
 
-# The two side grids, which this script did not rebuild. Four committed records came out of them and
-# none was regenerated here, so "a change to any script shows up as a diff" was false for them: their
-# runs live under results/kaxis and results/ksweep, and the loops above read only results/grid_fork.
-# Their n_missing is counted against the injected directory as it is now, 180 cells, where the
-# committed records were written when it held 150 -- so n_missing moves from 135 and 144 to 165 and
-# 174 and the rows do not.
-step "the k axis and the fold sweep, whose runs are not under grid_fork"
-for cond in epang_T8_K25 upstream_raxml_T8; do
-    base=results/baseline2k/runs/gtdb_arc2k__${cond}__rep1/gtdb_arc2k__${cond}__rep1.mis
-    aggregate_grid.py --injected-dir "$INJ" --runs-dir results/kaxis/runs \
-        --condition "${cond}__rep1" --baseline-mis "$base" \
-        --out "results/kaxis_${cond}.json"
-done
-for cond in epang_T8_K25 epang_T8_K5; do
-    aggregate_grid.py --injected-dir "$INJ" --runs-dir results/ksweep/runs \
-        --condition "${cond}__rep1" --baseline-mis "$BASE_FORK" \
-        --out "results/ksweep_${cond}.json"
-done
+# The two side grids, which are not separate results. kaxis ran species distance at every k and rate
+# 0.05, ksweep ran species and genus at k=10, and the 180-cell grid now covers every one of those
+# cells with the same seeds and the same injected inputs. Rebuilding their four summary records was
+# worse than not rebuilding them: it produced four committed files carrying the grid's own numbers,
+# which a reader could take for independent measurements of the same quantity. They were removed.
+#
+# What their 42 run directories are good for is the opposite claim. Each was produced by a different
+# Slurm job at a different time from the grid's counterpart, so comparing the two is the largest
+# reproducibility check here by a wide margin -- 42 cells against the determinism script's one cell
+# produced three times.
+step "the 42 cells that were run twice must have produced the same answer twice"
+verify_duplicate_runs.py
 
 # Error kind 3, which Protocol.md 2.2 asks to characterise rather than score: whole taxa relabelled,
 # so nothing correct is left to confirm them, and detection reported against how well the clade can
