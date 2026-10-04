@@ -74,19 +74,35 @@ def main():
     if args.base_scores:
         base = list(cmalign_scores(args.base_scores).values())
         print(f"archaeal set       {describe(base)}")
+    # The median cannot answer the question it was given. Three quarters of the donors sit between
+    # 1001 and 1014 bits, so a median difference of a fraction of a bit says nothing about the left
+    # tail, which is the only place an alignment effect could live: a donor that aligns at 461 bits
+    # is the one that might be flagged for aligning badly rather than for where it places. So count
+    # the tail instead, against what independence predicts.
+    tail = {}
     if hit and miss:
         print(f"\nmedian difference between flagged and unflagged donors: "
-              f"{st.median(hit) - st.median(miss):+.1f} bits")
-        # If detection were driven by alignment score, the unflagged donors would be the ones that
-        # align well, so their median would be clearly higher.
-        overlap = min(max(hit), max(miss)) - max(min(hit), min(miss))
-        print(f"their score ranges overlap over {overlap:.1f} bits")
+              f"{st.median(hit) - st.median(miss):+.2f} bits")
+        print(f"lowest score  flagged {min(hit):.2f}  unflagged {min(miss):.2f}")
+        allv = sorted(hit + miss)
+        print(f"\n{'tail':>12}{'cut':>10}{'flagged':>9}{'unflag':>8}{'expected':>10}")
+        for q in (0.05, 0.10, 0.25):
+            cut = allv[int(len(allv) * q)]
+            nh = sum(1 for v in hit if v <= cut)
+            nm = sum(1 for v in miss if v <= cut)
+            exp = len(hit) * (nh + nm) / len(allv)
+            tail[f"below_p{int(q * 100)}"] = {"cut_bits": round(cut, 2), "flagged": nh,
+                                             "unflagged": nm, "flagged_expected": round(exp, 1)}
+            print(f"{'below p' + str(int(q * 100)):>12}{cut:10.2f}{nh:9}{nm:8}{exp:10.1f}")
+        print("\nflagged at or near the expected count in every tail means the detection does not "
+              "track alignment quality")
 
     if args.out:
         Path(args.out).write_text(json.dumps({
             "condition": args.condition,
             "flagged": {"n": len(hit), "median": round(st.median(hit), 2) if hit else None},
             "unflagged": {"n": len(miss), "median": round(st.median(miss), 2) if miss else None},
+            "low_score_tail": tail,
         }, indent=2))
 
 

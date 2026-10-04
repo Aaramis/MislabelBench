@@ -736,6 +736,29 @@ it would add background. The three published shares reproduce byte-identically, 
 totals sum to 25 772 against an independent recount. The docstring's "31.5 % of all flags" was the
 one thing wrong: 8057 of 25 772 is 31.3 %.
 
+**58. A caveat was ruled out with a statistic that could not have detected it.** `bin/foreign_score_vs_flag.py`
+answers whether the bacterial donors of error kind 6 are flagged for where they place or for aligning
+badly against the archaeal covariance model, and it answers by comparing medians: 1009.14 bits flagged
+against 1009.16 unflagged, a difference of 0.02 bits. Correct arithmetic, and no evidence either way,
+because three quarters of the donors sit between 1001 and 1014 bits. A median that discriminating
+cannot see the only place an alignment effect could live, which is the left tail -- the donor that
+aligns at 461 bits is the one that might be flagged for aligning badly rather than for its position.
+And the tail is where the reader's suspicion naturally goes, since the unflagged donors bottom out at
+975 while the flagged reach 461.
+
+Counted against what independence predicts, the caveat is genuinely dead. Below the 5th percentile of
+score, 20 donors are flagged and 0 unflagged where 19.0 flagged is expected; below the 10th, 39 and 1
+against 38.0; below the 25th, 94 and 5 against 94.0. The same three rows for upstream. So the worst
+aligning donors are all flagged for the reason 95 % of the donors are flagged and not for their score,
+and the protocol's caveat was overcautious in the direction the protocol guessed. The counts are now
+in the two published records and in what the script prints, so the conclusion rests on the statistic
+that can carry it.
+
+Two things that were checked and did hold: the parse reads `bit sc` and not a neighbouring column,
+confirmed against the `--sfile` header, and all 393 donor injections have a score in both conditions
+-- 373 + 20 and 376 + 17 -- so the silent `continue` for a donor missing from the score table never
+fires.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

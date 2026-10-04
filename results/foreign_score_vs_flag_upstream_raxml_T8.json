@@ -7,5 +7,25 @@
   "unflagged": {
     "n": 17,
     "median": 1008.65
+  },
+  "low_score_tail": {
+    "below_p5": {
+      "cut_bits": 962.28,
+      "flagged": 20,
+      "unflagged": 0,
+      "flagged_expected": 19.1
+    },
+    "below_p10": {
+      "cut_bits": 977.31,
+      "flagged": 39,
+      "unflagged": 1,
+      "flagged_expected": 38.3
+    },
+    "below_p25": {
+      "cut_bits": 1001.18,
+      "flagged": 95,
+      "unflagged": 4,
+      "flagged_expected": 94.7
+    }
   }
 }
