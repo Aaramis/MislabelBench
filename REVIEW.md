@@ -1920,6 +1920,44 @@ simulated cells rebuilt, **27 steps, exit 0, and zero diffs across all 46 tables
 only files the rebuild touched were the 90 `warn.txt`, and after this change there are none. No cluster,
 no container, no network, on a Mac under python 3.14 against records produced on Linux under 3.12.
 
+**97. Three scripts had no caller, and one of them held a result.** Asking mechanically which of the
+45 scripts in `bin/` are invoked by anything -- `analyses.sh`, a job script, a module, a test -- returns
+three with nothing: `fold_mechanism.py`, `review_coverage.py` and `subset_taxa.py`. Each turned out to be
+a different kind of problem.
+
+**`subset_taxa.py` produces the dataset the entire injection grid runs on**, and nothing ran it or
+checked it. Rebuilt from `gtdb_arc1200` and seed 42: all four subsets come back **byte-identical**, 400,
+800, 2 023 and 4 001 sequences, `.tax` and `.fasta` alike. What did not come back identical is the
+descriptor beside them, and the reason is a defect already fixed once elsewhere in this repository: it
+recorded `args.fasta` as typed, so the committed `gtdb_arc2k.subset.json` says `gtdb_arc1200.tax`
+because it was made from inside `data/gtdb`, and rebuilding from the repository root writes
+`data/gtdb/gtdb_arc1200.tax`. `inject_mislabels.py` carries exactly this correction for `truth.json`,
+with a comment explaining it; `subset_taxa.py` was left as it was. It now records each input's name and
+sha256, the four descriptors were regenerated, and the same command from two different directories
+produces the same file. The digest also completes a chain that was previously a chain of names:
+`gtdb_arc1200.tax` **76573d69…** → seed 42 → `gtdb_arc2k.tax` **500b2e19…**, which is the digest every
+one of the 180 injected cells records as its source.
+
+**`fold_mechanism.py` answers a question about the fork's own mechanism and nobody was running it.** Its
+docstring says the fork gains "6 to 8 points at *k*=2 to 5". On the completed grid it is **24, 15 and
+10** -- a number written into a comment while the measurement was still arriving, which is the failure
+this review has now seen in a docstring, a README table and a decision entry. And the result it
+computes is worth having: the co-removal model the fold scheme would have to work through predicts
+**+0.022 at *k*=2 against an observed +0.240**, and **+0.257 at *k*=10 against +0.005**. The sharper test
+moves P alone -- five folds instead of twenty-five raises P at *k*=2 from 0.04 to 0.20 -- and recall
+falls by 0.011. So the fork's advantage is not fold co-removal, which agrees with what the Kexact
+decomposition shows on two cells by removing the folds directly, and now rests on 180 cells as well. It
+is in `analyses.sh`, writes `results/fold_mechanism.json`, and its docstring carries the measured
+numbers.
+
+A smaller inconsistency inside it: `--folds` labelled the first table while the second hard-coded 5 and
+25, so `--folds 5` would have relabelled one table and not the other. Both read their fold count from a
+flag now.
+
+**`review_coverage.py` is the gate that checks this document names every file**, and it had no caller --
+it was run by hand after each session, which is how a gate quietly stops being run. It is a step of
+`analyses.sh` now, which is the same argument finding 91 made about a claim a script makes about itself.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

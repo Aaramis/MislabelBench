@@ -1,6 +1,8 @@
 {
   "source_fasta": "gtdb_arc1200.aligned.fasta",
+  "source_fasta_sha256": "4c1ab8e768d9e0b7b0136230cba01f3d4b574bcbeeb8a7e0376fda638669724b",
   "source_taxonomy": "gtdb_arc1200.tax",
+  "source_taxonomy_sha256": "76573d698bbade88004961a82d47cf76045a08c70953f9dc24881c5dea0d2146",
   "seed": 42,
   "target": 4000,
   "n_source": 7051,

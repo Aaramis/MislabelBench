@@ -120,6 +120,14 @@ fold, which is upstream's own leave-one-out protocol run through EPA-ng, so it s
 changes. On two *k*=2 cells the engine with the folds removed is worth +0.284 and +0.177, while the
 fold scheme with the engine held fixed is worth −0.020 and 0.000.
 
+The same conclusion falls out of the whole grid rather than two cells, by testing the mechanism the
+fold scheme would have to work through. If the fork's advantage came from a co-carrier leaving with
+its target when a fold is removed, the gain would track
+P = 1 − (1 − 1/K)^(*k*−1), and it does not: P predicts **+0.022 at *k*=2 where the gap is +0.240**,
+eleven times larger, and **+0.257 at *k*=10 where the gap is +0.005**. The second test is sharper
+still, because it moves P without moving anything else -- running five folds instead of twenty-five
+raises P at *k*=2 from 0.04 to 0.20 and recall falls by 0.011, the wrong way. `results/fold_mechanism.json`.
+
 The fold scheme does something, but only at the highest *k* and only a little. Comparing conditions
 cell by cell at *k*=10: five folds instead of twenty-five gains 0.035 and is better in 17 of the 18
 cells where the two differ; dealing the folds in tree order instead of by sequence name removes 0.036

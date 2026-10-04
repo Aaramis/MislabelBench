@@ -225,6 +225,15 @@ if [ -s results/simulated/runs/sim__upstream_raxml_T8__rep1/sim__upstream_raxml_
         --out results/paired_simulated_upstream_vs_epang_T8_K25.json >/dev/null
 fi
 
+# Does fold co-removal explain the fork's advantage on the k axis? The question is the fork's own
+# mechanism, so it belongs beside the decomposition rather than in a script nothing ran: this one had
+# no caller, wrote no record, and its docstring still quoted the partial grid's numbers.
+step "the k-axis gap against the co-removal model it was supposed to have"
+fold_mechanism.py --upstream results/grid_summary_upstream_raxml_T8.json \
+    --fork results/grid_summary_epang_T8_K25.json \
+    --fork-k5 results/grid_summary_epang_T8_K5.json \
+    --out results/fold_mechanism.json
+
 # Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.
 step "the shape of the Confidence column, both tools"
 for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
@@ -305,6 +314,11 @@ verify_grid_complete.py --datasets-json data/gtdb/datasets2k.json --runs-dir res
 # upstream shows up as a diff in a table and not only as a change of ink.
 step "the Application Note's figure"
 make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/figure1_values.tsv
+
+# Run here rather than by hand, which is how it was run until now. A gate whose running depends on
+# someone remembering it is one nobody notices has stopped.
+step "every file of the repository is named somewhere in REVIEW.md"
+review_coverage.py
 
 # The claim this script opens with, checked rather than restated. It has been false three times.
 step "every table under results/ was rebuilt by this run"

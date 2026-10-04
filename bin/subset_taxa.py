@@ -13,6 +13,7 @@ the judgeability of both so the subset can be checked against the set it came fr
 """
 
 import argparse
+import hashlib
 import json
 import random
 import sys
@@ -128,8 +129,18 @@ def main():
             fh.write(f"{n}\t{tax[n]}\n")
 
     report = {
-        "source_fasta": args.fasta,
-        "source_taxonomy": args.taxonomy,
+        # Each input's name and digest rather than the path it was read from, which is the same
+        # correction inject_mislabels.py carries for truth.json and which was left undone here. The
+        # path is whatever the caller typed, so the committed record for gtdb_arc2k reads
+        # "gtdb_arc1200.tax" because it was made from inside data/gtdb, and rebuilding it from the
+        # repository root produced "data/gtdb/gtdb_arc1200.tax" -- a record that cannot reproduce
+        # unless the next person happens to stand in the same directory. The digest also makes the
+        # record say which file, not just which name: every injected cell's truth.json already
+        # carries the .tax sha256 this one now agrees with.
+        "source_fasta": Path(args.fasta).name,
+        "source_fasta_sha256": hashlib.sha256(Path(args.fasta).read_bytes()).hexdigest(),
+        "source_taxonomy": Path(args.taxonomy).name,
+        "source_taxonomy_sha256": hashlib.sha256(Path(args.taxonomy).read_bytes()).hexdigest(),
         "seed": args.seed,
         "target": args.target,
         "n_source": len(tax),

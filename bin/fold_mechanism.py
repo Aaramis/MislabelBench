@@ -3,8 +3,12 @@
 
 Three questions, in the order they have to be asked.
 
-1. Is there a difference at all? The means suggest the fork gains 6 to 8 points at k=2 to 5, but
-   with three seeds per cell a gap has to be read next to the spread, so both are printed.
+1. Is there a difference at all? On the completed 180-cell grid the fork gains 24, 15 and 10 points
+   at k=2, 3 and 5, and nothing at k=1 and k=10. The figures in this paragraph read "6 to 8 points"
+   while the grid was partial, which is what writing a measurement into a comment costs when the
+   measurement is still arriving; they are rebuilt into results/fold_mechanism.json now, so a stale
+   number shows up as a diff. A gap is still printed beside the spread, because three seeds per cell
+   is not many: the ratio is 2.6 at k=2 and 0.06 at k=1.
 
 2. If there is, is it the placement engine? At k=1 there is no shared label to anchor anything, so
    any engine difference shows there. If k=1 is equal, the engine is not the explanation.
@@ -14,6 +18,12 @@ Three questions, in the order they have to be asked.
    1 - (1 - 1/K)^(k-1), which predicts a gain of P x (recall at k=1 - recall at k). The prediction
    is testable twice over: against the observed gap, and against K=5 versus K=25 on the same
    cells, where P changes from 0.31 to 0.87 at k=10 and recall should move a lot if this is it.
+
+The answer, now that the grid is complete, is that co-removal is not the explanation. It predicts
++0.022 at k=2 where the observed gap is +0.240 -- eleven times larger -- and +0.257 at k=10 where the
+observed gap is +0.005. The second test agrees: raising P from 0.04 to 0.20 at k=2 by running K=5
+instead of K=25 moves recall by -0.011, the wrong way. The engine is what differs, which
+kexact_decomposition.py shows directly by removing the folds and leaving the engine in place.
 """
 
 import argparse
@@ -57,7 +67,11 @@ def main():
     p.add_argument("--upstream", required=True, help="grid summary json for the comparator")
     p.add_argument("--fork", required=True, help="grid summary json for the fork at K=25")
     p.add_argument("--fork-k5", help="grid summary json for the fork at K=5, same cells")
-    p.add_argument("--folds", type=int, default=25)
+    p.add_argument("--folds", type=int, default=25, help="fold count of --fork")
+    # --folds governed the first table and the second hard-coded 5 and 25, so passing --folds 5 would
+    # have relabelled one table and not the other. Both read their fold count from a flag now.
+    p.add_argument("--folds-k5", type=int, default=5, help="fold count of --fork-k5")
+    p.add_argument("--out", help="write the two tables as a record")
     args = p.parse_args()
 
     up, fk = by_k(args.upstream), by_k(args.fork)
@@ -65,6 +79,7 @@ def main():
     if not shared:
         raise SystemExit("the two summaries share no k value")
 
+    record = {"folds": args.folds, "folds_k5": args.folds_k5, "by_k": [], "fold_count": []}
     print(f"{'k':>3}{'upstream':>18}{'fork':>18}{'gap':>9}{'sd':>8}{'gap/sd':>8}"
           f"{'co-removal':>12}{'predicted':>11}")
     for k in shared:
@@ -76,6 +91,10 @@ def main():
         print(f"{k:>3}{u['recall_mean']:11.3f} ±{u['recall_sd']:5.3f}"
               f"{f['recall_mean']:11.3f} ±{f['recall_sd']:5.3f}{gap:+9.3f}{sd:8.3f}"
               f"{(gap / sd if sd else float('inf')):8.2f}{pco:12.3f}{pred:+11.3f}")
+        record["by_k"].append({"k": k, "upstream": round(u["recall_mean"], 4),
+                               "fork": round(f["recall_mean"], 4), "gap": round(gap, 4),
+                               "sd": round(sd, 4), "p_co_removal": round(pco, 4),
+                               "predicted_gap": round(pred, 4)})
 
     if args.fork_k5:
         k5 = by_k(args.fork_k5)
@@ -92,7 +111,17 @@ def main():
         for k in sorted(set(k5) & set(fk)):
             print(f"{k:>3}{k5[k]['recall_mean']:9.3f}{fk[k]['recall_mean']:9.3f}"
                   f"{k5[k]['recall_mean'] - fk[k]['recall_mean']:+9.3f}"
-                  f"{1 - 0.8 ** (k - 1):14.3f}{1 - (1 - 1 / 25) ** (k - 1):15.3f}")
+                  f"{1 - (1 - 1 / args.folds_k5) ** (k - 1):14.3f}"
+                  f"{1 - (1 - 1 / args.folds) ** (k - 1):15.3f}")
+            record["fold_count"].append(
+                {"k": k, "k5": round(k5[k]["recall_mean"], 4),
+                 "k25": round(fk[k]["recall_mean"], 4),
+                 "diff": round(k5[k]["recall_mean"] - fk[k]["recall_mean"], 4),
+                 "p_co_removal_k5": round(1 - (1 - 1 / args.folds_k5) ** (k - 1), 4),
+                 "p_co_removal_k25": round(1 - (1 - 1 / args.folds) ** (k - 1), 4)})
+
+    if args.out:
+        Path(args.out).write_text(json.dumps(record, indent=2) + "\n")
 
 
 if __name__ == "__main__":
