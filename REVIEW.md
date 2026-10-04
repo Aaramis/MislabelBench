@@ -934,10 +934,13 @@ timings for that outdir are gone. Nine trace files have zero rows in total; the 
 copies `trace*.txt` only -- so for every other outdir the fallback exists solely on the cluster, 43 MB
 of it.
 
-The second gap closed. Of 1022 records, 4 carry `timing_trusted: true` with no `cpu_model`, and they
-are exactly the four baseline runs; all 54 other trusted timings record `AMD EPYC 9754 128-Core
+The second gap was already known and is now closed. `bin/verify_runs.py` reports it on every run --
+"4 trusted runs with no recorded cpu_model ... their seconds are not comparable without the node's
+Slurm features" -- so what was missing was not the detection but the answer. Of 1024 records those 4
+are exactly the four baseline runs, and all 54 other trusted timings record `AMD EPYC 9754 128-Core
 Processor`. Comparing seconds across CPU models is the hazard `--constraint=epyc-9754` exists for, so
-four trusted figures without one is not cosmetic. They are recoverable: all four record `host:
+four trusted figures without one is not cosmetic. The gate names the host, which is what makes them
+recoverable: all four record `host:
 cpu-node-123`, and Slurm reports that node as `ActiveFeatures=epyc-9754`. Same model as every other
 trusted timing, so the baseline seconds are comparable with the rest -- which had been assumed
 throughout and is now established. Not backfilled into the records, because a value inferred from a
