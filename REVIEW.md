@@ -1562,6 +1562,41 @@ Nine cells per *k* puts the floor at 2 × (1/2)⁹ = **0.0039**, computed rather
 cells against 12, all verified against their truth, and the 24 new ones byte-identical between macOS and
 the cluster.
 
+**86. Kind 3's prediction holds for both tools, and the comparison between them is underpowered by
+construction.** Finding 82 reported the mechanism on the fork and committed to a prediction rather than
+an assumption: that it is a property of leave-one-out and not of the placement engine, so upstream's
+pending arm should show it too. Upstream finished, 36 tasks of 36, and it does -- **absolutely**:
+
+| | fork | upstream |
+|---|---|---|
+| `within` >= 0.99, 39 clades, 167 sequences | 0.012 | **0.000** |
+| `within` < 0.99, 15 clades, 59 sequences | 0.339 | 0.237 |
+
+Not one of the 167 sequences in a cohesive clade is detected by upstream. Separation, 2.2's variable,
+again fails to order anything: 0.146, 0.086, 0.000, 0.033 from least separable to most, highest where the
+clade can least anchor itself. So the reversal finding 82 reported is the mechanism and not an engine
+artefact, and it is *stricter* for upstream, which fits: strict leave-one-out removes one sequence at a
+time, so a cohesive clade's remaining members always anchor the wrong label, where the fork's k-fold
+batching can occasionally take several of them together.
+
+Overall kind 3 recall is **0.097 for the fork against 0.062 for upstream**, 22 and 14 of 226 sequences.
+The fork leads in 4 clades, upstream in none, and **50 of 54 tie at zero** -- which is what makes the
+comparison unusable as a test: an exact two-sided sign test over 4 untied pairs cannot report below
+2 × (1/2)⁴ = **0.1250**, and it returns exactly that. The floor is the design again, as in finding 85,
+but for a different reason: there it was one seed where the grid uses three, here it is that kind 3 is so
+near-undetectable that almost every clade ties. Reaching nine untied pairs would need about 120 clades,
+twenty cells instead of nine.
+
+Not run, and that is 2.2's own framing rather than a shortcut: kind 3 is listed as "characterised, with
+the limit stated", not scored, and three hours of cluster time to put a p-value on a kind the protocol
+does not ask to score buys less than saying plainly that the two tools differ by 8 sequences in 226 and
+that the design cannot call it.
+
+One mechanistic detail, consistent and not proven. The four clades the fork detects and upstream does not
+are **all of size 3**, with the fork taking 2 or 3 of the 3 where upstream takes 0 or 1. Fold batching is
+the only route by which the fork can differ here, and with 25 folds over 2 023 sequences a clade of 3 has
+a modest chance of two members landing in one fold. Four cases is a consistent story, not evidence.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

@@ -1,0 +1,31 @@
+{
+  "dataset": "k3_phylum_s2",
+  "n_seqs": 2023,
+  "aln_len": 1478,
+  "condition": "upstream_raxml_T8",
+  "rep": 1,
+  "run_name": "k3_phylum_s2__upstream_raxml_T8__rep1",
+  "timing_trusted": false,
+  "impl": "sativa",
+  "engine": "raxml",
+  "threads": 8,
+  "host": "cpu-node-44",
+  "cpu_model": "Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz",
+  "collected_at": "2026-10-04T12:38:43",
+  "n_mislabels": 96,
+  "inputs": {
+    "k3_phylum_s2.fasta": "81025f7aed2c5bf547c9aa01eae2879f9c114c8493df0b260e8b5275816248e5",
+    "k3_phylum_s2.tax": "eb5edfdaa3aef2d250a576a11402b4df29af8f96fc83f244c52b73b44823b64f"
+  },
+  "wall_sec": 946.07,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 142.8,
+  "user_cpu_sec": 7546.52,
+  "sys_cpu_sec": 2.73,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 946.0,
+  "reftree_sec": 11.0,
+  "l1out_sec": 934.0,
+  "status": "ok"
+}
