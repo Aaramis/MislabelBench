@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-seven more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-nine more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -508,6 +508,24 @@ to be the claim's consequence — every flagged row's declared lineage must matc
 and the exceptions turned out to be the tool, not a mix-up. **The claim stands and is still
 unrecorded**, which is the next thing worth fixing: an input digest in `run.json` would make it
 provable rather than inferable.
+
+**48. Four gates could pass without checking anything.** Found by the newest one doing it:
+`verify_inputs.py`, written to prove both tools read the same database, printed "0 cells with
+recorded input digests, 0 consistent" and **exited 0** having matched no files — the job script had
+left the working directory at the Nextflow launch dir, so the relative glob resolved under `.nf/`.
+The instrument built to prevent a silent pass performed one.
+
+The same question put to the other six found three with the identical shape — a counter starting at
+zero, a loop over a glob, a summary line printed either way: `verify_injection.py` and
+`verify_foreign.py` reporting "0 cells checked, 0 sound", `verify_timing_flags.py` reporting
+"0 run records checked". All four refuse now, each checked by running it where nothing matches, and
+`verify_timing_flags.py` also refuses when no job script declares an outdir and a trust flag, which
+would otherwise make every record unclaimed and nothing wrong. `verify_manifests.py` and
+`verify_runs.py` already guarded it.
+
+**What this closed.** `inputs_check.sh` ran one cell under both tools and the digests are identical,
+so Protocol.md 2.5's premise — both tools read the identical database — is now evidence rather than a
+property of how `main.nf` happens to be written.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
