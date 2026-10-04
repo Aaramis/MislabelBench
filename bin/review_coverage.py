@@ -20,7 +20,12 @@ from pathlib import Path
 # What a defect could live in. Data, results and the generated cells are checked by the gates in
 # bin/analyses.sh rather than read, and listing them here would bury the signal.
 REVIEWABLE = ("bin/", "slurm/", "modules/", "conf/", "tests/")
-ALSO = ("main.nf", "nextflow.config")
+# The documents at the root carry the claims, and they were outside this list while the code was
+# inside it -- so DISTRIBUTION.md could hold four aggregate figures measured wrong and PUBLISHING.md
+# could open by saying nothing was public when version 1 had been pushed, with the coverage list
+# reporting 92 of 92 throughout. A claim is as reviewable as a line of code.
+ALSO = ("main.nf", "nextflow.config", "README.md", "RESULTS.md", "DISTRIBUTION.md",
+        "PUBLISHING.md", "data/README.md")
 SKIP_SUFFIX = (".pyc",)
 
 

@@ -16,7 +16,7 @@ The rest of this file is what the design had to account for, measured rather tha
 On gtdb_arc1200, 7 051 sequences, 25 folds:
 
 ```
-run.l1o_tasks/           275 MB, 146 files
+run.l1o_tasks/           284 MB, 177 files   (2 at the top, 25 folds of 7)
   manifest.json          folds, leaves, the epang args, the command
   model
   fold_000/
@@ -29,14 +29,19 @@ run.l1o_tasks/           275 MB, 146 files
   fold_001 … fold_024
 ```
 
-**246 of the 275 MB is the 25 per-fold copies of the reference alignment.** The queries total 11 MB
-and the placements the stage produces total 8.9 MB.
+**257 of the 284 MB is the 25 per-fold copies of the reference alignment.** The queries total 10.7 MB
+and the placements the stage produces total 19.2 MB.
+
+Those four aggregates were 275 MB, 146 files, 246 MB and 8.9 MB here until they were measured against a
+real `run.l1o_tasks` on gtdb_arc1200 rather than carried forward. The per-fold figures above were right;
+only the sums were not, and the placements were out by a factor of two.
 
 ## What that rules out
 
 `scaling.sh` fans out with one `srun` per node, each running `-folds i/N` against **one shared
 taskdir on a POSIX filesystem**. Nothing is staged; the tasks write into the same directory. That is
-why it measures 73 % parallel efficiency at N=2, and it is a number the pipeline cannot simply
+why it measures 79 % parallel efficiency at N=2 -- 195.59 s against 123.93 s in the table below is
+1.58x, and the 73 % that stood here is 1.47x from the superseded gtdb_arc2k round (D82), and it is a number the pipeline cannot simply
 inherit: Nextflow gives each task its own directory and does not assume a shared filesystem, which
 is the point of it.
 
@@ -56,8 +61,9 @@ SELOOPLACE    manifest, model, k folds -> the jplace and logs for those folds
 SELOOSCORE    refjson, all folds    -> the .mis
 ```
 
-Staging is then 11 MB per fold and 275 MB in total however many tasks there are, instead of 275 MB
-multiplied by the shard count. `--folds_per_job` becomes the group size, Nextflow's own scheduler
+Staging is then 12 MB per fold and 284 MB in total however many tasks there are, instead of 284 MB
+multiplied by the shard count. 11 MB is the total of all 25 queries, not what one fold costs; a fold
+carries its own copy of the alignment and that is what makes it 12. `--folds_per_job` becomes the group size, Nextflow's own scheduler
 replaces the `srun` loop, and the Slurm executor places the tasks.
 
 ## Checked: a one-fold task directory is enough
@@ -102,11 +108,16 @@ task that lands on a slow node, where a shard holds the whole step.
 
 One replicate per shard count, `gtdb_arc1200`, `-profile ifb`, every stage its own Slurm job:
 
-| shards | placement | speedup | efficiency | the `srun` version | its speedup |
-|---|---|---|---|---|---|
-| 1 | 194.5 | 1.00 | — | 195.59 (spread 0.67) | 1.00 |
-| 2 | 111.2 | **1.75** | 87 % | 123.93 (spread 27.14) | 1.58 |
-| 4 | **56.4** | **3.45** | 86 % | 197.57 (spread 134.08) | 0.99 |
+| shards | folds per shard | placement | speedup | vs shards | ceiling | vs ceiling | the `srun` version | its speedup |
+|---|---|---|---|---|---|---|---|---|
+| 1 | 25 | 194.5 | 1.00 | — | 1.00 | — | 195.59 (spread 0.67) | 1.00 |
+| 2 | 13, 12 | 111.2 | **1.75** | 87 % | 1.92 | 90.9 % | 123.93 (spread 27.14) | 1.58 |
+| 4 | 7, 6, 6, 6 | **56.4** | **3.45** | 86 % | 3.57 | **96.5 %** | 197.57 (spread 134.08) | 0.99 |
+
+25 folds over 4 shards split 7, 6, 6, 6, the step ends when the shard holding 7 ends, and no
+distribution however free beats 25/7 = 3.57. So the 86 % is mostly the arithmetic of 25 not dividing by
+4; against what the split allows the placement runs at 96.5 %. Both columns are here because they answer
+different questions and only one of them is about overhead.
 
 **At one shard the two agree to 0.6 %** — 194.5 s against 195.59 with a spread of 0.67 over three replicates — which is the check that
 the staged pipeline does the same placement work as the `srun` version rather than something
@@ -129,8 +140,8 @@ it avoids.
 
 The placement step falls 194.5 → 56.4 and the span only 374 → 314, because scheduling and staging
 grow with the task count and reach 163 s at four shards. So the honest form of the claim is that
-the *placement step* distributes at about 86 % efficiency, and that a user's wall clock saturates
-near 314 s on this dataset however many shards are used. Reporting the stages separately, which the
+the *placement step* reaches 96.5 % of what its fold split allows, 86 % measured against the shard count,
+and that a user's wall clock saturates near 314 s on this dataset however many shards are used. Reporting the stages separately, which the
 protocol already promises, is what makes that visible.
 
 ## One task per fold is too fine, and the logs say how fine is fine
@@ -156,9 +167,13 @@ places with `-T 8`. That is the first thing the staged pipeline should measure.
 
 An OOM-killed run logged `[epang-l1o] EPA-ng FAIL fold 18:`, with nothing after the colon, then
 `placed 7/12 folds`, and carried on. The only symptom was the scoring stage crashing later on an
-empty jplace. The fold count in the log is the sole signal, so `scaling.sh` now counts the
+empty jplace. The fold count in the log is the sole signal, so `scaling.sh` counts the
 placements itself before scoring — every fold must have one and none may be empty — and the staged
-pipeline needs the same check between its placement and scoring stages.
+pipeline has the same check twice over, which this file asked for and then did not record as done:
+`stagedlooplace` counts its shard's placements against its fold directories and refuses an empty one,
+and `stagedlooscore` counts the folds it collected against `n_folds` in the manifest, so a lost shard
+fails there rather than scoring part of the database. Both compare with `-eq` and not `=`, because
+`wc -l` pads its output on some platforms.
 
 ## What this does not change
 

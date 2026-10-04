@@ -1248,6 +1248,49 @@ while exclusion returns "budget unreachable" at the same budgets. D22 quotes 3 9
 pair -- the percentage holds, the absolutes drifted when the record was rebuilt, which is the same
 stale-number class as findings 69, 70 and 73, this time in the decision log rather than in the repository.
 
+**77. The documents carrying the claims were outside the instrument that measures coverage.**
+`bin/review_coverage.py` lists `bin/`, `slurm/`, `modules/`, `conf/`, `tests/`, `main.nf` and
+`nextflow.config`. Not the markdown at the root. So it reported 92 of 92 while two documents had never
+been read in any pass of this review, and a claim is as reviewable as a line of code. The documents are
+in the list now, which is why the count moved to 97.
+
+`DISTRIBUTION.md` had four aggregate figures that had been carried forward rather than measured. Against
+a real `run.l1o_tasks` on gtdb_arc1200: the directory is **284 MB and 177 files**, not 275 MB and 146;
+the per-fold alignment copies are **257 MB**, not 246; and the placements the stage produces total
+**19.2 MB**, not 8.9 -- out by a factor of two. Every *per-fold* figure in the same listing was right,
+which is how the sums survived: 10.3 MB of `ref.fasta`, 430 KB of query, 760 KB of jplace, and
+`ref.nwk` at 384 KB. Three more, each a document disagreeing with itself or with another: it said 73 %
+parallel efficiency at N=2 where its own table gives 1.58x and therefore 79 %, the 73 % being 1.47x
+from the superseded gtdb_arc2k round; it said staging is 11 MB per fold where 11 MB is the total of all
+25 queries and a fold costs 12 MB because it carries its own alignment; and it asked for the fold
+completeness check "the staged pipeline needs" without recording that it has it twice, in
+`stagedlooplace` per shard and in `stagedlooscore` against the manifest's `n_folds`. Its efficiency
+table now carries the fold-split ceiling that finding 61 put in README, which the two documents had
+stopped agreeing about the moment that finding landed.
+
+`PUBLISHING.md` opened with "Everything below is prepared. Nothing is public until you push" and told
+you to add a remote. **`origin` has been configured all along and `origin/main` holds 8 commits**: local
+`main` and `origin/main` are identical, 0 either way, and GitHub's default branch is `main`. Version 1
+is public. The consequence is the finding rather than the staleness: **`RESULTS.md` on `main` states the
+refuted detection claim and carries no refutation**, because the banner that refutes it -- 0.94 at *k*=1
+to 0.13 at *k*=10 for both tools alike, the fold scheme worth 0.035 and only at *k*=10 -- exists only on
+`nextflow`, 201 commits that have never been pushed. Nothing here pushes anything, so this is reported
+and not fixed; the branch is a fast-forward over `origin/main` and contains all of its history, which is
+the cheapest of the three ways out and the only one that also publishes the work that did the refuting.
+
+The same file's other claims, now measured rather than repeated: the version 1 machinery the plan says
+is deleted is still tracked, 97 files and about 6 MB across `scripts/`, `sativa_epang/`, `data_ascii/`,
+`data_injected/` and `config.sh`, and two parts of it are load-bearing because `slurm/m1_check.sh` builds
+its byte-equality comparison from `data_ascii/` and the version 1 run under `results/runs/`. And the
+cluster-path question is narrower than it reads: `git grep` matches 2 436 files under `results/`, all run
+logs where the tool printed its own paths, and exactly four elsewhere -- two documents and two comments,
+each quoting a path to explain something. **No code depends on one**, which was established by opening
+the two comments rather than by counting them.
+
+One near miss worth recording. `ref.nwk` was about to be written up as a file the document lists and the
+directory does not have, on the strength of an `ls -la fold_000 | head -9` that cut the alphabetically
+last entry. There are 25 of them.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
