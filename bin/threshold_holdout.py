@@ -85,6 +85,15 @@ def main():
     cells, n_baseline = load(args.injected_dir, args.runs_dir, args.condition, args.baseline_mis)
     if not cells:
         raise SystemExit("no scored cell found; check --runs-dir and --condition")
+    # read_mis keeps only rows that carry the ninth column, so a tool that does not write
+    # OriginalLabelExclusion yields nothing at all -- not even its Confidence values. Run on an
+    # upstream condition this printed "baseline 0 flags", "collateral flags per cell: 0.0" and
+    # "unreachable" for every budget, which reads as a measurement of a tool that flags nothing
+    # rather than as a format mismatch. Said plainly instead.
+    if not any(c["injected_flags"] or c["collateral_flags"] for c in cells):
+        raise SystemExit(f"no flag in {args.condition} carries an OriginalLabelExclusion column; "
+                         f"this comparison needs the fork's nine-column .mis, and upstream's is "
+                         f"eight")
     fit = [c for c in cells if c["seed"] == args.select_seed]
     held = [c for c in cells if c["seed"] != args.select_seed]
     if not fit or not held:
