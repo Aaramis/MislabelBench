@@ -1416,7 +1416,9 @@ Compactness is measured as separation: identity within the clade minus identity 
 members, against the recipient rather than the whole database, because that is the comparison 2.2's
 account is about and because all-against-all is 3 billion character comparisons in pure python.
 `bin/clade_detection.py` reports detection per clade against it, which is what makes the
-characterisation falsifiable.
+characterisation falsifiable. `slurm/make_clade.sh` builds the nine cells, three distances by three
+seeds, and `slurm/kind3.sh` runs both tools over them; `slurm/simulation.sh` does the same for the
+thirteen simulated ones. Both run untimed and declare it, since neither answers a timing question.
 
 The separation range is itself a finding before either tool has run. At species distance -- "a wrong
 label inside the correct genus", the hard case 2.2 names -- it reaches **−0.078**, clades whose members
