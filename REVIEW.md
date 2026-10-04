@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Twenty-three more came later, from repatriating the results, cloning the
+done during the review itself. Twenty-four more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -436,6 +436,22 @@ Which direction it cuts, since a confound on the main axis has to be answered an
 more corruption makes a cell harder, and the extra corruption is at high *k* where recall is already
 lowest. It reinforces the fall from 0.92 at *k*=1 to 0.13 at *k*=10 rather than producing it, and a
 7 % change in corruption cannot produce a sevenfold change in recall.
+
+**44. The *k* axis is not an independent variable, and nothing said so.** Injecting *k* sequences
+from one taxon needs a taxon with *k*+1 members, so raising *k* shrinks the eligible pool and shifts
+it towards large taxa — 319 species-level taxa qualify at *k*=1 and 31 at *k*=10. The donor groups
+used go from a median of 3 members to 14, and **the share of each group carrying the wrong label
+rises from 0.34 to 0.67**.
+
+That share is the quantity the detection law identifies as the predictor, so *k* is a proxy for it
+and the design cannot pull them apart: holding group size fixed while varying *k* would leave 31
+taxa to draw from. The *k* table and the surviving-label curve are the same axis seen twice, which
+is why recall falls 0.92 to 0.13 along it. Not a defect in the code — a limitation of the design that
+the repository reported around without stating, and a reviewer reading the *k* table as an
+independent sweep would be entitled to ask.
+
+This is the same class as finding 43 and came from the same question: what does the design promise,
+and does it deliver. Two in one pass, both on the axis the headline result is measured along.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
