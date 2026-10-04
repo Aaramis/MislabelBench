@@ -232,7 +232,7 @@ claim that nothing is left to find -- `bin/review_coverage.py` counts names, not
 faults in findings 67 to 72 sat in files that a previous pass had already walked past. The one entry
 with no logic in it is `slurm/bad_nodes.txt`, which is generated: `prelude.sh` appends a node that
 turns out to lack singularity and `submit.sh` passes the list as `--exclude`, so the cluster is learned
-once instead of rediscovered by every job. It holds two nodes.
+once instead of rediscovered by every job. It holds four: cpu-node-127 through 130.
 
 ## The whole of it, reproduced from a clone
 
