@@ -1883,7 +1883,7 @@ a deploy run -- it survived -- a repatriation run, which pulled it into the comm
 "5 known, 1 learned on the cluster since last time". Then removed from both sides and the two files
 checked identical again.
 
-**And one thing checked without changing it.** Eleven job scripts open with `rm -rf` on an output
+**And one thing checked without changing it.** Ten job scripts open with `rm -rf` on an output
 directory whose name carries no job id, and two collisions of that shape are already recorded here --
 `determinism.sh` wiping its predecessor's `.mis`, and `ragged_check.sh` destroying `before_after`'s
 output. The exposure is bounded by `results/` being committed: the evidence lives in git, so what a
