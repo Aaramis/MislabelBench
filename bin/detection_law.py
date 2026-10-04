@@ -88,6 +88,18 @@ def main():
         print(f"  k={k:<3} {hit:5}/{tot:<6} {hit / tot:.3f}")
         out["by_k"].append({"k": k, "detected": hit, "injected": tot,
                             "recall": round(hit / tot, 4)})
+    # The two tables count the same injected sequences, so their totals must agree. They would not
+    # if a sequence landed outside the printed bins: group_size is a defaultdict, so a true lineage
+    # absent from the base taxonomy gives right = -k, a negative ratio, a negative bucket index, and
+    # a row that is tallied and then never printed, while by_k keeps it. Unreachable in the data --
+    # 0 of 11 178 injected sequences has a missing lineage or a donor group without a survivor --
+    # and silent if it ever became reachable, which is the reason to compare rather than to guard.
+    ratio_total = sum(r["injected"] for r in out["by_ratio"])
+    k_total = sum(r["injected"] for r in out["by_k"])
+    if ratio_total != k_total:
+        raise SystemExit(f"the ratio table covers {ratio_total} injected sequences and the k table "
+                         f"{k_total}: {k_total - ratio_total} fell outside the printed bins")
+
     if args.out:
         Path(args.out).write_text(json.dumps(out, indent=2))
 
