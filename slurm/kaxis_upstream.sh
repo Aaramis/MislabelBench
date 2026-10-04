@@ -21,8 +21,11 @@ nf_launch_dir kaxis_upstream
 
 echo "running on $(hostname)"
 
-# The whole grid on the fork. These are not timed comparisons, they answer a detection
-# question, so timing_trusted is false and several cells run at once.
+# The k axis with the comparator beside the fork: fifteen cells, species distance at the top rate,
+# every k in 1/2/3/5/10, three seeds, under both tools. Neither the whole grid nor the fork alone --
+# this comment was a copy of grid_fork.sh's and was wrong on both counts.
+# Not timed comparisons, they answer a detection question, so timing_trusted is false and several
+# cells run at once.
 nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --datasets_json "$BENCH_ROOT/data/injected/datasets.json" \
   --datasets inj_species_r0.05_k1_s1,inj_species_r0.05_k1_s2,inj_species_r0.05_k1_s3,inj_species_r0.05_k2_s1,inj_species_r0.05_k2_s2,inj_species_r0.05_k2_s3,inj_species_r0.05_k3_s1,inj_species_r0.05_k3_s2,inj_species_r0.05_k3_s3,inj_species_r0.05_k5_s1,inj_species_r0.05_k5_s2,inj_species_r0.05_k5_s3,inj_species_r0.05_k10_s1,inj_species_r0.05_k10_s2,inj_species_r0.05_k10_s3 \

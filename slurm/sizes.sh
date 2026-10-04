@@ -14,10 +14,10 @@
 # 402, 801, 2023, 4001 and 7051 sequences, three replicates, timed.
 #
 # 140 cores of 254 are reserved rather than the node held exclusively, because --exclusive bills all
-# 254 against a 600-CPU per-user quota and would make this the only job we can run. Whether the
-# reservation is as trustworthy as exclusivity is being checked separately at one node; until that
-# lands, every timing here carries the model and the allocation it ran under, so it can be rechecked
-# rather than re-run.
+# 254 against a 600-CPU per-user quota and would make this the only job we can run. That check has
+# since landed: D39 found reserving most of a node times the same as holding it and more
+# reproducibly, which is what threads.sh already states. Every timing here still carries the model
+# and the allocation it ran under, so it can be rechecked rather than re-run.
 #
 # Every subset is drawn by whole taxa from the alignment, not from the ragged release file, and their
 # judgeability at species runs 73.8 to 76.2 % against 72.7 % for the source, so the sizes are

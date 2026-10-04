@@ -1090,6 +1090,21 @@ so the comparison that chose RepS is now reproducible and reproduces. `fetch_bac
 `p__Pseudomonadota` at 543 726 against Bacillota's 306 490, its counts match to the record, and
 `donor_pool.fasta`, `.tax` and `.aligned.fasta` come back md5-identical for the third independent time.
 
+**71. Four job scripts described work they do not do.** Reading the last of `slurm/` line by line
+rather than sweeping it turned up a copied comment and three stale ones. None changes a number; all
+four would mislead anyone reading the script to find out what produced a result.
+
+`ksweep.sh` and `kaxis_upstream.sh` both open with grid_fork.sh's comment, "The whole grid on the
+fork". `ksweep.sh` runs six cells at two fold counts. `kaxis_upstream.sh` runs fifteen -- species
+distance, every *k*, three seeds -- under **both** tools, so the copied line is wrong on both counts;
+its 30 run directories are 15 cells times 2 conditions, counted. `kexact_k2.sh` says "Six cells rather
+than the grid: k=2 at family distance, both rates, three seeds". Two were run, s1 and s2 at r0.05,
+which is what README honestly reports the decomposition on; the script's own file-cost paragraph is
+the reason, and the comment never caught up with it. `sizes.sh` says the trustworthiness of reserving
+most of a node instead of holding it "is being checked separately at one node; until that lands" --
+it landed, as D39, and `threads.sh` three directories away states the result as settled. Two scripts
+disagreeing about whether the same question is open is the shape worth noticing.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a

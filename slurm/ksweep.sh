@@ -21,8 +21,10 @@ nf_launch_dir ksweep
 
 echo "running on $(hostname)"
 
-# The whole grid on the fork. These are not timed comparisons, they answer a detection
-# question, so timing_trusted is false and several cells run at once.
+# The k axis on the fork at two fold counts: six cells, species and genus distance at the top rate,
+# three seeds each. Not the whole grid -- that is grid_fork.sh, and this comment was a copy of its.
+# Not timed comparisons, they answer a detection question, so timing_trusted is false and several
+# cells run at once.
 nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --datasets_json "$BENCH_ROOT/data/injected/datasets.json" \
   --datasets inj_species_r0.05_k10_s1,inj_species_r0.05_k10_s2,inj_species_r0.05_k10_s3,inj_genus_r0.05_k10_s1,inj_genus_r0.05_k10_s2,inj_genus_r0.05_k10_s3 \

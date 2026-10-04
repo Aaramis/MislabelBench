@@ -16,9 +16,10 @@
 #   Kexact against upstream_raxml_T8   the engine, with the folding removed
 #   Kexact against epang_T8_K25        the folding, with the engine held fixed
 #
-# Six cells rather than the grid: k=2 at family distance, both rates, three seeds, which is where the gap
-# is largest and where both other conditions already exist. One sequence per fold on 2023 sequences is
-# about 2000 EPA-ng placements per cell, so the full grid would be a hundred hours and six cells is two.
+# k=2 at family distance, where the gap is largest and where both other conditions already exist. One
+# sequence per fold on 2023 sequences is about 2000 EPA-ng placements per cell, so the full grid would
+# be a hundred hours. Six cells were planned, at both rates and three seeds; two were run, s1 and s2
+# at r0.05, which is what README reports the decomposition on. The file cost below is why.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
