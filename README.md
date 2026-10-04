@@ -94,6 +94,19 @@ cells where the two differ; dealing the folds in tree order instead of by sequen
 and is worse in 18 of 18. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
 sequence's true relatives with it.
 
+**What the marker cannot be asked, and where that bites.** The 7 051-sequence set contains 847
+groups of byte-identical alignment rows, and **54 of them carry conflicting labels** — 7 disagreeing
+first at phylum, 6 at class, 1 at order, 2 at family, 5 at genus, 33 at species, with 52 of the 54
+identical in the unaligned release too. An identical 16S under two phylum labels means the marker
+cannot separate those organisms, so no method placing it can either. That is a ceiling on
+detectability and it belongs to the database, not to either tool.
+
+It bounds the agreement figures above, which are measured on that set. It does **not** bound the
+grid: the 2 023-sequence subset the grid runs on has 241 identical groups and **3 conflicting, none
+above genus**. Three is what chance gives — 54 groups surviving a 29 % subsample at both members is
+4.4 expected — so the recall figures are not limited by this, and the ceiling has to be quoted
+against the set it was measured on.
+
 **Distribution, which is the one thing upstream cannot do at any price.** Upstream places folds only
 inside its own process. The fork splits the leave-one-out into four stages and the harness runs them
 as separate Slurm jobs, one per group of folds. On 7 051 sequences, 25 folds, one replicate each:
