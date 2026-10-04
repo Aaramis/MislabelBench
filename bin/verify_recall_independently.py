@@ -70,7 +70,10 @@ def main():
             for row in summary["rows"]:
                 if row["metric"] != "by_confidence":
                     continue
-                if (row["distance"], row["k"], row["rate"]) != (t["distance"], t["k"], t["rate"]):
+                # .get on both sides, not indexing: the foreign cells have no k and their summary
+                # rows carry k: null, so a cell is matched on the fields it has. Indexing crashed
+                # here and left error kind 6 outside this check entirely.
+                if any(row.get(f) != t.get(f) for f in ("distance", "k", "rate")):
                     continue
                 r, collateral = cell_counts(truth_path, mis, row["threshold"])
                 if r is not None:

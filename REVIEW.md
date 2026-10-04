@@ -2109,6 +2109,26 @@ variable the claim does not use -- that a claim and the record it cites were abo
 `foreign_score_vs_flag.py`, which is the kind-6-specific analysis, now writes `by_label_sharing` for both
 tools.
 
+**104. The control confirms, including the result added last, and the gate that checks the grid could
+not reach two thirds of the experiments.** 2.1's control is the newest claim here and had never been
+recomputed. From the primary files: **0 flags on 864 certainly-correct sequences for both tools**, the
+fork's law **1.000, 0.9899, 0.8222, 0.000** and upstream's **0.9922, 0.9646, 0.6568, 0.000**, and the
+paired comparison at *k*=3 reproducing exactly -- **9 cells of 9, sign test p = 0.003906**. That last one
+was added three sessions ago on one run of one script, and it is the strongest statement the paper makes
+about 2.2, so recomputing it was overdue.
+
+One imprecision fixed: README read "recall there is 1.000 at *k*=1 at every distance", naming no tool.
+That is the fork; upstream is **0.9922**. Both are now given.
+
+**And the gate from finding 99 covered one experiment of three.** `verify_recall_independently.py` took
+the grid's directories as its only invocation, while the simulated and foreign sets publish records of
+exactly the same shape from exactly the same producer. Pointed at the simulated set it passes **288
+values**; pointed at the foreign set it **crashed** -- `KeyError: 'k'`, because kind 6's cells have no *k*
+and their summary rows carry `k: null`. Indexing where the data is sparse is the kind of thing a gate
+does once and then nobody notices the experiment is uncovered, which is the shape of finding 97's
+uncalled scripts. It matches cells on the fields they have now, and the three experiments are checked
+together: **3 600 values on the grid, 288 on the control, 72 on kind 6, all agreeing.**
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

@@ -298,6 +298,14 @@ verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --summary epang_T8_K5__rep1=results/grid_summary_epang_T8_K5.json \
     --summary epang_T8_K5_tree__rep1=results/grid_summary_epang_T8_K5_tree.json \
     --summary upstream_raxml_T8__rep1=results/grid_summary_upstream_raxml_T8.json
+# The same check over the other two injection experiments, which have the same record shape. Error
+# kind 6's cells carry no k, which crashed this gate until it matched cells on the fields they have.
+verify_recall_independently.py --injected-dir data/simulated --runs-dir results/simulated/runs \
+    --summary epang_T8_K25__rep1=results/simulated_summary_epang_T8_K25.json \
+    --summary upstream_raxml_T8__rep1=results/simulated_summary_upstream_raxml_T8.json
+verify_recall_independently.py --injected-dir data/foreign --runs-dir results/foreign/runs \
+    --summary epang_T8_K25__rep1=results/foreign_summary_epang_T8_K25.json \
+    --summary upstream_raxml_T8__rep1=results/foreign_summary_upstream_raxml_T8.json
 
 # Seconds from two machines cannot be compared, which is the rule this repository states for itself and
 # enforces at submission with --constraint. Nothing checked it afterwards against what the runs recorded.

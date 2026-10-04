@@ -342,8 +342,8 @@ is that **neither tool flags anything**: 0 of 864 for the fork and 0 for upstrea
 2 023 on the real set. So the 4.6 % on real data is the reference's own content and not noise the method
 generates.
 
-Recall there is **1.000 at *k*=1** at every distance with no collateral flags, against 0.746 and 133
-collateral on the real grid, so that gap is the reference's difficulty rather than the method's ceiling.
+Recall there is **1.000 at *k*=1** for the fork at every distance, and 0.992 for upstream, with no
+collateral flags from either, against 0.746 and 133 collateral on the real grid, so that gap is the reference's difficulty rather than the method's ceiling.
 And the surviving-ratio law reproduces out of sample, which is the stronger result: **1.000, 0.990, 0.822,
 0.000** across the ratio bands against the archaeal **0.867, 0.600, 0.327, 0.110, 0.011** — monotone on
 both, collapsing to nothing at the top of the range on both, offset by exactly the heterogeneity a simple
