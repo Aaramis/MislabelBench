@@ -57,6 +57,15 @@ def main():
     args = p.parse_args()
 
     aln = read_fasta(args.alignment)
+    # identity() compares column i to column i, so this is only meaningful on an alignment, and
+    # the file names here do not say which is which: gtdb_arc2k.fasta is aligned (2023 rows of
+    # 1478 columns, subsampled from gtdb_arc1200.aligned.fasta), while gtdb_arc1200.fasta is the
+    # unaligned release at 1200-2684 nt and gtdb_arc1200.aligned.fasta is its alignment. Handed
+    # the unaligned one, every identity below would be a plausible-looking number about nothing.
+    widths = {len(v) for v in aln.values()}
+    if len(widths) != 1:
+        raise SystemExit(f"{args.alignment} is not an alignment: {len(widths)} distinct widths, "
+                         f"{min(widths)} to {max(widths)}")
     by_group = defaultdict(list)
     for line in Path(args.base_tax).read_text().splitlines():
         if line.strip():
@@ -75,6 +84,12 @@ def main():
             for t in thresholds:
                 counts[t][k][0] += best >= t
                 counts[t][k][1] += 1
+
+    # A run that matched no cell printed this header, wrote {"by_k": []} and exited 0, and
+    # analyses.sh discards stdout, so the empty file was the only trace. Same shape as the four
+    # gates in D110.
+    if not counts[thresholds[0]]:
+        raise SystemExit(f"no cell matched {args.injected_dir}/*/*.truth.json")
 
     print("share of injected sequences with a correctly labelled near-identical neighbour")
     print(f"{'k':>4}" + "".join(f"{'>=' + str(t):>12}" for t in thresholds))

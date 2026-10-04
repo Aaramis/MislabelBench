@@ -658,6 +658,28 @@ a measured number and a typed one sat in the same repository without ever having
 reproduce from `bin/dataset_shape.py`, whose output was checked against an independent count before
 either was written down.
 
+**54. A file name says "aligned" for one dataset and not the other, and the script that depends on
+it could not tell.** `bin/cluster_conflict.py` compares two sequences column by column, which is only
+meaningful on a fixed-width alignment; its docstring says so. `bin/analyses.sh` passes it
+`data/gtdb/gtdb_arc2k.fasta`, and that file *is* an alignment -- 2023 rows of 1478 columns,
+subsampled from `gtdb_arc1200.aligned.fasta`, as its own `subset.json` records. But
+`gtdb_arc1200.fasta` with the same suffix is the unaligned release at 1200 to 2684 nt, and its
+alignment is `gtdb_arc1200.aligned.fasta`. So the suffix means one thing for one dataset and the
+opposite for the other, and the script given the wrong one would have compared position 400 of a
+1200 nt sequence with position 400 of a 2684 nt one and reported a plausible fraction. `slurm/scaling.sh`
+already guards against this by preferring `.aligned.fasta` and falling back; `analyses.sh` hardcodes.
+Checked rather than assumed: the widths are uniform, so no published number is affected. The script
+now refuses a file that is not fixed-width, which is the check that generalises past this one caller.
+
+The same script had the D110 shape. Given an `--injected-dir` that matches nothing it printed its
+header, wrote `{"by_k": []}` and exited 0 -- and `analyses.sh` sends its stdout to `/dev/null`, so a
+valid-looking empty file would have been the only trace. Two silent-zero paths inside it were
+measured rather than reasoned about: `by_group` is a `defaultdict`, so a true lineage absent from the
+base taxonomy scores 0.0 instead of failing, and `max(..., default=0.0)` does the same for a group
+with no correctly labelled member. Both are empty on the real data, 0 of 11 178 injected sequences,
+so the five published rows are clean. With the guard in place the committed
+`results/cluster_conflict.json` reproduces identically.
+
 All of these came out of tests that should have been run earlier: clone the repository into an empty
 directory and rebuild, read the traces of runs already published rather than the records derived from
 them, and then watch what the corrected numbers predict. Finding 33 is the only one here that a
