@@ -20,6 +20,18 @@ sequences for the headline and a 2 023-sequence subset drawn by whole taxa for t
 fork uses 5.5. On the 2 023-sequence subset the pair is 19.3x and 35.3x. At 402 sequences the fork
 uses 3.1 of 8 threads, so on a small reference it should be given fewer.
 
+**The harness reproduces version 1's answer, which is what validated it.** The plan's first
+milestone asked for the new harness to land on v1's figure of ~109 s for upstream at one thread.
+It does not: on an exclusive epyc-9754 with the model pinned it measures **135.8 s, spread 0.9 s
+over three replicates**, against 109.0 s on v1's 32-core workstation. The measurement is tight, so
+the 24 % is the hardware and not the harness — single-threaded RAxML is bound by per-core speed and
+a 128-core part is not where that is found.
+
+Seconds from two machines cannot be compared. The answer can, and it is identical: `a1aa0f35…`,
+48 flags, in all three replicates and in all three of v1's. v1 ran sativa 0.9.3 from a hand-built
+conda environment; this runs bioconda sativa 0.9.3 in a container pinned by build string.
+`slurm/m1_check.sh` is the check, and it fails if the two ever diverge.
+
 **Determinism, across CPU architectures and not only across runs.** The same cell and the same seed
 produce a byte-identical `.mis` on hardware nine years apart. Three independent productions of
 `inj_species_r0.05_k3_s1` under `epang_T8_K25`, each a separate Slurm job with its own work

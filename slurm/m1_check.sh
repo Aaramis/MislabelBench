@@ -54,3 +54,20 @@ for f in sorted(glob.glob(f"{sys.argv[1]}/runs/*/run.json")):
 if v:
     print(f"  median {st.median(v):.1f} s over {len(v)} replicates, spread {max(v) - min(v):.1f}")
 PY
+
+# The comparison that should have been M1's criterion. Seconds from two machines cannot be compared;
+# the answer can. v1 ran sativa 0.9.3 from a hand-built conda environment on a 32-core workstation,
+# this runs bioconda sativa 0.9.3 in a pinned container on an IFB node, and the .mis has to match.
+v1=$BENCH_ROOT/results/runs/n800__upstream_py3_raxml_T1__rep1/n800_upstream_py3_raxml_T1_rep1.mis
+[ -s "$v1" ] || { echo "no v1 run of this condition at $v1" >&2; exit 1; }
+echo
+echo "=== against version 1's own .mis for the same condition"
+echo "  v1:  $(md5sum "$v1" | cut -d' ' -f1)  $(grep -vc '^;' "$v1") flags"
+fail=0
+for d in "$BENCH_ROOT"/results/m1_check/runs/*/; do
+    m=$(ls "$d"*.mis)
+    echo "  new: $(md5sum "$m" | cut -d' ' -f1)  $(grep -vc '^;' "$m") flags  $(basename "$d")"
+    cmp -s "$v1" "$m" || fail=1
+done
+[ "$fail" = "0" ] || { echo "VERDICT: the harness does not reproduce version 1's answer" >&2; exit 1; }
+echo "VERDICT: byte identical to version 1, on different hardware and a different environment"
