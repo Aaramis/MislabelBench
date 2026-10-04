@@ -2129,6 +2129,28 @@ does once and then nobody notices the experiment is uncovered, which is the shap
 uncalled scripts. It matches cells on the fields they have now, and the three experiments are checked
 together: **3 600 values on the grid, 288 on the control, 72 on kind 6, all agreeing.**
 
+**105. Kind 4's table is confirmed, and the one cell that did not match named a hazard the code guards
+against without ever having measured it.** Recomputed from the primary files, the resolution table
+reproduces at five of its six rows exactly -- **690/619 at species, 917/863 at genus, 975/948 at order,
+962/932 at class, 931/927 at phylum** -- and differed by a single sequence at family, **947 against
+README's 948**. A one-sequence gap in a table that two earlier near-misses had already made me doubt was
+worth chasing to the end rather than rounding away.
+
+The cause is not an error. My route derived "named at the injected rank" from the `.mis` row's own
+`OriginalTaxonomyPath`; `score_injection.py` derives it from the injected taxonomy file and falls back
+to the column only when the file is unavailable, with a comment saying that column "does not always
+describe the sequence". The sequence that separates them shows why: its `OriginalTaxonomyPath` reads
+`f__Wolframiiraptoraceae;g__Geocrenenecus;__TAXCLUSTER5__s__Geocrenenecus huangii` where the injected
+taxonomy says `f__JAVZCJ01;g__JAVZCJ01;s__JAVZCJ01 sp038874475`. SATIVA clusters taxa internally and
+reports the cluster's representative lineage, leaving a `__TAXCLUSTER<N>__` marker in the string.
+
+**So the producer's defensive choice is necessary, and now it has a number.** Across the grid, **712
+`.mis` files carry the marker on 3 869 rows**, and ten rows in the baselines. Of the 5 446 injected
+detections, **40 have it (0.73 %)**, and **exactly one** is ranked differently by the two readings. The
+guard had been reasoned and commented and never quantified; a reader who takes column 6 as the declared
+label gets 947 instead of 948, which is small enough to be mistaken for rounding and large enough to be
+wrong.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
