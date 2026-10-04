@@ -327,8 +327,13 @@ placement might be doing the work, and it is not: within the donor pool the alig
 separate the flagged from the escaped, medians 1009.14 against 1009.16 bits, and below the 5th percentile
 of score 20 donors are flagged and 0 escape where 19.0 flagged is what independence predicts. The
 escapees are not the badly aligned ones; they are the ones whose archaeal label happens to be shared with
-another donor, which is kind 2 arriving by accident. `results/foreign_summary_*.json`,
-`results/foreign_score_vs_flag_*.json`.
+another donor, which is kind 2 arriving by accident — and that accounts for the whole of it. A donor whose
+archaeal label is its own is flagged **299 times in 299** by the fork; one sharing its label with another
+donor, **74 of 94**, Fisher **p = 7.0e-14**. So every one of the fork's twenty misses is a donor with a
+confederate. The same split holds for upstream, which makes it a property of leave-one-out rather than of
+either tool: **298 of 299** against **78 of 94**, **p = 5.5e-10**, with its one isolated escapee the only
+kind 6 miss this explanation does not cover. Both strata are in the record as `by_label_sharing`.
+`results/foreign_summary_*.json`, `results/foreign_score_vs_flag_*.json`.
 
 **A control where every label is certain.** Injection leaves one hole in itself: the sequences it did not
 touch are only assumed correct, so a flag on one of them cannot be called a false positive. A simulated

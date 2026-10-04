@@ -2088,6 +2088,27 @@ table and the 0.95 that gives the sharpest contrast (**18/34 against 4/192, p = 
 off the gradient after seeing it, so they describe and do not test; the median split chooses nothing and
 is what the claim now rests on. The 6.5e-14 is not quoted in README for that reason.
 
+**103. Kind 6's reinterpretation is confirmed, holds for the comparator too, and was in no record.**
+Finding 59 reinterpreted a whole error kind: the fork misses 20 of 393 foreign donors, and those twenty
+are not the badly aligned ones but the ones whose archaeal label happened to be given to another donor as
+well -- error kind 2 arriving by accident inside kind 6. Recomputed from `data/foreign/*/truth.json` and
+the run `.mis` files by a route written from the formats, every published number reproduces: the fork's
+**1.0000, 0.9667, 0.9406** across the three rates and upstream's **1.0000, 0.9333, 0.9571**, and the
+split **299/299 against 74/94**, Fisher **p = 7.0e-14** where the decision log recorded only p<0.001.
+
+**And it holds for upstream**, which was never checked and matters: **298 of 299 against 78 of 94**,
+**p = 5.5e-10**. A mechanism that appears in both tools is a property of leave-one-out and not of the
+fork's placement engine, which is a stronger statement than the one the repository was making. Upstream's
+single isolated escapee is also the one kind 6 miss the explanation does not cover, and saying so is
+cheaper than letting a reader find it.
+
+**The record carried none of this.** `foreign_summary_*.json` holds the pooled per-cell recall and
+nothing else; the stratification lived in README's prose and in the decision log. That is the third time
+in this sweep -- after the agreement control absent from README and kind 3's record binned by the
+variable the claim does not use -- that a claim and the record it cites were about different quantities.
+`foreign_score_vs_flag.py`, which is the kind-6-specific analysis, now writes `by_label_sharing` for both
+tools.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

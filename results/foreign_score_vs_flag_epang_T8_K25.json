@@ -27,5 +27,17 @@
       "unflagged": 5,
       "flagged_expected": 94.0
     }
+  },
+  "by_label_sharing": {
+    "isolated": {
+      "n": 299,
+      "flagged": 299,
+      "recall": 1.0
+    },
+    "shared": {
+      "n": 94,
+      "flagged": 74,
+      "recall": 0.7872
+    }
   }
 }

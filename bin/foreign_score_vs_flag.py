@@ -13,6 +13,7 @@ same score distribution, the detection is phylogenetic and the caveat was overca
 
 import argparse
 import json
+from collections import Counter
 import statistics as st
 from pathlib import Path
 
@@ -49,19 +50,39 @@ def main():
 
     scores = cmalign_scores(args.donor_scores)
     hit, miss = [], []
+    strata = {"isolated": {"n": 0, "flagged": 0}, "shared": {"n": 0, "flagged": 0}}
     for truth_p in sorted(Path(args.foreign_dir).glob("*/*.truth.json")):
         cell = truth_p.parent.name
         mis = Path(args.runs_dir) / f"{cell}__{args.condition}" / f"{cell}__{args.condition}.mis"
         if not mis.exists():
             continue
         f = flagged(mis)
-        for name in json.loads(truth_p.read_text())["injected"]:
+        injected = json.loads(truth_p.read_text())["injected"]
+        # How many donors in this cell were given the same archaeal label. A donor whose label is
+        # its own has nothing to confirm it and is found; one that shares its label with another
+        # donor has a confederate, which is error kind 2 arriving by accident inside kind 6. This
+        # is what the whole miss rate turned out to be, and it lived in prose and in the decision
+        # log while the record carried only the pooled recall.
+        sharers = Counter(rec["wrong"] for rec in injected.values())
+        for name, rec in injected.items():
+            alone = sharers[rec["wrong"]] == 1
+            bucket = strata["isolated" if alone else "shared"]
+            bucket["n"] += 1
+            bucket["flagged"] += name in f
             if name not in scores:
                 continue
             (hit if name in f else miss).append(scores[name])
 
     if not hit and not miss:
         raise SystemExit("no donor matched a run; check --runs-dir and --condition")
+
+    for key in ("isolated", "shared"):
+        b = strata[key]
+        b["recall"] = round(b["flagged"] / b["n"], 4) if b["n"] else None
+    print(f"donors whose archaeal label is their own: {strata['isolated']['flagged']}"
+          f"/{strata['isolated']['n']} flagged = {strata['isolated']['recall']}")
+    print(f"donors sharing a label with another donor: {strata['shared']['flagged']}"
+          f"/{strata['shared']['n']} flagged = {strata['shared']['recall']}")
 
     def describe(v):
         if not v:
@@ -103,6 +124,7 @@ def main():
             "flagged": {"n": len(hit), "median": round(st.median(hit), 2) if hit else None},
             "unflagged": {"n": len(miss), "median": round(st.median(miss), 2) if miss else None},
             "low_score_tail": tail,
+            "by_label_sharing": strata,
         }, indent=2))
 
 
