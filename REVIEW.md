@@ -2251,6 +2251,28 @@ The remaining five hold no unguarded parsing, no `|| true` and no silent fallbac
 actually read, which is what makes "both tools saw the same database" checkable rather than asserted, and
 `bin/analyses.sh` checks it on every rebuild.
 
+**109. Thirteen references in the decision log pointed at nothing, and I wrote all of them.** Over the
+last ten sessions I had been cross-referencing decisions as `[[d147-second-implementation]]`, a wiki-link
+form the document has never used: its headings are `## D147.` and it has no anchors of any kind. **Six
+distinct targets, thirteen occurrences, none of which resolves.** Nobody would have found out until
+someone followed one, which is the same failure as a record that cannot support the claim citing it --
+findings 100, 102 and 103 -- except that here I was the one introducing it while writing those findings.
+
+They are now plain `D147` references, which is what every pre-existing entry uses, and the rest of the
+log checks out: **every one of the 156 `Dnnn` references has an entry**. REVIEW.md was clean already --
+108 findings numbered 1 to 108 with no gaps and no duplicates, 30 distinct cross-references all
+resolving, no wiki links -- which is the useful contrast: the document with a convention stayed
+consistent, and the one where I invented a second convention did not.
+
+`bin/verify_report_references.py` checks it now: numbering without gaps or repeats, every "finding N"
+naming a finding that exists, no wiki link in either document, and with `--decisions`, every `Dnnn`
+having a heading. `bin/analyses.sh` runs it on the report alone, because the decision log is outside the
+repository and a clone must pass without it. All four failure paths tested on fabricated documents.
+
+It also had to learn the difference between a link and a quotation of one: its first version fired on
+this very finding, which has to show the form it is reporting. Code spans are stripped before looking,
+so a dangling link inside backticks is prose and one in running text is a defect -- checked both ways.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

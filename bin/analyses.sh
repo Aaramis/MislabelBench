@@ -345,6 +345,9 @@ make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/f
 # someone remembering it is one nobody notices has stopped.
 step "every file of the repository is named somewhere in REVIEW.md"
 review_coverage.py
+# And that the report's own cross-references resolve. Only REVIEW.md here: the decision log lives
+# outside this repository, so a clone must pass without it. Run it on both by hand with --decisions.
+verify_report_references.py
 
 # The claim this script opens with, checked rather than restated. It has been false three times.
 step "every table under results/ was rebuilt by this run"
