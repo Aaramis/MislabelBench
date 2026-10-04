@@ -1690,6 +1690,44 @@ false-positive rate that would train a reader to ignore the gate. A check that i
 five is worse than no check, because the one real failure arrives looking exactly like the other four.
 The one-off grep did its work and is not worth keeping.
 
+**90. The repository could not produce the thing the paper is for.** Part 1 of Protocol.md allots the
+Application Note 2 000 words plus one multi-panel figure, and names what it carries: "Speed and scaling
+first; the exclusion column second; accuracy against injected ground truth as the control that bounds
+both." The repository held 45 analysis scripts, 45 committed tables and **no plotting code and no
+figure**. The plan's `modules/local/plot/` was version 1's `bin/plot.py` wrapped, and it went when
+version 1 did; nothing replaced it. Every number the figure needs has been measured for weeks.
+
+`bin/make_figure.py` builds it: wall clock against reference size for both tools (A), the stages at one,
+two and four nodes with only placement distributing, as 2.8 requires (B), the exclusion column against
+confidence as a filter (C), and recall against *k* for both tools, which is the control (D).
+
+**It is written as SVG by hand, which is a reproducibility decision and not an aesthetic one.** All 45
+scripts in `bin/` import nothing outside the standard library, which is why the clone test rebuilds every
+table with no environment to install, no container and no network. One `import matplotlib` would end
+that. Worse for this repository's standards, a plotting library's output moves with its own version --
+fonts, hinting, layout -- so a figure built that way could not be checked byte for byte the way every
+other record here is. SVG is text: diffable, timestamp-free, identical on any machine with any python3.
+Checked rather than asserted: **two runs produce byte-identical files**.
+
+Three habits from earlier findings are built in. Nothing is recomputed where a record already holds it,
+so panel A parses `results/resource_usage.txt` rather than re-deriving medians from the run directories
+and cannot disagree with the table a reader checks it against. Every value drawn is also written to
+`results/figure1_values.tsv`, so a change in an upstream record shows up as a diff in a table rather than
+as ink nobody diffs. And the statistic is named: panel D plots the mean of six per-distance recalls, the
+axis says so, and the per-distance numbers are in the values table -- the discipline finding 88 put into
+README after the third near-miss of that kind.
+
+Each reader is a gate rather than a parser: the size gradient must yield exactly five rows, the scaling
+records exactly node counts 1, 2 and 4, and each *k* exactly six distances, or the script exits. A
+layout change upstream would otherwise draw a shorter curve instead of failing, which is the failure
+mode this review keeps finding.
+
+What the figure shows is what the records already said, which is the point of building it from them: the
+fork is 8 to 16 times faster across the size gradient, two nodes take placement from 196 s to 124 s while
+the serial stages stay at 70 s and four nodes regress, exclusion still keeps **97 %** of collateral flags
+at a 0.99 threshold where confidence keeps 51 %, and the fork's recall sits above upstream's at *k* = 2,
+3 and 5 and meets it at 1 and 10.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

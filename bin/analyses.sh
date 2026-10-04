@@ -270,5 +270,12 @@ verify_grid_complete.py --datasets-json data/gtdb/datasets2k.json --runs-dir res
     --conditions epang_T1_K25,epang_T8_K25,epang_T16_K25,upstream_raxml_T1,upstream_raxml_T8,upstream_raxml_T16 \
     --replicates 3
 
+# Last, because it reads the records the steps above write rather than the run directories: the
+# figure can only be as current as the tables, and building it from them is what keeps the two from
+# drifting. Every number it draws is also written to results/figure1_values.tsv, so a change
+# upstream shows up as a diff in a table and not only as a change of ink.
+step "the Application Note's figure"
+make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/figure1_values.tsv
+
 echo
 echo "done; results/ rebuilt from $BENCH_ROOT"
