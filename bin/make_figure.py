@@ -257,12 +257,18 @@ def main():
                                                   for r in cc["curves"][name])
         vals.append(f"C\t{name}_floor\t{floor:.4f}\t{min(y for _, y in curves[name]):.4f}")
     o += legend(ax.x0 + 10, ax.y0 + 14, [("confidence", FORK, None), ("exclusion", UP, "4 2")])
-    ex = cc["untouched_floor"]["exclusion"] / max(r["untouched_kept"]
-                                                  for r in cc["curves"]["exclusion"])
+    # "at its best threshold", not "at 0.99". untouched_floor is the minimum of the curve, which both
+    # columns reach at a threshold of 1.0; at 0.99 exclusion keeps 99.1 % and confidence 52.5 %. The
+    # first version of this annotation attached the floor to 0.99 and was caught by recomputing the
+    # curve from the .mis files instead of rereading the script that produces it.
+    def floor_frac(name):
+        c = cc["curves"][name]
+        return cc["untouched_floor"][name] / max(r["untouched_kept"] for r in c)
     o.append(txt(ax.x0 + PW - 8, ax.y0 + PH - 22,
-                 f"at 0.99 exclusion still keeps {ex * 100:.0f}% of the collateral flags",
-                 size=7, anchor="end", fill=UP))
-    o.append(txt(ax.x0 + PW - 8, ax.y0 + PH - 12, "and confidence 51 %",
+                 f"at its best threshold exclusion still keeps {floor_frac('exclusion') * 100:.0f}%"
+                 f" of the collateral flags", size=7, anchor="end", fill=UP))
+    o.append(txt(ax.x0 + PW - 8, ax.y0 + PH - 12,
+                 f"where confidence keeps {floor_frac('confidence') * 100:.0f}%",
                  size=7, anchor="end", fill=FORK))
 
     # D. The accuracy control, and the limit the injection design predicts.

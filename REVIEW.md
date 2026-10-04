@@ -1958,6 +1958,31 @@ flag now.
 it was run by hand after each session, which is how a gate quietly stops being run. It is a step of
 `analyses.sh` now, which is the same argument finding 91 made about a claim a script makes about itself.
 
+**98. A published number was attached to the wrong threshold, and only an independent recomputation
+could have shown it.** The paper has two claims that can go either way, and one of them is the exclusion
+column. The figure's panel C and D138 both stated it as "at a 0.99 threshold it still keeps 97 % of the
+collateral flags, where confidence keeps 51 %". Those two percentages are `untouched_floor` in
+`results/column_comparison.json`, and that field is the **minimum over the whole curve**, which both
+columns reach at a threshold of **1.0**, not 0.99.
+
+At 0.99 the answer is different and the sentence had it wrong in the direction that understates the
+finding: exclusion keeps **99.1 %** of the collateral flags there and confidence **52.5 %**. The claim
+itself survives either way -- the column is saturated and cannot filter -- but a reader checking the
+record against the sentence would have found two numbers that do not appear at the threshold named.
+
+It was found by recomputing the whole comparison from the `.mis` files, in a script written from the
+format rather than from `column_comparison.py`, so a shared mistake could not survive both. The totals
+agree exactly -- **5 446 injected flags, 20 326 collateral, 25 772 in all** -- which is the strongest
+check the exclusion analysis has had; it was the floors that did not, and chasing why is what found the
+threshold. Rereading the producing script would not have: the script is correct, and
+`floor = min(p["untouched_kept"] for p in curves[c])` reads exactly as it should.
+
+Fixed where it is generated, so it cannot drift again: `make_figure.py` now computes both percentages
+from the record and calls the threshold "its best", and D138 carries the correction with the 0.99
+figures beside it. And the semantics are pinned by a test whose fixture makes the two readings differ --
+one collateral flag at exactly 0.99, kept there and dropped at 1.0, so a floor read as "the value at
+0.99" returns 2 where the floor is 1.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

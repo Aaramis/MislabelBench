@@ -219,3 +219,45 @@ class BinomialTail(unittest.TestCase):
     def test_large_n_does_not_overflow(self):
         """n = 6531 is the unflagged group, where the comb() form overflowed on the first run."""
         self.assertLess(self._tail()(250, 6531, 0.0376), 1.0000001)
+
+
+class ColumnComparisonFloor(unittest.TestCase):
+    """untouched_floor is the minimum over the curve, not the value at any particular threshold.
+
+    The paper's one sentence about the exclusion column is read off this field, and it was published
+    once as "at a 0.99 threshold" when the floor is reached at 1.0 -- on the real grid, exclusion
+    keeps 97.5 % of the collateral flags at its floor and 99.1 % at 0.99. The fixture below makes the
+    two answers different on purpose: one collateral flag sits at exactly 0.99 and is kept there and
+    dropped at 1.0, so a reading that confused the two would return 2 where the floor is 1.
+    """
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        cell = self.tmp / "inj" / "c1"
+        cell.mkdir(parents=True)
+        (cell / "c1.truth.json").write_text(json.dumps({
+            "distance": "family", "rate": 0.01, "k": 1, "seed": 1, "n_total": 10,
+            "injected": {"i1": {"true": TRUE, "wrong": WRONG}},
+        }))
+        run_dir = self.tmp / "runs" / "c1__cond__rep1"
+        run_dir.mkdir(parents=True)
+        (run_dir / "c1__cond__rep1.mis").write_text(HEADER + "\n" + "\n".join([
+            mis_row("i1", 0.995, 0.995),
+            mis_row("u1", 0.990, 0.990),   # kept at 0.99, dropped at 1.0
+            mis_row("u2", 1.000, 1.000),   # kept at both
+            mis_row("u3", 0.500, 0.500),   # dropped at both
+        ]) + "\n")
+
+    def test_floor_is_the_minimum_of_the_curve_and_not_the_value_at_099(self):
+        out = self.tmp / "cc.json"
+        r = run("column_comparison.py", "--injected-dir", self.tmp / "inj",
+                "--runs-dir", self.tmp / "runs", "--condition", "cond__rep1", "--out", out)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        d = json.loads(out.read_text())
+        for column in ("confidence", "exclusion"):
+            curve = d["curves"][column]
+            at_099 = next(p for p in curve if p["threshold"] == 0.99)
+            self.assertEqual(at_099["untouched_kept"], 2, f"{column} at 0.99")
+            self.assertEqual(d["untouched_floor"][column], 1, f"{column} floor")
+            self.assertEqual(d["untouched_floor"][column],
+                             min(p["untouched_kept"] for p in curve))
