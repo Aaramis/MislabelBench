@@ -9,7 +9,7 @@ something, it was, and several of the findings below are things that reading had
 one of them more than once.
 
 Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Thirty-two more came later, from repatriating the results, cloning the
+done during the review itself. Thirty-three more came later, from repatriating the results, cloning the
 repository to see whether it still worked, reading the traces of runs already published, and running
 newly written code for the first time, rather than from reading it; they are at the end under their
 own heading. One of those sixteen changes a published number by a factor of three, one is a job that
@@ -172,7 +172,7 @@ Worth stating, because an audit that only lists faults does not say what it cove
 ## What this report does not cover
 
 `bin/review_coverage.py` lists the repository's reviewable files and names the ones this report never
-mentions. It reports **40 of 89**. That is not a claim those files were never read — most went
+mentions. It reports **38 of 89**. That is not a claim those files were never read — most went
 through the first pass as a batch — but a file the report never names has at best been read without
 record, and this review found out what that costs: `bin/_timeit.py` produces every second and every
 memory figure here and went unexamined through forty-eight findings, because it sat inside a coverage
@@ -595,6 +595,24 @@ column, so a tool that writes no `OriginalLabelExclusion` yields nothing at all 
 collateral flags per cell: 0.0" and "unreachable" for every budget, which reads as a measurement of a
 tool that flags nothing. It names the missing column and exits 1 now. Nothing published was affected:
 `analyses.sh` only ever runs it on the fork.
+
+**52. The baseline is not a fixed reference point, and the measurement saying so was unquoted.**
+`background_stability.py` exists because reporting added flags as a count assumes the pre-existing
+flags stay put, and its own docstring says a large `lost` would mean the baseline is not a fixed
+reference to subtract. **It is large**: over 180 cells against a baseline of 93 flags, a typical cell
+loses **11** (12 %, up to 21) while gaining 29 (31 %, up to 70). The churn is about 40 flags where the
+net change is 18, so a count of added flags describes the smaller half of what injection does to the
+background.
+
+That is the measurement behind Q6 of the protocol, which asks whether reporting both directions is
+the right rule. The answer was in `results/background_stability.tsv` and in no document. It is in the
+README now, with the share of the baseline beside the count, since 11 means nothing without the 93.
+
+Two small faults alongside: the statistic labelled median was `v[n // 2]`, the upper middle element
+for an even *n*, which agrees with the median on this grid for both columns and is not the median; and
+a condition matching no cell raised `IndexError` on an empty list rather than saying so. The
+arithmetic is otherwise right — injected sequences are excluded from the baseline side as well as the
+after side, so a sequence already suspect before being relabelled cannot count as lost.
 
 **The headline disagreement figure was audited by reimplementation**, not by rereading the script
 that produces it: an independent pass over the `.mis` files reproduces all seven numbers in
