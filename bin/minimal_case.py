@@ -171,6 +171,7 @@ def main():
             fa.write(f">{n}\n{''.join(aln[n][j] for j in informative)}\n")
             tx.write(f"{n}\t{relabel.get(n, tax[n])}\n")
 
+    n_wrong = len(set(relabel) & set(chosen))
     rank = next((r for r in RANKS
                  if prefix(true_lineage, r) != prefix(args.wrong_label, r)), None)
     (out / "case.json").write_text(json.dumps({
@@ -182,7 +183,7 @@ def main():
         "n_seqs": len(chosen),
         # The case's own k, which can be below the cell's: a companion dropped by --per-family is a
         # case with fewer carriers than the run it reproduces, and the number has to say so.
-        "n_wrong_labels": len(set(relabel) & set(chosen)),
+        "n_wrong_labels": n_wrong,
         "wrong_labels": sorted(set(relabel) & set(chosen)),
         "n_outgroup": len(picked),
         "alignment_width": len(informative),
@@ -195,7 +196,10 @@ def main():
         "source_taxonomy_sha256": sha256(args.taxonomy),
         "per_family": args.per_family,
     }, indent=2) + "\n")
-    print(f"{len(chosen)} sequences, {len(informative)} columns, one label changed at {rank}")
+    # The count and not the word "one". This line said "one label changed" whatever --injected-count
+    # was, so the log of the control case, which carries 102 of them, claimed to carry one.
+    print(f"{len(chosen)} sequences, {len(informative)} columns, "
+          f"{n_wrong} label{'s' if n_wrong > 1 else ''} changed at {rank}")
 
 
 if __name__ == "__main__":

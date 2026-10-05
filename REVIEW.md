@@ -23,7 +23,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | `slurm/` job scripts, the prelude and the submit wrapper | 38 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
-| run records, cross-checked against the files they summarise | 1115 |
+| run records, cross-checked against the files they summarise | 1116 |
 | result tables, each rebuilt by `bin/analyses.sh` | 51 |
 | tests over the scripts that turn runs into numbers | 26 |
 
@@ -2884,7 +2884,10 @@ isolated error explains the divergence. Adding back just the companion -- the ce
 sequence carries the same wrong family and stays in the reference supporting it while the target is left
 out -- makes upstream miss the sequence again at 183 sequences, and the fork too. The divergence needs both
 the companion and a large reference, so what the fork is better at is surviving a reference whose labels
-are already wrong, not placing hard sequences. That is a different claim about the tool than the one this
+are already wrong, not placing hard sequences. The *k*=1 cell, which finished after this was written,
+keeps that account and corrects its strength: a hundred wrong labels each carried by a single sequence
+still give the fork 5 sequences against upstream's 1, so degradation alone divides them and the companion
+multiplies the effect rather than causing it. That is a different claim about the tool than the one this
 report implied, and it is the claim §2.2's surviving-label law and finding 134's decay in *k* both
 predict.
 

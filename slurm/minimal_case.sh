@@ -2,7 +2,12 @@
 #SBATCH --job-name=mincase
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=8G
+# 32G, not 8. 8G was written without consulting a figure this repository already holds: slurm/scaling.sh
+# records the fork's measured process-tree peak at 9.3 GB on 2 023 sequences. The full-reference arm
+# duly died at 8.36 GB with 1 805 oom_kill events, and the symptom was the one that file also
+# documents -- an empty placement file and a JSONDecodeError four stages later. The headroom above 9.3
+# is for the arm whose peak nobody has measured, the fork driving RAxML.
+#SBATCH --mem=32G
 #SBATCH --time=08:00:00
 #SBATCH --output=%x-%j.log
 #
@@ -85,6 +90,13 @@ PY
 }
 
 mkdir -p "$OUT"
+# A tag whose table already has rows is not overwritten. The table is built by appending one row per
+# arm, so a second run under the same CASE_TAG would truncate the first run's results -- which is
+# exactly what happens when one arm of a sweep has to be redone. A new tag costs nothing.
+if [ -s "$OUT/verdicts.tsv" ] && [ "$(grep -c . "$OUT/verdicts.tsv")" -gt 1 ] && [ -z "${CASE_FORCE:-}" ]; then
+    echo "$OUT/verdicts.tsv already holds results. Use a different CASE_TAG, or CASE_FORCE=1 to replace them." >&2
+    exit 1
+fi
 printf 'sequence\tcase\tarm\tverdict\tlevel\tproposed\tconfidence\texclusion\n' > "$OUT/verdicts.tsv"
 
 run_case() {
