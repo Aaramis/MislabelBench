@@ -18,13 +18,13 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 134 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 37 |
+| findings in this report | 135 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 57 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 38 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1115 |
-| result tables, each rebuilt by `bin/analyses.sh` | 50 |
+| result tables, each rebuilt by `bin/analyses.sh` | 51 |
 | tests over the scripts that turn runs into numbers | 20 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2866,6 +2866,31 @@ gate added in a change has to be run *after* that change. The coverage gate coun
 a change that adds one does not reach it until `git add` has run: "after the change" and "after staging"
 are different moments, and the second is the one that matters. Four of these failures have now been the
 same sequence, which is a rule stated imprecisely rather than a habit of ignoring it.
+
+**135. The sequences only the fork catches are not hard sequences, and the report said so by implication.**
+The decomposition in finding 134 showed the engine carrying the whole of the fork's advantage, and the
+natural reading -- the one taken here until it was tested -- is that EPA-ng places difficult sequences
+better. It does not. `bin/minimal_case.py` and `slurm/minimal_case.sh` cut one of the 64 sequences the fork
+catches and upstream misses out of its cell and into a reference of its own, and **all three arms flagged
+it at the same confidence to three decimals** at every size from 183 sequences down to 22: 1.000, 1.000,
+0.902, 0.510, 0.510. The third arm is the fork with `SATIVA_L1O_ENGINE=raxml`, which separates the engine
+from the code that scores placements; it was verified to be real rather than assumed, by the absence of
+`[epang-l1o]` lines in its log where the EPA-ng arm has them.
+
+The control is what made this a finding instead of a puzzle. On **the whole 2 023-sequence reference with
+exactly one wrong label**, upstream flags the sequence at **confidence 1.000**; in its own cell, the same
+2 023 sequences with **102** wrong labels, it misses it. So neither reference size nor the engine on an
+isolated error explains the divergence. Adding back just the companion -- the cell is *k*=2, so one other
+sequence carries the same wrong family and stays in the reference supporting it while the target is left
+out -- makes upstream miss the sequence again at 183 sequences, and the fork too. The divergence needs both
+the companion and a large reference, so what the fork is better at is surviving a reference whose labels
+are already wrong, not placing hard sequences. That is a different claim about the tool than the one this
+report implied, and it is the claim §2.2's surviving-label law and finding 134's decay in *k* both
+predict.
+
+It also costs the minimal case its minimality: a case with one wrong label cannot reproduce the
+divergence, because one wrong label is detected by both tools everywhere it has been tried. The smallest
+sendable case carries *k* of them.
 
 ## What is outstanding
 

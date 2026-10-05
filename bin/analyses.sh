@@ -93,7 +93,8 @@ paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
 step "the engine against the fold scheme, on the cells with a Kexact run"
 if ls "$RUNS"/*__epang_T8_Kexact__rep1 >/dev/null 2>&1; then
     kexact_decomposition.py --injected-dir "$INJ" --runs-dir "$RUNS" \
-        --out results/kexact_decomposition.json
+        --out results/kexact_decomposition.json \
+        --pairs-out results/kexact_fork_only.tsv
 else
     echo "    no Kexact run yet"
 fi

@@ -52,9 +52,15 @@ cd "$(dirname "$0")/.."
 # back from any repatriation between that change and the day a real job produced output that failed to
 # arrive. Measured rather than reasoned: at the real transfer root, `runs/` transfers 0 of the
 # determinism run's files and `/runs/` transfers 2.
+#
+# verdicts.tsv and case.json are the minimal-case experiment's result and its record of what was
+# built. The case.fasta and case.tax they describe are deliberately not fetched: case.json carries
+# the sha256 of the two source files and the selection is deterministic, so any case can be rebuilt
+# byte for byte by bin/minimal_case.py, and the full-reference ones are 3 MB each.
 rsync -a --exclude='._*' --exclude='/runs/' --exclude='/runs_injected/' --exclude='/m1_check/' \
       --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
-      --include='*.stderr' --exclude='score.json' --exclude='*' \
+      --include='*.stderr' --include='verdicts.tsv' --include='case.json' \
+      --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
 # The learned bad-node list comes back as a union, not a copy. It is written on the cluster, by

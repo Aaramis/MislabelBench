@@ -17,6 +17,11 @@ protocol run through EPA-ng, so:
 
 Recall is reported at threshold 0 as well as at 0.9, because a difference at 0 is a difference in
 which sequences are flagged at all and cannot be an artefact of the fork's confidence column.
+
+Two recalls that differ do not say which sequences they differ on, and that question had been
+answered by hand. The names are recorded here instead, with the fork's confidence and exclusion on
+the ones only it catches beside the same figures on the ones both catch: if the two distributions
+match, the fork is not straining on its extra calls and the difference is entirely the other tool's.
 """
 
 import argparse
@@ -27,6 +32,29 @@ import tempfile
 from pathlib import Path
 
 CONDITIONS = ["upstream_raxml_T8", "epang_T8_Kexact", "epang_T8_K5", "epang_T8_K25"]
+
+
+def flagged(mis):
+    """Sequence -> (confidence, exclusion) for every row the tool wrote.
+
+    The .mis holds flagged rows only, so membership of this mapping is the flag at threshold 0.
+    Exclusion is the ninth column and upstream has eight, hence the None.
+    """
+    out = {}
+    for line in Path(mis).read_text().splitlines():
+        if line.startswith(";") or not line.strip():
+            continue
+        f = line.split("\t")
+        out[f[0]] = (float(f[4]), float(f[8]) if len(f) > 8 else None)
+    return out
+
+
+def median(values):
+    v = sorted(values)
+    if not v:
+        return None
+    mid = len(v) // 2
+    return round(v[mid] if len(v) % 2 else (v[mid - 1] + v[mid]) / 2, 3)
 
 
 def score(scorer, truth, mis):
@@ -49,6 +77,11 @@ def main():
     # from the repository root without --out overwrites that record, which is how grid_summary.json
     # and shape.json were each created and then silently replaced. Third instance of the same trap.
     p.add_argument("--out", required=True)
+    # The sequences only the fork catches, as 'name<TAB>wrong label', which is what
+    # slurm/minimal_case.sh takes to hunt for a case small enough to send to someone. Written by
+    # this script rather than typed, because a hand-made list of 64 names and lineages is the kind
+    # of file that is wrong once and then believed.
+    p.add_argument("--pairs-out", help="write the fork-only sequences and their injected labels here")
     args = p.parse_args()
 
     # Whichever cells have a Kexact run. One cell is a measurement, not a distribution, and the
@@ -61,12 +94,14 @@ def main():
     for cell in cells:
         truth = Path(args.injected_dir) / cell / f"{cell}.truth.json"
         rec = {"cell": cell, "k": json.loads(truth.read_text())["k"], "recall": {}}
+        rows_by_cond = {}
         for cond in CONDITIONS:
             run = Path(args.runs_dir) / f"{cell}__{cond}__rep1"
             mis = sorted(run.glob("*.mis"))
             if not mis:
                 rec["recall"][cond] = None
                 continue
+            rows_by_cond[cond] = flagged(mis[0])
             s = score(args.scorer, truth, mis[0])
             at = {t["threshold"]: t["recall"] for t in s["by_confidence"]}
             rec["recall"][cond] = {"flags": s["n_flagged_total"], "at_0": at[0.0], "at_0.9": at[0.9]}
@@ -75,9 +110,39 @@ def main():
             rec["engine_at_0"] = round(r["epang_T8_Kexact"]["at_0"] - r["upstream_raxml_T8"]["at_0"], 4)
         if r["epang_T8_Kexact"] and r["epang_T8_K25"]:
             rec["folds_at_0"] = round(r["epang_T8_K25"]["at_0"] - r["epang_T8_Kexact"]["at_0"], 4)
+
+        # Restricted to the injected sequences, because an extra flag on an untouched sequence has
+        # no truth to be judged against and is the subject of disagreement_truth.py instead.
+        fork, up = rows_by_cond.get("epang_T8_Kexact"), rows_by_cond.get("upstream_raxml_T8")
+        if fork is not None and up is not None:
+            injected = set(json.loads(truth.read_text())["injected"])
+            fork_only = sorted((injected & set(fork)) - set(up))
+            both = sorted(injected & set(fork) & set(up))
+            rec["one_sided"] = {
+                "fork_only": fork_only,
+                "upstream_only": sorted((injected & set(up)) - set(fork)),
+                "n_both": len(both),
+                "fork_only_median_confidence": median([fork[n][0] for n in fork_only]),
+                "both_median_confidence": median([fork[n][0] for n in both]),
+                "fork_only_median_exclusion": median([fork[n][1] for n in fork_only
+                                                      if fork[n][1] is not None]),
+                "both_median_exclusion": median([fork[n][1] for n in both
+                                                 if fork[n][1] is not None]),
+            }
         rows.append(rec)
 
     Path(args.out).write_text(json.dumps({"cells": rows}, indent=2))
+
+    if args.pairs_out:
+        lines = []
+        for rec in rows:
+            if not rec.get("one_sided"):
+                continue
+            truth = json.loads((Path(args.injected_dir) / rec["cell"] /
+                                f"{rec['cell']}.truth.json").read_text())["injected"]
+            lines += [f"{n}\t{truth[n]['wrong']}" for n in rec["one_sided"]["fork_only"]]
+        Path(args.pairs_out).write_text("\n".join(lines) + "\n")
+        print(f"{len(lines)} fork-only sequences written to {args.pairs_out}")
     for rec in rows:
         print(f"{rec['cell']} (k={rec['k']})")
         for cond, v in rec["recall"].items():
@@ -85,6 +150,14 @@ def main():
                   f"flags {v['flags']:4}  recall@0 {v['at_0']:.3f}  @0.9 {v['at_0.9']:.3f}"))
         print(f"  engine, folds removed : {rec.get('engine_at_0')}")
         print(f"  folds, engine fixed   : {rec.get('folds_at_0')}")
+        os = rec.get("one_sided")
+        if os:
+            print(f"  injected caught by the fork only: {len(os['fork_only'])}, "
+                  f"by upstream only: {len(os['upstream_only'])}, by both: {os['n_both']}")
+            print(f"  the fork's confidence on its own calls {os['fork_only_median_confidence']} "
+                  f"against {os['both_median_confidence']} on the shared ones, "
+                  f"exclusion {os['fork_only_median_exclusion']} against "
+                  f"{os['both_median_exclusion']}")
 
 
 if __name__ == "__main__":
