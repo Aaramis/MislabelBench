@@ -396,6 +396,12 @@ gracefully: `bin/analyses.sh` reaches its truth checks and exits 1 on nine forei
 `.fasta` was never built, after doing twenty-three steps of work. [`data/README.md`](data/README.md) says what is kept
 and what is regenerated, with the check that the regenerated cells come back byte-identical.
 
+`bin/restore_cluster.sh` rebuilds a cluster working copy from this repository: code, the kept
+datasets, every generated cell from its seed, and the two container images. `--dry-run` prints the plan
+without touching anything, and it refuses to run against a `~/bench` that already holds results. It
+exists because a cleanup command of mine deleted the cluster home directory and nothing here knew how to
+put it back; nothing was lost, which is what committing `results/` was for.
+
 `slurm/submit.sh` excludes the nodes recorded in `slurm/bad_nodes.txt`, which the jobs themselves
 append to when they land on one without singularity. Every path in every job script hangs off
 `BENCH_ROOT`, so a copy of this repo runs from anywhere.

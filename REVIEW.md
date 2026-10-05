@@ -2299,6 +2299,32 @@ needs the user's account access.
 The decision to commit `results/` was taken on the grounds that a cluster is a cache and the repository
 is the record. That was a claim until today.
 
+**111. Nothing in the repository knew how to rebuild the cluster, and the incident is what asked.**
+Finding 110 ends with the claim that the cluster is a cache and this repository is the record. That is
+true of the *measurements* -- 1 113 run records, 1 141 `.mis` files and 47 tables are committed, and
+every generated cell rebuilds from its seed -- and it was not true of the working copy. Putting
+`~/bench` back was knowledge in one person's head, and two of the four things it needs are not sent by
+anything here.
+
+`bin/push_code.sh` sends code only, deliberately: `data/raw` is fetched on the cluster by sha256 and
+`results/` travels the other way. Right for a cluster that holds the datasets, wrong for one that holds
+nothing. The gap is **38 MB across 28 committed files** -- `data/gtdb`, which carries the base sets,
+their subsets and the covariance model, and `data/bacteria`, the donor pool for error kind 6 -- none of
+which any generator can recreate without the raw release. The container cache is the other gap: the
+timing scripts find their image by glob and fail loudly when it is absent, so a restore that leaves the
+cache empty leaves every timed experiment broken until someone notices.
+
+`bin/restore_cluster.sh` is the procedure, in five checked steps, and it is written against the way the
+last one went wrong. It never deletes anything on the remote. It refuses to run against a `~/bench` that
+already holds results, because a restore that can overwrite a working cluster is the next incident. And
+every remote command it sends is single-quoted with no `$` inside, or escapes the `$` so the remote
+shell expands it -- which is exactly the distinction that cost the home directory. `--dry-run` prints the
+plan and touches nothing; that is all that can be checked until access returns, and it is checked.
+
+It has no caller, like `push_code.sh` and `repatriate.sh` beside it. Finding 97's rule about uncalled
+scripts was about analysis scripts, where silence means a number nobody rebuilds; an operator script that
+moves things between two machines is a different thing and the distinction is now written down.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
