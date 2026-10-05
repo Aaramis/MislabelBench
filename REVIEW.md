@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 128 |
+| findings in this report | 129 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2744,6 +2744,27 @@ is not known to work, however carefully it was reasoned about.**
 
 And `bin/verify_trace_table.py`, written the day before, caught the new trace file the moment it arrived
 and refused the rebuild until the table named it. That is the first thing it has done unprompted.
+
+**129. The fold-count gate skipped the one condition where the fold count is the claim.** Finding 92's
+check reads the expected fold count out of the condition's name with `__epang_T\d+_K(\d+)`.
+`epang_T8_Kexact` names no number, so it matched nothing and was skipped **silently** -- and strict
+leave-one-out is the condition whose entire purpose is that there is one sequence per fold, which is
+what makes it separate the engine from the fold scheme in README's decomposition.
+
+The expectation cannot come from the name there, so it comes from the data: `nextflow.config` declares
+`folds: 999999` and the tool caps at `min(folds, leaves)`, which finding 117 read in its source, so the
+count to expect is the cell's own sequence count. The two existing Kexact runs report **2 023 fold
+tasks** against `gtdb_arc2k`'s **2 023 sequences**. The gate covers them now -- **1 675 runs against
+1 671** -- and leaves the `run.json` field alone for those, since 999999 is the uncapped declaration and
+differs from the tool's count by design.
+
+**And the fix exposed a second defect in the same script.** A tree whose only runs are unusable -- a
+Kexact run with no `n_seqs` to check against, say -- reported "no fork run log found", because the
+empty-tree guard tested the count of runs *checked* rather than the count *matched*. The guard meant to
+catch a gate that compared nothing was swallowing the finding beside it. The two counts are separate
+now, and a tree of nothing but unusable runs reports the problem instead of claiming to be empty.
+
+Both paths tested on fabricated trees: a Kexact run with the wrong fold count, and one with no `n_seqs`.
 
 ## Deferred, with reasons
 
