@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 121 |
+| findings in this report | 122 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2577,6 +2577,27 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
+
+**122. The secondary dataset's chain, and the first time its code has run on a real release here.**
+Protocol.md's milestone sequence ends with UNITE RepS, and everything recorded about it came from a run
+on a cluster whose home directory no longer exists. `bin/prepare_unite.py` had never been executed on an
+actual release from this machine; the counts and the judgeability table in `assets/datasets.yml` were
+numbers in a file.
+
+Downloaded -- 29 158 924 bytes -- and hashed: **`a340864f…`**, the recorded value exactly, with the
+member the manifest names present in the archive. Prepared with the recorded rule, header field 4 equal
+to `reps`: **102 137 in the release, 16 120 refs, 4 175 refs_singleton, 81 842 reps**, all four as
+recorded, and 81 842 kept, so no malformed header and no name collision in the subset.
+
+And the judgeability table reproduces **row for row** on the freshly prepared file: 100.0 / 97.7 at
+phylum with 1 846 unresolved, 100.0 / 90.4 at class, 100.0 / 86.1 at order, 99.8 / 71.7 at family,
+97.4 / 59.9 at genus, and **45.3 / 10.9 at species with 62 129 unresolved** -- the corrected figure that
+replaced a published 85.7 %. The length statistics the manifest quotes come back too: p5 **421**, median
+**524**, p95 **666**, ratio **1.58**.
+
+So the last milestone's dataset is provenance-verified and its preparation works. What blocks it is not
+the harness: UNITE ships no alignment and ITS has no covariance model to align against, which is open
+question 2 in the protocol and a question for the co-authors rather than a missing piece of code.
 
 ## Deferred, with reasons
 
