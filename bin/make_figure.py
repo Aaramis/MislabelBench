@@ -37,7 +37,13 @@ W, H = 760, 540
 # Plot areas: two rows of two, left margin wide enough for a rotated y label.
 PANELS = {"A": (62, 40), "B": (452, 40), "C": (62, 320), "D": (452, 320)}
 PW, PH = 240, 180
-FORK, UP = "#1b6ca8", "#c1462c"
+# Black for the tool under test, colour for the comparator, taken from the script that produced
+# this journal's gappa figure (lczech/genesis-gappa-paper, plot.py): their own library is plotted
+# with colour "k" and a solid line, every competitor with a cycle colour and a (5,2) dash, and their
+# own column is moved to the front of the legend. It survives greyscale printing, which two coloured
+# lines of equal weight do not.
+FORK, UP = "#000000", "#c1462c"
+COMPARATOR_DASH = "5 2"
 STAGE = {"reference_sec": "#b8c6d1", "loo_tasks_sec": "#8aa3b5",
          "loo_place_sec": "#1b6ca8", "loo_score_sec": "#4a5f6d"}
 
@@ -91,15 +97,13 @@ def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
           txt(ax.x0 - 40, ax.y0 + PH / 2, ylabel, size=10, rot=-90)]
     for v in xticks:
         x = ax.px(v)
-        # The grid goes in before the data, so it sits under it. Two of the three figures looked at
-        # have one and it makes a log axis readable without counting decades.
-        o.append(f'<line x1="{x:.1f}" y1="{ax.y0}" x2="{x:.1f}" y2="{ax.y0 + PH}" '
-                 f'stroke="#e8e8e8" stroke-width="0.6"/>')
         o.append(f'<line x1="{x:.1f}" y1="{ax.y0 + PH}" x2="{x:.1f}" y2="{ax.y0 + PH + 4}" '
                  f'stroke="#444" stroke-width="0.8"/>')
         o.append(txt(x, ax.y0 + PH + 15, xfmt(v), size=8))
     for v in yticks:
         y = ax.py(v)
+        # Horizontal only. Their script calls ax.yaxis.grid(True) and never touches the x grid, and
+        # the published figure has no vertical rules; a first pass here drew both.
         o.append(f'<line x1="{ax.x0}" y1="{y:.1f}" x2="{ax.x0 + PW}" y2="{y:.1f}" '
                  f'stroke="#e8e8e8" stroke-width="0.6"/>')
         o.append(f'<line x1="{ax.x0 - 4}" y1="{y:.1f}" x2="{ax.x0}" y2="{y:.1f}" '
@@ -205,13 +209,13 @@ def main():
     # A. Speed, which is the claim the paper leads with.
     grad = read_gradient(root / "results/resource_usage.txt")
     ax = Ax("A", (350, 8000), (5, 4000), xlog=True, ylog=True)
-    o += frame(ax, "A", "wall clock, both tools", "reference sequences", "seconds",
+    o += frame(ax, "A", "wall clock, both tools", "Reference Sequences", "Runtime  [s]",
                [400, 1000, 2000, 4000, 7000], [10, 100, 1000],
                xfmt=lambda v: f"{v:,}".replace(",", " "))
-    o += series(ax, [(r["n"], r["upstream"]) for r in grad], UP)
+    o += series(ax, [(r["n"], r["upstream"]) for r in grad], UP, dash=COMPARATOR_DASH)
     o += series(ax, [(r["n"], r["fork"]) for r in grad], FORK)
-    o += legend(ax.x0 + 8, ax.y0 + 14, [("upstream SATIVA", UP, None),
-                                        ("sativa-epang", FORK, None)])
+    o += legend(ax.x0 + 8, ax.y0 + 14, [("sativa-epang", FORK, None),
+                                        ("SATIVA", UP, COMPARATOR_DASH)])
     # The speedup is the point of the panel and is not readable off two log curves.
     for r in grad:
         o.append(txt(ax.px(r["n"]), ax.py(r["fork"]) - 9, f"{r['wall_speedup']:.0f}x",
@@ -223,7 +227,7 @@ def main():
     # B. Scaling per stage, because only one stage distributes.
     stages = read_stages(root)
     ax = Ax("B", (0, 3), (0, 300))
-    o += frame(ax, "B", "stages at 1, 2 and 4 nodes", "nodes (7 051 sequences)", "seconds",
+    o += frame(ax, "B", "stages at 1, 2 and 4 nodes", "Nodes", "Runtime  [s]",
                [], [0, 100, 200, 300])
     bw = 46
     for i, row in enumerate(stages):
@@ -262,8 +266,8 @@ def main():
     lo_x = min(x for pts in curves.values() for x, _ in pts)
     lo_y = min(y for pts in curves.values() for _, y in pts)
     ax = Ax("C", (lo_x - 0.04, 1.02), (lo_y - 0.03, 1.01))
-    o += frame(ax, "C", "filtering, by each column", "collateral flags kept",
-               "injected flags kept", [0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+    o += frame(ax, "C", "filtering, by each column", "Collateral Flags Kept",
+               "Injected Flags Kept", [0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
                [0.80, 0.85, 0.90, 0.95, 1.0],
                xfmt=lambda v: f"{v:.1f}", yfmt=lambda v: f"{v:.2f}")
     for name, colour, dash in (("confidence", FORK, None), ("exclusion", UP, "4 2")):
@@ -285,17 +289,17 @@ def main():
 
     # D. The accuracy control, and the limit the injection design predicts.
     ax = Ax("D", (0.8, 10.5), (0, 1), xlog=True)
-    o += frame(ax, "D", "recall against shared-label count", "k relabelled together",
-               "recall (mean of 6 distances)", [1, 2, 3, 5, 10], [0, 0.25, 0.5, 0.75, 1],
+    o += frame(ax, "D", "recall against shared-label count", "Sequences Sharing the Wrong Label",
+               "Recall", [1, 2, 3, 5, 10], [0, 0.25, 0.5, 0.75, 1],
                xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
-    for cond, colour in (("upstream_raxml_T8", UP), ("epang_T8_K25", FORK)):
+    for cond, colour in (("epang_T8_K25", FORK), ("upstream_raxml_T8", UP)):
         for rate, dash in ((0.05, None), (0.01, "4 2")):
             r = read_recall(root, cond, rate)
             o += series(ax, sorted(r.items()), colour, dash=dash)
             vals += [f"D\t{cond}_r{rate}\t{k}\t{v:.4f}" for k, v in sorted(r.items())]
     o += legend(ax.x0 + PW - 96, ax.y0 + 14,
-                [("upstream, 5 %", UP, None), ("upstream, 1 %", UP, "4 2"),
-                 ("fork, 5 %", FORK, None), ("fork, 1 %", FORK, "4 2")])
+                [("sativa-epang, 5 %", FORK, None), ("sativa-epang, 1 %", FORK, "4 2"),
+                 ("SATIVA, 5 %", UP, None), ("SATIVA, 1 %", UP, "4 2")])
 
     o.append("</svg>")
     Path(args.out).write_text("\n".join(o) + "\n")
