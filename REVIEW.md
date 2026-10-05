@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 118 |
+| findings in this report | 119 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2412,10 +2412,11 @@ that is no better.
 
 **115. The open claim from finding 114 is settled, and the fork's diff is four fifths scratch files.**
 Cloning the public fork answers it in one command: `epa-ng` is **27 commits ahead of `master` and none
-behind**. `PUBLISHING.md`'s "one commit on top of v0.9.3 (`68284c2`)" was wrong three ways -- there is
-no tag `v0.9.3`, the tags being `v0.9.3.1` to `v0.9.3.6` and `v0.10.0` to `v0.10.2`; `68284c2` is an
-*upstream* commit, "fix gcc version check"; and the branch is 27 commits, which is what GitHub's compare
-view said beside the error that made it untrustworthy. The cautious reading of finding 114 was right to
+behind**. `PUBLISHING.md`'s "one commit on top of v0.9.3 (`68284c2`)" was wrong about the count -- the branch is
+27 commits, which is what GitHub's compare view said beside the error that made it untrustworthy -- and
+right about the base, which finding 119 establishes: `68284c2` is upstream's v0.9.3 tree exactly. The
+fork carries no `v0.9.3` tag of its own, its tags being `v0.9.3.1` to `v0.9.3.6` and `v0.10.0` to
+`v0.10.2`, which is what made the reference look wrong at first; upstream does carry one. The cautious reading of finding 114 was right to
 refuse both numbers and wrong about which would survive.
 
 **What the modification is: 22 files, 2 239 lines**, led by `epac/epang_l1o.py` at 1 150, `sativa.py` at
@@ -2506,6 +2507,26 @@ So every number in this benchmark traces to a commit whose deciding condition wa
 upstream's. The one caveat worth stating: the recipe was read as it stands today, and what it establishes
 is that build 0 of 0.10.2 comes from that tag -- which is the build string the repository pins, so the
 two meet.
+
+**119. The comparator is unmodified SATIVA, checked the same way, and it is the fork's own base.** The
+paper compares against "unmodified SATIVA" everywhere, and that phrase names a container:
+`sativa:0.9.3--py312h031d066_0`. Finding 118 closed that chain for the fork and left the comparator
+resting on the word "unmodified" in a recipe nobody had opened.
+
+Opened: the bioconda recipe for `sativa` is version **0.9.3**, build **0** -- the build string the
+repository pins -- built from `github.com/amkozlov/sativa/archive/refs/tags/v0.9.3.zip` with sha256
+**`0d0ae82f…`**, and it carries **no `patches:` section at all**. Downloaded and hashed here: the zip is
+`0d0ae82f…`. So the comparator is upstream's released source with nothing applied to it.
+
+**And the two chains meet.** That tree is **byte-identical, 0 differences, to the tip of the fork's
+`master`**, commit `68284c2`. So the diff findings 116 and 117 read -- 27 commits, the classification
+rule untouched, the fold behaviour as documented -- is precisely the difference between the two
+containers that produced every comparison in this benchmark. Neither chain is a claim about the other
+any more.
+
+It also settles what finding 115 got half right. `PUBLISHING.md` named `68284c2` as the base and that was
+correct; the fork simply carries no `v0.9.3` tag of its own, so the reference looked wrong from inside the
+clone. What was wrong was the count, not the commit.
 
 ## Deferred, with reasons
 
