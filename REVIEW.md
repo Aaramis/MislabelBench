@@ -19,7 +19,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | | count |
 |---|---|
 | findings in this report | 124 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
@@ -2646,6 +2646,11 @@ counts, 0 problems.**
 
 Its summary line said "all named" above the lines naming what was not, which is the fourth gate of mine
 to do that. The pattern is always the same: the summary is written before the failure path is exercised.
+
+And adding it made the coverage table's own `bin/` count stale inside this commit, which the gate from
+finding 113 caught -- for the third time, and for the third time after I had committed rather than
+before. The rule that finding states, that a gate added in a change has to be run after the change, is
+one I have now broken as often as I have written it.
 
 ## Deferred, with reasons
 
