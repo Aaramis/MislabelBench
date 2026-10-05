@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 119 |
+| findings in this report | 120 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2527,6 +2527,29 @@ any more.
 It also settles what finding 115 got half right. `PUBLISHING.md` named `68284c2` as the base and that was
 correct; the fork simply carries no `v0.9.3` tag of its own, so the reference looked wrong from inside the
 clone. What was wrong was the count, not the commit.
+
+**120. The third container's chain, and the one file every alignment was built against had no recorded
+identity.** Findings 118 and 119 closed the chains for the two tools. The alignment is the third:
+`modules/local/alignssu/main.nf` pins `infernal:1.1.5`, and what it aligns against is
+`data/gtdb/RF01959.cm`, committed. `assets/datasets.yml` records the sha256 of the **whole** `Rfam.cm.gz`
+and the `cmfetch` command that extracted the model from it -- so the archive has an identity and the file
+that actually did the work has none.
+
+It is the published model, checked by fetching Rfam's own per-family copy: the two differ on **one
+line**, the padding of a `DESC` field that `cmfetch` writes differently from the per-family download, and
+the model's own **`CKSUM` is 2012181519 in both files and both blocks**. `diff -w` finds nothing.
+
+**And the model's `CLEN` is 1478, which is the width of every alignment here**: 7 051 archaeal sequences,
+2 023 in the grid's subset, 600 bacterial donors, all exactly 1 478 columns and no other width anywhere.
+That is `--matchonly` doing what the module's comment says, and it is also what makes error kind 6
+possible -- the donors can be concatenated into the archaeal alignment because both are the model's own
+columns, which the manifest asserts and nothing had checked.
+
+Both are recorded and checked now. `assets/datasets.yml` carries `extracted_sha256` and
+`consensus_length`; `bin/verify_manifests.py` compares the committed model against the first, its `CLEN`
+header against the second, and every alignment's width against the model -- **242 datasets, the model,
+and 3 alignment widths**, with the failure path tested on a fabricated four-column alignment, which it
+names.
 
 ## Deferred, with reasons
 
