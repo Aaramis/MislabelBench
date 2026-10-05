@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 120 |
+| findings in this report | 121 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2550,6 +2550,33 @@ Both are recorded and checked now. `assets/datasets.yml` carries `extracted_sha2
 header against the second, and every alignment's width against the model -- **242 datasets, the model,
 and 3 alignment widths**, with the failure path tested on a fabricated four-column alignment, which it
 names.
+
+**121. The root of the data chain, and with it every link from the GTDB release to a published table.**
+`assets/datasets.yml` pins the raw release by sha256, which is the right thing to record and had never
+been compared against what the server sends. Downloaded -- 73 184 620 bytes -- and hashed:
+**`79aab42a…`**, the recorded value exactly.
+
+The selection rule the manifest states in one line, "lineage starts with `d__Archaea`, then length
+>= 1200 nt", applied literally to that file gives **1 053 664 sequences in the release, 13 754 after the
+domain filter, 7 051 after the length filter** -- the three recorded counts, and the last of them is the
+dataset the whole benchmark runs on.
+
+With findings 118 to 120 that leaves no link in this repository asserted rather than checked:
+
+| link | checked by |
+|---|---|
+| GTDB r226 release ← its recorded sha256 | downloading 73 MB and hashing it |
+| `gtdb_arc1200`, 7 051 sequences ← the release and one selection rule | recounting: 1 053 664 → 13 754 → 7 051 |
+| the four subsets ← `gtdb_arc1200` and seed 42 | regenerating: byte-identical, finding 97 |
+| 481 injected, foreign, clade and simulated cells ← their seeds | regenerating: byte-identical, finding 112 |
+| the alignment model ← Rfam's published RF01959 | fetching it: one line of padding apart, same `CKSUM` |
+| every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
+| the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
+| the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
+| 47 published tables ← 1 113 run records | `bin/analyses.sh`, byte-identical in a clone |
+| ~4 000 published values ← a second implementation | findings 98 to 107 |
+
+Each of those was a sentence in a manifest or a document before it was a measurement.
 
 ## Deferred, with reasons
 
