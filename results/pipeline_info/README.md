@@ -21,7 +21,8 @@ do at the line that names the path.
 No result here was produced by any version below 26.04.4, and none was tested on one.
 
 Task rows per file, and the gaps, which are real and worth stating rather than leaving to be
-noticed:
+noticed. Where a row names several files the number is their **total**, which three rows of this
+table meant per file until `bin/verify_trace_table.py` found the column saying two things at once:
 
 | file | rows | what it covers |
 |---|---|---|
@@ -31,10 +32,30 @@ noticed:
 | `trace-kaxis.txt` | 60 | 58 completed, 2 not |
 | `trace-foreign.txt` | 36 | the foreign-sequence cells, complete |
 | `trace-threads.txt` | 36 | the thread sweep, complete |
-| `trace-baseline2k.txt`, `trace-ksweep.txt` | 4 | complete |
-| `trace-determinism.txt`, `trace-nf.txt` | 2 | complete |
-| `trace-grid_up_species.txt`, `trace-kexact_k2_attempt1.txt` | 2 | the two jobs that died within a minute and a half on 3 October. The Kexact one is renamed because the successful run an hour later found it already there and wrote nothing, which is the collision the job id in the tag now prevents; the file was moved aside so the next Kexact submission can write its own |
+| `trace-baseline2k.txt` | 4 | complete |
+| `trace-ksweep.txt` | 4 | complete |
+| `trace-determinism.txt` | 2 | complete |
+| `trace-nf.txt` | 2 | complete |
+| `trace-grid_up_species.txt` | 2 | one of the two jobs that died within a minute and a half on 3 October. The Kexact one is renamed because the successful run an hour later found it already there and wrote nothing, which is the collision the job id in the tag now prevents; the file was moved aside so the next Kexact submission can write its own |
+| `trace-kexact_k2_attempt1.txt` | 2 | the other, described in the row above |
 | `trace-baseline.txt` | 0 | header only. The baseline job's trace was lost before per-tag naming existed, and nothing can recover it |
+
+Everything that arrived after the table above was written, which is 27 files and **620 task rows** --
+more than half as many again as the 719 listed above, and absent from a document whose purpose is to
+enumerate them. Grouped rather than listed one by one, since what they have in common is what matters:
+
+| files | rows | what they cover |
+|---|---|---|
+| `trace-grid_missing_epang_T8_K25_2183990.txt`, `trace-grid_missing_epang_T8_K25_2183986.txt`, `trace-grid_missing_epang_T8_K25_tree_2184020.txt`, `trace-grid_missing_epang_T8_K5_2184019.txt`, `trace-grid_missing_epang_T8_K5_tree_2184021.txt`, `trace-grid_missing_upstream_raxml_T8_2183991.txt`, `trace-grid_missing_upstream_raxml_T8_2183987.txt` | 189 | the jobs that filled the grid's remaining cells, one per condition; the two at 0 rows found nothing left to run |
+| `trace-grid_up_missing.txt` | 150 | the upstream grid's completion after the file-quota death |
+| `trace-simulation_2184272.txt`, `trace-simulation_2184091.txt` | 200 | 2.1's control, the second job completing what the first began |
+| `trace-kind3_2184084.txt` | 36 | error kind 3, nine cells under both tools |
+| `trace-staged_timed_f7_2177364.txt`, `trace-staged_timed_f13_2177363.txt`, `trace-staged_timed_f25_2177362.txt`, `trace-staged_check_2177253.txt` | 31 | the staged runs behind `results/staged_scaling_f*.txt` and DISTRIBUTION.md |
+| `trace-m1_check_2182101.txt`, `trace-inputs_check_2183078.txt`, `trace-kexact_k2.txt`, `trace-determinism_2182091.txt` | 14 | the M1 validation, an input check, the Kexact pair, and the determinism rerun |
+| `trace-grid_k5_local.txt`, `trace-grid_tree_local.txt`, `trace-grid_up_species_local.txt`, `trace-kaxis_upstream_local.txt`, `trace-kexact_k2_local.txt`, `trace-ksweep_local.txt`, `trace-sizes_local.txt`, `trace-threads_local.txt` | 0 | eight `_local` traces with a header and nothing else: submissions that failed before a task ran |
+
+`bin/verify_trace_table.py` keeps this honest -- every `trace-*.txt` in this directory must be named
+here, and every row count stated in either table must be the file's. It runs in `bin/analyses.sh`.
 
 A resumed run does list its cached tasks, with status `CACHED` rather than `COMPLETED`, so resuming
 does not silently shorten a trace. Checked with `-stub-run`: six cached and two run, eight rows.

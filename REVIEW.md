@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 123 |
+| findings in this report | 124 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2623,6 +2623,29 @@ The coverage gate caught this finding mid-commit, for the second time: adding th
 report's own count stale, and the gate counts *tracked* files, so it was right to fail while they were
 still untracked and right to pass once they were in. Twice now a gate of mine has fired on the change
 that introduced it, which is the cheapest evidence a gate can give.
+
+**124. The document that exists to enumerate the traces listed 13 of 41.** `results/pipeline_info/README.md`
+opens by saying it records "the gaps, which are real and worth stating rather than leaving to be noticed",
+and its table is exact as far as it goes: **13 files, 13 row counts, 0 disagreements** when each is
+counted. It goes to a third of the directory. **27 files holding 620 task rows** -- more than half as many
+again as the 719 it lists -- had arrived since it was written: the jobs that filled the grid's remaining
+cells, the upstream grid's completion, both simulation runs, kind 3, the staged timing rounds, and eight
+`_local` traces with a header and nothing else.
+
+That is the third table in this repository to have been written once and left while the thing it
+described grew, after the review's own coverage table and the publication state. All 41 are named now,
+the 27 grouped by what they have in common.
+
+**And writing the gate found a defect in the original table.** Three of its rows name two files and give
+one number -- `trace-baseline2k.txt`, `trace-ksweep.txt`, 4 -- meaning four rows *each*, while the
+grouped rows I was adding meant the total. One column, two meanings, decided by which row you are
+reading. The rows are split so the number is always the total of the files named, the convention is
+stated above the table, and `bin/verify_trace_table.py` checks both halves on every rebuild: every
+`trace-*.txt` named somewhere, every stated count equal to what those files hold. **41 traces and 20 row
+counts, 0 problems.**
+
+Its summary line said "all named" above the lines naming what was not, which is the fourth gate of mine
+to do that. The pattern is always the same: the summary is written before the failure path is exercised.
 
 ## Deferred, with reasons
 

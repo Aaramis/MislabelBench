@@ -353,6 +353,11 @@ make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/f
 
 # Run here rather than by hand, which is how it was run until now. A gate whose running depends on
 # someone remembering it is one nobody notices has stopped.
+# The traces are provenance rather than measurement, so nothing reads them -- which is exactly why the
+# document enumerating them drifted to 13 files of 41 without anyone noticing.
+step "every Nextflow trace is named in the document that enumerates them"
+verify_trace_table.py
+
 step "every file of the repository is named somewhere in REVIEW.md"
 review_coverage.py
 # And that the report's own cross-references resolve. Only REVIEW.md here: the decision log lives
