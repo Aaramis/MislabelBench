@@ -43,8 +43,10 @@ RANK="${CASE_KEEP_RANK:-order}"
 # one wrong label upstream flags this sequence at 1.000, and in its own cell, where 102 labels are
 # wrong, it misses it. So the company is the cause and a case without it reproduces nothing.
 TRUTH="${CASE_TRUTH:-}"
-# One spec per case, 'per_family,outgroup'. Smallest first, so a sweep that runs out of wall clock
-# has done the cheap cases rather than half of the expensive one.
+# One spec per case, 'per_family,outgroup' or 'per_family,outgroup,wrong labels'. The third field is
+# how many of the cell's wrong labels the case carries, which is the axis the mechanism asks about:
+# one is found by both tools and the cell's hundred by one of them. Smallest first, so a sweep that
+# runs out of wall clock has done the cheap cases rather than half of the expensive one.
 SPECS="${CASE_SPECS:-0,10 0,200 0,1000 0,999999}"
 DATASET="${CASE_DATASET:-gtdb_arc2k}"
 THREADS="${CASE_THREADS:-8}"
@@ -87,15 +89,17 @@ printf 'sequence\tcase\tarm\tverdict\tlevel\tproposed\tconfidence\texclusion\n' 
 
 run_case() {
     local seq="$1" wrong="$2" spec="$3"
-    local pf="${spec%%,*}" outgroup="${spec##*,}"
-    local case_dir="$OUT/${seq}__pf${pf}_og${outgroup}"
+    local pf="${spec%%,*}" rest="${spec#*,}"
+    local outgroup="${rest%%,*}" count=""
+    [ "$rest" = "${rest#*,}" ] || count="${rest#*,}"
+    local case_dir="$OUT/${seq}__pf${pf}_og${outgroup}${count:+_n$count}"
     rm -rf "$case_dir"
     # A sequence whose wrong label sits outside the kept clade is skipped and not fatal: over 64
     # candidates some are injected across a wider distance than --keep-rank spans, and the sweep is
     # worth more than its most awkward member.
     python3 "$ROOT/bin/minimal_case.py" --alignment "$ALN" --taxonomy "$TAX" \
         --sequence "$seq" --wrong-label "$wrong" --keep-rank "$RANK" \
-        ${TRUTH:+--truth "$TRUTH"} \
+        ${TRUTH:+--truth "$TRUTH"} ${count:+--injected-count "$count"} \
         --per-family "$pf" --outgroup "$outgroup" --out "$case_dir" || {
             printf '%s\t%s\t-\tSKIPPED(cannot build)\t-\t-\t-\t-\n' "$seq" "$spec" >> "$OUT/verdicts.tsv"
             return 0

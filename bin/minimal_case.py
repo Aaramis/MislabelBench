@@ -70,6 +70,15 @@ def main():
     # one wrong label is therefore an easier problem than the run it is meant to reproduce.
     p.add_argument("--truth", help="the cell's truth.json; every injected sequence sharing the "
                                    "target's true group and wrong label is relabelled too")
+    # How many of the cell's wrong labels the case carries. The default is the target's own group,
+    # which is the smallest case that reproduces anything. Raising it is the measurement the
+    # mechanism asks for: one wrong label is found by both tools and the whole cell's 102 are found
+    # by one of them, so the interesting quantity is where in between the two part company. A count
+    # at or above the cell's size reproduces the cell exactly, which is the control that says this
+    # script agrees with the run it is modelling.
+    p.add_argument("--injected-count", type=int, default=0,
+                   help="with --truth: apply this many of the cell's wrong labels, the target's "
+                        "group first; 0 means the group alone")
     p.add_argument("--out", required=True)
     args = p.parse_args()
 
@@ -90,8 +99,10 @@ def main():
     # The target's companions, if a cell was given. Matched on the pair and not on the wrong label
     # alone: two groups can be relabelled into the same donor taxon, and only the ones that left the
     # target's own group are the company it had.
-    companions = set()
+    relabel = {target: args.wrong_label}
     if args.truth:
+        if not Path(args.truth).is_file():
+            raise SystemExit(f"--truth names no readable file: {args.truth}")
         injected = json.loads(Path(args.truth).read_text())["injected"]
         if target not in injected:
             raise SystemExit(f"{target} is not injected in {args.truth}")
@@ -100,6 +111,14 @@ def main():
                       if r["true"] == rec["true"] and r["wrong"] == rec["wrong"]}
         if args.wrong_label != rec["wrong"]:
             raise SystemExit(f"--wrong-label disagrees with {args.truth}: the cell says {rec['wrong']}")
+        # The group first and the rest by name, so a count of n and a count of n+1 differ by one
+        # sequence rather than by a different draw. No seed, for the reason --per-family has none.
+        order = sorted(companions) + sorted(set(injected) - companions)
+        if args.injected_count and args.injected_count < len(companions):
+            raise SystemExit(f"--injected-count {args.injected_count} is below the target's own "
+                             f"group of {len(companions)}, which the case cannot drop")
+        for n in (order[:args.injected_count] if args.injected_count else sorted(companions)):
+            relabel[n] = injected[n]["wrong"]
 
     kept_clade = prefix(true_lineage, args.keep_rank)
     wrong_clade = prefix(args.wrong_label, args.keep_rank)
@@ -115,7 +134,7 @@ def main():
         by_family.setdefault(prefix(tax[n], "family"), []).append(n)
     target_genus = prefix(true_lineage, "genus")
     for fam, members in sorted(by_family.items()):
-        members.sort(key=lambda n: (n != target, n not in companions,
+        members.sort(key=lambda n: (n != target, n not in relabel,
                                     prefix(tax[n], "genus") != target_genus, n))
         chosen += members[: args.per_family] if args.per_family else members
 
@@ -150,7 +169,7 @@ def main():
     with (out / "case.fasta").open("w") as fa, (out / "case.tax").open("w") as tx:
         for n in chosen:
             fa.write(f">{n}\n{''.join(aln[n][j] for j in informative)}\n")
-            tx.write(f"{n}\t{args.wrong_label if n in companions or n == target else tax[n]}\n")
+            tx.write(f"{n}\t{relabel.get(n, tax[n])}\n")
 
     rank = next((r for r in RANKS
                  if prefix(true_lineage, r) != prefix(args.wrong_label, r)), None)
@@ -163,8 +182,8 @@ def main():
         "n_seqs": len(chosen),
         # The case's own k, which can be below the cell's: a companion dropped by --per-family is a
         # case with fewer carriers than the run it reproduces, and the number has to say so.
-        "n_wrong_labels": len((companions | {target}) & set(chosen)),
-        "companions": sorted(companions - {target}),
+        "n_wrong_labels": len(set(relabel) & set(chosen)),
+        "wrong_labels": sorted(set(relabel) & set(chosen)),
         "n_outgroup": len(picked),
         "alignment_width": len(informative),
         # The digests and not just the paths. The case is meant to be sent to someone who does not

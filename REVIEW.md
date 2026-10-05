@@ -25,7 +25,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1115 |
 | result tables, each rebuilt by `bin/analyses.sh` | 51 |
-| tests over the scripts that turn runs into numbers | 20 |
+| tests over the scripts that turn runs into numbers | 26 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -2890,7 +2890,14 @@ predict.
 
 It also costs the minimal case its minimality: a case with one wrong label cannot reproduce the
 divergence, because one wrong label is detected by both tools everywhere it has been tried. The smallest
-sendable case carries *k* of them.
+sendable case carries *k* of them, and with the companion but without the full reference every arm misses
+the sequence, at 22, 31, 183 and 373 sequences alike.
+
+The case builder is held to the one property that makes a negative result mean anything: at full count it
+must reproduce the cell. It does, exactly -- the taxonomy and the alignment it writes equal the cell's as
+mappings -- so the sweep contains the run that is known to diverge rather than only runs that do not.
+`tests/test_minimal_case.py` keeps that, together with the refusal to build a case that drops the
+companion, and the determinism the shrinking search depends on.
 
 ## What is outstanding
 
