@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 112 |
+| findings in this report | 113 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2372,6 +2372,12 @@ So the table is derived now. `bin/verify_report_references.py` recomputes all ei
 names individually: "'`slurm/` job scripts' says 29, repository has 37". The opening also tells a reader
 where to start, which a chronological log of 112 findings otherwise does not: the second-implementation
 sweep is findings 98 to 107, and the incident and its consequences are 110 to 112.
+
+The gate's first live catch was this finding. Adding it made the table's own figure stale within the
+same commit -- "says 112, repository has 113" -- which is the shape of the problem it exists for and the
+cheapest possible demonstration that it works. I had committed before re-running `bin/analyses.sh`, so
+the check that caught it ran one step too late; the count is corrected and the lesson is that a gate
+added in the same change it validates has to be run after the change, not before.
 
 And its exit message is named for what it found. The script now fails on a drifted count as readily as
 on a dangling reference, and said "N reference(s) point at nothing" for both -- the third time in this
