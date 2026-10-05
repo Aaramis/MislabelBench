@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 124 |
+| findings in this report | 125 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2651,6 +2651,30 @@ And adding it made the coverage table's own `bin/` count stale inside this commi
 finding 113 caught -- for the third time, and for the third time after I had committed rather than
 before. The rule that finding states, that a gate added in a change has to be run after the change, is
 one I have now broken as often as I have written it.
+
+**125. The fourth stale table, and the pattern is now the finding.** `data/README.md` says what the
+generators produce and what is kept rather than regenerated. It read "**378** regenerated files ... from
+the two `make_` scripts": there are **four** generators, and the count is **481 -- 360 injected, 18
+foreign, 27 clade, 76 simulated**, measured in finding 112 against a tree holding exactly what a restore
+would deliver, with 0 differing and 0 absent. The size beside it was 56 MB where the `.tax` files are
+**58 MB** and the `.fasta` are 180 symlinks holding nothing.
+
+Four tables in this repository have now been written once and left while what they describe grew: the
+review's own coverage table, the publication state, the trace enumeration, and this. Three were caught by
+looking, one by a gate. The common shape is a document that counts a directory, which is a cache of that
+directory with nothing to invalidate it.
+
+So the check goes where the data is rather than into a fourth bespoke script: `bin/verify_manifests.py`
+now parses the counts out of `data/README.md`'s own sentence -- the sentence a reader reads, not a
+machine-readable block beside it -- and compares each against the directories. **242 datasets, the
+covariance model, 3 alignment widths and 4 generated-file counts in one step.** The failure path was
+tested by moving one count by one, which it names.
+
+Writing it produced two mistakes of mine worth recording because both are recurring. The first regex
+matched "180 injected cells" forty lines above the list and reported a drift that did not exist; it is
+anchored to the list now. And I read `exit=$?` after a pipeline again, which reports the exit of `tail`
+rather than of the script -- the same misreading that validated a manifest against a stale cluster copy
+early in this review.
 
 ## Deferred, with reasons
 

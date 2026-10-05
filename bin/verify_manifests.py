@@ -84,6 +84,47 @@ def check_alignment_model(problems):
     return checked
 
 
+def check_data_readme(problems):
+    """data/README.md states how many files the generators produce; the directories decide.
+
+    It said "378 files from the two make_ scripts" while there were four generators and 481 files,
+    which is the fourth table in this repository to have been written once and left while the thing
+    it described grew. The counts are parsed from the sentence rather than from a machine-readable
+    block, because the sentence is what a reader reads.
+    """
+    import re as _re
+
+    readme = Path("data/README.md")
+    if not readme.exists():
+        return 0
+    text = readme.read_text()
+    counted = {}
+    for sub in ("injected", "foreign", "clade", "simulated"):
+        d = Path("data") / sub
+        if not d.is_dir():
+            return 0
+        counted[sub] = sum(1 for f in d.rglob("*") if f.is_file() and f.name != "warn.txt"
+                           and not f.name.endswith(("truth.json", "datasets.json")))
+    total = sum(counted.values())
+    stated_total = _re.search(r"\*\*(\d+) files --", text)
+    if not stated_total:
+        problems.append("data/README.md states no total for the regenerated files")
+        return 0
+    if int(stated_total.group(1)) != total:
+        problems.append(f"data/README.md says {stated_total.group(1)} regenerated files, "
+                        f"the directories hold {total}")
+    # Anchored to the list that follows the total, not to the first "N injected" in the document:
+    # the loose form matched "180 injected cells" forty lines earlier and reported a false drift.
+    listing = text[stated_total.end():stated_total.end() + 200]
+    for sub, n in counted.items():
+        m = _re.search(rf"(\d+) {sub}\b", listing)
+        if not m:
+            problems.append(f"data/README.md gives no count for {sub}")
+        elif int(m.group(1)) != n:
+            problems.append(f"data/README.md says {m.group(1)} {sub}, the directory holds {n}")
+    return len(counted)
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--glob", default="data/*/datasets*.json",
@@ -128,9 +169,10 @@ def main():
                 unsound.add((man.name, ds["name"]))
 
     n_aln = check_alignment_model(problems)
+    n_data = check_data_readme(problems)
     print(f"{checked} datasets in {len(manifests)} manifests checked, "
           f"{checked - len(unsound)} sound; the covariance model and {n_aln} alignment widths "
-          f"against it")
+          f"against it; {n_data} generated-file counts against data/README.md")
     for pb in problems:
         print(f"  {pb}", file=sys.stderr)
     if problems:

@@ -30,7 +30,7 @@ and is checked by `verify_injection.py`.
 **`*.pfam`**, 23 MB. The Pfam-format output of `cmalign`; `*.aligned.fasta` is the same alignment in
 the form everything downstream reads.
 
-**The per-cell `.tax` and `.fasta` of the 180 injected cells**, 56 MB. Each is the base taxonomy with
+**The per-cell `.tax` and `.fasta` of the 180 injected cells**, 58 MB of `.tax` and 180 symlinks. Each is the base taxonomy with
 a few hundred labels rewritten, and `slurm/make_grid.sh` rebuilds all 180 from their seeds in under
 a minute with no cluster and no container. The alignment is shared, so each cell's `.fasta` was only
 ever a symlink to the base.
@@ -44,9 +44,15 @@ machines; it now records the input's name and sha256, which can.
 
 That check named the `.tax` and the `truth.json` and stopped there, which is narrower than what it is
 used to license: a cell also carries a `.fasta`, and that is the file SATIVA reads. Rerun from a fresh
-clone with nothing but the two `make_` scripts, **all 378 regenerated files are byte-identical** --
-180 injected `.tax`, 180 injected `.fasta`, and both for the nine foreign cells, which the earlier
-check did not cover either. The 180 injected `.fasta` are *symlinks* to `gtdb_arc2k.fasta`, because
-injection rewrites a taxonomy and never an alignment, so comparing them compares one file to itself
-180 times; what the check establishes for those is that the link is remade and points where it should.
+clone with nothing but the generators, every regenerated file is byte-identical. That check has grown
+twice since it was written here as "378 files from the two `make_` scripts": there are **four**
+generators now, and the count is **481 files -- 360 injected, 18 foreign, 27 clade, 76 simulated** --
+most recently rerun against a tree holding exactly what `bin/restore_cluster.sh` would deliver, with
+**0 differing and 0 absent**.
+
+The caveat that keeps that number honest, restated rather than assumed remembered: **225 of the 235
+regenerated `.fasta` are symlinks** to a base alignment, because injection rewrites a taxonomy and never
+an alignment, so comparing their contents compares one file to itself. What the check establishes for
+those is that the link is remade and points where it should. The ten real ones are the nine foreign
+cells and the simulated reference, and they are where the comparison bites.
 The nine foreign `.fasta` are real files and are the ones that comparison bites on.
