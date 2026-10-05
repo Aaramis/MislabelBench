@@ -49,6 +49,14 @@ else
     fi
 fi
 
+# push_code.sh sends the per-cell truth files into data/injected/ and data/foreign/ with rsync, and
+# rsync will not create a parent chain: on a cluster that already has ~/bench/data this never shows,
+# and on an empty one -- the case this script exists for -- step 2 dies with
+# `mkdir "~/bench/data/injected" failed: No such file or directory`. Found on the first real run,
+# because the local replay of the delivery created its own target directory and so could not.
+echo "== 1b. the directory skeleton, which rsync will not create for itself"
+run ssh "$HOST" 'mkdir -p ~/bench/data/injected ~/bench/data/foreign ~/bench/data/clade ~/bench/data/simulated ~/bench/results'
+
 echo "== 2. code, which is what push_code.sh already sends"
 run bash bin/push_code.sh "$REMOTE"
 

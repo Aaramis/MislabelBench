@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 126 |
+| findings in this report | 127 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2692,6 +2692,33 @@ turn a true account of an event into a false one.
 That is the distinction the four stale tables did not have: a number describing the repository must be
 derived, and a number describing something that happened must be dated and left alone. Three of this
 repository's documents now have gates for the first kind; the second kind needs a sentence, not a gate.
+
+**127. The restore procedure was used for real, and failed at step 2 for a reason no local test could
+reach.** Access to the cluster came back and the home directory was as the incident left it: `.cache`,
+`.ssh` and nothing else. `bin/restore_cluster.sh`, written in finding 111 and rehearsed in finding 112,
+got as far as pushing the code and died:
+
+    rsync: mkdir "/shared/home/agardette/bench/data/injected" failed: No such file or directory
+
+`bin/push_code.sh` sends the per-cell truth files into `data/injected/` and `data/foreign/`, and rsync
+will not create a parent chain. On a cluster that already holds `~/bench/data` this never shows. On an
+empty one -- the only case the restore exists for -- it stops the procedure at its second step.
+
+**Finding 112's rehearsal could not have caught it**, and the reason is worth stating because it limits
+that method: the local replay assembled the delivery into a directory it had just created, so the parent
+always existed. A replay of a delivery tests the delivery's *contents*; it cannot test a precondition the
+replay itself establishes. One `mkdir -p` of the skeleton now precedes step 2.
+
+**With that, the restore is verified end to end rather than rehearsed.** The cluster holds the code, the
+datasets, both container images -- 71 MB and 105 MB in the Nextflow cache -- and the four learned bad
+nodes. The four generators rebuilt every cell there, and the **235 taxonomy files are byte-identical to
+this repository's, 235 of 235**; an apparent 74-line difference was `sort` collating differently on the
+two machines, which a `LC_ALL=C` sort removed entirely. On the cluster itself, `verify_manifests.py`
+reports 242 datasets sound with the covariance model and 3 alignment widths, and `verify_injection.py`
+180 cells of 180.
+
+So the claim that a cluster is a cache and this repository is the record has now been exercised: the
+cluster was destroyed and rebuilt from the repository, and what came back is identical to what went.
 
 ## Deferred, with reasons
 
