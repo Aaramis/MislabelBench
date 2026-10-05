@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 115 |
+| findings in this report | 116 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2430,6 +2430,35 @@ line is run residue. `v0.10.2` does exist as a tag, so the source of the version
 identifiable, which is the part of the availability claim that matters most and it holds.
 
 Removing the `tmp/` directories is a change to a separate repository and is not made from here.
+
+**116. The paper's central claim about the code is true, and nothing here had ever checked it against
+the code.** Protocol.md states twice, once in the Summary a reader meets first, that "the classification
+rule, branch labelling and confidence computation are upstream's, unchanged". Everything in this
+repository that bears on it is *behavioural* -- the agreement control, which is Jaccard **0.80** at 2 023
+sequences and **0.67** at 7 051. That is weak evidence for a claim about source: two implementations
+agreeing on two thirds of a union is equally consistent with a rule that was quietly altered. The source
+has been public all along and was never opened.
+
+Opened now, by diffing the fork's branch against upstream for the three files that hold the rule:
+
+- **`epac/classify_util.py`**, 14 lines: `classify` and `assign_taxonomy_maxsum` return `rw_total`
+  alongside what they already returned, threaded through so a new column can be computed from it, plus a
+  longer assertion message. **The decision logic is untouched** -- the erlang filter, the "max own
+  weight and total weight above the threshold" rule, the per-rank confidences.
+- **`epac/json_util.py`**, 8 lines: `set_binary_model` tolerates a missing RAxML binary model, since
+  with EPA-ng placing there may be no RAxML run to produce one.
+- **`epac/taxonomy_util.py`**, 2 lines: `"[\W_]+"` to `r"[\W_]+"`, a Python invalid-escape fix.
+
+And `check_seq_tax_labels` in `sativa.py`, which is where the mislabel call is actually made, differs by
+an optional `rw_total=None`, the initialisation and computation of `excl` as **1 minus the likelihood
+weight on the declared taxon**, and moving the append inside the function. **The condition that decides
+a mislabel is identical.** So the claim holds as written, now on the evidence that supports it.
+
+**One thing arrives for free.** The fork's own comment beside that computation says a placement sitting
+entirely on a taxon's stem "reports 0.51 whether or not any weight at all falls inside the declared
+taxon (see `parent_lhw_coeff`)" -- the same mechanism this benchmark reports from the outside, in
+findings about the 0.510 artefact and the 8 057 stem flags. The source and the measurement agree about
+why, which neither could establish alone.
 
 ## Deferred, with reasons
 
