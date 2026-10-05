@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 125 |
+| findings in this report | 126 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2675,6 +2675,23 @@ matched "180 injected cells" forty lines above the list and reported a drift tha
 anchored to the list now. And I read `exit=$?` after a pipeline again, which reports the exit of `tail`
 rather than of the script -- the same misreading that validated a manifest against a stale cluster copy
 early in this review.
+
+**126. README's counts hold, and the one that looked wrong was a date rather than a drift.** After four
+stale tables the obvious next question is whether the document a reader meets first carries the same
+problem. Swept for every claim that counts something in the repository and checked each against the data:
+**9 clade cells, 37 simulated cells, 2 Kexact runs, 60 fit cells and 120 held out, 180 grid cells**, and
+the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which the record gives as
+exactly those three numbers summing to 180. Nothing drifted.
+
+One figure reads as if it had. "That sentence was false until the **949** run directories ... were
+brought back from the cluster" sits in a repository holding **1 113** run records. It is not a stale
+count but a statement about a day, and the difference matters only because a reader cannot tell which
+from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
+turn a true account of an event into a false one.
+
+That is the distinction the four stale tables did not have: a number describing the repository must be
+derived, and a number describing something that happened must be dated and left alone. Three of this
+repository's documents now have gates for the first kind; the second kind needs a sentence, not a gate.
 
 ## Deferred, with reasons
 
