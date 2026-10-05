@@ -303,9 +303,11 @@ at **r = +0.55** across the 54 clades, and by quintile only cohesion has a thres
 protocol's variable sorts because it travels with cohesion, not on its own account. Both gradients are in
 the record as `by_separation` and `by_within`. `results/clade_detection_*.json`.
 
-**Kind 4 tests resolution rather than detection** — correct to genus, wrong at species only — and the
-question is whether a detected mislabel is named at the rank the injection moved. It is, increasingly with
-distance, pooled over the grid's sequences:
+**Kind 4 tests resolution rather than detection.** It asks a second question of every cell the grid
+already ran: when a mislabel is detected, is it *named* at the rank the injection moved, or is a higher
+rank blamed? Kind 4 proper, correct to genus and wrong at species only, is the shallowest row of the
+table below rather than a separate experiment, which is also why the table spans all six distances. The
+answer improves with distance, pooled over the grid's sequences:
 
 | distance | detected | named at the right rank | resolution |
 |---|---|---|---|

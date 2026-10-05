@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 132 |
+| findings in this report | 133 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2824,6 +2824,21 @@ people. The items that were done are kept at the end in the past tense, which is
 That is dated and correct, and deleting it would lose the lesson it carries: a coverage tool that
 silently omits a tree invites the inference that the tree is dead, which is the inference that was once
 made about `sativa_epang/` while `scripts/README.md` was building RAxML from it.
+
+**133. A section named for an error kind presented a table that was not about that kind.** README opens
+its kind 4 paragraph with "correct to genus, wrong at species only" and then shows a table of six rows,
+species through phylum. Both are accurate and together they mislead: kind 4 is the shallow end of the
+distance axis, while the quantity the table reports, whether a detection names the rank the injection
+moved, is computed on every cell of the grid.
+
+This was not found by reading. A reader of the protocol, which carries the same six-row typology, asked
+what separates kind 1 from kind 4 and then concluded they were the same thing. They are not: kind 1 is
+the *k*=1 column at any distance, kind 4 the species row at any *k*, and they meet in one cell of thirty.
+The typology reads as six experiments when three of its rows are three readings of one grid, and the
+confusion survives into README wherever a section is named for a kind and reports something broader.
+
+The paragraph now says what the table is before showing it. The repository's own structure was never
+wrong; what was wrong is that nothing said which rows of the grid a kind picks out.
 
 ## What is outstanding
 
