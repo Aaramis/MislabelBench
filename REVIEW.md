@@ -8,31 +8,40 @@ The rule throughout was to **verify rather than conclude**. Where a doubt could 
 something, it was, and several of the findings below are things that reading had already passed over —
 one of them more than once.
 
-Twenty findings. Three would have produced a wrong number, eleven were latent, and six were in work
-done during the review itself. Thirty-three more came later, from repatriating the results, cloning the
-repository to see whether it still worked, reading the traces of runs already published, and running
-newly written code for the first time, rather than from reading it; they are at the end under their
-own heading. One of those sixteen changes a published number by a factor of three, one is a job that
-the corrected number predicted would run out of memory and then did, one was introduced by the
-review itself and ran the whole repository on a login node, and one would have placed every fold
-under the wrong substitution model.
+This report grew with the work, one pass at a time, and its own opening went stale twice: the table
+below once stated a coverage the repository no longer had, and the paragraph above it counted findings
+that had long since been outnumbered. Both are now derived rather than asserted —
+`bin/verify_report_references.py` recomputes every number in the table from the repository and fails if
+one drifts, which is the only way a summary of a growing document stays true.
 
 ## What was reviewed
 
-| | |
+| | count |
 |---|---|
-| `main.nf` | grid construction, the branch by implementation, the four-way join into `COLLECTRUN` |
-| `nextflow.config`, `conf/` | parameters, profiles, trace files, publishing |
-| `modules/local/` | all four modules: containers, declared outputs against stub blocks, tool flags |
-| `bin/` | 42 scripts: paths, error handling, division guards, condition selection |
-| `slurm/` | 29 job scripts, the prelude, the submit wrapper |
-| `assets/`, manifests | five dataset manifests against the files they describe, and the judgeability they claim |
-| the results | 1 226 run records, cross-checked against the files they summarise |
+| findings in this report | 112 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 37 |
+| `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
+| dataset manifests, against the files they describe | 8 |
+| run records, cross-checked against the files they summarise | 1113 |
+| result tables, each rebuilt by `bin/analyses.sh` | 47 |
+| tests over the scripts that turn runs into numbers | 20 |
 
-The counts above were 29, 20 and 927 until they were compared against the repository: twenty-eight
-files had been added since this table was written, including the four staged modules and fifteen
-`bin/` scripts, and a review that states a coverage it no longer has is worse than one that states
-none. The second pass over the added files produced findings 37 and 38.
+`main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
+and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
+
+## How to read it
+
+The findings are in the order they were found, which is also the order in which the methods that found
+them arrived: reading the code, then repatriating results and cloning the repository to see whether it
+still worked, then recomputing every published number by a second implementation. That last sweep is
+findings 98 to 107 and is the one worth starting from if you want the shortest account of whether the
+numbers are right: ten claims, roughly four thousand recomputed values, **one wrong number**, and five
+things that were true but could not be checked from the repository as it stood.
+
+Findings 110 to 112 are an incident and its consequences: a cleanup command of mine deleted the cluster
+home directory. No measurement was lost, which is what committing `results/` was for, and the restore
+procedure that did not exist now does.
 
 ## Findings that produced a wrong number
 
@@ -2346,6 +2355,27 @@ foreign cells and the simulated reference -- are where that comparison bites, an
 
 So the restore's delivery is sufficient and exact for everything except the container cache, which no
 local test can reach. That remains the one step whose first proof will be the day it is run.
+
+**113. The report's own opening contradicted the report.** The deliverable the final read-through is
+supposed to produce had an introduction that read "Twenty findings … thirty-three more came later … one
+of those sixteen", arithmetic that does not close, above a coverage table claiming **four** modules
+where there are **eight**, **42** `bin/` scripts where there are **55**, **29** `slurm/` scripts where
+there are **37**, and **1 226** run records where there are **1 113**. Every number in it was wrong, in a
+document whose stated purpose is finding comments that disagree with their code.
+
+What makes it worth more than an edit is that **it had gone stale once before and been corrected by
+hand**: the paragraph under the table says so, and records that the second pass over the files added
+since produced findings 37 and 38. Correcting it again by hand would have set up the third time.
+
+So the table is derived now. `bin/verify_report_references.py` recomputes all eight counts from
+`git ls-files` and the file system and fails when one drifts -- tested by moving two of them, which it
+names individually: "'`slurm/` job scripts' says 29, repository has 37". The opening also tells a reader
+where to start, which a chronological log of 112 findings otherwise does not: the second-implementation
+sweep is findings 98 to 107, and the incident and its consequences are 110 to 112.
+
+And its exit message is named for what it found. The script now fails on a drifted count as readily as
+on a dangling reference, and said "N reference(s) point at nothing" for both -- the third time in this
+review that a gate of mine reported something other than what it had established.
 
 ## Deferred, with reasons
 

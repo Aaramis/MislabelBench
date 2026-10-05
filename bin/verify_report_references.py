@@ -21,8 +21,15 @@ Four things, all mechanical:
 
 import argparse
 import re
+import subprocess
 import sys
 from pathlib import Path
+
+
+def git_ls(*patterns):
+    """Tracked files, so an untracked scratch file cannot change a published count."""
+    out = subprocess.run(["git", "ls-files", *patterns], capture_output=True, text=True)
+    return [f for f in out.stdout.splitlines() if f]
 
 HEADING = re.compile(r"^\*\*(\d+)\. ", re.M)
 REFERENCE = re.compile(r"\bfindings?\s+(\d+)(?:\s*,\s*(\d+))*(?:\s+and\s+(\d+))?", re.I)
@@ -74,11 +81,42 @@ def main():
                 problems.append(f"{args.decisions}: refers to D{ref}, which has no entry")
         checked += len(headings)
 
-    print(f"{checked} numbered entries checked, {len(problems)} problem(s)")
+    # The report's own coverage table, recomputed from the repository. It went stale twice before
+    # anyone noticed: it once claimed four modules where there were eight and 42 bin/ scripts where
+    # there were 55, and a review stating a coverage it no longer has is worse than one stating none.
+    # The labels are matched loosely because the table's left column is prose; what is pinned is the
+    # number beside each.
+    counted = {
+        "findings in this report": len(seen),
+        "`bin/` scripts": len(git_ls("bin/*.py", "bin/*.sh")),
+        "`slurm/` job scripts": len(git_ls("slurm/*.sh")),
+        "`modules/local/`": len([d for d in Path("modules/local").iterdir() if d.is_dir()])
+                            if Path("modules/local").is_dir() else None,
+        "dataset manifests": len([f for f in git_ls() if re.search(r"datasets.*\.json$", f)]),
+        "run records": len([f for f in git_ls() if re.search(r"runs/.*/run\.json$", f)]),
+        "result tables": len([f for f in git_ls("results/*") if f.count("/") == 1]),
+        "tests over the scripts": sum(Path(f).read_text().count("def test_")
+                                      for f in git_ls("tests/*.py")),
+    }
+    for label, n in counted.items():
+        if n is None:
+            continue
+        row = re.search(rf"^\|\s*{re.escape(label)}[^|]*\|\s*(\d+)\s*\|", text, re.M)
+        if not row:
+            problems.append(f"{args.report}: no coverage row starting '{label}'")
+        elif int(row.group(1)) != n:
+            problems.append(f"{args.report}: '{label}' says {row.group(1)}, repository has {n}")
+
+    print(f"{checked} numbered entries and {len(counted)} coverage counts checked, "
+          f"{len(problems)} problem(s)")
     for pb in problems[:10]:
         print(f"  {pb}", file=sys.stderr)
     if problems:
-        sys.exit(f"{len(problems)} reference(s) point at nothing")
+        # Named for what it found rather than for what the script is mostly about: this exits on a
+        # drifted coverage count as readily as on a dangling reference, and a summary line that says
+        # the wrong one is the third habit of mine this review has had to correct.
+        sys.exit(f"{len(problems)} problem(s) in {args.report}: a reference pointing at nothing, "
+                 f"or a stated count the repository contradicts")
 
 
 if __name__ == "__main__":
