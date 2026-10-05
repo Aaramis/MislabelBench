@@ -1,0 +1,8 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence
+RS_GCF_007050195.1_NZ_QIMI01000202.1	Phylum	p__Thermoproteota	p__Asgardarchaeota	0.990	d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Sulfolobaceae;g__Saccharolobus;s__Saccharolobus sp001719125	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	1.000;0.990;0.891
+RS_GCF_028472005.1_NZ_CP046616.1	Family	f__Acidilobaceae	f__Sulfolobaceae	1.000	d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Acidilobaceae;g__Calypsonella;s__Calypsonella navitae	d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Sulfolobaceae;g__Saccharolobus;s__Saccharolobus islandicus	1.000;1.000;1.000;1.000;1.000;1.000;0.989
+GB_GCA_938074605.1_CALJEI010000002.1	Species	s__Ignisphaera sp938074605	s__Ignisphaera sp025058535	0.510	d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Ignisphaeraceae;g__Ignisphaera;s__Ignisphaera sp938074605	d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Ignisphaeraceae;g__Ignisphaera;s__Ignisphaera sp025058535	1.000;1.000;1.000;1.000;1.000;1.000;0.510

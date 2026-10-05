@@ -1,0 +1,8 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_021513715.1_CP084167.1	Phylum	p__Asgardarchaeota	p__Altiarchaeota	0.494	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	d__Archaea;p__Altiarchaeota;c__Altiarchaeia;o__IMC4;f__QMZM01;g__EX4484-2;s__EX4484-2 sp002254565	1.000;0.494;0.494;0.494;0.494;0.494;0.494	0.969
+GB_GCA_003144275.1_NJBF01000005.1	Phylum	p__Asgardarchaeota	p__Aenigmatarchaeota	0.490	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia	1.000;0.490;0.490	0.960
+GB_GCA_003352285.1_QQVN01000005.1	Family	f__UBA57	f__Nitrosopumilaceae	1.000	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;s__UBA57 sp002495905	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__PXYB01;s__PXYB01 sp003352285	1.000;1.000;1.000;1.000;1.000;1.000;1.000	1.000

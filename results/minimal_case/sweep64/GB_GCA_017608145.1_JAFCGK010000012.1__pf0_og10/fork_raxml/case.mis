@@ -1,0 +1,6 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_017608145.1_JAFCGK010000012.1	Family	f__UBA9642	f__JAFCFN01	0.902	d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__UBA9642;g__UBA9642;s__UBA9642 sp026002815	d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__JAFCFN01;g__JAFCFN01;s__JAFCFN01 sp017608625	1.000;0.902;0.902;0.902;0.902;0.902;0.902	1.000

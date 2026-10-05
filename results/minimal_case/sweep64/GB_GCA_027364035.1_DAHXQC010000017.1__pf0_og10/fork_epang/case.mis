@@ -1,0 +1,10 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_937877725.1_CALGBG010000228.1	Phylum	p__Asgardarchaeota	p__Micrarchaeota	0.510	d__Archaea;p__Asgardarchaeota	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000
+GB_GCA_021513715.1_CP084167.1	Phylum	p__Asgardarchaeota	p__Micrarchaeota	0.510	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAKARM01;s__JAKARM01 sp021822165	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000
+GB_GCA_027364035.1_DAHXQC010000017.1	Family	f__Micrarchaeaceae	f__CABMGC01	1.000	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZYD01;s__JAJZYD01 sp021811605	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925	1.000;1.000;1.000;1.000;1.000;1.000;1.000	1.000
+GB_GCA_027353825.1_DAHXDP010000003.1	Family	f__Micrarchaeaceae	f__CABMGC01	1.000	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZYD01;s__JAJZYD01 sp021811605	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAKAUU01	1.000;1.000;1.000;1.000;1.000;1.000	1.000
+GB_GCA_021811605.1_JAJZNR010000020.1	Species	s__JAJZYD01 sp021811605	s__JAJZYD01 sp030037495	0.510	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZYD01;s__JAJZYD01 sp021811605	d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__Micrarchaeaceae;g__JAJZYD01;s__JAJZYD01 sp030037495	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000

@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 135 |
+| findings in this report | 136 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 57 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 38 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2898,6 +2898,21 @@ must reproduce the cell. It does, exactly -- the taxonomy and the alignment it w
 mappings -- so the sweep contains the run that is known to diverge rather than only runs that do not.
 `tests/test_minimal_case.py` keeps that, together with the refusal to build a case that drops the
 companion, and the determinism the shrinking search depends on.
+
+**136. `--include='*.log'` reached into a running job's scratch directory.** Repatriating the
+minimal-case results brought back **3 745 files** where 431 were wanted. The excess was per-fold
+`epang.log` and `epa_info.log` from the tools' `tmp/` directories: one strict leave-one-out run on 2 023
+sequences is two thousand folds, each with its own logs, and two such runs were still in progress and
+would have deleted those files themselves. Nothing was corrupted, because none of it was committed, but
+the next repatriation after a Kexact job would have put a running job's transient state into the
+repository.
+
+Fixed with `--exclude='tmp/'`, placed first because rsync takes the first matching rule. The pattern is
+deliberately unanchored, which is the opposite of finding 128's lesson and right for the opposite reason:
+there the anchor mattered because one top-level `runs/` had to be skipped and every nested one kept, and
+here a scratch directory named `tmp` has to be skipped at whatever depth a tool puts it. Measured rather
+than reasoned, as that finding also required: against the live cluster the rule takes the transfer from
+**4 207 files to 441**.
 
 ## What is outstanding
 

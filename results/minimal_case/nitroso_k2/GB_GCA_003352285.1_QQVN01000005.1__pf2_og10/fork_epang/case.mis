@@ -1,0 +1,8 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_021513715.1_CP084167.1	Phylum	p__Asgardarchaeota	p__Altiarchaeota	0.503	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	d__Archaea;p__Altiarchaeota;c__Altiarchaeia;o__IMC4;f__QMZM01;g__EX4484-2;s__EX4484-2 sp002254565	1.000;0.503;0.503;0.503;0.503;0.503;0.503	0.986
+GB_GCA_027295865.1_JAPUKB010000054.1	Family	f__UBA57	f__JAPUIC01	0.510	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__JAPUIC01;g__JAPUIC01;s__JAPUIC01 sp027297425	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000
+GB_GCA_002495905.1_DAHJ01000025.1	Family	f__UBA57	f__JAPUIC01	0.510	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;s__UBA57 sp002495905	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__JAPUIC01;g__JAPUIC01;s__JAPUIC01 sp027297425	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000

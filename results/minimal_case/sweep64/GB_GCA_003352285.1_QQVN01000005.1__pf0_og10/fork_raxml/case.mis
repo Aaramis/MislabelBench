@@ -1,0 +1,9 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_937877725.1_CALGBG010000228.1	Phylum	p__Asgardarchaeota	p__Thermoproteota	0.859	d__Archaea;p__Asgardarchaeota	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__TA-21;s__TA-21 sp025923455	0.999;0.859;0.859;0.859;0.240;0.189;0.158	0.944
+GB_GCA_003352285.1_QQVN01000005.1	Family	f__UBA57	f__Nitrosopumilaceae	1.000	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;s__UBA57 sp002495905	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__PXYB01;s__PXYB01 sp003352285	1.000;1.000;1.000;1.000;1.000;0.930;0.930	1.000
+GB_GCA_039938575.1_JBDUUJ010000094.1	Family	f__Nitrosopumilaceae	f__Nitrososphaeraceae	1.000	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosotenuis;s__Nitrosotenuis sp039938575	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae	1.000;1.000;1.000;1.000;1.000	1.000
+GB_GCA_002495905.1_DAHJ01000025.1	Genus	g__UBA57	g__B1T1B5	0.510	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;s__UBA57 sp002495905	d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__B1T1B5;s__B1T1B5 sp027295865	1.000;1.000;1.000;1.000;0.510;0.510;0.510	1.000

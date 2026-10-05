@@ -1,0 +1,66 @@
+SATIVA v0.9.1, released on 2023-08-16. Last version: https://github.com/amkozlov/sativa 
+By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
+
+SATIVA was called as follows:
+
+/usr/local/bin/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/nitroso_full1/pf0_og999999/upstream_raxml/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: case.tax ...
+
+==> Loading reference alignment from file: case.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028344155
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028345575
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;__TAXCLUSTER1__s__Nitrosopelagicus sp028344155
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;s__Methanobacterium sp013403005
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_A;s__Methanobacterium_A sp002067325
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;__TAXCLUSTER2__s__Methanobacterium sp013403005
+
+WARNING: 4 indistinguishable taxa have been merged into 2 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2023 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./case.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+Leave-one-out test identified 105 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Phylum      :	34
+Class       :	7
+Order       :	5
+Family      :	7
+Genus       :	24
+Species     :	12
+
+Total mislabels: 89 / 4.40 %
+
+Results were saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_full1/pf0_og999999/upstream_raxml/case.mis
+Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_full1/pf0_og999999/upstream_raxml/case.log
+
+Analysis completed successfully, elapsed time: 419 seconds (5s reftree, 414s leave-one-out)
+

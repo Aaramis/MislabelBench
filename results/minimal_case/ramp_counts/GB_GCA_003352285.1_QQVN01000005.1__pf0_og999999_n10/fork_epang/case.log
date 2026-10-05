@@ -1,0 +1,499 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/ramp_counts/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: case.tax ...
+
+==> Loading reference alignment from file: case.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;s__UBA57 sp002495905
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__PXYB01;s__PXYB01 sp003352285
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;__TAXCLUSTER1__s__UBA57 sp002495905
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028344155
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;s__Nitrosopelagicus sp028345575
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__Nitrosopelagicus;__TAXCLUSTER2__s__Nitrosopelagicus sp028344155
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;s__Methanobacterium sp013403005
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_A;s__Methanobacterium_A sp002067325
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium;__TAXCLUSTER3__s__Methanobacterium sp013403005
+
+WARNING: 6 indistinguishable taxa have been merged into 3 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2023 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./case.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/minimal_case/ramp_counts/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp/case_1791208612837/RAxML_info.mfresolv_case
+[epang-l1o] wrote 2023 fold tasks to /shared/home/agardette/bench/results/minimal_case/ramp_counts/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp/case_1791208612837/epang_l1out_seq_case (14.3s)
+[epang-l1o] EPA-ng FAIL fold 3: 
+[epang-l1o] EPA-ng FAIL fold 2: 
+[epang-l1o] EPA-ng FAIL fold 0: 
+[epang-l1o] EPA-ng FAIL fold 4: 
+[epang-l1o] EPA-ng FAIL fold 5: 
+[epang-l1o] EPA-ng FAIL fold 6: 
+[epang-l1o] EPA-ng FAIL fold 7: 
+[epang-l1o] EPA-ng FAIL fold 8: 
+[epang-l1o] EPA-ng FAIL fold 9: 
+[epang-l1o] EPA-ng FAIL fold 10: 
+[epang-l1o] EPA-ng FAIL fold 11: 
+[epang-l1o] EPA-ng FAIL fold 13: 
+[epang-l1o] EPA-ng FAIL fold 14: 
+[epang-l1o] EPA-ng FAIL fold 15: 
+[epang-l1o] EPA-ng FAIL fold 16: 
+[epang-l1o] EPA-ng FAIL fold 17: 
+[epang-l1o] EPA-ng FAIL fold 19: 
+[epang-l1o] EPA-ng FAIL fold 20: 
+[epang-l1o] EPA-ng FAIL fold 21: 
+[epang-l1o] EPA-ng FAIL fold 23: 
+[epang-l1o] EPA-ng FAIL fold 24: 
+[epang-l1o] EPA-ng FAIL fold 25: 
+[epang-l1o] EPA-ng FAIL fold 26: 
+[epang-l1o] EPA-ng FAIL fold 27: 
+[epang-l1o] EPA-ng FAIL fold 28: 
+[epang-l1o] EPA-ng FAIL fold 29: 
+[epang-l1o] EPA-ng FAIL fold 31: 
+[epang-l1o] EPA-ng FAIL fold 32: 
+[epang-l1o] EPA-ng FAIL fold 34: 
+[epang-l1o] EPA-ng FAIL fold 36: 
+[epang-l1o] EPA-ng FAIL fold 37: 
+[epang-l1o] EPA-ng FAIL fold 38: 
+[epang-l1o] EPA-ng FAIL fold 39: 
+[epang-l1o] EPA-ng FAIL fold 40: 
+[epang-l1o] EPA-ng FAIL fold 41: 
+[epang-l1o] EPA-ng FAIL fold 42: 
+[epang-l1o] EPA-ng FAIL fold 43: 
+[epang-l1o] EPA-ng FAIL fold 44: 
+[epang-l1o] EPA-ng FAIL fold 46: 
+[epang-l1o] EPA-ng FAIL fold 47: 
+[epang-l1o] EPA-ng FAIL fold 48: 
+[epang-l1o] EPA-ng FAIL fold 50: 
+[epang-l1o] EPA-ng FAIL fold 52: 
+[epang-l1o] EPA-ng FAIL fold 53: 
+[epang-l1o] EPA-ng FAIL fold 54: 
+[epang-l1o] EPA-ng FAIL fold 57: 
+[epang-l1o] EPA-ng FAIL fold 56: 
+[epang-l1o] EPA-ng FAIL fold 59: 
+[epang-l1o] EPA-ng FAIL fold 60: 
+[epang-l1o] EPA-ng FAIL fold 61: 
+[epang-l1o] EPA-ng FAIL fold 62: 
+[epang-l1o] EPA-ng FAIL fold 63: 
+[epang-l1o] EPA-ng FAIL fold 64: 
+[epang-l1o] EPA-ng FAIL fold 65: 
+[epang-l1o] EPA-ng FAIL fold 66: 
+[epang-l1o] EPA-ng FAIL fold 67: 
+[epang-l1o] EPA-ng FAIL fold 68: 
+[epang-l1o] EPA-ng FAIL fold 69: 
+[epang-l1o] EPA-ng FAIL fold 70: 
+[epang-l1o] EPA-ng FAIL fold 71: 
+[epang-l1o] EPA-ng FAIL fold 72: 
+[epang-l1o] EPA-ng FAIL fold 73: 
+[epang-l1o] EPA-ng FAIL fold 74: 
+[epang-l1o] EPA-ng FAIL fold 75: 
+[epang-l1o] EPA-ng FAIL fold 76: 
+[epang-l1o] EPA-ng FAIL fold 77: 
+[epang-l1o] EPA-ng FAIL fold 78: 
+[epang-l1o] EPA-ng FAIL fold 79: 
+[epang-l1o] EPA-ng FAIL fold 81: 
+[epang-l1o] EPA-ng FAIL fold 82: 
+[epang-l1o] EPA-ng FAIL fold 83: 
+[epang-l1o] EPA-ng FAIL fold 84: 
+[epang-l1o] EPA-ng FAIL fold 86: 
+[epang-l1o] EPA-ng FAIL fold 87: 
+[epang-l1o] EPA-ng FAIL fold 85: 
+[epang-l1o] EPA-ng FAIL fold 89: 
+[epang-l1o] EPA-ng FAIL fold 88: 
+[epang-l1o] EPA-ng FAIL fold 90: 
+[epang-l1o] EPA-ng FAIL fold 91: 
+[epang-l1o] EPA-ng FAIL fold 92: 
+[epang-l1o] EPA-ng FAIL fold 93: 
+[epang-l1o] EPA-ng FAIL fold 94: 
+[epang-l1o] EPA-ng FAIL fold 95: 
+[epang-l1o] EPA-ng FAIL fold 96: 
+[epang-l1o] EPA-ng FAIL fold 97: 
+[epang-l1o] EPA-ng FAIL fold 98: 
+[epang-l1o] EPA-ng FAIL fold 99: 
+[epang-l1o] EPA-ng FAIL fold 100: 
+[epang-l1o] EPA-ng FAIL fold 101: 
+[epang-l1o] EPA-ng FAIL fold 102: 
+[epang-l1o] EPA-ng FAIL fold 104: 
+[epang-l1o] EPA-ng FAIL fold 103: 
+[epang-l1o] EPA-ng FAIL fold 105: 
+[epang-l1o] EPA-ng FAIL fold 107: 
+[epang-l1o] EPA-ng FAIL fold 108: 
+[epang-l1o] EPA-ng FAIL fold 109: 
+[epang-l1o] EPA-ng FAIL fold 110: 
+[epang-l1o] EPA-ng FAIL fold 111: 
+[epang-l1o] EPA-ng FAIL fold 112: 
+[epang-l1o] EPA-ng FAIL fold 113: 
+[epang-l1o] EPA-ng FAIL fold 114: 
+[epang-l1o] EPA-ng FAIL fold 115: 
+[epang-l1o] EPA-ng FAIL fold 116: 
+[epang-l1o] EPA-ng FAIL fold 118: 
+[epang-l1o] EPA-ng FAIL fold 117: 
+[epang-l1o] EPA-ng FAIL fold 119: 
+[epang-l1o] EPA-ng FAIL fold 120: 
+[epang-l1o] EPA-ng FAIL fold 121: 
+[epang-l1o] EPA-ng FAIL fold 122: 
+[epang-l1o] EPA-ng FAIL fold 123: 
+[epang-l1o] EPA-ng FAIL fold 124: 
+[epang-l1o] EPA-ng FAIL fold 125: 
+[epang-l1o] EPA-ng FAIL fold 127: 
+[epang-l1o] EPA-ng FAIL fold 126: 
+[epang-l1o] EPA-ng FAIL fold 128: 
+[epang-l1o] EPA-ng FAIL fold 129: 
+[epang-l1o] EPA-ng FAIL fold 130: 
+[epang-l1o] EPA-ng FAIL fold 131: 
+[epang-l1o] EPA-ng FAIL fold 132: 
+[epang-l1o] EPA-ng FAIL fold 133: 
+[epang-l1o] EPA-ng FAIL fold 134: 
+[epang-l1o] EPA-ng FAIL fold 135: 
+[epang-l1o] EPA-ng FAIL fold 136: 
+[epang-l1o] EPA-ng FAIL fold 138: 
+[epang-l1o] EPA-ng FAIL fold 137: 
+[epang-l1o] EPA-ng FAIL fold 139: 
+[epang-l1o] EPA-ng FAIL fold 140: 
+[epang-l1o] EPA-ng FAIL fold 141: 
+[epang-l1o] EPA-ng FAIL fold 142: 
+[epang-l1o] EPA-ng FAIL fold 144: 
+[epang-l1o] EPA-ng FAIL fold 143: 
+[epang-l1o] EPA-ng FAIL fold 145: 
+[epang-l1o] EPA-ng FAIL fold 146: 
+[epang-l1o] EPA-ng FAIL fold 147: 
+[epang-l1o] EPA-ng FAIL fold 148: 
+[epang-l1o] EPA-ng FAIL fold 149: 
+[epang-l1o] EPA-ng FAIL fold 150: 
+[epang-l1o] EPA-ng FAIL fold 151: 
+[epang-l1o] EPA-ng FAIL fold 152: 
+[epang-l1o] EPA-ng FAIL fold 153: 
+[epang-l1o] EPA-ng FAIL fold 155: 
+[epang-l1o] EPA-ng FAIL fold 154: 
+[epang-l1o] EPA-ng FAIL fold 156: 
+[epang-l1o] EPA-ng FAIL fold 157: 
+[epang-l1o] EPA-ng FAIL fold 159: 
+[epang-l1o] EPA-ng FAIL fold 158: 
+[epang-l1o] EPA-ng FAIL fold 161: 
+[epang-l1o] EPA-ng FAIL fold 163: 
+[epang-l1o] EPA-ng FAIL fold 165: 
+[epang-l1o] EPA-ng FAIL fold 166: 
+[epang-l1o] EPA-ng FAIL fold 167: 
+[epang-l1o] EPA-ng FAIL fold 169: 
+[epang-l1o] EPA-ng FAIL fold 171: 
+[epang-l1o] EPA-ng FAIL fold 170: 
+[epang-l1o] EPA-ng FAIL fold 172: 
+[epang-l1o] EPA-ng FAIL fold 174: 
+[epang-l1o] EPA-ng FAIL fold 173: 
+[epang-l1o] EPA-ng FAIL fold 175: 
+[epang-l1o] EPA-ng FAIL fold 176: 
+[epang-l1o] EPA-ng FAIL fold 177: 
+[epang-l1o] EPA-ng FAIL fold 178: 
+[epang-l1o] EPA-ng FAIL fold 179: 
+[epang-l1o] EPA-ng FAIL fold 180: 
+[epang-l1o] EPA-ng FAIL fold 181: 
+[epang-l1o] EPA-ng FAIL fold 182: 
+[epang-l1o] EPA-ng FAIL fold 183: 
+[epang-l1o] EPA-ng FAIL fold 184: 
+[epang-l1o] EPA-ng FAIL fold 186: 
+[epang-l1o] EPA-ng FAIL fold 187: 
+[epang-l1o] EPA-ng FAIL fold 185: 
+[epang-l1o] EPA-ng FAIL fold 189: 
+[epang-l1o] EPA-ng FAIL fold 188: 
+[epang-l1o] EPA-ng FAIL fold 190: 
+[epang-l1o] EPA-ng FAIL fold 191: 
+[epang-l1o] EPA-ng FAIL fold 192: 
+[epang-l1o] EPA-ng FAIL fold 193: 
+[epang-l1o] EPA-ng FAIL fold 194: 
+[epang-l1o] EPA-ng FAIL fold 195: 
+[epang-l1o] EPA-ng FAIL fold 196: 
+[epang-l1o] EPA-ng FAIL fold 197: 
+[epang-l1o] EPA-ng FAIL fold 198: 
+[epang-l1o] EPA-ng FAIL fold 199: 
+[epang-l1o] EPA-ng FAIL fold 200: 
+[epang-l1o] EPA-ng FAIL fold 201: 
+[epang-l1o] EPA-ng FAIL fold 202: 
+[epang-l1o] EPA-ng FAIL fold 203: 
+[epang-l1o] EPA-ng FAIL fold 204: 
+[epang-l1o] EPA-ng FAIL fold 207: 
+[epang-l1o] EPA-ng FAIL fold 208: 
+[epang-l1o] EPA-ng FAIL fold 209: 
+[epang-l1o] EPA-ng FAIL fold 210: 
+[epang-l1o] EPA-ng FAIL fold 211: 
+[epang-l1o] EPA-ng FAIL fold 213: 
+[epang-l1o] EPA-ng FAIL fold 214: 
+[epang-l1o] EPA-ng FAIL fold 215: 
+[epang-l1o] EPA-ng FAIL fold 216: 
+[epang-l1o] EPA-ng FAIL fold 217: 
+[epang-l1o] EPA-ng FAIL fold 218: 
+[epang-l1o] EPA-ng FAIL fold 219: 
+[epang-l1o] EPA-ng FAIL fold 220: 
+[epang-l1o] EPA-ng FAIL fold 223: 
+[epang-l1o] EPA-ng FAIL fold 224: 
+[epang-l1o] EPA-ng FAIL fold 226: 
+[epang-l1o] EPA-ng FAIL fold 227: 
+[epang-l1o] EPA-ng FAIL fold 228: 
+[epang-l1o] EPA-ng FAIL fold 229: 
+[epang-l1o] EPA-ng FAIL fold 230: 
+[epang-l1o] EPA-ng FAIL fold 232: 
+[epang-l1o] EPA-ng FAIL fold 233: 
+[epang-l1o] EPA-ng FAIL fold 235: 
+[epang-l1o] EPA-ng FAIL fold 234: 
+[epang-l1o] EPA-ng FAIL fold 237: 
+[epang-l1o] EPA-ng FAIL fold 239: 
+[epang-l1o] EPA-ng FAIL fold 238: 
+[epang-l1o] EPA-ng FAIL fold 240: 
+[epang-l1o] EPA-ng FAIL fold 241: 
+[epang-l1o] EPA-ng FAIL fold 242: 
+[epang-l1o] EPA-ng FAIL fold 243: 
+[epang-l1o] EPA-ng FAIL fold 244: 
+[epang-l1o] EPA-ng FAIL fold 245: 
+[epang-l1o] EPA-ng FAIL fold 246: 
+[epang-l1o] EPA-ng FAIL fold 248: 
+[epang-l1o] EPA-ng FAIL fold 247: 
+[epang-l1o] EPA-ng FAIL fold 250: 
+[epang-l1o] EPA-ng FAIL fold 249: 
+[epang-l1o] EPA-ng FAIL fold 251: 
+[epang-l1o] EPA-ng FAIL fold 252: 
+[epang-l1o] EPA-ng FAIL fold 253: 
+[epang-l1o] EPA-ng FAIL fold 254: 
+[epang-l1o] EPA-ng FAIL fold 257: 
+[epang-l1o] EPA-ng FAIL fold 258: 
+[epang-l1o] EPA-ng FAIL fold 259: 
+[epang-l1o] EPA-ng FAIL fold 260: 
+[epang-l1o] EPA-ng FAIL fold 261: 
+[epang-l1o] EPA-ng FAIL fold 262: 
+[epang-l1o] EPA-ng FAIL fold 264: 
+[epang-l1o] EPA-ng FAIL fold 265: 
+[epang-l1o] EPA-ng FAIL fold 266: 
+[epang-l1o] EPA-ng FAIL fold 267: 
+[epang-l1o] EPA-ng FAIL fold 269: 
+[epang-l1o] EPA-ng FAIL fold 270: 
+[epang-l1o] EPA-ng FAIL fold 271: 
+[epang-l1o] EPA-ng FAIL fold 272: 
+[epang-l1o] EPA-ng FAIL fold 273: 
+[epang-l1o] EPA-ng FAIL fold 274: 
+[epang-l1o] EPA-ng FAIL fold 275: 
+[epang-l1o] EPA-ng FAIL fold 276: 
+[epang-l1o] EPA-ng FAIL fold 278: 
+[epang-l1o] EPA-ng FAIL fold 279: 
+[epang-l1o] EPA-ng FAIL fold 280: 
+[epang-l1o] EPA-ng FAIL fold 281: 
+[epang-l1o] EPA-ng FAIL fold 282: 
+[epang-l1o] EPA-ng FAIL fold 283: 
+[epang-l1o] EPA-ng FAIL fold 284: 
+[epang-l1o] EPA-ng FAIL fold 285: 
+[epang-l1o] EPA-ng FAIL fold 286: 
+[epang-l1o] EPA-ng FAIL fold 287: 
+[epang-l1o] EPA-ng FAIL fold 289: 
+[epang-l1o] EPA-ng FAIL fold 290: 
+[epang-l1o] EPA-ng FAIL fold 291: 
+[epang-l1o] EPA-ng FAIL fold 292: 
+[epang-l1o] EPA-ng FAIL fold 293: 
+[epang-l1o] EPA-ng FAIL fold 294: 
+[epang-l1o] EPA-ng FAIL fold 295: 
+[epang-l1o] EPA-ng FAIL fold 296: 
+[epang-l1o] EPA-ng FAIL fold 297: 
+[epang-l1o] EPA-ng FAIL fold 299: 
+[epang-l1o] EPA-ng FAIL fold 298: 
+[epang-l1o] EPA-ng FAIL fold 301: 
+[epang-l1o] EPA-ng FAIL fold 302: 
+[epang-l1o] EPA-ng FAIL fold 303: 
+[epang-l1o] EPA-ng FAIL fold 304: 
+[epang-l1o] EPA-ng FAIL fold 305: 
+[epang-l1o] EPA-ng FAIL fold 306: 
+[epang-l1o] EPA-ng FAIL fold 307: 
+[epang-l1o] EPA-ng FAIL fold 308: 
+[epang-l1o] EPA-ng FAIL fold 309: 
+[epang-l1o] EPA-ng FAIL fold 310: 
+[epang-l1o] EPA-ng FAIL fold 311: 
+[epang-l1o] EPA-ng FAIL fold 312: 
+[epang-l1o] EPA-ng FAIL fold 313: 
+[epang-l1o] EPA-ng FAIL fold 314: 
+[epang-l1o] EPA-ng FAIL fold 315: 
+[epang-l1o] EPA-ng FAIL fold 316: 
+[epang-l1o] EPA-ng FAIL fold 317: 
+[epang-l1o] EPA-ng FAIL fold 318: 
+[epang-l1o] EPA-ng FAIL fold 320: 
+[epang-l1o] EPA-ng FAIL fold 321: 
+[epang-l1o] EPA-ng FAIL fold 319: 
+[epang-l1o] EPA-ng FAIL fold 323: 
+[epang-l1o] EPA-ng FAIL fold 324: 
+[epang-l1o] EPA-ng FAIL fold 326: 
+[epang-l1o] EPA-ng FAIL fold 327: 
+[epang-l1o] EPA-ng FAIL fold 328: 
+[epang-l1o] EPA-ng FAIL fold 329: 
+[epang-l1o] EPA-ng FAIL fold 331: 
+[epang-l1o] EPA-ng FAIL fold 330: 
+[epang-l1o] EPA-ng FAIL fold 332: 
+[epang-l1o] EPA-ng FAIL fold 333: 
+[epang-l1o] EPA-ng FAIL fold 334: 
+[epang-l1o] EPA-ng FAIL fold 335: 
+[epang-l1o] EPA-ng FAIL fold 337: 
+[epang-l1o] EPA-ng FAIL fold 338: 
+[epang-l1o] EPA-ng FAIL fold 339: 
+[epang-l1o] EPA-ng FAIL fold 340: 
+[epang-l1o] EPA-ng FAIL fold 341: 
+[epang-l1o] EPA-ng FAIL fold 342: 
+[epang-l1o] EPA-ng FAIL fold 343: 
+[epang-l1o] EPA-ng FAIL fold 344: 
+[epang-l1o] EPA-ng FAIL fold 345: 
+[epang-l1o] EPA-ng FAIL fold 346: 
+[epang-l1o] EPA-ng FAIL fold 347: 
+[epang-l1o] EPA-ng FAIL fold 348: 
+[epang-l1o] EPA-ng FAIL fold 350: 
+[epang-l1o] EPA-ng FAIL fold 352: 
+[epang-l1o] EPA-ng FAIL fold 354: 
+[epang-l1o] EPA-ng FAIL fold 356: 
+[epang-l1o] EPA-ng FAIL fold 357: 
+[epang-l1o] EPA-ng FAIL fold 358: 
+[epang-l1o] EPA-ng FAIL fold 359: 
+[epang-l1o] EPA-ng FAIL fold 360: 
+[epang-l1o] EPA-ng FAIL fold 361: 
+[epang-l1o] EPA-ng FAIL fold 362: 
+[epang-l1o] EPA-ng FAIL fold 363: 
+[epang-l1o] EPA-ng FAIL fold 364: 
+[epang-l1o] EPA-ng FAIL fold 365: 
+[epang-l1o] EPA-ng FAIL fold 366: 
+[epang-l1o] EPA-ng FAIL fold 367: 
+[epang-l1o] EPA-ng FAIL fold 368: 
+[epang-l1o] EPA-ng FAIL fold 370: 
+[epang-l1o] EPA-ng FAIL fold 369: 
+[epang-l1o] EPA-ng FAIL fold 371: 
+[epang-l1o] EPA-ng FAIL fold 373: 
+[epang-l1o] EPA-ng FAIL fold 372: 
+[epang-l1o] EPA-ng FAIL fold 374: 
+[epang-l1o] EPA-ng FAIL fold 375: 
+[epang-l1o] EPA-ng FAIL fold 376: 
+[epang-l1o] EPA-ng FAIL fold 377: 
+[epang-l1o] EPA-ng FAIL fold 378: 
+[epang-l1o] EPA-ng FAIL fold 379: 
+[epang-l1o] EPA-ng FAIL fold 380: 
+[epang-l1o] EPA-ng FAIL fold 381: 
+[epang-l1o] EPA-ng FAIL fold 383: 
+[epang-l1o] EPA-ng FAIL fold 384: 
+[epang-l1o] EPA-ng FAIL fold 386: 
+[epang-l1o] EPA-ng FAIL fold 387: 
+[epang-l1o] EPA-ng FAIL fold 388: 
+[epang-l1o] EPA-ng FAIL fold 389: 
+[epang-l1o] EPA-ng FAIL fold 390: 
+[epang-l1o] EPA-ng FAIL fold 391: 
+[epang-l1o] EPA-ng FAIL fold 392: 
+[epang-l1o] EPA-ng FAIL fold 393: 
+[epang-l1o] EPA-ng FAIL fold 394: 
+[epang-l1o] EPA-ng FAIL fold 395: 
+[epang-l1o] EPA-ng FAIL fold 396: 
+[epang-l1o] EPA-ng FAIL fold 397: 
+[epang-l1o] EPA-ng FAIL fold 398: 
+[epang-l1o] EPA-ng FAIL fold 399: 
+[epang-l1o] EPA-ng FAIL fold 400: 
+[epang-l1o] EPA-ng FAIL fold 401: 
+[epang-l1o] EPA-ng FAIL fold 403: 
+[epang-l1o] EPA-ng FAIL fold 404: 
+[epang-l1o] EPA-ng FAIL fold 405: 
+[epang-l1o] EPA-ng FAIL fold 407: 
+[epang-l1o] EPA-ng FAIL fold 409: 
+[epang-l1o] EPA-ng FAIL fold 408: 
+[epang-l1o] EPA-ng FAIL fold 411: 
+[epang-l1o] EPA-ng FAIL fold 412: 
+[epang-l1o] EPA-ng FAIL fold 413: 
+[epang-l1o] EPA-ng FAIL fold 415: 
+[epang-l1o] EPA-ng FAIL fold 416: 
+[epang-l1o] EPA-ng FAIL fold 417: 
+[epang-l1o] EPA-ng FAIL fold 418: 
+[epang-l1o] EPA-ng FAIL fold 419: 
+[epang-l1o] EPA-ng FAIL fold 420: 
+[epang-l1o] EPA-ng FAIL fold 421: 
+[epang-l1o] EPA-ng FAIL fold 422: 
+[epang-l1o] EPA-ng FAIL fold 423: 
+[epang-l1o] EPA-ng FAIL fold 424: 
+[epang-l1o] EPA-ng FAIL fold 425: 
+[epang-l1o] EPA-ng FAIL fold 426: 
+[epang-l1o] EPA-ng FAIL fold 427: 
+[epang-l1o] EPA-ng FAIL fold 428: 
+[epang-l1o] EPA-ng FAIL fold 430: 
+[epang-l1o] EPA-ng FAIL fold 429: 
+[epang-l1o] EPA-ng FAIL fold 431: 
+[epang-l1o] EPA-ng FAIL fold 432: 
+[epang-l1o] EPA-ng FAIL fold 433: 
+[epang-l1o] EPA-ng FAIL fold 434: 
+[epang-l1o] EPA-ng FAIL fold 435: 
+[epang-l1o] EPA-ng FAIL fold 437: 
+[epang-l1o] EPA-ng FAIL fold 438: 
+[epang-l1o] EPA-ng FAIL fold 439: 
+[epang-l1o] EPA-ng FAIL fold 440: 
+[epang-l1o] EPA-ng FAIL fold 442: 
+[epang-l1o] EPA-ng FAIL fold 441: 
+[epang-l1o] EPA-ng FAIL fold 443: 
+[epang-l1o] EPA-ng FAIL fold 444: 
+[epang-l1o] EPA-ng FAIL fold 445: 
+[epang-l1o] EPA-ng FAIL fold 446: 
+[epang-l1o] EPA-ng FAIL fold 447: 
+[epang-l1o] EPA-ng FAIL fold 448: 
+[epang-l1o] EPA-ng FAIL fold 449: 
+[epang-l1o] EPA-ng FAIL fold 450: 
+[epang-l1o] EPA-ng FAIL fold 452: 
+[epang-l1o] EPA-ng FAIL fold 451: 
+[epang-l1o] EPA-ng FAIL fold 454: 
+[epang-l1o] EPA-ng FAIL fold 453: 
+[epang-l1o] EPA-ng FAIL fold 455: 
+[epang-l1o] EPA-ng FAIL fold 456: 
+[epang-l1o] EPA-ng FAIL fold 457: 
+[epang-l1o] EPA-ng FAIL fold 458: 
+[epang-l1o] EPA-ng FAIL fold 460: 
+[epang-l1o] EPA-ng FAIL fold 459: 
+[epang-l1o] EPA-ng FAIL fold 461: 
+[epang-l1o] EPA-ng FAIL fold 462: 
+[epang-l1o] EPA-ng FAIL fold 463: 
+[epang-l1o] EPA-ng FAIL fold 464: 
+[epang-l1o] EPA-ng FAIL fold 465: 
+[epang-l1o] EPA-ng FAIL fold 466: 
+[epang-l1o] EPA-ng FAIL fold 467: 
+[epang-l1o] EPA-ng FAIL fold 469: 
+[epang-l1o] EPA-ng FAIL fold 468: 
+[epang-l1o] EPA-ng FAIL fold 470: 
+[epang-l1o] EPA-ng FAIL fold 472: 
+[epang-l1o] EPA-ng FAIL fold 471: 
+[epang-l1o] EPA-ng FAIL fold 473: 
+[epang-l1o] EPA-ng FAIL fold 475: 
+[epang-l1o] EPA-ng FAIL fold 476: 
+[epang-l1o] EPA-ng FAIL fold 477: 
+[epang-l1o] EPA-ng FAIL fold 479: 
+[epang-l1o] EPA-ng FAIL fold 480: 
+[epang-l1o] EPA-ng FAIL fold 481: 
+[epang-l1o] EPA-ng FAIL fold 482: 
+[epang-l1o] EPA-ng FAIL fold 483: 
+[epang-l1o] EPA-ng FAIL fold 484: 
+[epang-l1o] EPA-ng FAIL fold 485: 
+[epang-l1o] EPA-ng FAIL fold 486: 
+[epang-l1o] EPA-ng FAIL fold 487: 
+[epang-l1o] EPA-ng FAIL fold 489: 

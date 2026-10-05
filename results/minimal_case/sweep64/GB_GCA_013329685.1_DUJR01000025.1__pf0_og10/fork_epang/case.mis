@@ -1,0 +1,8 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_021513715.1_CP084167.1	Class	c__Heimdallarchaeia	c__Baldrarchaeia	0.510	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	d__Archaea;p__Asgardarchaeota;c__Baldrarchaeia;o__Baldrarchaeales;f__Baldrarchaeaceae;g__Baldrarchaeum;s__Baldrarchaeum yapensis	1.000;1.000;0.510;0.510;0.510;0.510;0.510	1.000
+GB_GCA_013329685.1_DUJR01000025.1	Family	f__Methanococcaceae	f__Methanocaldococcaceae	1.000	d__Archaea;p__Methanobacteriota;c__Methanococci;o__Methanococcales;f__Methanococcaceae;g__Methanococcus;s__Methanococcus voltae	d__Archaea;p__Methanobacteriota;c__Methanococci;o__Methanococcales;f__Methanocaldococcaceae;g__Methanocaldococcus;s__Methanocaldococcus jannaschii	1.000;1.000;1.000;1.000;1.000;1.000;0.510	1.000
+GB_GCA_019561555.1_JAHEQB010000104.1	Genus	g__Methanofervidicoccus	g__Methanococcus	0.510	d__Archaea;p__Methanobacteriota;c__Methanococci;o__Methanococcales;f__Methanococcaceae;g__Methanofervidicoccus	d__Archaea;p__Methanobacteriota;c__Methanococci;o__Methanococcales;f__Methanococcaceae;g__Methanococcus;s__Methanococcus voltae	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000

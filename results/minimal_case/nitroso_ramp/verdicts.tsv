@@ -1,0 +1,7 @@
+case	arm	verdict	level	proposed	confidence	exclusion
+0,200	upstream_raxml	FLAG	Family	f__Nitrosopumilaceae	1.000	-
+0,200	fork_epang	FLAG	Family	f__Nitrosopumilaceae	1.000	1.000
+0,200	fork_raxml	FLAG	Family	f__Nitrosopumilaceae	1.000	1.000
+0,1000	upstream_raxml	FLAG	Family	f__Nitrosopumilaceae	1.000	-
+0,1000	fork_epang	FLAG	Family	f__Nitrosopumilaceae	1.000	1.000
+0,1000	fork_raxml	FLAG	Family	f__Nitrosopumilaceae	1.000	1.000

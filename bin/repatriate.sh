@@ -57,7 +57,14 @@ cd "$(dirname "$0")/.."
 # built. The case.fasta and case.tax they describe are deliberately not fetched: case.json carries
 # the sha256 of the two source files and the selection is deterministic, so any case can be rebuilt
 # byte for byte by bin/minimal_case.py, and the full-reference ones are 3 MB each.
-rsync -a --exclude='._*' --exclude='/runs/' --exclude='/runs_injected/' --exclude='/m1_check/' \
+# 'tmp/' unanchored, which is the opposite of the lesson above and deliberate. A tool's scratch
+# directory is named tmp wherever it sits, and --include='*.log' matches the per-fold epang.log and
+# epa_info.log inside it: one strict leave-one-out run on 2 023 sequences is two thousand folds, and a
+# single repatriation brought back 3 314 of those files, from a job that was still running and would
+# delete them itself. Nothing in results/ wants a directory named tmp, so the pattern that matches
+# every depth is the right one here. It is first in the list because rsync takes the first match.
+rsync -a --exclude='tmp/' \
+      --exclude='._*' --exclude='/runs/' --exclude='/runs_injected/' --exclude='/m1_check/' \
       --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
       --include='*.stderr' --include='verdicts.tsv' --include='case.json' \
       --exclude='score.json' --exclude='*' \
