@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 129 |
+| findings in this report | 130 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2765,6 +2765,21 @@ catch a gate that compared nothing was swallowing the finding beside it. The two
 now, and a tree of nothing but unusable runs reports the problem instead of claiming to be empty.
 
 Both paths tested on fabricated trees: a Kexact run with the wrong fold count, and one with no `n_seqs`.
+
+**130. The third script whose `--out` named a committed record by default.** Waiting on a job, the
+useful work was checking that `bin/kexact_decomposition.py` would take the arriving *k*=10 cell without
+hand-holding. It will: it discovers cells by globbing `*__epang_T8_Kexact__rep1`, so a new one joins the
+decomposition on its own. What it also had was `--out` defaulting to
+`results/kexact_decomposition.json` -- a committed record named as a fallback, so running the script
+from the repository root without `--out` replaces one of the paper's tables with whatever that
+invocation computed.
+
+That is the trap that created `grid_summary.json` and `shape.json`, each caught after the fact. Swept
+across every script with an `--out`: **three have defaults, and only this one is dangerous.**
+`collect_run.py` writes `run.json` into the isolated task directory the pipeline gives it, which is its
+job, and `score_injection.py` writes `score.json` into the current directory, which creates a stray file
+rather than overwriting a record. The other fifteen print to stdout when `--out` is absent, which is
+safe. `--out` is required here now.
 
 ## Deferred, with reasons
 
