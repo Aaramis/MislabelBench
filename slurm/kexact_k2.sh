@@ -16,10 +16,19 @@
 #   Kexact against upstream_raxml_T8   the engine, with the folding removed
 #   Kexact against epang_T8_K25        the folding, with the engine held fixed
 #
-# k=2 at family distance, where the gap is largest and where both other conditions already exist. One
-# sequence per fold on 2023 sequences is about 2000 EPA-ng placements per cell, so the full grid would
-# be a hundred hours. Six cells were planned, at both rates and three seeds; two were run, s1 and s2
-# at r0.05, which is what README reports the decomposition on. The file cost below is why.
+# The name says k2 because that is where it started and renaming it would orphan the trace files and
+# the job-script declarations verify_runs.py checks every run against. KEXACT_CELL chooses the cell, and
+# the arm now runs along k rather than at one value: k=2 seeds 1 and 2, then k=10, then k=5, at family
+# distance and rate 0.05 where the other three conditions already exist.
+#
+# One sequence per fold on 2023 sequences is about 2000 EPA-ng placements, measured at 71 minutes a cell
+# against 38 seconds at K=25, so the full grid would be a hundred hours and the axis is sampled instead.
+#
+# The file cost below was the other reason for one cell at a time, and the estimate was wrong. A cell was
+# put at 14 500 files against a 100 000 quota, which killed a planned six-cell job before it ran.
+# Measured on the k=10 run: the home went from 1 115 files to 1 164, forty-nine more, because Nextflow
+# removes the work directory on success. The peak is real and the cost is not cumulative, so the limit
+# is on cells running at once rather than on how many may be run.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
