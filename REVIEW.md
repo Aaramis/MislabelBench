@@ -2861,6 +2861,12 @@ finding 131's measurement that the file cost is a transient peak rather than a s
 fold-count gate checked its 2 023 fold tasks against 2 023 sequences unprompted, and the trace gate
 refused the rebuild until the new trace was named. Both were written for this.
 
+**And the rule finding 113 wrote down was wrong in a way that let me break it four times.** It says a
+gate added in a change has to be run *after* that change. The coverage gate counts **tracked** files, so
+a change that adds one does not reach it until `git add` has run: "after the change" and "after staging"
+are different moments, and the second is the one that matters. Four of these failures have now been the
+same sequence, which is a rule stated imprecisely rather than a habit of ignoring it.
+
 ## What is outstanding
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
