@@ -269,6 +269,16 @@ fi
 step "timing: the staged scaling, and how many cores each tool actually uses"
 scaling_summary.py > results/scaling_summary.txt
 resource_usage.py > results/resource_usage.txt
+# The staged table DISTRIBUTION.md quotes was printed by a job script and committed nowhere: the
+# per-shard timings are in results/, so the numbers were recoverable, but the table that carries the
+# distribution claim had no record and nothing rebuilt it. One file per fold count, since the three
+# rounds differ in the only variable they vary.
+for fpj in 7 13 25; do
+    d="results/staged_timed_f${fpj}"
+    [ -d "$d/staged" ] || continue
+    staged_scaling.py --staged-dir "$d/staged" --trace-dir "$d/pipeline_info" \
+        > "results/staged_scaling_f${fpj}.txt"
+done
 
 # What each reference can be judged on at all, which is a ceiling on any recall figure and a
 # property of the database rather than of either tool. One rule for every dataset, so that the

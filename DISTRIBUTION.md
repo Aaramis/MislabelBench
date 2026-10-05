@@ -111,12 +111,12 @@ One replicate per shard count, `gtdb_arc1200`, `-profile ifb`, every stage its o
 | shards | folds per shard | placement | speedup | vs shards | ceiling | vs ceiling | the `srun` version | its speedup |
 |---|---|---|---|---|---|---|---|---|
 | 1 | 25 | 194.5 | 1.00 | — | 1.00 | — | 195.59 (spread 0.67) | 1.00 |
-| 2 | 13, 12 | 111.2 | **1.75** | 87 % | 1.92 | 90.9 % | 123.93 (spread 27.14) | 1.58 |
-| 4 | 7, 6, 6, 6 | **56.4** | **3.45** | 86 % | 3.57 | **96.5 %** | 197.57 (spread 134.08) | 0.99 |
+| 2 | 13, 12 | 111.2 | **1.75** | 87 % | 1.92 | 91.0 % | 123.93 (spread 27.14) | 1.58 |
+| 4 | 7, 6, 6, 6 | **56.4** | **3.45** | 86 % | 3.57 | **96.6 %** | 197.57 (spread 134.08) | 0.99 |
 
 25 folds over 4 shards split 7, 6, 6, 6, the step ends when the shard holding 7 ends, and no
 distribution however free beats 25/7 = 3.57. So the 86 % is mostly the arithmetic of 25 not dividing by
-4; against what the split allows the placement runs at 96.5 %. Both columns are here because they answer
+4; against what the split allows the placement runs at 96.6 %. Both columns are here because they answer
 different questions and only one of them is about overhead.
 
 **At one shard the two agree to 0.6 %** — 194.5 s against 195.59 with a spread of 0.67 over three replicates — which is the check that
@@ -140,7 +140,7 @@ it avoids.
 
 The placement step falls 194.5 → 56.4 and the span only 374 → 314, because scheduling and staging
 grow with the task count and reach 163 s at four shards. So the honest form of the claim is that
-the *placement step* reaches 96.5 % of what its fold split allows, 86 % measured against the shard count,
+the *placement step* reaches 96.6 % of what its fold split allows, 86 % measured against the shard count,
 and that a user's wall clock saturates near 314 s on this dataset however many shards are used. Reporting the stages separately, which the
 protocol already promises, is what makes that visible.
 

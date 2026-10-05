@@ -18,13 +18,13 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 122 |
+| findings in this report | 123 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1113 |
-| result tables, each rebuilt by `bin/analyses.sh` | 47 |
+| result tables, each rebuilt by `bin/analyses.sh` | 50 |
 | tests over the scripts that turn runs into numbers | 20 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2598,6 +2598,26 @@ replaced a published 85.7 %. The length statistics the manifest quotes come back
 So the last milestone's dataset is provenance-verified and its preparation works. What blocks it is not
 the harness: UNITE ships no alignment and ITS has no covariance model to align against, which is open
 question 2 in the protocol and a question for the co-authors rather than a missing piece of code.
+
+**123. The table carrying the distribution claim was printed by a job script and committed nowhere, and
+two of its figures were truncated.** `DISTRIBUTION.md` and README both quote the staged scaling table --
+111.2 s at two shards for a speedup of 1.75, 56.4 s at four for 3.45, against ceilings of 1.92 and 3.57
+that the fold split allows. Recomputed from the committed per-shard `timing.json` files by a route
+written from the format: **every one of those matches**, and the fold splits are 13+12 and 7+6+6+6 as
+stated.
+
+Two things did not. The last column, the share of the ceiling actually reached, is **90.97 %** and
+**96.58 %** at full precision, written as "90.9 %" and "96.5 %" -- truncations where everything else in
+this repository rounds, so a reader recomputing gets 91.0 and 96.6 and wonders which is wrong. The
+**96.5 %** appears four times across two documents and a docstring. All of them now say 96.6 and 91.0.
+
+And the table itself had no record. `bin/staged_scaling.py` is run by `slurm/staged_timed.sh` and prints
+to stdout; nothing wrote it into `results/`, so the numbers two documents quote came from a job log that
+no longer exists on a cluster whose home directory was deleted. The per-shard timings *are* committed,
+which is why the table was recoverable at all -- but recovering it required writing a second
+implementation, which is not what a reader should have to do. `bin/analyses.sh` now writes
+`results/staged_scaling_f7.txt`, `_f13` and `_f25`, one per fold count, and `verify_rebuild_coverage.py`
+covers them like every other table.
 
 ## Deferred, with reasons
 

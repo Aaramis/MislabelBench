@@ -18,7 +18,7 @@ allocation every time.
 Fold counts per shard are printed with them, because a speedup read against the shard count
 conflates two things. 25 folds over 4 shards split 7, 6, 6, 6, so the slowest shard carries 7 of 25
 and no distribution of them can beat 25/7 = 3.57x however free it is. Measured against 4 the
-pipeline is 86 % efficient; measured against the ceiling the fold split leaves it is 96.5 %, and the
+pipeline is 86 % efficient; measured against the ceiling the fold split leaves it is 96.6 %, and the
 difference between those two numbers is arithmetic, not overhead.
 """
 

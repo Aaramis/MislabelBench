@@ -1,0 +1,4 @@
+cell                               shards     ref  tasks    place  spread  score      sum     span
+gtdb_arc1200__epang_T8_K25__rep1        2    71.8    2.6    111.2    26.8   19.8    205.4    320.0
+                                  shards: 84.4, 111.2
+                                  folds: 13, 12  -> no split of these beats 1.92x on 2 shards

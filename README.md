@@ -219,13 +219,13 @@ as separate Slurm jobs, one per group of folds. On 7 051 sequences, 25 folds, on
 | shards | folds per shard | placement | speedup | vs shards | ceiling | vs ceiling | end-to-end span |
 |---|---|---|---|---|---|---|---|
 | 1 | 25 | 194.5 s | 1.00 | — | 1.00 | — | 374 s |
-| 2 | 13, 12 | 111.2 s | 1.75 | 87 % | 1.92 | 90.9 % | 320 s |
-| 4 | 7, 6, 6, 6 | 56.4 s | 3.45 | 86 % | 3.57 | 96.5 % | 314 s |
+| 2 | 13, 12 | 111.2 s | 1.75 | 87 % | 1.92 | 91.0 % | 320 s |
+| 4 | 7, 6, 6, 6 | 56.4 s | 3.45 | 86 % | 3.57 | 96.6 % | 314 s |
 
 Efficiency against the shard count is the conventional figure and it is the wrong one to read alone
 here. 25 folds over 4 shards split 7, 6, 6, 6, the step ends when the shard holding 7 ends, and no
 distribution however free beats 25/7 = 3.57. So the 86 % is mostly the arithmetic of 25 not dividing
-by 4: against what the split allows the placement distributes at 96.5 %, and the shards finish within
+by 4: against what the split allows the placement distributes at 96.6 %, and the shards finish within
 0.6 s of each other where the `srun` version produced one straggler per allocation at 124 to 258 s
 against its own 56 to 62. Three things then have to be said together: the distribution is very nearly
 free, the fold count caps what it can buy, and the end-to-end wall clock saturates near 314 s because
