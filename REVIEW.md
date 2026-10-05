@@ -18,12 +18,12 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 131 |
+| findings in this report | 132 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
-| run records, cross-checked against the files they summarise | 1113 |
+| run records, cross-checked against the files they summarise | 1114 |
 | result tables, each rebuilt by `bin/analyses.sh` | 50 |
 | tests over the scripts that turn runs into numbers | 20 |
 
@@ -2801,21 +2801,53 @@ this run: the home directory went from **1 115 files to 1 164**, forty-nine more
 work directory on success, so the fold directories are a transient peak rather than a standing cost. The
 limit is on *concurrent* cells, not on how many may be run.
 
-## Deferred, with reasons
+**132. The section listing what was held back had itself been held back.** `REVIEW.md` ended with
+"Deferred, with reasons", and every item in it was out of date. Two pipeline improvements were described
+as waiting for the upstream grid to finish: the grid finished weeks of work ago, both improvements
+shipped, and the sync they were waiting on has happened many times since. The third item said
+"`sativa_epang/` stays despite not being what runs" because `scripts/README.md` built version 1's RAxML
+binaries from it. **Both directories were removed with version 1**, so the paragraph described a present
+state that does not exist.
 
-Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
-changing `bin/` or `main.nf` would cost that job its resume — which editing the pipeline between a
-failure and its retry has already cost once. That was stated too broadly: the cluster copy of the
-repository is an rsync of it and not a checkout, so a commit here cannot reach a running job. Both
-are done, and what waits for the grid is the sync, not the edit.
+That is the fifth passage in this repository written once and left while what it described moved, after
+the review's coverage table, the publication state, the trace enumeration and the data counts. It is the
+most pointed of the five, because a section whose whole subject is "what has not been done yet" is the
+one place staleness is guaranteed rather than possible.
 
-- `collect_run.py` records the parse outcome as `sativa_timing`: `parsed`, `no match` or
-  `log missing`. An absent phase timing used to mean either, and the second — a reworded log line —
-  would empty the timings of every run at once with nothing failing.
-- `main.nf` compares the number of `COLLECTRUN` records against datasets x conditions x replicates
-  and exits 1 if they differ, so a dropped join fails the run instead of quietly shortening the grid.
-  Checked with `-stub-run` on four cells, including a deliberately filtered timing channel.
+It is now **What is outstanding**, and it says what the word means: nothing is held back by choice. One
+experiment is running, six contradictions wait on a co-author's ruling, and three things wait on other
+people. The items that were done are kept at the end in the past tense, which is the distinction finding
+126 drew between a number that describes the repository and one that describes an event.
 
-`sativa_epang/` stays despite not being what runs: `scripts/README.md` builds version 1's RAxML
-binaries from it, so removing it would make version 1's published figures unreproducible. It carries a
-`NOT_WHAT_RUNS.md` saying so.
+**And one reference that looked stale is not.** `bin/review_coverage.py` still names `sativa_epang/` and
+`scripts/`, in a comment that says they "used to live outside the list above" and "have been removed".
+That is dated and correct, and deleting it would lose the lesson it carries: a coverage tool that
+silently omits a tree invites the inference that the tree is dead, which is the inference that was once
+made about `sativa_epang/` while `scripts/README.md` was building RAxML from it.
+
+## What is outstanding
+
+Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
+
+**Running.** The strict leave-one-out along *k*. Finding 131 reports *k*=10 and the *k*=5 cell is on the
+cluster; *k*=1 and *k*=3 would complete the axis at family distance and rate 0.05, at about 71 minutes
+each.
+
+**Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
+tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory
+per sequence, UNITE's species judgeability, the claim that under-supplied cells are dropped rather than
+rounded, the primary dataset's size, error kind 6 reported as one number where it is two strata, and
+kind 3's mechanism, whose sign is reversed. Each needs a ruling on whether the document is corrected.
+
+**Blocked on others.** Error kind 5 waits on nf-core/taxmarker#39, which Protocol.md's own typology says
+it waits on. The UNITE dataset is verified end to end and waits only on an ITS alignment method, which is
+the protocol's second open question. The `tmp/` directories committed on the fork's published branch are
+a change to a separate repository and belong to its owner.
+
+**Done, and recorded here because this section used to say otherwise.** Two pipeline-side improvements
+were once held back while the upstream grid ran: `collect_run.py` recording the parse outcome as
+`sativa_timing`, and `main.nf` comparing the `COLLECTRUN` count against datasets x conditions x
+replicates. Both shipped, the grid finished, and the sync they waited on has happened many times since.
+`sativa_epang/` was kept on the grounds that `scripts/README.md` built version 1's RAxML binaries from
+it; version 1 was removed, and with it both directories. This section described all three as pending
+until it was reread.
