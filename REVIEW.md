@@ -18,12 +18,12 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 133 |
+| findings in this report | 134 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
-| run records, cross-checked against the files they summarise | 1114 |
+| run records, cross-checked against the files they summarise | 1115 |
 | result tables, each rebuilt by `bin/analyses.sh` | 50 |
 | tests over the scripts that turn runs into numbers | 20 |
 
@@ -2839,6 +2839,27 @@ confusion survives into README wherever a section is named for a kind and report
 
 The paragraph now says what the table is before showing it. The repository's own structure was never
 wrong; what was wrong is that nothing said which rows of the grid a kind picks out.
+
+**134. The engine-versus-folds decomposition now has a shape, and the fold scheme's share is zero at
+every *k* measured.** The *k*=5 cell completes the axis D176 set out to measure. At family distance and
+rate 0.05: the engine is worth **+0.284 and +0.177 at *k*=2, +0.114 at *k*=5, +0.018 at *k*=10**, and
+twenty-five folds against strict leave-one-out is worth **0.000 at every one of them** except −0.020 on
+the first cell.
+
+A clean monotone decay, and the simplest statement the benchmark can make about its own claim: **the
+whole of the fork's advantage is the placement engine, and it fades as *k* rises** exactly as §2.2's
+surviving-label argument says it must.
+
+One qualification keeps that honest. The fold column compares twenty-five folds against one sequence per
+fold. **Five folds is above both** at *k*=5, 0.248 against 0.229, and at *k*=10, 0.227 against 0.200.
+Batching does nothing until the batches are large, and then it adds a little at high *k*, which is the
+same effect the fold sweep measured across the grid and which a column named "folds" would otherwise
+hide.
+
+The run cost 1 h 10 m and took the home directory from 1 140 files to 1 183, forty-three more, confirming
+finding 131's measurement that the file cost is a transient peak rather than a standing one. The
+fold-count gate checked its 2 023 fold tasks against 2 023 sequences unprompted, and the trace gate
+refused the rebuild until the new trace was named. Both were written for this.
 
 ## What is outstanding
 
