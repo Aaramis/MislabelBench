@@ -50,7 +50,8 @@ runs it compared against are all gone. Its three run records went with them rath
 gate to report as belonging to no script, which is what `bin/verify_timing_flags.py` had begun doing.
 
 **Determinism, across CPU architectures and not only across runs.** The same cell and the same seed
-produce a byte-identical `.mis` on hardware nine years apart. Three independent productions of
+produce a byte-identical `.mis` on hardware nine years apart, on three CPU models, and on a cluster
+that was destroyed and rebuilt from this repository in between. Four independent productions of
 `inj_species_r0.05_k3_s1` under `epang_T8_K25`, each a separate Slurm job with its own work
 directory:
 
@@ -59,6 +60,7 @@ directory:
 | grid cell | cpu-node-123 | AMD EPYC 9754 | 38.0 s | `b41934ad…` |
 | determinism, 2 Oct | cpu-node-37 | Intel Xeon E5-2695 v3 | 66.0 s | `b41934ad…` |
 | determinism, rerun | cpu-node-16 | Intel Xeon E5-2695 v3 | 56.3 s | `b41934ad…` |
+| determinism, rebuilt cluster | cpu-node-104 | AMD EPYC 7662 | 47.7 s | `b41934ad…` |
 
 And 42 more cells, which were run twice before anyone thought to compare them. `results/kaxis` and
 `results/ksweep` are earlier, smaller runs of cells the 180-cell grid also covers, so each of their 42
@@ -68,7 +70,9 @@ against 526.2 s, 39 % apart -- so they are separate executions and not copies.
 `bin/verify_duplicate_runs.py` is the check; it is not a separate result, and the grid is where those
 cells' numbers are reported.
 
-A 1.7-fold spread in seconds and the same 161 flags to the byte. Two of the three rows are records you
+A 1.7-fold spread in seconds and the same 161 flags to the byte. The last row is the one that tests
+more than the tool: the cluster it ran on had been deleted and rebuilt from this repository, with the
+containers pulled again from their recipes, and it returned the same file. Two of the three rows are records you
 can open: the grid cell and the rerun. The 2 October row is not -- `determinism.sh` opens by clearing
 its own output directory, so its successor wiped that run's `.mis`, and what survives is
 `results/pipeline_info/trace-determinism.txt` giving the task 1m 9s against the rerun's 58.7 s. The

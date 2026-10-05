@@ -45,7 +45,14 @@ cd "$(dirname "$0")/.."
 # recognised and deleted by hand each time, which is how something unwanted eventually gets committed.
 # They are excluded here rather than deleted there: they are the evidence behind version 1's published
 # figures, which are still on origin/main.
-rsync -a --exclude='._*' --exclude='runs/' --exclude='runs_injected/' --exclude='m1_check/' \
+#
+# The leading slashes are not decoration. Written `runs/`, an rsync filter matches a directory of that
+# name at ANY depth, so the pattern meant to skip one top-level tree skipped every
+# `results/*/runs/` as well -- which is every run directory this script exists to fetch. Nothing came
+# back from any repatriation between that change and the day a real job produced output that failed to
+# arrive. Measured rather than reasoned: at the real transfer root, `runs/` transfers 0 of the
+# determinism run's files and `/runs/` transfers 2.
+rsync -a --exclude='._*' --exclude='/runs/' --exclude='/runs_injected/' --exclude='/m1_check/' \
       --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
       --include='*.stderr' --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/

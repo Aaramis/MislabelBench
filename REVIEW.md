@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 127 |
+| findings in this report | 128 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2719,6 +2719,31 @@ reports 242 datasets sound with the covariance model and 3 alignment widths, and
 
 So the claim that a cluster is a cache and this repository is the record has now been exercised: the
 cluster was destroyed and rebuilt from the repository, and what came back is identical to what went.
+
+**128. The rebuilt cluster reproduces a published answer, and fetching it found that nothing could have
+been fetched.** With the cluster restored, the question the restore cannot answer is whether the pipeline
+still produces the same results there. `slurm/determinism.sh` reran one grid cell --
+`inj_species_r0.05_k3_s1` under `epang_T8_K25`, 1 min 4 s, two tasks -- and the `.mis` came back
+**`b41934ad468dfbab94622e03094f3b98`**, which is the md5 README publishes for that cell. A cluster that
+was deleted and rebuilt from this repository, with both containers pulled again from their recipes,
+returned the same 161 flags to the byte. It is a fourth independent production and a third CPU model,
+AMD EPYC 7662 at 47.7 s against 38.0, 66.0 and 56.3 on the other three.
+
+**Then the repatriation did not bring it back**, and the cause had been sitting there since finding 103's
+session. `bin/repatriate.sh` excludes version 1's run trees with `--exclude='runs/'`. An rsync filter
+written that way matches a directory of that name **at any depth**, so a pattern meant to skip one
+top-level tree skipped `results/*/runs/` as well -- every run directory the script exists to fetch.
+Measured rather than argued: at the real transfer root, `--exclude='runs/'` transfers **0** of the
+determinism run's files and `--exclude='/runs/'` transfers **2**. All three exclusions are anchored now.
+
+What it cost is nothing, by luck and timing: the simulated runs were repatriated minutes before the
+exclusion was added, and the cluster was destroyed before any other job ran. The first job to produce
+output after that change is the one that exposed it -- which is the same way finding 127 found the
+restore's missing `mkdir`, and the same lesson twice in two days: **a mechanism that is never exercised
+is not known to work, however carefully it was reasoned about.**
+
+And `bin/verify_trace_table.py`, written the day before, caught the new trace file the moment it arrived
+and refused the rebuild until the table named it. That is the first thing it has done unprompted.
 
 ## Deferred, with reasons
 
