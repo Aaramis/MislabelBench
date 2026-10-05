@@ -2273,6 +2273,32 @@ It also had to learn the difference between a link and a quotation of one: its f
 this very finding, which has to show the form it is reporting. Code spans are stripped before looking,
 so a dangling link inside backticks is prose and one in running text is a defect -- checked both ways.
 
+**110. The pipeline's only guard against losing a cell was proved live, and proving it cost the cluster
+home directory.** `main.nf` branches cells to the two tools on `meta.impl`, and Nextflow's `branch`
+silently drops an element matching no label: a condition whose `impl` were misspelled would simply not
+run, and the grid would look complete. The repository reasons that the cardinality check after
+`COLLECTRUN` covers it, since `expected` is computed from the request. Reasoning is not evidence, so it
+was tested: a stub run with a condition whose `impl` matches no branch, against a control with two real
+ones. **The control exits 0; the probe exits 1 with "collected 1 run records for 2 cells: a cell lost an
+output before COLLECTRUN".** The guard holds.
+
+Four of my own mistakes stood between the question and that answer, all worth recording because each is
+a shape that recurs: `#SBATCH --output=` does not expand `$HOME`, so the first log went to a directory
+literally named `$HOME`; the second went to the compute node's `/tmp`, which the login node cannot read;
+the third collided with itself because two arms without `--trace_tag` write the same report name; and the
+fourth and fifth were resource requests below what the processes declare -- stub runs honour `cpus` and
+`memory` directives, which is not obvious and is why `-stub-run` needs a real allocation.
+
+**Then the cleanup deleted the cluster home directory.** `rm -rf … "$HOME"` inside a single-quoted ssh
+command is expanded by the remote shell, not protected from it. `~/bench`, the container cache and
+`~/.ssh/authorized_keys` are gone, so key login fails. **No measurement was lost** -- 1 113 run records,
+1 141 `.mis` files and 47 tables are committed here, the datasets regenerate from their seeds, and the
+raw release is pinned by sha256 in `assets/datasets.yml`. D158 records it with the remediation, which
+needs the user's account access.
+
+The decision to commit `results/` was taken on the grounds that a cluster is a cache and the repository
+is the record. That was a claim until today.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that

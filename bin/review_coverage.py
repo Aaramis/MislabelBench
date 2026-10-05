@@ -68,9 +68,14 @@ def main():
     missing = []
     for f in files:
         name = Path(f).name
-        # By full path always; by basename only when that basename belongs to one file.
-        if f in text:
+        # The path is matched with a boundary, not as a substring. `main.nf` is a suffix of every
+        # `modules/local/*/main.nf`, so the substring form certified the pipeline file whenever any
+        # module path appeared -- the same defect as the shared basename above, one layer in, and in
+        # the fix for it. It happens to be named on its own eleven times, which is luck and not a
+        # check.
+        if re.search(rf"(?<![\w/.-]){re.escape(f)}(?![\w])", text):
             continue
+        # By basename only when that basename belongs to one file.
         if name not in shared and re.search(rf"\b{re.escape(name)}\b", text):
             continue
         missing.append(f)
