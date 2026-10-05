@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 114 |
+| findings in this report | 115 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2409,6 +2409,27 @@ here: a compare that errors is not evidence against the claim, and a count print
 not evidence for it. `PUBLISHING.md` now says so and names what would settle it -- a clone and
 `git log v0.9.3..epa-ng` -- rather than keeping a claim nobody has checked or replacing it with one
 that is no better.
+
+**115. The open claim from finding 114 is settled, and the fork's diff is four fifths scratch files.**
+Cloning the public fork answers it in one command: `epa-ng` is **27 commits ahead of `master` and none
+behind**. `PUBLISHING.md`'s "one commit on top of v0.9.3 (`68284c2`)" was wrong three ways -- there is
+no tag `v0.9.3`, the tags being `v0.9.3.1` to `v0.9.3.6` and `v0.10.0` to `v0.10.2`; `68284c2` is an
+*upstream* commit, "fix gcc version check"; and the branch is 27 commits, which is what GitHub's compare
+view said beside the error that made it untrustworthy. The cautious reading of finding 114 was right to
+refuse both numbers and wrong about which would survive.
+
+**What the modification is: 22 files, 2 239 lines**, led by `epac/epang_l1o.py` at 1 150, `sativa.py` at
+303 and `CHANGES-epa-ng.md` at 258. That is larger than "two hunks in `sativa.py`, one in
+`epac/config.py`, one new file" by enough that the old description would mislead a reviewer about what
+to read.
+
+**And the finding worth acting on: twelve files under `tmp/` are committed on the branch** -- SATIVA's
+own scratch directory, holding alignments, trees and 2 400-line FASTAs -- **8 809 lines against the
+modification's 2 239**. Four fifths of what a reviewer sees when following Protocol.md's Availability
+line is run residue. `v0.10.2` does exist as a tag, so the source of the version this benchmark ran is
+identifiable, which is the part of the availability claim that matters most and it holds.
+
+Removing the `tmp/` directories is a change to a separate repository and is not made from here.
 
 ## Deferred, with reasons
 

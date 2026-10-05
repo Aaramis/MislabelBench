@@ -59,13 +59,23 @@ record of what differs from upstream.
 There is **no checkout of it on this machine**, which is the other half of why the instructions below
 were stale. Anything that needs the source itself has to start by cloning it.
 
-One claim about it is **open**. This file has said the branch holds a single commit on top of v0.9.3
-(`68284c2`), so that GitHub shows the modification as one readable diff: two hunks in `sativa.py`, one
-in `epac/config.py`, one new `epac/epang_l1o.py`, one config line. GitHub's compare view against
-`v0.9.3` reports **27 commits and 34 files changed** and then failed to render the diff, so the two do
-not agree and neither can be trusted from here — a compare that errors is not evidence against a claim,
-and a number printed beside an error is not evidence for one. Settling it needs a clone of the fork and
-`git log v0.9.3..epa-ng`, from a machine that has one.
+**What the branch actually holds**, from a clone rather than from memory. `epa-ng` is **27 commits
+ahead of `master` and none behind**, and those commits are the work: the EPA-ng placement in both
+passes, the staged leave-one-out, `-folds` taking a subset, the `OriginalLabelExclusion` column, and
+the releases 0.10.0 to 0.10.2. This file used to say "one commit on top of v0.9.3 (`68284c2`)", which
+was wrong three ways: there is no tag `v0.9.3` — the tags are `v0.9.3.1` to `v0.9.3.6` and `v0.10.0` to
+`v0.10.2` — and `68284c2` is an *upstream* commit, "fix gcc version check". **`v0.10.2` exists as a
+tag**, so the exact source of the version this benchmark ran is identifiable.
+
+The modification a reviewer should read is **22 files and 2 239 lines**, led by `epac/epang_l1o.py`
+(1 150), `sativa.py` (303) and `CHANGES-epa-ng.md` (258) — larger than the "two hunks and a new file"
+this section used to describe, which was an early state.
+
+**And 80 % of the diff is not the modification.** Twelve files under `tmp/` — SATIVA's own scratch
+directory, with alignments, trees and 2 400-line FASTAs — are committed on the branch: **8 809 lines**
+against the modification's 2 239. A reviewer following Protocol.md's Availability line meets them first.
+Removing them from the branch would make the diff say what the work is; that is a change to a separate
+repository and is not made from here.
 
 ## Repository description and topics
 
