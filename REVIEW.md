@@ -24,7 +24,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1116 |
-| result tables, each rebuilt by `bin/analyses.sh` | 51 |
+| result tables, each rebuilt by `bin/analyses.sh` | 52 |
 | tests over the scripts that turn runs into numbers | 26 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,

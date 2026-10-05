@@ -23,7 +23,8 @@ Numbers are never recomputed where a committed record already holds them: panel 
 results/resource_usage.txt, the record resource_usage.py writes, so the figure cannot
 disagree with the table. Panels B, C and D read JSON records. Everything plotted is also
 written to --values as a table, so a change in any upstream record shows up as a diff there
-and not only as a change of ink.
+and not only as a change of ink, and the panel descriptions go to a caption file beside the SVG
+rather than onto the panels, which is what this journal's own figures do.
 """
 
 import argparse
@@ -73,20 +74,34 @@ def txt(x, y, s, size=9, anchor="middle", weight="normal", rot=None, fill="#000"
             f'font-weight="{weight}" text-anchor="{anchor}"{t}>{esc(s)}</text>')
 
 
+# The panel titles and the sentences that used to be printed inside the panels. Three figures from
+# the same lab in this journal were downloaded and looked at -- gappa figure 1, and figures 3 and 4
+# of the multilevel placement paper -- and none of them writes a title or an explanatory sentence
+# inside a panel. The caption carries all of it, and it is long. So the text is collected here and
+# written beside the figure as a draft caption instead of being drawn on top of the data.
+CAPTION = []
+
+
 def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
+    CAPTION.append(f"({key.lower()}) {title}.")
     o = [f'<rect x="{ax.x0}" y="{ax.y0}" width="{PW}" height="{PH}" fill="none" '
          f'stroke="#444" stroke-width="0.8"/>',
-         txt(ax.x0 - 44, ax.y0 - 16, key, size=13, anchor="start", weight="bold"),
-         txt(ax.x0 - 26, ax.y0 - 16, title, size=10, anchor="start"),
-         txt(ax.x0 + PW / 2, ax.y0 + PH + 32, xlabel, size=10),
-         txt(ax.x0 - 40, ax.y0 + PH / 2, ylabel, size=10, rot=-90)]
+         txt(ax.x0 - 44, ax.y0 - 16, f"({key.lower()})", size=12, anchor="start", weight="bold")]
+    o += [txt(ax.x0 + PW / 2, ax.y0 + PH + 32, xlabel, size=10),
+          txt(ax.x0 - 40, ax.y0 + PH / 2, ylabel, size=10, rot=-90)]
     for v in xticks:
         x = ax.px(v)
+        # The grid goes in before the data, so it sits under it. Two of the three figures looked at
+        # have one and it makes a log axis readable without counting decades.
+        o.append(f'<line x1="{x:.1f}" y1="{ax.y0}" x2="{x:.1f}" y2="{ax.y0 + PH}" '
+                 f'stroke="#e8e8e8" stroke-width="0.6"/>')
         o.append(f'<line x1="{x:.1f}" y1="{ax.y0 + PH}" x2="{x:.1f}" y2="{ax.y0 + PH + 4}" '
                  f'stroke="#444" stroke-width="0.8"/>')
         o.append(txt(x, ax.y0 + PH + 15, xfmt(v), size=8))
     for v in yticks:
         y = ax.py(v)
+        o.append(f'<line x1="{ax.x0}" y1="{y:.1f}" x2="{ax.x0 + PW}" y2="{y:.1f}" '
+                 f'stroke="#e8e8e8" stroke-width="0.6"/>')
         o.append(f'<line x1="{ax.x0 - 4}" y1="{y:.1f}" x2="{ax.x0}" y2="{y:.1f}" '
                  f'stroke="#444" stroke-width="0.8"/>')
         o.append(txt(ax.x0 - 7, y + 3, yfmt(v), size=8, anchor="end"))
@@ -264,12 +279,9 @@ def main():
     def floor_frac(name):
         c = cc["curves"][name]
         return cc["untouched_floor"][name] / max(r["untouched_kept"] for r in c)
-    o.append(txt(ax.x0 + PW - 8, ax.y0 + PH - 22,
-                 f"at its best threshold exclusion still keeps {floor_frac('exclusion') * 100:.0f}%"
-                 f" of the collateral flags", size=7, anchor="end", fill=UP))
-    o.append(txt(ax.x0 + PW - 8, ax.y0 + PH - 12,
-                 f"where confidence keeps {floor_frac('confidence') * 100:.0f}%",
-                 size=7, anchor="end", fill=FORK))
+    CAPTION.append(f"In (c), at its best threshold the exclusion column still keeps "
+                   f"{floor_frac('exclusion') * 100:.0f}% of the collateral flags where confidence "
+                   f"keeps {floor_frac('confidence') * 100:.0f}%.")
 
     # D. The accuracy control, and the limit the injection design predicts.
     ax = Ax("D", (0.8, 10.5), (0, 1), xlog=True)
@@ -288,6 +300,12 @@ def main():
     o.append("</svg>")
     Path(args.out).write_text("\n".join(o) + "\n")
     Path(args.values).write_text("\n".join(vals) + "\n")
+    # The caption beside the figure, because the text it holds used to be drawn on the panels and
+    # the journal's own figures put it in the caption instead. It is a draft: it names each panel
+    # and carries the one sentence panel (c) cannot do without, and the prose around it is written
+    # by hand in the manuscript.
+    Path(args.out).with_name(Path(args.out).stem + "_caption.txt").write_text(
+        " ".join(CAPTION) + "\n")
     print(f"{args.out}: 4 panels, {len(vals) - 1} values, from committed records only")
 
 
