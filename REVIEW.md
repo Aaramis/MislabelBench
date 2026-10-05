@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 117 |
+| findings in this report | 118 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2481,6 +2481,31 @@ published comparisons resting on a difference that was not there. It did not hap
 **0 of 360 `_tree` runs logged that line**, and finding 93's 180 cells of 180 produce a different `.mis`
 from their base condition. The behavioural check was the right one and now it is known what it was
 guarding against.
+
+**118. The chain from the container that produced every number to the source whose rule was verified is
+now closed, with no link assumed.** Findings 116 and 117 read the fork's source and found the
+classification rule unchanged and the fold behaviour as documented. That is worth exactly as much as the
+link between *that source* and *what ran*, which nothing had established: the benchmark pins a container,
+and a pinned container is evidence about a build, not about a commit.
+
+Followed end to end:
+
+- `conf/modules.config` and the modules pin `sativa-epang:0.10.2--py314hab16a5f_0`, build number **0**.
+- The bioconda recipe for `sativa-epang` is version **0.10.2**, build **0**, built from
+  `github.com/Aaramis/sativa-epang/archive/refs/tags/v0.10.2.tar.gz` with sha256 **`d97ada47…`**.
+- That tarball, fetched and hashed here, is **`d97ada47…`** -- the recipe's checksum is the file's, not
+  merely a string beside a URL.
+- Its 78 files are **byte-identical to the git tree at tag `v0.10.2`**, checked by extracting both and
+  diffing, because GitHub generating an archive from a tag is a reasonable expectation and not a fact
+  about this tarball.
+- `v0.10.2` is commit **`e687646`**, which is also the tip of `epa-ng`, so the tagged release and the
+  branch a reviewer reads are the same thing.
+- `e687646` is the source findings 116 and 117 examined.
+
+So every number in this benchmark traces to a commit whose deciding condition was read and found to be
+upstream's. The one caveat worth stating: the recipe was read as it stands today, and what it establishes
+is that build 0 of 0.10.2 comes from that tag -- which is the build string the repository pins, so the
+two meet.
 
 ## Deferred, with reasons
 
