@@ -124,6 +124,14 @@ fold, which is upstream's own leave-one-out protocol run through EPA-ng, so it s
 changes. On two *k*=2 cells the engine with the folds removed is worth +0.284 and +0.177, while the
 fold scheme with the engine held fixed is worth −0.020 and 0.000.
 
+**And the engine's share collapses with *k*.** A third cell at the same distance and rate, *k*=10,
+gives **+0.018 for the engine and 0.000 for the fold scheme**: upstream 0.182, strict leave-one-out
+through EPA-ng 0.200, twenty-five folds 0.200. So what the fork gains at *k*=2 is nearly all engine and
+nearly all gone by *k*=10, which is what the surviving-label account predicts — by *k*=10 the carriers
+that remain confirm the wrong label whichever engine places against them. The one condition above both
+there is five folds at **0.227**, the only place where removing more of the reference at once helps, and
+it is 0.027 on one cell.
+
 The same conclusion falls out of the whole grid rather than two cells, by testing the mechanism the
 fold scheme would have to work through. If the fork's advantage came from a co-carrier leaving with
 its target when a fold is removed, the gain would track

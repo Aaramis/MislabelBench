@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 130 |
+| findings in this report | 131 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 56 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2780,6 +2780,26 @@ across every script with an `--out`: **three have defaults, and only this one is
 job, and `score_injection.py` writes `score.json` into the current directory, which creates a stray file
 rather than overwriting a record. The other fifteen print to stdout when `--out` is absent, which is
 safe. `--out` is required here now.
+
+**131. The strict leave-one-out was extended along *k*, and the engine's advantage turns out to be
+*k*-dependent.** D176 argued that a decomposition measured at *k*=2 alone cannot say whether the engine's
+gain holds across the axis the kind 2 story is about. The third Kexact cell -- family distance, rate
+0.05, *k*=10, 1 h 11 m, 2 023 fold tasks for 2 023 sequences -- answers it: **+0.018 for the engine and
+0.000 for the fold scheme**, against +0.284 and +0.177 at *k*=2.
+
+Upstream reaches 0.182 on that cell, strict leave-one-out through EPA-ng 0.200, twenty-five folds 0.200,
+five folds 0.227. So the fork's advantage is nearly all engine at *k*=2 and nearly all gone at *k*=10,
+which is what the surviving-label account predicts rather than a surprise: by *k*=10 the carriers left
+behind confirm the wrong label whichever engine places against them. Five folds is the only condition
+above the other three there, by 0.027 on one cell, and it is the same effect the fold sweep measured
+across the grid.
+
+**And the constraint that limited this experiment to one cell at a time is not what it was thought to
+be.** `slurm/kexact_k2.sh` runs one cell per submission because a Kexact cell was estimated at 14 500
+files against a 100 000-file quota, and the six-cell version was abandoned on that estimate. Measured on
+this run: the home directory went from **1 115 files to 1 164**, forty-nine more. Nextflow removes its
+work directory on success, so the fold directories are a transient peak rather than a standing cost. The
+limit is on *concurrent* cells, not on how many may be run.
 
 ## Deferred, with reasons
 
