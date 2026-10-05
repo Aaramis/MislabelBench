@@ -49,21 +49,23 @@ decision about whether published logs should carry the cluster's layout, not a p
 
 ## The fork
 
-Prepared in `../sativa-epang`. Fork `amkozlov/sativa` on GitHub first, then:
+**It is already published.** `github.com/Aaramis/sativa-epang` is public, its default branch is
+`epa-ng`, it carries `CHANGES-epa-ng.md` at the root and it is GPL-3.0 — checked by fetching the page,
+because this file used to give instructions for publishing it as though that were still to do. So
+Protocol.md's Availability line holds as written. That matters more than it looks: the copy of the
+modified code that used to live in this repository has been removed, so the fork's branch is the only
+record of what differs from upstream.
 
-```bash
-cd ../sativa-epang
-git remote add fork git@github.com:Aaramis/sativa-epang.git
-git push fork epa-ng
-```
+There is **no checkout of it on this machine**, which is the other half of why the instructions below
+were stale. Anything that needs the source itself has to start by cloning it.
 
-The branch holds one commit on top of v0.9.3 (`68284c2`), so GitHub shows the whole modification as a
-single readable diff: two hunks in `sativa.py`, one in `epac/config.py`, one new `epac/epang_l1o.py`,
-one config line. `CHANGES-epa-ng.md` at the root of the branch explains it and links back to this
-benchmark. Whether that is still accurate has not been rechecked: the fork is a separate repository and
-outside the review this file sits next to. It matters more now than it did, because the copy of the
-modified code that used to live here has been removed, so the fork's own branch is the only record of
-what differs from upstream.
+One claim about it is **open**. This file has said the branch holds a single commit on top of v0.9.3
+(`68284c2`), so that GitHub shows the modification as one readable diff: two hunks in `sativa.py`, one
+in `epac/config.py`, one new `epac/epang_l1o.py`, one config line. GitHub's compare view against
+`v0.9.3` reports **27 commits and 34 files changed** and then failed to render the diff, so the two do
+not agree and neither can be trusted from here — a compare that errors is not evidence against a claim,
+and a number printed beside an error is not evidence for one. Settling it needs a clone of the fork and
+`git log v0.9.3..epa-ng`, from a machine that has one.
 
 ## Repository description and topics
 

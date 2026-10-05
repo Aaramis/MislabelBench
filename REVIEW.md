@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 113 |
+| findings in this report | 114 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2382,6 +2382,33 @@ added in the same change it validates has to be run after the change, not before
 And its exit message is named for what it found. The script now fails on a drifted count as readily as
 on a dangling reference, and said "N reference(s) point at nothing" for both -- the third time in this
 review that a gate of mine reported something other than what it had established.
+
+**114. `PUBLISHING.md` described the fork as waiting to be published, and it has been public all
+along.** The file carries the repository's publication state, which is the one part of this work a
+reader of the paper meets first, and most of it holds up when checked rather than read: `origin/main`
+is **8 commits**, last dated 2026-08-18 and authored by the repository's owner, so nothing has been
+pushed; `nextflow` is an ancestor-descendant of it, confirmed with `git merge-base --is-ancestor`, so
+the fast-forward the file describes is available; the published claim it says is refuted is quoted
+exactly from `origin/main:RESULTS.md` -- "Unmodified SATIVA finds 28 of 33. The EPA-ng version finds 33
+of 33"; `LICENSE` is GPL; and the path-grep claim, that no code depends on an absolute cluster path,
+holds -- the only matches outside `results/` are two comments explaining a past bug and two documents
+quoting one.
+
+The fork section does not. It is written as instructions still to be carried out -- "Prepared in
+`../sativa-epang`", then `git push fork epa-ng` -- and **`../sativa-epang` does not exist on this
+machine**, nor does any checkout of it anywhere under `~/Documents`. Fetching the repository settles
+what the instructions were for: `github.com/Aaramis/sativa-epang` is **public**, its default branch is
+`epa-ng`, `CHANGES-epa-ng.md` is at its root and it is GPL-3.0. So Protocol.md's Availability line holds
+as written, and it matters more than it looks, because the copy of the modified code that used to live
+here was removed: that branch is the only record of what differs from upstream.
+
+**One claim about it is now open rather than unexamined.** The file says the branch is a single commit
+on top of v0.9.3, so the modification reads as one diff. GitHub's compare against `v0.9.3` reports **27
+commits and 34 files changed** and then failed to render. The two disagree and neither is usable from
+here: a compare that errors is not evidence against the claim, and a count printed beside an error is
+not evidence for it. `PUBLISHING.md` now says so and names what would settle it -- a clone and
+`git log v0.9.3..epa-ng` -- rather than keeping a claim nobody has checked or replacing it with one
+that is no better.
 
 ## Deferred, with reasons
 
