@@ -2325,6 +2325,28 @@ It has no caller, like `push_code.sh` and `repatriate.sh` beside it. Finding 97'
 scripts was about analysis scripts, where silence means a number nobody rebuilds; an operator script that
 moves things between two machines is a different thing and the distinction is now written down.
 
+**112. The restore procedure was a plan until it was replayed.** `bin/restore_cluster.sh` says what a
+cluster working copy needs: the code `push_code.sh` already sends, the two dataset directories it does
+not, the four generators, and the container images. The first three of those are claims about
+sufficiency, and with cluster access gone they could not be tested where they will run -- but they can be
+tested where the delivery is assembled, which is here.
+
+Built a tree holding **exactly** what steps 2 and 3 would deliver, by replaying `push_code.sh`'s own
+rsync filters and then its two dataset directories: **383 files, 45 MB**. Ran the four generators in it.
+All four exit 0, and every cell they produce is byte-identical to the repository's: **481 generated
+files, 0 differing, 0 absent** -- 235 `.tax`, 235 `.fasta`, 10 counts files and a manifest. The other 238
+files compared were the `truth.json` and `datasets.json` the rsync itself carried, which prove nothing
+and are counted separately for that reason.
+
+One caveat, from finding 75, applies again and is worth repeating rather than letting the number stand
+unqualified: **225 of the 235 `.fasta` are symlinks** to the base alignment, because injection rewrites a
+taxonomy and never an alignment, so comparing their contents compares one file to itself. What the check
+establishes for those is that the link is remade and points where it should. The ten real ones -- the
+foreign cells and the simulated reference -- are where that comparison bites, and they match.
+
+So the restore's delivery is sufficient and exact for everything except the container cache, which no
+local test can reach. That remains the one step whose first proof will be the day it is run.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
