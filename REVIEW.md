@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 116 |
+| findings in this report | 117 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 55 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 37 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2459,6 +2459,28 @@ entirely on a taxon's stem "reports 0.51 whether or not any weight at all falls 
 taxon (see `parent_lhw_coeff`)" -- the same mechanism this benchmark reports from the outside, in
 findings about the 0.510 artefact and the 8 057 stem flags. The source and the measurement agree about
 why, which neither could establish alone.
+
+**117. The tool's fold behaviour, which three conditions and the whole fan-out rest on, read from the
+source instead of inferred.** Finding 116 checked what the fork leaves unchanged. The other half is what
+it adds, and the benchmark's comments describe it confidently: K is capped at the leaf count so a K above
+*n* is one sequence per fold; `-folds i/N` is a stride; the folds are dealt round robin, by name unless
+`SATIVA_EPANG_FOLD_ORDER=tree`. Those are the premises of the `Kexact` condition, of the distributed
+placement and of the four fold conditions, and all of them came from reading the tool's behaviour from
+outside.
+
+All four hold, and the source says them in one line each: `K = min(folds, len(ordered))`;
+`[i for i in known if i % total == part]`; `[ordered[i::K] for i in range(K)]`; and the tree order behind
+an environment variable whose default is `"name"`. The stride's arithmetic reproduces what the staged
+runs measured -- 25 folds over 2 shards gives **13 and 12**, over 4 gives **7, 6, 6, 6**, which is what
+the shard logs show and what `staged_scaling.py` reads its 96.5 % ceiling against.
+
+**And the source names a hazard the benchmark could not have seen from outside.** If the reference tree
+yields fewer leaf names than the fold list expects, `_l1o_folds` logs one line and **keeps name order**.
+A `_tree` condition would then be a `name` condition wearing a `_tree` label, with 360 runs and two
+published comparisons resting on a difference that was not there. It did not happen, checked two ways:
+**0 of 360 `_tree` runs logged that line**, and finding 93's 180 cells of 180 produce a different `.mis`
+from their base condition. The behavioural check was the right one and now it is known what it was
+guarding against.
 
 ## Deferred, with reasons
 
