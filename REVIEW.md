@@ -2619,6 +2619,11 @@ implementation, which is not what a reader should have to do. `bin/analyses.sh` 
 `results/staged_scaling_f7.txt`, `_f13` and `_f25`, one per fold count, and `verify_rebuild_coverage.py`
 covers them like every other table.
 
+The coverage gate caught this finding mid-commit, for the second time: adding three tables made the
+report's own count stale, and the gate counts *tracked* files, so it was right to fail while they were
+still untracked and right to pass once they were in. Twice now a gate of mine has fired on the change
+that introduced it, which is the cheapest evidence a gate can give.
+
 ## Deferred, with reasons
 
 Two pipeline-side improvements were held back while the upstream grid ran, on the grounds that
