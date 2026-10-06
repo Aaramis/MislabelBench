@@ -19,12 +19,12 @@ one drifts, which is the only way a summary of a growing document stays true.
 | | count |
 |---|---|
 | findings in this report | 136 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 57 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 58 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 38 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1116 |
-| result tables, each rebuilt by `bin/analyses.sh` | 52 |
+| result tables, each rebuilt by `bin/analyses.sh` | 54 |
 | tests over the scripts that turn runs into numbers | 26 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2890,8 +2890,12 @@ cell's full **102**. The companion does not produce the divergence, it destroys 
 between ten wrong labels and a hundred something changes in kind that is not yet identified.
 
 What the sweep did establish is sharper than what it set out to find. The third arm, the fork driving
-RAxML, agrees with upstream in **20 of 20 cases**, including the single case where the fork driving
-EPA-ng flags and the other two miss. So the difference is the **placement engine** and not the code that
+RAxML, agrees with upstream in **78 of 78 cases** where both ran, and across all 82 cases exactly one
+has the fork driving EPA-ng flagging where upstream misses. That count is 78 and not the 20 first
+written here because the first was read by eye off eleven tables whose first column is `per_family`,
+`case` or `sequence` depending on when the sweep ran; `bin/minimal_case_summary.py` recounts it from
+the arms' own `.mis` files, which is a second reading of the evidence rather than a tidier copy of the
+first. So the difference is the **placement engine** and not the code that
 scores placements, which no two-arm comparison could have shown and which is why the arm was built. What
 the fork is better at is surviving a reference whose labels are already wrong, not placing hard
 sequences.

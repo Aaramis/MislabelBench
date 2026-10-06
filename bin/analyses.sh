@@ -90,6 +90,15 @@ paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
 
 # Strict leave-one-out through EPA-ng, which is the one condition that tells the engine apart from
 # the fold scheme. Runs on whichever cells have it; it is expensive, so that is one or two.
+# Reads the case directories, not the verdicts tables those runs wrote, so the campaign's claims rest
+# on a second reading of the same evidence.
+step "the minimal-case campaign, recounted from the arms' own output"
+if ls results/minimal_case/*/*/case.json >/dev/null 2>&1; then
+    minimal_case_summary.py --out results/minimal_case_summary.tsv
+else
+    echo "    no minimal-case sweep yet"
+fi
+
 step "the engine against the fold scheme, on the cells with a Kexact run"
 if ls "$RUNS"/*__epang_T8_Kexact__rep1 >/dev/null 2>&1; then
     kexact_decomposition.py --injected-dir "$INJ" --runs-dir "$RUNS" \

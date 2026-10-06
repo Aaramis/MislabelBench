@@ -140,8 +140,10 @@ So the whole of the fork's advantage is the placement engine, and it rises from 
 
 **And "the engine" means the engine, not the fork's scoring code.** The two differ in two things at
 once, so a third arm was run: the fork with `SATIVA_L1O_ENGINE=raxml`, the same codebase driving the
-other engine. Over 20 cut-down cases around one sequence it agrees with upstream **20 times out of 20**,
-including the one case where the fork driving EPA-ng flags a sequence both others miss.
+other engine. Over the campaign's 82 cases it agrees with upstream **78 times out of 78** where both
+arms ran, and of those 82 cases exactly **one** has the fork driving EPA-ng flagging where upstream
+misses: the cell itself, 2 023 sequences and 102 wrong labels. `bin/minimal_case_summary.py` reads this
+back out of the arms' `.mis` files rather than out of the tables the runs wrote.
 
 That sweep also says what the advantage is not. Cut the sequence out into a reference of its own, from
 2 023 sequences down to 22, and all three arms flag it at the same confidence to three decimals. Put it
