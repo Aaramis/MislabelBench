@@ -7,9 +7,14 @@ ground truth as the control that bounds both." The four panels are that sentence
 requirement that scaling be reported per stage rather than as one total.
 
   A  wall clock against reference size, both tools, log-log
-  B  the three stages and the one that distributes, at one, two and four nodes
-  C  the exclusion column against confidence, as a filter
-  D  recall against k, both tools, which is the limit the design predicts
+  B  recall against the share of surviving relatives that carry the wrong label, both tools
+  C  recall against k, both tools
+  D  what the engine contributes and what the fold scheme contributes, against k
+
+Each panel carries one sentence of the Evaluation section and no panel carries none. Two earlier
+panels were dropped against that rule: the per-stage scaling bars, because the main text makes no
+scaling claim, and the exclusion column's filtering curves, because that whole analysis moved to the
+supplement. Both are still in results/ and can come back if the text changes.
 
 Written as SVG by hand rather than with a plotting library, which is a reproducibility
 choice and not an aesthetic one. Every other script in bin/ runs on the standard library
@@ -112,11 +117,16 @@ def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
     return o
 
 
-def series(ax, pts, colour, dash=None, marker="o"):
-    d = " ".join(f"{'M' if i == 0 else 'L'}{ax.px(x):.1f},{ax.py(y):.1f}"
-                 for i, (x, y) in enumerate(pts))
-    s = f' stroke-dasharray="{dash}"' if dash else ""
-    o = [f'<path d="{d}" fill="none" stroke="{colour}" stroke-width="1.6"{s}/>']
+def series(ax, pts, colour, dash=None, marker="o", line=True):
+    # line=False for a series whose points are separate measurements rather than one trajectory.
+    # The decomposition has two cells at k=2, and joining them drew a vertical spike that reads as
+    # a sudden change where there are only two seeds of the same condition.
+    o = []
+    if line:
+        d = " ".join(f"{'M' if i == 0 else 'L'}{ax.px(x):.1f},{ax.py(y):.1f}"
+                     for i, (x, y) in enumerate(pts))
+        st = f' stroke-dasharray="{dash}"' if dash else ""
+        o = [f'<path d="{d}" fill="none" stroke="{colour}" stroke-width="1.6"{st}/>']
     for x, y in pts:
         if marker == "o":
             o.append(f'<circle cx="{ax.px(x):.1f}" cy="{ax.py(y):.1f}" r="2.6" '
@@ -224,82 +234,64 @@ def main():
         vals += [f"A\tupstream\t{r['n']}\t{r['upstream']}", f"A\tfork\t{r['n']}\t{r['fork']}",
                  f"A\twall_speedup\t{r['n']}\t{r['wall_speedup']}"]
 
-    # B. Scaling per stage, because only one stage distributes.
-    stages = read_stages(root)
-    ax = Ax("B", (0, 3), (0, 300))
-    o += frame(ax, "B", "stages at 1, 2 and 4 nodes", "Nodes", "Runtime  [s]",
-               [], [0, 100, 200, 300])
-    bw = 46
-    for i, row in enumerate(stages):
-        base = 0.0
-        cx = ax.px(i + 0.5)
-        for key in ("reference_sec", "loo_tasks_sec", "loo_place_sec", "loo_score_sec"):
-            v = row[key]
-            y1, y0 = ax.py(base + v), ax.py(base)
-            o.append(f'<rect x="{cx - bw / 2:.1f}" y="{y1:.1f}" width="{bw}" '
-                     f'height="{y0 - y1:.1f}" fill="{STAGE[key]}" stroke="#fff" '
-                     f'stroke-width="0.5"/>')
-            base += v
-            vals.append(f"B\t{key}\t{row['nodes']}\t{round(v, 2)}")
-        o.append(txt(cx, ax.y0 + PH + 15, row["nodes"], size=8))
-        o.append(txt(cx, ax.py(base) - 5, f"{base:.0f}", size=8))
-    # Placed between the one-node bar and the four-node one, the only clear space in the panel:
-    # at the left it covered the N=1 total and at the right the N=4 one.
-    o += legend(ax.x0 + 94, ax.y0 + 10,
-                [("scoring", STAGE["loo_score_sec"], None),
-                 ("placement", STAGE["loo_place_sec"], None),
-                 ("fold setup", STAGE["loo_tasks_sec"], None),
-                 ("reference", STAGE["reference_sec"], None)], size=8)
+    # B. The law the whole detection result rests on: what predicts detection is not k and not the
+    # fold count but how much of a sequence's surviving neighbourhood already carries the wrong
+    # label. Both tools obey it, which is why both curves are drawn.
+    ax = Ax("B", (0, 1), (0, 1))
+    o += frame(ax, "B", "recall against the share of surviving relatives carrying the wrong label",
+               "Relatives Carrying the Wrong Label", "Recall",
+               [0, 0.25, 0.5, 0.75, 1], [0, 0.25, 0.5, 0.75, 1],
+               xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
+    for cond, colour, dash in (("epang_T8_K25", FORK, None),
+                               ("upstream_raxml_T8", UP, COMPARATOR_DASH)):
+        bands = json.loads(Path(root, f"results/detection_law_{cond}.json").read_text())["by_ratio"]
+        pts = [((b["low"] + b["high"]) / 2, b["recall"]) for b in bands]
+        o += series(ax, pts, colour, dash=dash)
+        vals += [f"B\t{cond}\t{x}\t{y}" for x, y in pts]
+    o += legend(ax.x0 + PW - 96, ax.y0 + 14, [("sativa-epang", FORK, None),
+                                              ("SATIVA", UP, COMPARATOR_DASH)])
 
-    # C. The exclusion column as a filter, which is the claim that can go either way.
-    cc = json.loads(Path(root, "results/column_comparison.json").read_text())
-    # Both curves live in the top right corner -- neither column throws away many injected
-    # flags -- so the panel is drawn over the range the curves actually occupy. Full-range
-    # axes would show two lines touching the corner and nothing else. The tick labels say
-    # where the axes start.
-    curves = {}
-    for name in ("confidence", "exclusion"):
-        c = cc["curves"][name]
-        ti = max(r["injected_kept"] for r in c)
-        tu = max(r["untouched_kept"] for r in c)
-        curves[name] = [(r["untouched_kept"] / tu, r["injected_kept"] / ti) for r in c]
-    lo_x = min(x for pts in curves.values() for x, _ in pts)
-    lo_y = min(y for pts in curves.values() for _, y in pts)
-    ax = Ax("C", (lo_x - 0.04, 1.02), (lo_y - 0.03, 1.01))
-    o += frame(ax, "C", "filtering, by each column", "Collateral Flags Kept",
-               "Injected Flags Kept", [0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-               [0.80, 0.85, 0.90, 0.95, 1.0],
-               xfmt=lambda v: f"{v:.1f}", yfmt=lambda v: f"{v:.2f}")
-    for name, colour, dash in (("confidence", FORK, None), ("exclusion", UP, "4 2")):
-        o += series(ax, curves[name], colour, dash=dash, marker=None)
-        floor = cc["untouched_floor"][name] / max(r["untouched_kept"]
-                                                  for r in cc["curves"][name])
-        vals.append(f"C\t{name}_floor\t{floor:.4f}\t{min(y for _, y in curves[name]):.4f}")
-    o += legend(ax.x0 + 10, ax.y0 + 14, [("confidence", FORK, None), ("exclusion", UP, "4 2")])
-    # "at its best threshold", not "at 0.99". untouched_floor is the minimum of the curve, which both
-    # columns reach at a threshold of 1.0; at 0.99 exclusion keeps 99.1 % and confidence 52.5 %. The
-    # first version of this annotation attached the floor to 0.99 and was caught by recomputing the
-    # curve from the .mis files instead of rereading the script that produces it.
-    def floor_frac(name):
-        c = cc["curves"][name]
-        return cc["untouched_floor"][name] / max(r["untouched_kept"] for r in c)
-    CAPTION.append(f"In (c), at its best threshold the exclusion column still keeps "
-                   f"{floor_frac('exclusion') * 100:.0f}% of the collateral flags where confidence "
-                   f"keeps {floor_frac('confidence') * 100:.0f}%.")
-
-    # D. The accuracy control, and the limit the injection design predicts.
-    ax = Ax("D", (0.8, 10.5), (0, 1), xlog=True)
-    o += frame(ax, "D", "recall against shared-label count", "Sequences Sharing the Wrong Label",
-               "Recall", [1, 2, 3, 5, 10], [0, 0.25, 0.5, 0.75, 1],
+    # C. The comparison itself. Both ends are flat for opposite reasons, a ceiling at k=1 where
+    # the rest of the group keeps the right label and a floor at k=10 where it does not, so the
+    # fork's advantage lives in between and the panel has to show the whole range to say so.
+    ax = Ax("C", (0.8, 10.5), (0, 1), xlog=True)
+    o += frame(ax, "C", "recall against the number of sequences sharing the wrong label",
+               "Sequences Sharing the Wrong Label", "Recall",
+               [1, 2, 3, 5, 10], [0, 0.25, 0.5, 0.75, 1],
                xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
     for cond, colour in (("epang_T8_K25", FORK), ("upstream_raxml_T8", UP)):
         for rate, dash in ((0.05, None), (0.01, "4 2")):
             r = read_recall(root, cond, rate)
             o += series(ax, sorted(r.items()), colour, dash=dash)
-            vals += [f"D\t{cond}_r{rate}\t{k}\t{v:.4f}" for k, v in sorted(r.items())]
+            vals += [f"C\t{cond}_r{rate}\t{k}\t{v:.4f}" for k, v in sorted(r.items())]
     o += legend(ax.x0 + PW - 96, ax.y0 + 14,
                 [("sativa-epang, 5 %", FORK, None), ("sativa-epang, 1 %", FORK, "4 2"),
                  ("SATIVA, 5 %", UP, None), ("SATIVA, 1 %", UP, "4 2")])
+
+    # D. Where the advantage comes from. Running EPA-ng with one sequence per fold is upstream's own
+    # protocol with the other engine, so the gap it leaves is the engine alone and what remains is
+    # the fold scheme. Both seeds at k=2 are plotted rather than averaged: two cells are two
+    # measurements and a mean of two would look like a point estimate.
+    cells = json.loads(Path(root, "results/kexact_decomposition.json").read_text())["cells"]
+    cells = [c for c in cells if c.get("engine_at_0") is not None]
+    ax = Ax("D", (0.8, 10.5), (-0.05, 0.32), xlog=True)
+    o += frame(ax, "D", "what the engine contributes and what the fold scheme contributes",
+               "Sequences Sharing the Wrong Label", "Difference in Recall",
+               [1, 2, 3, 5, 10], [0, 0.1, 0.2, 0.3],
+               xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
+    o.append(f'<line x1="{ax.x0}" y1="{ax.py(0):.1f}" x2="{ax.x0 + PW}" y2="{ax.py(0):.1f}" '
+             f'stroke="#999" stroke-width="0.7"/>')
+    for field, colour, dash, label in (("engine_at_0", FORK, None, "engine"),
+                                       ("folds_at_0", UP, COMPARATOR_DASH, "fold scheme")):
+        pts = sorted((c["k"], c[field]) for c in cells if c.get(field) is not None)
+        o += series(ax, pts, colour, dash=dash, line=False)
+        # The eye still needs the shape, so the mean per k is drawn through the points.
+        means = sorted({k: sum(v for kk, v in pts if kk == k) / sum(1 for kk, _ in pts if kk == k)
+                        for k, _ in pts}.items())
+        o += series(ax, means, colour, dash=dash, marker=None)
+        vals += [f"D\t{field}\t{k}\t{v}" for k, v in pts]
+    o += legend(ax.x0 + PW - 86, ax.y0 + 14, [("engine", FORK, None),
+                                              ("fold scheme", UP, COMPARATOR_DASH)])
 
     o.append("</svg>")
     Path(args.out).write_text("\n".join(o) + "\n")

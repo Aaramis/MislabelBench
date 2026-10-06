@@ -1,1 +1,1 @@
-(a) wall clock, both tools. (b) stages at 1, 2 and 4 nodes. (c) filtering, by each column. In (c), at its best threshold the exclusion column still keeps 97% of the collateral flags where confidence keeps 51%. (d) recall against shared-label count.
+(a) wall clock, both tools. (b) recall against the share of surviving relatives carrying the wrong label. (c) recall against the number of sequences sharing the wrong label. (d) what the engine contributes and what the fold scheme contributes.
