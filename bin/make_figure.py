@@ -9,6 +9,7 @@ requirement that scaling be reported per stage rather than as one total.
   A  the method, drawn, one row per version, converging on the scoring they share
   B  wall clock against reference size, both tools, log-log, seconds at the points
   C  recall against the share of surviving relatives that carry the wrong label, both tools
+  D  what the engine contributes and what the fold scheme contributes, against k
 
 Each panel carries one sentence of the Evaluation section and no panel carries none. Three earlier
 panels were dropped against that rule: the per-stage scaling bars, because the main text makes no
@@ -44,18 +45,18 @@ from pathlib import Path
 # looked at to settle this: two of the three carry one legend for the whole figure, at the bottom or
 # at the right, rather than repeating a box in every panel, which is what this did and what cost each
 # panel a corner of its plotting area.
-W, H = 760, 532
+W, H = 760, 512
 # Plot areas: two rows of two, left margin wide enough for a rotated y label.
 # One schematic across the top and three data panels in a row beneath it, which is the layout of
 # the FastDup figure in this journal and, less strictly, of SigProfilerAssignment's: the method is
 # drawn before any curve is shown. Three panels across a double column is tight, and FastDup does it.
-# A two-row schematic on top, one row per version, converging on the box they share; two wide
-# panels beneath it. Three panels across a double column was readable but cramped, and the data
-# panel that left, recall against k, is carried by the law panel: the fork's curve sits above
-# upstream's in every band, which is the "finds more" claim, and the sign-test table in the
-# supplement says where.
-PANELS = {"B": (62, 282), "C": (442, 282)}
-PW, PH = 280, 180
+# A two-row schematic on top, one row per version, converging on the box they share; three panels
+# beneath it, FastDup's layout. Recall against k is not among them: the law panel already shows the
+# fork above upstream in every band, which is the "finds more" claim. The decomposition is, because
+# it carries two sentences of the text at once -- the advantage peaks at k=2 and vanishes at both
+# ends, and all of it is the engine -- and without it neither had a picture.
+PANELS = {"B": (58, 282), "C": (308, 282), "D": (558, 282)}
+PW, PH = 190, 160
 SCHEMATIC = (24, 34, 736, 200)   # x, y, width, height
 # Black for the tool under test, colour for the comparator, taken from the script that produced
 # this journal's gappa figure (lczech/genesis-gappa-paper, plot.py): their own library is plotted
@@ -330,8 +331,8 @@ def main():
     o.append(f'<line x1="{bx:.1f}" y1="{y_up + 7:.1f}" x2="{bx:.1f}" y2="{y_fk - 7:.1f}" '
              f'stroke="#444" stroke-width="1" marker-end="url(#head)" marker-start="url(#head)"/>')
     lo, hi = min(r["wall_speedup"] for r in grad), max(r["wall_speedup"] for r in grad)
-    o.append(txt(bx + 6, (y_up + y_fk) / 2 + 3, f"{lo:.0f} to {hi:.0f}x faster", size=8,
-                 anchor="start"))
+    o.append(txt(bx - 6, (y_up + y_fk) / 2 + 3, f"{lo:.0f} to {hi:.0f}x faster", size=8,
+                 anchor="end"))
 
     # C. The law the whole detection result rests on: what predicts detection is not k and not the
     # fold count but how much of a sequence's surviving neighbourhood already carries the wrong
@@ -340,7 +341,7 @@ def main():
     # as the ranges they are, which a midpoint of 0.3 does not say.
     ax = Ax("C", (0, 1), (0, 1))
     o += frame(ax, "C", "recall against the share of surviving relatives carrying the wrong label",
-               "Surviving Relatives Carrying the Wrong Label", "Recall",
+               "Surviving Relatives Carrying the Wrong Label (%)", "Recall",
                [], [0, 0.25, 0.5, 0.75, 1], yfmt=lambda v: f"{v:g}")
     for cond, colour, dash in (("epang_T8_K25", FORK, None),
                                ("upstream_raxml_T8", UP, COMPARATOR_DASH)):
@@ -355,7 +356,31 @@ def main():
         x = ax.px((b["low"] + b["high"]) / 2)
         o.append(f'<line x1="{x:.1f}" y1="{ax.y0 + PH}" x2="{x:.1f}" y2="{ax.y0 + PH + 4}" '
                  f'stroke="#444" stroke-width="0.8"/>')
-        o.append(txt(x, ax.y0 + PH + 15, f"{b['low'] * 100:.0f} to {b['high'] * 100:.0f} %", size=7))
+        o.append(txt(x, ax.y0 + PH + 15, f"{b['low'] * 100:.0f}-{b['high'] * 100:.0f}", size=7))
+
+    # D. Where the advantage comes from, and what shape it has. Running EPA-ng with one sequence per
+    # fold is upstream's own protocol with the other engine, so the gap it leaves is the engine alone
+    # and what remains is the fold scheme. Both seeds at k=2 are plotted rather than averaged, and a
+    # mean is drawn through so the shape reads: two cells are two measurements, not a point estimate.
+    cells = json.loads(Path(root, "results/kexact_decomposition.json").read_text())["cells"]
+    cells = [c for c in cells if c.get("engine_at_0") is not None]
+    ax = Ax("D", (0.8, 10.5), (-0.05, 0.32), xlog=True)
+    o += frame(ax, "D", "what the engine contributes and what the fold scheme contributes, against k",
+               "Sequences Sharing the Wrong Label", "Difference in Recall",
+               [1, 2, 3, 5, 10], [0, 0.1, 0.2, 0.3],
+               xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
+    o.append(f'<line x1="{ax.x0}" y1="{ax.py(0):.1f}" x2="{ax.x0 + PW}" y2="{ax.py(0):.1f}" '
+             f'stroke="#999" stroke-width="0.7"/>')
+    for field, colour, dash in (("engine_at_0", FORK, None), ("folds_at_0", UP, COMPARATOR_DASH)):
+        pts = sorted((c["k"], c[field]) for c in cells if c.get(field) is not None)
+        o += series(ax, pts, colour, dash=dash, line=False)
+        means = sorted({k: sum(v for kk, v in pts if kk == k) / sum(1 for kk, _ in pts if kk == k)
+                        for k, _ in pts}.items())
+        o += series(ax, means, colour, dash=dash, marker=None)
+        vals += [f"D\t{field}\t{k}\t{v}" for k, v in pts]
+    # Labelled on the curves: a box would sit on the only part of the panel that carries data.
+    o.append(txt(ax.px(3.3), ax.py(0.21), "engine", size=8, anchor="start", fill=FORK))
+    o.append(txt(ax.px(3.3), ax.py(0.04), "fold scheme", size=8, anchor="start", fill=UP))
 
     # One legend for the whole figure, centred under the panels.
     o += legend(W / 2 - 110, H - 16, [("sativa-epang", FORK, None)], size=9)
@@ -370,7 +395,7 @@ def main():
     # by hand in the manuscript.
     Path(args.out).with_name(Path(args.out).stem + "_caption.txt").write_text(
         " ".join(CAPTION) + "\n")
-    print(f"{args.out}: 3 panels, {len(vals) - 1} values, from committed records only")
+    print(f"{args.out}: 4 panels, {len(vals) - 1} values, from committed records only")
 
 
 if __name__ == "__main__":
