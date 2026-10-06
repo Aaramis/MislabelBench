@@ -23,7 +23,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | `slurm/` job scripts, the prelude and the submit wrapper | 38 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
-| run records, cross-checked against the files they summarise | 1116 |
+| run records, cross-checked against the files they summarise | 1117 |
 | result tables, each rebuilt by `bin/analyses.sh` | 54 |
 | tests over the scripts that turn runs into numbers | 26 |
 
@@ -2954,10 +2954,10 @@ mentioned wherever the panel goes was written from the superseded record, and th
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** The strict leave-one-out at *k*=3, the one point still missing from the axis at family
-distance and rate 0.05, about 71 minutes. Findings 131 and 134 report *k*=10, *k*=5 and both *k*=2
-seeds; *k*=1 finished after them and is in the decomposition table. The minimal-case campaign is
-complete, eleven sweeps and 82 cases, and nothing else is on the cluster.
+**Running.** Nothing. The strict leave-one-out at *k*=3 finished on 2026-10-06 and closed the axis at
+family distance and rate 0.05: six cells, every *k* the grid uses, the engine's share +0.147 at *k*=3
+and the fold scheme's 0.000 as in the other five. The minimal-case campaign is complete, eleven sweeps
+and 82 cases.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory

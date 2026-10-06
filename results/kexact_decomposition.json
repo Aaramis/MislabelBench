@@ -217,6 +217,59 @@
       }
     },
     {
+      "cell": "inj_family_r0.05_k3_s1",
+      "k": 3,
+      "recall": {
+        "upstream_raxml_T8": {
+          "flags": 153,
+          "at_0": 0.3431372549019608,
+          "at_0.9": 0.3235294117647059
+        },
+        "epang_T8_Kexact": {
+          "flags": 178,
+          "at_0": 0.49019607843137253,
+          "at_0.9": 0.4803921568627451
+        },
+        "epang_T8_K5": {
+          "flags": 190,
+          "at_0": 0.47058823529411764,
+          "at_0.9": 0.46078431372549017
+        },
+        "epang_T8_K25": {
+          "flags": 183,
+          "at_0": 0.49019607843137253,
+          "at_0.9": 0.4803921568627451
+        }
+      },
+      "engine_at_0": 0.1471,
+      "folds_at_0": 0.0,
+      "one_sided": {
+        "fork_only": [
+          "GB_GCA_027317545.1_DAHVHC010000004.1",
+          "GB_GCA_029569655.1_JAKQSV010000014.1",
+          "GB_GCA_035357575.1_DAOPNR010000069.1",
+          "GB_GCA_035416485.1_DAOLNH010000002.1",
+          "GB_GCA_902827205.1_LR792634.1-_2",
+          "GB_GCA_950063575.1_CATMAB010000039.1",
+          "GB_GCA_958448615.1_CAUDEP010000001.1",
+          "RS_GCF_000513315.1_NZ_HG794426.1-_2",
+          "RS_GCF_000949015.1_NZ_JYHS01000003.1",
+          "RS_GCF_001399695.1_NZ_LJCQ01000190.1",
+          "RS_GCF_001402945.1_NZ_LKBG01000012.1",
+          "RS_GCF_003342675.1_NZ_CP031148.1-_2",
+          "RS_GCF_003342695.1_NZ_CP031150.1-_2",
+          "RS_GCF_019669925.1_NZ_AP019779.1",
+          "RS_GCF_902827225.1_NZ_LR792632.1-_2"
+        ],
+        "upstream_only": [],
+        "n_both": 35,
+        "fork_only_median_confidence": 1.0,
+        "both_median_confidence": 1.0,
+        "fork_only_median_exclusion": 1.0,
+        "both_median_exclusion": 1.0
+      }
+    },
+    {
       "cell": "inj_family_r0.05_k5_s1",
       "k": 5,
       "recall": {

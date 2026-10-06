@@ -132,11 +132,14 @@ more cells at the same distance and rate complete the axis:
 | 1 | 0.921 | 0.960 | 0.960 | **+0.040** | 0.000 |
 | 2 (seed 1) | 0.402 | 0.686 | 0.667 | **+0.284** | −0.020 |
 | 2 (seed 2) | 0.471 | 0.647 | 0.647 | **+0.177** | 0.000 |
+| 3 | 0.343 | 0.490 | 0.490 | **+0.147** | 0.000 |
 | 5 | 0.114 | 0.229 | 0.229 | **+0.114** | 0.000 |
 | 10 | 0.182 | 0.200 | 0.200 | **+0.018** | 0.000 |
 
 So the whole of the fork's advantage is the placement engine, and it rises from +0.040 at *k*=1 to
-+0.28 at *k*=2 before decaying to +0.018 at *k*=10.
++0.28 at *k*=2 before decaying through +0.147 at *k*=3 and +0.114 at *k*=5 to +0.018 at *k*=10. The
+axis is complete at family distance and rate 0.05: six cells, every value of *k* the grid uses, and the
+fold scheme's share is 0.000 in all six.
 
 **And "the engine" means the engine, not the fork's scoring code.** The two differ in two things at
 once, so a third arm was run: the fork with `SATIVA_L1O_ENGINE=raxml`, the same codebase driving the
