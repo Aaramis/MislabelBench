@@ -6,15 +6,18 @@ carries: "Speed and scaling first; the exclusion column second; accuracy against
 ground truth as the control that bounds both." The four panels are that sentence, with 2.8's
 requirement that scaling be reported per stage rather than as one total.
 
-  A  wall clock against reference size, both tools, log-log
-  B  recall against the share of surviving relatives that carry the wrong label, both tools
+  A  the method, drawn: four stages and the two lines where the versions differ
+  B  wall clock against reference size, both tools, log-log
   C  recall against k, both tools
-  D  what the engine contributes and what the fold scheme contributes, against k
+  D  recall against the share of surviving relatives that carry the wrong label, both tools
 
-Each panel carries one sentence of the Evaluation section and no panel carries none. Two earlier
+Each panel carries one sentence of the Evaluation section and no panel carries none. Three earlier
 panels were dropped against that rule: the per-stage scaling bars, because the main text makes no
-scaling claim, and the exclusion column's filtering curves, because that whole analysis moved to the
-supplement. Both are still in results/ and can come back if the text changes.
+scaling claim; the exclusion column's filtering curves, because that whole analysis moved to the
+supplement; and the engine-versus-fold-scheme decomposition, which is the argument a developer wants
+and a user does not, and which one sentence and a supplementary table carry. All three are still in
+results/ and can come back if the text changes. The schematic took the place of the third: two of
+three published figures looked at in this journal draw the method before showing a curve.
 
 Written as SVG by hand rather than with a plotting library, which is a reproducibility
 choice and not an aesthetic one. Every other script in bin/ runs on the standard library
@@ -42,10 +45,14 @@ from pathlib import Path
 # looked at to settle this: two of the three carry one legend for the whole figure, at the bottom or
 # at the right, rather than repeating a box in every panel, which is what this did and what cost each
 # panel a corner of its plotting area.
-W, H = 760, 574
+W, H = 760, 446
 # Plot areas: two rows of two, left margin wide enough for a rotated y label.
-PANELS = {"A": (62, 40), "B": (452, 40), "C": (62, 320), "D": (452, 320)}
-PW, PH = 240, 180
+# One schematic across the top and three data panels in a row beneath it, which is the layout of
+# the FastDup figure in this journal and, less strictly, of SigProfilerAssignment's: the method is
+# drawn before any curve is shown. Three panels across a double column is tight, and FastDup does it.
+PANELS = {"B": (58, 212), "C": (318, 212), "D": (578, 212)}
+PW, PH = 170, 150
+SCHEMATIC = (24, 34, 736, 130)   # x, y, width, height
 # Black for the tool under test, colour for the comparator, taken from the script that produced
 # this journal's gappa figure (lczech/genesis-gappa-paper, plot.py): their own library is plotted
 # with colour "k" and a solid line, every competitor with a cycle colour and a (5,2) dash, and their
@@ -95,6 +102,63 @@ def txt(x, y, s, size=9, anchor="middle", weight="normal", rot=None, fill="#000"
 # inside a panel. The caption carries all of it, and it is long. So the text is collected here and
 # written beside the figure as a draft caption instead of being drawn on top of the data.
 CAPTION = []
+
+
+def box(x, y, w, h, fill, lines, size=8, stroke="#888"):
+    o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="{fill}" '
+         f'stroke="{stroke}" stroke-width="0.8"/>']
+    top = y + h / 2 - (len(lines) - 1) * (size + 3) / 2 + size / 3
+    for i, (text, weight, colour) in enumerate(lines):
+        o.append(txt(x + w / 2, top + i * (size + 3), text, size=size, weight=weight, fill=colour))
+    return o
+
+
+def arrow(x1, y1, x2, y2, colour="#444", dash=None):
+    d = f' stroke-dasharray="{dash}"' if dash else ""
+    return [f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{colour}" '
+            f'stroke-width="1.1"{d} marker-end="url(#head)"/>']
+
+
+def schematic():
+    """What the tool does, drawn before any result is shown.
+
+    Four stages left to right, and in the placement stage the two lines that are the whole subject
+    of the note, in the figure's own colour code: SATIVA's loop in the comparator's red dash and
+    sativa-epang's in black. The return arrow is FastDup's device for 'loop until every block is
+    processed'. Nothing here is measured; it is the reader's map for the three panels below.
+    """
+    X, Y, Wd, Hd = SCHEMATIC
+    o = ['<defs><marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" '
+         'orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#444"/></marker></defs>',
+         txt(X - 2, Y - 10, "(a)", size=12, anchor="start", weight="bold")]
+    bw, bh, gap = 150, 58, 36
+    y = Y + 22
+    xs = [X + 10 + i * (bw + gap) for i in range(4)]
+    o += box(xs[0], y, bw, bh, "#f0f0f0",
+             [("Alignment", "bold", "#000"), ("and declared taxonomy", "normal", "#000")])
+    o += box(xs[1], y, bw, bh, "#e3eef7",
+             [("Reference tree", "bold", "#000"), ("RAxML-NG, constrained", "normal", "#000"),
+              ("by the taxonomy", "normal", "#000")])
+    o += box(xs[2], y - 10, bw, bh + 20, "#e8f3e8",
+             [("Leave-one-out placement", "bold", "#000"),
+              ("SATIVA: one sequence, RAxML-EPA", "normal", UP),
+              ("sativa-epang: K sequences, EPA-ng", "normal", FORK)])
+    o += box(xs[3], y, bw, bh, "#fbeedf",
+             [("Flag mislabels", "bold", "#000"), ("placement against the", "normal", "#000"),
+              ("declared label, with a confidence", "normal", "#000")])
+    for i in range(3):
+        o += arrow(xs[i] + bw + 3, y + bh / 2, xs[i + 1] - 4, y + bh / 2)
+    # The loop: from the flagging stage back to the placement stage, below the boxes.
+    ly = y + bh + 26
+    o.append(f'<path d="M{xs[3] + bw / 2:.1f},{y + bh + 2} V{ly} H{xs[2] + bw / 2:.1f} '
+             f'V{y + bh + 12}" fill="none" stroke="#444" stroke-width="1.1" '
+             f'marker-end="url(#head)"/>')
+    o.append(txt((xs[2] + xs[3] + bw) / 2, ly + 11, "until every sequence has been placed",
+                 size=8, fill="#444"))
+    # The cost difference, n placements against n/K, is said in the caption: beside the arrow it
+    # collided with it, and the two lines in the box already carry the idea.
+    CAPTION.append("(a) The method, and where the two versions differ: n placements against n/K.")
+    return o
 
 
 def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
@@ -220,43 +284,29 @@ def main():
          f'<rect width="{W}" height="{H}" fill="#fff"/>']
     vals = ["panel\tseries\tx\ty"]
 
-    # A. Speed, which is the claim the paper leads with.
+    o += schematic()
+
+    # B. Speed, which is the claim the paper leads with.
     grad = read_gradient(root / "results/resource_usage.txt")
-    ax = Ax("A", (350, 8000), (5, 4000), xlog=True, ylog=True)
-    o += frame(ax, "A", "wall clock, both tools", "Reference Sequences", "Runtime (seconds)",
+    ax = Ax("B", (350, 8000), (5, 4000), xlog=True, ylog=True)
+    o += frame(ax, "B", "wall clock, both tools", "Reference Sequences", "Runtime (seconds)",
                [400, 1000, 2000, 4000, 7000], [10, 100, 1000],
                xfmt=lambda v: f"{v:,}".replace(",", " "))
-    o += series(ax, [(r["n"], r["upstream"]) for r in grad], UP, dash=COMPARATOR_DASH)
-    o += series(ax, [(r["n"], r["fork"]) for r in grad], FORK)
     # Labelled rules at round durations, so a log axis can be read without counting decades. The
     # same device carries the performance panel of the SigProfilerAssignment figure in this journal.
     for secs, label in ((60, "1 min"), (600, "10 min")):
-        y = ax.py(secs)
-        o.append(f'<line x1="{ax.x0}" y1="{y:.1f}" x2="{ax.x0 + PW}" y2="{y:.1f}" '
+        yy = ax.py(secs)
+        o.append(f'<line x1="{ax.x0}" y1="{yy:.1f}" x2="{ax.x0 + PW}" y2="{yy:.1f}" '
                  f'stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>')
-        o.append(txt(ax.x0 + PW - 4, y - 4, label, size=7, anchor="end", fill="#888"))
+        o.append(txt(ax.x0 + PW - 4, yy - 4, label, size=7, anchor="end", fill="#888"))
+    o += series(ax, [(r["n"], r["upstream"]) for r in grad], UP, dash=COMPARATOR_DASH)
+    o += series(ax, [(r["n"], r["fork"]) for r in grad], FORK)
     # The speedup is the point of the panel and is not readable off two log curves.
     for r in grad:
-        o.append(txt(ax.px(r["n"]), ax.py(r["fork"]) - 9, f"{r['wall_speedup']:.0f}x",
+        o.append(txt(ax.px(r["n"]), ax.py(r["fork"]) - 8, f"{r['wall_speedup']:.0f}x",
                      size=7, fill=FORK))
-    for r in grad:
-        vals += [f"A\tupstream\t{r['n']}\t{r['upstream']}", f"A\tfork\t{r['n']}\t{r['fork']}",
-                 f"A\twall_speedup\t{r['n']}\t{r['wall_speedup']}"]
-
-    # B. The law the whole detection result rests on: what predicts detection is not k and not the
-    # fold count but how much of a sequence's surviving neighbourhood already carries the wrong
-    # label. Both tools obey it, which is why both curves are drawn.
-    ax = Ax("B", (0, 1), (0, 1))
-    o += frame(ax, "B", "recall against the share of surviving relatives carrying the wrong label",
-               "Relatives Carrying the Wrong Label", "Recall",
-               [0, 0.25, 0.5, 0.75, 1], [0, 0.25, 0.5, 0.75, 1],
-               xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
-    for cond, colour, dash in (("epang_T8_K25", FORK, None),
-                               ("upstream_raxml_T8", UP, COMPARATOR_DASH)):
-        bands = json.loads(Path(root, f"results/detection_law_{cond}.json").read_text())["by_ratio"]
-        pts = [((b["low"] + b["high"]) / 2, b["recall"]) for b in bands]
-        o += series(ax, pts, colour, dash=dash)
-        vals += [f"B\t{cond}\t{x}\t{y}" for x, y in pts]
+        vals += [f"B\tupstream\t{r['n']}\t{r['upstream']}", f"B\tfork\t{r['n']}\t{r['fork']}",
+                 f"B\twall_speedup\t{r['n']}\t{r['wall_speedup']}"]
 
     # C. The comparison itself. Both ends are flat for opposite reasons, a ceiling at k=1 where
     # the rest of the group keeps the right label and a floor at k=10 where it does not, so the
@@ -272,38 +322,27 @@ def main():
             o += series(ax, sorted(r.items()), colour, dash=dash)
             vals += [f"C\t{cond}_r{rate}\t{k}\t{v:.4f}" for k, v in sorted(r.items())]
     # Colour is the tool and is in the shared legend, so this one only has to say what the dash is.
-    o += legend(ax.x0 + PW - 58, ax.y0 + 14,
-                [("5 %", "#555", None), ("1 %", "#555", "4 2")], size=8)
+    o += legend(ax.x0 + PW - 46, ax.y0 + 12, [("5 %", "#555", None), ("1 %", "#555", "4 2")], size=8)
 
-    # D. Where the advantage comes from. Running EPA-ng with one sequence per fold is upstream's own
-    # protocol with the other engine, so the gap it leaves is the engine alone and what remains is
-    # the fold scheme. Both seeds at k=2 are plotted rather than averaged: two cells are two
-    # measurements and a mean of two would look like a point estimate.
-    cells = json.loads(Path(root, "results/kexact_decomposition.json").read_text())["cells"]
-    cells = [c for c in cells if c.get("engine_at_0") is not None]
-    ax = Ax("D", (0.8, 10.5), (-0.05, 0.32), xlog=True)
-    o += frame(ax, "D", "what the engine contributes and what the fold scheme contributes",
-               "Sequences Sharing the Wrong Label", "Difference in Recall",
-               [1, 2, 3, 5, 10], [0, 0.1, 0.2, 0.3],
+    # D. The law the whole detection result rests on: what predicts detection is not k and not the
+    # fold count but how much of a sequence's surviving neighbourhood already carries the wrong
+    # label. Both tools obey it, which is why both curves are drawn and why half of every injected
+    # mislabel is found by neither.
+    ax = Ax("D", (0, 1), (0, 1))
+    o += frame(ax, "D", "recall against the share of surviving relatives carrying the wrong label",
+               "Relatives Carrying the Wrong Label", "Recall",
+               [0, 0.25, 0.5, 0.75, 1], [0, 0.25, 0.5, 0.75, 1],
                xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
-    o.append(f'<line x1="{ax.x0}" y1="{ax.py(0):.1f}" x2="{ax.x0 + PW}" y2="{ax.py(0):.1f}" '
-             f'stroke="#999" stroke-width="0.7"/>')
-    for field, colour, dash, label in (("engine_at_0", FORK, None, "engine"),
-                                       ("folds_at_0", UP, COMPARATOR_DASH, "fold scheme")):
-        pts = sorted((c["k"], c[field]) for c in cells if c.get(field) is not None)
-        o += series(ax, pts, colour, dash=dash, line=False)
-        # The eye still needs the shape, so the mean per k is drawn through the points.
-        means = sorted({k: sum(v for kk, v in pts if kk == k) / sum(1 for kk, _ in pts if kk == k)
-                        for k, _ in pts}.items())
-        o += series(ax, means, colour, dash=dash, marker=None)
-        vals += [f"D\t{field}\t{k}\t{v}" for k, v in pts]
-    # Labelled on the curves. A box here would sit on the only part of the panel that carries data.
-    o.append(txt(ax.px(3.4), ax.py(0.20), "engine", size=8, anchor="start", fill=FORK))
-    o.append(txt(ax.px(3.4), ax.py(0.035), "fold scheme", size=8, anchor="start", fill=UP))
+    for cond, colour, dash in (("epang_T8_K25", FORK, None),
+                               ("upstream_raxml_T8", UP, COMPARATOR_DASH)):
+        bands = json.loads(Path(root, f"results/detection_law_{cond}.json").read_text())["by_ratio"]
+        pts = [((b["low"] + b["high"]) / 2, b["recall"]) for b in bands]
+        o += series(ax, pts, colour, dash=dash)
+        vals += [f"D\t{cond}\t{x}\t{y}" for x, y in pts]
 
     # One legend for the whole figure, centred under the panels.
-    o += legend(W / 2 - 110, H - 20, [("sativa-epang", FORK, None)], size=9)
-    o += legend(W / 2 + 20, H - 20, [("SATIVA", UP, COMPARATOR_DASH)], size=9)
+    o += legend(W / 2 - 110, H - 16, [("sativa-epang", FORK, None)], size=9)
+    o += legend(W / 2 + 20, H - 16, [("SATIVA", UP, COMPARATOR_DASH)], size=9)
 
     o.append("</svg>")
     Path(args.out).write_text("\n".join(o) + "\n")
