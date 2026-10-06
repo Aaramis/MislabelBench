@@ -42,5 +42,4 @@
 <rect x="338" y="67" width="10" height="9" fill="#b5b5b5"/>
 <text x="352.0" y="74.0" font-size="7" fill="#000" font-weight="normal" text-anchor="start">batch setup</text>
 <rect x="338" y="80" width="10" height="9" fill="#d5d5d5"/>
-<text x="352.0" y="87.0" font-size="7" fill="#000" font-weight="normal" text-anchor="start">reference tree</text>
-<text x="202.0" y="294.0" font-size="7" fill="#666" font-weight="normal" text-anchor="middle">7 051 sequences, 25 folds, one node per shard, 8 threads</text></svg>
+<text x="352.0" y="87.0" font-size="7" fill="#000" font-weight="normal" text-anchor="start">reference tree</text></svg>

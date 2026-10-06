@@ -26,8 +26,8 @@ def canvas(w, h, body):
             + "\n".join(body) + "</svg>\n")
 
 
-def single(w=400, h=300, pw=280, ph=190, x0=72, y0=40):
-    mf.PANELS["A"] = (x0, y0)
+def single(w=400, h=300, pw=280, ph=190, x0=72, y0=40, letter="A"):
+    mf.PANELS[letter] = (x0, y0)
     mf.PW, mf.PH = pw, ph
     return w, h
 
@@ -57,17 +57,15 @@ def resource_blocks():
 # 1. The workflow, standalone.
 def fig_1():
     mf.CAPTION.clear()
-    body = mf.schematic()
-    x, y, w, h = mf.SCHEMATIC
-    return canvas(760, 240, body)
+    return 760, 240, mf.schematic()
 
 
 # 2. Runtime against peak memory: the plan's "time constrains the original, memory constrains ours".
-def fig_2():
-    w, h = single(420, 320, 290, 200, 78, 40)
+def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
+    w, h = single(*g, L)
     wall, mem = resource_blocks()
-    ax = mf.Ax("A", (5, 6000), (50, 20000), xlog=True, ylog=True)
-    o = mf.frame(ax, "A", "", "Runtime (seconds)", "Peak Memory (MB)",
+    ax = mf.Ax(L, (5, 6000), (50, 20000), xlog=True, ylog=True)
+    o = mf.frame(ax, L, "", "Runtime (seconds)", "Peak Memory (MB)",
                  [10, 100, 1000], [100, 1000, 10000],
                  xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:,}".replace(",", " "))
     for secs, label in ((60, "1 min"), (600, "10 min"), (3600, "1 h")):
@@ -88,9 +86,7 @@ def fig_2():
                         fill=mf.UP))
     o += mf.legend(ax.x0 + 8, ax.y0 + mf.PH - 24, [("sativa-epang", mf.FORK, None),
                                                      ("SATIVA", mf.UP, mf.COMPARATOR_DASH)], size=8)
-    o.append(mf.txt(ax.x0 + mf.PW / 2, h - 6, "one point per reference size, 402 to 7 051 sequences",
-                    size=7, fill="#666"))
-    return canvas(w, h, o)
+    return w, h, o
 
 
 # 3. The stages at one, two and four shards: only placement distributes.
@@ -112,11 +108,11 @@ def staged_rows():
     return sorted(rows, key=lambda r: r["shards"])
 
 
-def fig_3():
-    w, h = single(400, 300, 260, 190, 72, 40)
+def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
+    w, h = single(*g, L)
     rows = staged_rows()
-    ax = mf.Ax("A", (0, 3), (0, 300))
-    o = mf.frame(ax, "A", "", "Placement Shards", "Runtime (seconds)", [], [0, 100, 200, 300])
+    ax = mf.Ax(L, (0, 3), (0, 300))
+    o = mf.frame(ax, L, "", "Placement Shards", "Runtime (seconds)", [], [0, 100, 200, 300])
     bw = 52
     for i, row in enumerate(rows):
         base, cx = 0.0, ax.px(i + 0.5)
@@ -135,17 +131,15 @@ def fig_3():
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}"/>')
         o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
         ly += 13
-    o.append(mf.txt(ax.x0 + mf.PW / 2, h - 6, "7 051 sequences, 25 folds, one node per shard, 8 threads",
-                    size=7, fill="#666"))
-    return canvas(w, h, o)
+    return w, h, o
 
 
 # 4. How flags are counted, and what it gives, by taxonomic distance of the injected error.
 DIST = ["species", "genus", "family", "order", "class", "phylum"]
 
 
-def fig_4():
-    w, h = single(660, 320, 300, 190, 232, 40)
+def fig_4(L="A", g=(660, 320, 300, 190, 232, 40), key=True):
+    w, h = single(*g, L)
     rows = [ln.split("\t") for ln in (ROOT / "results/background_stability.tsv").read_text().splitlines()[1:]]
     by = collections.defaultdict(lambda: collections.defaultdict(list))
     for cell, n_inj, base, kept, lost, gained in rows:
@@ -163,8 +157,8 @@ def fig_4():
         if len(p) == 3:
             local[p[0]] = p[2]
     mean = lambda xs: sum(xs) / len(xs)
-    ax = mf.Ax("A", (0, 6), (-25, 160))
-    o = mf.frame(ax, "A", "", "Taxonomic Distance of the Injected Error", "Flags per Dataset (mean)",
+    ax = mf.Ax(L, (0, 6), (-25, 160 if key else 330))
+    o = mf.frame(ax, L, "", "Taxonomic Distance of the Injected Error", "Flags per Dataset (mean)",
                  [], [0, 50, 100, 150], yfmt=lambda v: f"{v:g}")
     o.append(f'<line x1="{ax.x0}" y1="{ax.py(0):.1f}" x2="{ax.x0 + mf.PW}" y2="{ax.py(0):.1f}" '
              f'stroke="#444" stroke-width="0.8"/>')
@@ -185,33 +179,44 @@ def fig_4():
                  f'fill="#fff" stroke="{GREY}" stroke-width="0.8" stroke-dasharray="2 1"/>')
         o.append(mf.txt(cx, ax.y0 + mf.PH + 15, d, size=7))
         o.append(mf.txt(cx, ax.py(base) - 4, local.get(d, ""), size=6.5, fill=mf.UP))
-    lx, ly = ax.x0 + mf.PW + 8, ax.y0 + 10
-    for label, colour, dashed in (("baseline flags kept", LIGHT, False), ("injected errors found", mf.FORK, False),
-                                  ("collateral flags, with the", mf.UP, False),
-                                  ("baseline flags lost", "#fff", True)):
-        o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}" stroke="{GREY}" '
-                 f'stroke-width="0.8"{" stroke-dasharray=\"2 1\"" if dashed else ""}/>')
-        o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
-        ly += 12
-        if label.startswith("collateral"):
-            o.append(mf.txt(lx + 14, ly, "share inside a touched clade", size=7, anchor="start"))
+    entries = (("baseline flags kept", LIGHT, False), ("injected errors found", mf.FORK, False),
+               ("collateral flags, with the", mf.UP, False), ("baseline flags lost", "#fff", True))
+    if key:
+        lx, ly = ax.x0 + mf.PW + 8, ax.y0 + 10
+        for label, colour, dashed in entries:
+            o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}" stroke="{GREY}" '
+                     f'stroke-width="0.8"{" stroke-dasharray=\"2 1\"" if dashed else ""}/>')
+            o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
             ly += 12
+            if label.startswith("collateral"):
+                o.append(mf.txt(lx + 14, ly, "share inside a touched clade", size=7, anchor="start"))
+                ly += 12
+    else:
+        # Two columns in the headroom above the bars; the collateral entry on one line.
+        short = (("baseline kept", LIGHT, False), ("injected found", mf.FORK, False),
+                 ("collateral (% in a touched clade)", mf.UP, False), ("baseline lost", "#fff", True))
+        for i, (label, colour, dashed) in enumerate(short):
+            lx = ax.x0 + 6 + (i % 2) * 88 if i < 2 else ax.x0 + 6
+            ly = ax.y0 + 10 + (0 if i < 2 else 12 * (i - 1))
+            o.append(f'<rect x="{lx}" y="{ly - 7}" width="9" height="8" fill="{colour}" stroke="{GREY}" '
+                     f'stroke-width="0.8"{" stroke-dasharray=\"2 1\"" if dashed else ""}/>')
+            o.append(mf.txt(lx + 12, ly, label, size=6.5, anchor="start"))
     # The three-box key on the left: what is done, then how each flag is classed.
     bx, by0 = 20, 60
-    for i, (lines, fill) in enumerate(((["Inject errors", "at a chosen rank"], "#f0f0f0"),
+    for i, (lines, fill) in enumerate(() if not key else ((["Inject errors", "at a chosen rank"], "#f0f0f0"),
                                        (["Run both tools", "before and after"], "#e3eef7"),
                                        (["Class every flag:", "kept, lost, found,", "collateral"], "#e8f3e8"))):
         o += mf.box(bx, by0 + i * 62, 150, 48, fill, [(t, "normal", "#000") for t in lines], size=7.5)
         if i < 2:
             o += mf.arrow(bx + 75, by0 + i * 62 + 50, bx + 75, by0 + (i + 1) * 62 - 3)
-    return canvas(w, h, o)
+    return w, h, o
 
 
 # 5. The limit: recall against the share of surviving relatives carrying the wrong label.
-def fig_5():
-    w, h = single(400, 300, 260, 190, 72, 40)
-    ax = mf.Ax("A", (0, 1), (0, 1))
-    o = mf.frame(ax, "A", "", "Surviving Relatives Carrying the Wrong Label (%)", "Recall",
+def fig_5(L="A", g=(400, 300, 260, 190, 72, 40)):
+    w, h = single(*g, L)
+    ax = mf.Ax(L, (0, 1), (0, 1))
+    o = mf.frame(ax, L, "", "Surviving Relatives Carrying the Wrong Label (%)", "Recall",
                  [], [0, 0.25, 0.5, 0.75, 1], yfmt=lambda v: f"{v:g}")
     for cond, colour, dash in (("epang_T8_K25", mf.FORK, None), ("upstream_raxml_T8", mf.UP, mf.COMPARATOR_DASH)):
         bands = json.loads((ROOT / f"results/detection_law_{cond}.json").read_text())["by_ratio"]
@@ -225,12 +230,12 @@ def fig_5():
         o.append(mf.txt(x, ax.y0 + mf.PH + 15, f"{b['low'] * 100:.0f}-{b['high'] * 100:.0f}", size=7))
     o += mf.legend(ax.x0 + mf.PW - 90, ax.y0 + 12, [("sativa-epang", mf.FORK, None),
                                                      ("SATIVA", mf.UP, mf.COMPARATOR_DASH)], size=8)
-    return canvas(w, h, o)
+    return w, h, o
 
 
 # 6. The confidence histogram: the point mass at 0.510, and the column that explains it.
-def fig_6():
-    w, h = single(420, 300, 290, 190, 72, 40)
+def fig_6(L="A", g=(420, 300, 290, 190, 72, 40)):
+    w, h = single(*g, L)
     conf, excl = [], []
     for mis in sorted((ROOT / "results/grid_fork/runs").glob("*__epang_T8_K25__rep1/*.mis")):
         for ln in mis.read_text().splitlines():
@@ -244,8 +249,8 @@ def fig_6():
         b = min(int(c * 50) / 50, 0.98)                  # 0.02-wide bins from 0.50
         bins[b][0 if (e is not None and e >= 0.99) else 1] += 1
     top = max(sum(v) for v in bins.values())
-    ax = mf.Ax("A", (0.49, 1.01), (0, top * 1.12))
-    o = mf.frame(ax, "A", "", "Confidence", "Flags",
+    ax = mf.Ax(L, (0.49, 1.01), (0, top * 1.12))
+    o = mf.frame(ax, L, "", "Confidence", "Flags",
                  [0.5, 0.6, 0.7, 0.8, 0.9, 1.0], list(range(0, int(top * 1.12), 4000)),
                  xfmt=lambda v: f"{v:.1f}", yfmt=lambda v: f"{v:,}".replace(",", " "))
     bw = ax.px(0.52) - ax.px(0.50) - 1
@@ -255,18 +260,36 @@ def fig_6():
         o.append(f'<rect x="{x:.1f}" y="{y_lo:.1f}" width="{bw:.1f}" height="{ax.py(0) - y_lo:.1f}" fill="{LIGHT}"/>')
         o.append(f'<rect x="{x:.1f}" y="{y_hi:.1f}" width="{bw:.1f}" height="{y_lo - y_hi:.1f}" fill="{mf.FORK}"/>')
     n_stem = sum(1 for c in conf if abs(c - 0.510) < 0.0005)
-    o.append(mf.txt(ax.px(0.53), ax.py(top) + 4, f"{n_stem:,} flags at exactly 0.510,".replace(",", " "),
-                    size=7.5, anchor="start"))
-    o.append(mf.txt(ax.px(0.53), ax.py(top) + 15, f"{n_stem / len(conf) * 100:.0f} % of {len(conf):,}".replace(",", " "),
-                    size=7.5, anchor="start"))
+    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62), f"{n_stem:,} flags at".replace(",", " "),
+                    size=7, anchor="start"))
+    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 10, "exactly 0.510,", size=7, anchor="start"))
+    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 20, f"{n_stem / len(conf) * 100:.0f} % of {len(conf):,}".replace(",", " "),
+                    size=7, anchor="start"))
     o += mf.legend(ax.x0 + mf.PW - 118, ax.y0 + 12, [("exclusion >= 0.99", mf.FORK, None),
                                                       ("exclusion < 0.99", LIGHT, None)], size=7.5)
-    o.append(mf.txt(ax.x0 + mf.PW / 2, h - 6, "every flag of the 180-dataset grid, sativa-epang",
-                    size=7, fill="#666"))
-    return canvas(w, h, o)
+    return w, h, o
+
+
+def figure2():
+    """The six candidates on one canvas, in the order the paper makes its claims.
+
+    The workflow across the top; the two performance claims side by side; then the evaluation in
+    three panels across, FastDup's layout: how flags are counted, the law both tools obey, and the
+    one usage instruction. 760 wide, which is a double column, and about 700 tall.
+    """
+    o = []
+    o += fig_1()[2]
+    o += fig_2("B", (0, 0, 270, 170, 72, 262))[2]
+    o += fig_3("C", (0, 0, 236, 170, 452, 262))[2]
+    o += fig_4("D", (0, 0, 180, 150, 58, 512), key=False)[2]
+    o += fig_5("E", (0, 0, 180, 150, 318, 512))[2]
+    o += fig_6("F", (0, 0, 180, 150, 578, 512))[2]
+    return canvas(760, 712, o)
 
 
 if __name__ == "__main__":
     for i, fn in enumerate((fig_1, fig_2, fig_3, fig_4, fig_5, fig_6), 1):
-        (OUT / f"figure1_{i}.svg").write_text(fn())
-    print(f"6 candidates written to {OUT}")
+        w, h, body = fn()
+        (OUT / f"figure1_{i}.svg").write_text(canvas(w, h, body))
+    (OUT / "figure2.svg").write_text(figure2())
+    print(f"6 candidates and figure2 written to {OUT}")
