@@ -10,7 +10,7 @@ workflow manager can distribute. The classification rule is upstream's, unchange
 
 This is a benchmark of that modification, not a new method.
 
-The paper's figure is `results/figure1.svg`, built by `bin/make_figure.py` from the committed tables:
+The paper's figure is `results/candidates/figure3.svg`, built by `bin/paper_figure.py` from the committed tables:
 wall clock against reference size for both tools, the stages at one, two and four nodes, the exclusion
 column against confidence as a filter, and recall against *k*. It is written as SVG directly rather than
 with a plotting library, so that the analysis layer keeps importing nothing outside the standard library
@@ -488,7 +488,9 @@ tests/                                 unittest over the scripts that turn runs 
 assets/datasets.yml                    every source with version, DOI, URL, date and sha256
 data/                                  the base datasets and the injected ground truth; see data/README.md
 results/                               the measured runs and the tables built from them
-results/figure1.svg                    the Application Note's figure, and figure1_values.tsv behind it
+results/candidates/                    the Application Note's figure3.svg, its values table and its
+                                       draft caption, with the panels it was chosen from beside it
+results/figure1.svg                    an earlier composition, kept because REVIEW.md cites it
 ```
 
 `results/` is tracked: the runs are the evidence, and the tables are rebuilt from them by

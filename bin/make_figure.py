@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Build the Application Note's one multi-panel figure from the committed records.
+"""The drawing primitives, and an earlier four-panel composition kept for reference.
+
+The figure the manuscript carries is built by bin/paper_figure.py, which imports everything below:
+the axis transform, the frame, the series, the schematic and FONT_SCALE. This file still writes
+results/figure1.svg, an earlier composition that several findings in REVIEW.md cite by name, and
+that is the only reason it still writes anything.
 
 Part 1 of Protocol.md allows the main text 2000 words plus one figure, and orders what it
 carries: "Speed and scaling first; the exclusion column second; accuracy against injected
-ground truth as the control that bounds both." The four panels are that sentence, with 2.8's
+ground truth as the control that bounds both." The four panels below are that sentence, with 2.8's
 requirement that scaling be reported per stage rather than as one total.
 
   A  the method, drawn, one row per version, converging on the scoring they share

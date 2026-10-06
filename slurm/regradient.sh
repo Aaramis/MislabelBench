@@ -21,6 +21,14 @@
 # node that nothing else is using, in one session. Whatever comes out is comparable to itself
 # without any assumption about what the cluster was doing between jobs.
 #
+# WARNING, written after the fact: the times this produces are NOT comparable with the committed
+# gradient and must not replace it. The sampler below starts a process every 0.2 s to walk /proc,
+# which costs a fixed slice of one core, and the two tools absorb that differently: upstream
+# saturates 7.97 of its 8 threads and has nothing spare, the fork uses 3.09 to 5.57 and absorbs it.
+# Measured: upstream came out 8 to 15 % slower at every size while the fork was within 1 % at the
+# three largest. Use this script for memory, which reading /proc does not disturb, and take the
+# times from the pipeline's own runs. D190 in the decision log has the numbers.
+#
 # Memory is measured twice for every run, because the two numbers answer different questions and
 # the committed records only have the first. ru_maxrss over children is the largest SINGLE child
 # process, which is what run.json carries; the sampler below walks the run's own descendants every

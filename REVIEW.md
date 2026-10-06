@@ -2938,7 +2938,7 @@ versions of the one figure each dropped a panel the previous one had, judged aga
 manuscript's Evaluation section, until the co-author could not read what was left. The benchmark
 plan is the better judge: it makes three claims -- the same rule, a speed gain, a way to distribute --
 and two of its sections, the four-way count of flags and the point mass at 0.510, are the ideas no
-other tool reports. `bin/figure_candidates.py` draws one standalone panel per idea, six of them, from
+other tool reports. `bin/paper_figure.py` draws one standalone panel per idea, six of them, from
 committed records only and with `make_figure.py`'s own helpers, so each can be accepted or refused
 on sight and whatever is kept moves into the figure unchanged. Two things it surfaced: runtime
 against peak memory puts the tools in opposite corners, 9 GB against 0.6 GB at 7 051 sequences, which

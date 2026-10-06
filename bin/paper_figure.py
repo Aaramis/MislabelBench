@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
-"""Candidate panels for the Application Note's figure, one file each, to be judged on sight.
+"""The Application Note's figure, and the six candidate panels it was chosen from.
 
-Six ideas, each tied to one claim or one section of the benchmark plan, drawn standalone so a
-reader can accept or reject them one at a time. Everything is read from committed records; the
-helpers are make_figure's, so whatever is kept moves into it unchanged.
+figure3.svg is the figure the manuscript carries: the method drawn in two rows, then runtime
+against peak memory, the four stages across one, two and four placement shards, the flag count by
+taxonomic distance, and the law both tools obey. figure1_1 to figure1_6 are the same panels drawn
+standalone, which is how they were judged one at a time, and figure2 is an earlier six-panel
+composition. Each panel is one function that takes a letter and a geometry, so the standalone file
+and the composition cannot drift apart.
+
+Everything comes from committed records. The drawing primitives are make_figure's, and the sizes are
+chosen for the printed page: the journal's two-column text block is 423.9 pt and this canvas is 760,
+so make_figure.FONT_SCALE is set to put the smallest label at 5.8 pt rather than 3.6. See REVIEW.md
+finding 141 before changing it.
 """
 
 import collections
