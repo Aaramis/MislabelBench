@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 138 |
+| findings in this report | 139 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 39 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2963,6 +2963,17 @@ different work. `slurm/regradient.sh` re-measures the whole gradient, both tools
 replicates, back to back on one exclusive node, and samples every descendant's RSS so the tree total
 and the largest single process are recorded beside it. Until it returns, the panel that plots this
 keeps the committed values and the anomaly is stated rather than smoothed.
+
+**139. A fifth summary line reported success after the work had failed.** `slurm/regradient.sh`, the
+job written to settle finding 138, lost all thirty of its runs to `_timeit.py: command not found` and
+then printed a complete table of `NA`, a tidy aligned one, and the word `ALLDONE`. Two defects, and
+the second is the one that matters. `bin/` is on PATH for the pipeline's own processes because
+Nextflow puts it there, which is why no other script here had needed to say so, and a batch script
+gets no such help; that is an ordinary mistake, caught in one reading of the log. Printing a summary
+of thirty failures as though it were a result is the same mistake findings 101, 124, 125 and 129 each
+recorded, and the rule each time was that the failure path has to be exercised before the summary is
+written. The script now counts failed runs, prints the reason, and exits 1 with the table marked as
+not a measurement. The job is resubmitted.
 
 ## What is outstanding
 

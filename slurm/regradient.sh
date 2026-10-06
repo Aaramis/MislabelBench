@@ -36,11 +36,19 @@ REPS="${REGRADIENT_REPS:-3}"
 SIZES="${REGRADIENT_SIZES:-gtdb_arc400 gtdb_arc800 gtdb_arc2k gtdb_arc4000 gtdb_arc1200}"
 THREADS=8
 
+# bin/ is not on PATH in a batch script. Nextflow puts it there for the pipeline's own processes,
+# which is why nothing else here needed it, and the first run of this script lost all thirty
+# measurements to "_timeit.py: command not found". Checked rather than assumed, because PATH being
+# wrong is silent until the first call.
+TIMEIT="$ROOT/bin/_timeit.py"
+[ -x "$TIMEIT" ] || { echo "no executable $TIMEIT" >&2; exit 1; }
+
 FORK=$(ls "$HOME"/.singularity_cache/*sativa-epang*0.10.2*py314hab16a5f_0* 2>/dev/null | head -1)
 UP=$(ls "$HOME"/.singularity_cache/*sativa*0.9.3*py312h031d066_0* 2>/dev/null | grep -v epang | head -1)
 [ -n "$FORK" ] && [ -n "$UP" ] || { echo "missing a container image" >&2; exit 1; }
 
 rm -rf "$OUT"; mkdir -p "$OUT"
+failed=0
 echo "node $(hostname), $(nproc) cpus, model: $(awk -F: '/^model name/{gsub(/^ +/,"",$2);print $2;exit}' /proc/cpuinfo)"
 printf 'dataset\tn_seqs\ttool\trep\twall_s\tru_maxrss_mb\ttree_peak_mb\tlargest_child_mb\tlargest_child\n' \
     > "$OUT/gradient.tsv"
@@ -97,7 +105,7 @@ for ds in $SIZES; do
               SINGULARITYENV_SATIVA_L1O_ENGINE=epang SINGULARITYENV_SATIVA_EPANG_FOLDS=25 \
               SINGULARITYENV_OMP_NUM_THREADS=$THREADS \
               SINGULARITYENV_OPENBLAS_NUM_THREADS=$THREADS SINGULARITYENV_MKL_NUM_THREADS=$THREADS \
-              _timeit.py --cwd "$d" --stdout "$d/stdout.log" -- \
+              "$TIMEIT" --cwd "$d" --stdout "$d/stdout.log" -- \
                 singularity exec -B "$d:$d" --pwd "$d" "$img" \
                   $cmd -s aln.fasta -t tax.tsv -T $THREADS -n run -tmpdir "$d/tmp" \
                        -m ultrafast -C 0.4 -x BAC -p 42 "${extra[@]}" > "$d/timing.json" ) &
@@ -111,10 +119,20 @@ for ds in $SIZES; do
             printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' \
                 "$ds" "$n" "$tool" "$rep" "$wall" "$rss" "$tree" "$child" "$comm" >> "$OUT/gradient.tsv"
             echo "$ds $tool rep$rep: wall ${wall}s  ru_maxrss ${rss}MB  tree ${tree}MB  largest ${child}MB ($comm)  status $st"
+            [ "$st" = "0" ] && [ "$wall" != "NA" ] || { failed=$((failed + 1)); tail -3 "$d/stdout.log" >&2 2>/dev/null; }
             # The scratch tree is the bulk of the files; the .mis and the logs are what is kept.
             rm -rf "$d/tmp" "$d/aln.fasta" "$d/samples.txt"
         done
     done
 done
 echo; column -t -s $'\t' "$OUT/gradient.tsv" || cat "$OUT/gradient.tsv"
+
+# A table of NA is not a measurement. The first run of this script printed thirty of them and said
+# ALLDONE, which is the fifth time in this repository that a summary line has reported success after
+# the work failed; the rule each time was the same, that the failure path has to be exercised before
+# the summary is written.
+if [ "$failed" != "0" ]; then
+    echo "$failed of the runs failed; the table above is not a measurement" >&2
+    exit 1
+fi
 echo ALLDONE
