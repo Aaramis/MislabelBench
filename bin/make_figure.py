@@ -107,6 +107,13 @@ def txt(x, y, s, size=9, anchor="middle", weight="normal", rot=None, fill="#000"
 # inside a panel. The caption carries all of it, and it is long. So the text is collected here and
 # written beside the figure as a draft caption instead of being drawn on top of the data.
 CAPTION = []
+# "(a)" is what two of the three published figures looked at use; "A", bold and bare, is the third's
+# (mapache). Both occur in this journal, so the choice is a flag rather than a rule.
+LABEL_STYLE = "paren-lower"
+
+
+def panel_label(key):
+    return key.upper() if LABEL_STYLE == "upper" else f"({key.lower()})"
 
 
 def box(x, y, w, h, fill, lines, size=8, stroke="#888"):
@@ -135,7 +142,7 @@ def schematic():
     X, Y, Wd, Hd = SCHEMATIC
     o = ['<defs><marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" '
          'orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#444"/></marker></defs>',
-         txt(X - 2, Y - 10, "(a)", size=12, anchor="start", weight="bold")]
+         txt(X - 2, Y - 10, panel_label("a"), size=12, anchor="start", weight="bold")]
     bh = 46
     y1, y2 = Y + 18, Y + 98                   # the two rows
     xref, xeng, xscore, xflag = X + 96, X + 206, X + 430, X + 592
@@ -173,7 +180,7 @@ def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
     CAPTION.append(f"({key.lower()}) {title}.")
     o = [f'<rect x="{ax.x0}" y="{ax.y0}" width="{PW}" height="{PH}" fill="none" '
          f'stroke="#444" stroke-width="0.8"/>',
-         txt(ax.x0 - 44, ax.y0 - 16, f"({key.lower()})", size=12, anchor="start", weight="bold")]
+         txt(ax.x0 - 44, ax.y0 - 16, panel_label(key), size=12, anchor="start", weight="bold")]
     o += [txt(ax.x0 + PW / 2, ax.y0 + PH + 32, xlabel, size=10),
           txt(ax.x0 - 40, ax.y0 + PH / 2, ylabel, size=10, rot=-90)]
     for v in xticks:

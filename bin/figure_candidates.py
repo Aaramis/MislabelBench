@@ -158,6 +158,81 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
 DIST = ["species", "genus", "family", "order", "class", "phylum"]
 
 
+def flag_counts():
+    """Per distance: mean baseline kept, lost, collateral (gained), injected errors found, and the
+    share of collateral flags inside a touched clade. From three committed records."""
+    rows = [ln.split("\t") for ln in (ROOT / "results/background_stability.tsv").read_text().splitlines()[1:]]
+    by = collections.defaultdict(lambda: collections.defaultdict(list))
+    for cell, n_inj, base, kept, lost, gained in rows:
+        d = cell.split("_")[1]
+        for k, v in (("injected", n_inj), ("kept", kept), ("lost", lost), ("gained", gained)):
+            by[d][k].append(float(v))
+    grid = json.loads((ROOT / "results/grid_summary_epang_T8_K25.json").read_text())["rows"]
+    rec = collections.defaultdict(list)
+    for r in grid:
+        if r["metric"] == "by_confidence" and r["threshold"] == 0.0:
+            rec[r["distance"]].append(r["recall_mean"])
+    local = {}
+    for ln in (ROOT / "results/collateral_locality.txt").read_text().splitlines()[1:]:
+        q = ln.split()
+        if len(q) == 3:
+            local[q[0]] = q[2]
+    mean = lambda xs: sum(xs) / len(xs)
+    out = {}
+    for d in DIST:
+        out[d] = {"kept": mean(by[d]["kept"]), "lost": mean(by[d]["lost"]), "gained": mean(by[d]["gained"]),
+                  "found": mean(rec[d]) * mean(by[d]["injected"]), "local": local.get(d, "")}
+    return out
+
+
+HATCH = ('<defs><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" '
+         'patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="5" stroke="#888" '
+         'stroke-width="1.2"/></pattern></defs>')
+
+
+def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
+    """The flag count with the lost baseline flags hatched on the baseline itself.
+
+    Grey plus hatching is the baseline before injection; everything above it is what injection
+    added. Drawn stacked above zero so the bar reads without the legend, which a box below zero
+    did not. The lost segment sits on the grey and not on top of the stack, because those flags are
+    gone after injection and do not belong in the after-total.
+    """
+    w, h = single(*g, L)
+    data = flag_counts()
+    top = max(v["kept"] + v["lost"] + v["found"] + v["gained"] for v in data.values())
+    # Headroom for the legend above the tallest bars; two columns keep it two rows tall.
+    ax = mf.Ax(L, (0, 6), (0, top * 1.5))
+    o = [HATCH]
+    o += mf.frame(ax, L, "", "Taxonomic Distance of the Injected Error", "Flags per Dataset",
+                  [], [0, 50, 100, 150], yfmt=lambda v: f"{v:g}")
+    bw = 40
+    for i, d in enumerate(DIST):
+        v, cx, base = data[d], ax.px(i + 0.5), 0.0
+        for name, fill in (("kept", LIGHT), ("lost", "url(#hatch)"), ("found", mf.FORK), ("gained", mf.UP)):
+            y1, y0 = ax.py(base + v[name]), ax.py(base)
+            o.append(f'<rect x="{cx - bw / 2:.1f}" y="{y1:.1f}" width="{bw}" height="{y0 - y1:.1f}" '
+                     f'fill="{fill}" stroke="#fff" stroke-width="0.6"/>')
+            VALUES.append(f"{L}\t{name}\t{d}\t{v[name]:.2f}")
+            base += v[name]
+        VALUES.append(f"{L}\tcollateral_local_share\t{d}\t{v['local']}")
+        o.append(mf.txt(cx, ax.y0 + mf.PH + 15, d, size=7.5))
+        o.append(mf.txt(cx, ax.py(base) - 4, v["local"], size=6.5, fill=mf.UP))
+    entries = (("baseline flags retained", LIGHT), ("baseline flags lost", "url(#hatch)"),
+               ("injected errors found", mf.FORK), ("new collateral flags", mf.UP))
+    for i, (label, fill) in enumerate(entries):
+        lx = ax.x0 + 10 + (i % 2) * 150
+        ly = ax.y0 + 12 + (i // 2) * 12
+        o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{fill}" stroke="{GREY}" stroke-width="0.6"/>')
+        o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
+    CAPTION.append(f"({L.lower()}) Flags per dataset by the taxonomic distance of the injected error. Grey and "
+                   "hatched together are the baseline before injection, the hatched part being the baseline "
+                   "flags that disappear after it; above them, the injected errors found and the collateral "
+                   "flags on untouched sequences. The percentage is the share of collateral flags inside a "
+                   "clade the injection touched. Untouched sequences are not known negatives.")
+    return w, h, o
+
+
 def fig_4(L="A", g=(660, 320, 300, 190, 232, 40), key=True):
     w, h = single(*g, L)
     rows = [ln.split("\t") for ln in (ROOT / "results/background_stability.tsv").read_text().splitlines()[1:]]
@@ -329,6 +404,29 @@ def figure2(write=False):
     return canvas(760, 712, o)
 
 
+def figure3(write=False):
+    """The four-panel composition proposed on 2026-10-06, with two corrections.
+
+    A workflow across the top; B and C the two performance claims; then D the flag count on three
+    fifths of the width and E the law on the rest. The sketch it answers had no recall curve at all,
+    and the law is the paper's detection result, so E stays. The lost baseline flags are hatched on
+    the baseline and not on top of the stack. Letters bare and upper-case, mapache's style.
+    """
+    mf.LABEL_STYLE = "upper"
+    o = []
+    o += fig_1()[2]
+    o += fig_2("B", (0, 0, 270, 170, 72, 262))[2]
+    o += fig_3("C", (0, 0, 236, 170, 452, 262))[2]
+    o += fig_4b("D", (0, 0, 390, 150, 58, 512))[2]
+    o += fig_5("E", (0, 0, 212, 150, 536, 512))[2]
+    mf.LABEL_STYLE = "paren-lower"
+    if write:
+        (OUT / "figure3_values.tsv").write_text("\n".join(VALUES) + "\n")
+        kept = [c for c in mf.CAPTION if not c.endswith(") .")]
+        (OUT / "figure3_caption.txt").write_text(" ".join(kept + CAPTION) + "\n")
+    return canvas(760, 712, o)
+
+
 if __name__ == "__main__":
     for i, fn in enumerate((fig_1, fig_2, fig_3, fig_4, fig_5, fig_6), 1):
         w, h, body = fn()
@@ -336,4 +434,8 @@ if __name__ == "__main__":
     VALUES[:] = VALUES[:1]
     CAPTION.clear()
     (OUT / "figure2.svg").write_text(figure2(write=True))
-    print(f"6 candidates and figure2 written to {OUT}, {len(VALUES) - 1} values, caption drafted")
+    n2 = len(VALUES) - 1
+    VALUES[:] = VALUES[:1]
+    CAPTION.clear()
+    (OUT / "figure3.svg").write_text(figure3(write=True))
+    print(f"6 candidates, figure2 ({n2} values) and figure3 ({len(VALUES) - 1} values) written to {OUT}")
