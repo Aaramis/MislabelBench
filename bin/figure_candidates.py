@@ -132,7 +132,7 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
 # allocation at 124 to 258 s and showed four nodes no faster than one. The pipeline's shards finish
 # within 0.6 s of each other and the straggler was the fan-out's, not the tool's. README's own table
 # rests on these records, so the panel has to as well.
-STAGE = {"ref": ("reference tree", LIGHT), "tasks": ("batch setup", "#b5b5b5"),
+STAGE = {"ref": ("tree", LIGHT), "tasks": ("setup", "#b5b5b5"),
          "place": ("placement", mf.FORK), "score": ("scoring", GREY)}
 
 
@@ -170,7 +170,7 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
     CAPTION.append(f"({L.lower()}) The four stages on 7 051 sequences with 25 folds, one node per shard. "
                    f"Only placement distributes. At four shards they finish within {by_shards[4]:.1f} s of "
                    f"each other; at two the spread is {by_shards[2]:.1f} s because 25 folds split 13 and 12.")
-    lx, ly = ax.x0 + mf.PW + 6, ax.y0 + 8
+    lx, ly = ax.x0 + mf.PW - 72, ax.y0 + 10
     for key, (label, colour) in reversed(list(STAGE.items())):
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}"/>')
         o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
@@ -231,7 +231,7 @@ def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
     ymax = math.ceil(top * 1.45 / 50) * 50
     ax = mf.Ax(L, (0, 6), (0, ymax))
     o = [HATCH]
-    o += mf.frame(ax, L, "", "Taxonomic Distance of the Injected Error", "Flags per Dataset",
+    o += mf.frame(ax, L, "", "Distance of the Injected Error", "Flags per Dataset",
                   [], list(range(0, ymax + 1, 50)), yfmt=lambda v: f"{v:g}")
     bw = 40
     for i, d in enumerate(DIST):
@@ -245,10 +245,10 @@ def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
         VALUES.append(f"{L}\tcollateral_local_share\t{d}\t{v['local']}")
         o.append(mf.txt(cx, ax.y0 + mf.PH + 15, d.capitalize(), size=7.5))
         o.append(mf.txt(cx, ax.py(base) - 4, v["local"], size=6.5, fill=mf.UP))
-    entries = (("baseline flags retained", LIGHT), ("baseline flags lost", "url(#hatch)"),
-               ("injected errors found", mf.FORK), ("new collateral flags", mf.UP))
+    entries = (("baseline kept", LIGHT), ("baseline lost", "url(#hatch)"),
+               ("injected found", mf.FORK), ("collateral", mf.UP))
     for i, (label, fill) in enumerate(entries):
-        lx = ax.x0 + 10 + (i % 2) * 150
+        lx = ax.x0 + 10 + (i % 2) * 140
         ly = ax.y0 + 12 + (i // 2) * 12
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{fill}" stroke="{GREY}" stroke-width="0.6"/>')
         o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
@@ -346,7 +346,7 @@ def fig_4(L="A", g=(660, 320, 300, 190, 232, 40), key=True):
 def fig_5(L="A", g=(400, 300, 260, 190, 72, 40)):
     w, h = single(*g, L)
     ax = mf.Ax(L, (0, 1), (0, 1))
-    o = mf.frame(ax, L, "", "Surviving Relatives Carrying the Wrong Label (%)", "Recall",
+    o = mf.frame(ax, L, "", "Wrong-Labelled Relatives (%)", "Recall",
                  [], [0, 0.25, 0.5, 0.75, 1], yfmt=lambda v: f"{v:g}")
     for cond, colour, dash in (("epang_T8_K25", mf.FORK, None), ("upstream_raxml_T8", mf.UP, mf.COMPARATOR_DASH)):
         bands = json.loads((ROOT / f"results/detection_law_{cond}.json").read_text())["by_ratio"]
@@ -442,10 +442,10 @@ def figure3(write=False):
     mf.LABEL_STYLE = "upper"
     o = []
     o += fig_1()[2]
-    o += fig_2("B", (0, 0, 270, 158, 72, 232))[2]
+    o += fig_2("B", (0, 0, 240, 158, 104, 232))[2]
     o += fig_3("C", (0, 0, 236, 158, 452, 232))[2]
-    o += fig_4b("D", (0, 0, 390, 140, 58, 450))[2]
-    o += fig_5("E", (0, 0, 212, 140, 536, 450))[2]
+    o += fig_4b("D", (0, 0, 286, 140, 76, 450))[2]
+    o += fig_5("E", (0, 0, 286, 140, 448, 450))[2]
     mf.LABEL_STYLE = "paren-lower"
     if write:
         (OUT / "figure3_values.tsv").write_text("\n".join(VALUES) + "\n")

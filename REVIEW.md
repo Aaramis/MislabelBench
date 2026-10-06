@@ -3029,17 +3029,19 @@ reduced to **0.558**, so a tick label drawn at 7 pt reaches the page at **3.9 pt
 drawn at 6.5, at **3.6**. Six points is the usual floor for print. Every axis in the figure is below
 four.
 
-Raising the sizes is not enough on its own. `FONT_SCALE = 1.6` puts the smallest label at 5.8 pt and
-was tried: the panel legends then run off their panels, the schematic's boxes overlap their own text,
-and the y axis collides with its labels. The figure carries more text than 424 pt can hold at a
-legible size, which is a design question rather than a parameter, so the factor is back at 1 and the
-knob is left in place with the measurement beside it.
+Raising the sizes alone does not work. `FONT_SCALE = 1.6` puts the smallest label at 5.8 pt, and the
+first attempt kept the old wording and the old panel widths: the legends ran off their panels, the
+schematic's boxes overlapped their own text, and the y axis collided with its labels.
 
-Three ways out, and the choice is the manuscript's rather than the code's. Move one data panel to the
-supplement, which buys the remaining ones about a third more width each. Shorten the axis labels, the
-longest of which is "Surviving Relatives Carrying the Wrong Label (%)" and could be a caption
-sentence instead. Or let the figure run taller with one data panel per row, which costs page height
-in a note already a page over.
+Fixed by paying for the type with room, which took four passes, each one looked at before the next.
+The longest axis titles are shortened and the caption carries what they no longer spell out --
+"Surviving Relatives Carrying the Wrong Label (%)" becomes "Wrong-Labelled Relatives (%)". The two
+bottom panels are given equal width, since five band labels need as much room as six rank names. The
+stage legend moves inside its panel with shorter words. And the axis title's offset, 40 points
+whatever the type size, now scales with it: at 1.6 the widest tick label reached the title, and
+moving the title out pushed it off the canvas until the panels moved right to meet it.
+
+Printed sizes are now **5.8 to 10.7 pt**, against 3.6 to 6.7 before, with the tick labels at 6.2.
 
 ## What is outstanding
 

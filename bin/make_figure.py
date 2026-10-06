@@ -153,11 +153,11 @@ def schematic():
          txt(X - 2, Y + 2, panel_label("a"), size=12, anchor="start", weight="bold")]
     bh = 46
     y1, y2 = Y + 18, Y + 98                   # the two rows
-    xref, xeng, xscore, xflag = X + 96, X + 206, X + 430, X + 592
-    wref, weng, wscore, wflag = 86, 190, 128, 134
+    xref, xeng, xscore, xflag = X + 132, X + 232, X + 440, X + 596
+    wref, weng, wscore, wflag = 78, 180, 122, 130
     # Row labels, in the figure's colour code.
-    o.append(txt(X + 44, y1 + bh / 2 + 4, "SATIVA", size=10, weight="bold", fill=UP))
-    o.append(txt(X + 44, y2 + bh / 2 + 4, "sativa-epang", size=10, weight="bold", fill=FORK))
+    o.append(txt(X + 62, y1 + bh / 2 + 4, "SATIVA", size=9, weight="bold", fill=UP))
+    o.append(txt(X + 62, y2 + bh / 2 + 4, "sativa-epang", size=9, weight="bold", fill=FORK))
     for y in (y1, y2):
         o += box(xref, y, wref, bh, "#f0f0f0", [("Reference tree", "normal", "#000")])
     o += box(xeng, y1, weng, bh, "#f7e9e6",
@@ -190,7 +190,7 @@ def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
          f'stroke="#444" stroke-width="0.8"/>',
          txt(ax.x0 - 44, ax.y0 - 16, panel_label(key), size=12, anchor="start", weight="bold")]
     o += [txt(ax.x0 + PW / 2, ax.y0 + PH + 32, xlabel, size=10),
-          txt(ax.x0 - 40, ax.y0 + PH / 2, ylabel, size=10, rot=-90)]
+          txt(ax.x0 - 26 * FONT_SCALE - 14, ax.y0 + PH / 2, ylabel, size=10, rot=-90)]
     for v in xticks:
         x = ax.px(v)
         o.append(f'<line x1="{x:.1f}" y1="{ax.y0 + PH}" x2="{x:.1f}" y2="{ax.y0 + PH + 4}" '
@@ -204,7 +204,7 @@ def frame(ax, key, title, xlabel, ylabel, xticks, yticks, xfmt=str, yfmt=str):
                  f'stroke="#e8e8e8" stroke-width="0.6"/>')
         o.append(f'<line x1="{ax.x0 - 4}" y1="{y:.1f}" x2="{ax.x0}" y2="{y:.1f}" '
                  f'stroke="#444" stroke-width="0.8"/>')
-        o.append(txt(ax.x0 - 7, y + 3, yfmt(v), size=8, anchor="end"))
+        o.append(txt(ax.x0 - 6, y + 3, yfmt(v), size=8, anchor="end"))
     return o
 
 

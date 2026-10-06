@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" font-family="Helvetica,Arial,sans-serif"><rect width="400" height="300" fill="#fff"/><rect x="72" y="40" width="260" height="190" fill="none" stroke="#444" stroke-width="0.8"/>
 <text x="28.0" y="24.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">(a)</text>
-<text x="202.0" y="262.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle">Surviving Relatives Carrying the Wrong Label (%)</text>
-<text x="32.0" y="135.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 32.0 135.0)">Recall</text>
+<text x="202.0" y="262.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle">Wrong-Labelled Relatives (%)</text>
+<text x="16.4" y="135.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 16.4 135.0)">Recall</text>
 <line x1="72" y1="230.0" x2="332" y2="230.0" stroke="#e8e8e8" stroke-width="0.6"/>
 <line x1="68" y1="230.0" x2="72" y2="230.0" stroke="#444" stroke-width="0.8"/>
-<text x="65.0" y="233.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0</text>
+<text x="66.0" y="233.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0</text>
 <line x1="72" y1="182.5" x2="332" y2="182.5" stroke="#e8e8e8" stroke-width="0.6"/>
 <line x1="68" y1="182.5" x2="72" y2="182.5" stroke="#444" stroke-width="0.8"/>
-<text x="65.0" y="185.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0.25</text>
+<text x="66.0" y="185.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0.25</text>
 <line x1="72" y1="135.0" x2="332" y2="135.0" stroke="#e8e8e8" stroke-width="0.6"/>
 <line x1="68" y1="135.0" x2="72" y2="135.0" stroke="#444" stroke-width="0.8"/>
-<text x="65.0" y="138.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0.5</text>
+<text x="66.0" y="138.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0.5</text>
 <line x1="72" y1="87.5" x2="332" y2="87.5" stroke="#e8e8e8" stroke-width="0.6"/>
 <line x1="68" y1="87.5" x2="72" y2="87.5" stroke="#444" stroke-width="0.8"/>
-<text x="65.0" y="90.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0.75</text>
+<text x="66.0" y="90.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0.75</text>
 <line x1="72" y1="40.0" x2="332" y2="40.0" stroke="#e8e8e8" stroke-width="0.6"/>
 <line x1="68" y1="40.0" x2="72" y2="40.0" stroke="#444" stroke-width="0.8"/>
-<text x="65.0" y="43.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1</text>
+<text x="66.0" y="43.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1</text>
 <path d="M98.0,65.3 L150.0,116.0 L202.0,167.9 L254.0,209.0 L306.0,227.9" fill="none" stroke="#000000" stroke-width="1.6"/>
 <circle cx="98.0" cy="65.3" r="2.6" fill="#000000"/>
 <circle cx="150.0" cy="116.0" r="2.6" fill="#000000"/>
