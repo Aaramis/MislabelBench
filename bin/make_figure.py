@@ -9,7 +9,7 @@ requirement that scaling be reported per stage rather than as one total.
   A  the method, drawn, one row per version, converging on the scoring they share
   B  wall clock against reference size, both tools, log-log, seconds at the points
   C  recall against the share of surviving relatives that carry the wrong label, both tools
-  D  recall against k for SATIVA and for the fork with and without batching, on the same cells
+  D  what an injected error is, drawn: k sequences of one group given a neighbour's label
 
 Each panel carries one sentence of the Evaluation section and no panel carries none. Three earlier
 panels were dropped against that rule: the per-stage scaling bars, because the main text makes no
@@ -358,30 +358,55 @@ def main():
                  f'stroke="#444" stroke-width="0.8"/>')
         o.append(txt(x, ax.y0 + PH + 15, f"{b['low'] * 100:.0f}-{b['high'] * 100:.0f}", size=7))
 
-    # D. Where the advantage comes from, said in recalls rather than in differences. Three
-    # conditions on the same cells: SATIVA; the fork with one sequence per fold, which is SATIVA's
-    # own protocol driven by the other engine; and the fork with its 25 folds. The two fork curves
-    # lie on top of each other, which is "the fold scheme contributes nothing", and the gap from
-    # them to SATIVA is the engine, widest at k=2. A first version plotted those two gaps as
-    # curves of differences and the co-author could not read it; nobody else would have.
-    cells = json.loads(Path(root, "results/kexact_decomposition.json").read_text())["cells"]
-    ax = Ax("D", (0.8, 10.5), (0, 1), xlog=True)
-    o += frame(ax, "D", "recall of SATIVA and of sativa-epang with and without batching, against k",
-               "Sequences Sharing the Wrong Label", "Recall",
-               [1, 2, 3, 5, 10], [0, 0.25, 0.5, 0.75, 1],
-               xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
-    conds = (("upstream_raxml_T8", UP, COMPARATOR_DASH), ("epang_T8_Kexact", FORK, None),
-             ("epang_T8_K25", FORK, "2 2"))
-    for cond, colour, dash in conds:
-        pts = sorted((c["k"], c["recall"][cond]["at_0"]) for c in cells if c["recall"].get(cond))
-        o += series(ax, pts, colour, dash=dash, line=False)
-        means = sorted({k: sum(v for kk, v in pts if kk == k) / sum(1 for kk, _ in pts if kk == k)
-                        for k, _ in pts}.items())
-        o += series(ax, means, colour, dash=dash, marker=None)
-        vals += [f"D\t{cond}\t{k}\t{v}" for k, v in pts]
-    # Only the batching needs naming here; the two tools are in the shared legend.
-    o += legend(ax.x0 + PW - 112, ax.y0 + 12,
-                [("one sequence per batch", FORK, None), ("25 batches", FORK, "2 2")], size=7)
+    # D. What an injected error is. Panel (c) speaks of relatives carrying the wrong label and the
+    # text of 180 datasets built from distance, rate, k and seed, and nothing showed what any of
+    # that looks like. A small tree does: a group of sequences, k of them given a neighbouring
+    # taxon's label at a chosen rank, the rest keeping theirs. The rank is the distance, k is how
+    # many move together, and those k are exactly the "relatives carrying the wrong label" that
+    # the leave-one-out in (c) then has to see past. Not measured; the reader's key to (c).
+    x0, y0 = PANELS["D"]
+    o.append(txt(x0 - 44, y0 - 16, "(d)", size=12, anchor="start", weight="bold"))
+    CAPTION.append("(d) What an injected error is: k sequences of one group given a neighbouring "
+                   "taxon's label at a chosen rank.")
+    # A tree: a root splitting into two clades, A with four leaves and B with three.
+    rx, ry = x0 + 6, y0 + 76                # root
+    ax_, ay_ = x0 + 46, y0 + 40             # clade A node
+    bx_, by_ = x0 + 46, y0 + 118            # clade B node
+    stroke = 'stroke="#444" stroke-width="1"'
+    o.append(f'<path d="M{rx},{ry} V{ay_} H{ax_} M{rx},{ry} V{by_} H{bx_}" fill="none" {stroke}/>')
+    leaves_a = [y0 + 16, y0 + 32, y0 + 48, y0 + 64]
+    leaves_b = [y0 + 104, y0 + 118, y0 + 132]
+    lx = x0 + 86
+    o.append(f'<path d="M{ax_},{leaves_a[0]} V{leaves_a[-1]}" fill="none" {stroke}/>')
+    o.append(f'<path d="M{bx_},{leaves_b[0]} V{leaves_b[-1]}" fill="none" {stroke}/>')
+    for yy in leaves_a + leaves_b:
+        o.append(f'<line x1="{ax_}" y1="{yy}" x2="{lx}" y2="{yy}" {stroke}/>')
+    # Clade labels, true taxonomy.
+    o.append(txt(ax_ - 4, ay_ - 30, "family A", size=8, anchor="end", fill="#444"))
+    o.append(txt(bx_ - 4, by_ + 30, "family B", size=8, anchor="end", fill="#444"))
+    # Leaf labels: every leaf carries its declared family. Two of A's carry B's, in red.
+    for i, yy in enumerate(leaves_a):
+        wrong = i in (1, 2)
+        o.append(txt(lx + 5, yy + 3, "B" if wrong else "A", size=8, anchor="start",
+                     fill=UP if wrong else "#000", weight="bold" if wrong else "normal"))
+    for yy in leaves_b:
+        o.append(txt(lx + 5, yy + 3, "B", size=8, anchor="start"))
+    # The two moved labels bracketed as k.
+    bxk = lx + 18
+    o.append(f'<path d="M{bxk},{leaves_a[1] - 5} H{bxk + 5} V{leaves_a[2] + 5} H{bxk}" '
+             f'fill="none" stroke="{UP}" stroke-width="1"/>')
+    o.append(txt(bxk + 10, (leaves_a[1] + leaves_a[2]) / 2 + 3, "k = 2 relabelled", size=8,
+                 anchor="start", fill=UP))
+    o.append(txt(bxk + 10, (leaves_a[1] + leaves_a[2]) / 2 + 14, "to the neighbour", size=8,
+                 anchor="start", fill=UP))
+    # The distance: the rank at which the true and the written label part.
+    o.append(txt(x0 + 100, y0 + 92, "distance = family", size=8, anchor="start", fill="#444"))
+    o.append(txt(x0 + 100, y0 + 104, "(species to phylum)", size=7, anchor="start", fill="#888"))
+    # The remaining A leaves are the surviving relatives (c) counts; here half of A carries B's label.
+    o.append(txt(x0 + PW / 2, y0 + PH + 15, "6 ranks  x  4 rates  x  5 k  x  3 seeds", size=7,
+                 fill="#444"))
+    o.append(txt(x0 + PW / 2, y0 + PH + 26, "= 180 datasets, truth known for every label", size=7,
+                 fill="#444"))
 
     # One legend for the whole figure, centred under the panels.
     o += legend(W / 2 - 110, H - 16, [("sativa-epang", FORK, None)], size=9)
