@@ -110,6 +110,7 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     o += mf.series(ax, fork, mf.FORK)
     for n, (x, y) in zip(sizes, fork):
         VALUES.append(f"{L}\tfork_wall_s_vs_child_mb\t{x}\t{y}")
+        VALUES.append(f"{L}\treference_size_label\t{x}\t{n}")
     for n, (x, y) in zip(sizes, up):
         VALUES.append(f"{L}\tupstream_wall_s_vs_child_mb\t{x}\t{y}")
     CAPTION.append(f"({L.lower()}) Wall clock against peak memory, one point per reference size from "
@@ -167,6 +168,8 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
         o.append(mf.txt(cx, ax.py(row["ref"] + row["tasks"] + row["place"] / 2) + 3,
                         f"{row['place']:.0f}", size=7, fill="#fff"))
     by_shards = {r["shards"]: r["spread"] for r in rows}
+    for r in rows:
+        VALUES.append(f"{L}\tshard_spread_s\t{r['shards']}\t{r['spread']}")
     CAPTION.append(f"({L.lower()}) The four stages on 7 051 sequences with 25 folds, one node per shard. "
                    f"Only placement distributes. At four shards they finish within {by_shards[4]:.1f} s of "
                    f"each other; at two the spread is {by_shards[2]:.1f} s because 25 folds split 13 and 12.")
