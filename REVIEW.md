@@ -2959,10 +2959,16 @@ fractions within 0.003, duplicates and distinct site patterns are both monotone 
 at 402 against 493 and 1 441 at 801), thread occupancy is 7.87 against 7.94 of 8, and the CPU model is
 the same. What the records cannot see is which child process peaks: `run.json`'s figure comes from
 `RUSAGE_CHILDREN.ru_maxrss`, the largest *single* child, and SATIVA spawns RAxML several times for
-different work. `slurm/regradient.sh` re-measures the whole gradient, both tools and five sizes, three
-replicates, back to back on one exclusive node, and samples every descendant's RSS so the tree total
-and the largest single process are recorded beside it. Until it returns, the panel that plots this
-keeps the committed values and the anomaly is stated rather than smoothed.
+different work. `slurm/regradient.sh` re-measured the whole gradient, both tools and five sizes, three
+replicates, back to back on one exclusive node, sampling every descendant's RSS. It reproduced the
+inversion to 0.1 MB and named RAxML as the process that peaks, which is what led to finding 140 and
+the config line behind it.
+
+**Its times are not usable and the committed ones stand.** Upstream came out 8 to 15 % slower at
+every size while the fork was within 1 % at the three largest, and the asymmetry is the sampler: it
+starts a process every 0.2 s to walk `/proc`, upstream saturates 7.97 of its 8 threads and has
+nothing spare, the fork uses 3.09 to 5.57 and absorbs it. The slowdown tracks the occupancy. Measuring
+memory and time in the same run costs the time, which is worth knowing before anyone repeats it.
 
 **139. A fifth summary line reported success after the work had failed.** `slurm/regradient.sh`, the
 job written to settle finding 138, lost all thirty of its runs to `_timeit.py: command not found` and
