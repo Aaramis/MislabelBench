@@ -20,6 +20,15 @@ OUT.mkdir(parents=True, exist_ok=True)
 GREY, LIGHT = "#8a8a8a", "#d5d5d5"
 
 
+def num(n):
+    return f"{n:,}".replace(",", " ")
+
+# Every number drawn, as make_figure.py keeps for its own figure: a change in any upstream record
+# shows up as a diff in this table and not only as a change of ink.
+VALUES = ["panel\tseries\tx\ty"]
+CAPTION = []
+
+
 def canvas(w, h, body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" '
             f'font-family="Helvetica,Arial,sans-serif"><rect width="{w}" height="{h}" fill="#fff"/>'
@@ -79,6 +88,12 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     o += mf.series(ax, up, mf.UP, dash=mf.COMPARATOR_DASH)
     o += mf.series(ax, fork, mf.FORK)
     for n, (x, y) in zip(sizes, fork):
+        VALUES.append(f"{L}\tfork_wall_s_vs_child_mb\t{x}\t{y}")
+    for n, (x, y) in zip(sizes, up):
+        VALUES.append(f"{L}\tupstream_wall_s_vs_child_mb\t{x}\t{y}")
+    CAPTION.append(f"({L.lower()}) Wall clock against peak memory, one point per reference size from "
+                   f"{num(min(sizes))} to {num(max(sizes))} sequences, both tools at 8 threads.")
+    for n, (x, y) in zip(sizes, fork):
         o.append(mf.txt(ax.px(x) - 6, ax.py(y) - 6, f"{n:,}".replace(",", " "), size=7, anchor="end",
                         fill=mf.FORK))
     for n, (x, y) in zip(sizes, up):
@@ -118,6 +133,7 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
         base, cx = 0.0, ax.px(i + 0.5)
         for key, (label, colour) in STAGE.items():
             v = row[key]
+            VALUES.append(f"{L}\t{key}\t{row['shards']}\t{v}")
             y1, y0 = ax.py(base + v), ax.py(base)
             o.append(f'<rect x="{cx - bw / 2:.1f}" y="{y1:.1f}" width="{bw}" height="{y0 - y1:.1f}" '
                      f'fill="{colour}" stroke="#fff" stroke-width="0.6"/>')
@@ -126,6 +142,10 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
         o.append(mf.txt(cx, ax.py(base) - 5, f"{base:.0f} s", size=8))
         o.append(mf.txt(cx, ax.py(row["ref"] + row["tasks"] + row["place"] / 2) + 3,
                         f"{row['place']:.0f}", size=7, fill="#fff"))
+    by_shards = {r["shards"]: r["spread"] for r in rows}
+    CAPTION.append(f"({L.lower()}) The four stages on 7 051 sequences with 25 folds, one node per shard. "
+                   f"Only placement distributes. At four shards they finish within {by_shards[4]:.1f} s of "
+                   f"each other; at two the spread is {by_shards[2]:.1f} s because 25 folds split 13 and 12.")
     lx, ly = ax.x0 + mf.PW + 6, ax.y0 + 8
     for key, (label, colour) in reversed(list(STAGE.items())):
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}"/>')
@@ -168,6 +188,10 @@ def fig_4(L="A", g=(660, 320, 300, 190, 232, 40), key=True):
         found = mean(rec[d]) * mean(by[d]["injected"])
         segs = (("kept", mean(by[d]["kept"]), LIGHT), ("found", found, mf.FORK),
                 ("gained", mean(by[d]["gained"]), mf.UP))
+        for name, v, _ in segs:
+            VALUES.append(f"{L}\t{name}\t{d}\t{v:.2f}")
+        VALUES.append(f"{L}\tlost\t{d}\t{mean(by[d]['lost']):.2f}")
+        VALUES.append(f"{L}\tcollateral_local_share\t{d}\t{local.get(d, '')}")
         base = 0.0
         for name, v, colour in segs:
             y1, y0 = ax.py(base + v), ax.py(base)
@@ -179,6 +203,10 @@ def fig_4(L="A", g=(660, 320, 300, 190, 232, 40), key=True):
                  f'fill="#fff" stroke="{GREY}" stroke-width="0.8" stroke-dasharray="2 1"/>')
         o.append(mf.txt(cx, ax.y0 + mf.PH + 15, d, size=7))
         o.append(mf.txt(cx, ax.py(base) - 4, local.get(d, ""), size=6.5, fill=mf.UP))
+    CAPTION.append(f"({L.lower()}) Flags per dataset by the taxonomic distance of the injected error: "
+                   "baseline flags kept, injected errors found, collateral flags on untouched sequences, "
+                   "and baseline flags lost, drawn below zero. The percentage is the share of collateral "
+                   "flags inside a clade the injection touched. Untouched sequences are not known negatives.")
     entries = (("baseline flags kept", LIGHT, False), ("injected errors found", mf.FORK, False),
                ("collateral flags, with the", mf.UP, False), ("baseline flags lost", "#fff", True))
     if key:
@@ -222,9 +250,13 @@ def fig_5(L="A", g=(400, 300, 260, 190, 72, 40)):
         bands = json.loads((ROOT / f"results/detection_law_{cond}.json").read_text())["by_ratio"]
         pts = [((b["low"] + b["high"]) / 2, b["recall"]) for b in bands]
         o += mf.series(ax, pts, colour, dash=dash)
+        VALUES.extend(f"{L}\t{cond}\t{x}\t{y}" for x, y in pts)
         if cond == "epang_T8_K25":
             for x, y in pts:
                 o.append(mf.txt(ax.px(x), ax.py(y) - 8, f"{y:.2f}", size=7, fill=mf.FORK))
+    CAPTION.append(f"({L.lower()}) Recall against the share of a sequence's surviving relatives that already "
+                   "carry the wrong label, both tools. Both follow the same curve, which is why half of every "
+                   "injected mislabel is found by neither.")
     for b in bands:
         x = ax.px((b["low"] + b["high"]) / 2)
         o.append(mf.txt(x, ax.y0 + mf.PH + 15, f"{b['low'] * 100:.0f}-{b['high'] * 100:.0f}", size=7))
@@ -255,6 +287,8 @@ def fig_6(L="A", g=(420, 300, 290, 190, 72, 40)):
                  xfmt=lambda v: f"{v:.1f}", yfmt=lambda v: f"{v:,}".replace(",", " "))
     bw = ax.px(0.52) - ax.px(0.50) - 1
     for b, (hi, lo) in sorted(bins.items()):
+        VALUES.append(f"{L}\texclusion_ge_0.99\t{b:.2f}\t{hi}")
+        VALUES.append(f"{L}\texclusion_lt_0.99\t{b:.2f}\t{lo}")
         x = ax.px(b)
         y_lo, y_hi = ax.py(lo), ax.py(lo + hi)
         o.append(f'<rect x="{x:.1f}" y="{y_lo:.1f}" width="{bw:.1f}" height="{ax.py(0) - y_lo:.1f}" fill="{LIGHT}"/>')
@@ -265,12 +299,16 @@ def fig_6(L="A", g=(420, 300, 290, 190, 72, 40)):
     o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 10, "exactly 0.510,", size=7, anchor="start"))
     o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 20, f"{n_stem / len(conf) * 100:.0f} % of {len(conf):,}".replace(",", " "),
                     size=7, anchor="start"))
+    CAPTION.append(f"({L.lower()}) Confidence of every flag in the 180-dataset grid, sativa-epang: "
+                   f"{num(n_stem)} of {num(len(conf))} sit at exactly 0.510, the value the scoring rule "
+                   "gives a placement on the stem of the declared taxon, and all of them carry exclusion "
+                   "at or above 0.99.")
     o += mf.legend(ax.x0 + mf.PW - 118, ax.y0 + 12, [("exclusion >= 0.99", mf.FORK, None),
                                                       ("exclusion < 0.99", LIGHT, None)], size=7.5)
     return w, h, o
 
 
-def figure2():
+def figure2(write=False):
     """The six candidates on one canvas, in the order the paper makes its claims.
 
     The workflow across the top; the two performance claims side by side; then the evaluation in
@@ -284,6 +322,10 @@ def figure2():
     o += fig_4("D", (0, 0, 180, 150, 58, 512), key=False)[2]
     o += fig_5("E", (0, 0, 180, 150, 318, 512))[2]
     o += fig_6("F", (0, 0, 180, 150, 578, 512))[2]
+    if write:
+        (OUT / "figure2_values.tsv").write_text("\n".join(VALUES) + "\n")
+        kept = [c for c in mf.CAPTION if not c.endswith(") .")]
+        (OUT / "figure2_caption.txt").write_text(" ".join(kept + CAPTION) + "\n")
     return canvas(760, 712, o)
 
 
@@ -291,5 +333,7 @@ if __name__ == "__main__":
     for i, fn in enumerate((fig_1, fig_2, fig_3, fig_4, fig_5, fig_6), 1):
         w, h, body = fn()
         (OUT / f"figure1_{i}.svg").write_text(canvas(w, h, body))
-    (OUT / "figure2.svg").write_text(figure2())
-    print(f"6 candidates and figure2 written to {OUT}")
+    VALUES[:] = VALUES[:1]
+    CAPTION.clear()
+    (OUT / "figure2.svg").write_text(figure2(write=True))
+    print(f"6 candidates and figure2 written to {OUT}, {len(VALUES) - 1} values, caption drafted")
