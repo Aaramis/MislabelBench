@@ -38,7 +38,11 @@ import math
 import statistics as st
 from pathlib import Path
 
-W, H = 760, 540
+# The extra 34 points at the bottom are the shared legend's strip. Three Bioinformatics figures were
+# looked at to settle this: two of the three carry one legend for the whole figure, at the bottom or
+# at the right, rather than repeating a box in every panel, which is what this did and what cost each
+# panel a corner of its plotting area.
+W, H = 760, 574
 # Plot areas: two rows of two, left margin wide enough for a rotated y label.
 PANELS = {"A": (62, 40), "B": (452, 40), "C": (62, 320), "D": (452, 320)}
 PW, PH = 240, 180
@@ -219,13 +223,18 @@ def main():
     # A. Speed, which is the claim the paper leads with.
     grad = read_gradient(root / "results/resource_usage.txt")
     ax = Ax("A", (350, 8000), (5, 4000), xlog=True, ylog=True)
-    o += frame(ax, "A", "wall clock, both tools", "Reference Sequences", "Runtime  [s]",
+    o += frame(ax, "A", "wall clock, both tools", "Reference Sequences", "Runtime (seconds)",
                [400, 1000, 2000, 4000, 7000], [10, 100, 1000],
                xfmt=lambda v: f"{v:,}".replace(",", " "))
     o += series(ax, [(r["n"], r["upstream"]) for r in grad], UP, dash=COMPARATOR_DASH)
     o += series(ax, [(r["n"], r["fork"]) for r in grad], FORK)
-    o += legend(ax.x0 + 8, ax.y0 + 14, [("sativa-epang", FORK, None),
-                                        ("SATIVA", UP, COMPARATOR_DASH)])
+    # Labelled rules at round durations, so a log axis can be read without counting decades. The
+    # same device carries the performance panel of the SigProfilerAssignment figure in this journal.
+    for secs, label in ((60, "1 min"), (600, "10 min")):
+        y = ax.py(secs)
+        o.append(f'<line x1="{ax.x0}" y1="{y:.1f}" x2="{ax.x0 + PW}" y2="{y:.1f}" '
+                 f'stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>')
+        o.append(txt(ax.x0 + PW - 4, y - 4, label, size=7, anchor="end", fill="#888"))
     # The speedup is the point of the panel and is not readable off two log curves.
     for r in grad:
         o.append(txt(ax.px(r["n"]), ax.py(r["fork"]) - 9, f"{r['wall_speedup']:.0f}x",
@@ -248,8 +257,6 @@ def main():
         pts = [((b["low"] + b["high"]) / 2, b["recall"]) for b in bands]
         o += series(ax, pts, colour, dash=dash)
         vals += [f"B\t{cond}\t{x}\t{y}" for x, y in pts]
-    o += legend(ax.x0 + PW - 96, ax.y0 + 14, [("sativa-epang", FORK, None),
-                                              ("SATIVA", UP, COMPARATOR_DASH)])
 
     # C. The comparison itself. Both ends are flat for opposite reasons, a ceiling at k=1 where
     # the rest of the group keeps the right label and a floor at k=10 where it does not, so the
@@ -264,9 +271,9 @@ def main():
             r = read_recall(root, cond, rate)
             o += series(ax, sorted(r.items()), colour, dash=dash)
             vals += [f"C\t{cond}_r{rate}\t{k}\t{v:.4f}" for k, v in sorted(r.items())]
-    o += legend(ax.x0 + PW - 96, ax.y0 + 14,
-                [("sativa-epang, 5 %", FORK, None), ("sativa-epang, 1 %", FORK, "4 2"),
-                 ("SATIVA, 5 %", UP, None), ("SATIVA, 1 %", UP, "4 2")])
+    # Colour is the tool and is in the shared legend, so this one only has to say what the dash is.
+    o += legend(ax.x0 + PW - 58, ax.y0 + 14,
+                [("5 %", "#555", None), ("1 %", "#555", "4 2")], size=8)
 
     # D. Where the advantage comes from. Running EPA-ng with one sequence per fold is upstream's own
     # protocol with the other engine, so the gap it leaves is the engine alone and what remains is
@@ -290,8 +297,13 @@ def main():
                         for k, _ in pts}.items())
         o += series(ax, means, colour, dash=dash, marker=None)
         vals += [f"D\t{field}\t{k}\t{v}" for k, v in pts]
-    o += legend(ax.x0 + PW - 86, ax.y0 + 14, [("engine", FORK, None),
-                                              ("fold scheme", UP, COMPARATOR_DASH)])
+    # Labelled on the curves. A box here would sit on the only part of the panel that carries data.
+    o.append(txt(ax.px(3.4), ax.py(0.20), "engine", size=8, anchor="start", fill=FORK))
+    o.append(txt(ax.px(3.4), ax.py(0.035), "fold scheme", size=8, anchor="start", fill=UP))
+
+    # One legend for the whole figure, centred under the panels.
+    o += legend(W / 2 - 110, H - 20, [("sativa-epang", FORK, None)], size=9)
+    o += legend(W / 2 + 20, H - 20, [("SATIVA", UP, COMPARATOR_DASH)], size=9)
 
     o.append("</svg>")
     Path(args.out).write_text("\n".join(o) + "\n")
