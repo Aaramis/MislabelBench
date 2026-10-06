@@ -2937,9 +2937,10 @@ than reasoned, as that finding also required: against the live cluster the rule 
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** The strict leave-one-out along *k*. Finding 131 reports *k*=10 and the *k*=5 cell is on the
-cluster; *k*=1 and *k*=3 would complete the axis at family distance and rate 0.05, at about 71 minutes
-each.
+**Running.** The strict leave-one-out at *k*=3, the one point still missing from the axis at family
+distance and rate 0.05, about 71 minutes. Findings 131 and 134 report *k*=10, *k*=5 and both *k*=2
+seeds; *k*=1 finished after them and is in the decomposition table. The minimal-case campaign is
+complete, eleven sweeps and 82 cases, and nothing else is on the cluster.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory
