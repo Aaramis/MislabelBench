@@ -57,7 +57,7 @@ W, H = 760, 512
 # ends, and all of it is the engine -- and without it neither had a picture.
 PANELS = {"B": (58, 282), "C": (308, 282), "D": (558, 282)}
 PW, PH = 190, 160
-SCHEMATIC = (24, 34, 736, 200)   # x, y, width, height
+SCHEMATIC = (24, 30, 736, 170)   # x, y, width, height
 # Black for the tool under test, colour for the comparator, taken from the script that produced
 # this journal's gappa figure (lczech/genesis-gappa-paper, plot.py): their own library is plotted
 # with colour "k" and a solid line, every competitor with a cycle colour and a (5,2) dash, and their

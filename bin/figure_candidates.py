@@ -442,16 +442,16 @@ def figure3(write=False):
     mf.LABEL_STYLE = "upper"
     o = []
     o += fig_1()[2]
-    o += fig_2("B", (0, 0, 270, 170, 72, 262))[2]
-    o += fig_3("C", (0, 0, 236, 170, 452, 262))[2]
-    o += fig_4b("D", (0, 0, 390, 150, 58, 512))[2]
-    o += fig_5("E", (0, 0, 212, 150, 536, 512))[2]
+    o += fig_2("B", (0, 0, 270, 158, 72, 232))[2]
+    o += fig_3("C", (0, 0, 236, 158, 452, 232))[2]
+    o += fig_4b("D", (0, 0, 390, 140, 58, 450))[2]
+    o += fig_5("E", (0, 0, 212, 140, 536, 450))[2]
     mf.LABEL_STYLE = "paren-lower"
     if write:
         (OUT / "figure3_values.tsv").write_text("\n".join(VALUES) + "\n")
         kept = [c for c in mf.CAPTION if not c.endswith(") .")]
         (OUT / "figure3_caption.txt").write_text(" ".join(kept + CAPTION) + "\n")
-    return canvas(760, 712, o)
+    return canvas(760, 632, o)
 
 
 if __name__ == "__main__":
