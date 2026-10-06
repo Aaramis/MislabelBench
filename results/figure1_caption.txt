@@ -1,1 +1,1 @@
-(a) The method, and where the two versions differ: n placements against n/K. (b) wall clock, both tools. (c) recall against the number of sequences sharing the wrong label. (d) recall against the share of surviving relatives carrying the wrong label.
+(a) The method, one row per version. Only the placement step differs: n placements against n/K. (b) runtime against reference size, both tools. (c) recall against the share of surviving relatives carrying the wrong label.
