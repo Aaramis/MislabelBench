@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 139 |
+| findings in this report | 140 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 39 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -2974,6 +2974,36 @@ of thirty failures as though it were a result is the same mistake findings 101, 
 recorded, and the rule each time was that the failure path has to be exercised before the summary is
 written. The script now counts failed runs, prints the reason, and exits 1 with the table marked as
 not a measurement. The job is resubmitted.
+
+**140. The two tools do not use the same rate heterogeneity model, and nothing here had noticed.** Each
+run writes its reference as a `.refjson` carrying a `ratehet_model` field, and it reads **GTRGAMMA for
+sativa-epang and GTRCAT for upstream at every size above 402 sequences**. At 402 both use GTRGAMMA, so
+upstream switches somewhere between 402 and 801 and the fork does not. Found while chasing finding
+138: the memory inversion at the smallest size is that switch, since GAMMA keeps four rate categories
+where CAT keeps one, so upstream's RAxML needs 99.0 MB on 402 sequences and 52.4 on 801 despite twice
+the taxa. That part is explained.
+
+What the switch costs the comparison is not. Three claims rest on the two tools differing only in the
+placement engine:
+
+- **Speed.** The fork is measured against a comparator doing a quarter of the per-site likelihood
+  work above 402 sequences. The 11x and 16x are therefore conservative, which is the harmless
+  direction, but they are not a like-for-like comparison and the note must say so.
+- **Memory.** The fork's higher peak is partly GAMMA against CAT and not only EPA-ng's own appetite.
+- **Detection.** GAMMA and CAT give different likelihoods, so different placements, so possibly
+  different flags. Part of the recall difference this benchmark attributes to the engine could be the
+  rate model. This is the one that matters and it is not yet measured.
+
+It also qualifies D185. The third arm there, the fork driving RAxML, was built so that fork and
+upstream would differ in one thing; its `.refjson` says GTRGAMMA where upstream's says GTRCAT, so they
+differed in two. The arm still agreed with upstream in 78 of 78 cases, which says the rate model
+changed no verdict in those 78, but that was luck rather than design.
+
+Established from three independent sets of runs, which is why it is stated as a property of the tools
+rather than of one script: the size-gradient re-measurement, the minimal-case sweeps, and the grid's
+own reference files. The switch's location in the source was not found -- neither container exposes an
+importable `epac` package to grep -- so the behaviour is reported from the tools' own output, which is
+where it matters.
 
 ## What is outstanding
 
