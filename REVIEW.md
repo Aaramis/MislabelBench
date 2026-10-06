@@ -20,7 +20,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 |---|---|
 | findings in this report | 140 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 39 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1117 |
@@ -2991,13 +2991,22 @@ placement engine:
   direction, but they are not a like-for-like comparison and the note must say so.
 - **Memory.** The fork's higher peak is partly GAMMA against CAT and not only EPA-ng's own appetite.
 - **Detection.** GAMMA and CAT give different likelihoods, so different placements, so possibly
-  different flags. Part of the recall difference this benchmark attributes to the engine could be the
-  rate model. This is the one that matters and it is not yet measured.
+  different flags. This was the one that mattered, and it is measured and closed: see below.
+
+Closed by `slurm/shared_reference.sh`. Neither tool exposes the rate model on its command line, but
+both take `-r` to reuse a reference, so upstream built one with its own GTRCAT and the fork's staged
+leave-one-out ran against that same file, model and tree included. On `inj_family_r0.05_k2_s1` the
+recalls are **upstream 0.402, the fork on upstream's reference 0.686, the fork on its own 0.667**, and
+the borrowed arm's record says GTRCAT, which is what shows it reused the file rather than rebuilding.
+So the engine alone is worth **+0.284** with everything else identical, and the rate model **-0.019**,
+in the direction that flatters upstream. That +0.284 is what the strict leave-one-out decomposition
+reported for this cell by a route sharing no step with this one.
 
 It also qualifies D185. The third arm there, the fork driving RAxML, was built so that fork and
 upstream would differ in one thing; its `.refjson` says GTRGAMMA where upstream's says GTRCAT, so they
 differed in two. The arm still agreed with upstream in 78 of 78 cases, which says the rate model
-changed no verdict in those 78, but that was luck rather than design.
+changed no verdict in those 78, and the shared-reference control now says the same thing with a number
+on it, so the agreement was not luck after all.
 
 Established from three independent sets of runs, which is why it is stated as a property of the tools
 rather than of one script: the size-gradient re-measurement, the minimal-case sweeps, and the grid's

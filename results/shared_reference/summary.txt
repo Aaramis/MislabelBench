@@ -1,0 +1,12 @@
+upstream   : model GTRCAT, 170 flags
+fork_shared: model GTRCAT, 197 flags
+fork_own   : model GTRGAMMA, 190 flags
+
+upstream      170 flags,  41 of 102 injected found (recall 0.402)
+fork_shared   197 flags,  70 of 102 injected found (recall 0.686)
+fork_own      190 flags,  68 of 102 injected found (recall 0.667)
+
+fork_own     vs fork_shared  shared  173, only fork_own  17, only fork_shared  24, jaccard 0.808
+fork_shared  vs upstream     shared  150, only fork_shared  47, only upstream  20, jaccard 0.691
+fork_own     vs upstream     shared  146, only fork_own  44, only upstream  24, jaccard 0.682
+ALLDONE

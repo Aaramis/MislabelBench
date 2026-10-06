@@ -141,7 +141,13 @@ So the whole of the fork's advantage is the placement engine, and it rises from 
 axis is complete at family distance and rate 0.05: six cells, every value of *k* the grid uses, and the
 fold scheme's share is 0.000 in all six.
 
-**And "the engine" means the engine, not the fork's scoring code.** The two differ in two things at
+**And "the engine" means the engine, not the rate model and not the fork's scoring code.** Above 402
+sequences upstream builds its reference under GTRCAT and the fork under GTRGAMMA, which is a second
+difference nobody had noticed and which `slurm/shared_reference.sh` removes: upstream builds the
+reference, the fork's staged leave-one-out places against that same file, and the borrowed arm's own
+record says GTRCAT. On `inj_family_r0.05_k2_s1` recall is then **0.402 for upstream, 0.686 for the fork
+on upstream's reference, 0.667 for the fork on its own** -- the engine worth +0.284 with model and tree
+held identical, the rate model worth -0.019. The two differ in two things at
 once, so a third arm was run: the fork with `SATIVA_L1O_ENGINE=raxml`, the same codebase driving the
 other engine. Over the campaign's 82 cases it agrees with upstream **78 times out of 78** where both
 arms ran, and of those 82 cases exactly **one** has the fork driving EPA-ng flagging where upstream
