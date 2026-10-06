@@ -18,8 +18,8 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 136 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 58 |
+| findings in this report | 137 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 38 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
@@ -2932,6 +2932,19 @@ there the anchor mattered because one top-level `runs/` had to be skipped and ev
 here a scratch directory named `tmp` has to be skipped at whatever depth a tool puts it. Measured rather
 than reasoned, as that finding also required: against the live cluster the rule takes the transfer from
 **4 207 files to 441**.
+
+**137. The figure was being chosen by elimination, and the plan says what it should show.** Four
+versions of the one figure each dropped a panel the previous one had, judged against the
+manuscript's Evaluation section, until the co-author could not read what was left. The benchmark
+plan is the better judge: it makes three claims -- the same rule, a speed gain, a way to distribute --
+and two of its sections, the four-way count of flags and the point mass at 0.510, are the ideas no
+other tool reports. `bin/figure_candidates.py` draws one standalone panel per idea, six of them, from
+committed records only and with `make_figure.py`'s own helpers, so each can be accepted or refused
+on sight and whatever is kept moves into the figure unchanged. Two things it surfaced: runtime
+against peak memory puts the tools in opposite corners, 9 GB against 0.6 GB at 7 051 sequences, which
+is the plan's "memory constrains ours" with a number; and the per-stage bars show two nodes at 194 s
+against 266 at one and 268 at four, so the distribution claim rests on one node count and the
+straggler at four, already noted in `slurm/scaling.sh`, has to be said wherever the panel goes.
 
 ## What is outstanding
 
