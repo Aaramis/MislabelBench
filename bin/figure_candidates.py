@@ -93,18 +93,32 @@ def fig_2():
     return canvas(w, h, o)
 
 
-# 3. The stages at one, two and four nodes: only placement distributes.
-STAGE = {"reference_sec": ("reference tree", LIGHT), "loo_tasks_sec": ("batch setup", "#b5b5b5"),
-         "loo_place_sec": ("placement", mf.FORK), "loo_score_sec": ("scoring", GREY)}
+# 3. The stages at one, two and four shards: only placement distributes.
+# Read from the pipeline's own staged records, results/staged_scaling_f{25,13,7}.txt, and not from
+# results/scaling/*/timing.json: those are the earlier srun fan-out, which threw one straggler per
+# allocation at 124 to 258 s and showed four nodes no faster than one. The pipeline's shards finish
+# within 0.6 s of each other and the straggler was the fan-out's, not the tool's. README's own table
+# rests on these records, so the panel has to as well.
+STAGE = {"ref": ("reference tree", LIGHT), "tasks": ("batch setup", "#b5b5b5"),
+         "place": ("placement", mf.FORK), "score": ("scoring", GREY)}
+
+
+def staged_rows():
+    rows = []
+    for fpj in (25, 13, 7):
+        ln = (ROOT / f"results/staged_scaling_f{fpj}.txt").read_text().splitlines()[1].split()
+        rows.append({"shards": int(ln[1]), "ref": float(ln[2]), "tasks": float(ln[3]),
+                     "place": float(ln[4]), "spread": float(ln[5]), "score": float(ln[6])})
+    return sorted(rows, key=lambda r: r["shards"])
 
 
 def fig_3():
     w, h = single(400, 300, 260, 190, 72, 40)
-    stages = mf.read_stages(ROOT)
+    rows = staged_rows()
     ax = mf.Ax("A", (0, 3), (0, 300))
-    o = mf.frame(ax, "A", "", "Nodes", "Runtime (seconds)", [], [0, 100, 200, 300])
+    o = mf.frame(ax, "A", "", "Placement Shards", "Runtime (seconds)", [], [0, 100, 200, 300])
     bw = 52
-    for i, row in enumerate(stages):
+    for i, row in enumerate(rows):
         base, cx = 0.0, ax.px(i + 0.5)
         for key, (label, colour) in STAGE.items():
             v = row[key]
@@ -112,16 +126,16 @@ def fig_3():
             o.append(f'<rect x="{cx - bw / 2:.1f}" y="{y1:.1f}" width="{bw}" height="{y0 - y1:.1f}" '
                      f'fill="{colour}" stroke="#fff" stroke-width="0.6"/>')
             base += v
-        o.append(mf.txt(cx, ax.y0 + mf.PH + 15, row["nodes"], size=8))
+        o.append(mf.txt(cx, ax.y0 + mf.PH + 15, row["shards"], size=8))
         o.append(mf.txt(cx, ax.py(base) - 5, f"{base:.0f} s", size=8))
-        o.append(mf.txt(cx, ax.py(row["reference_sec"] + row["loo_tasks_sec"] + row["loo_place_sec"] / 2) + 3,
-                        f"{row['loo_place_sec']:.0f}", size=7, fill="#fff"))
+        o.append(mf.txt(cx, ax.py(row["ref"] + row["tasks"] + row["place"] / 2) + 3,
+                        f"{row['place']:.0f}", size=7, fill="#fff"))
     lx, ly = ax.x0 + mf.PW + 6, ax.y0 + 8
     for key, (label, colour) in reversed(list(STAGE.items())):
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}"/>')
         o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
         ly += 13
-    o.append(mf.txt(ax.x0 + mf.PW / 2, h - 6, "7 051 sequences, 8 threads per node",
+    o.append(mf.txt(ax.x0 + mf.PW / 2, h - 6, "7 051 sequences, 25 folds, one node per shard, 8 threads",
                     size=7, fill="#666"))
     return canvas(w, h, o)
 

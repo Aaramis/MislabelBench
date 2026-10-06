@@ -2942,9 +2942,13 @@ other tool reports. `bin/figure_candidates.py` draws one standalone panel per id
 committed records only and with `make_figure.py`'s own helpers, so each can be accepted or refused
 on sight and whatever is kept moves into the figure unchanged. Two things it surfaced: runtime
 against peak memory puts the tools in opposite corners, 9 GB against 0.6 GB at 7 051 sequences, which
-is the plan's "memory constrains ours" with a number; and the per-stage bars show two nodes at 194 s
-against 266 at one and 268 at four, so the distribution claim rests on one node count and the
-straggler at four, already noted in `slurm/scaling.sh`, has to be said wherever the panel goes.
+is the plan's "memory constrains ours" with a number; and the per-stage bars, as first drawn, showed two nodes at 194 s against 266 at one and 268 at
+four. That was the wrong record: `read_stages` reads `results/scaling/*/timing.json`, the earlier
+`srun` fan-out whose straggler at 124 to 258 s README already explains and whose successor, the
+pipeline's own staged runs, finishes four shards within 0.6 s of each other. The candidate now reads
+`results/staged_scaling_f{25,13,7}.txt`, the records README's own table rests on: placement 194.5,
+111.2 and 56.4 s at one, two and four shards. The sentence that said the straggler had to be
+mentioned wherever the panel goes was written from the superseded record, and this is its correction.
 
 ## What is outstanding
 
