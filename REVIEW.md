@@ -3010,9 +3010,17 @@ on it, so the agreement was not luck after all.
 
 Established from three independent sets of runs, which is why it is stated as a property of the tools
 rather than of one script: the size-gradient re-measurement, the minimal-case sweeps, and the grid's
-own reference files. The switch's location in the source was not found -- neither container exposes an
-importable `epac` package to grep -- so the behaviour is reported from the tools' own output, which is
-where it matters.
+own reference files.
+
+**And the cause is one line of a config file.** `sativa.cfg` ships with each tool and sets
+`raxml_model=auto` upstream and `raxml_model=GTRGAMMA` in the fork. With `auto`,
+`resolve_auto_settings` applies `epac/config.py`'s `CAT_GAMMA_THRES = 500` and switches above 500
+sequences; with a value pinned, that branch never runs. The rule, the threshold and the trainer that
+writes the model into the reference are identical in both repositories line for line, and both runs
+record the same `ref_tree_size`, 801 and 2023, so neither the rule nor its input differs. The
+direction is worth stating plainly: the fork does four times the per-site likelihood work of its
+comparator above 500 sequences, so this penalises its speed and memory rather than flattering them,
+and finding 140's control shows it buys nothing in recall.
 
 ## What is outstanding
 
