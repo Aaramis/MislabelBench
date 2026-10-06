@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 140 |
+| findings in this report | 141 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3021,6 +3021,25 @@ record the same `ref_tree_size`, 801 and 2023, so neither the rule nor its input
 direction is worth stating plainly: the fork does four times the per-site likelihood work of its
 comparator above 500 sequences, so this penalises its speed and memory rather than flattering them,
 and finding 140's control shows it buys nothing in recall.
+
+**141. The figure is illegible at the size it will be printed, and nothing had checked.** The
+journal's two-column text block is **423.9 pt**, measured by compiling the class rather than guessed,
+and the figure is drawn on a 760 pt canvas and placed at `\textwidth`. Everything in it is therefore
+reduced to **0.558**, so a tick label drawn at 7 pt reaches the page at **3.9 pt** and the smallest,
+drawn at 6.5, at **3.6**. Six points is the usual floor for print. Every axis in the figure is below
+four.
+
+Raising the sizes is not enough on its own. `FONT_SCALE = 1.6` puts the smallest label at 5.8 pt and
+was tried: the panel legends then run off their panels, the schematic's boxes overlap their own text,
+and the y axis collides with its labels. The figure carries more text than 424 pt can hold at a
+legible size, which is a design question rather than a parameter, so the factor is back at 1 and the
+knob is left in place with the measurement beside it.
+
+Three ways out, and the choice is the manuscript's rather than the code's. Move one data panel to the
+supplement, which buys the remaining ones about a third more width each. Shorten the axis labels, the
+longest of which is "Surviving Relatives Carrying the Wrong Label (%)" and could be a caption
+sentence instead. Or let the figure run taller with one data panel per row, which costs page height
+in a note already a page over.
 
 ## What is outstanding
 

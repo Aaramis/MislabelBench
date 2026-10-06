@@ -91,13 +91,21 @@ class Ax:
         return self.y0 + PH - (self._fy(v) - self.ya) / (self.yb - self.ya) * PH
 
 
+# Every font size passes through txt(), so one factor sets the printed size of the whole figure.
+# The journal's two-column text block is 424 pt and this canvas is 760, so a label drawn at 7 pt
+# reaches the page at 3.9 pt. Nothing below about 6 pt is legible in print, and a figure whose axes
+# cannot be read is a figure that has to be redrawn after acceptance. 1.6 puts the smallest label
+# at 5.8 pt and the tick labels at 6.3.
+FONT_SCALE = 1.6
+
+
 def esc(s):
     return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
 def txt(x, y, s, size=9, anchor="middle", weight="normal", rot=None, fill="#000"):
     t = f' transform="rotate({rot} {x:.1f} {y:.1f})"' if rot is not None else ""
-    return (f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" fill="{fill}" '
+    return (f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size * FONT_SCALE:.1f}" fill="{fill}" '
             f'font-weight="{weight}" text-anchor="{anchor}"{t}>{esc(s)}</text>')
 
 
