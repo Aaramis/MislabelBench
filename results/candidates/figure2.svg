@@ -86,36 +86,36 @@
 <line x1="452" y1="432.0" x2="688" y2="432.0" stroke="#e8e8e8" stroke-width="0.6"/>
 <line x1="448" y1="432.0" x2="452" y2="432.0" stroke="#444" stroke-width="0.8"/>
 <text x="445.0" y="435.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0</text>
-<line x1="452" y1="375.3" x2="688" y2="375.3" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="448" y1="375.3" x2="452" y2="375.3" stroke="#444" stroke-width="0.8"/>
-<text x="445.0" y="378.3" font-size="8" fill="#000" font-weight="normal" text-anchor="end">100</text>
-<line x1="452" y1="318.7" x2="688" y2="318.7" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="448" y1="318.7" x2="452" y2="318.7" stroke="#444" stroke-width="0.8"/>
-<text x="445.0" y="321.7" font-size="8" fill="#000" font-weight="normal" text-anchor="end">200</text>
-<line x1="452" y1="262.0" x2="688" y2="262.0" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="448" y1="262.0" x2="452" y2="262.0" stroke="#444" stroke-width="0.8"/>
-<text x="445.0" y="265.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">300</text>
-<rect x="465.3" y="391.8" width="52" height="40.2" fill="#d5d5d5" stroke="#fff" stroke-width="0.6"/>
-<rect x="465.3" y="390.2" width="52" height="1.5" fill="#b5b5b5" stroke="#fff" stroke-width="0.6"/>
-<rect x="465.3" y="280.0" width="52" height="110.2" fill="#000000" stroke="#fff" stroke-width="0.6"/>
-<rect x="465.3" y="268.7" width="52" height="11.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
+<line x1="452" y1="378.9" x2="688" y2="378.9" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="448" y1="378.9" x2="452" y2="378.9" stroke="#444" stroke-width="0.8"/>
+<text x="445.0" y="381.9" font-size="8" fill="#000" font-weight="normal" text-anchor="end">100</text>
+<line x1="452" y1="325.8" x2="688" y2="325.8" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="448" y1="325.8" x2="452" y2="325.8" stroke="#444" stroke-width="0.8"/>
+<text x="445.0" y="328.8" font-size="8" fill="#000" font-weight="normal" text-anchor="end">200</text>
+<line x1="452" y1="272.6" x2="688" y2="272.6" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="448" y1="272.6" x2="452" y2="272.6" stroke="#444" stroke-width="0.8"/>
+<text x="445.0" y="275.6" font-size="8" fill="#000" font-weight="normal" text-anchor="end">300</text>
+<rect x="465.3" y="394.3" width="52" height="37.7" fill="#d5d5d5" stroke="#fff" stroke-width="0.6"/>
+<rect x="465.3" y="392.8" width="52" height="1.4" fill="#b5b5b5" stroke="#fff" stroke-width="0.6"/>
+<rect x="465.3" y="289.5" width="52" height="103.3" fill="#000000" stroke="#fff" stroke-width="0.6"/>
+<rect x="465.3" y="278.9" width="52" height="10.6" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
 <text x="491.3" y="447.0" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">1</text>
-<text x="491.3" y="263.7" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">288 s</text>
-<text x="491.3" y="338.1" font-size="7" fill="#fff" font-weight="normal" text-anchor="middle">194</text>
-<rect x="544.0" y="391.3" width="52" height="40.7" fill="#d5d5d5" stroke="#fff" stroke-width="0.6"/>
-<rect x="544.0" y="389.8" width="52" height="1.5" fill="#b5b5b5" stroke="#fff" stroke-width="0.6"/>
-<rect x="544.0" y="326.8" width="52" height="63.0" fill="#000000" stroke="#fff" stroke-width="0.6"/>
-<rect x="544.0" y="315.6" width="52" height="11.2" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
+<text x="491.3" y="273.9" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">288 s</text>
+<text x="491.3" y="344.2" font-size="7" fill="#fff" font-weight="normal" text-anchor="middle">194</text>
+<rect x="544.0" y="393.9" width="52" height="38.1" fill="#d5d5d5" stroke="#fff" stroke-width="0.6"/>
+<rect x="544.0" y="392.5" width="52" height="1.4" fill="#b5b5b5" stroke="#fff" stroke-width="0.6"/>
+<rect x="544.0" y="333.4" width="52" height="59.1" fill="#000000" stroke="#fff" stroke-width="0.6"/>
+<rect x="544.0" y="322.9" width="52" height="10.5" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
 <text x="570.0" y="447.0" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">2</text>
-<text x="570.0" y="310.6" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">205 s</text>
-<text x="570.0" y="361.3" font-size="7" fill="#fff" font-weight="normal" text-anchor="middle">111</text>
-<rect x="622.7" y="391.0" width="52" height="41.0" fill="#d5d5d5" stroke="#fff" stroke-width="0.6"/>
-<rect x="622.7" y="389.5" width="52" height="1.5" fill="#b5b5b5" stroke="#fff" stroke-width="0.6"/>
-<rect x="622.7" y="357.5" width="52" height="32.0" fill="#000000" stroke="#fff" stroke-width="0.6"/>
-<rect x="622.7" y="346.4" width="52" height="11.2" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
+<text x="570.0" y="317.9" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">205 s</text>
+<text x="570.0" y="365.9" font-size="7" fill="#fff" font-weight="normal" text-anchor="middle">111</text>
+<rect x="622.7" y="393.6" width="52" height="38.4" fill="#d5d5d5" stroke="#fff" stroke-width="0.6"/>
+<rect x="622.7" y="392.2" width="52" height="1.4" fill="#b5b5b5" stroke="#fff" stroke-width="0.6"/>
+<rect x="622.7" y="362.2" width="52" height="30.0" fill="#000000" stroke="#fff" stroke-width="0.6"/>
+<rect x="622.7" y="351.7" width="52" height="10.5" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
 <text x="648.7" y="447.0" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">4</text>
-<text x="648.7" y="341.4" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">151 s</text>
-<text x="648.7" y="376.5" font-size="7" fill="#fff" font-weight="normal" text-anchor="middle">56</text>
+<text x="648.7" y="346.7" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">151 s</text>
+<text x="648.7" y="380.2" font-size="7" fill="#fff" font-weight="normal" text-anchor="middle">56</text>
 <rect x="694" y="263" width="10" height="9" fill="#8a8a8a"/>
 <text x="708.0" y="270.0" font-size="7" fill="#000" font-weight="normal" text-anchor="start">scoring</text>
 <rect x="694" y="276" width="10" height="9" fill="#000000"/>

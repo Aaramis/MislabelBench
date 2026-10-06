@@ -148,7 +148,9 @@ def staged_rows():
 def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
     w, h = single(*g, L)
     rows = staged_rows()
-    ax = mf.Ax(L, (0, 3), (0, 300))
+    # 320 and not 300: the total is written just above its bar, and at 288 s that put the label on
+    # the 300 gridline. The ticks stay at the round hundreds.
+    ax = mf.Ax(L, (0, 3), (0, 320))
     o = mf.frame(ax, L, "", "Placement Shards", "Runtime (seconds)", [], [0, 100, 200, 300])
     bw = 52
     for i, row in enumerate(rows):
