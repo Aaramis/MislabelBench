@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 137 |
+| findings in this report | 138 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 38 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 39 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1117 |
@@ -2949,6 +2949,20 @@ pipeline's own staged runs, finishes four shards within 0.6 s of each other. The
 `results/staged_scaling_f{25,13,7}.txt`, the records README's own table rests on: placement 194.5,
 111.2 and 56.4 s at one, two and four shards. The sentence that said the straggler had to be
 mentioned wherever the panel goes was written from the superseded record, and this is its correction.
+
+**138. The size gradient's memory is non-monotone at its smallest point, and the records cannot say
+why.** Upstream's peak memory is **99.0 MB at 402 sequences and 56.9 at 801**, rising monotonically
+after that. It is not noise: three replicates each, spread 0.1 MB, and the Nextflow trace's
+process-tree peak inverts the same way, 148 against 113. Five explanations were checked against the
+committed records and all are ruled out: the alignments are the same 1 478 columns wide with gap
+fractions within 0.003, duplicates and distinct site patterns are both monotone in *n* (247 and 1 342
+at 402 against 493 and 1 441 at 801), thread occupancy is 7.87 against 7.94 of 8, and the CPU model is
+the same. What the records cannot see is which child process peaks: `run.json`'s figure comes from
+`RUSAGE_CHILDREN.ru_maxrss`, the largest *single* child, and SATIVA spawns RAxML several times for
+different work. `slurm/regradient.sh` re-measures the whole gradient, both tools and five sizes, three
+replicates, back to back on one exclusive node, and samples every descendant's RSS so the tree total
+and the largest single process are recorded beside it. Until it returns, the panel that plots this
+keeps the committed values and the anomaly is stated rather than smoothed.
 
 ## What is outstanding
 
