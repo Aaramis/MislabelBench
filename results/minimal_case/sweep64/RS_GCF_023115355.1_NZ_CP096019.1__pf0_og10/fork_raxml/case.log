@@ -32,14 +32,14 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-Leave-one-out test identified 21 suspicious sequences; running final EPA test to check them...
+Leave-one-out test identified 20 suspicious sequences; running final EPA test to check them...
 
 Mislabeled sequences by rank:
 Phylum      :	2
 Class       :	1
 Family      :	2
-Genus       :	5
-Species     :	6
+Genus       :	2
+Species     :	9
 
 Total mislabels: 16 / 4.91 %
 

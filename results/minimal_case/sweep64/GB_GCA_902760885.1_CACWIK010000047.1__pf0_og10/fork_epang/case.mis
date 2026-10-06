@@ -1,0 +1,8 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_021513715.1_CP084167.1	Class	c__Heimdallarchaeia	c__Baldrarchaeia	0.510	d__Archaea;p__Asgardarchaeota;c__Heimdallarchaeia	d__Archaea;p__Asgardarchaeota;c__Baldrarchaeia;o__Baldrarchaeales;f__Baldrarchaeaceae;g__Baldrarchaeum;s__Baldrarchaeum yapensis	1.000;1.000;0.510;0.510;0.510;0.510;0.510	1.000
+GB_GCA_902760885.1_CACWIK010000047.1	Family	f__UBA472	f__Methanomethylophilaceae	1.000	d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__UBA472;g__MVRC01;s__MVRC01 sp013415865	d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus sp001481295	1.000;1.000;1.000;1.000;1.000;1.000;1.000	1.000
+GB_GCA_945835715.1_CAMAJN010000001.1	Genus	g__Methanomethylophilus	g__Methanoprimaticola	0.511	d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanomethylophilus;s__Methanomethylophilus alvi	d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__Methanoprimaticola	1.000;1.000;1.000;1.000;1.000;0.511	1.000

@@ -2883,11 +2883,23 @@ exactly one wrong label**, upstream flags the sequence at **confidence 1.000**; 
 isolated error explains the divergence. Adding back just the companion -- the cell is *k*=2, so one other
 sequence carries the same wrong family and stays in the reference supporting it while the target is left
 out -- makes upstream miss the sequence again at 183 sequences, and the fork too. The divergence needs both
-the companion and a large reference, so what the fork is better at is surviving a reference whose labels
-are already wrong, not placing hard sequences. The *k*=1 cell, which finished after this was written,
-keeps that account and corrects its strength: a hundred wrong labels each carried by a single sequence
-still give the fork 5 sequences against upstream's 1, so degradation alone divides them and the companion
-multiplies the effect rather than causing it. That is a different claim about the tool than the one this
+the companion and a large reference. That last clause was written before the ramp finished and the ramp
+refutes it: on the whole reference the sequence is flagged by all three arms with one wrong label,
+**missed by all three with two**, missed by all three with ten, and flagged by the fork alone only at the
+cell's full **102**. The companion does not produce the divergence, it destroys the easy detection, and
+between ten wrong labels and a hundred something changes in kind that is not yet identified.
+
+What the sweep did establish is sharper than what it set out to find. The third arm, the fork driving
+RAxML, agrees with upstream in **20 of 20 cases**, including the single case where the fork driving
+EPA-ng flags and the other two miss. So the difference is the **placement engine** and not the code that
+scores placements, which no two-arm comparison could have shown and which is why the arm was built. What
+the fork is better at is surviving a reference whose labels are already wrong, not placing hard
+sequences.
+
+The minimal case the search was for does not exist. The smallest reference that reproduces the
+divergence is the cell itself, 2 023 sequences and 102 wrong labels; every smaller reference down to 22
+sequences and every reduced label count gives the same verdict from all three arms. That is a property
+of the phenomenon, not a failure of the search, and it is worth more than the file would have been. That is a different claim about the tool than the one this
 report implied, and it is the claim §2.2's surviving-label law and finding 134's decay in *k* both
 predict.
 

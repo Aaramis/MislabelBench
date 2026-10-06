@@ -1,0 +1,7 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_000805995.1_JWKW01000011.1	Family	f__JACPIM01	f__GW2011-AR17	1.000	d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__JACPIM01;g__JAGWAC01;s__JAGWAC01 sp018302125	d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__GW2011-AR17;g__GW2011-AR17;s__GW2011-AR17 sp10136u	1.000;1.000;1.000;1.000;1.000;1.000;0.902	1.000
+GB_GCA_016188045.1_JACPIM010000006.1	Family	f__JACPIM01	f__DATDVL01	0.510	d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__JACPIM01	d__Archaea;p__Nanobdellota;c__Nanobdellia;o__SCGC-AAA011-G17;f__DATDVL01;g__DATDVR01;s__DATDVR01 sp035289925	1.000;0.510;0.510;0.510;0.510;0.510;0.510	1.000

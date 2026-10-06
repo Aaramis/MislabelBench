@@ -31,19 +31,19 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-Leave-one-out test identified 21 suspicious sequences; running final EPA test to check them...
+Leave-one-out test identified 20 suspicious sequences; running final EPA test to check them...
 
 Mislabeled sequences by rank:
 Phylum      :	2
 Class       :	1
 Family      :	2
-Genus       :	5
-Species     :	6
+Genus       :	2
+Species     :	9
 
 Total mislabels: 16 / 4.91 %
 
 Results were saved to: /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/upstream_raxml/case.mis
 Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/upstream_raxml/case.log
 
-Analysis completed successfully, elapsed time: 60 seconds (3s reftree, 57s leave-one-out)
+Analysis completed successfully, elapsed time: 67 seconds (3s reftree, 64s leave-one-out)
 

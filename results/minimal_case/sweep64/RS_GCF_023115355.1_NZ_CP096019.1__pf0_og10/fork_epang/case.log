@@ -32,21 +32,21 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/fork_epang/tmp/case_1791208946334/RAxML_info.mfresolv_case
-[epang-l1o] wrote 326 fold tasks to /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/fork_epang/tmp/case_1791208946334/epang_l1out_seq_case (1.1s)
-[epang-l1o] placed 326/326 folds (4 at a time, 2 threads each, 81.1s)
-[epang-l1o] placements produits: 325 (K=326 folds, remap 1.3s)
-[epang-l1o] timing: fold prep 1.1s, epa-ng 81.1s, remap 1.3s, elapsed 83.6s
-Leave-one-out test identified 27 suspicious sequences; running final EPA test to check them...
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/fork_epang/tmp/case_1791210981334/RAxML_info.mfresolv_case
+[epang-l1o] wrote 326 fold tasks to /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/fork_epang/tmp/case_1791210981334/epang_l1out_seq_case (1.1s)
+[epang-l1o] placed 326/326 folds (4 at a time, 2 threads each, 81.0s)
+[epang-l1o] placements produits: 324 (K=326 folds, remap 1.2s)
+[epang-l1o] timing: fold prep 1.1s, epa-ng 81.0s, remap 1.2s, elapsed 83.3s
+Leave-one-out test identified 24 suspicious sequences; running final EPA test to check them...
 
-[epang-final] 27 suspects re-placed (model RAxML_info.mfresolv_case)
+[epang-final] 24 suspects re-placed (model RAxML_info.mfresolv_case)
 Mislabeled sequences by rank:
 Phylum      :	2
 Family      :	2
-Genus       :	8
-Species     :	9
+Genus       :	6
+Species     :	8
 
-Total mislabels: 21 / 6.44 %
+Total mislabels: 18 / 5.52 %
 
 Results were saved to: /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/fork_epang/case.mis
 Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/sweep64/RS_GCF_023115355.1_NZ_CP096019.1__pf0_og10/fork_epang/case.log

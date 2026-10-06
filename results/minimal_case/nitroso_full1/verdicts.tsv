@@ -1,2 +1,3 @@
 case	arm	verdict	level	proposed	confidence	exclusion
 0,999999	upstream_raxml	FLAG	Family	f__Nitrosopumilaceae	1.000	-
+0,999999	fork_epang	ERROR(status 1)	-	-	-	-

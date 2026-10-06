@@ -1,1 +1,3 @@
 sequence	case	arm	verdict	level	proposed	confidence	exclusion
+GB_GCA_003352285.1_QQVN01000005.1	0,999999,999	upstream_raxml	miss	-	-	-	-
+GB_GCA_003352285.1_QQVN01000005.1	0,999999,999	fork_epang	ERROR(status 1)	-	-	-	-

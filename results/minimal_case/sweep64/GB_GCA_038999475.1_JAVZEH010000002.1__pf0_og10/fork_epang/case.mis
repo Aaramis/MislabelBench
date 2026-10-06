@@ -1,0 +1,7 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_000806115.1_JWKQ01000002.1	Order	o__GW2011-AR5	o__Aenigmatarchaeales	0.510	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__GW2011-AR5	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__Aenigmatarchaeales;f__Aenigmatarchaeaceae;g__Aenigmatarchaeum;s__Aenigmatarchaeum subterraneum	1.000;1.000;1.000;0.510;0.510;0.510;0.510	1.000
+GB_GCA_038999475.1_JAVZEH010000002.1	Family	f__JACRAC01	f__JAHLMP01	0.793	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__GW2011-AR5;f__JACRAC01;g__JAWCMQ01;s__JAWCMQ01 sp039091255	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__GW2011-AR5;f__JAHLMP01;g__JAHLMP01;s__JAHLMP01 sp018920315	1.000;0.845;0.845;0.845;0.793;0.793;0.739	0.948

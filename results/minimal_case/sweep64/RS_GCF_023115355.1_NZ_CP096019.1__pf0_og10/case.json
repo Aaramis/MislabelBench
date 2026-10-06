@@ -1,7 +1,7 @@
 {
   "sequence": "RS_GCF_023115355.1_NZ_CP096019.1",
   "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Halocatena;s__Halocatena salina",
-  "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Halobacteriaceae;g__Halobacterium;s__Halobacterium rubrum",
+  "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Halorubrum;s__Halorubrum ezzemoulense",
   "distance": "family",
   "kept_clade": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales",
   "n_seqs": 326,

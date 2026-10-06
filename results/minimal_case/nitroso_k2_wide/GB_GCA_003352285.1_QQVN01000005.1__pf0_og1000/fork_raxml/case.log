@@ -62,3 +62,20 @@ WARNING: 8 indistinguishable taxa have been merged into 4 clusters.
 
 Running the leave-one-sequence-out test...
 
+Leave-one-out test identified 61 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Phylum      :	23
+Class       :	5
+Order       :	4
+Family      :	4
+Genus       :	12
+Species     :	3
+
+Total mislabels: 51 / 4.35 %
+
+Results were saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_k2_wide/GB_GCA_003352285.1_QQVN01000005.1__pf0_og1000/fork_raxml/case.mis
+Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_k2_wide/GB_GCA_003352285.1_QQVN01000005.1__pf0_og1000/fork_raxml/case.log
+
+Analysis completed successfully, elapsed time: 870 seconds (14s reftree, 856s leave-one-out)
+

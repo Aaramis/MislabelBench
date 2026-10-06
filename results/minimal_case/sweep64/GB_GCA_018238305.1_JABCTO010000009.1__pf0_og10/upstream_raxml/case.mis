@@ -1,0 +1,9 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence
+GB_GCA_018238305.1_JABCTO010000009.1	Family	f__MK-D1	f__SOKP01	1.000	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__MK-D1;g__Harpocratesius;s__Harpocratesius sp018238965	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__SOKP01;g__SOKP01;s__SOKP01 sp018238625	1.000;1.000;1.000;1.000;1.000;1.000;0.515
+GB_GCA_030588985.1_JAUUWP010000005.1	Genus	g__Loki-b32	g__SOKP01	1.000	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__SOKP01;g__Loki-b32	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__SOKP01;g__SOKP01;s__SOKP01 sp030599585	1.000;1.000;1.000;1.000;1.000;1.000;0.508
+GB_GCA_030588655.1_JAUUXF010000002.1	Species	s__SOKP01 sp004375715	s__SOKP01 sp030599585	0.510	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__SOKP01;g__SOKP01;s__SOKP01 sp004375715	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__SOKP01;g__SOKP01;s__SOKP01 sp030599585	1.000;1.000;1.000;1.000;1.000;1.000;0.510
+GB_GCA_018238965.1_JABCSI010000002.1	Species	s__Harpocratesius sp018238965	s__Harpocratesius repetitus	0.510	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__MK-D1;g__Harpocratesius;s__Harpocratesius sp018238965	d__Archaea;p__Asgardarchaeota;c__Lokiarchaeia;o__Sigynarchaeales;f__MK-D1;g__Harpocratesius;s__Harpocratesius repetitus	1.000;0.510;0.510;0.510;0.510;0.510;0.510

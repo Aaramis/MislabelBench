@@ -1,0 +1,9 @@
+;WARNING: The revised taxon name suggested here is not necessarily the one that has priority in nomenclature. 
+;Our suggestion should only be taken as indicative of an affiliation to the same group, whose correct name must be determined 
+;in an additional step according to the specific rules of nomenclature that apply to the studied organisms.
+;
+;SeqID	MislabeledLevel	OriginalLabel	ProposedLabel	Confidence	OriginalTaxonomyPath	ProposedTaxonomyPath	PerRankConfidence	OriginalLabelExclusion
+GB_GCA_039000425.1_JAWBPV010000026.1	Phylum	p__Aenigmatarchaeota	p__Asgardarchaeota	0.510	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__SCSR01;g__JAVZGQ01;s__JAVZGQ01 sp039000425	d__Archaea;p__Asgardarchaeota	1.000;0.510	1.000
+GB_GCA_038996625.1_JAWAJM010000057.1	Phylum	p__Aenigmatarchaeota	p__Asgardarchaeota	0.510	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__SpSt-28;g__SpSt-28	d__Archaea;p__Asgardarchaeota	1.000;0.510	1.000
+GB_GCA_033579515.1_JAVQVO010000004.1	Family	f__SCSR01	f__SpSt-28	1.000	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__SCSR01;g__JACOWB01;s__JACOWB01 sp016177025	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__SpSt-28;g__SpSt-28;s__SpSt-28 sp025057985	1.000;1.000;1.000;1.000;1.000;1.000;1.000	1.000
+GB_GCA_039000425.1_JAWBPV010000029.1	Genus	g__JAVZGQ01	g__JAVZHQ01	0.510	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__SCSR01;g__JAVZGQ01;s__JAVZGQ01 sp039000425	d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__CG10238-14;f__SCSR01;g__JAVZHQ01;s__JAVZHQ01 sp038998335	1.000;1.000;1.000;1.000;1.000;0.510;0.510	1.000

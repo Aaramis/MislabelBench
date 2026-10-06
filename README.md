@@ -136,7 +136,20 @@ more cells at the same distance and rate complete the axis:
 | 10 | 0.182 | 0.200 | 0.200 | **+0.018** | 0.000 |
 
 So the whole of the fork's advantage is the placement engine, and it rises from +0.040 at *k*=1 to
-+0.28 at *k*=2 before decaying to +0.018 at *k*=10. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
++0.28 at *k*=2 before decaying to +0.018 at *k*=10.
+
+**And "the engine" means the engine, not the fork's scoring code.** The two differ in two things at
+once, so a third arm was run: the fork with `SATIVA_L1O_ENGINE=raxml`, the same codebase driving the
+other engine. Over 20 cut-down cases around one sequence it agrees with upstream **20 times out of 20**,
+including the one case where the fork driving EPA-ng flags a sequence both others miss.
+
+That sweep also says what the advantage is not. Cut the sequence out into a reference of its own, from
+2 023 sequences down to 22, and all three arms flag it at the same confidence to three decimals. Put it
+back on the whole reference with one wrong label and all three flag it; with two, all three miss it;
+with ten, all three miss it; only at the cell's full 102 does the fork flag it alone. So the fork is not
+better at placing hard sequences, it is better on a reference whose labels are already wrong, and
+between ten wrong labels and a hundred something changes in kind that these runs do not identify.
+`results/minimal_case/` holds all eleven sweeps. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
 confirm the wrong label whichever engine places against them.
 
 The fold column needs one qualification. It compares twenty-five folds against strict leave-one-out and
