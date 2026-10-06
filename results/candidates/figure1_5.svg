@@ -23,11 +23,11 @@
 <circle cx="202.0" cy="167.9" r="2.6" fill="#000000"/>
 <circle cx="254.0" cy="209.0" r="2.6" fill="#000000"/>
 <circle cx="306.0" cy="227.9" r="2.6" fill="#000000"/>
-<text x="98.0" y="57.3" font-size="7" fill="#000000" font-weight="normal" text-anchor="middle">0.87</text>
-<text x="150.0" y="108.0" font-size="7" fill="#000000" font-weight="normal" text-anchor="middle">0.60</text>
-<text x="202.0" y="159.9" font-size="7" fill="#000000" font-weight="normal" text-anchor="middle">0.33</text>
-<text x="254.0" y="201.0" font-size="7" fill="#000000" font-weight="normal" text-anchor="middle">0.11</text>
-<text x="306.0" y="219.9" font-size="7" fill="#000000" font-weight="normal" text-anchor="middle">0.01</text>
+<text x="104.0" y="57.3" font-size="7" fill="#000000" font-weight="normal" text-anchor="start">0.87</text>
+<text x="156.0" y="108.0" font-size="7" fill="#000000" font-weight="normal" text-anchor="start">0.60</text>
+<text x="208.0" y="159.9" font-size="7" fill="#000000" font-weight="normal" text-anchor="start">0.33</text>
+<text x="260.0" y="201.0" font-size="7" fill="#000000" font-weight="normal" text-anchor="start">0.11</text>
+<text x="312.0" y="219.9" font-size="7" fill="#000000" font-weight="normal" text-anchor="start">0.01</text>
 <path d="M98.0,80.8 L150.0,146.4 L202.0,198.9 L254.0,214.7 L306.0,229.1" fill="none" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
 <circle cx="98.0" cy="80.8" r="2.6" fill="#c1462c"/>
 <circle cx="150.0" cy="146.4" r="2.6" fill="#c1462c"/>

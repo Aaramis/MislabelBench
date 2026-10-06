@@ -29,6 +29,27 @@ VALUES = ["panel\tseries\tx\ty"]
 CAPTION = []
 
 
+def place_label(ax, x, y, text, colour, dx=-6, dy=-6, size=7):
+    """A point's label at its usual offset, flipped only when it would leave the frame.
+
+    The first version of this flipped every label to a fixed inward side and so laid half of them on
+    the curves. The default side is the one that reads best for the series; the flip is the
+    exception, taken only when the text would cross an edge.
+    """
+    px, py = ax.px(x), ax.py(y)
+    w = len(text) * size * 0.58
+    if dx < 0 and px + dx - w < ax.x0 + 2:
+        dx = -dx
+    elif dx > 0 and px + dx + w > ax.x0 + mf.PW - 2:
+        dx = -dx
+    if dy > 0 and py + dy > ax.y0 + mf.PH - 3:
+        dy = -6
+    elif dy < 0 and py + dy < ax.y0 + 8:
+        dy = 12
+    anchor = "middle" if dx == 0 else ("end" if dx < 0 else "start")
+    return mf.txt(px + dx, py + dy, text, size=size, anchor=anchor, fill=colour)
+
+
 def canvas(w, h, body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" '
             f'font-family="Helvetica,Arial,sans-serif"><rect width="{w}" height="{h}" fill="#fff"/>'
@@ -73,7 +94,7 @@ def fig_1():
 def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     w, h = single(*g, L)
     wall, mem = resource_blocks()
-    ax = mf.Ax(L, (5, 6000), (50, 20000), xlog=True, ylog=True)
+    ax = mf.Ax(L, (5, 11000), (50, 20000), xlog=True, ylog=True)
     o = mf.frame(ax, L, "", "Runtime (seconds)", "Peak Memory (MB)",
                  [10, 100, 1000], [100, 1000, 10000],
                  xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:,}".replace(",", " "))
@@ -94,11 +115,12 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     CAPTION.append(f"({L.lower()}) Wall clock against peak memory, one point per reference size from "
                    f"{num(min(sizes))} to {num(max(sizes))} sequences, both tools at 8 threads.")
     for n, (x, y) in zip(sizes, fork):
-        o.append(mf.txt(ax.px(x) - 6, ax.py(y) - 6, f"{n:,}".replace(",", " "), size=7, anchor="end",
-                        fill=mf.FORK))
-    for n, (x, y) in zip(sizes, up):
-        o.append(mf.txt(ax.px(x) + 6, ax.py(y) + 11, f"{n:,}".replace(",", " "), size=7, anchor="start",
-                        fill=mf.UP))
+        o.append(place_label(ax, x, y, num(n), mf.FORK, dx=-6, dy=-6))
+    for i, (n, (x, y)) in enumerate(zip(sizes, up)):
+        # A label offset sideways from a local minimum lands on the rising arm of its own curve.
+        # Centred underneath, there is nothing to collide with; the same holds above a maximum.
+        lo = 0 < i < len(up) - 1 and y < up[i - 1][1] and y < up[i + 1][1]
+        o.append(place_label(ax, x, y, num(n), mf.UP, dx=0 if lo else 6, dy=14))
     o += mf.legend(ax.x0 + 8, ax.y0 + mf.PH - 24, [("sativa-epang", mf.FORK, None),
                                                      ("SATIVA", mf.UP, mf.COMPARATOR_DASH)], size=8)
     return w, h, o
@@ -201,11 +223,14 @@ def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
     w, h = single(*g, L)
     data = flag_counts()
     top = max(v["kept"] + v["lost"] + v["found"] + v["gained"] for v in data.values())
-    # Headroom for the legend above the tallest bars; two columns keep it two rows tall.
-    ax = mf.Ax(L, (0, 6), (0, top * 1.5))
+    # Headroom for the legend above the tallest bars, and ticks all the way up: a y axis labelled
+    # to 150 under a frame reaching 235 reads as a plotting error.
+    import math
+    ymax = math.ceil(top * 1.45 / 50) * 50
+    ax = mf.Ax(L, (0, 6), (0, ymax))
     o = [HATCH]
     o += mf.frame(ax, L, "", "Taxonomic Distance of the Injected Error", "Flags per Dataset",
-                  [], [0, 50, 100, 150], yfmt=lambda v: f"{v:g}")
+                  [], list(range(0, ymax + 1, 50)), yfmt=lambda v: f"{v:g}")
     bw = 40
     for i, d in enumerate(DIST):
         v, cx, base = data[d], ax.px(i + 0.5), 0.0
@@ -216,7 +241,7 @@ def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
             VALUES.append(f"{L}\t{name}\t{d}\t{v[name]:.2f}")
             base += v[name]
         VALUES.append(f"{L}\tcollateral_local_share\t{d}\t{v['local']}")
-        o.append(mf.txt(cx, ax.y0 + mf.PH + 15, d, size=7.5))
+        o.append(mf.txt(cx, ax.y0 + mf.PH + 15, d.capitalize(), size=7.5))
         o.append(mf.txt(cx, ax.py(base) - 4, v["local"], size=6.5, fill=mf.UP))
     entries = (("baseline flags retained", LIGHT), ("baseline flags lost", "url(#hatch)"),
                ("injected errors found", mf.FORK), ("new collateral flags", mf.UP))
@@ -328,7 +353,7 @@ def fig_5(L="A", g=(400, 300, 260, 190, 72, 40)):
         VALUES.extend(f"{L}\t{cond}\t{x}\t{y}" for x, y in pts)
         if cond == "epang_T8_K25":
             for x, y in pts:
-                o.append(mf.txt(ax.px(x), ax.py(y) - 8, f"{y:.2f}", size=7, fill=mf.FORK))
+                o.append(place_label(ax, x, y, f"{y:.2f}", mf.FORK, dx=6, dy=-8))
     CAPTION.append(f"({L.lower()}) Recall against the share of a sequence's surviving relatives that already "
                    "carry the wrong label, both tools. Both follow the same curve, which is why half of every "
                    "injected mislabel is found by neither.")

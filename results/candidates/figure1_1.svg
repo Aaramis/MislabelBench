@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="240" viewBox="0 0 760 240" font-family="Helvetica,Arial,sans-serif"><rect width="760" height="240" fill="#fff"/><defs><marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#444"/></marker></defs>
-<text x="22.0" y="24.0" font-size="12" fill="#000" font-weight="bold" text-anchor="start">(a)</text>
+<text x="22.0" y="36.0" font-size="12" fill="#000" font-weight="bold" text-anchor="start">(a)</text>
 <text x="68.0" y="79.0" font-size="10" fill="#c1462c" font-weight="bold" text-anchor="middle">SATIVA</text>
 <text x="68.0" y="159.0" font-size="10" fill="#000000" font-weight="bold" text-anchor="middle">sativa-epang</text>
 <rect x="120" y="52" width="86" height="46" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="0.8"/>

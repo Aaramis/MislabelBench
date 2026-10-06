@@ -142,7 +142,7 @@ def schematic():
     X, Y, Wd, Hd = SCHEMATIC
     o = ['<defs><marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" '
          'orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#444"/></marker></defs>',
-         txt(X - 2, Y - 10, panel_label("a"), size=12, anchor="start", weight="bold")]
+         txt(X - 2, Y + 2, panel_label("a"), size=12, anchor="start", weight="bold")]
     bh = 46
     y1, y2 = Y + 18, Y + 98                   # the two rows
     xref, xeng, xscore, xflag = X + 96, X + 206, X + 430, X + 592
