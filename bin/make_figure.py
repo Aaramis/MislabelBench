@@ -9,7 +9,7 @@ requirement that scaling be reported per stage rather than as one total.
   A  the method, drawn, one row per version, converging on the scoring they share
   B  wall clock against reference size, both tools, log-log, seconds at the points
   C  recall against the share of surviving relatives that carry the wrong label, both tools
-  D  what the engine contributes and what the fold scheme contributes, against k
+  D  recall against k for SATIVA and for the fork with and without batching, on the same cells
 
 Each panel carries one sentence of the Evaluation section and no panel carries none. Three earlier
 panels were dropped against that rule: the per-stage scaling bars, because the main text makes no
@@ -358,29 +358,30 @@ def main():
                  f'stroke="#444" stroke-width="0.8"/>')
         o.append(txt(x, ax.y0 + PH + 15, f"{b['low'] * 100:.0f}-{b['high'] * 100:.0f}", size=7))
 
-    # D. Where the advantage comes from, and what shape it has. Running EPA-ng with one sequence per
-    # fold is upstream's own protocol with the other engine, so the gap it leaves is the engine alone
-    # and what remains is the fold scheme. Both seeds at k=2 are plotted rather than averaged, and a
-    # mean is drawn through so the shape reads: two cells are two measurements, not a point estimate.
+    # D. Where the advantage comes from, said in recalls rather than in differences. Three
+    # conditions on the same cells: SATIVA; the fork with one sequence per fold, which is SATIVA's
+    # own protocol driven by the other engine; and the fork with its 25 folds. The two fork curves
+    # lie on top of each other, which is "the fold scheme contributes nothing", and the gap from
+    # them to SATIVA is the engine, widest at k=2. A first version plotted those two gaps as
+    # curves of differences and the co-author could not read it; nobody else would have.
     cells = json.loads(Path(root, "results/kexact_decomposition.json").read_text())["cells"]
-    cells = [c for c in cells if c.get("engine_at_0") is not None]
-    ax = Ax("D", (0.8, 10.5), (-0.05, 0.32), xlog=True)
-    o += frame(ax, "D", "what the engine contributes and what the fold scheme contributes, against k",
-               "Sequences Sharing the Wrong Label", "Difference in Recall",
-               [1, 2, 3, 5, 10], [0, 0.1, 0.2, 0.3],
+    ax = Ax("D", (0.8, 10.5), (0, 1), xlog=True)
+    o += frame(ax, "D", "recall of SATIVA and of sativa-epang with and without batching, against k",
+               "Sequences Sharing the Wrong Label", "Recall",
+               [1, 2, 3, 5, 10], [0, 0.25, 0.5, 0.75, 1],
                xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:g}")
-    o.append(f'<line x1="{ax.x0}" y1="{ax.py(0):.1f}" x2="{ax.x0 + PW}" y2="{ax.py(0):.1f}" '
-             f'stroke="#999" stroke-width="0.7"/>')
-    for field, colour, dash in (("engine_at_0", FORK, None), ("folds_at_0", UP, COMPARATOR_DASH)):
-        pts = sorted((c["k"], c[field]) for c in cells if c.get(field) is not None)
+    conds = (("upstream_raxml_T8", UP, COMPARATOR_DASH), ("epang_T8_Kexact", FORK, None),
+             ("epang_T8_K25", FORK, "2 2"))
+    for cond, colour, dash in conds:
+        pts = sorted((c["k"], c["recall"][cond]["at_0"]) for c in cells if c["recall"].get(cond))
         o += series(ax, pts, colour, dash=dash, line=False)
         means = sorted({k: sum(v for kk, v in pts if kk == k) / sum(1 for kk, _ in pts if kk == k)
                         for k, _ in pts}.items())
         o += series(ax, means, colour, dash=dash, marker=None)
-        vals += [f"D\t{field}\t{k}\t{v}" for k, v in pts]
-    # Labelled on the curves: a box would sit on the only part of the panel that carries data.
-    o.append(txt(ax.px(3.3), ax.py(0.21), "engine", size=8, anchor="start", fill=FORK))
-    o.append(txt(ax.px(3.3), ax.py(0.04), "fold scheme", size=8, anchor="start", fill=UP))
+        vals += [f"D\t{cond}\t{k}\t{v}" for k, v in pts]
+    # Only the batching needs naming here; the two tools are in the shared legend.
+    o += legend(ax.x0 + PW - 112, ax.y0 + 12,
+                [("one sequence per batch", FORK, None), ("25 batches", FORK, "2 2")], size=7)
 
     # One legend for the whole figure, centred under the panels.
     o += legend(W / 2 - 110, H - 16, [("sativa-epang", FORK, None)], size=9)

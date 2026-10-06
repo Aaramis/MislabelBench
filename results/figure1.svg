@@ -132,7 +132,7 @@
 <rect x="558" y="282" width="190" height="160" fill="none" stroke="#444" stroke-width="0.8"/>
 <text x="514.0" y="266.0" font-size="12" fill="#000" font-weight="bold" text-anchor="start">(d)</text>
 <text x="653.0" y="474.0" font-size="10" fill="#000" font-weight="normal" text-anchor="middle">Sequences Sharing the Wrong Label</text>
-<text x="518.0" y="362.0" font-size="10" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 518.0 362.0)">Difference in Recall</text>
+<text x="518.0" y="362.0" font-size="10" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 518.0 362.0)">Recall</text>
 <line x1="574.5" y1="442" x2="574.5" y2="446" stroke="#444" stroke-width="0.8"/>
 <text x="574.5" y="457.0" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">1</text>
 <line x1="625.6" y1="442" x2="625.6" y2="446" stroke="#444" stroke-width="0.8"/>
@@ -143,33 +143,43 @@
 <text x="693.2" y="457.0" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">5</text>
 <line x1="744.4" y1="442" x2="744.4" y2="446" stroke="#444" stroke-width="0.8"/>
 <text x="744.4" y="457.0" font-size="8" fill="#000" font-weight="normal" text-anchor="middle">10</text>
-<line x1="558" y1="420.4" x2="748" y2="420.4" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="554" y1="420.4" x2="558" y2="420.4" stroke="#444" stroke-width="0.8"/>
-<text x="551.0" y="423.4" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0</text>
-<line x1="558" y1="377.1" x2="748" y2="377.1" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="554" y1="377.1" x2="558" y2="377.1" stroke="#444" stroke-width="0.8"/>
-<text x="551.0" y="380.1" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0.1</text>
-<line x1="558" y1="333.9" x2="748" y2="333.9" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="554" y1="333.9" x2="558" y2="333.9" stroke="#444" stroke-width="0.8"/>
-<text x="551.0" y="336.9" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0.2</text>
-<line x1="558" y1="290.6" x2="748" y2="290.6" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="554" y1="290.6" x2="558" y2="290.6" stroke="#444" stroke-width="0.8"/>
-<text x="551.0" y="293.6" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0.3</text>
-<line x1="558" y1="420.4" x2="748" y2="420.4" stroke="#999" stroke-width="0.7"/>
-<circle cx="574.5" cy="403.3" r="2.6" fill="#000000"/>
-<circle cx="625.6" cy="344.1" r="2.6" fill="#000000"/>
-<circle cx="625.6" cy="297.4" r="2.6" fill="#000000"/>
-<circle cx="693.2" cy="371.0" r="2.6" fill="#000000"/>
-<circle cx="744.4" cy="412.5" r="2.6" fill="#000000"/>
-<path d="M574.5,403.3 L625.6,320.7 L693.2,371.0 L744.4,412.5" fill="none" stroke="#000000" stroke-width="1.6"/>
-<circle cx="574.5" cy="420.4" r="2.6" fill="#c1462c"/>
-<circle cx="625.6" cy="428.9" r="2.6" fill="#c1462c"/>
-<circle cx="625.6" cy="420.4" r="2.6" fill="#c1462c"/>
-<circle cx="693.2" cy="420.4" r="2.6" fill="#c1462c"/>
-<circle cx="744.4" cy="420.4" r="2.6" fill="#c1462c"/>
-<path d="M574.5,420.4 L625.6,424.6 L693.2,420.4 L744.4,420.4" fill="none" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
-<text x="662.6" y="329.6" font-size="8" fill="#000000" font-weight="normal" text-anchor="start">engine</text>
-<text x="662.6" y="403.1" font-size="8" fill="#c1462c" font-weight="normal" text-anchor="start">fold scheme</text>
+<line x1="558" y1="442.0" x2="748" y2="442.0" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="554" y1="442.0" x2="558" y2="442.0" stroke="#444" stroke-width="0.8"/>
+<text x="551.0" y="445.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0</text>
+<line x1="558" y1="402.0" x2="748" y2="402.0" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="554" y1="402.0" x2="558" y2="402.0" stroke="#444" stroke-width="0.8"/>
+<text x="551.0" y="405.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0.25</text>
+<line x1="558" y1="362.0" x2="748" y2="362.0" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="554" y1="362.0" x2="558" y2="362.0" stroke="#444" stroke-width="0.8"/>
+<text x="551.0" y="365.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0.5</text>
+<line x1="558" y1="322.0" x2="748" y2="322.0" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="554" y1="322.0" x2="558" y2="322.0" stroke="#444" stroke-width="0.8"/>
+<text x="551.0" y="325.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">0.75</text>
+<line x1="558" y1="282.0" x2="748" y2="282.0" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="554" y1="282.0" x2="558" y2="282.0" stroke="#444" stroke-width="0.8"/>
+<text x="551.0" y="285.0" font-size="8" fill="#000" font-weight="normal" text-anchor="end">1</text>
+<circle cx="574.5" cy="294.7" r="2.6" fill="#c1462c"/>
+<circle cx="625.6" cy="377.7" r="2.6" fill="#c1462c"/>
+<circle cx="625.6" cy="366.7" r="2.6" fill="#c1462c"/>
+<circle cx="693.2" cy="423.7" r="2.6" fill="#c1462c"/>
+<circle cx="744.4" cy="412.9" r="2.6" fill="#c1462c"/>
+<path d="M574.5,294.7 L625.6,372.2 L693.2,423.7 L744.4,412.9" fill="none" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
+<circle cx="574.5" cy="288.3" r="2.6" fill="#000000"/>
+<circle cx="625.6" cy="338.5" r="2.6" fill="#000000"/>
+<circle cx="625.6" cy="332.2" r="2.6" fill="#000000"/>
+<circle cx="693.2" cy="405.4" r="2.6" fill="#000000"/>
+<circle cx="744.4" cy="410.0" r="2.6" fill="#000000"/>
+<path d="M574.5,288.3 L625.6,335.3 L693.2,405.4 L744.4,410.0" fill="none" stroke="#000000" stroke-width="1.6"/>
+<circle cx="574.5" cy="288.3" r="2.6" fill="#000000"/>
+<circle cx="625.6" cy="338.5" r="2.6" fill="#000000"/>
+<circle cx="625.6" cy="335.3" r="2.6" fill="#000000"/>
+<circle cx="693.2" cy="405.4" r="2.6" fill="#000000"/>
+<circle cx="744.4" cy="410.0" r="2.6" fill="#000000"/>
+<path d="M574.5,288.3 L625.6,336.9 L693.2,405.4 L744.4,410.0" fill="none" stroke="#000000" stroke-width="1.6" stroke-dasharray="2 2"/>
+<line x1="636" y1="294" x2="654" y2="294" stroke="#000000" stroke-width="1.6"/>
+<text x="659.0" y="297.0" font-size="7" fill="#000" font-weight="normal" text-anchor="start">one sequence per batch</text>
+<line x1="636" y1="307" x2="654" y2="307" stroke="#000000" stroke-width="1.6" stroke-dasharray="2 2"/>
+<text x="659.0" y="310.0" font-size="7" fill="#000" font-weight="normal" text-anchor="start">25 batches</text>
 <line x1="270.0" y1="496" x2="288.0" y2="496" stroke="#000000" stroke-width="1.6"/>
 <text x="293.0" y="499.0" font-size="9" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
 <line x1="400.0" y1="496" x2="418.0" y2="496" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
