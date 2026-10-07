@@ -193,14 +193,15 @@ Where that changes is now measured, one wrong-label count at a time on the whole
 |---|---|---|---|
 | 1 | FLAG 1.000 | FLAG 1.000 | FLAG 1.000 |
 | 2, 10, **20** | miss | miss | miss |
-| **40** | miss | **FLAG 1.000** | running |
 | **60** | miss | **FLAG 1.000** | **miss** |
 | 102 | miss | **FLAG 1.000** | miss |
 
-So the fork starts finding this sequence between **20 and 40** wrong labels in its reference, and at 60
-the third arm says what does it: the same codebase driving RAxML misses where it driving EPA-ng flags, so
-the cause is the engine and not the scoring, as it is at 102. One sequence is one sequence, and what the
-grid adds to it is the 82-case campaign where fork_raxml agrees with upstream 78 times out of 78.
+So the fork starts finding this sequence somewhere between **20 and 60** wrong labels in its reference,
+and at 60 the third arm says what does it: the same codebase driving RAxML misses where driving EPA-ng
+flags, so the cause is the engine and not the scoring, as it is at 102. A case at 40 is running and will
+narrow the interval; it is not in the table until it is here, since a row whose evidence is on a cluster
+is a row nobody can check. One sequence is one sequence, and what the grid adds to it is the 82-case
+campaign where fork_raxml agrees with upstream 78 times out of 78.
 `results/minimal_case/ramp_counts_bracket/` holds the 20, `ramp2_n60/` the 60.
 The one axis that is now ruled out is how much reference surrounds the sequence: at a single wrong
 label, outgroups of 20, 30, 50 and 70 sequences all give the same verdict from all three arms at

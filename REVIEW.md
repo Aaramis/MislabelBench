@@ -3956,10 +3956,14 @@ identify". Measured one count at a time on the whole reference, each case its ow
 | wrong labels | SATIVA | fork, EPA-ng | fork, RAxML |
 |---|---|---|---|
 | 20 | miss | miss | miss |
-| 40 | miss | **FLAG 1.000** | running |
 | 60 | miss | **FLAG 1.000** | **miss** |
 
-So the transition sits between 20 and 40, and at 60 the third arm attributes it: the same codebase
+The 40 is running and is deliberately not in this table or README's. Its EPA-ng arm has already flagged
+at 1.000, which would narrow the interval to 20--40, and its third arm is still going: a row whose
+evidence sits on a cluster is a row nobody can check, and the derived summary that cites it could not be
+rebuilt from what is committed here. It goes in when it lands.
+
+So the transition sits between 20 and 60, and at 60 the third arm attributes it: the same codebase
 driving RAxML misses where driving EPA-ng flags, which is the engine and not the scoring, as at 102. The
 job says so itself -- `divergence reproduced for case(s) [('GB_GCA_003352285.1_QQVN01000005.1',
 '0,999999,60')]` -- which is the line finding 163 added the third spec field to be able to print.
