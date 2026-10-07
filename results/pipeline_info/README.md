@@ -40,8 +40,8 @@ table meant per file until `bin/verify_trace_table.py` found the column saying t
 | `trace-kexact_k2_attempt1.txt` | 2 | the other, described in the row above |
 | `trace-baseline.txt` | 0 | header only. The baseline job's trace was lost before per-tag naming existed, and nothing can recover it |
 
-Everything that arrived after the table above was written, which is 27 files and **620 task rows** --
-more than half as many again as the 719 listed above, and absent from a document whose purpose is to
+Everything that arrived after the table above was written, which is 32 files and **630 task rows** --
+nearly as many again as the 721 listed above, and absent from a document whose purpose is to
 enumerate them. Grouped rather than listed one by one, since what they have in common is what matters:
 
 | files | rows | what they cover |
@@ -52,13 +52,18 @@ enumerate them. Grouped rather than listed one by one, since what they have in c
 | `trace-kind3_2184084.txt` | 36 | error kind 3, nine cells under both tools |
 | `trace-staged_timed_f7_2177364.txt`, `trace-staged_timed_f13_2177363.txt`, `trace-staged_timed_f25_2177362.txt`, `trace-staged_check_2177253.txt` | 31 | the staged runs behind `results/staged_scaling_f*.txt` and DISTRIBUTION.md |
 | `trace-m1_check_2182101.txt`, `trace-inputs_check_2183078.txt`, `trace-kexact_k2.txt`, `trace-determinism_2182091.txt` | 14 | the M1 validation, an input check, the Kexact pair, and the determinism rerun |
+| `trace-kexact_k2_2201201.txt` | 2 | strict leave-one-out at *k*=1, 5 October, the end of the *k* axis where one label is wrong per family and the fold scheme has nothing to co-remove |
+| `trace-kexact_k2_2232070.txt` | 2 | strict leave-one-out at *k*=3, 6 October, the cell that closed the *k* axis |
 | `trace-kexact_k2_2197932.txt` | 2 | strict leave-one-out at *k*=5, 5 October, the midpoint of the engine/folds decomposition |
 | `trace-kexact_k2_2194012.txt` | 2 | strict leave-one-out at *k*=10, 5 October, the cell that extends the engine/folds decomposition along *k* |
 | `trace-determinism_2192792.txt` | 2 | the determinism rerun on the rebuilt cluster, 5 October: same cell, same seed, containers pulled again, the same `.mis` |
 | `trace-grid_k5_local.txt`, `trace-grid_tree_local.txt`, `trace-grid_up_species_local.txt`, `trace-kaxis_upstream_local.txt`, `trace-kexact_k2_local.txt`, `trace-ksweep_local.txt`, `trace-sizes_local.txt`, `trace-threads_local.txt` | 0 | eight `_local` traces with a header and nothing else: submissions that failed before a task ran |
 
 `bin/verify_trace_table.py` keeps this honest -- every `trace-*.txt` in this directory must be named
-here, and every row count stated in either table must be the file's. It runs in `bin/analyses.sh`.
+here, every row count stated in either table must be the file's, and each table's own totals must be
+what the sentence introducing it says. It also reads the other way, which is the only check here that
+does: every run collected on or after 2026-10-03 must be named by some trace, so a trace left behind on
+the cluster is a failure rather than a silence. It runs in `bin/analyses.sh`.
 
 A resumed run does list its cached tasks, with status `CACHED` rather than `COMPLETED`, so resuming
 does not silently shorten a trace. Checked with `-stub-run`: six cached and two run, eight rows.

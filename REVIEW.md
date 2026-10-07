@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 141 |
+| findings in this report | 143 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3048,6 +3048,40 @@ whatever the type size, now scales with it: at 1.6 the widest tick label reached
 moving the title out pushed it off the canvas until the panels moved right to meet it.
 
 Printed sizes are now **5.8 to 10.7 pt**, against 3.6 to 6.7 before, with the tick labels at 6.2.
+
+**142. A script was added to `bin/analyses.sh` without being executable, and the chain had never been
+run since.** Finding 134's fix renamed `bin/figure_candidates.py` to `bin/paper_figure.py` and added a
+call to it from `bin/analyses.sh`, which puts `bin/` on `PATH` and invokes its scripts by name. The old
+name was only ever run as `python3 bin/figure_candidates.py`, so its mode was `100644`, and `git mv`
+preserved it: it was the one tracked script in `bin/` not marked executable. The first run of the chain
+after that commit stopped at `Permission denied`, which is the right failure and the reason it was
+found at once -- but the commit had claimed the chain worked without running it. Fixed with
+`git update-index --chmod=+x`; `bin/analyses.sh` now exits 0 and rebuilds all 54 tables byte for byte,
+which is also the strongest determinism evidence here outside `verify_duplicate_runs.py`.
+
+**143. A run's trace stayed on the cluster, and the document that counts them had drifted again.** The
+strict leave-one-out at *k*=3 wrote `trace-kexact_k2_2232070.txt` into
+`results/grid_fork/pipeline_info/` on the cluster, where the repatriation does not look -- it copies
+`results/pipeline_info/`, and Nextflow writes the trace beside the outdir it was given. The run's own
+records came back; only its provenance did not, and `bin/verify_trace_table.py` caught it the moment
+the chain ran. Repatriated by hand, and the *k*=1 trace that had arrived earlier is named too.
+
+What the gate did not catch, and could not, is the absence itself: all three of its checks read the
+directory and ask what the document says about it, so a trace that never arrived is invisible to every
+one of them -- which is how the commit carrying the *k*=3 result said every gate was green. A fourth
+check now reads the other way. The trace names each task's cell as `PROCESS (dataset/condition/repN)`,
+which is exactly the three fields `run.json` records, so every run can be looked for in the traces.
+Measured before being trusted: of the 875 runs collected on 2026-10-02, 574 are named by no trace and
+never can be, those jobs having shared one trace name before the per-tag naming this directory's
+document describes; from 2026-10-03 on, all 242 are named. So the check starts there, and restoring the
+original state -- the trace gone and the document not yet naming it -- makes it the only one of the four
+to fire.
+
+The same pass found the sentence introducing the second table saying 27 files and 620 task rows when
+the table listed 30 and 626, and quoting 719 rows for the first when it listed 721 -- the drift finding
+73 found in two summaries and finding 100 in this report's own coverage table, in the one place here
+still free to drift because the gate read only table cells. It now recomputes each table's totals and
+checks the prose against them, proved by making each number wrong in turn and seeing it named.
 
 ## What is outstanding
 
