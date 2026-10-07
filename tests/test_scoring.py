@@ -141,10 +141,6 @@ class VerifyInjection(unittest.TestCase):
         self.assertNotEqual(self.verify().returncode, 0, "the cell has five entries, the base six")
 
 
-if __name__ == "__main__":
-    unittest.main(verbosity=2)
-
-
 class ColumnComparison(unittest.TestCase):
     """column_comparison.py divided by the number of flags at the stem confidence without
     checking there were any. On this grid 31.5 % of flags sit there, so it never bit; on a
@@ -261,3 +257,71 @@ class ColumnComparisonFloor(unittest.TestCase):
             self.assertEqual(d["untouched_floor"][column], 1, f"{column} floor")
             self.assertEqual(d["untouched_floor"][column],
                              min(p["untouched_kept"] for p in curve))
+
+
+class ThresholdBoundaries(unittest.TestCase):
+    """A row whose value is exactly the threshold is kept.
+
+    Both scripts compare with >= against thresholds drawn from the observed values themselves, so
+    the boundary row is not an edge case here, it is the common case: every point of the exclusion
+    curve is placed at a value some row carries. A mutation sweep turned both comparisons strict and
+    no test noticed, because the fixtures used 0.95 and 0.50 against a threshold of 0.9. These use
+    0.90 and 0.99, which are two of the published thresholds, and 31.3 % of the real flags sit on a
+    single confidence value, so a strict comparison would move a published recall by a third.
+    """
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.truth = self.tmp / "t.truth.json"
+        self.truth.write_text(json.dumps({
+            "distance": "family", "rate": 0.01, "k": 1, "seed": 1, "n_total": 10,
+            "injected": {n: {"true": TRUE, "wrong": WRONG} for n in ("i1", "i2")},
+        }))
+        self.mis = self.tmp / "run.mis"
+        self.mis.write_text(HEADER + "\n" + "\n".join([
+            mis_row("i1", 0.900, 0.990),   # exactly on two published thresholds
+            mis_row("i2", 0.899, 0.989),   # just below both
+        ]) + "\n")
+
+    def test_score_injection_keeps_the_row_sitting_on_the_threshold(self):
+        out = self.tmp / "s.json"
+        r = run("score_injection.py", "--truth", self.truth, "--mis", self.mis, "--out", out)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        d = json.loads(out.read_text())
+        conf = {x["threshold"]: x["recall"] for x in d["by_confidence"]}
+        excl = {x["threshold"]: x["recall"] for x in d["by_exclusion"]}
+        self.assertEqual(conf[0.9], 0.5, "i1 is at 0.900 and counts at a 0.9 threshold")
+        self.assertEqual(conf[0.95], 0.0, "both rows are below 0.95")
+        self.assertEqual(excl[0.99], 0.5, "i1 is at 0.990 and counts at a 0.99 threshold")
+
+    def test_column_comparison_curve_and_budget_include_their_own_boundary(self):
+        """injected_kept uses >= on the threshold, and the budget comparison uses <= on the count of
+        calls on untouched sequences. The fixture puts one untouched flag at each value so the two
+        boundaries are separately visible: at a budget of exactly 1 the 0.9 point is eligible."""
+        inj = self.tmp / "inj" / "c1"
+        inj.mkdir(parents=True)
+        (inj / "c1.truth.json").write_text(json.dumps({
+            "distance": "family", "rate": 0.01, "k": 1, "seed": 1, "n_total": 10,
+            "injected": {"i1": {"true": TRUE, "wrong": WRONG}}}))
+        d = self.tmp / "runs" / "c1__cond"
+        d.mkdir(parents=True)
+        (d / "c1__cond.mis").write_text(HEADER + "\n" + "\n".join([
+            mis_row("i1", 0.900, 0.900),
+            mis_row("u1", 0.900, 0.900),
+            mis_row("u2", 0.500, 0.500),
+        ]) + "\n")
+        out = self.tmp / "cc.json"
+        r = run("column_comparison.py", "--injected-dir", self.tmp / "inj",
+                "--runs-dir", self.tmp / "runs", "--condition", "cond", "--out", out)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        curve = json.loads(out.read_text())["curves"]["confidence"]
+        at_09 = next(p for p in curve if p["threshold"] == 0.9)
+        self.assertEqual(at_09["injected_kept"], 1, "i1 is at exactly 0.900")
+        self.assertEqual(at_09["untouched_kept"], 1, "u1 is at exactly 0.900")
+        self.assertIn("budget      1:", r.stdout)
+        self.assertIn("confidence     1", r.stdout.split("budget      1:")[1].splitlines()[0],
+                      "the 0.9 point costs exactly the budget, so it is reachable")
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
