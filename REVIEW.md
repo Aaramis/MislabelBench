@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 164 |
+| findings in this report | 166 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -219,10 +219,16 @@ Worth stating, because an audit that only lists faults does not say what it cove
 - **`slurm/base2k.sh` and `slurm/foreign.sh`**: consistent with the timed/untimed policy -- base2k takes
   the node exclusively with the model pinned and declares `timing_trusted true`, foreign does neither
   and declares false.
-- **`slurm/m1_check.sh` and `slurm/staged_check.sh`** assert rather than report: each compares a `.mis`
-  against a committed reference and exits non-zero if it differs. Both references are tracked -- the v1
-  `n800` run, the `baseline2k` run and the whole of `data_ascii` -- so both scripts work from a clone,
-  which is what makes their verdicts worth anything.
+- **`slurm/staged_check.sh`** asserts rather than reports: it compares the staged path's `.mis` against
+  the committed `baseline2k` run and exits non-zero if they differ. Its reference is tracked, so it works
+  from a clone, which is what makes its verdict worth anything.
+- **The M1 criterion has no standing check any more.** `slurm/m1_check.sh` did the same against version
+  1's `n800` run, and both went in "Remove version 1 entirely", so the plan's acceptance test -- the new
+  harness landing on the v1 figure for upstream at one thread -- is recorded in `RESULTS.md` and
+  reproducible from nothing. The reference data was deleted on the owner's call and cannot be put back,
+  so this is stated rather than fixed. It was found by the second half of `bin/review_coverage.py`, which
+  now also checks the report for paths the repository no longer has: this paragraph had described the
+  script as live, and its reference data as tracked, for every run since that commit.
 - **Both cardinality guards in `main.nf` are live, and `slurm/guard_probe.sh` is how that is known.**
   `join()` pairs on the meta map and drops whatever finds no partner without a word, so a cell that lost
   one of its outputs would never reach `COLLECTRUN` and a short grid would look complete. The only
@@ -3670,6 +3676,44 @@ Fixed by removing `--exclusive` and bounding the interference with replicates in
 drifted are corrected with it: `README.md` said untimed runs "do not take the node", which implied
 timed ones do, and the panel C caption said "one node per shard" where a shard is one Slurm job holding
 eight cores of a shared node.
+
+**165. The default dataset manifest pointed at a directory deleted three weeks ago, and the script that
+proves the two cardinality guards are live died on the same deletion.** `nextflow run .` fails at
+`main.nf` line 29 with "No such file or directory:  .../data_ascii/datasets.json". `data_ascii/` went in
+"Remove version 1 entirely"; `nextflow.config` kept `datasets_json = "data_ascii/datasets.json"` as the
+default. Nothing noticed because every job script in `slurm/` passes `--datasets_json` explicitly, so the
+default is reached only by someone running the pipeline the way the README's own "Using the tool" section
+implies. Now `data/gtdb/datasets.json`, which exists.
+
+The same commit left `slurm/guard_probe.sh` copying `data_ascii` into its scratch project, under
+`set -euo pipefail`, so the probe died on the `cp` before any run. That script is the only evidence that
+`main.nf`'s two `error()` calls inside `.count().subscribe { }` actually abort a run rather than decorate
+it, and `join()` silently dropping a cell is the one failure that would make a short grid look complete.
+It has not run since the deletion. It now writes its own manifest, naming the committed 2 023-sequence
+set by absolute path, absolute because `run_one` launches from `$WORK/$tag` and a project-relative path
+in a manifest resolves against the launch directory. Verified by replaying the probe locally rather than
+by reading it: the control run exits 0, and with `expected` bumped by one it exits 1 on "collected 2 run
+records for 3 cells: a cell lost an output before COLLECTRUN".
+
+Three defects from one deletion, and the deletion was clean. What they have in common is that none of
+them is reachable from a committed command: the default manifest is bypassed by every script, the probe
+is run by hand, and `slurm/m1_check.sh` was gone without anything referring to it. `bin/analyses.sh`
+cannot catch a file that nothing runs.
+
+**166. The shards had no record of which node they ran on, which is what exclusivity used to stand in
+for.** With `--exclusive` gone for the reason finding 164 gives, two placement shards of the same round
+can land on one node, and that is not noise: finding 152 measured two tasks of one run building the same
+tree at 71 s each where one alone takes 42.5. Nothing in a record said whether it had happened, because
+`hostname` is not among Nextflow's default trace fields and the field list in `nextflow.config` did not
+add it -- the same shape as the `container` field, which this report already has a finding about.
+
+`hostname` is now in the trace fields and `bin/staged_scaling.py` reads it: one host per shard prints
+"one shard each", a repeat prints which host carried more than one and exits non-zero, so a round that
+shared a node cannot be published as a round that did not. Both branches were checked by running them,
+the collision branch on a trace rewritten to put two shards on `cpu-node-10`. Nextflow's local executor
+writes "-" in the field and the three existing rounds have no field at all, so both are reported as "not
+recorded" rather than counted as clean -- which also says plainly that the three published rounds have no
+evidence either way, and they are being redone.
 
 ## What is outstanding
 

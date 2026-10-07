@@ -24,7 +24,21 @@ nextflow_env
 
 WORK=$BENCH_ROOT/results/guard_probe
 rm -rf "$WORK"; mkdir -p "$WORK"
-cp -r "$BENCH_ROOT"/{main.nf,nextflow.config,conf,modules,bin,assets,data_ascii} "$WORK/"
+cp -r "$BENCH_ROOT"/{main.nf,nextflow.config,conf,modules,bin,assets} "$WORK/"
+# data_ascii/ and its n100 set went with version 1, which left this script copying a directory that is
+# not there: under set -e the probe died on the cp, before any run, so the two guards it exists to check
+# went unverified from that commit on. The manifest is written here instead, naming the committed
+# 2 023-sequence set by absolute path. Absolute because run_one launches from $WORK/$tag, and a
+# project-relative path inside a manifest resolves against the launch directory, not the project.
+python3 - "$BENCH_ROOT" "$WORK/datasets.json" <<'PYJ'
+import json, sys
+root, out = sys.argv[1], sys.argv[2]
+json.dump({"source": "guard probe: the committed 2k set, by absolute path",
+           "datasets": [{"name": "gtdb_arc2k", "n_seqs": 2023, "aln_len": 1478,
+                         "fasta": root + "/data/gtdb/gtdb_arc2k.fasta",
+                         "tax": root + "/data/gtdb/gtdb_arc2k.tax"}]},
+          open(out, "w"), indent=2)
+PYJ
 
 run_one() {
     local tag="$1"
@@ -33,8 +47,8 @@ run_one() {
     cd "$dir"
     local st=0
     nextflow run "$WORK" -stub-run ${STAGED_ARGS:-} \
-        --datasets_json "$WORK/data_ascii/datasets.json" \
-        --datasets n100 \
+        --datasets_json "$WORK/datasets.json" \
+        --datasets gtdb_arc2k \
         --conditions upstream_raxml_T1,epang_T8_K25 \
         --sativa_taxcode BOT \
         --timing_trusted false \

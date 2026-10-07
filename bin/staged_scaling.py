@@ -66,6 +66,29 @@ def trace_span(trace_dir, run_name):
     return best
 
 
+def shard_hosts(trace_dir, run_name):
+    """Which host each placement shard ran on, from the trace's hostname field.
+
+    This replaces what --exclusive used to guarantee. The QOS charges an exclusive job the whole
+    node, 510 CPUs against a cap of 600, so two shards could never both be exclusive and the
+    distributed rounds run on shared nodes. Two shards on one node is then possible, and it is the
+    one disturbance that would corrupt the measurement rather than just add noise to it: finding 152
+    measured two tasks of one run building the same tree at 71 s each where one alone takes 42.5.
+
+    Nextflow's local executor writes "-" in this field and old traces have no field at all, so an
+    absent or "-" host is reported as not recorded rather than counted as a collision.
+    """
+    hosts = []
+    for path in sorted(Path(trace_dir).glob("trace-*.txt")):
+        for row in csv.DictReader(path.open(), delimiter="\t"):
+            if row["status"] != "COMPLETED" or "LOOPLACE" not in row["name"].upper():
+                continue
+            if run_name.split("__")[0] not in row["name"]:
+                continue
+            hosts.append((row.get("hostname") or "-").strip())
+    return [h for h in hosts if h and h != "-"]
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--staged-dir", required=True, help="results/<outdir>/staged")
@@ -76,6 +99,7 @@ def main():
     if not cells:
         raise SystemExit(f"no cells under {args.staged_dir}")
 
+    collisions = []
     print(f"{'cell':34}{'shards':>7}{'ref':>8}{'tasks':>7}{'place':>9}{'spread':>8}"
           f"{'score':>7}{'sum':>9}{'span':>9}")
     for cell in cells:
@@ -105,10 +129,26 @@ def main():
               + (f"{span:>9.1f}" if span else f"{'-':>9}"))
         if len(shards) > 1:
             print(f"{'':34}shards: " + ", ".join(f"{x:.1f}" for x in sorted(shards)))
+            hosts = shard_hosts(args.trace_dir, cell.name) if args.trace_dir else []
+            if not hosts:
+                print(f"{'':34}hosts: not recorded")
+            elif len(set(hosts)) < len(hosts):
+                dup = sorted(h for h in set(hosts) if hosts.count(h) > 1)
+                print(f"{'':34}hosts: " + ", ".join(sorted(hosts))
+                      + f"  -> {', '.join(dup)} carried more than one shard")
+                collisions.append((cell.name, dup))
+            else:
+                print(f"{'':34}hosts: " + ", ".join(sorted(hosts)) + "  -> one shard each")
         if folds:
             ceiling = sum(folds) / max(folds)
             print(f"{'':34}folds: " + ", ".join(str(x) for x in folds)
                   + f"  -> no split of these beats {ceiling:.2f}x on {len(folds)} shards")
+
+    # Not a warning. A round whose shards shared a node did not measure what the panel says it
+    # measured, and the table is written by a job script that would otherwise publish it anyway.
+    if collisions:
+        raise SystemExit("shards shared a node: "
+                         + "; ".join(f"{c} on {', '.join(d)}" for c, d in collisions))
 
 
 if __name__ == "__main__":
