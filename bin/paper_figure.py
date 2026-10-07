@@ -90,7 +90,12 @@ def resource_blocks():
             if mode == "wall":
                 wall[n] = (float(parts[1]), float(parts[2]))          # fork, upstream
             else:
-                mem[n] = (float(parts[2]), float(parts[4]))           # fork child, up child
+                # The process-tree peak, not run.json's ru_maxrss. ru_maxrss is the largest single
+                # child, and the two diverge exactly where concurrency does -- 1.07x at one thread,
+                # 3.55x at eight. What decides whether a run fits is the tree: that is what Slurm
+                # and the OOM killer act on. Drawn as the largest child, this panel would support a
+                # ceiling of 1.5 million sequences on a 2 TB node where the real one is 400 000.
+                mem[n] = (float(parts[1]), float(parts[3]))           # fork tree, up tree
     return wall, mem
 
 
@@ -104,7 +109,7 @@ def fig_1():
 def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     w, h = single(*g, L)
     wall, mem = resource_blocks()
-    ax = mf.Ax(L, (5, 11000), (50, 20000), xlog=True, ylog=True)
+    ax = mf.Ax(L, (5, 11000), (80, 60000), xlog=True, ylog=True)
     o = mf.frame(ax, L, "", "Runtime (seconds)", "Peak Memory (MB)",
                  [10, 100, 1000], [100, 1000, 10000],
                  xfmt=lambda v: f"{v:g}", yfmt=lambda v: f"{v:,}".replace(",", " "))
@@ -122,14 +127,18 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     o += mf.series(ax, up, mf.UP, dash=mf.COMPARATOR_DASH)
     o += mf.series(ax, fork, mf.FORK)
     for n, (x, y) in zip(sizes, fork):
-        VALUES.append(f"{L}\tfork_wall_s_vs_child_mb\t{x}\t{y}")
+        VALUES.append(f"{L}\tfork_wall_s_vs_tree_peak_mb\t{x}\t{y}")
         VALUES.append(f"{L}\treference_size_label\t{x}\t{n}")
     for n, (x, y) in zip(sizes, up):
-        VALUES.append(f"{L}\tupstream_wall_s_vs_child_mb\t{x}\t{y}")
+        VALUES.append(f"{L}\tupstream_wall_s_vs_tree_peak_mb\t{x}\t{y}")
     CAPTION.append(f"({L.lower()}) Wall clock against peak memory, one point per reference size from "
                    f"{num(min(sizes))} to {num(max(sizes))} sequences, both tools at 8 threads.")
-    for n, (x, y) in zip(sizes, fork):
-        o.append(place_label(ax, x, y, num(n), mf.FORK, dx=-6, dy=-6))
+    for i, (n, (x, y)) in enumerate(zip(sizes, fork)):
+        # The last point's label goes to the right. Above and to the left, where the rest of the
+        # series puts its labels, it lands on the previous point's: the two largest references are
+        # 22 points apart across and 14 up, and a five-digit label is 31 wide.
+        o.append(place_label(ax, x, y, num(n), mf.FORK,
+                             dx=6 if i == len(fork) - 1 else -6, dy=-6))
     for i, (n, (x, y)) in enumerate(zip(sizes, up)):
         if i == 0:
             # Above and to the left. Below and to the right, where the rule beneath would put it,

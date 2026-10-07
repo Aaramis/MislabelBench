@@ -8,43 +8,43 @@
 <text x="190.9" y="255.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">100</text>
 <line x1="277.6" y1="240" x2="277.6" y2="244" stroke="#444" stroke-width="0.8"/>
 <text x="277.6" y="255.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">1000</text>
-<line x1="78" y1="216.9" x2="368" y2="216.9" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="74" y1="216.9" x2="78" y2="216.9" stroke="#444" stroke-width="0.8"/>
-<text x="72.0" y="219.9" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">100</text>
-<line x1="78" y1="140.0" x2="368" y2="140.0" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="74" y1="140.0" x2="78" y2="140.0" stroke="#444" stroke-width="0.8"/>
-<text x="72.0" y="143.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1 000</text>
-<line x1="78" y1="63.1" x2="368" y2="63.1" stroke="#e8e8e8" stroke-width="0.6"/>
-<line x1="74" y1="63.1" x2="78" y2="63.1" stroke="#444" stroke-width="0.8"/>
-<text x="72.0" y="66.1" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">10 000</text>
+<line x1="78" y1="233.3" x2="368" y2="233.3" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="74" y1="233.3" x2="78" y2="233.3" stroke="#444" stroke-width="0.8"/>
+<text x="72.0" y="236.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">100</text>
+<line x1="78" y1="163.7" x2="368" y2="163.7" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="74" y1="163.7" x2="78" y2="163.7" stroke="#444" stroke-width="0.8"/>
+<text x="72.0" y="166.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1 000</text>
+<line x1="78" y1="94.1" x2="368" y2="94.1" stroke="#e8e8e8" stroke-width="0.6"/>
+<line x1="74" y1="94.1" x2="78" y2="94.1" stroke="#444" stroke-width="0.8"/>
+<text x="72.0" y="97.1" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">10 000</text>
 <line x1="171.6" y1="40" x2="171.6" y2="240" stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>
 <text x="174.6" y="35.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">1 min</text>
 <line x1="258.4" y1="40" x2="258.4" y2="240" stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>
 <text x="261.4" y="35.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">10 min</text>
 <line x1="325.9" y1="40" x2="325.9" y2="240" stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>
 <text x="328.9" y="35.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">1 h</text>
-<path d="M181.9,217.2 L223.5,235.6 L260.6,205.2 L288.8,180.0 L318.8,156.9" fill="none" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
-<circle cx="181.9" cy="217.2" r="2.6" fill="#c1462c"/>
-<circle cx="223.5" cy="235.6" r="2.6" fill="#c1462c"/>
-<circle cx="260.6" cy="205.2" r="2.6" fill="#c1462c"/>
-<circle cx="288.8" cy="180.0" r="2.6" fill="#c1462c"/>
-<circle cx="318.8" cy="156.9" r="2.6" fill="#c1462c"/>
-<path d="M102.6,166.4 L122.1,138.3 L154.9,107.8 L200.5,84.0 L227.2,65.2" fill="none" stroke="#000000" stroke-width="1.6"/>
-<circle cx="102.6" cy="166.4" r="2.6" fill="#000000"/>
-<circle cx="122.1" cy="138.3" r="2.6" fill="#000000"/>
-<circle cx="154.9" cy="107.8" r="2.6" fill="#000000"/>
-<circle cx="200.5" cy="84.0" r="2.6" fill="#000000"/>
-<circle cx="227.2" cy="65.2" r="2.6" fill="#000000"/>
-<text x="96.6" y="160.4" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">402</text>
-<text x="116.1" y="132.3" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">801</text>
-<text x="148.9" y="101.8" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">2 023</text>
-<text x="194.5" y="78.0" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">4 001</text>
-<text x="221.2" y="59.2" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">7 051</text>
-<text x="175.9" y="211.2" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="end">402</text>
-<text x="223.5" y="229.6" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="middle">801</text>
-<text x="266.6" y="219.2" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">2 023</text>
-<text x="294.8" y="194.0" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">4 001</text>
-<text x="324.8" y="170.9" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">7 051</text>
+<path d="M181.9,221.4 L223.5,229.6 L260.6,211.0 L288.8,192.1 L318.8,173.3" fill="none" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
+<circle cx="181.9" cy="221.4" r="2.6" fill="#c1462c"/>
+<circle cx="223.5" cy="229.6" r="2.6" fill="#c1462c"/>
+<circle cx="260.6" cy="211.0" r="2.6" fill="#c1462c"/>
+<circle cx="288.8" cy="192.1" r="2.6" fill="#c1462c"/>
+<circle cx="318.8" cy="173.3" r="2.6" fill="#c1462c"/>
+<path d="M102.6,145.2 L122.1,125.1 L154.9,96.3 L200.5,72.3 L227.2,55.2" fill="none" stroke="#000000" stroke-width="1.6"/>
+<circle cx="102.6" cy="145.2" r="2.6" fill="#000000"/>
+<circle cx="122.1" cy="125.1" r="2.6" fill="#000000"/>
+<circle cx="154.9" cy="96.3" r="2.6" fill="#000000"/>
+<circle cx="200.5" cy="72.3" r="2.6" fill="#000000"/>
+<circle cx="227.2" cy="55.2" r="2.6" fill="#000000"/>
+<text x="96.6" y="139.2" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">402</text>
+<text x="116.1" y="119.1" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">801</text>
+<text x="148.9" y="90.3" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">2 023</text>
+<text x="194.5" y="66.3" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">4 001</text>
+<text x="233.2" y="49.2" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="start">7 051</text>
+<text x="175.9" y="215.4" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="end">402</text>
+<text x="223.5" y="223.6" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="middle">801</text>
+<text x="266.6" y="225.0" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">2 023</text>
+<text x="294.8" y="206.1" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">4 001</text>
+<text x="324.8" y="187.3" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">7 051</text>
 <line x1="250" y1="92.0" x2="268" y2="92.0" stroke="#000000" stroke-width="1.6"/>
 <text x="273.0" y="95.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
 <line x1="250" y1="108.0" x2="268" y2="108.0" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
