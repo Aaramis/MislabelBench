@@ -17,6 +17,20 @@
 # FOLDS_PER_JOB sets the shard count on 25 folds: 25 gives one shard, 13 gives two, 7 gives four,
 # which are the three node counts scaling.sh measured. Below four the tool loses its own internal
 # concurrency and a fold costs 22 s instead of 8; see DISTRIBUTION.md.
+#
+# STAGED_REP numbers a replicate of the same round. The stages no longer hold a node to themselves --
+# an exclusive job is charged all 510 CPUs of an epyc-9754 against a QOS cap of 600, so two shards
+# could never be scheduled, let alone four -- so what bounds the interference is the spread over
+# replicates rather than an argument that nothing else was running. Round and replicate both go in
+# the output directory, so no two runs can overwrite each other's trace:
+#
+#   for r in 1 2 3; do for f in 25 13 7; do
+#     STAGED_REP=$r FOLDS_PER_JOB=$f slurm/submit.sh slurm/staged_timed.sh -p fast
+#   done; done
+#
+# Submit them chained on --dependency=afterany, not all at once. Without exclusivity our own rounds
+# are each other's interference, and two rounds of this on one node is the one disturbance we can
+# still rule out.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 nextflow_env
@@ -26,7 +40,9 @@ nextflow_env
 export PATH="$BENCH_ROOT/bin:$PATH"
 
 FPJ="${FOLDS_PER_JOB:-7}"
-nf_launch_dir "staged_timed_f${FPJ}"
+REP="${STAGED_REP:-}"
+TAG="f${FPJ}${REP:+_r$REP}"
+nf_launch_dir "staged_timed_${TAG}"
 
 nextflow run "$BENCH_ROOT" -profile ifb \
   --datasets_json "$BENCH_ROOT/data/gtdb/datasets.json" \
@@ -36,10 +52,10 @@ nextflow run "$BENCH_ROOT" -profile ifb \
   --folds_per_job "$FPJ" \
   --sativa_taxcode BAC \
   --timing_trusted true \
-  --trace_tag "staged_timed_f${FPJ}_${SLURM_JOB_ID:-local}" \
-  --outdir "$BENCH_ROOT/results/staged_timed_f${FPJ}"
+  --trace_tag "staged_timed_${TAG}_${SLURM_JOB_ID:-local}" \
+  --outdir "$BENCH_ROOT/results/staged_timed_${TAG}"
 
 # The measurement reads itself: if the shards ran concurrently the span is about the stage sum, and
 # if something serialised them it is about the sum with the shards added instead of maximised.
-staged_scaling.py --staged-dir "$BENCH_ROOT/results/staged_timed_f${FPJ}/staged" \
-    --trace-dir "$BENCH_ROOT/results/staged_timed_f${FPJ}/pipeline_info"
+staged_scaling.py --staged-dir "$BENCH_ROOT/results/staged_timed_${TAG}/staged" \
+    --trace-dir "$BENCH_ROOT/results/staged_timed_${TAG}/pipeline_info"
