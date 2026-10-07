@@ -18,8 +18,8 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 155 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
+| findings in this report | 156 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
@@ -3419,6 +3419,40 @@ It covers the subsets now, driven by each record's own parameters rather than by
 subset added later is checked without editing anything. **731 files, 731 identical**, 17 seconds; the
 recorded source sha256s are checked against the files they name in the same pass. Proved by changing
 one record's seed from 42 to 43: the gate names all three of that subset's files.
+
+**156. The fold order reached the tool, which nothing had established, and the thread count moves one
+digit in ninety-three.** `verify_fold_counts.py` states the hazard and closes half of it: a condition's
+`folds` field in `run.json` "is the declaration and not the measurement; it would read 5 just as
+happily if the environment variable had never reached the container", so it checks the count against
+the tool's own log line. The fold *order* has no log line, and it is the knob two of the five grid
+conditions turn. Its published result is that it changes detection by nothing -- **a null result that
+an option never reaching the container would produce just as well.**
+
+Measured on the output rather than on the declaration: `epang_T8_K25` and `epang_T8_K25_tree` produce
+a different `.mis` on **180 of 180 cells**, and every one of the ten pairs of batching conditions
+differs on every cell it shares, 1 110 cells in all. `SATIVA_EPANG_FOLD_ORDER` reached the tool. The
+null result is a result.
+
+**The other direction found something.** Thread count is not an independent variable here -- every
+comparison in this benchmark is at eight threads and nothing claims otherwise -- so two conditions
+differing only in threads should give the same answer. Upstream does, byte for byte at 1, 8 and 16
+threads, in all three replicates. The fork does not: the three `.mis` have three different checksums.
+
+What actually differs is **one character**. All three flag the same 93 sequences at the same ranks with
+the same proposed labels; one sequence, `GB_GCA_030588985.1_JAUUWP010000005.1`, reads a confidence of
+**0.993 at one thread and 0.992 at eight and sixteen**, its exclusion unchanged at 0.997. Eight and
+sixteen agree exactly. That is summation order under threading, and it is the reason the new check
+compares the flag set and the rank rather than the bytes -- a choice measured rather than assumed:
+putting the confidence back into the comparison makes it fire on exactly those six pairs and no others.
+
+`bin/verify_conditions_differ.py` runs in `bin/analyses.sh` and reads the condition names, which is
+where the harness gets the same fields from. **18 thread pairs and 10 batching pairs over 1 110 cells,
+0 problems.**
+
+**It is worth one sentence in the manuscript.** The reproducibility claim there is byte-identity for one
+dataset and one seed across three CPU models; a reader who reruns at a different thread count gets a
+different checksum, and the honest form of the claim says at a fixed thread count, or says that what
+moves is one confidence in ninety-three and no call.
 
 ## What is outstanding
 

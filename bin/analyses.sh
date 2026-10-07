@@ -342,6 +342,9 @@ verify_regeneration.py
 # run.json records what was declared rather than what ran. This compares both against the tool's own
 # line, which is the only evidence of the fold count the harness did not write itself.
 verify_fold_counts.py
+# And the other half of what that one states: the count is checked against the tool's own line, the
+# order against nothing. This checks the output instead, in both directions.
+verify_conditions_differ.py
 verify_injection.py --base "$TAX" --injected-dir "$INJ"
 verify_foreign.py
 
