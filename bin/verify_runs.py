@@ -21,7 +21,7 @@ fatal, since wall_sec is measured independently, so that one is reported and doe
 import argparse
 import json
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 
@@ -36,6 +36,7 @@ def main():
         sys.exit(f"no run record matched {args.glob}")
 
     seen, bad, unparsed, modelless = Counter(), [], [], []
+    behaviour = defaultdict(list)
     for f in records:
         try:
             d = json.loads(f.read_text())
@@ -65,6 +66,22 @@ def main():
         if d.get("timing_trusted") and not d.get("cpu_model"):
             modelless.append(f"{f} (host {d.get('host')})")
 
+        # The flags that decide what the tool did. They come from params with defaults, so one
+        # --sativa_mode on a command line changes what a condition means, and conf/modules.config
+        # records that a stage once ran -m thorough by accident and cost a scaling measurement.
+        # _timeit.py now writes the executed argv into the record; what is checked is that every
+        # record carrying one agrees with every other, since the value itself is a choice and the
+        # thing that invalidates a comparison is two runs disagreeing about it.
+        if d.get("cmd"):
+            argv = d["cmd"]
+            flags = {}
+            for i, tok in enumerate(argv):
+                if tok in ("-m", "-C", "-p", "-x") and i + 1 < len(argv):
+                    flags[tok] = argv[i + 1]
+                elif tok == "-S":
+                    flags[tok] = True
+            behaviour[tuple(sorted(flags.items()))].append(str(f))
+
         # sativa_timing says which of the two causes applies; records written before it
         # existed carry neither it nor the timings, so absence of the keys still counts.
         if "sativa_timing" in d:
@@ -75,6 +92,12 @@ def main():
 
     print(f"{len(records)} run records checked: "
           + ", ".join(f"{n} {s}" for s, n in sorted(seen.items())))
+    if behaviour:
+        n = sum(len(v) for v in behaviour.values())
+        print(f"  {n} record(s) carry the executed argv, in {len(behaviour)} flag combination(s)")
+        if len(behaviour) > 1:
+            for combo, files in sorted(behaviour.items(), key=lambda kv: -len(kv[1])):
+                bad.append(f"{len(files)} run(s) with flags {dict(combo)}, e.g. {files[0]}")
     if unparsed:
         print(f"  {len(unparsed)} without parsed phase timings, e.g. {unparsed[0]}; "
               "wall_sec is unaffected.", file=sys.stderr)

@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 173 |
+| findings in this report | 174 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3920,6 +3920,32 @@ across the twelve specs: their keys are `engine`, `fold_order`, `folds`, `impl`,
 intersection with `dataset, n_seqs, aln_len, condition, rep, run_name, timing_trusted` is **empty**. It
 is sound today and it is one careless key from not being, which is worth a line here rather than a guard
 in the workflow for a mistake nobody has made.
+
+**174. No run record says which flags produced it, and the flags are one command line away from
+changing.** Every condition reaches the tool with the same five flags, built once in
+`conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
+`-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 147 run records, none carries
+them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
+the two files it read, and is silent about what the tool was told to do.
+
+That gap has already cost something once, which is why it is worth closing rather than noting.
+`conf/modules.config`'s own comment says `STAGEDREFERENCE` was outside the flag selector, ran without
+`-x`, printed its usage and exited 0 in 0.21 s, and "would also have run `-m thorough`, the default,
+which is the mistake that cost one scaling measurement already". A `--sativa_mode thorough` on one
+submission would do the same today and leave no trace in any table.
+
+`bin/_timeit.py` now records the argv it executed. Taken from the command rather than rebuilt from the
+params, which is the difference between evidence and a second copy that drifts -- the shape of four
+other findings here. It arrives in `run.json` through the merge `collect_run.py` already does, checked
+end to end: a `timing.json` carrying `['/bin/echo', 'hi']` produces a record saying so.
+
+`bin/verify_runs.py` checks agreement rather than a value, since the value is a choice and what
+invalidates a comparison is two runs disagreeing about it. Both branches were run: two synthetic
+records differing only in `-m ultrafast` against `-m thorough` exit 1 and name the odd one, and the same
+pair agreeing exits 0 reporting "2 records carry the executed argv, in 1 flag combination". On the
+repository as it stands the line is silent, because the 1 147 existing records predate it; it is armed
+for the staged rounds now queued.
 
 ## What is outstanding
 

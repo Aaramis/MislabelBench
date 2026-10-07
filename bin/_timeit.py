@@ -87,6 +87,13 @@ def main():
         "max_rss_mb": round(usage.ru_maxrss / (1048576.0 if sys.platform == "darwin" else 1024.0), 1),
         "user_cpu_sec": round(usage.ru_utime, 2),
         "sys_cpu_sec": round(usage.ru_stime, 2),
+        # The argv, because nothing else recorded it. -m, -C, -x, -p and -S decide what the tool does
+        # and they come from params with defaults, one --sativa_mode away from being something else;
+        # conf/modules.config's own comment says a stage once ran -m thorough by accident and cost a
+        # scaling measurement. Of the 1 147 run records written before this line, not one says which
+        # flags produced it. Taken from the command actually executed rather than rebuilt from the
+        # params, which is the difference between evidence and a second copy that can drift.
+        "cmd": cmd,
         **where(),
     }))
 
