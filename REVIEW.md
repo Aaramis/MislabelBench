@@ -18,11 +18,11 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 159 |
+| findings in this report | 160 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 40 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
-| dataset manifests, against the files they describe | 8 |
+| dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1117 |
 | result tables, each rebuilt by `bin/analyses.sh` | 54 |
 | `.mis` files, the flag lists every detection number is computed from | 1416 |
@@ -3527,6 +3527,38 @@ by evaluating it in Nextflow rather than read: both operand orders give the same
 The general shape is one this report has met before: a default that is harmless until another setting
 makes it load-bearing. `--exclusive` did not create the problem, it revealed a request nobody had ever
 had a reason to size.
+
+**160. Kind 5 was recorded as blocked when half of it had been measured and the other half was one
+generator away.** "Error kind 5 waits on nf-core/taxmarker#39" has stood in the outstanding section
+for weeks, and `slurm/ragged_check.sh` had already answered the first half: on 402 sequences with a
+quarter of the lineages cut to genus and a quarter to family, the tool accepts unequal depths and
+flags 11, and what breaks it is the truncation rather than the missing information -- an empty lineage
+raises `IndexError` in `epac/taxonomy_util.py` before any placement, while both untrimmed
+placeholder forms run and flag 14.
+
+That is robustness, not detection: nothing was mislabelled in those files, so 11 is a count and not a
+recall. The question a user has -- does an incomplete lineage hide a real mislabel? -- was never put.
+
+**It splits in two, and only one half needs the convention.** Truncating sequences other than the ones
+whose label was faked is well defined: the injected truth is untouched, so recall compares cell for
+cell with the grid and the difference is what the lost context costs. Truncating the faked sequences
+themselves is not: if a lineage stops at family and the error is at species, the rank of the error is
+no longer declared and "was it detected" has no agreed answer. The protocol's "settle the convention
+first" is right about the second half and was being applied to both.
+
+`slurm/make_ragged.sh` builds the first half from the grid's own cells -- family distance, the top
+rate, every *k*, three seeds, **15 datasets of 2 023 sequences, about 479 lineages cut to genus and
+478 to family in each** -- by `ragged_check.sh`'s own rule, so the two experiments describe the same
+shape of input. `slurm/ragged_grid.sh` runs both tools, because `ragged_check.sh` only ever ran the
+fork: whether SATIVA accepts a ragged lineage at all is unmeasured, and a difference there would be
+the answer rather than a detail. Submitted as job 2290437.
+
+**And the discipline failure worth recording with it.** The commit adding those two scripts was made
+without running `bin/analyses.sh`, and left `review_coverage.py` failing with two unnamed files and
+two coverage counts wrong. The gates caught it one turn later, which is what they are for -- but a
+gate that runs only when someone remembers to run it is the thing this report has complained about
+eight times. The rule is the one the repository already states for its tables: no commit without the
+chain.
 
 ## What is outstanding
 
