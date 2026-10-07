@@ -73,7 +73,13 @@ def main():
     donors = sorted(l for l, m in by_lineage.items() if len(m) >= floor)
     rng.shuffle(donors)
 
-    injected, used = {}, set()
+    # No bookkeeping of which sequences are already taken, because there is nothing to keep: a
+    # sequence belongs to exactly one lineage and each lineage appears once in `donors`, so two
+    # groups can never compete for the same member. This loop used to subtract a `used` set and
+    # re-test `floor` afterwards, which read as protection against an overlap that cannot occur.
+    # Checked over 60 combinations of k, rate and seed on the 2 023-sequence set: neither the
+    # subtraction nor the re-test ever changed anything.
+    injected = {}
     for donor in donors:
         if len(injected) >= need:
             break
@@ -83,13 +89,10 @@ def main():
         if not options:
             continue
         wrong = options[rng.randrange(len(options))]
-        members = sorted(set(by_lineage[donor]) - used)
-        if len(members) < floor:
-            continue
+        members = sorted(by_lineage[donor])
         rng.shuffle(members)
         for name in members[:args.k]:
             injected[name] = {"true": donor, "wrong": wrong, "donor_group": donor}
-            used.add(name)
 
     if len(injected) < need:
         print(f"warning: asked for {need}, injected {len(injected)}; "

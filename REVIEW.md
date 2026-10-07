@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 177 |
+| findings in this report | 178 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4029,6 +4029,34 @@ slurm/bad_nodes.txt`, which is the union and also silently fixes any duplicate. 
 also an input is the part worth checking rather than assuming, since this runs on a Mac and BSD `sort` is
 not GNU `sort`: tested with `sort -u A B -o B`, which gives the union, and with a target holding `x` twice,
 which comes back once. So the merge is sound on this machine as well as on the cluster.
+
+**178. The injection is sound and one of its guards guards nothing.** `bin/inject_mislabels.py` is where
+every recall number comes from, so it was read against the protocol line by line. The two properties that
+matter hold and are already asserted by `bin/verify_injection.py`, which is the right place for them: a
+donor taxon always keeps a correctly labelled member, with membership taken from the **base** taxonomy
+rather than the injected one, since a sequence relabelled *into* a group would otherwise make that group
+look populated when its own members had all been relabelled away; and the wrong label agrees with the true
+one above the stated rank and differs at it. 180 cells, 180 sound.
+
+What the reading did find is one guard that cannot fire. The group loop subtracted a `used` set from each
+donor's members and then re-tested the `k + 1` floor:
+
+```python
+members = sorted(set(by_lineage[donor]) - used)
+if len(members) < floor:
+    continue
+```
+
+A sequence belongs to exactly one lineage and each lineage appears once in `donors`, so two groups can
+never compete for a member and the subtraction is always empty; the re-test duplicates the filter that
+built `donors`. It reads as protection against an overlap the data structure makes impossible, which is
+worse than nothing in a script whose job is to be checkable. Instrumented and run over **60 combinations**
+of k in 1, 2, 3, 5, 10, rate in 0.005 to 0.05 and three seeds on the 2 023-sequence set: neither branch
+fired once.
+
+Both are gone. The random stream is untouched -- the same list reaches `rng.shuffle` either way -- and the
+proof is not that argument but `bin/verify_regeneration.py`, which rebuilds every cell from the kept inputs
+and reports **731 identical, 0 differing** after the change.
 
 ## What is outstanding
 
