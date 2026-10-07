@@ -18,13 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 146 |
+| findings in this report | 148 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
 | run records, cross-checked against the files they summarise | 1117 |
 | result tables, each rebuilt by `bin/analyses.sh` | 54 |
+| `.mis` files, the flag lists every detection number is computed from | 1416 |
 | tests over the scripts that turn runs into numbers | 26 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2047,8 +2048,8 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 113 run records, 55 are trusted and
-1 058 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
+figure reads seconds from a run marked untrusted. True: of **1 117 run records, 55 are trusted and
+1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
 speedup at 16.5. So the discipline is real and the exposure was 0.1 s.
@@ -2300,8 +2301,8 @@ fourth and fifth were resource requests below what the processes declare -- stub
 
 **Then the cleanup deleted the cluster home directory.** `rm -rf … "$HOME"` inside a single-quoted ssh
 command is expanded by the remote shell, not protected from it. `~/bench`, the container cache and
-`~/.ssh/authorized_keys` are gone, so key login fails. **No measurement was lost** -- 1 113 run records,
-1 141 `.mis` files and 47 tables are committed here, the datasets regenerate from their seeds, and the
+`~/.ssh/authorized_keys` are gone, so key login fails. **No measurement was lost** -- the 1 113 run records,
+1 141 `.mis` files and 47 tables committed here that day, the datasets regenerate from their seeds, and the
 raw release is pinned by sha256 in `assets/datasets.yml`. D158 records it with the remediation, which
 needs the user's account access.
 
@@ -2310,7 +2311,7 @@ is the record. That was a claim until today.
 
 **111. Nothing in the repository knew how to rebuild the cluster, and the incident is what asked.**
 Finding 110 ends with the claim that the cluster is a cache and this repository is the record. That is
-true of the *measurements* -- 1 113 run records, 1 141 `.mis` files and 47 tables are committed, and
+true of the *measurements* -- 1 113 run records, 1 141 `.mis` files and 47 tables that day, and
 every generated cell rebuilds from its seed -- and it was not true of the working copy. Putting
 `~/bench` back was knowledge in one person's head, and two of the four things it needs are not sent by
 anything here.
@@ -2360,7 +2361,8 @@ local test can reach. That remains the one step whose first proof will be the da
 supposed to produce had an introduction that read "Twenty findings … thirty-three more came later … one
 of those sixteen", arithmetic that does not close, above a coverage table claiming **four** modules
 where there are **eight**, **42** `bin/` scripts where there are **55**, **29** `slurm/` scripts where
-there are **37**, and **1 226** run records where there are **1 113**. Every number in it was wrong, in a
+there are **37**, and a run-record count of **1 226** where there were 1 113. Every number in it was
+wrong, in a
 document whose stated purpose is finding comments that disagree with their code.
 
 What makes it worth more than an edit is that **it had gone stale once before and been corrected by
@@ -2573,7 +2575,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| 47 published tables ← 1 113 run records | `bin/analyses.sh`, byte-identical in a clone |
+| **54 published tables** ← 1 117 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2684,7 +2686,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 113** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 117** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3164,6 +3166,41 @@ docstring rather than left to be noticed.
 The order matters more than the count. Every visual defect in this figure until now was found by
 looking at it and reported in French by its only reader. The ones that survived four passes of looking
 were found by the first pass of measuring.
+
+**147. A reader can reproduce every committed number from a clone, and that had never been run.** The
+repository's central claim is that a clone plus the four generators plus `bin/analyses.sh` reproduces
+everything in `results/`. It was asserted in three documents and in one row of the table above, and it
+had been exercised only in pieces: the datasets since finding 145, the tables only in the tree that
+wrote them, where a stale table and a correct one look the same.
+
+Run end to end today, at `ce6c08f`, into a path that is not this one: clone, the four generators, then
+`bin/analyses.sh`. **All 33 steps ran, none skipped, every gate green, and `git status` on `results/`
+came back empty** -- 54 tables, 6 figures and their values, byte for byte what is committed. Both halves
+of the claim are now measured rather than reasoned, and the only caveat worth stating is the one the
+measurement cannot remove: the clone was built by the same python on the same machine, so this is
+reproducibility of the analysis and not portability of the interpreter. Finding 97's cross-check, macOS
+python 3.14 against Linux 3.12, is what covers the other.
+
+**148. The report wrote down the rule and then broke it three times.** Finding 113 draws the
+distinction a document has to make about its own numbers: "a number describing the repository must be"
+current, "a number describing an event must be" kept. Three counts on the current side rotted anyway --
+a run-record count of **1 113** where there are 1 117, **1 141** `.mis` files where there are 1 416, and
+a published-table count of **47** where there are 54 -- across four places in REVIEW.md and one in
+README.md. The coverage table
+beside them was right the whole time, because `bin/verify_report_references.py` recomputes it; the
+prose beside it was not, because nothing recomputed that.
+
+The counts were wrong by 4, 275 and 7. None changes a conclusion, which is exactly why none was noticed:
+the one about the `.mis` corpus had drifted by a quarter.
+
+**Fixed by putting the distinction in the markup rather than in a paragraph.** A corpus count that is
+bold is a claim about the repository now and is checked; the same count unbolded is part of an account
+of a day and is left as it was. Two phrases are checked that way, "run records" and "published tables".
+A third is not and says so: "N `.mis` files" is also how a measurement reads -- 712 of them carry a
+TAXCLUSTER marker, finding 102 -- so that count is checked in the coverage table, which gained a row
+for it, and nowhere else. Finding 113's own sentence quotes a wrong number, 1 226, and is rephrased so
+the bold does not sit against the phrase: a quotation of a stale table must not read as a claim about
+today.
 
 ## What is outstanding
 
