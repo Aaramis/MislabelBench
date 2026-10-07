@@ -14,8 +14,14 @@ shift || true
 
 exclude=""
 if [ -s "$BAD_NODES" ]; then
-    exclude="--exclude=$(paste -sd, "$BAD_NODES")"
-    echo "excluding $(wc -l < "$BAD_NODES") node(s) known to lack singularity"
+    # sort -u, because the list can hold a name twice. prelude.sh appends with
+    # `grep -qxF "$host" || echo "$host" >>`, which is a read and a write and not one step, so two
+    # jobs landing on the same singularity-less node at the same moment both see it absent and both
+    # append. bin/repatriate.sh takes the union with the cluster's copy and would clean it up later;
+    # until it runs, the count printed here would overstate and Slurm would get a name twice.
+    # Deduplicating at the point of use costs nothing and needs no lock.
+    exclude="--exclude=$(sort -u "$BAD_NODES" | paste -sd, -)"
+    echo "excluding $(sort -u "$BAD_NODES" | wc -l | tr -d ' ') node(s) known to lack singularity"
 fi
 
 # shellcheck disable=SC2086

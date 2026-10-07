@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 176 |
+| findings in this report | 177 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4005,6 +4005,30 @@ disjoint conditions into the same directory and are meant to run together. A loc
 script through environment variables in two of the three cases. So what protects this is a rule rather
 than a mechanism: **two jobs writing the same condition into the same `--outdir` must not overlap**, and
 it is written here because nothing in the harness will say it.
+
+**177. The learned bad-node list can hold a name twice, and the two places that worried me about it were
+already right.** `slurm/prelude.sh` records a node that lacks singularity with
+`grep -qxF "$host" "$BAD_NODES" || echo "$host" >> "$BAD_NODES"`. That is a read and then a write, not one
+step, so two jobs landing on the same singularity-less node at the same moment both find it absent and
+both append. The appends themselves do not interleave -- a single short `echo` under `O_APPEND` is atomic
+on this filesystem -- so the failure is a duplicate line, not a corrupted one. `slurm/submit.sh` then
+built `--exclude` by pasting the file and printed `wc -l` as the number of nodes, so a duplicate would
+have been passed to Slurm twice and counted twice. Deduplicated at the point of use, which costs nothing
+and needs no lock: `sort -u` before the paste and before the count. There are no duplicates in the file
+today, which is why this is one line and not an incident.
+
+Two things that looked like worse versions of the same problem are already handled, and checking them is
+the only way the next reader will know.
+
+`bin/push_code.sh` excludes `bad_nodes.txt` from the wholesale sync, with a comment saying why: it is the
+one file in the code tree the cluster writes, so pushing the laptop's copy over it would unlearn the
+cluster. Without that exclusion every push would have reset the list.
+
+`bin/repatriate.sh` merges rather than overwrites: `sort -u "$remote_bad" slurm/bad_nodes.txt -o
+slurm/bad_nodes.txt`, which is the union and also silently fixes any duplicate. Writing to a file that is
+also an input is the part worth checking rather than assuming, since this runs on a Mac and BSD `sort` is
+not GNU `sort`: tested with `sort -u A B -o B`, which gives the union, and with a target holding `x` twice,
+which comes back once. So the merge is sound on this machine as well as on the cluster.
 
 ## What is outstanding
 
