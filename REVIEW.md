@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 163 |
+| findings in this report | 164 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3642,16 +3642,45 @@ What made the mistake possible is that the spec's second field looks like the in
 missing third field is not an error. The script's own usage lines show `0,10` and `0,999999`, both
 two-field, so the form that answers the mechanism question appears nowhere in the examples.
 
+**164. The exclusive request was added against the repository's own written record that it cannot be
+granted, and three jobs queued on it for a day.** `DISTRIBUTION.md` has said since the `srun` fan-out
+was written that "`--exclusive` on four nodes is 2 040 CPUs against a 600-CPU quota, so this is not
+fixable by asking for the nodes", and `README.md` has said that `--exclusive` "bills all 510 cores of a
+node against a 600-core quota and starves every other job". The IFB profile was then given
+`clusterOptions = params.timed ? '--constraint=epyc-9754 --exclusive' : null` anyway, three staged
+rounds were submitted on it, and their stages pended on `QOSMaxCpuPerUserLimit` until they were
+cancelled. Two days of queue were spent on a wall this report's own repository had measured and
+written down.
+
+The numbers, re-derived from the scheduler rather than from the documents, agree with the documents:
+QOS `normal` caps a user at `cpu=600,mem=2000G`; a stage asks `TRES=cpu=8,mem=58456M`; an exclusive job
+is charged the node, so one shard is 510 CPUs, two are 1 020 and four are 2 040. The one-shard round
+was schedulable and the two-shard and four-shard rounds, which are the only reason the scaling panel
+exists, never were.
+
+What the diagnosis cost is the part worth recording. Two earlier entries in `Decisions.md` reasoned
+about this wait as node scarcity, measured partition horizons and node drain for it, and reversed a
+partition choice over it, all without reading the two files that already named the cause. The sequence
+was: blame the constraint, measure the constraint, find the constraint free, blame the partition,
+measure the partition, move everything, and only then read the pending reason string. The reason string
+was available at the first step.
+
+Fixed by removing `--exclusive` and bounding the interference with replicates instead, which is finding
+163's sibling and is recorded in `Decisions.md` with the alternative rejected. Two statements that had
+drifted are corrected with it: `README.md` said untimed runs "do not take the node", which implied
+timed ones do, and the panel C caption said "one node per shard" where a shard is one Slurm job holding
+eight cores of a shared node.
+
 ## What is outstanding
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** Five jobs, all on `fast` since the partition finding below. The ragged grid (2296741) and
-the three staged timing launchers (2296742/43/44, at 25, 13 and 7 folds per job) started within sixteen
-minutes of being moved off `long`, where `sbatch --test-only` had put a one-core job's earliest start in
-2028; the launchers' own stages are queued behind an exclusive epyc-9754 node, which is the wait that
-figure panel C has to pay. The wrong-label ramp (2297235) is queued. The minimal-case campaign is at
-twelve sweeps and 82 cases, the twelfth being the one finding 163 describes.
+**Running.** Two jobs. The ragged grid (2296741) is past the fork arm and on the comparator's, and the
+wrong-label ramp (2297235) is in its first case, 2 023 sequences with 20 labels changed, which is the
+axis finding 163 says the first attempt missed. The three staged timing launchers were cancelled, for
+the reason finding 164 gives; the nine replicate rounds that replace them cannot be submitted until the
+ragged grid finishes, since `bin/push_code.sh` reaches a running job's project files. The minimal-case
+campaign is at twelve sweeps and 82 cases.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory

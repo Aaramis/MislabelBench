@@ -550,10 +550,16 @@ the per-core speed of the newest, so `--constraint` is not optional and `cpu_mod
 `run.json` — into 641 of the 949 records, the rest predating the field. Five of those are trusted
 runs, and `verify_runs.py` says so every time it runs; the four baselines among them are on
 `cpu-node-123`, which Slurm reports as `epyc-9754`, the model their script asked for. Untimed runs,
-which answer detection questions, do not pin and do not take the node: `--exclusive` bills all 510
-cores of a node against a 600-core quota and starves every other job.
+which answer detection questions, do not pin at all.
 
-**A timed run has the machine to itself.** `executor.queueSize = 1` when `params.timed`, which is
+**No run takes the node, timed ones included.** `--exclusive` is charged the whole node, 510 cores on
+an epyc-9754, against a QOS that caps a user at `cpu=600,mem=2000G`. One exclusive task fits only
+while nothing else of ours runs, two are 1 020 cores and four are 2 040, so the distributed rounds
+cannot be made exclusive and were not. It was tried: the three staged rounds carried
+`--constraint=epyc-9754 --exclusive` for a day and their stages sat on `QOSMaxCpuPerUserLimit` until
+they were cancelled. What bounds the interference instead is the spread over replicates.
+
+**A timed run has the harness to itself.** `executor.queueSize = 1` when `params.timed`, which is
 the only cap Nextflow applies across processes: `maxForks` is per process, so setting it through a
 label let one SATIVA and one SATIVAEPANG run side by side, as the baseline trace shows them doing
 for 38 seconds. The allocation was six times larger than the two of them needed, so no published

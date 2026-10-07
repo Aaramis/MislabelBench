@@ -205,7 +205,7 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
     by_shards = {r["shards"]: r["spread"] for r in rows}
     for r in rows:
         VALUES.append(f"{L}\tshard_spread_s\t{r['shards']}\t{r['spread']}")
-    CAPTION.append(f"({L.lower()}) The four stages on 7 051 sequences with 25 folds, one node per shard. "
+    CAPTION.append(f"({L.lower()}) The four stages on 7 051 sequences with 25 folds, one Slurm job per shard. "
                    f"Only placement distributes. At four shards they finish within {by_shards[4]:.1f} s of "
                    f"each other; at two the spread is {by_shards[2]:.1f} s because 25 folds split 13 and 12.")
     lx, ly = ax.x0 + mf.PW - 72, ax.y0 + 10
