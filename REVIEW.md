@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 161 |
+| findings in this report | 163 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -26,7 +26,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | run records, cross-checked against the files they summarise | 1117 |
 | result tables, each rebuilt by `bin/analyses.sh` | 54 |
 | `.mis` files, the flag lists every detection number is computed from | 1416 |
-| tests over the scripts that turn runs into numbers | 26 |
+| tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -3579,14 +3579,79 @@ it is copied from `modules/local/*/main.nf`**, which is what the benchmark execu
 written out beside them. A usage note that is not the executed command is the kind of thing that goes
 quietly wrong, and this report has four findings about exactly that shape.
 
+**162. The test suite was never asked whether it can fail, and sixteen of twenty-six broken versions
+passed it.** This report already noted that the 26 tests check fixtures written by the same hand as the
+code. That is a suspicion, not a measurement, so it was measured: each of the eight tested scripts was
+copied to scratch and one operator at a time was flipped (`>=` to `>`, `<=` to `<`, `and` to `or`, `or`
+to `and`, a list index to its neighbour), the suite run after each, the file restored. **26 mutations,
+10 detected, 16 survived.**
+
+Several survivors are in docstrings and error messages, where a flipped operator changes nothing and
+the sweep is simply crude. Eight are not. They sit in code a published number is read through, and they
+survived for two different reasons:
+
+| script | mutation | why nothing noticed |
+|---|---|---|
+| `background_stability.py` | `startswith(";") or not strip()` to `and` | no test reaches the function |
+| `background_stability.py` | `out[f[0]] = f[1]` to `out[f[1]] = f[0]` | no test reaches the function |
+| `conflict_enrichment.py` | `line[1:].split()[0]` to `[1]` | only `tail_ge` was tested |
+| `conflict_enrichment.py` | `strip() and not startswith(";")` to `or` | only `tail_ge` was tested |
+| `score_injection.py` | `v >= t` to `v > t` | fixtures at 0.95 and 0.50 against 0.9 |
+| `column_comparison.py` | `r[col] >= t` to `>` | same, no row on a threshold |
+| `column_comparison.py` | `untouched_kept <= b` to `<` | no fixture costs exactly the budget |
+| `detection_law.py` | `n >= k + 1` to `>` | `eligible_taxa` was never asserted |
+
+The comment-skip pair is the one that would have been hard to find afterwards. With `and` instead of
+`or`, the `;SeqID` header line stops being skipped and becomes a flag named ";SeqID". It is present in
+every `.mis` in the repository, so it is retained in every cell, and `background_stability.py` would
+report a baseline one larger and one extra retained flag everywhere, with no error, no exception and a
+plausible table. The threshold pair is the one that would have been largest: the thresholds are drawn
+from the values the rows themselves carry, so a row sitting exactly on a threshold is the ordinary case
+and not an edge, and **31.3 % of this grid's flags carry a single confidence value**, 0.510. A strict
+comparison there moves a published recall by a third of the flags.
+
+`tests/test_parsing.py` is new and covers the four parsing mutants; `ThresholdBoundaries` in
+`tests/test_scoring.py` covers the four comparisons, with fixtures placed at 0.900 and 0.990 because
+those are published thresholds. Each of the eight now fails the suite when it is reintroduced, checked
+by reintroducing them one at a time. 33 tests.
+
+The sweep also found a defect in the suite's own plumbing: `tests/test_scoring.py` had its
+`if __name__ == "__main__": unittest.main()` block in the middle of the file, before three of its six
+classes. `python3 -m pytest tests` collected 31 tests and `python3 tests/test_scoring.py` collected 8,
+so anyone running the file the way a test file is usually run was silently testing half of it. Moved to
+the end: 16 and 33.
+
+**163. A ramp was launched on the wrong axis, and the log said it reproduced nothing rather than that it
+had asked nothing.** `README.md` records that between ten wrong labels and the cell's 102 something
+changes in kind, since at one label all three arms flag, at two and at ten all three miss, and at 102
+the fork flags alone. The experiment to close that gap was submitted as
+`CASE_SPECS="0,20 0,30 0,50 0,70"`. Those are **outgroup sizes**, not wrong-label counts:
+`slurm/minimal_case.sh` takes `per_family,outgroup[,wrong labels]` and the count is the optional third
+field, which also needs `CASE_TRUTH` to have a cell to draw the labels from. The job ran for seven
+minutes, printed `1 label changed at family` four times, and ended on `no size reproduced the
+divergence`, which was true and not an answer to the question.
+
+The run is kept, in `results/minimal_case/outgroup_small/`, because it does rule out one thing: at a
+single wrong label, outgroups of 20, 30, 50 and 70 give FLAG from all three arms at 1.000 to three
+decimals, so the transition between ten labels and a hundred is in the labels and not in how much
+reference surrounds the sequence. The ramp was resubmitted as `0,999999,20 0,999999,40 0,999999,60
+0,999999,80` against the cell's own truth file, which is 102 labels and contains the sequence, both
+checked before submitting rather than after.
+
+What made the mistake possible is that the spec's second field looks like the interesting one and a
+missing third field is not an error. The script's own usage lines show `0,10` and `0,999999`, both
+two-field, so the form that answers the mechanism question appears nowhere in the examples.
+
 ## What is outstanding
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** Nothing. The strict leave-one-out at *k*=3 finished on 2026-10-06 and closed the axis at
-family distance and rate 0.05: six cells, every *k* the grid uses, the engine's share +0.147 at *k*=3
-and the fold scheme's 0.000 as in the other five. The minimal-case campaign is complete, eleven sweeps
-and 82 cases.
+**Running.** Five jobs, all on `fast` since the partition finding below. The ragged grid (2296741) and
+the three staged timing launchers (2296742/43/44, at 25, 13 and 7 folds per job) started within sixteen
+minutes of being moved off `long`, where `sbatch --test-only` had put a one-core job's earliest start in
+2028; the launchers' own stages are queued behind an exclusive epyc-9754 node, which is the wait that
+figure panel C has to pay. The wrong-label ramp (2297235) is queued. The minimal-case campaign is at
+twelve sweeps and 82 cases, the twelfth being the one finding 163 describes.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory

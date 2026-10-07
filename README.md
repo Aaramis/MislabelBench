@@ -187,7 +187,10 @@ back on the whole reference with one wrong label and all three flag it; with two
 with ten, all three miss it; only at the cell's full 102 does the fork flag it alone. So the fork is not
 better at placing hard sequences, it is better on a reference whose labels are already wrong, and
 between ten wrong labels and a hundred something changes in kind that these runs do not identify.
-`results/minimal_case/` holds all eleven sweeps. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
+The one axis that is now ruled out is how much reference surrounds the sequence: at a single wrong
+label, outgroups of 20, 30, 50 and 70 sequences all give the same verdict from all three arms at
+1.000 to three decimals (`outgroup_small`), so the transition is in the labels and not in the size.
+`results/minimal_case/` holds all twelve sweeps. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
 confirm the wrong label whichever engine places against them.
 
 The fold column needs one qualification. It compares twenty-five folds against strict leave-one-out and
