@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 156 |
+| findings in this report | 157 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3453,6 +3453,32 @@ where the harness gets the same fields from. **18 thread pairs and 10 batching p
 dataset and one seed across three CPU models; a reader who reruns at a different thread count gets a
 different checksum, and the honest form of the claim says at a fixed thread count, or says that what
 moves is one confidence in ninety-three and no call.
+
+**157. The manuscript's numbers were audited against the records, and one of them has no record.**
+About fifty values across the Application Note and its supplement were checked against what
+`results/` holds, mechanically where a number appears in a committed file and by hand where it does
+not. **Every one matches**: the detection law band by band, the paired sign tests for all five values
+of *k* with their counts and their p-values, the engine-against-folds decomposition for all six cells,
+the disagreement buckets, the collateral locality per rank, the baseline churn, the column's shape.
+The totals close too -- the 119, 8 and 53 cells of the headline are the column sums of the paired
+table.
+
+One number is not in the repository at all. The supplement says the 42 cells run twice "ne partagent
+pas leur temps d'exécution, le plus grand écart étant 731,8 s contre 526,2 s, 39 %", and
+`bin/verify_duplicate_runs.py` prints only the byte-identity count. The claim is **true** -- recomputed
+from the run records: 42 pairs, **0 sharing a wall clock**, widest 731.8 against 526.2, 39 % --
+and it was computed once by hand, so nothing would notice it drifting.
+
+It is printed now, beside the identity count it qualifies, because the two statements are one
+argument: byte-identity is evidence of reproducibility only if the runs are genuinely separate, and
+what shows they are is that none of them shares a clock.
+
+**The audit found no error, which is itself worth recording** after a report in which the same class
+has bitten five times. It also suggests the cheap version of the check is worth having: every number
+in the manuscript, matched against every number any committed record holds, flags 8 of 148 in the
+supplement -- and six of those eight are explained by the corpus not reading `assets/datasets.yml`
+(the release counts, the model's `CKSUM`, the release version) or by being a derivation rather than a
+measurement (the 1.86 predicted from four rate categories). The two that were left are the pair above.
 
 ## What is outstanding
 

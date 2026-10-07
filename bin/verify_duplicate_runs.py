@@ -13,9 +13,16 @@ numbers, which a reader could take for independent measurements of the same quan
 
 A pair that disagrees means the pipeline is not deterministic across jobs, which would invalidate
 every table here, so this exits non-zero rather than reporting.
+
+The seconds are reported too, for the opposite reason. Byte-identity is only evidence of
+reproducibility if the two runs are genuinely separate, and the thing that shows they are is that
+they do not share a wall clock: no pair of the 42 does, and the widest is 39 % apart. The
+supplementary states that spread and nothing here produced it -- it was computed by hand once -- so
+it is printed with the identity count it qualifies.
 """
 
 import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -57,7 +64,24 @@ def main():
         sys.exit("no run directory under results/kaxis or results/ksweep had a counterpart to "
                  "compare; run this from the benchmark root")
 
+    timed = []
+    for side, main in PAIRS:
+        for d in sorted(Path(side).glob("*")):
+            other = Path(main) / d.name
+            try:
+                wa = json.loads((d / "run.json").read_text())["wall_sec"]
+                wb = json.loads((other / "run.json").read_text())["wall_sec"]
+            except (OSError, KeyError, ValueError):
+                continue
+            if wa and wb:
+                timed.append((d.name, max(wa, wb), min(wa, wb)))
+    shared = sum(1 for _, hi, lo in timed if hi == lo)
     print(f"{total} cells were run twice in separate jobs, {same} produced a byte-identical .mis")
+    if timed:
+        name, hi, lo = max(timed, key=lambda r: r[1] / r[2])
+        print(f"{len(timed)} of those pairs carry both wall clocks, {shared} share one, and the "
+              f"widest is {hi:.1f} s against {lo:.1f} s, {100 * (hi - lo) / lo:.0f} % apart "
+              f"({name})")
     for p in problems[:10]:
         print(f"  {p}", file=sys.stderr)
     if problems:
