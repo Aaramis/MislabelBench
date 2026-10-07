@@ -43,16 +43,24 @@ field that moved was
 machines; it now records the input's name and sha256, which can.
 
 That check named the `.tax` and the `truth.json` and stopped there, which is narrower than what it is
-used to license: a cell also carries a `.fasta`, and that is the file SATIVA reads. Rerun from a fresh
-clone with nothing but the generators, every regenerated file is byte-identical. That check has grown
-twice since it was written here as "378 files from the two `make_` scripts": there are **four**
-generators now, and the count is **481 files -- 360 injected, 18 foreign, 27 clade, 76 simulated** --
-most recently rerun against a tree holding exactly what `bin/restore_cluster.sh` would deliver, with
-**0 differing and 0 absent**.
+used to license: a cell also carries a `.fasta`, and that is the file SATIVA reads. It is now
+`bin/verify_regeneration.py`, run by `bin/analyses.sh` rather than by hand: a root holding nothing but
+the kept inputs above, the four generators run into it, and every file they write compared with this
+tree's. **719 files, 719 identical**, in 18 seconds, no cluster and no container. Counting only what
+the experiments themselves consist of, without the manifests and the ground truth, that is
+**481 files -- 360 injected, 18 foreign, 27 clade, 76 simulated**.
 
-The caveat that keeps that number honest, restated rather than assumed remembered: **225 of the 235
-regenerated `.fasta` are symlinks** to a base alignment, because injection rewrites a taxonomy and never
-an alignment, so comparing their contents compares one file to itself. What the check establishes for
-those is that the link is remade and points where it should. The ten real ones are the nine foreign
-cells and the simulated reference, and they are where the comparison bites.
-The nine foreign `.fasta` are real files and are the ones that comparison bites on.
+It is run that way because the way it was run before could not work. It was run from a fresh clone
+"with nothing but the generators", and a fresh clone is where two of the four experiments are not
+regenerated at all: the clade and simulated cells **are** committed, every generator skips a cell whose
+`.tax` is already there, so for 103 of those files the check compared git's content with itself. Their
+reproducibility was unmeasured until the cells were deleted and rebuilt, which they now are, in a tree
+that is not this one. They do come back byte for byte.
+
+The caveat that keeps the number honest: **225 of the 235 regenerated `.fasta` are symlinks** to a base
+alignment, because injection rewrites a taxonomy and never an alignment. A link is therefore compared by
+its target and not by the bytes it points at -- comparing those compares one file with itself, which is
+how 45 committed links stayed absolute and unnoticed, naming
+`/Users/auguste/Documents/git/sativa-epang-benchmark` in every clone on every other machine. The ten
+real `.fasta` are the nine foreign cells and the simulated reference, and those are where a content
+comparison bites.

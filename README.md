@@ -439,10 +439,13 @@ bin/analyses.sh                                # rebuild every table in results/
 python3 -m unittest discover -s tests          # the analysis layer's tests
 ```
 
-The four generators come first because the cells they make are not in the repository: they are the
-base taxonomy with a few hundred labels rewritten, or the same alignment with donors added, and
+The four generators come first because most of the cells they make are not in the repository: they are
+the base taxonomy with a few hundred labels rewritten, or the same alignment with donors added, and
 rebuilding every one from its seed takes a couple of minutes and needs neither cluster nor container
-nor network. All four are listed because running only the first is not enough and does not fail
+nor network. The clade and simulated cells are the exception -- they are committed, being small and
+being two experiments' ground truth -- so `make_clade.sh` and `make_simulation.sh` rebuild nothing on a
+fresh clone. Run them anyway: each cell's alignment is a symlink, and the two scripts refresh those
+even for a cell they skip, which is what makes a clone's links point inside the clone. All four are listed because running only the first is not enough and does not fail
 gracefully: `bin/analyses.sh` reaches its truth checks and exits 1 on nine foreign datasets whose
 `.fasta` was never built, after doing twenty-three steps of work. [`data/README.md`](data/README.md) says what is kept
 and what is regenerated, with the check that the regenerated cells come back byte-identical.

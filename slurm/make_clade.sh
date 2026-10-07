@@ -17,17 +17,24 @@ ALN="$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax"
 [ -s "$ALN" ] && [ -s "$TAX" ] || { echo "missing $ALN or $TAX" >&2; exit 1; }
 
+# See make_grid.sh for why the cell alignments are relative links and not absolute ones.
+ALN_REL=$(python3 -c 'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' \
+          "$ALN" "$OUT/any_cell")
+
 # Idempotent, for the reason make_grid.sh gives: a cell is a function of its name.
 for dist in species family phylum; do
   for seed in 1 2 3; do
     name="k3_${dist}_s${seed}"
     d="$OUT/$name"
-    [ -s "$d/$name.tax" ] && continue
-    mkdir -p "$d"
-    python3 "$BENCH_ROOT/bin/inject_clade.py" "$TAX" --alignment "$ALN" \
-      --distance "$dist" --n-clades 6 --seed "$seed" --prefix "$d/$name" \
-      >"$d/clades.txt" 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
-    ln -sf "$ALN" "$d/$name.fasta"
+    if [ ! -s "$d/$name.tax" ]; then
+      mkdir -p "$d"
+      python3 "$BENCH_ROOT/bin/inject_clade.py" "$TAX" --alignment "$ALN" \
+        --distance "$dist" --n-clades 6 --seed "$seed" --prefix "$d/$name" \
+        >"$d/clades.txt" 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
+    fi
+    # See make_grid.sh: relative, and refreshed even for a cell that already exists. These nine
+    # cells are committed, so without the refresh a clone keeps the links the author's machine wrote.
+    ln -sfn "$ALN_REL" "$d/$name.fasta"
   done
 done
 

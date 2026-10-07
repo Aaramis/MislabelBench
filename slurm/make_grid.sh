@@ -18,6 +18,13 @@ mkdir -p "$OUT"
 ALN="$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax"
 
+# The cell alignments are symlinks to the one file every cell shares. Relative, so a clone of this
+# repository resolves them wherever it sits: committed as absolute paths they named one machine under
+# one home, which is the defect this script's own comment below warns about for manifests. Every cell
+# directory is one level under $OUT, so the path from any of them to the alignment is the same.
+ALN_REL=$(python3 -c 'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' \
+          "$ALN" "$OUT/any_cell")
+
 # Rates: the two Protocol.md 2.3 defines. A 2 % arm was generated and then removed, the repository
 # being scoped to exactly what the protocol defines. What that arm would have bought is recorded in
 # D125 and D128: the axis is not flat, 0.042 recall at 1 % against 0.148 at 5 % at k=10, and 2 % is the
@@ -29,13 +36,16 @@ for dist in species genus family order class phylum; do
       for seed in 1 2 3; do
         name="inj_${dist}_r${rate}_k${k}_s${seed}"
         d="$OUT/$name"
-        [ -s "$d/$name.tax" ] && continue
-        mkdir -p "$d"
-        python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
-          --distance "$dist" --rate "$rate" --k "$k" --seed "$seed" \
-          --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || {
-            echo "FAILED $name" >&2; continue; }
-        ln -sf "$ALN" "$d/$name.fasta"
+        if [ ! -s "$d/$name.tax" ]; then
+          mkdir -p "$d"
+          python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
+            --distance "$dist" --rate "$rate" --k "$k" --seed "$seed" \
+            --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || {
+              echo "FAILED $name" >&2; continue; }
+        fi
+        # Outside the guard, so a skipped cell still gets its link refreshed -- a link written on
+        # another machine points at where that machine kept the alignment.
+        ln -sfn "$ALN_REL" "$d/$name.fasta"
       done
     done
   done

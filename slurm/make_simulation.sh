@@ -32,6 +32,10 @@ fi
 ALN="$OUT/sim/sim.fasta"
 TAX="$OUT/sim/sim.tax"
 
+# See make_grid.sh for why the cell alignments are relative links and not absolute ones.
+ALN_REL=$(python3 -c 'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' \
+          "$ALN" "$OUT/any_cell")
+
 # Injected cells. Distances only to genus: deeper than that and the simulated tree has no
 # divergence left to tell the recipient from the donor, which is a property of the model and not a
 # finding, so the cells that would measure it are not made.
@@ -47,12 +51,15 @@ for dist in species genus family; do
     for seed in 1 2 3; do
       name="sim_${dist}_k${k}_s${seed}"
       d="$OUT/$name"
-      [ -s "$d/$name.tax" ] && continue
-      mkdir -p "$d"
-      python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
-        --distance "$dist" --rate 0.05 --k "$k" --seed "$seed" \
-        --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
-      ln -sf "$ALN" "$d/$name.fasta"
+      if [ ! -s "$d/$name.tax" ]; then
+        mkdir -p "$d"
+        python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
+          --distance "$dist" --rate 0.05 --k "$k" --seed "$seed" \
+          --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
+      fi
+      # See make_grid.sh: relative, and refreshed even for a cell that already exists. These 36
+      # cells are committed, so without the refresh a clone keeps the links the author's machine wrote.
+      ln -sfn "$ALN_REL" "$d/$name.fasta"
     done
   done
 done

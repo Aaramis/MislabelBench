@@ -334,6 +334,10 @@ verify_timed_one_model.py
 
 step "truth checks, which must pass rather than be read"
 verify_manifests.py
+# What is not committed must come back from the kept inputs alone, which was the one claim in
+# data/README.md run by hand rather than by this script -- and run from a fresh clone, where two of
+# the four experiments cannot be regenerated at all because their cells are committed.
+verify_regeneration.py
 # The condition names are the benchmark's independent variable for four of its conditions, and
 # run.json records what was declared rather than what ran. This compares both against the tool's own
 # line, which is the only evidence of the fold count the harness did not write itself.

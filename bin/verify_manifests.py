@@ -9,11 +9,18 @@ It also insists each fasta is an alignment of one width, which is the assumption
 makes and which was violated once: a size subset was drawn from the ragged release file instead of
 the aligned one, and it looked entirely plausible until the widths were measured.
 
+And it refuses an absolute path twice over: in a manifest entry, and in the symlink a relative entry
+may point at. Those are the same defect and only the first was checked. Every cell's alignment is a
+link to the one file the cells share, 45 of them are committed, and all 45 named
+/Users/auguste/Documents/git/sativa-epang-benchmark -- so every clone on any other machine had 45
+dangling alignments, and no documented command repaired them.
+
 A check, so it exits non-zero when something disagrees.
 """
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -31,6 +38,25 @@ def measure(fasta):
     if n:
         widths.add(cur)
     return n, widths
+
+
+
+def check_symlinks(problems, root=Path("data")):
+    """Every link under data/ must be relative and must resolve.
+
+    Relative because an absolute target names one machine under one home, which is what the manifest
+    check below says of a path and is no less true of a link. Resolving because a link that does not
+    is a dataset that is not there, and the manifest check only sees the cells a manifest lists.
+    """
+    links = [p for p in root.rglob("*") if p.is_symlink()]
+    for link in links:
+        target = os.readlink(link)
+        if os.path.isabs(target):
+            problems.append(f"{link}: links to {target}, an absolute path that resolves on one "
+                            f"machine under one home")
+        elif not link.exists():
+            problems.append(f"{link}: links to {target}, which is not there")
+    return len(links)
 
 
 def check_alignment_model(problems):
@@ -170,9 +196,11 @@ def main():
 
     n_aln = check_alignment_model(problems)
     n_data = check_data_readme(problems)
+    n_links = check_symlinks(problems)
     print(f"{checked} datasets in {len(manifests)} manifests checked, "
           f"{checked - len(unsound)} sound; the covariance model and {n_aln} alignment widths "
-          f"against it; {n_data} generated-file counts against data/README.md")
+          f"against it; {n_data} generated-file counts against data/README.md; {n_links} links "
+          f"under data/ checked for being relative and resolving")
     for pb in problems:
         print(f"  {pb}", file=sys.stderr)
     if problems:

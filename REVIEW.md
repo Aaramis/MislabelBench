@@ -18,8 +18,8 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 143 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 59 |
+| findings in this report | 145 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 60 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
@@ -3082,6 +3082,54 @@ the table listed 30 and 626, and quoting 719 rows for the first when it listed 7
 73 found in two summaries and finding 100 in this report's own coverage table, in the one place here
 still free to drift because the gate read only table cells. It now recomputes each table's totals and
 checks the prose against them, proved by making each number wrong in turn and seeing it named.
+
+**144. Forty-five symlinks committed into git named the author's home directory, so every clone on
+every other machine had forty-five dangling alignments.** Each injected, clade and simulated cell's
+`.fasta` is a link to the one alignment its experiment shares -- injection rewrites a taxonomy and never
+an alignment -- and the three generators made those links with `ln -sf "$ALN"`, where `$ALN` is
+`$BENCH_ROOT/data/...`, an absolute path. The 180 injected links are regenerated and gitignored, so they
+are written fresh wherever the generator runs. The 27 clade and 18 simulated ones are committed, and all
+45 carried `/Users/auguste/Documents/git/sativa-epang-benchmark/data/...` as their target.
+
+Verified rather than reasoned: a clone of this branch holds **45 symlinks, 45 of them absolute**, and
+with that root made unavailable `bin/verify_manifests.py` drops from 242 sound datasets to 197 and exits
+1. So a reader cloning the repository to reproduce error kind 3 or the simulation control gets a loud
+failure with an opaque cause -- and **no documented command repairs it**: `ln -sf` sat inside the
+`[ -s "$d/$name.tax" ] && continue` guard, so re-running the generator on a clone whose cells are
+already there skips the link along with the cell. Measured: after rewriting a link to a root that does
+not exist, `bash slurm/make_clade.sh` reports nine cells built and leaves the link exactly as it was.
+
+The irony is in the file. `slurm/make_grid.sh` two lines below the `ln -sf` explains why the manifest's
+paths are relative -- "an absolute path makes the manifest work on exactly one machine under exactly one
+home" -- and `bin/verify_manifests.py` enforces that for a manifest entry, having been bitten once. The
+link that entry points at was not checked.
+
+**Fixed three ways.** The link target is now computed with `os.path.relpath`, so it is
+`../../gtdb/gtdb_arc2k.fasta` and resolves wherever the tree sits; the `ln` moved out of the skip guard,
+so a stale or dangling link is repaired by the documented command; and `bin/verify_manifests.py` now
+refuses an absolute or dangling link under `data/` exactly as it refuses an absolute manifest path --
+**225 links checked**. Proved by putting one link back and watching both the gate and the regeneration
+check below name it, then watching `make_clade.sh` repair it.
+
+**145. The claim that every uncommitted dataset is regenerable was asserted, and for 103 files it could
+not have been checked.** `data/README.md` opens with "what is not here is regenerable, and that claim is
+checked rather than asserted". The check was run by hand, from a fresh clone, "with nothing but the
+generators" -- and a fresh clone is the one place it cannot work for two of the four experiments. The
+clade and simulated cells **are** committed; every generator skips a cell whose `.tax` is already there;
+so for the 27 clade and 76 simulated files the comparison compared git's content with itself. Confirmed
+directly: in a fresh clone the two scripts write **no `warn.txt` at all**, because they never ran a cell
+-- 180 of them in `data/injected` and none anywhere else.
+
+It is now `bin/verify_regeneration.py`, in `bin/analyses.sh`: a scratch root holding nothing but the kept
+inputs, the four generators run into it, and every file they write compared with this tree's. The kept
+inputs are copied rather than linked, because `make_foreign.sh` writes into `data/bacteria` on the branch
+that aligns the donors. **719 files, 719 identical, 0 differing, 0 missing either way, in 18 seconds**,
+with no cluster and no container.
+
+Two things it establishes that nothing had. The committed clade and simulated cells **do** come back byte
+for byte from their seeds: deleted and rebuilt, all 150 files matched but the 45 links, which differ only
+because they are now relative. And a link is compared by its target rather than by the bytes it points at
+-- comparing those compares one file with itself, which is how finding 144 survived every earlier check.
 
 ## What is outstanding
 
