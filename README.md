@@ -572,15 +572,14 @@ runs, and `verify_runs.py` says so every time it runs; the four baselines among 
 `cpu-node-123`, which Slurm reports as `epyc-9754`, the model their script asked for. Untimed runs,
 which answer detection questions, do not pin at all.
 
-The machine a record names is the one that ran the tool, and that took a correction. `COLLECTRUN` is
-its own Nextflow process and so its own Slurm job, placed independently of the task it collects: of
-the five tool/collector pairs whose Slurm ids both survive in accounting, two ran on different nodes.
-`host` and `cpu_model` were read from the collector's own `/proc/cpuinfo`, so they described the
-wrong machine. No published second moved, because a timed run constrains every process to
-`epyc-9754` and the collector is then on the same model by construction — the three staged rounds
-have tool and collector alike on `cpu-node-121`. `bin/_timeit.py` now reports its host and model from
-inside the tool's task and `collect_run.py` prefers them, falling back to its own for the records
-made before it did.
+The machine a record names is now the one that ran the tool. `host` and `cpu_model` used to be read by
+`COLLECTRUN` from its own `/proc/cpuinfo`, and `COLLECTRUN` is a separate process: under `-profile ifb`
+it is a separate Slurm job placed on its own node. No committed record is known to be wrong, because
+twenty of the twenty-one job scripts run `-profile singularity`, the local executor inside one
+allocation, where every task is on the allocation's node; the one script on `ifb` has tool and collector
+alike on `cpu-node-121` in all three of its rounds. `bin/_timeit.py` reports its host and model from
+inside the tool's task anyway and `collect_run.py` prefers them, falling back to its own for the records
+made before it did, because a field should be measured where the thing it describes happens.
 
 **No run takes the node, timed ones included.** `--exclusive` is charged the whole node, 510 cores on
 an epyc-9754, against a QOS that caps a user at `cpu=600,mem=2000G`. One exclusive task fits only

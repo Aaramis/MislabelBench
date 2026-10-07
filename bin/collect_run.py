@@ -80,10 +80,10 @@ def main():
     # answer to the same partition, and between the oldest and the newest there is roughly a factor
     # of two per core. Seconds from two runs are only comparable if they ran on the same model.
     #
-    # The machine named is the one that ran the tool, which is not this one. COLLECTRUN is its own
-    # Nextflow process and therefore its own Slurm job, placed independently: of the five pairs whose
-    # Slurm ids both survive in accounting, two ran on different nodes. So _timeit.py, which runs
-    # inside the tool's task, reports its host and model in timing.json and those are preferred here.
+    # The machine named is the one that ran the tool, which is not necessarily this one. COLLECTRUN is
+    # its own Nextflow process and therefore, under -profile ifb, its own Slurm job placed on its own
+    # node. So _timeit.py, which runs inside the tool's task, reports its host and model in
+    # timing.json and those are preferred here.
     # This process's own values are the fallback for records made before it did, and they are what
     # every pre-existing run.json carries.
     record["host"] = measured.pop("host", None) or socket.gethostname()

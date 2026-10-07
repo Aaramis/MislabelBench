@@ -22,14 +22,13 @@ import time
 def where():
     """The machine this run is on, recorded here because here is where the run happens.
 
-    COLLECTRUN is a separate Nextflow process, so on Slurm it is a separate job and the scheduler
-    places it independently: of the five tool/collector pairs whose Slurm ids both survive in
-    accounting, two ran on different nodes -- the tool on cpu-node-16 against the collector on
-    cpu-node-30, and cpu-node-13 against cpu-node-37. So the host and model collect_run.py reads
-    from its own /proc/cpuinfo describe the collector. It has never corrupted a published second,
-    because a timed run pins every process to --constraint=epyc-9754 and the collector is then on
-    the same model by construction, but the field read as a property of the measured machine and was
-    not one. collect_run.py applies the timing fields after its own, so these win where they exist.
+    COLLECTRUN is a separate Nextflow process, so under -profile ifb it is a separate Slurm job that
+    the scheduler places on its own node, and the host and model collect_run.py reads from its own
+    /proc/cpuinfo describe the collector. No committed record is known to be wrong: twenty of the
+    twenty-one job scripts use -profile singularity, the local executor inside one allocation, where
+    every task is on the allocation's node, and the one on ifb has tool and collector alike on
+    cpu-node-121 in all three rounds. The field still read as a property of the measured machine
+    without being measured there, which is the reason to move it rather than to argue about it.
     """
     model = None
     try:
