@@ -127,13 +127,22 @@ workflow {
         STAGEDLOOPLACE(ch_shards)
 
         // Back to one element per cell, with the shard keys dropped so the groups re-form on the
-        // cell's own meta. groupTuple needs the size or it waits for the whole channel; n_shards
-        // is carried in the meta for exactly that.
+        // cell's own meta.
+        //
+        // groupKey and not a bare groupTuple. The comment here used to say that groupTuple needs the
+        // size or it waits for the whole channel, and that n_shards was carried in the meta for
+        // exactly that -- while passing n_shards as a tuple element, which groupTuple does not read.
+        // So every cell's scoring waited for every other cell's shards: harmless on a one-cell timing
+        // run, and on a grid it moves all the scoring to the end. groupKey(key, n) is the mechanism
+        // for a size that differs per key, and .target unwraps it so the joins below still see a
+        // plain meta map.
         ch_placed = STAGEDLOOPLACE.out.folds
-            .map { meta, folds -> tuple(meta.findAll { k, v -> !(k in ['shard', 'n_shards']) },
-                                        meta.n_shards, folds) }
-            .groupTuple(by: 0)
-            .map { meta, sizes, folds -> tuple(meta, folds.flatten()) }
+            .map { meta, folds ->
+                def key = meta.findAll { k, v -> !(k in ['shard', 'n_shards']) }
+                tuple(groupKey(key, meta.n_shards as int), folds)
+            }
+            .groupTuple()
+            .map { key, folds -> tuple(key.target, folds.flatten()) }
 
         STAGEDLOOSCORE(
             STAGEDREFERENCE.out.refjson

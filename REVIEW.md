@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 171 |
+| findings in this report | 172 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3853,6 +3853,48 @@ What remains true about `bin/verify_timed_one_model.py` is that it resolves a mi
 other records sharing a `host`, and for four trusted runs that is a collector-to-collector mapping. Under
 the local executor the collector is the tool's node, so the resolution is sound; under `ifb` it would not
 have been.
+
+**172. A comment said `groupTuple` was given the group size, and it was not, so every cell's scoring
+waited for every other cell's shards.** `main.nf` regroups the placement shards of a cell with
+
+```groovy
+.map { meta, folds -> tuple(meta.findAll { ... }, meta.n_shards, folds) }
+.groupTuple(by: 0)
+```
+
+above the comment "groupTuple needs the size or it waits for the whole channel; n_shards is carried in
+the meta for exactly that". `n_shards` is carried, as the second element of the tuple, where
+`groupTuple` does not look for it: the operator takes its size as the `size:` parameter and nothing
+else. So the size was never given and the stated failure mode is the one that was in effect.
+
+The mechanism was checked rather than taken from the documentation, with a twelve-line script on this
+machine's Nextflow 26.04.6. Key A's three items arrive together; key B's third arrives a second late:
+
+```groovy
+items = Channel.of(['A', 1], ['A', 2], ['A', 3], ['B', 1], ['B', 2])
+    .concat(Channel.of(['B', 3]).map { v -> sleep(1000); stamp("B's third item arrives"); v })
+items.map { k, v -> tuple(groupKey(k, 3), v) }.groupTuple().subscribe { ... }
+items.groupTuple(by: 0).subscribe { ... }
+```
+
+| | |
+|---|---|
+| `groupKey` emits A | **1 586 ms** |
+| B's third item arrives | 2 582 ms |
+| `groupKey` emits B | 2 590 ms |
+| `groupTuple` emits A **and** B | **2 594 ms** |
+
+So `groupKey(key, n)` is eager and a bare `groupTuple` is not, and `groupKey` is the mechanism for a size
+that differs per key, which is this case: a cell with fewer folds than `folds_per_job` gets one shard
+while another gets four. `main.nf` now uses it, with `.target` unwrapping the key so the joins below still
+see a plain meta map.
+
+What this cost is nothing published and some wall clock on a grid. The timing rounds run one cell, where
+there is no other cell to wait for; a grid of 180 cells moved all of its scoring to the end. Checked for
+correctness on two cells of three shards each as a stub run: six placements, two scored cells, each group
+the right size, and both cardinality guards pass. The stub cannot show the eagerness -- its tasks finish in
+50 ms, and the old and new code submit in the same order at that timescale -- which is why the mechanism
+was isolated separately rather than argued from the pipeline.
 
 ## What is outstanding
 
