@@ -34,7 +34,13 @@
 # that none would, and bin/kexact_decomposition.py --pairs-out writes the whole list of sequences
 # the fork catches and upstream misses, so the search runs over all of them.
 #
-# No timing is taken here, so nothing requires exclusivity or a pinned CPU model.
+# No timing is taken here, so nothing requires exclusivity or a pinned CPU model. Which also
+# means this job has no reason to queue behind timed ones: when the default partition is full
+# of jobs holding whole pinned nodes, move it rather than wait --
+#   slurm/submit.sh slurm/minimal_case.sh --partition=long
+# or, for a job already queued, scontrol update jobid=N Partition=long. Done once: three timed
+# tasks held the fast partition's epyc-9754 nodes for an hour and a half and this job sat
+# behind them, while long had 1 412 idle cores and no constraint to satisfy.
 set -euo pipefail
 source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 require_singularity
