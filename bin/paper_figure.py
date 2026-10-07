@@ -16,6 +16,7 @@ finding 141 before changing it.
 
 import collections
 import json
+import statistics as st
 import sys
 from pathlib import Path
 
@@ -173,11 +174,34 @@ STAGE = {"ref": ("tree", LIGHT), "tasks": ("setup", "#b5b5b5"),
 
 
 def staged_rows():
+    """One row per round, averaged over whatever replicates of it exist.
+
+    The rounds are no longer exclusive -- an exclusive job is charged all 510 cores of the node
+    against a QOS cap of 600, so two shards could never both have it -- so the quantity that bounds
+    the interference is the spread over replicates, and the panel has to be read off all of them
+    rather than off one. `results/staged_scaling_f25.txt` and `..._f25_r2.txt` are both rounds of
+    f25; the glob takes either shape, so a single-run round still plots.
+    """
     rows = []
     for fpj in (25, 13, 7):
-        ln = (ROOT / f"results/staged_scaling_f{fpj}.txt").read_text().splitlines()[1].split()
-        rows.append({"shards": int(ln[1]), "ref": float(ln[2]), "tasks": float(ln[3]),
-                     "place": float(ln[4]), "spread": float(ln[5]), "score": float(ln[6])})
+        files = sorted(ROOT.glob(f"results/staged_scaling_f{fpj}.txt")) \
+            + sorted(ROOT.glob(f"results/staged_scaling_f{fpj}_r*.txt"))
+        reps = []
+        for f in files:
+            ln = f.read_text().splitlines()[1].split()
+            reps.append({"shards": int(ln[1]), "ref": float(ln[2]), "tasks": float(ln[3]),
+                         "place": float(ln[4]), "spread": float(ln[5]), "score": float(ln[6])})
+        if not reps:
+            raise SystemExit(f"no results/staged_scaling_f{fpj}*.txt to read")
+        totals = [r["ref"] + r["tasks"] + r["place"] + r["score"] for r in reps]
+        row = {k: st.mean(r[k] for r in reps) for k in ("ref", "tasks", "place", "spread")}
+        row["score"] = st.mean(r["score"] for r in reps)
+        row["shards"] = reps[0]["shards"]
+        row["reps"] = len(reps)
+        # Range and not a standard deviation: at three replicates the range is what a reader can
+        # check against the three numbers, and the claim it has to survive is a factor of 1.9.
+        row["total_range"] = max(totals) - min(totals)
+        rows.append(row)
     return sorted(rows, key=lambda r: r["shards"])
 
 
@@ -205,9 +229,17 @@ def fig_3(L="A", g=(400, 300, 260, 190, 72, 40)):
     by_shards = {r["shards"]: r["spread"] for r in rows}
     for r in rows:
         VALUES.append(f"{L}\tshard_spread_s\t{r['shards']}\t{r['spread']}")
+        VALUES.append(f"{L}\treplicates\t{r['shards']}\t{r['reps']}")
+        VALUES.append(f"{L}\ttotal_range_s\t{r['shards']}\t{round(r['total_range'], 2)}")
+    reps = {r["shards"]: r["reps"] for r in rows}
+    worst = max(r["total_range"] for r in rows)
+    replication = (f" Each bar is the mean of {min(reps.values())} runs, which agree to within "
+                   f"{worst:.1f} s on the total."
+                   if min(reps.values()) > 1 else " One run per shard count.")
     CAPTION.append(f"({L.lower()}) The four stages on 7 051 sequences with 25 folds, one Slurm job per shard. "
                    f"Only placement distributes. At four shards they finish within {by_shards[4]:.1f} s of "
-                   f"each other; at two the spread is {by_shards[2]:.1f} s because 25 folds split 13 and 12.")
+                   f"each other; at two the spread is {by_shards[2]:.1f} s because 25 folds split 13 and 12."
+                   + replication)
     lx, ly = ax.x0 + mf.PW - 72, ax.y0 + 10
     for key, (label, colour) in reversed(list(STAGE.items())):
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{colour}"/>')

@@ -27,8 +27,14 @@ C	tasks	4	2.7
 C	place	4	56.4
 C	score	4	19.7
 C	shard_spread_s	1	0.0
+C	replicates	1	1
+C	total_range_s	1	0.0
 C	shard_spread_s	2	26.8
+C	replicates	2	1
+C	total_range_s	2	0.0
 C	shard_spread_s	4	0.6
+C	replicates	4	1
+C	total_range_s	4	0.0
 D	kept	species	79.80
 D	found	species	22.48
 D	gained	species	30.00

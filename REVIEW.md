@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 168 |
+| findings in this report | 169 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3776,6 +3776,24 @@ class entirely. That hunt came back clean on its own terms: of 2 803 committed f
 `/shared/home/agardette`, every one is a tool log or a `case.json` provenance field, and nothing reads a
 path out of either. `bin/analyses.sh` recomputing the minimal-case summary on this machine is the proof,
 since it would fail on the first absolute path it had to open.
+
+**169. The scaling panel read one file per round, which is the wrong shape for a measurement whose
+error bar is the replicate.** Finding 164 took exclusivity away and put three replicates per round in
+its place. The panel that carries the result still read `results/staged_scaling_f{25,13,7}.txt`, one
+file, one number, and would have plotted replicate one and silently discarded the other two -- the two
+that are the whole reason the first is publishable.
+
+`staged_rows()` now globs `results/staged_scaling_f{fpj}*.txt`, averages the stages over whatever
+replicates exist, and records the count and the range of the total beside the stage values, so the
+figure's own values file carries what its caption claims. The caption states the replication rather than
+leaving the reader to assume it: "One run per shard count." today, and "Each bar is the mean of 3 runs,
+which agree to within X s on the total" once the rounds land. The range and not a standard deviation,
+because at three replicates the range is what a reader can check against three printed numbers.
+
+Checked both shapes by running them. With the three files that exist the caption says one run and the
+values record `replicates 1`, `total_range_s 0.0`. With two synthetic replicates per round added, the
+caption says three runs agreeing to 2.3 s and the values record `replicates 3`. The synthetic files were
+removed and the gates reproduce the committed figure byte for byte.
 
 ## What is outstanding
 
