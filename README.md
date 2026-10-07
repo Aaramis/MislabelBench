@@ -32,6 +32,21 @@ the two ever disagree. They did: this said 262, 2 950, 11.2x, and **19.3x and 35
 the last pair taken from one replicate before the others had run and 17 % and 19 % above the medians
 that replaced it.
 
+**Memory.** The question this file opens with has two halves and only one of them was answered here
+until now. At 7 051 sequences the fork's process-tree peak is **36 250 MB against upstream's 727**, a
+factor of **49.8**; by largest single process it is 9 396 against 603, a factor of 15.6. Both are
+printed because they answer different questions -- `ru_maxrss` is what one process needs, the tree is
+what the machine needs -- and the gap between them appears exactly where concurrency does: **1.07x at
+one thread, 3.55x at eight**.
+
+The fork's footprint is proportional to its reference, **4.47 to 5.14 MB per sequence across a
+seventeen-fold size range**, where upstream's converges to 0.108. That is the number a user needs,
+because it is a ceiling rather than a slowdown: **64 GB holds 14 227 sequences at eight threads and
+58 850 at one**. So threads buy speed and are paid for in memory, which is the other half of the
+advice the paragraph above ends on -- on a small machine, give the fork fewer. Same table, same rule:
+read `results/resource_usage.txt` rather than this paragraph if the two disagree. They did, by a
+factor of four, until the staged runs' per-stage tasks stopped being pooled with the whole runs.
+
 **The harness was validated against version 1, which has since been removed.** The plan's first
 milestone asked for the new harness to land on version 1's figure of ~109 s for upstream at one thread.
 It did not: on an exclusive epyc-9754 with the model pinned it measured **135.8 s, spread 0.9 s over

@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 150 |
+| findings in this report | 151 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3268,6 +3268,34 @@ aligned is `bac120_msa_reps_r226.faa.gz` and `ar53_msa_reps_r226.faa.gz`, the co
 **protein** alignment behind the genome tree, and `bac120_r226.tree` and `ar53_r226.tree`, whose tips
 are genomes and whose branch lengths are amino-acid substitutions. Neither substitutes for an SSU
 alignment. That is now recorded in `assets/datasets.yml` beside the selection rule it justifies.
+
+**151. The README asks what the fork costs and answers half of it.** The file opens with "Does
+replacing SATIVA's placement engine with EPA-ng change its answers, and what does it cost?" and then
+has a **Speed** paragraph, a validation paragraph, agreement, detection, the column, reproducibility --
+and the word *memory* appears nowhere in its 522 lines. The cost has two halves and the one that bounds
+what a reader can actually run was in `results/resource_usage.txt` and in finding 31 above, in neither
+case where someone deciding whether to use the tool would look.
+
+It is the half that matters more for a decision, because it is a ceiling and not a slowdown: a tool
+that is 11x slower still finishes, a tool that needs 36 GB on a 64 GB machine stops at 14 227 sequences.
+The README now carries it in the shape the Speed paragraph has -- both measures and why both, the
+per-sequence law, the practical ceiling at one and eight threads, and the same instruction to believe
+the table over the paragraph.
+
+**Two doubts the same pass raised and closed by measurement rather than by reading.**
+
+Finding 33 swept every job script's `--mem` against the measured peak and found none within a factor of
+two. That sweep used the table finding 149 has since corrected by a factor of four at 7 051 sequences,
+so it had to be run again. Re-swept: every script that runs a tool on the 7 051-sequence set asks
+**64 GB or more** -- `baseline.sh` 128, `sizes.sh` 128, `scaling.sh` 64, `regradient.sh` 64 -- against a
+corrected peak of 36 250 MB. The two that look low are not: `startcost.sh` asks 32 GB and starts
+containers and reads a task directory rather than placing anything, and `staged_timed.sh` asks 4 GB
+because it is a launcher whose Nextflow tasks each get their own allocation. Nothing was
+under-provisioned, and now that is measured against the right number.
+
+And the stub blocks, re-checked mechanically rather than by eye: **8 modules, 33 declared outputs, every
+one created by its stub**. A stub that omits an output fails `-stub-run` in a way that looks like a
+pipeline bug, and the modules gained the four staged processes after the last read-through.
 
 ## What is outstanding
 
