@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 154 |
+| findings in this report | 155 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3402,6 +3402,23 @@ done.
 cost an hour: a stub run honours `cpus` and `memory`, this pipeline asks 8 MB per sequence, so a
 4 001-sequence cell asks 33.3 GB and will not start on a 32 GB laptop. That is in the plan's notes and
 in no document a reader of this repository would find.
+
+**155. The four datasets every measurement runs on were the last regeneration claim with no gate.**
+`bin/subset_taxa.py` draws the size subsets by whole taxa, and 402, 801, 2 023 and 4 001 are what the
+grid, the thread axis and the size gradient are measured on. They are committed rather than
+regenerated, and nothing invoked the script that makes them: a sweep for `bin/` scripts that no job
+script, module, workflow or test calls returns three, and this is the one that matters -- the other
+two are `restore_cluster.sh` and `recover_trace_from_report.py`, both disaster tools meant for a hand.
+
+Each subset carries a `.subset.json` recording the source file and its sha256, the taxonomy and its
+sha256, the seed and the target -- everything needed to build it again. Finding 97 established once, by
+hand, that they come back byte-identical. Nothing ran it again, and `bin/verify_regeneration.py`
+covered only the four injection generators.
+
+It covers the subsets now, driven by each record's own parameters rather than by a list here, so a
+subset added later is checked without editing anything. **731 files, 731 identical**, 17 seconds; the
+recorded source sha256s are checked against the files they name in the same pass. Proved by changing
+one record's seed from 42 to 43: the gate names all three of that subset's files.
 
 ## What is outstanding
 

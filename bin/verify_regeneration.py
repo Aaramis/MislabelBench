@@ -21,12 +21,20 @@ than linked, because make_foreign.sh writes into data/bacteria on the branch tha
 
     bin/verify_regeneration.py [--keep]
 
+The size subsets are checked the same way and were the last regeneration claim with no gate. They are
+committed, because every measurement in this benchmark runs on one of them, and each carries a
+.subset.json recording the source file, its sha256, the seed and the target -- everything needed to
+build it again. Finding 97 established once, by hand, that they come back byte-identical; nothing ran
+that again. The parameters come from the record rather than from this file, so a subset added later is
+checked without editing anything here.
+
 warn.txt is excluded: it is each generator's stderr, documented as not kept, and its content depends
 on which cells were already there.
 """
 
 import argparse
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -35,6 +43,7 @@ import tempfile
 from pathlib import Path
 
 GENERATED = ("injected", "foreign", "clade", "simulated")
+SUBSETS = "data/gtdb/*.subset.json"
 GENERATORS = ("make_grid.sh", "make_foreign.sh", "make_clade.sh", "make_simulation.sh")
 KEPT = ("data/gtdb", "data/bacteria")
 
@@ -83,6 +92,30 @@ def main():
 
         same = different = only_here = only_there = 0
         problems = []
+
+        # The size subsets, from each record's own parameters.
+        for rec in sorted(here.glob(SUBSETS)):
+            spec = json.loads(rec.read_text())
+            src_fa, src_tax = here / "data/gtdb" / spec["source_fasta"], here / "data/gtdb" / spec["source_taxonomy"]
+            for path, key in ((src_fa, "source_fasta_sha256"), (src_tax, "source_taxonomy_sha256")):
+                if spec.get(key) and digest(path) != spec[key]:
+                    problems.append(f"{rec.name}: {key} is not the sha256 of {path.name}")
+            stem = rec.name[:-len(".subset.json")]
+            r = subprocess.run([str(here / "bin/subset_taxa.py"), str(src_fa), str(src_tax),
+                                "--target", str(spec["target"]), "--seed", str(spec["seed"]),
+                                "--prefix", str(scratch / "data/gtdb" / stem)],
+                               capture_output=True, text=True)
+            if r.returncode != 0:
+                problems.append(f"{stem}: subset_taxa.py exited {r.returncode}: {r.stderr[-200:]}")
+                continue
+            for ext in (".fasta", ".tax", ".subset.json"):
+                mine, theirs = here / "data/gtdb" / (stem + ext), scratch / "data/gtdb" / (stem + ext)
+                if content(mine) == content(theirs):
+                    same += 1
+                else:
+                    different += 1
+                    problems.append(f"data/gtdb/{stem}{ext}: does not come back from its record")
+
         for sub in GENERATED:
             mine, theirs = files_under(here, sub), files_under(scratch, sub)
             for rel in sorted(mine.keys() | theirs.keys()):
@@ -100,7 +133,8 @@ def main():
                     _, their_c = content(theirs[rel])
                     problems.append(f"{rel}: {kind} differs, {mine_c} here against {their_c}")
 
-        print(f"{same + different + only_here + only_there} regenerable files compared against a "
+        print(f"{same + different + only_here + only_there} regenerable files, the four size "
+              f"subsets included, compared against a "
               f"tree built from the kept inputs alone: {same} identical, {different} differing, "
               f"{only_here} missing from it, {only_there} missing from here")
         for pb in problems[:10]:
