@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 174 |
+| findings in this report | 175 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3946,6 +3946,33 @@ records differing only in `-m ultrafast` against `-m thorough` exit 1 and name t
 pair agreeing exits 0 reporting "2 records carry the executed argv, in 1 flag combination". On the
 repository as it stands the line is silent, because the 1 147 existing records predate it; it is armed
 for the staged rounds now queued.
+
+**175. The gap README left open is closed: the fork starts finding the sequence between 20 and 40 wrong
+labels, and at 60 the engine is what does it.** The question was stated in `README.md` and in finding 163:
+at one wrong label all three arms flag, at two and at ten all three miss, at the cell's 102 the fork flags
+alone, and "between ten wrong labels and a hundred something changes in kind that these runs do not
+identify". Measured one count at a time on the whole reference, each case its own job:
+
+| wrong labels | SATIVA | fork, EPA-ng | fork, RAxML |
+|---|---|---|---|
+| 20 | miss | miss | miss |
+| 40 | miss | **FLAG 1.000** | running |
+| 60 | miss | **FLAG 1.000** | **miss** |
+
+So the transition sits between 20 and 40, and at 60 the third arm attributes it: the same codebase
+driving RAxML misses where driving EPA-ng flags, which is the engine and not the scoring, as at 102. The
+job says so itself -- `divergence reproduced for case(s) [('GB_GCA_003352285.1_QQVN01000005.1',
+'0,999999,60')]` -- which is the line finding 163 added the third spec field to be able to print.
+
+Three runs of this ramp were needed and the first two were mine to lose: the first asked the wrong axis
+(finding 163), the second filled the file quota (finding 170). The third ran with the quota guard in place
+and left the home at **4 579 files**, which is what a successful arm cleaning up after itself looks like.
+
+The three near-empty tables from the quota failure are dropped rather than committed. They held one
+genuine row each, `upstream_raxml miss`, which the third attempt reproduces properly, and otherwise the
+`ERROR(status 1)` whose diagnosis is in finding 170 and the job logs. `ramp_counts_bracket/` is kept
+because it carries a result nothing else does, the complete 20 with all three arms missing, and its name
+records that it was the four-point attempt rather than claiming to be the 20.
 
 ## What is outstanding
 

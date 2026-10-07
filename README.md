@@ -185,8 +185,23 @@ That sweep also says what the advantage is not. Cut the sequence out into a refe
 2 023 sequences down to 22, and all three arms flag it at the same confidence to three decimals. Put it
 back on the whole reference with one wrong label and all three flag it; with two, all three miss it;
 with ten, all three miss it; only at the cell's full 102 does the fork flag it alone. So the fork is not
-better at placing hard sequences, it is better on a reference whose labels are already wrong, and
-between ten wrong labels and a hundred something changes in kind that these runs do not identify.
+better at placing hard sequences, it is better on a reference whose labels are already wrong.
+
+Where that changes is now measured, one wrong-label count at a time on the whole reference:
+
+| wrong labels | SATIVA | fork, EPA-ng | fork, RAxML |
+|---|---|---|---|
+| 1 | FLAG 1.000 | FLAG 1.000 | FLAG 1.000 |
+| 2, 10, **20** | miss | miss | miss |
+| **40** | miss | **FLAG 1.000** | running |
+| **60** | miss | **FLAG 1.000** | **miss** |
+| 102 | miss | **FLAG 1.000** | miss |
+
+So the fork starts finding this sequence between **20 and 40** wrong labels in its reference, and at 60
+the third arm says what does it: the same codebase driving RAxML misses where it driving EPA-ng flags, so
+the cause is the engine and not the scoring, as it is at 102. One sequence is one sequence, and what the
+grid adds to it is the 82-case campaign where fork_raxml agrees with upstream 78 times out of 78.
+`results/minimal_case/ramp_counts_bracket/` holds the 20, `ramp2_n60/` the 60.
 The one axis that is now ruled out is how much reference surrounds the sequence: at a single wrong
 label, outgroups of 20, 30, 50 and 70 sequences all give the same verdict from all three arms at
 1.000 to three decimals (`outgroup_small`), so the transition is in the labels and not in the size.

@@ -1,0 +1,4 @@
+sequence	case	arm	verdict	level	proposed	confidence	exclusion
+GB_GCA_003352285.1_QQVN01000005.1	0,999999,60	upstream_raxml	miss	-	-	-	-
+GB_GCA_003352285.1_QQVN01000005.1	0,999999,60	fork_epang	FLAG	Family	f__Nitrosopumilaceae	1.000	1.000
+GB_GCA_003352285.1_QQVN01000005.1	0,999999,60	fork_raxml	miss	-	-	-	-
