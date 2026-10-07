@@ -137,6 +137,14 @@ tools find 4 203, **neither finds 5 617 — half of every mislabel injected**. T
 of them and upstream 38.6 %. The gap between the tools is real and smaller than the gap between
 either tool and the truth.
 
+**The obvious objection, answered: the fork does not simply flag more.** It raises **25 772 flags
+against upstream's 23 758, 8.5 % more**, and finds **26.1 % more injected errors**. The extra calls
+are therefore better than its average call, not worse: of the flags the fork raises and upstream does
+not, **26.5 % are injected mislabels**, against 19.9 % of the flags both raise and **4.3 % of
+upstream's own unique flags**. A tool that gained recall by lowering a threshold would show the
+opposite, its unique calls being poorer than its agreed ones. `results/disagreement_truth.json`, whose
+script prints the same shares per taxonomic distance.
+
 **And the cause is the engine, not the fold scheme.** `epang_T8_Kexact` places one sequence per
 fold, which is upstream's own leave-one-out protocol run through EPA-ng, so it separates the two
 changes. On two *k*=2 cells the engine with the folds removed is worth +0.284 and +0.177, while the

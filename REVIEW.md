@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 157 |
+| findings in this report | 158 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3479,6 +3479,32 @@ in the manuscript, matched against every number any committed record holds, flag
 supplement -- and six of those eight are explained by the corpus not reading `assets/datasets.yml`
 (the release counts, the model's `CKSUM`, the release version) or by being a derivation rather than a
 measurement (the 1.86 predicted from four rate categories). The two that were left are the pair above.
+
+**158. The first objection a referee will raise was computable and unanswered.** The claim is that
+sativa-epang finds more injected mislabels than SATIVA, 48.7 % against 38.6 %. The obvious reply is
+that it finds more because it flags more: the README says so itself in the agreement section, "the
+fork flags more and increasingly so with size". Nothing anywhere said what that costs, and
+`threshold_holdout.py`, which exists precisely to match budgets, compares the fork's two *columns* and
+not the two *tools*.
+
+The data answers it and has all along, inside `results/disagreement_truth.json`. The fork raises
+**25 772 flags against 23 758, 8.5 % more**, and finds **26.1 % more injected errors** -- so the extra
+flags are better than its average flag, not worse. Flag by flag:
+
+| raised by | flags | injected | share |
+|---|---|---|---|
+| both tools | 21 086 | 4 203 | 19.9 % |
+| the fork only | 4 686 | 1 243 | **26.5 %** |
+| upstream only | 2 672 | 115 | **4.3 %** |
+
+A tool that bought recall by lowering a threshold would show the opposite: its unique calls poorer
+than its agreed ones. The fork's are richer, and six times richer than its comparator's unique calls.
+
+**What was missing was not the measurement but the sentence.** `disagreement_truth.py` already prints
+these shares, and per taxonomic distance as well; it prints them to a console nobody keeps, while the
+record it writes holds the counts and not the division. The README carries the three shares now. This
+is the fourth time in this report that a number existed in the repository and in no document a reader
+would open.
 
 ## What is outstanding
 
