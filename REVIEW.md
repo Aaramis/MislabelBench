@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 175 |
+| findings in this report | 176 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3973,6 +3973,38 @@ genuine row each, `upstream_raxml miss`, which the third attempt reproduces prop
 `ERROR(status 1)` whose diagnosis is in finding 170 and the job logs. `ramp_counts_bracket/` is kept
 because it carries a result nothing else does, the complete 20 with all three arms missing, and its name
 records that it was the four-point attempt rather than claiming to be the 20.
+
+**176. Seven job scripts publish into one output directory and three of them write the same condition,
+which has never collided and is not prevented.** `results/grid_fork` is the `--outdir` of `grid_fork.sh`,
+`grid_treeorder.sh`, `grid_k5.sh`, `grid_upstream.sh`, `grid_upstream_species.sh`,
+`grid_upstream_missing.sh` and `kexact_k2.sh`. Most are disjoint by condition, which is the point: the
+grid is filled by several jobs because one would not fit a time limit. Three are not.
+`grid_upstream.sh` runs `--datasets all --conditions upstream_raxml_T8`, `grid_upstream_species.sh` runs
+the species cells with the same condition, and `grid_upstream_missing.sh` runs `$COND`, which has been
+that condition. Their run directories are named `<cell>__<condition>__rep<n>`, so those three write the
+same paths with `publishDir mode: 'copy'`, and a copy is not atomic.
+
+It has not happened. From the traces' own submit times the five runs that wrote `upstream_raxml_T8` cells
+into that directory are strictly sequential:
+
+| | |
+|---|---|
+| `grid_upstream` | 10-02 20:12 to 10-03 04:37 |
+| `grid_up_species` | 10-03 04:39 |
+| `grid_up_missing` | 10-03 05:39 to 10-03 11:37 |
+| `grid_missing_upstream_raxml_T8_2183991` | 10-04 11:16 to 11:36 |
+
+No pair overlaps, each starting after the previous ended. The related collision that did happen was on the
+trace files, four jobs into one `trace-*.txt`, and the per-tag naming in `nextflow.config` fixed that; the
+run directories were never hit.
+
+**No guard is added, and the reason is the granularity.** A lock on the output directory would be
+reliable and would forbid the concurrency this grid is built on: `grid_fork.sh` and `grid_k5.sh` write
+disjoint conditions into the same directory and are meant to run together. A lock on the pair
+(directory, condition) is the right unit and prelude.sh cannot compute it, since the conditions reach the
+script through environment variables in two of the three cases. So what protects this is a rule rather
+than a mechanism: **two jobs writing the same condition into the same `--outdir` must not overlap**, and
+it is written here because nothing in the harness will say it.
 
 ## What is outstanding
 
