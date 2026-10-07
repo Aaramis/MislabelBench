@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 152 |
+| findings in this report | 153 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3335,6 +3335,41 @@ fact understated -- with a 42.5 s reference the one-to-four-shard total would fa
 the four-shard total rather than 48 %. But those are arithmetic, not measurements. The remedy is one
 cluster run: the staged experiment with the whole-run control disabled, or with `--exclusive` on the
 timed staged path. Until then the panel overstates the floor it exists to show.
+
+**153. The collision of finding 152 is in the dataflow, and it is fixed and verified.** `SATIVAEPANG`
+and `STAGEDREFERENCE` both consume `ch_by_impl.fork`, so on a staged run Nextflow submits them
+together -- which is what the 48 ms between them in `trace-staged_timed_f25` is. The stages now wait
+for the monolithic run of the same cell, by joining the channel on `SATIVAEPANG.out.mis` and mapping
+the result back to the three inputs the stage takes.
+
+**Verified by running it, which this repository could not do until now.** Nextflow 26.04.6 runs on this
+machine under Java 25; `-stub-run -profile stub_test` executes the whole staged path in under a second
+with no container. Before and after, six tasks, no failure, both count guards satisfied -- so the join
+drops no cell. And the dependency is in Nextflow's own rendering of the graph: with `-with-dag`, the
+process node for `SATIVAEPANG` gains exactly one outgoing edge, into the operator that feeds
+`STAGEDREFERENCE`.
+
+```
+old : v4 --> v5  v4 --> v33            (v4 = SATIVAEPANG; nothing of it reaches STAGEDREFERENCE)
+new : v4 --> v5  v4 --> v1  v4 --> v35 (v1 --> v8, and v8 = STAGEDREFERENCE)
+```
+
+That the DSL had never been executed by any check here is itself the finding behind the finding. The
+plan asked for nf-test on two modules that no longer exist -- injection and scoring moved into `bin/`
+and are covered by `tests/`, 26 tests -- so the requirement was met in substance and the capability was
+lost with it. `main.nf` and `nextflow.config` were read and never run. A stub run is 0.8 s and needs
+only a JVM.
+
+**Unconditional rather than only when timed**, which is a choice: an untimed staged run now also waits,
+and pays wall clock for nothing. It buys a path that is the same shape in both modes, so the thing
+tested locally is the thing that runs on the cluster, and the staged path is off by default and exists
+for the distribution measurement, which is always timed.
+
+**And `--exclusive` is deliberately not added to the timed staged path.** It would bill a whole
+254-core node per shard, four nodes for the four-shard round. The evidence that it is not needed is
+`sizes.sh`: `--cpus-per-task=140` of 254, no exclusivity, and its three replicates of the full set
+agree to **1 %** -- 260.6, 261.7, 263.4 s. The hazard that produced finding 152 was this run colliding
+with itself, not with a stranger, and that is what the join removes.
 
 ## What is outstanding
 
