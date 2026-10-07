@@ -25,7 +25,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1147 |
 | result tables, each rebuilt by `bin/analyses.sh` | 56 |
-| `.mis` files, the flag lists every detection number is computed from | 1460 |
+| `.mis` files, the flag lists every detection number is computed from | 1467 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,

@@ -1,8 +1,14 @@
 {
-  "n_cases": 86,
-  "fork_raxml_agrees_with_upstream": 82,
-  "fork_raxml_comparable": 82,
+  "n_cases": 89,
+  "fork_raxml_agrees_with_upstream": 84,
+  "fork_raxml_comparable": 84,
   "fork_epang_wins_alone": [
+    {
+      "sweep": "ramp2_n60",
+      "case": "GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n60",
+      "n_seqs": 2023,
+      "n_wrong_labels": 60
+    },
     {
       "sweep": "ramp_all_m32",
       "case": "GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n999",
