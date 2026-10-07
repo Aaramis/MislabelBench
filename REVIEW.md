@@ -3715,6 +3715,15 @@ writes "-" in the field and the three existing rounds have no field at all, so b
 recorded" rather than counted as clean -- which also says plainly that the three published rounds have no
 evidence either way, and they are being redone.
 
+The first version of that check was wrong, and a stub run of the staged path found it before it ever met
+real data. It pooled the hosts from every `trace-*.txt` in the directory, the way `trace_span` beside it
+pools spans and then takes a maximum. A round that times out and is resubmitted leaves a second trace in
+the same outdir under a different job id, so pooling would have listed every host twice and called a
+clean round a collision -- and a timed-out launcher is the expected case now that the limit is one day
+and the wait can be longer. It reads each file separately and takes the one with the most placement rows,
+since one round is one trace. Checked both ways: two identical traces in one directory report "one shard
+each", and a repeat inside a single file still exits non-zero.
+
 **167. An incomplete lineage costs both tools recall, and it costs the fork more, which no run had
 asked.** `README.md` recorded that ragged lineages are *accepted*, from one cell that ran through and
 flagged 11, and left the detection question open. It is now answered on the grid's own fifteen cells at

@@ -78,15 +78,24 @@ def shard_hosts(trace_dir, run_name):
     Nextflow's local executor writes "-" in this field and old traces have no field at all, so an
     absent or "-" host is reported as not recorded rather than counted as a collision.
     """
-    hosts = []
+    best = []
     for path in sorted(Path(trace_dir).glob("trace-*.txt")):
+        # Per file, not pooled across them. A round that timed out and was resubmitted leaves a second
+        # trace in the same outdir under a different job id, and pooling the two would report every
+        # host twice and call it a collision. One round is one trace, so the file with the most
+        # placement rows is the round, and a repeat inside one file is a real repeat.
+        hosts = []
         for row in csv.DictReader(path.open(), delimiter="\t"):
             if row["status"] != "COMPLETED" or "LOOPLACE" not in row["name"].upper():
                 continue
             if run_name.split("__")[0] not in row["name"]:
                 continue
-            hosts.append((row.get("hostname") or "-").strip())
-    return [h for h in hosts if h and h != "-"]
+            h = (row.get("hostname") or "-").strip()
+            if h and h != "-":
+                hosts.append(h)
+        if len(hosts) > len(best):
+            best = hosts
+    return best
 
 
 def main():
