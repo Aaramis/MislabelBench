@@ -28,8 +28,9 @@ cp -r "$BENCH_ROOT"/{main.nf,nextflow.config,conf,modules,bin,assets} "$WORK/"
 # data_ascii/ and its n100 set went with version 1, which left this script copying a directory that is
 # not there: under set -e the probe died on the cp, before any run, so the two guards it exists to check
 # went unverified from that commit on. The manifest is written here instead, naming the committed
-# 2 023-sequence set by absolute path. Absolute because run_one launches from $WORK/$tag, and a
-# project-relative path inside a manifest resolves against the launch directory, not the project.
+# 2 023-sequence set by absolute path. Absolute because main.nf's resolvePath resolves a relative
+# manifest path against projectDir, which here is $WORK, and $WORK holds only the code: the copy above
+# deliberately leaves data/ out, so data/gtdb/... would be looked for where it is not.
 python3 - "$BENCH_ROOT" "$WORK/datasets.json" <<'PYJ'
 import json, sys
 root, out = sys.argv[1], sys.argv[2]

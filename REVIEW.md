@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 172 |
+| findings in this report | 173 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3690,10 +3690,15 @@ The same commit left `slurm/guard_probe.sh` copying `data_ascii` into its scratc
 `main.nf`'s two `error()` calls inside `.count().subscribe { }` actually abort a run rather than decorate
 it, and `join()` silently dropping a cell is the one failure that would make a short grid look complete.
 It has not run since the deletion. It now writes its own manifest, naming the committed 2 023-sequence
-set by absolute path, absolute because `run_one` launches from `$WORK/$tag` and a project-relative path
-in a manifest resolves against the launch directory. Verified by replaying the probe locally rather than
-by reading it: the control run exits 0, and with `expected` bumped by one it exits 1 on "collected 2 run
-records for 3 cells: a cell lost an output before COLLECTRUN".
+set by absolute path. Verified by replaying the probe locally rather than by reading it: the control run
+exits 0, and with `expected` bumped by one it exits 1 on "collected 2 run records for 3 cells: a cell lost
+an output before COLLECTRUN".
+
+The reason given for the absolute path was wrong when this was written and is corrected here, since a
+wrong reason in a comment is what several findings above are about. It said a project-relative manifest
+path resolves against the launch directory. It does not: `main.nf`'s `resolvePath` resolves it against
+`projectDir`. Absolute is still right, for the other reason -- the probe copies only the code into
+`$WORK`, deliberately leaving `data/` out, so `projectDir` is exactly where the data is not.
 
 Three defects from one deletion, and the deletion was clean. What they have in common is that none of
 them is reachable from a committed command: the default manifest is bypassed by every script, the probe
@@ -3895,6 +3900,26 @@ correctness on two cells of three shards each as a stub run: six placements, two
 the right size, and both cardinality guards pass. The stub cannot show the eagerness -- its tasks finish in
 50 ms, and the old and new code submit in the same order at that timescale -- which is why the mechanism
 was isolated separately rather than argued from the pipeline.
+
+**173. Two things in `main.nf` were checked and are sound, recorded because checking them is the only
+way anyone will know.** The review instruction is to verify a doubt rather than suppose it resolved, and
+a doubt that turns out to be nothing still costs the next reader the same hour unless the answer is
+written down.
+
+`resolvePath` and where a manifest's relative paths point. The function is
+`file(p.startsWith('/') ? p : "${projectDir}/${p}", checkIfExists: true)`, so a relative path resolves
+against the project and not against the launch directory, which matters because every job script now
+launches from its own `.nf/<name>/` so several can run at once. Checked by running a stub from a scratch
+directory with a manifest holding `data/gtdb/gtdb_arc2k.fasta`: exit 0, no path error. The guard probe's
+own comment had this backwards two hours after it was written, and the correction is in finding 165.
+
+`meta + spec` and whether a condition can overwrite a cell's identity. The cell's meta is built from
+seven fixed keys and then `+ spec`, where the right-hand side wins on collision, so a condition spec
+carrying `dataset` or `run_name` would rename the cell it describes and nothing would say so. Counted
+across the twelve specs: their keys are `engine`, `fold_order`, `folds`, `impl`, `threads`, and the
+intersection with `dataset, n_seqs, aln_len, condition, rep, run_name, timing_trusted` is **empty**. It
+is sound today and it is one careless key from not being, which is worth a line here rather than a guard
+in the workflow for a mistake nobody has made.
 
 ## What is outstanding
 
