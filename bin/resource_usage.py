@@ -58,9 +58,22 @@ g = defaultdict(list)
 # and shifted a published figure down without a word. All 56 trusted records carry all three
 # fields, so this has never fired -- which is the reason to make it loud rather than to leave it.
 incomplete = []
+# And a record whose run shared the machine is excluded by experiment, because nothing in the record
+# says so. The staged experiments run the whole-run control and the staged stages as separate Slurm
+# jobs with no serialisation -- nextflow.config disables maxForks and queueSize on that path, on the
+# argument that "each task is its own Slurm allocation, so nothing shares a node by accident", which
+# confuses an allocation with a machine. The measurement says it: the reference build takes
+# 71, 71, 72 s in the three staged jobs against 42, 42, 43, 44 in the serialised and exclusive ones,
+# while the leave-one-out is 216 against 218 to 220 in both. Only the stage that overlaps is slowed,
+# and it is slowed by 67 %. Those three records are honest records of what happened and are not
+# comparable seconds, so they stay on disk and out of every median here.
+contended = []
 for f in glob.glob("results/*/runs/*/run.json"):
     d = json.load(open(f))
     if not (d.get("timing_trusted") and d.get("wall_sec")):
+        continue
+    if f.split("/")[1].startswith("staged_"):
+        contended.append(f)
         continue
     if any(d.get(k) in (None, 0, 0.0) for k in ("user_cpu_sec", "max_rss_mb")):
         incomplete.append(f)
@@ -70,6 +83,9 @@ for f in glob.glob("results/*/runs/*/run.json"):
 if incomplete:
     print(f"excluded {len(incomplete)} trusted runs with no CPU time or no peak memory, "
           f"e.g. {incomplete[0]}", file=sys.stderr)
+if contended:
+    print(f"excluded {len(contended)} trusted runs from the staged experiments, whose whole-run "
+          f"control shares its node with the stages", file=sys.stderr)
 print(f"{'dataset':14}{'condition':20}{'n':>3}{'wall':>10}{'cores':>7}{'CPU-s':>9}")
 for (ds, c), v in sorted(g.items()):
     if not ds.startswith("gtdb"):

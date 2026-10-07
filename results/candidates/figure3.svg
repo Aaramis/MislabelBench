@@ -61,17 +61,17 @@
 <circle cx="255.1" cy="362.5" r="2.6" fill="#c1462c"/>
 <circle cx="278.4" cy="342.6" r="2.6" fill="#c1462c"/>
 <circle cx="303.3" cy="324.3" r="2.6" fill="#c1462c"/>
-<path d="M124.3,331.8 L140.5,309.7 L167.7,285.5 L205.4,266.7 L227.6,251.9" fill="none" stroke="#000000" stroke-width="1.6"/>
+<path d="M124.3,331.8 L140.5,309.7 L167.7,285.5 L205.4,266.7 L227.5,251.9" fill="none" stroke="#000000" stroke-width="1.6"/>
 <circle cx="124.3" cy="331.8" r="2.6" fill="#000000"/>
 <circle cx="140.5" cy="309.7" r="2.6" fill="#000000"/>
 <circle cx="167.7" cy="285.5" r="2.6" fill="#000000"/>
 <circle cx="205.4" cy="266.7" r="2.6" fill="#000000"/>
-<circle cx="227.6" cy="251.9" r="2.6" fill="#000000"/>
+<circle cx="227.5" cy="251.9" r="2.6" fill="#000000"/>
 <text x="118.3" y="325.8" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">402</text>
 <text x="134.5" y="303.7" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">801</text>
 <text x="161.7" y="279.5" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">2 023</text>
 <text x="199.4" y="260.7" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">4 001</text>
-<text x="221.6" y="245.9" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">7 051</text>
+<text x="221.5" y="245.9" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">7 051</text>
 <text x="184.0" y="366.0" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="end">402</text>
 <text x="224.4" y="380.5" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="middle">801</text>
 <text x="261.1" y="376.5" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">2 023</text>

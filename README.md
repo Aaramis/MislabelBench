@@ -22,9 +22,12 @@ also in `results/figure1_values.tsv`.
 Numbers below are medians over replicates on one pinned CPU model. GTDB r226 archaeal 16S, 7 051
 sequences for the headline and a 2 023-sequence subset drawn by whole taxa for the grid.
 
-**Speed.** 263.4 s against 2 983.6 s on the full set: **11.3x** in wall clock, medians over 7 fork
-replicates and 4 upstream. The more useful figure is **16.2x** in **CPU time**, because upstream
-saturates the eight threads it is given, 7.97 of 8, while the fork uses 5.57. On the 2 023-sequence
+**Speed.** 262.4 s against 2 983.6 s on the full set: **11.4x** in wall clock, medians over 4 fork
+replicates and 4 upstream. The more useful figure is **16.4x** in **CPU time**, because upstream
+saturates the eight threads it is given, 7.97 of 8, while the fork uses 5.54. It was 7 fork
+replicates, 263.4 s and 11.3x until finding 152: three of the seven came from the staged experiments,
+whose whole-run control is submitted 48 ms before a stage that builds the same reference tree, and
+their reference stage takes 71 s against 42.5 in a run that has the machine to itself. On the 2 023-sequence
 subset, 7 replicates each, the pair is **16.5x and 29.7x**. At 402 sequences the fork uses 3.09 of 8
 threads, so on a small reference it should be given fewer. Every figure here is a row or a line of
 `results/resource_usage.txt`, which `bin/analyses.sh` rebuilds; read it rather than this paragraph if

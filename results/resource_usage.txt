@@ -1,5 +1,5 @@
 dataset       condition             n      wall  cores    CPU-s
-gtdb_arc1200  epang_T8_K25          7     263.4   5.57     1466
+gtdb_arc1200  epang_T8_K25          4     262.4   5.54     1451
 gtdb_arc1200  upstream_raxml_T8     4    2983.6   7.97    23796
 gtdb_arc2k    epang_T16_K25         3      29.8   6.44      191
 gtdb_arc2k    epang_T1_K25          3     151.9   1.00      152
@@ -14,7 +14,7 @@ gtdb_arc4000  upstream_raxml_T8     3    1343.9   7.97    10712
 gtdb_arc800   epang_T8_K25          3      16.1   3.92       63
 gtdb_arc800   upstream_raxml_T8     3     237.8   7.94     1889
 
-gtdb_arc1200   wall  11.3x   CPU-time  16.2x   (n=4 upstream, 7 fork)
+gtdb_arc1200   wall  11.4x   CPU-time  16.4x   (n=4 upstream, 4 fork)
 gtdb_arc2k     wall  16.5x   CPU-time  29.7x   (n=7 upstream, 7 fork)
 gtdb_arc400    wall   8.2x   CPU-time  21.0x   (n=3 upstream, 3 fork)
 gtdb_arc4000   wall  10.4x   CPU-time  15.5x   (n=3 upstream, 3 fork)
@@ -26,7 +26,7 @@ size gradient, both tools at 8 threads: medians, and the pair of speedups
        801     16.1     237.8    14.8    30.2        3.92      7.94
       2023     38.5     635.6    16.5    29.7        4.49      7.97
       4001    129.0    1343.9    10.4    15.5        5.34      7.97
-      7051    263.4    2983.6    11.3    16.2        5.57      7.97
+      7051    262.4    2983.6    11.4    16.4        5.54      7.97
 
 thread axis at 2023 sequences: what each tool does with the threads it is given
 tool         T     wall   cores  speedup vs T1  efficiency

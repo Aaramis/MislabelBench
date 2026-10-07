@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 151 |
+| findings in this report | 152 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3296,6 +3296,45 @@ under-provisioned, and now that is measured against the right number.
 And the stub blocks, re-checked mechanically rather than by eye: **8 modules, 33 declared outputs, every
 one created by its stub**. A stub that omits an output fails `-stub-run` in a way that looks like a
 pipeline bug, and the modules gained the four staged processes after the last read-through.
+
+**152. Three timed records were measured against another copy of themselves, and the configuration
+comment says it cannot happen.** `nextflow.config` disables both `maxForks` and `executor.queueSize`
+on the staged path, for a good reason -- serialising the placement shards would remove the only thing
+a distributed run measures -- and justifies it with a sentence that is false: "under the ifb profile
+each task is its own Slurm job, so a timed staged run needs no per-process cap at all". **An allocation
+is not a machine.** Nothing stops Slurm putting two jobs of the same run on one 254-core node.
+
+It did, and the records say so without ambiguity. In each of the three `staged_timed_f*` jobs the
+whole-run control and `STAGEDREFERENCE` were submitted **48 ms apart** -- 21:45:31.335 and
+21:45:31.383 in `trace-staged_timed_f25` -- and each then built the same reference tree. The control's
+`reftree_sec` reads **71, 71, 72 s** across the three jobs; the same quantity in the four serialised or
+exclusive runs reads **42, 42, 43, 44**. And the staged reference stage's own record,
+`reference.timing.json`, reads **71.04 s**: two independent processes building one tree, each taking
+1.67x what one alone takes.
+
+**The discriminating evidence is the stage that was not slowed.** `l1out_sec` is **216 s** in all three
+staged jobs against 218 to 220 in the clean ones -- not slower, marginally faster. The placement phases
+overlapped as well, from 21:47:25 to 21:50:18, and cost nothing. That is finding 140's result applied
+here: the fork uses **5.57 of its 8 threads** during placement and absorbs a neighbour in the slack,
+while `STAGEDREFERENCE` runs RAxML at **766.8 %** and has none. Only the saturated stage pays, which
+also rules out the two explanations that would otherwise fit -- a slow node (the same node is faster
+for the leave-one-out) and generic contention (it would slow everything).
+
+**What it reached.** `bin/resource_usage.py` pooled all seven records of that cell into one median.
+The headline survived by luck: four clean against three contended, so the median landed on a clean
+value, 263.4 s. It is now taken over the four comparable ones, **262.4 s, and the wall-clock ratio
+moves from 11.3x to 11.4x and CPU time from 16.2x to 16.4x**. The three records stay on disk, because
+they are honest records of what happened; they are out of every median and the script says how many it
+dropped and why.
+
+**What it still reaches, and cannot be fixed from here.** The staged table that `results/staged_scaling_f*.txt`
+publishes, and panel C of the Application Note's figure, take `ref` from those same contended jobs:
+**71.0, 71.8, 72.3 s** where the uncontended build is 42.5. The qualitative claim is unharmed and in
+fact understated -- with a 42.5 s reference the one-to-four-shard total would fall from 259.7 s to
+121.3 s, a factor of **2.14 rather than the 1.91 now published**, and the serial floor would be 35 % of
+the four-shard total rather than 48 %. But those are arithmetic, not measurements. The remedy is one
+cluster run: the staged experiment with the whole-run control disabled, or with `--exclusive` on the
+timed staged path. Until then the panel overstates the floor it exists to show.
 
 ## What is outstanding
 

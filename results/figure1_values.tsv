@@ -12,8 +12,8 @@ B	upstream	4001	1343.9
 B	fork	4001	129.0
 B	wall_speedup	4001	10.4
 B	upstream	7051	2983.6
-B	fork	7051	263.4
-B	wall_speedup	7051	11.3
+B	fork	7051	262.4
+B	wall_speedup	7051	11.4
 C	epang_T8_K25	0.1	0.8666
 C	epang_T8_K25	0.30000000000000004	0.6001
 C	epang_T8_K25	0.5	0.3271
