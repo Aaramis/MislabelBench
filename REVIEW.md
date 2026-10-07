@@ -25,7 +25,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1147 |
 | result tables, each rebuilt by `bin/analyses.sh` | 56 |
-| `.mis` files, the flag lists every detection number is computed from | 1467 |
+| `.mis` files, the flag lists every detection number is computed from | 1470 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -3956,14 +3956,10 @@ identify". Measured one count at a time on the whole reference, each case its ow
 | wrong labels | SATIVA | fork, EPA-ng | fork, RAxML |
 |---|---|---|---|
 | 20 | miss | miss | miss |
+| 40 | miss | **FLAG 1.000** | **miss** |
 | 60 | miss | **FLAG 1.000** | **miss** |
 
-The 40 is running and is deliberately not in this table or README's. Its EPA-ng arm has already flagged
-at 1.000, which would narrow the interval to 20--40, and its third arm is still going: a row whose
-evidence sits on a cluster is a row nobody can check, and the derived summary that cites it could not be
-rebuilt from what is committed here. It goes in when it lands.
-
-So the transition sits between 20 and 60, and at 60 the third arm attributes it: the same codebase
+So the transition sits between 20 and 40, and at both counts the third arm attributes it: the same codebase
 driving RAxML misses where driving EPA-ng flags, which is the engine and not the scoring, as at 102. The
 job says so itself -- `divergence reproduced for case(s) [('GB_GCA_003352285.1_QQVN01000005.1',
 '0,999999,60')]` -- which is the line finding 163 added the third spec field to be able to print.
