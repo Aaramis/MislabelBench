@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 170 |
+| findings in this report | 171 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3819,6 +3819,32 @@ After clearing the debris the home holds **5 920** files, so the three remaining
 Two at a time, not four: the failure happened at about 86 000 live files, which is more than the 81 200
 left behind, so the tool's peak is above what it leaves and the safe concurrency is lower than the
 arithmetic on the leftovers suggests.
+
+**171. Every run record names the machine that collected it, not the machine that ran it.**
+`collect_run.py` sets `host` from `socket.gethostname()` and `cpu_model` from its own `/proc/cpuinfo`,
+with a comment saying the model is recorded "rather than left to be reconstructed from the hostname",
+which reads as a property of the measured machine. `COLLECTRUN` is a separate Nextflow process, so under
+`-profile ifb` it is a separate Slurm job that the scheduler places on its own. Checked against Slurm
+accounting rather than reasoned about: of the five tool/collector pairs whose job ids both survive,
+**two ran on different nodes** -- the tool on `cpu-node-16` against the collector on `cpu-node-30`, and
+`cpu-node-13` against `cpu-node-37`.
+
+No published second moved, and the reason is worth stating because it is not the record. A timed run
+sets `process.clusterOptions = '--constraint=epyc-9754'` for *every* process, so the collector is pinned
+to the same model as the tool by construction; the three staged rounds have tool and collector alike on
+`cpu-node-121`. The field was right for a reason the field does not carry, which is the same shape as
+several findings above.
+
+What it did reach is `bin/verify_timed_one_model.py`, which resolves a missing `cpu_model` through other
+records sharing a `host`. That mapping was from a collector's node to a collector's model: self-consistent,
+and silent about the node that produced the seconds. Four trusted runs are resolved that way.
+
+Fixed where the measurement is: `bin/_timeit.py` runs inside the tool's task and now reports its host and
+model, and `collect_run.py` prefers those over its own, which stay as the fallback for the 1 147 records
+made before. A null model is omitted rather than written, so a development run on a Mac, which has no
+`/proc/cpuinfo`, cannot overwrite a model the collector does have. Verified end to end: a `timing.json`
+carrying `cpu-node-16` and an EPYC 9754 produces a `run.json` saying exactly that while the collector is
+a laptop.
 
 ## What is outstanding
 

@@ -13,9 +13,35 @@ import json
 import os
 import resource
 import signal
+import socket
 import subprocess
 import sys
 import time
+
+
+def where():
+    """The machine this run is on, recorded here because here is where the run happens.
+
+    COLLECTRUN is a separate Nextflow process, so on Slurm it is a separate job and the scheduler
+    places it independently: of the five tool/collector pairs whose Slurm ids both survive in
+    accounting, two ran on different nodes -- the tool on cpu-node-16 against the collector on
+    cpu-node-30, and cpu-node-13 against cpu-node-37. So the host and model collect_run.py reads
+    from its own /proc/cpuinfo describe the collector. It has never corrupted a published second,
+    because a timed run pins every process to --constraint=epyc-9754 and the collector is then on
+    the same model by construction, but the field read as a property of the measured machine and was
+    not one. collect_run.py applies the timing fields after its own, so these win where they exist.
+    """
+    model = None
+    try:
+        for line in open("/proc/cpuinfo"):
+            if line.startswith("model name"):
+                model = line.split(":", 1)[1].strip()
+                break
+    except OSError:
+        pass
+    # A null model is left out rather than written, so it cannot overwrite a value the collector
+    # does have: there is no /proc/cpuinfo on a Mac, where this script is run in development.
+    return {"host": socket.gethostname(), **({"cpu_model": model} if model else {})}
 
 
 def main():
@@ -62,6 +88,7 @@ def main():
         "max_rss_mb": round(usage.ru_maxrss / (1048576.0 if sys.platform == "darwin" else 1024.0), 1),
         "user_cpu_sec": round(usage.ru_utime, 2),
         "sys_cpu_sec": round(usage.ru_stime, 2),
+        **where(),
     }))
 
 

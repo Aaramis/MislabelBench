@@ -568,9 +568,19 @@ Two rules the scripts enforce, both learned by getting them wrong first.
 **A timed run pins the CPU model.** The cluster mixes four generations and the oldest is about half
 the per-core speed of the newest, so `--constraint` is not optional and `cpu_model` goes into
 `run.json` — into 641 of the 949 records, the rest predating the field. Five of those are trusted
-runs, and `verify_runs.py` says so every time it runs; the four baselines among them are on
+runs, and `verify_runs.py` says so every time it runs; the four baselines among them report
 `cpu-node-123`, which Slurm reports as `epyc-9754`, the model their script asked for. Untimed runs,
 which answer detection questions, do not pin at all.
+
+The machine a record names is the one that ran the tool, and that took a correction. `COLLECTRUN` is
+its own Nextflow process and so its own Slurm job, placed independently of the task it collects: of
+the five tool/collector pairs whose Slurm ids both survive in accounting, two ran on different nodes.
+`host` and `cpu_model` were read from the collector's own `/proc/cpuinfo`, so they described the
+wrong machine. No published second moved, because a timed run constrains every process to
+`epyc-9754` and the collector is then on the same model by construction — the three staged rounds
+have tool and collector alike on `cpu-node-121`. `bin/_timeit.py` now reports its host and model from
+inside the tool's task and `collect_run.py` prefers them, falling back to its own for the records
+made before it did.
 
 **No run takes the node, timed ones included.** `--exclusive` is charged the whole node, 510 cores on
 an epyc-9754, against a QOS that caps a user at `cpu=600,mem=2000G`. One exclusive task fits only

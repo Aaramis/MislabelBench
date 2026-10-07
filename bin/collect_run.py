@@ -76,12 +76,19 @@ def main():
     record = json.loads(Path(args.meta).read_text())
     measured = json.loads(Path(args.timing).read_text())
 
-    record["host"] = socket.gethostname()
     # The cluster is heterogeneous: xeon-e5-2695, epyc-7662, epyc-9554 and epyc-9754 nodes all
-    # answer to the same partition, and between the oldest and the newest there is roughly a
-    # factor of two per core. Seconds from two runs are only comparable if they ran on the same
-    # model, so the model is recorded rather than left to be reconstructed from the hostname.
-    record["cpu_model"] = cpu_model()
+    # answer to the same partition, and between the oldest and the newest there is roughly a factor
+    # of two per core. Seconds from two runs are only comparable if they ran on the same model.
+    #
+    # The machine named is the one that ran the tool, which is not this one. COLLECTRUN is its own
+    # Nextflow process and therefore its own Slurm job, placed independently: of the five pairs whose
+    # Slurm ids both survive in accounting, two ran on different nodes. So _timeit.py, which runs
+    # inside the tool's task, reports its host and model in timing.json and those are preferred here.
+    # This process's own values are the fallback for records made before it did, and they are what
+    # every pre-existing run.json carries.
+    record["host"] = measured.pop("host", None) or socket.gethostname()
+    model = measured.pop("cpu_model", None)
+    record["cpu_model"] = model or cpu_model()
     record["collected_at"] = datetime.now().isoformat(timespec="seconds")
     record["n_mislabels"] = count_mislabels(Path(args.mis))
     # What the run read, by digest. The dataset's name is a label; this is evidence, and it is what
