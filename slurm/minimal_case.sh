@@ -61,7 +61,13 @@ TRUTH="${CASE_TRUTH:-}"
 SPECS="${CASE_SPECS:-0,10 0,200 0,1000 0,999999}"
 DATASET="${CASE_DATASET:-gtdb_arc2k}"
 THREADS="${CASE_THREADS:-8}"
-OUT="$ROOT/results/minimal_case/${CASE_TAG:-$DATASET}"
+# CASE_TAG is required, not defaulted to the dataset. The default put one sweep under
+# results/minimal_case/gtdb_arc2k, a name that says nothing about what was varied and that the next
+# sweep on the same dataset would have collided with. It also got the same sweep committed twice,
+# once under the default tag by repatriation and once under a hand-chosen name, and the repository
+# then held two copies of four identical rows. The script already refuses to overwrite a tag that
+# holds results, so naming the experiment is the one thing left to insist on.
+OUT="$ROOT/results/minimal_case/${CASE_TAG:?CASE_TAG is required: name the sweep, e.g. CASE_TAG=ramp_n40}"
 
 ALN="$ROOT/data/gtdb/${DATASET}.fasta"
 TAX="$ROOT/data/gtdb/${DATASET}.tax"

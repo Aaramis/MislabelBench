@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 167 |
+| findings in this report | 168 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1147 |
 | result tables, each rebuilt by `bin/analyses.sh` | 56 |
-| `.mis` files, the flag lists every detection number is computed from | 1461 |
+| `.mis` files, the flag lists every detection number is computed from | 1460 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -3754,6 +3754,28 @@ One thing the gates showed about themselves while this was added. `bin/review_co
 it is committed, and it passed on a repository holding an unnamed `bin/ragged_cost.py`. The check added
 in finding 165, which looks for paths the report names and the repository does not have, caught it
 immediately in the other direction. The two halves cover each other, and neither alone would have.
+
+**168. The repatriation plus `git add -A` committed a running job's half-written table and a second copy
+of a finished sweep.** `bin/repatriate.sh` fetches everything matching its include list, which is right,
+and `git add -A` then stages it, which is right until one of the directories belongs to a job that is
+still running. Two things went in that should not have:
+
+`results/minimal_case/ramp_counts_bracket/` held one row, the first arm of the first of four cases, from
+a job with six hours left on the clock. A partial table under `results/` is worse than no table: nothing
+marks it partial, and `README.md` counts the directories under `results/minimal_case/` as sweeps.
+
+`results/minimal_case/gtdb_arc2k/` was the same sweep as `results/minimal_case/outgroup_small/`, four
+identical rows under two names. The cause is `slurm/minimal_case.sh` defaulting `CASE_TAG` to the dataset
+name: the submission that produced it did not name itself, so it landed under `gtdb_arc2k`, and the
+verdicts table had already been copied by hand under a name that says what was varied. `CASE_TAG` is now
+required. The directory keeps the meaningful name and the fuller content, the four `case.json` records
+that make the sweep reproducible, which the hand copy did not have.
+
+Both were found by grepping the committed artefacts for absolute paths, looking for a different defect
+class entirely. That hunt came back clean on its own terms: of 2 803 committed files naming
+`/shared/home/agardette`, every one is a tool log or a `case.json` provenance field, and nothing reads a
+path out of either. `bin/analyses.sh` recomputing the minimal-case summary on this machine is the proof,
+since it would fail on the first absolute path it had to open.
 
 ## What is outstanding
 
