@@ -20,11 +20,17 @@ That is the right direction for a check whose output a human then looks at.
 
     bin/verify_figure_layout.py results/candidates/figure3.svg [more.svg ...]
 
-Three rules:
+Four rules:
 
   no two text elements' boxes intersect
   a text element whose anchor lies inside a filled rectangle fits inside it, with a point to spare
+  a text element that starts inside a panel frame does not run out of its right edge
   nothing is drawn outside the canvas
+
+The third was added after the fourth defect of the same family: panel E's legend ran 17 points past
+its own frame and this script said nothing, because a frame is an unfilled rectangle and the second
+rule only looks at filled ones. Tick labels and axis titles sit outside the frame to begin with and
+are not caught by it; a legend, an annotation or a point label inside the plot is.
 
 Rotated text is measured along its own axis. A text that sits in no rectangle is checked by the
 first and third rules only, which is every axis label and every point label.
@@ -37,6 +43,7 @@ going to be printed. That is an exclusion, so it is written down here rather tha
 """
 
 import argparse
+import html
 import itertools
 import re
 import sys
@@ -57,7 +64,9 @@ def boxes(svg):
     """Every text element as (label, x0, y0, x1, y1)."""
     out = []
     for a, body in TEXT.findall(svg):
-        s = re.sub(r"<[^>]+>", "", body).strip()
+        # Entities are one glyph, not four. Measured as written, "&gt;" made a label 21 points
+        # wider than it prints and the panel-frame rule reported a legend that fits.
+        s = html.unescape(re.sub(r"<[^>]+>", "", body)).strip()
         if not s:
             continue
         x, y = float(attr(a, "x", 0)), float(attr(a, "y", 0))
@@ -70,6 +79,16 @@ def boxes(svg):
             continue
         x0 = x - w / 2 if anchor == "middle" else (x - w if anchor == "end" else x)
         out.append((s, x0, y - size * ASCENT, x0 + w, y + size * DESCENT))
+    return out
+
+
+def panel_frames(svg):
+    """The plot frames: unfilled rectangles with a stroke. filled_rects() skips them by design."""
+    out = []
+    for a in RECT.findall(svg):
+        if attr(a, "fill", "none") == "none" and attr(a, "stroke"):
+            x, y = float(attr(a, "x", 0)), float(attr(a, "y", 0))
+            out.append((x, y, x + float(attr(a, "width", 0)), y + float(attr(a, "height", 0))))
     return out
 
 
@@ -88,7 +107,7 @@ def check(path, margin=1.0):
     svg = open(path).read()
     head = SVG.search(svg).group(1)
     cw, ch = float(attr(head, "width", 0)), float(attr(head, "height", 0))
-    texts, rects = boxes(svg), filled_rects(svg)
+    texts, rects, frames = boxes(svg), filled_rects(svg), panel_frames(svg)
     problems = []
 
     for a, b in itertools.combinations(texts, 2):
@@ -110,11 +129,17 @@ def check(path, margin=1.0):
                                 f"{rx1 - rx0:.0f} and runs out of it")
             if y0 < ry0 + margin or y1 > ry1 - margin:
                 problems.append(f"'{s}' runs out of the top or bottom of its box")
+        for fx0, fy0, fx1, fy1 in frames:
+            if fx0 <= x0 <= fx1 and fy0 <= cy <= fy1 and x1 > fx1:
+                problems.append(f"'{s}' starts inside a panel and runs {x1 - fx1:.0f} points out of "
+                                f"its right edge")
+                break
+
         if x0 < -0.5 or y0 < -0.5 or x1 > cw + 0.5 or y1 > ch + 0.5:
             problems.append(f"'{s}' is outside the {cw:.0f} by {ch:.0f} canvas")
 
-    print(f"{path}: {len(texts)} text elements and {len(rects)} boxes checked; "
-          f"{len(problems)} problem(s)")
+    print(f"{path}: {len(texts)} text elements, {len(rects)} boxes and {len(frames)} panel "
+          f"frames checked; {len(problems)} problem(s)")
     for pb in problems[:12]:
         print(f"  {pb}", file=sys.stderr)
     return problems

@@ -47,7 +47,10 @@ def place_label(ax, x, y, text, colour, dx=-6, dy=-6, size=7):
     exception, taken only when the text would cross an edge.
     """
     px, py = ax.px(x), ax.py(y)
-    w = len(text) * size * 0.58
+    # The width of the text as it is drawn, not as it is declared: make_figure multiplies every size
+    # by FONT_SCALE, so at 1.6 this estimated a 7 pt label at 16 points where it reaches the page at
+    # 25, and the guard below let "0.01" run past the right edge of panel E.
+    w = len(text) * size * mf.FONT_SCALE * 0.55
     if dx < 0 and px + dx - w < ax.x0 + 2:
         dx = -dx
     elif dx > 0 and px + dx + w > ax.x0 + mf.PW - 2:
@@ -397,7 +400,9 @@ def fig_5(L="A", g=(400, 300, 260, 190, 72, 40)):
     for b in bands:
         x = ax.px((b["low"] + b["high"]) / 2)
         o.append(mf.txt(x, ax.y0 + mf.PH + 15, f"{b['low'] * 100:.0f}-{b['high'] * 100:.0f}", size=7))
-    o += mf.legend(ax.x0 + mf.PW - 90, ax.y0 + 12, [("sativa-epang", mf.FORK, None),
+    # 114 and not 90: "sativa-epang" is 85 points at this size and the line sample takes 23 more,
+    # so from PW - 90 the text ended 17 points outside the panel.
+    o += mf.legend(ax.x0 + mf.PW - 114, ax.y0 + 12, [("sativa-epang", mf.FORK, None),
                                                      ("SATIVA", mf.UP, mf.COMPARATOR_DASH)], size=8)
     return w, h, o
 
@@ -442,7 +447,8 @@ def fig_6(L="A", g=(420, 300, 290, 190, 72, 40)):
                    f"{num(n_stem)} of {num(len(conf))} sit at exactly 0.510, the value the scoring rule "
                    "gives a placement on the stem of the declared taxon, and all of them carry exclusion "
                    "at or above 0.99.")
-    o += mf.legend(ax.x0 + mf.PW - 118, ax.y0 + 12, [("exclusion >= 0.99", mf.FORK, None),
+    # 150: "exclusion >= 0.99" is 120 points at this size and the line sample takes 23 more.
+    o += mf.legend(ax.x0 + mf.PW - 150, ax.y0 + 12, [("exclusion >= 0.99", mf.FORK, None),
                                                       ("exclusion < 0.99", LIGHT, None)], size=7.5)
     return w, h, o
 

@@ -35,7 +35,7 @@
 <circle cx="154.9" cy="96.3" r="2.6" fill="#000000"/>
 <circle cx="200.5" cy="72.3" r="2.6" fill="#000000"/>
 <circle cx="227.2" cy="55.2" r="2.6" fill="#000000"/>
-<text x="96.6" y="139.2" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">402</text>
+<text x="108.6" y="139.2" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="start">402</text>
 <text x="116.1" y="119.1" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">801</text>
 <text x="148.9" y="90.3" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">2 023</text>
 <text x="194.5" y="66.3" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">4 001</text>

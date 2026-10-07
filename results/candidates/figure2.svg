@@ -67,7 +67,7 @@
 <circle cx="143.6" cy="309.8" r="2.6" fill="#000000"/>
 <circle cx="186.0" cy="289.5" r="2.6" fill="#000000"/>
 <circle cx="210.9" cy="274.9" r="2.6" fill="#000000"/>
-<text x="88.9" y="345.4" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">402</text>
+<text x="100.9" y="345.4" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="start">402</text>
 <text x="107.0" y="328.4" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">801</text>
 <text x="137.6" y="303.8" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">2 023</text>
 <text x="180.0" y="283.5" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">4 001</text>
@@ -228,10 +228,10 @@
 <text x="408.0" y="677.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">40-60</text>
 <text x="444.0" y="677.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">60-80</text>
 <text x="480.0" y="677.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">80-100</text>
-<line x1="408" y1="524.0" x2="426" y2="524.0" stroke="#000000" stroke-width="1.6"/>
-<text x="431.0" y="527.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
-<line x1="408" y1="540.0" x2="426" y2="540.0" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
-<text x="431.0" y="543.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text>
+<line x1="384" y1="524.0" x2="402" y2="524.0" stroke="#000000" stroke-width="1.6"/>
+<text x="407.0" y="527.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
+<line x1="384" y1="540.0" x2="402" y2="540.0" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
+<text x="407.0" y="543.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text>
 <rect x="578" y="512" width="180" height="150" fill="none" stroke="#444" stroke-width="0.8"/>
 <text x="534.0" y="496.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">(f)</text>
 <text x="668.0" y="694.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle">Confidence</text>
@@ -326,7 +326,7 @@
 <text x="595.3" y="579.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">8 057 flags at</text>
 <text x="595.3" y="593.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">exactly 0.510,</text>
 <text x="595.3" y="607.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">31 % of 25 772</text>
-<line x1="640" y1="524.0" x2="658" y2="524.0" stroke="#000000" stroke-width="1.6"/>
-<text x="663.0" y="527.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &gt;= 0.99</text>
-<line x1="640" y1="539.0" x2="658" y2="539.0" stroke="#d5d5d5" stroke-width="1.6"/>
-<text x="663.0" y="542.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &lt; 0.99</text></svg>
+<line x1="608" y1="524.0" x2="626" y2="524.0" stroke="#000000" stroke-width="1.6"/>
+<text x="631.0" y="527.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &gt;= 0.99</text>
+<line x1="608" y1="539.0" x2="626" y2="539.0" stroke="#d5d5d5" stroke-width="1.6"/>
+<text x="631.0" y="542.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &lt; 0.99</text></svg>
