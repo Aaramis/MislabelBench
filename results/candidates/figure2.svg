@@ -1,33 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="712" viewBox="0 0 760 712" font-family="Helvetica,Arial,sans-serif"><rect width="760" height="712" fill="#fff"/><defs><marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#444"/></marker></defs>
 <text x="22.0" y="32.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">(a)</text>
-<text x="86.0" y="75.0" font-size="14.4" fill="#c1462c" font-weight="bold" text-anchor="middle">SATIVA</text>
-<text x="86.0" y="155.0" font-size="14.4" fill="#000000" font-weight="bold" text-anchor="middle">sativa-epang</text>
-<rect x="156" y="48" width="78" height="46" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="0.8"/>
-<text x="195.0" y="73.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Reference tree</text>
-<rect x="156" y="128" width="78" height="46" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="0.8"/>
-<text x="195.0" y="153.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Reference tree</text>
-<rect x="256" y="48" width="180" height="46" rx="6" fill="#f7e9e6" stroke="#888" stroke-width="0.8"/>
-<text x="346.0" y="68.2" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Remove and place</text>
-<text x="346.0" y="79.2" font-size="12.8" fill="#c1462c" font-weight="normal" text-anchor="middle">one sequence (RAxML-EPA)</text>
-<rect x="264" y="120" width="180" height="46" rx="6" fill="#ececec" stroke="#999" stroke-width="0.8"/>
-<rect x="260" y="124" width="180" height="46" rx="6" fill="#ececec" stroke="#999" stroke-width="0.8"/>
-<rect x="256" y="128" width="180" height="46" rx="6" fill="#e8e8e8" stroke="#999" stroke-width="0.8"/>
-<text x="346.0" y="148.2" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Remove and place</text>
-<text x="346.0" y="159.2" font-size="12.8" fill="#000000" font-weight="normal" text-anchor="middle">K sequences at once (EPA-ng)</text>
-<rect x="464" y="77.0" width="122" height="68" rx="6" fill="#e3eef7" stroke="#888" stroke-width="0.8"/>
-<text x="525.0" y="102.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Same label and</text>
-<text x="525.0" y="113.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">confidence scoring</text>
-<text x="525.0" y="124.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">as SATIVA</text>
-<rect x="620" y="48" width="130" height="46" rx="6" fill="#f7e9e6" stroke="#888" stroke-width="0.8"/>
-<text x="685.0" y="73.7" font-size="12.8" fill="#c1462c" font-weight="normal" text-anchor="middle">Flagged sequences</text>
-<rect x="620" y="128" width="130" height="46" rx="6" fill="#e8e8e8" stroke="#888" stroke-width="0.8"/>
-<text x="685.0" y="153.7" font-size="12.8" fill="#000000" font-weight="normal" text-anchor="middle">Flagged sequences</text>
-<line x1="237.0" y1="71.0" x2="252.0" y2="71.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
-<line x1="439.0" y1="71.0" x2="460.0" y2="89.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
-<line x1="589.0" y1="89.0" x2="616.0" y2="71.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
-<line x1="237.0" y1="151.0" x2="252.0" y2="151.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
-<line x1="439.0" y1="151.0" x2="460.0" y2="117.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
-<line x1="589.0" y1="117.0" x2="616.0" y2="151.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
+<text x="82.0" y="76.0" font-size="14.4" fill="#c1462c" font-weight="bold" text-anchor="middle">SATIVA</text>
+<text x="82.0" y="158.0" font-size="14.4" fill="#000000" font-weight="bold" text-anchor="middle">sativa-epang</text>
+<rect x="142" y="46" width="112" height="52" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="0.8"/>
+<text x="198.0" y="76.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Reference tree</text>
+<rect x="142" y="128" width="112" height="52" rx="6" fill="#f0f0f0" stroke="#888" stroke-width="0.8"/>
+<text x="198.0" y="158.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Reference tree</text>
+<rect x="276" y="46" width="146" height="52" rx="6" fill="#f7e9e6" stroke="#888" stroke-width="0.8"/>
+<text x="349.0" y="60.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Remove and place</text>
+<text x="349.0" y="76.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">one sequence</text>
+<text x="349.0" y="92.3" font-size="12.8" fill="#c1462c" font-weight="normal" text-anchor="middle">(RAxML-EPA)</text>
+<rect x="284" y="120" width="146" height="52" rx="6" fill="#ececec" stroke="#999" stroke-width="0.8"/>
+<rect x="280" y="124" width="146" height="52" rx="6" fill="#ececec" stroke="#999" stroke-width="0.8"/>
+<rect x="276" y="128" width="146" height="52" rx="6" fill="#e8e8e8" stroke="#999" stroke-width="0.8"/>
+<text x="349.0" y="142.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Remove and place</text>
+<text x="349.0" y="158.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">K sequences at once</text>
+<text x="349.0" y="174.3" font-size="12.8" fill="#000000" font-weight="normal" text-anchor="middle">(EPA-ng)</text>
+<rect x="446" y="76.0" width="138" height="74" rx="6" fill="#e3eef7" stroke="#888" stroke-width="0.8"/>
+<text x="515.0" y="101.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">Same label and</text>
+<text x="515.0" y="117.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">confidence scoring</text>
+<text x="515.0" y="133.3" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">as SATIVA</text>
+<rect x="608" y="46" width="132" height="52" rx="6" fill="#f7e9e6" stroke="#888" stroke-width="0.8"/>
+<text x="674.0" y="76.3" font-size="12.8" fill="#c1462c" font-weight="normal" text-anchor="middle">Flagged sequences</text>
+<rect x="608" y="128" width="132" height="52" rx="6" fill="#e8e8e8" stroke="#888" stroke-width="0.8"/>
+<text x="674.0" y="158.3" font-size="12.8" fill="#000000" font-weight="normal" text-anchor="middle">Flagged sequences</text>
+<line x1="257.0" y1="72.0" x2="272.0" y2="72.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
+<line x1="425.0" y1="72.0" x2="442.0" y2="89.5" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
+<line x1="587.0" y1="89.5" x2="604.0" y2="72.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
+<line x1="257.0" y1="154.0" x2="272.0" y2="154.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
+<line x1="425.0" y1="154.0" x2="442.0" y2="118.2" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
+<line x1="587.0" y1="118.2" x2="604.0" y2="154.0" stroke="#444" stroke-width="1.1" marker-end="url(#head)"/>
 <rect x="72" y="262" width="270" height="170" fill="none" stroke="#444" stroke-width="0.8"/>
 <text x="28.0" y="246.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">(b)</text>
 <text x="207.0" y="464.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle">Runtime (seconds)</text>
@@ -48,11 +50,11 @@
 <line x1="68" y1="281.7" x2="72" y2="281.7" stroke="#444" stroke-width="0.8"/>
 <text x="66.0" y="284.7" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">10 000</text>
 <line x1="159.2" y1="262" x2="159.2" y2="432" stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>
-<text x="162.2" y="272.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">1 min</text>
+<text x="162.2" y="257.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">1 min</text>
 <line x1="240.0" y1="262" x2="240.0" y2="432" stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>
-<text x="243.0" y="272.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">10 min</text>
+<text x="243.0" y="257.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">10 min</text>
 <line x1="302.8" y1="262" x2="302.8" y2="432" stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>
-<text x="305.8" y="272.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">1 h</text>
+<text x="305.8" y="257.0" font-size="11.2" fill="#888" font-weight="normal" text-anchor="start">1 h</text>
 <path d="M168.7,412.6 L207.5,428.3 L242.0,402.4 L268.2,381.0 L296.2,361.4" fill="none" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
 <circle cx="168.7" cy="412.6" r="2.6" fill="#c1462c"/>
 <circle cx="207.5" cy="428.3" r="2.6" fill="#c1462c"/>
@@ -70,15 +72,15 @@
 <text x="137.6" y="313.6" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">2 023</text>
 <text x="180.0" y="293.4" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">4 001</text>
 <text x="205.1" y="277.4" font-size="11.2" fill="#000000" font-weight="normal" text-anchor="end">7 051</text>
-<text x="174.7" y="426.6" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">402</text>
+<text x="162.7" y="406.6" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="end">402</text>
 <text x="207.5" y="422.3" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="middle">801</text>
 <text x="248.0" y="416.4" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">2 023</text>
 <text x="274.2" y="395.0" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">4 001</text>
 <text x="302.2" y="375.4" font-size="11.2" fill="#c1462c" font-weight="normal" text-anchor="start">7 051</text>
-<line x1="80" y1="408" x2="98" y2="408" stroke="#000000" stroke-width="1.6"/>
-<text x="103.0" y="411.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
-<line x1="80" y1="421" x2="98" y2="421" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
-<text x="103.0" y="424.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text>
+<line x1="224" y1="314.0" x2="242" y2="314.0" stroke="#000000" stroke-width="1.6"/>
+<text x="247.0" y="317.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
+<line x1="224" y1="330.0" x2="242" y2="330.0" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
+<text x="247.0" y="333.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text>
 <rect x="452" y="262" width="236" height="170" fill="none" stroke="#444" stroke-width="0.8"/>
 <text x="408.0" y="246.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">(c)</text>
 <text x="570.0" y="464.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle">Placement Shards</text>
@@ -226,10 +228,10 @@
 <text x="408.0" y="677.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">40-60</text>
 <text x="444.0" y="677.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">60-80</text>
 <text x="480.0" y="677.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">80-100</text>
-<line x1="408" y1="524" x2="426" y2="524" stroke="#000000" stroke-width="1.6"/>
+<line x1="408" y1="524.0" x2="426" y2="524.0" stroke="#000000" stroke-width="1.6"/>
 <text x="431.0" y="527.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">sativa-epang</text>
-<line x1="408" y1="537" x2="426" y2="537" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
-<text x="431.0" y="540.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text>
+<line x1="408" y1="540.0" x2="426" y2="540.0" stroke="#c1462c" stroke-width="1.6" stroke-dasharray="5 2"/>
+<text x="431.0" y="543.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text>
 <rect x="578" y="512" width="180" height="150" fill="none" stroke="#444" stroke-width="0.8"/>
 <text x="534.0" y="496.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">(f)</text>
 <text x="668.0" y="694.0" font-size="16.0" fill="#000" font-weight="normal" text-anchor="middle">Confidence</text>
@@ -322,9 +324,9 @@
 <rect x="747.6" y="661.9" width="5.9" height="0.1" fill="#d5d5d5"/>
 <rect x="747.6" y="528.1" width="5.9" height="133.9" fill="#000000"/>
 <text x="595.3" y="579.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">8 057 flags at</text>
-<text x="595.3" y="589.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">exactly 0.510,</text>
-<text x="595.3" y="599.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">31 % of 25 772</text>
-<line x1="640" y1="524" x2="658" y2="524" stroke="#000000" stroke-width="1.6"/>
+<text x="595.3" y="593.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">exactly 0.510,</text>
+<text x="595.3" y="607.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">31 % of 25 772</text>
+<line x1="640" y1="524.0" x2="658" y2="524.0" stroke="#000000" stroke-width="1.6"/>
 <text x="663.0" y="527.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &gt;= 0.99</text>
-<line x1="640" y1="537" x2="658" y2="537" stroke="#d5d5d5" stroke-width="1.6"/>
-<text x="663.0" y="540.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &lt; 0.99</text></svg>
+<line x1="640" y1="539.0" x2="658" y2="539.0" stroke="#d5d5d5" stroke-width="1.6"/>
+<text x="663.0" y="542.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">exclusion &lt; 0.99</text></svg>

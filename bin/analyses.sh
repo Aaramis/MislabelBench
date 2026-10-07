@@ -366,6 +366,9 @@ step "the Application Note's figure"
 make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/figure1_values.tsv
 # And the figure the manuscript actually carries, with its values table and its draft caption.
 paper_figure.py "$BENCH_ROOT"
+# Measured rather than looked at. Four passes of looking left "Reference tree" running out of both
+# sides of its box and two labels 0.7 points apart in the runtime panel.
+verify_figure_layout.py results/candidates/figure3.svg results/candidates/figure1_[1-6].svg
 
 # Run here rather than by hand, which is how it was run until now. A gate whose running depends on
 # someone remembering it is one nobody notices has stopped.

@@ -26,6 +26,8 @@ ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
 OUT = ROOT / "results" / "candidates"
 OUT.mkdir(parents=True, exist_ok=True)
 GREY, LIGHT = "#8a8a8a", "#d5d5d5"
+# A line step for a block of 7 pt text, at the size it is actually drawn. See make_figure.box().
+NOTE_STEP = 7 * mf.FONT_SCALE * 1.25
 
 
 def num(n):
@@ -110,7 +112,10 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
         xx = ax.px(secs)
         o.append(f'<line x1="{xx:.1f}" y1="{ax.y0}" x2="{xx:.1f}" y2="{ax.y0 + mf.PH}" '
                  f'stroke="#c8c8c8" stroke-width="0.7" stroke-dasharray="3 2"/>')
-        o.append(mf.txt(xx + 3, ax.y0 + 10, label, size=7, anchor="start", fill="#888"))
+        # Above the frame, not inside it. Inside, the top strip is where the largest reference's
+        # label lands -- "1 min" and "7 051" overlapped by 25 points -- and every other place in a
+        # 240 by 158 panel already has a point label or the legend in it.
+        o.append(mf.txt(xx + 3, ax.y0 - 5, label, size=7, anchor="start", fill="#888"))
     sizes = sorted(wall)
     fork = [(wall[n][0], mem[n][0]) for n in sizes]
     up = [(wall[n][1], mem[n][1]) for n in sizes]
@@ -126,11 +131,21 @@ def fig_2(L="A", g=(420, 320, 290, 200, 78, 40)):
     for n, (x, y) in zip(sizes, fork):
         o.append(place_label(ax, x, y, num(n), mf.FORK, dx=-6, dy=-6))
     for i, (n, (x, y)) in enumerate(zip(sizes, up)):
+        if i == 0:
+            # Above and to the left. Below and to the right, where the rule beneath would put it,
+            # it ends 0.7 points from the next point's label and the two read as one number: this
+            # series starts with a drop, so its first two points are close in x and far in y.
+            # Nothing is drawn to the left of the series' first point.
+            o.append(place_label(ax, x, y, num(n), mf.UP, dx=-6, dy=-6))
+            continue
         # A label offset sideways from a local minimum lands on the rising arm of its own curve.
         # Centred underneath, there is nothing to collide with; the same holds above a maximum.
-        lo = 0 < i < len(up) - 1 and y < up[i - 1][1] and y < up[i + 1][1]
+        lo = i < len(up) - 1 and y < up[i - 1][1] and y < up[i + 1][1]
         o.append(place_label(ax, x, y, num(n), mf.UP, dx=0 if lo else 6, dy=14))
-    o += mf.legend(ax.x0 + 8, ax.y0 + mf.PH - 24, [("sativa-epang", mf.FORK, None),
+    # Right, between the two curves. The bottom left is where the comparator's first two labels now
+    # are; the top right corner is free too, but there the legend's own line sample starts 2 points
+    # from where the fork's curve ends and reads as its continuation.
+    o += mf.legend(ax.x0 + mf.PW - 118, ax.y0 + 52, [("sativa-epang", mf.FORK, None),
                                                      ("SATIVA", mf.UP, mf.COMPARATOR_DASH)], size=8)
     return w, h, o
 
@@ -260,7 +275,7 @@ def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
                ("injected found", mf.FORK), ("collateral", mf.UP))
     for i, (label, fill) in enumerate(entries):
         lx = ax.x0 + 10 + (i % 2) * 140
-        ly = ax.y0 + 12 + (i // 2) * 12
+        ly = ax.y0 + 12 + (i // 2) * NOTE_STEP   # 12 apart for glyphs 11.2 tall, as in fig_6
         o.append(f'<rect x="{lx}" y="{ly - 7}" width="10" height="9" fill="{fill}" stroke="{GREY}" stroke-width="0.6"/>')
         o.append(mf.txt(lx + 14, ly, label, size=7, anchor="start"))
     CAPTION.append(f"({L.lower()}) Flags per dataset by the taxonomic distance of the injected error. Grey and "
@@ -271,7 +286,7 @@ def fig_4b(L="D", g=(760, 300, 420, 150, 58, 40)):
     return w, h, o
 
 
-def fig_4(L="A", g=(660, 320, 300, 190, 232, 40), key=True):
+def fig_4(L="A", g=(740, 320, 300, 190, 232, 40), key=True):
     w, h = single(*g, L)
     rows = [ln.split("\t") for ln in (ROOT / "results/background_stability.tsv").read_text().splitlines()[1:]]
     by = collections.defaultdict(lambda: collections.defaultdict(list))
@@ -409,8 +424,10 @@ def fig_6(L="A", g=(420, 300, 290, 190, 72, 40)):
     n_stem = sum(1 for c in conf if abs(c - 0.510) < 0.0005)
     o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62), f"{n_stem:,} flags at".replace(",", " "),
                     size=7, anchor="start"))
-    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 10, "exactly 0.510,", size=7, anchor="start"))
-    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 20, f"{n_stem / len(conf) * 100:.0f} % of {len(conf):,}".replace(",", " "),
+    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + NOTE_STEP, "exactly 0.510,", size=7,
+                    anchor="start"))
+    o.append(mf.txt(ax.px(0.54), ax.py(top * 0.62) + 2 * NOTE_STEP,
+                    f"{n_stem / len(conf) * 100:.0f} % of {len(conf):,}".replace(",", " "),
                     size=7, anchor="start"))
     CAPTION.append(f"({L.lower()}) Confidence of every flag in the 180-dataset grid, sativa-epang: "
                    f"{num(n_stem)} of {num(len(conf))} sit at exactly 0.510, the value the scoring rule "

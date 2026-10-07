@@ -18,8 +18,8 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 145 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 60 |
+| findings in this report | 146 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 8 |
@@ -3130,6 +3130,40 @@ Two things it establishes that nothing had. The committed clade and simulated ce
 for byte from their seeds: deleted and rebuilt, all 150 files matched but the 45 links, which differ only
 because they are now relative. And a link is compared by its target rather than by the bytes it points at
 -- comparing those compares one file with itself, which is how finding 144 survived every earlier check.
+
+**146. The figure's geometry was written for 8 pt text and drawn at 12.8, and four passes of looking
+at it did not find what one pass of measuring it did.** Finding 141 raised `FONT_SCALE` to 1.6 so the
+smallest label would reach the page at 5.8 pt instead of 3.6, and paid for the type with room over four
+passes. What it did not do is scale the geometry that positions the type. Three separate places kept
+computing in unscaled units:
+
+- `make_figure.box()` stepped its lines by `size + 3`, 11 points apart for glyphs 12.8 tall, so **every
+  multi-line box in the schematic had its lines touching**. The same arithmetic in `fig_6`'s three-line
+  note and in `fig_4b`'s inline key, 10 and 12 apart for glyphs 11.2 tall.
+- The schematic's boxes were sized by eye at the old scale. **"Reference tree" is 99 points of Helvetica
+  at 12.8 and its box was 78**, so it ran out of both sides; "K sequences at once (EPA-ng)" needed 197
+  in a box of 180. The boxes are wider now and the engine boxes carry their tool on a line of its own.
+- `mf.legend()` stepped by a fixed 13.
+
+And one that was not about scale at all: in the runtime panel the "1 min" annotation sat 10 points below
+the top frame, which is exactly where the largest reference's label lands, so the two **overlapped by 25
+points**; and the comparator's first two labels ended **0.7 points apart**, reading as one number, with
+the legend touching the second. The annotations moved above the frame, where nothing else is; the
+comparator's first label moved above and to the left of its point, where nothing is drawn at all; and
+the legend moved to the right, between the curves.
+
+**This is now measured.** `bin/verify_figure_layout.py` parses the SVG and checks three things: no two
+text elements' boxes intersect, a text inside a filled rectangle fits inside it, and nothing leaves the
+canvas. Helvetica's average advance is taken as 0.55 em against a true 0.52, which errs towards
+reporting a near miss -- the right direction for a check a human then looks at. It runs in
+`bin/analyses.sh` over the manuscript's figure and the six standalone panels: **105 text elements and 53
+boxes, 0 problems**, from 5 overlapping pairs and 2 overflowing boxes before. The two superseded
+compositions are not passed and do not pass, 14 problems and 13; that is written into the script's
+docstring rather than left to be noticed.
+
+The order matters more than the count. Every visual defect in this figure until now was found by
+looking at it and reported in French by its only reader. The ones that survived four passes of looking
+were found by the first pass of measuring.
 
 ## What is outstanding
 

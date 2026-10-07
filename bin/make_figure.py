@@ -130,11 +130,16 @@ def panel_label(key):
 
 
 def box(x, y, w, h, fill, lines, size=8, stroke="#888"):
+    # The line step is a multiple of the size the glyphs are drawn at, which is size * FONT_SCALE.
+    # Computed from the unscaled size it did not follow the scale: at 1.6 the lines sat 11 apart and
+    # were 12.8 tall, so every multi-line box in the schematic had its lines touching.
+    drawn = size * FONT_SCALE
+    step = drawn * 1.25
     o = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="{fill}" '
          f'stroke="{stroke}" stroke-width="0.8"/>']
-    top = y + h / 2 - (len(lines) - 1) * (size + 3) / 2 + size / 3
+    top = y + h / 2 - (len(lines) - 1) * step / 2 + drawn / 3
     for i, (text, weight, colour) in enumerate(lines):
-        o.append(txt(x + w / 2, top + i * (size + 3), text, size=size, weight=weight, fill=colour))
+        o.append(txt(x + w / 2, top + i * step, text, size=size, weight=weight, fill=colour))
     return o
 
 
@@ -156,25 +161,30 @@ def schematic():
     o = ['<defs><marker id="head" markerWidth="7" markerHeight="7" refX="6" refY="3.5" '
          'orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#444"/></marker></defs>',
          txt(X - 2, Y + 2, panel_label("a"), size=12, anchor="start", weight="bold")]
-    bh = 46
-    y1, y2 = Y + 18, Y + 98                   # the two rows
-    xref, xeng, xscore, xflag = X + 132, X + 232, X + 440, X + 596
-    wref, weng, wscore, wflag = 78, 180, 122, 130
+    bh = 52
+    y1, y2 = Y + 16, Y + 98                   # the two rows
+    # Every box is at least as wide as its widest line drawn at FONT_SCALE, which none of them was:
+    # "Reference tree" is 99 points of Helvetica at 12.8 and sat in a box of 78, so it ran out of
+    # both sides. The engine boxes carry their tool on a line of its own for the same reason.
+    xref, xeng, xscore, xflag = X + 118, X + 252, X + 422, X + 584
+    wref, weng, wscore, wflag = 112, 146, 138, 132
     # Row labels, in the figure's colour code.
-    o.append(txt(X + 62, y1 + bh / 2 + 4, "SATIVA", size=9, weight="bold", fill=UP))
-    o.append(txt(X + 62, y2 + bh / 2 + 4, "sativa-epang", size=9, weight="bold", fill=FORK))
+    o.append(txt(X + 58, y1 + bh / 2 + 4, "SATIVA", size=9, weight="bold", fill=UP))
+    o.append(txt(X + 58, y2 + bh / 2 + 4, "sativa-epang", size=9, weight="bold", fill=FORK))
     for y in (y1, y2):
         o += box(xref, y, wref, bh, "#f0f0f0", [("Reference tree", "normal", "#000")])
     o += box(xeng, y1, weng, bh, "#f7e9e6",
-             [("Remove and place", "normal", "#000"), ("one sequence (RAxML-EPA)", "normal", UP)])
+             [("Remove and place", "normal", "#000"), ("one sequence", "normal", "#000"),
+              ("(RAxML-EPA)", "normal", UP)])
     # Stacked cards for the batches: the same box drawn three times, offset, back to front.
     for d in (8, 4, 0):
         o += box(xeng + d, y2 - d, weng, bh, "#ececec" if d else "#e8e8e8",
                  [] if d else [("Remove and place", "normal", "#000"),
-                               ("K sequences at once (EPA-ng)", "normal", FORK)],
+                               ("K sequences at once", "normal", "#000"),
+                               ("(EPA-ng)", "normal", FORK)],
                  stroke="#999")
     ymid = (y1 + y2 + bh) / 2
-    o += box(xscore, ymid - 34, wscore, 68, "#e3eef7",
+    o += box(xscore, ymid - 37, wscore, 74, "#e3eef7",
              [("Same label and", "normal", "#000"), ("confidence scoring", "normal", "#000"),
               ("as SATIVA", "normal", "#000")])
     o += box(xflag, y1, wflag, bh, "#f7e9e6", [("Flagged sequences", "normal", UP)])
@@ -233,7 +243,7 @@ def series(ax, pts, colour, dash=None, marker="o", line=True):
 def legend(x, y, entries, size=9):
     o = []
     for i, (label, colour, dash) in enumerate(entries):
-        yy = y + i * 13
+        yy = y + i * size * FONT_SCALE * 1.25   # see box(): a step that does not follow the scale
         s = f' stroke-dasharray="{dash}"' if dash else ""
         o.append(f'<line x1="{x}" y1="{yy}" x2="{x + 18}" y2="{yy}" stroke="{colour}" '
                  f'stroke-width="1.6"{s}/>')
