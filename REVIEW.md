@@ -19,13 +19,13 @@ one drifts, which is the only way a summary of a growing document stays true.
 | | count |
 |---|---|
 | findings in this report | 167 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
-| run records, cross-checked against the files they summarise | 1117 |
-| result tables, each rebuilt by `bin/analyses.sh` | 54 |
-| `.mis` files, the flag lists every detection number is computed from | 1416 |
+| run records, cross-checked against the files they summarise | 1147 |
+| result tables, each rebuilt by `bin/analyses.sh` | 56 |
+| `.mis` files, the flag lists every detection number is computed from | 1461 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2054,7 +2054,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 117 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 147 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2581,7 +2581,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **54 published tables** ← 1 117 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **56 published tables** ← 1 147 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2692,7 +2692,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 117** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 147** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
