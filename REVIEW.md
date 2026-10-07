@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 158 |
+| findings in this report | 159 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3505,6 +3505,28 @@ these shares, and per taxonomic distance as well; it prints them to a console no
 record it writes holds the counts and not the division. The README carries the three shares now. This
 is the fourth time in this report that a number existed in the repository and in no document a reader
 would open.
+
+**159. Every task asked the queue for a day, which is what made an exclusive request unschedulable.**
+`nextflow.config` sets `cpus` and `memory` on `process_timed` and sets no `time` at all, so each task
+inherited the partition's default of **one day**. That costs nothing while tasks share nodes. It
+becomes the binding constraint the moment finding 152's fix adds `--exclusive`: Slurm then has to find
+a whole 254-core pinned node free for twenty-four hours in order to run five minutes of work, and it
+will not reserve one speculatively.
+
+Measured rather than inferred. The three staged rounds' `SATIVAEPANG` tasks sat at `(Resources)` and
+`(Priority)` for **an hour and a half** with zero idle epyc-9754 nodes anywhere, and `squeue --start`
+could not estimate a start time. Lowering their limit from 24 h to 2 h by hand moved all three to
+`(None)` immediately -- eligible for backfill. The minimal-case job queued behind them, which needs no
+exclusivity at all, was freed the same way.
+
+`time` is set now, from the slow arm: upstream takes **2 984 s on 7 051 sequences**, 0.42 s per
+sequence, so `30.min + 2.s` per sequence gives **1 h 37 m at 2 023 and 4 h 25 m at 7 051** -- about
+five times the measured worst case and a twentieth of what was being asked. The arithmetic was checked
+by evaluating it in Nextflow rather than read: both operand orders give the same Duration.
+
+The general shape is one this report has met before: a default that is harmless until another setting
+makes it load-bearing. `--exclusive` did not create the problem, it revealed a request nobody had ever
+had a reason to size.
 
 ## What is outstanding
 
