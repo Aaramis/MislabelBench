@@ -21,6 +21,7 @@ A check, so it exits non-zero when something disagrees.
 import argparse
 import json
 import os
+import re as _re
 import sys
 from pathlib import Path
 
@@ -57,6 +58,81 @@ def check_symlinks(problems, root=Path("data")):
         elif not link.exists():
             problems.append(f"{link}: links to {target}, which is not there")
     return len(links)
+
+
+
+def _block(text, key, value=r"([0-9.]+)\s*$"):
+    """The `name: number` entries indented under `key:`, as a dict.
+
+    Parsed with a regular expression rather than with pyyaml, for the reason check_alignment_model
+    already parses this file that way: this runs in bin/analyses.sh on a fresh clone, and a gate that
+    needs a package the rest of the chain does not is a gate that is skipped.
+    """
+    m = _re.search(rf"^(\s*){key}:\s*(#.*)?$", text, _re.M)
+    if not m:
+        return None
+    indent, out = len(m.group(1)), {}
+    for line in text[m.end():].splitlines()[1:]:
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if len(line) - len(line.lstrip()) <= indent:
+            break
+        entry = _re.match(rf"\s+(\w+):\s*{value}", line)
+        if entry:
+            out[entry.group(1)] = float(entry.group(2))
+    return out
+
+
+def check_provenance(problems):
+    """assets/datasets.yml states counts and judgeability; committed files hold both.
+
+    Every figure here had a counterpart in the repository and nothing compared the two -- the file
+    even carries the command that reproduces one of them, in a comment, which is a check written down
+    and never run. It is not hypothetical: the same block's own comment records that it published
+    81.5 % at species where the rule gives 72.7, "only this file and the protocol said 81.5 %", and
+    that an adjacent label described a different statistic for 35 points.
+    """
+    yml = Path("assets/datasets.yml")
+    if not yml.exists():
+        return 0
+    text = yml.read_text()
+    checked = 0
+
+    def records(path):
+        p = Path(path)
+        return sum(1 for l in p.read_text().splitlines() if l.startswith(">")) if p.exists() else None
+
+    def shape(path, field="judgeable_pct_of_labelled"):
+        p = Path(path)
+        return json.loads(p.read_text()).get(field) if p.exists() else None
+
+    # A declared count against the file it describes.
+    for key, path, what in (
+            ("judgeable_pct_after_length", "results/shape_gtdb_arc1200.json", "the archaeal set"),
+            ("judgeable_pct", "data/unite/unite_shape.json", "UNITE RepS"),
+            ("refs_judgeable_pct", "data/unite/unite_refs_shape.json", "UNITE RefS")):
+        want = _block(text, key) or _block(text, key, r"\{of_labelled:\s*([0-9.]+)")
+        have = shape(path)
+        if not want or not have:
+            continue
+        for rank, v in want.items():
+            if rank not in have:
+                problems.append(f"datasets.yml: {key} names {rank}, {path} does not")
+            elif abs(have[rank] - v) > 0.05:
+                problems.append(f"datasets.yml: {key}.{rank} says {v}, {path} computes "
+                                f"{have[rank]} for {what}")
+            checked += 1
+
+    for key, path, label in (("after_length", "data/gtdb/gtdb_arc1200.fasta", "archaeal"),
+                             ("drawn", "data/bacteria/donor_pool.fasta", "donor")):
+        m = _re.search(rf"^\s*{key}:\s*(\d+)\s*$", text, _re.M)
+        n = records(path)
+        if m and n is not None:
+            checked += 1
+            if int(m.group(1)) != n:
+                problems.append(f"datasets.yml: {key} says {m.group(1)}, {path} holds {n} "
+                                f"{label} records")
+    return checked
 
 
 def check_alignment_model(problems):
@@ -197,10 +273,12 @@ def main():
     n_aln = check_alignment_model(problems)
     n_data = check_data_readme(problems)
     n_links = check_symlinks(problems)
+    n_prov = check_provenance(problems)
     print(f"{checked} datasets in {len(manifests)} manifests checked, "
           f"{checked - len(unsound)} sound; the covariance model and {n_aln} alignment widths "
           f"against it; {n_data} generated-file counts against data/README.md; {n_links} links "
-          f"under data/ checked for being relative and resolving")
+          f"under data/ checked for being relative and resolving; {n_prov} provenance "
+          f"figures in assets/datasets.yml against what the repository holds")
     for pb in problems:
         print(f"  {pb}", file=sys.stderr)
     if problems:

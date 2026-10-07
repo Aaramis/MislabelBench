@@ -38,6 +38,16 @@ datasets:
     licence: CC BY-SA 4.0
     # Taxonomy travels in the FASTA header, after the accession, as d__...;s__...
     select: "lineage starts with d__Archaea, then length >= 1200 nt"
+    # GTDB publishes no SSU alignment, which is why this benchmark aligns the sequences itself
+    # against the covariance model below -- the first question a reader asks of that step. Checked
+    # against the release listing on 2026-10-07: genomic_files_all/ holds ssu_all_r226.fna.gz and
+    # genomic_files_reps/ holds bac120_ssu_reps_r226.fna.gz and ar53_ssu_reps_r226.fna.gz, all
+    # unaligned nucleotide FASTA -- the records selected here run 1 200 to 2 684 nt. What the
+    # release does publish aligned is bac120_msa_reps_r226.faa.gz and ar53_msa_reps_r226.faa.gz,
+    # the concatenated marker-gene PROTEIN alignment behind the genome tree, and bac120_r226.tree
+    # and ar53_r226.tree, whose tips are genomes and whose branch lengths are amino-acid
+    # substitutions. Neither is an SSU alignment and neither is a substitute for one.
+    published_ssu_alignment: none; the release ships unaligned .fna for SSU
     counts:
       in_release: 1053664
       after_domain: 13754

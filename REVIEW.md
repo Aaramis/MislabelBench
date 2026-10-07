@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 149 |
+| findings in this report | 150 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3235,6 +3235,39 @@ column, so panel B was never wrong. The consequence for `Protocol.md` is the opp
 the list of six -- it tells a co-author the fork "caps out near 48 000 sequences" on a 64 GB
 workstation, from the per-process figure; per machine at eight threads it is **14 227**, which is the
 same claim out by 3.4x.
+
+**150. The provenance file states seventeen figures the repository can compute, and compared none of
+them.** `assets/datasets.yml` is where a reviewer looks for what was downloaded and what it contained:
+record counts, the share of each set that leave-one-out can judge at each rank, the donor pool's size.
+Every one of those has a counterpart already committed -- `results/shape_gtdb_arc1200.json`,
+`data/unite/unite_shape.json`, `data/unite/unite_refs_shape.json`, the FASTA files themselves -- and
+nothing compared the two. The file even carries the command that reproduces one block, in a comment:
+"Both blocks reproduce with: bin/dataset_shape.py --fasta ... --tax ...". A check written down and
+never run.
+
+It is not a hypothetical class here. The same block's own comment records that this file published
+**81.5 % judgeable at species where the rule gives 72.7**, and that "only this file and the protocol
+said 81.5 %"; and that the label above the numbers named a different statistic, off by 35 points at
+species while the numbers stayed put. The file has drifted twice and both times it was caught by
+someone reading it.
+
+`bin/verify_manifests.py` now compares all seventeen: three judgeability blocks against the shape
+records that compute them, rank by rank, and two declared counts against the files they describe.
+Parsed with a regular expression rather than pyyaml, for the reason the covariance-model check in the
+same file already is -- this runs in `bin/analyses.sh` on a fresh clone, and a gate needing a package
+the rest of the chain does not is a gate that gets skipped. Proved by putting the historical error
+back: it names `judgeable_pct_after_length.species says 81.5, results/shape_gtdb_arc1200.json computes
+72.7`.
+
+**And the provenance fact the file was missing, which is the first question its own method invites.**
+Nothing in the repository said why the sequences are aligned here rather than taken aligned. Checked
+against the GTDB r226 release listing on 2026-10-07: **it publishes no SSU alignment.**
+`genomic_files_all/ssu_all_r226.fna.gz` and the two `*_ssu_reps_r226.fna.gz` are unaligned nucleotide
+FASTA, and the records this benchmark selects run **1 200 to 2 684 nt**. What the release does publish
+aligned is `bac120_msa_reps_r226.faa.gz` and `ar53_msa_reps_r226.faa.gz`, the concatenated marker-gene
+**protein** alignment behind the genome tree, and `bac120_r226.tree` and `ar53_r226.tree`, whose tips
+are genomes and whose branch lengths are amino-acid substitutions. Neither substitutes for an SSU
+alignment. That is now recorded in `assets/datasets.yml` beside the selection rule it justifies.
 
 ## What is outstanding
 
