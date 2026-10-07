@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 169 |
+| findings in this report | 170 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3794,6 +3794,31 @@ Checked both shapes by running them. With the three files that exist the caption
 values record `replicates 1`, `total_range_s 0.0`. With two synthetic replicates per round added, the
 caption says three runs agreeing to 2.3 s and the values record `replicates 3`. The synthetic files were
 removed and the gates reproduce the committed figure byte for byte.
+
+**170. Four concurrent minimal cases filled the 100 000-file quota, and three of the four failures were
+the first one's debris.** The wrong-label ramp was split into four jobs to beat an eight-hour limit, which
+it did, and all four failed. The exception is exact: `OSError: [Errno 122] Disk quota exceeded` from
+`epac/epang_l1o.py` line 924, naming `fold_1038/epang.log`. The arithmetic nobody did first: one arm on
+2 023 sequences writes **20 300 files** into its scratch directory, four arms at once is 81 200, and
+`getfattr -n ceph.quota.max_files $HOME` says **100 000**. The quota is documented in `nextflow.config`
+and in this report, both times as something that has already killed a job.
+
+The cascade is worth separating from the cause. `slurm/minimal_case.sh` deletes an arm's scratch
+directory on success and deliberately keeps it on failure, "which is when anyone would want to look at
+it". That is right in principle and the wrong unit: the first failure left 20 300 files behind, which is
+what made the other three fail, and the home finished at **85 796 of 100 000** holding nothing anyone
+would read. One genuine failure became four.
+
+Two changes, neither of which gives up the diagnosis. On failure the fold task tree goes and the rest of
+the scratch directory stays, so `RAxML_info`, the model and `epang.log` are still there at a bounded
+cost. And the script checks the quota before it starts: `getfattr --only-values -n ceph.dir.rfiles` and
+`ceph.quota.max_files`, refusing to run with less than 25 000 files free and printing the command that
+clears a stale tree. A forty-minute failure deep inside the tool becomes one line before anything runs.
+
+After clearing the debris the home holds **5 920** files, so the three remaining ramp points can go in.
+Two at a time, not four: the failure happened at about 86 000 live files, which is more than the 81 200
+left behind, so the tool's peak is above what it leaves and the safe concurrency is lower than the
+arithmetic on the leftovers suggests.
 
 ## What is outstanding
 

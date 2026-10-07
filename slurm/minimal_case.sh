@@ -101,6 +101,25 @@ print("\t".join([size, arm, "FLAG" if row else "miss",
 PY
 }
 
+# One arm on 2 023 sequences writes about 20 300 files into its scratch directory, against a ceph
+# quota of 100 000 on the home that `getfattr -n ceph.quota.max_files` reports and that two jobs have
+# already died on. The tool's own failure mode is an OSError from inside the leave-one-out, forty
+# minutes in, naming a fold it could not create. Checking first turns that into one line now.
+room() {
+    local used free
+    used=$(getfattr --only-values -n ceph.dir.rfiles "$HOME" 2>/dev/null) || return 0
+    local limit
+    limit=$(getfattr --only-values -n ceph.quota.max_files "$HOME" 2>/dev/null) || return 0
+    free=$((limit - used))
+    echo "$free of $limit files free on $HOME"
+    [ "$free" -gt 25000 ] || {
+        echo "fewer than 25 000 files free: one arm needs about 20 300. Clear a scratch tree first:" >&2
+        echo "  find \$BENCH_ROOT/results/minimal_case -type d -name 'fold_*' -exec rm -rf {} +" >&2
+        exit 1
+    }
+}
+room
+
 mkdir -p "$OUT"
 # A tag whose table already has rows is not overwritten. The table is built by appending one row per
 # arm, so a second run under the same CASE_TAG would truncate the first run's results -- which is
@@ -158,6 +177,12 @@ run_case() {
             # reason goes in the table rather than into a log nobody reads.
             printf '%s\t%s\t%s\tERROR(status %s)\t-\t-\t-\t-\n' "$seq" "$spec" "$arm" "$st" >> "$OUT/verdicts.tsv"
             tail -5 "$d/stdout.log" >&2 || true
+            # Keep the scratch directory, which is where a failure is diagnosed, but not the fold
+            # task tree: one failed arm on 2 023 sequences leaves 20 300 files there, and four of
+            # them filled the 100 000-file quota and made each other fail. The first failure was
+            # genuine and the other three were its debris. What a diagnosis needs is the tool's own
+            # top-level files -- RAxML_info, the model, epang.log -- which stay.
+            find "$d/tmp" -type d -name 'fold_*' -exec rm -rf {} + 2>/dev/null || true
             [ "$arm" = "fork_raxml" ] || exit 1
             continue
         fi
