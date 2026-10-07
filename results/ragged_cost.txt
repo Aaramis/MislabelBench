@@ -1,0 +1,13 @@
+condition              k  cells  recall full  recall ragged   delta  untouched full  untouched ragged
+epang_T8_K25           1      3        0.974          0.891  -0.083             396               287
+epang_T8_K25           2      3        0.667          0.592  -0.075             391               320
+epang_T8_K25           3      3        0.513          0.382  -0.131             397               321
+epang_T8_K25           5      3        0.343          0.238  -0.105             376               365
+epang_T8_K25          10      3        0.197          0.130  -0.067             345               298
+epang_T8_K25         all     15        0.531          0.440  -0.092            1905              1591
+upstream_raxml_T8      1      3        0.941          0.878  -0.063             418               307
+upstream_raxml_T8      2      3        0.435          0.392  -0.042             383               333
+upstream_raxml_T8      3      3        0.324          0.268  -0.056             381               328
+upstream_raxml_T8      5      3        0.244          0.200  -0.044             369               359
+upstream_raxml_T8     10      3        0.185          0.130  -0.055             318               300
+upstream_raxml_T8    all     15        0.420          0.368  -0.052            1869              1627

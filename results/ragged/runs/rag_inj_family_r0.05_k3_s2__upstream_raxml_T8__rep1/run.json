@@ -1,0 +1,31 @@
+{
+  "dataset": "rag_inj_family_r0.05_k3_s2",
+  "n_seqs": 2023,
+  "aln_len": 1478,
+  "condition": "upstream_raxml_T8",
+  "rep": 1,
+  "run_name": "rag_inj_family_r0.05_k3_s2__upstream_raxml_T8__rep1",
+  "timing_trusted": false,
+  "impl": "sativa",
+  "engine": "raxml",
+  "threads": 8,
+  "host": "cpu-node-120",
+  "cpu_model": "AMD EPYC 9754 128-Core Processor",
+  "collected_at": "2026-10-07T19:34:29",
+  "n_mislabels": 133,
+  "inputs": {
+    "rag_inj_family_r0.05_k3_s2.fasta": "81025f7aed2c5bf547c9aa01eae2879f9c114c8493df0b260e8b5275816248e5",
+    "rag_inj_family_r0.05_k3_s2.tax": "c83908fe5173604db4fc6b7ed2b8c68d441b16c11a9aca62c92209dba2f815e0"
+  },
+  "wall_sec": 720.93,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 144.5,
+  "user_cpu_sec": 5747.24,
+  "sys_cpu_sec": 2.78,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 721.0,
+  "reftree_sec": 8.0,
+  "l1out_sec": 713.0,
+  "status": "ok"
+}

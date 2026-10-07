@@ -400,6 +400,26 @@ forms a placeholder-only lineage used to take — `d__;p__;…` and `;;;;;;` —
 breaks the tool is the trimming rather than the missing information. That matters for
 nf-core/taxmarker#40, which produces the trimmed form. `results/ragged_check/`, `results/before_after/`.
 
+Accepting ragged lineages is not the same as detecting as well on them, and the cost is now measured
+rather than left open. The grid's own fifteen cells at family distance and rate 0.05 were rebuilt with a
+quarter of the **untouched** lineages cut to genus and a quarter to family, the injected sequences
+keeping their full lineage so the truth file is the cell's own, byte for byte. Both tools lose recall and
+neither fails:
+
+| | full lineages | ragged | delta |
+|---|---|---|---|
+| sativa-epang | 0.531 | 0.440 | **-0.092** |
+| SATIVA | 0.420 | 0.368 | **-0.052** |
+
+The sign holds in 15 of 15 cells for the fork and 14 of 15 for upstream, so it is not one seed. The two
+numbers that matter beyond the drop: SATIVA accepts ragged lineages too, which `slurm/ragged_check.sh`
+never tested because it only ever ran the fork; and the gap between the tools narrows from **+0.111 to
++0.072**, a third of the advantage, so a reference whose labels stop early costs the new engine more than
+it costs the old one. Flags on untouched sequences fall as well, 1 905 to 1 591 and 1 869 to 1 627, which
+is expected and reported beside the recall because a lineage that stops at genus cannot be flagged below
+it, and reporting only recall would let that pass for detection. `bin/ragged_cost.py`,
+`results/ragged_cost.txt`.
+
 **Kind 6, a foreign sequence under a plausible label**, is detected almost always: bacterial donors given
 archaeal lineages are flagged at **1.000, 0.967 and 0.941** by the fork across the three injection rates
 and 1.000, 0.933 and 0.957 by upstream. The protocol's caveat was that poor alignment rather than

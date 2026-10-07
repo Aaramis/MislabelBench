@@ -1,7 +1,7 @@
 {
-  "n_cases": 82,
-  "fork_raxml_agrees_with_upstream": 78,
-  "fork_raxml_comparable": 78,
+  "n_cases": 87,
+  "fork_raxml_agrees_with_upstream": 82,
+  "fork_raxml_comparable": 82,
   "fork_epang_wins_alone": [
     {
       "sweep": "ramp_all_m32",

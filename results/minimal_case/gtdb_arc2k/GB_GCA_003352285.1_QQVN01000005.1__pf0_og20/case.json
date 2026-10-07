@@ -1,0 +1,19 @@
+{
+  "sequence": "GB_GCA_003352285.1_QQVN01000005.1",
+  "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__PXYB01;s__PXYB01 sp003352285",
+  "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA57;g__UBA57;s__UBA57 sp002495905",
+  "distance": "family",
+  "kept_clade": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales",
+  "n_seqs": 193,
+  "n_wrong_labels": 1,
+  "wrong_labels": [
+    "GB_GCA_003352285.1_QQVN01000005.1"
+  ],
+  "n_outgroup": 20,
+  "alignment_width": 1478,
+  "source_alignment": "/shared/home/agardette/bench/data/gtdb/gtdb_arc2k.fasta",
+  "source_alignment_sha256": "81025f7aed2c5bf547c9aa01eae2879f9c114c8493df0b260e8b5275816248e5",
+  "source_taxonomy": "/shared/home/agardette/bench/data/gtdb/gtdb_arc2k.tax",
+  "source_taxonomy_sha256": "500b2e19d1cf0f24b7df0011a88a9ffdddbd2a445fae88542dcfae39ce3535ac",
+  "per_family": 0
+}

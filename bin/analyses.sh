@@ -291,6 +291,16 @@ for d in results/staged_timed_f*; do
         > "results/staged_scaling_${d#results/staged_timed_}.txt"
 done
 
+# What an incomplete lineage costs detection. The ragged cells are the grid's own at family distance
+# and the top rate, with a quarter of the untouched lineages cut to genus and a quarter to family, so
+# the injected truth is unchanged and recall is comparable cell for cell. Skipped rather than failed
+# when the runs are not here, since the cells are a late addition and a clone may predate them.
+if [ -d results/ragged/runs ]; then
+    step "what an incomplete lineage costs detection, for both tools"
+    ragged_cost.py --out results/ragged_cost.json > results/ragged_cost.txt
+    cat results/ragged_cost.txt
+fi
+
 # What each reference can be judged on at all, which is a ceiling on any recall figure and a
 # property of the database rather than of either tool. One rule for every dataset, so that the
 # protocol's table is computed one way: the UNITE rows were published at 85.7 % and 8.5 % when

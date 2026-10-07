@@ -40,7 +40,7 @@ table meant per file until `bin/verify_trace_table.py` found the column saying t
 | `trace-kexact_k2_attempt1.txt` | 2 | the other, described in the row above |
 | `trace-baseline.txt` | 0 | header only. The baseline job's trace was lost before per-tag naming existed, and nothing can recover it |
 
-Everything that arrived after the table above was written, which is 32 files and **630 task rows** --
+Everything that arrived after the table above was written, which is 39 files and **690 task rows** --
 nearly as many again as the 721 listed above, and absent from a document whose purpose is to
 enumerate them. Grouped rather than listed one by one, since what they have in common is what matters:
 
@@ -58,6 +58,8 @@ enumerate them. Grouped rather than listed one by one, since what they have in c
 | `trace-kexact_k2_2194012.txt` | 2 | strict leave-one-out at *k*=10, 5 October, the cell that extends the engine/folds decomposition along *k* |
 | `trace-determinism_2192792.txt` | 2 | the determinism rerun on the rebuilt cluster, 5 October: same cell, same seed, containers pulled again, the same `.mis` |
 | `trace-grid_k5_local.txt`, `trace-grid_tree_local.txt`, `trace-grid_up_species_local.txt`, `trace-kaxis_upstream_local.txt`, `trace-kexact_k2_local.txt`, `trace-ksweep_local.txt`, `trace-sizes_local.txt`, `trace-threads_local.txt` | 0 | eight `_local` traces with a header and nothing else: submissions that failed before a task ran |
+| `trace-ragged_2296741.txt` | 60 | the ragged-lineage grid, 7 October: fifteen cells at family distance and rate 0.05 under both tools, complete. `results/ragged_cost.txt` is read off these runs |
+| `trace-staged_timed_f25_2281826.txt`, `trace-staged_timed_f13_2281828.txt`, `trace-staged_timed_f7_2281829.txt`, `trace-staged_timed_f25_2296742.txt`, `trace-staged_timed_f13_2296743.txt`, `trace-staged_timed_f7_2296744.txt` | 0 | six header-only traces from the two attempts to measure the staged rounds with `--exclusive`. Not a failure to launch: the launchers ran, and every stage they submitted pended on `QOSMaxCpuPerUserLimit` because an exclusive job is charged all 510 cores of the node against a 600-core cap. They are kept because they are the record behind finding 164 and behind the panel still carrying the non-exclusive numbers |
 
 `bin/verify_trace_table.py` keeps this honest -- every `trace-*.txt` in this directory must be named
 here, every row count stated in either table must be the file's, and each table's own totals must be

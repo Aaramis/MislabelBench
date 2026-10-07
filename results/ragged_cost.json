@@ -1,0 +1,125 @@
+{
+  "cells": 15,
+  "by_condition": [
+    {
+      "condition": "epang_T8_K25",
+      "k": 1,
+      "cells": 3,
+      "recall_full": 0.9736,
+      "recall_ragged": 0.8911,
+      "delta": -0.0825,
+      "untouched_full": 396,
+      "untouched_ragged": 287
+    },
+    {
+      "condition": "epang_T8_K25",
+      "k": 2,
+      "cells": 3,
+      "recall_full": 0.6667,
+      "recall_ragged": 0.5915,
+      "delta": -0.0752,
+      "untouched_full": 391,
+      "untouched_ragged": 320
+    },
+    {
+      "condition": "epang_T8_K25",
+      "k": 3,
+      "cells": 3,
+      "recall_full": 0.5131,
+      "recall_ragged": 0.3824,
+      "delta": -0.1307,
+      "untouched_full": 397,
+      "untouched_ragged": 321
+    },
+    {
+      "condition": "epang_T8_K25",
+      "k": 5,
+      "cells": 3,
+      "recall_full": 0.3429,
+      "recall_ragged": 0.2381,
+      "delta": -0.1048,
+      "untouched_full": 376,
+      "untouched_ragged": 365
+    },
+    {
+      "condition": "epang_T8_K25",
+      "k": 10,
+      "cells": 3,
+      "recall_full": 0.197,
+      "recall_ragged": 0.1303,
+      "delta": -0.0667,
+      "untouched_full": 345,
+      "untouched_ragged": 298
+    },
+    {
+      "condition": "epang_T8_K25",
+      "k": "all",
+      "cells": 15,
+      "recall_full": 0.5314,
+      "recall_ragged": 0.4397,
+      "delta": -0.0917,
+      "untouched_full": 1905,
+      "untouched_ragged": 1591
+    },
+    {
+      "condition": "upstream_raxml_T8",
+      "k": 1,
+      "cells": 3,
+      "recall_full": 0.9406,
+      "recall_ragged": 0.8779,
+      "delta": -0.0627,
+      "untouched_full": 418,
+      "untouched_ragged": 307
+    },
+    {
+      "condition": "upstream_raxml_T8",
+      "k": 2,
+      "cells": 3,
+      "recall_full": 0.4346,
+      "recall_ragged": 0.3922,
+      "delta": -0.0425,
+      "untouched_full": 383,
+      "untouched_ragged": 333
+    },
+    {
+      "condition": "upstream_raxml_T8",
+      "k": 3,
+      "cells": 3,
+      "recall_full": 0.3235,
+      "recall_ragged": 0.268,
+      "delta": -0.0556,
+      "untouched_full": 381,
+      "untouched_ragged": 328
+    },
+    {
+      "condition": "upstream_raxml_T8",
+      "k": 5,
+      "cells": 3,
+      "recall_full": 0.2444,
+      "recall_ragged": 0.2,
+      "delta": -0.0444,
+      "untouched_full": 369,
+      "untouched_ragged": 359
+    },
+    {
+      "condition": "upstream_raxml_T8",
+      "k": 10,
+      "cells": 3,
+      "recall_full": 0.1848,
+      "recall_ragged": 0.1303,
+      "delta": -0.0545,
+      "untouched_full": 318,
+      "untouched_ragged": 300
+    },
+    {
+      "condition": "upstream_raxml_T8",
+      "k": "all",
+      "cells": 15,
+      "recall_full": 0.4199,
+      "recall_ragged": 0.3679,
+      "delta": -0.0519,
+      "untouched_full": 1869,
+      "untouched_ragged": 1627
+    }
+  ]
+}

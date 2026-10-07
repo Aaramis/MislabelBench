@@ -1,0 +1,32 @@
+{
+  "dataset": "rag_inj_family_r0.05_k2_s2",
+  "n_seqs": 2023,
+  "aln_len": 1478,
+  "condition": "epang_T8_K25",
+  "rep": 1,
+  "run_name": "rag_inj_family_r0.05_k2_s2__epang_T8_K25__rep1",
+  "timing_trusted": false,
+  "impl": "sativaepang",
+  "engine": "epang",
+  "threads": 8,
+  "folds": 25,
+  "host": "cpu-node-120",
+  "cpu_model": "AMD EPYC 9754 128-Core Processor",
+  "collected_at": "2026-10-07T18:29:34",
+  "n_mislabels": 164,
+  "inputs": {
+    "rag_inj_family_r0.05_k2_s2.fasta": "81025f7aed2c5bf547c9aa01eae2879f9c114c8493df0b260e8b5275816248e5",
+    "rag_inj_family_r0.05_k2_s2.tax": "14570c63b65927e3548faebab837839526f3e394352d09bfa13f545d4cc61559"
+  },
+  "wall_sec": 47.77,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 2498.7,
+  "user_cpu_sec": 238.72,
+  "sys_cpu_sec": 39.43,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 48.0,
+  "reftree_sec": 19.0,
+  "l1out_sec": 29.0,
+  "status": "ok"
+}

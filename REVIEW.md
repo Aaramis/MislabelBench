@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 166 |
+| findings in this report | 167 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3715,16 +3715,46 @@ writes "-" in the field and the three existing rounds have no field at all, so b
 recorded" rather than counted as clean -- which also says plainly that the three published rounds have no
 evidence either way, and they are being redone.
 
+**167. An incomplete lineage costs both tools recall, and it costs the fork more, which no run had
+asked.** `README.md` recorded that ragged lineages are *accepted*, from one cell that ran through and
+flagged 11, and left the detection question open. It is now answered on the grid's own fifteen cells at
+family distance and rate 0.05, rebuilt with a quarter of the untouched lineages cut to genus and a
+quarter to family, under both tools: sativa-epang 0.531 to **0.440**, SATIVA 0.420 to **0.368**. The
+sign holds in 15 of 15 cells for the fork and 14 of 15 for upstream.
+
+Three things fall out that were not the question.
+
+SATIVA accepts ragged lineages too. `slurm/ragged_check.sh` only ever ran the fork, so this was
+unmeasured, and a tool that refused them would have been a result of its own.
+
+The gap between the tools narrows from **+0.111 to +0.072**, a third of the advantage. The engine's
+margin is partly a margin on well-annotated neighbourhoods, which is the surviving-label account in
+another form: a neighbour whose lineage stops at genus can neither confirm nor contradict below it.
+
+Flags on untouched sequences fall too, 1 905 to 1 591 and 1 869 to 1 627. That is not a second
+improvement, it is the mechanism leaking into the other column: a truncated lineage has fewer ranks to
+be judged at. `bin/ragged_cost.py` prints it beside the recall for that reason, since a report of recall
+alone would have read as the tools becoming more precise.
+
+The comparison rests on the injected truth being identical between a ragged cell and its full-lineage
+twin. That is checked in the script and not assumed: it aborts on any cell whose injected set differs,
+and all fifteen agree key for key.
+
+One thing the gates showed about themselves while this was added. `bin/review_coverage.py` reads
+`git ls-files`, so the forward check -- every file named in the report -- cannot see a new script until
+it is committed, and it passed on a repository holding an unnamed `bin/ragged_cost.py`. The check added
+in finding 165, which looks for paths the report names and the repository does not have, caught it
+immediately in the other direction. The two halves cover each other, and neither alone would have.
+
 ## What is outstanding
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** Two jobs. The ragged grid (2296741) is past the fork arm and on the comparator's, and the
-wrong-label ramp (2297235) is in its first case, 2 023 sequences with 20 labels changed, which is the
-axis finding 163 says the first attempt missed. The three staged timing launchers were cancelled, for
-the reason finding 164 gives; the nine replicate rounds that replace them cannot be submitted until the
-ragged grid finishes, since `bin/push_code.sh` reaches a running job's project files. The minimal-case
-campaign is at twelve sweeps and 82 cases.
+**Running.** One job, the wrong-label ramp (2297235), on its first case of four. The ragged grid finished
+in 1 h 32 m, 60 tasks, and is the subject of finding 167. The three staged timing launchers were
+cancelled for the reason finding 164 gives; the nine replicate rounds that replace them go in once the
+ramp finishes, since `bin/push_code.sh` reaches a running job's project files. The minimal-case campaign
+is at twelve sweeps and 82 cases.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory
