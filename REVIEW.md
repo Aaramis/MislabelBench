@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 148 |
+| findings in this report | 149 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3201,6 +3201,40 @@ TAXCLUSTER marker, finding 102 -- so that count is checked in the coverage table
 for it, and nowhere else. Finding 113's own sentence quotes a wrong number, 1 226, and is rephrased so
 the bold does not sit against the phrase: a quotation of a stale table must not read as a claim about
 today.
+
+**149. The published memory table disagreed with the finding that produced it, by a factor of four,
+for as long as the staged runs existed.** Finding 31 established the fork's per-machine footprint and
+recorded three numbers: the tree peak is **3.55x the largest child at eight threads**, **4.61 MB per
+sequence**, **36 GB at 7 051 sequences**, and 64 GB holds **14 227**. `results/resource_usage.txt`, the
+table those numbers came from and the only place the law is written, said 3.39, 4.40, **8 602 MB** and
+14 881. Two documents in one repository, one right and one wrong, and nothing compared them.
+
+The cause is a key that stopped being unique. `trace_peaks()` pools every Nextflow trace by (dataset,
+condition) and medians it. When the distributed work landed, `trace-staged_timed_f{7,13,25}.txt`
+arrived carrying `STAGEDREFERENCE`, `STAGEDLOOTASKS` and `STAGEDLOOSCORE` tasks under the *same*
+(dataset, condition) as the whole runs -- they are the same cell, run in stages. So the median for
+`gtdb_arc1200` was taken over **six whole runs at 36 250 MB and nine stages between 230 and 8 704**,
+and landed on a scoring stage: 8 602 MB is literally one of the `STAGEDLOOSCORE` rows. The 2 023 row
+moved the same way, 9 318 to 8 909, which is only 4 % and would never have been noticed at all.
+
+**Three independent routes say the corrected value is right**, which is why this is a repair and not a
+second guess: every whole-run trace row reads 35.3 to 36.3 GB; the `/proc` sampler of finding 140's
+re-measurement, which does not read traces at all, reads **36 184 MB** against the corrected
+**36 250**, 0.2 % apart; and finding 31's own by-hand numbers now match the script's to the last
+digit it prints.
+
+**Fixed by naming what a whole run is.** Only `SATIVA` and `SATIVAEPANG` tasks are runs of a tool; the
+staged processes belong to the staged table, which has its own. And the table now checks the law it
+states: the fork's footprint is proportional to its reference, so a MB-per-sequence column spanning
+more than a factor of two, or a peak that falls as the reference grows, exits non-zero. Both fire on
+the old pool -- **"runs from 1.22 to 5.14, a factor of 4.2"** and **"falls from 20 582 MB at 4 001 to
+8 602 at 7 051"** -- which is the point: this was visible in the printed column and was printed anyway.
+
+The consequence for the manuscript is none: `bin/paper_figure.py` reads the child column, not the tree
+column, so panel B was never wrong. The consequence for `Protocol.md` is the opposite and is already on
+the list of six -- it tells a co-author the fork "caps out near 48 000 sequences" on a 64 GB
+workstation, from the per-process figure; per machine at eight threads it is **14 227**, which is the
+same claim out by 3.4x.
 
 ## What is outstanding
 

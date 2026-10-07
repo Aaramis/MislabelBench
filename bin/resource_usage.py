@@ -28,12 +28,21 @@ UNITS = {"B": 1 / 1048576, "KB": 1 / 1024, "MB": 1, "GB": 1024, "TB": 1048576}
 TASK = re.compile(r"\w+ \((.+?)/(.+?)/rep(\d+)\)")
 
 
+# A whole run of a tool, which is the only thing whose process-tree peak answers "how much memory
+# does this tool need for a reference of n sequences". The staged processes are stages of a
+# differently-shaped run of the same (dataset, condition), and pooling them with the whole runs is
+# how the published peak at 7 051 sequences became 8 602 MB: the median of six whole runs at 36 250
+# and nine stages between 230 and 8 704 is a scoring stage's footprint, four times too low, printed
+# beside a MB/seq column where it stood out at 1.22 against 4.4 to 5.1 everywhere else.
+WHOLE_RUN = ("SATIVA ", "SATIVAEPANG ")
+
+
 def trace_peaks():
     """Process-tree peak RSS in MB, per (dataset, condition), from every trace file."""
     out = defaultdict(list)
     for path in glob.glob("results/pipeline_info/trace-*.txt"):
         for r in csv.DictReader(open(path), delimiter="\t"):
-            if r["status"] != "COMPLETED" or r["name"].startswith("COLLECTRUN"):
+            if r["status"] != "COMPLETED" or not r["name"].startswith(WHOLE_RUN):
                 continue
             m, raw = TASK.match(r["name"]), r.get("peak_rss", "-")
             unit = re.match(r"([\d.]+)\s*(B|KB|MB|GB|TB)", raw or "")
@@ -107,6 +116,7 @@ for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}
         w, c = st.median(x[0] for x in v), st.median(x[1] / x[0] for x in v)
         print(f"{tool:10}{t:>4}{w:9.1f}{c:8.2f}{b / w:15.2f}{100 * (b / w) / t:11.0f}%")
 
+per_seq, tree_series = [], []
 print()
 print("peak memory, both tools at 8 threads, medians over replicates.")
 print("tree is the Nextflow trace's process-tree peak; child is run.json's ru_maxrss.")
@@ -122,6 +132,8 @@ for ds, n in sizes:
     ut = st.median(tu) if tu else float("nan")
     print(f"{n:>10}{ft:11.0f}{fm:12.0f}{ut:9.0f}{um:10.0f}{ft / ut:12.1f}"
           f"{fm / um if um else float('nan'):13.1f}{ft / n:13.2f}")
+    per_seq.append((n, ft / n))
+    tree_series.append((n, ft))
 
 print()
 # The two footprints answer different questions and the thread axis is where they separate. The
@@ -142,3 +154,25 @@ for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}
         per = tree / 2023
         print(f"{tool:10}{t:>4}{wall:8.0f}{tree:10.0f}{child:10.0f}{tree / child:7.2f}"
               f"{per:13.2f}{int(65536 / per):>19,}")
+
+
+# The law this table states is that the fork's footprint is proportional to the reference, and the
+# table is the only place that law is written down. So it is checked against itself here, because the
+# one time it was wrong it was wrong in a way the eye should have caught and did not: 1.22 MB per
+# sequence at 7 051 in a column reading 4.4 to 5.1 everywhere else, printed for as long as it took
+# the staged runs' per-stage tasks to be pooled with the whole runs and nobody to look. REVIEW.md
+# finding 31 held the right numbers the whole time, three of them, and nothing compared the two.
+problems = []
+if per_seq:
+    lo, hi = min(v for _, v in per_seq), max(v for _, v in per_seq)
+    if hi / lo > 2:
+        problems.append(f"the fork's MB per sequence runs from {lo:.2f} to {hi:.2f}, a factor of "
+                        f"{hi / lo:.1f}; it is proportional to the reference or this table is wrong")
+    for (n0, v0), (n1, v1) in zip(tree_series, tree_series[1:]):
+        if v1 < v0:
+            problems.append(f"the fork's peak falls from {v0:.0f} MB at {n0} sequences to {v1:.0f} "
+                            f"at {n1}, which no larger reference does")
+for pb in problems:
+    print(f"  {pb}", file=sys.stderr)
+if problems:
+    sys.exit(f"{len(problems)} implausibility in the memory table")
