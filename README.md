@@ -455,7 +455,17 @@ slurm/submit.sh slurm/baseline.sh              # both tools on the un-injected d
 slurm/submit.sh slurm/grid_fork.sh             # one condition over the grid
 bin/analyses.sh                                # rebuild every table in results/ from the runs
 python3 -m unittest discover -s tests          # the analysis layer's tests
+nextflow run . -stub-run -profile stub_test \
+  --datasets_json data/gtdb/datasets2k.json \
+  --datasets gtdb_arc2k --conditions epang_T8_K25 --staged true   # the workflow itself, no container
 ```
+
+The last one needs only a JVM and takes under a second: `-stub-run` replaces every tool with a few
+`touch` commands, so it exercises the grid, the joins and the shard split and nothing else. It is how
+finding 153 was verified. One caveat it is worth knowing before being surprised by it: a stub run still
+honours the `cpus` and `memory` directives, and this pipeline asks 8 MB per sequence, so a cell above
+about 4 000 sequences will not start on a laptop. Add `-c` with a smaller `process.memory` when the
+point is the dataflow.
 
 The four generators come first because most of the cells they make are not in the repository: they are
 the base taxonomy with a few hundred labels rewritten, or the same alignment with donors added, and

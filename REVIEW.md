@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 153 |
+| findings in this report | 154 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 61 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 40 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3370,6 +3370,38 @@ for the distribution measurement, which is always timed.
 `sizes.sh`: `--cpus-per-task=140` of 254, no exclusivity, and its three replicates of the full set
 agree to **1 %** -- 260.6, 261.7, 263.4 s. The hazard that produced finding 152 was this run colliding
 with itself, not with a stranger, and that is what the join removes.
+
+**154. The workflow, run for the first time, across the cases nothing had exercised.** Finding 153
+made the DSL executable here; this is the sweep that followed. Six configurations, each a stub run of
+under a second, and what each establishes:
+
+- **The grid.** Five datasets, two conditions, three replicates: **60 tasks, 15 `SATIVA`, 15
+  `SATIVAEPANG`, 30 `COLLECTRUN`**, both count guards satisfied. The channel `combine`s and the
+  four-way join produce exactly the cells asked for, which had only ever been confirmed by a cluster
+  run finishing.
+- **The three refusals, which all fire with a usable message.** An unknown condition names the twelve
+  it knows; an unknown dataset names the manifest it looked in; a timed staged run without `-profile
+  ifb` says why it needs it.
+- **The shard split, which is the one piece of real arithmetic in the workflow.** Swept exhaustively
+  in a transcription of the Groovy: **11 741 (folds, folds_per_job) pairs, every one a partition** --
+  every fold in exactly one shard, no shard empty. And the workflow agrees with the transcription:
+  on the stub's three folds, `folds_per_job` 1, 2, 3 and 7 give 3, 2, 1 and 1 shards.
+- **A declared output that a process fails to produce cannot reach the join.** Checked by deleting
+  `inputs.txt` from the fork's stub: Nextflow stops at `SATIVAEPANG` rather than letting the cell fall
+  out of the four-way join downstream, so the cardinality guard is the second line and not the first.
+
+**One hazard the sweep surfaced, latent rather than live.** `epang_T8_Kexact` sets `folds: 999999`,
+which the tool caps at one fold per sequence. On the staged path at the default `folds_per_job = 7`
+that is **289 Slurm jobs for a 2 023-sequence cell**, and the arithmetic alone would say 142 857. No run
+has combined the two -- `--staged` is off by default and every Kexact cell was run monolithically -- so
+nothing is wrong, and anyone who does combine them should know the number first. It is recorded here
+rather than guarded against, because a cap would be a number invented to prevent something nobody has
+done.
+
+**And the capability is written into the README**, next to the two test commands, with the caveat that
+cost an hour: a stub run honours `cpus` and `memory`, this pipeline asks 8 MB per sequence, so a
+4 001-sequence cell asks 33.3 GB and will not start on a 32 GB laptop. That is in the plan's notes and
+in no document a reader of this repository would find.
 
 ## What is outstanding
 
