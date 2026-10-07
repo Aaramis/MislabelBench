@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 160 |
+| findings in this report | 161 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 62 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -3559,6 +3559,25 @@ two coverage counts wrong. The gates caught it one turn later, which is what the
 gate that runs only when someone remembers to run it is the thing this report has complained about
 eight times. The rule is the one the repository already states for its tables: no commit without the
 chain.
+
+**161. Nothing in this repository says how to run the tool.** `DISTRIBUTION.md` explains what a fold
+task is and what distributing it costs, `README.md` explains how to re-run the benchmark, and between
+them the four stage invocations, the three environment variables and the new column appear once, in
+passing, inside a paragraph about something else. A reader who wants to use sativa-epang rather than
+reproduce these measurements has nowhere to look, and Protocol.md's own outline lists exactly those
+three things as what the Application Note must describe: the staged interface, `-folds`, and
+`OriginalLabelExclusion`.
+
+The manuscript does not carry them either. Neither `-folds`, nor `-stage`, nor the column's name
+appears anywhere in `body.tex` or `abstract.tex` as they stand, so the paper claims a mode that
+distributes across machines and gives the reader no way to invoke it. That is the author's call and it
+is flagged to him; what is mine is that the repository the paper points at had the same hole.
+
+`README.md` gains a "Using the tool" section: the one-process form with the three environment
+variables, the four-stage form with `-folds i/N`, and what the added column means. **Every command in
+it is copied from `modules/local/*/main.nf`**, which is what the benchmark executes, rather than
+written out beside them. A usage note that is not the executed command is the kind of thing that goes
+quietly wrong, and this report has four findings about exactly that shape.
 
 ## What is outstanding
 

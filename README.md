@@ -448,6 +448,50 @@ rather than a small-sample shrug. On this measure upstream's extra flags are the
 evidence is weak per sequence, since group membership says one member is wrong and not which, but it is
 weak in the same way for both tools. `results/conflict_enrichment.json`.
 
+## Using the tool
+
+Everything below is the invocation this benchmark actually runs, taken from `modules/local/*/main.nf`
+rather than written out beside it, because a usage note that is not the executed command is the sort
+of thing that goes quietly wrong. `ext.args` is the same for every condition and holds
+`-m ultrafast -C 0.4 -x BAC -p 42 -S`.
+
+The whole leave-one-out in one process, which is upstream's interface unchanged except for the
+environment:
+
+```bash
+export SATIVA_L1O_ENGINE=epang      # or raxml, to drive the same code with the old engine
+export SATIVA_EPANG_FOLDS=25        # sequences are removed and placed 25 folds at a time
+export SATIVA_EPANG_FOLD_ORDER=tree # optional; default is 'name', see below
+sativa-epang -s aln.fasta -t taxonomy.tax -T 8 -n myrun -m ultrafast -C 0.4 -x BAC -p 42 -S
+```
+
+`SATIVA_EPANG_FOLDS` is capped at the number of leaves, so any value above *n* gives one sequence per
+fold, which is the strict leave-one-out and what `epang_T8_Kexact` uses.
+`SATIVA_EPANG_FOLD_ORDER=tree` deals the folds by traversal instead of by name; left unset, the
+tool's own default stands. Both are measured here and neither changes which sequences are flagged by
+more than the fold count implies.
+
+The same run as four stages, which is what lets the placement cross machines. Each stage is a
+separate process and the first three write what the next one reads:
+
+```bash
+sativa-epang -s aln.fasta -t taxonomy.tax -T 8 -n run -o . <args> -stage reference
+sativa-epang -r run.refjson -T 8 -n run -o . -stage loo-tasks
+sativa-epang -stage loo-place -taskdir $PWD/run.l1o_tasks -T 8 -folds 0/4   # and 1/4, 2/4, 3/4
+sativa-epang -r run.refjson -T 8 -n run -o . <args> -stage loo-score -taskdir $PWD/run.l1o_tasks
+```
+
+Only `loo-place` divides. `-folds i/N` is a stride over the fold list in the task directory's
+`manifest.json`, so the N invocations partition the folds and can run anywhere that can read the
+directory; `DISTRIBUTION.md` is about what that costs and where it stops paying. The reference build
+does not divide, which is what bounds the gain.
+
+The output is upstream's `.mis` with one column added, `OriginalLabelExclusion`: one minus the
+placement weight that fell inside the declared taxon. It answers the question `Confidence` does not,
+which is how much evidence there is *against* the declared label rather than for the proposed one.
+What it is good for, and what it is not, is in the README section above and in the paper's
+supplement.
+
 ## Running it
 
 Everything runs as a Nextflow workflow with each tool pinned by container and build string, and each
