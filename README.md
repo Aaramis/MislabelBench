@@ -36,8 +36,11 @@ the last pair taken from one replicate before the others had run and 17 % and 19
 that replaced it.
 
 **Memory.** The question this file opens with has two halves and only one of them was answered here
-until now. At 7 051 sequences the fork's process-tree peak is **36 250 MB against upstream's 727**, a
-factor of **49.8**; by largest single process it is 9 396 against 603, a factor of 15.6. Both are
+until now. At 7 051 sequences the fork's process-tree peak is **36 147 MB against upstream's 727**, a
+factor of **49.7**; by largest single process it is 9 396 against 603, a factor of 15.6. The peak was
+36 250 and the factor 49.8 until nine more whole runs of that size were measured on 8 October, which
+moved the median by 0.3 %: the paragraph below says to read the table rather than this one when the two
+disagree, and they had. Both are
 printed because they answer different questions -- `ru_maxrss` is what one process needs, the tree is
 what the machine needs -- and the gap between them appears exactly where concurrency does: **1.07x at
 one thread, 3.55x at eight**.
@@ -51,7 +54,15 @@ machine holds by a fifth. The step sits between 2 023 and 4 001 and none of the 
 thresholds does, so what causes it is not known. That is the number a user needs,
 because it is a ceiling rather than a slowdown: **64 GB holds 14 227 sequences at eight threads and
 58 850 at one**. So threads buy speed and are paid for in memory, which is the other half of the
-advice the paragraph above ends on -- on a small machine, give the fork fewer. Same table, same rule:
+advice the paragraph above ends on -- on a small machine, give the fork fewer.
+
+Both the speed and the memory factors are measured against a comparator that is **not doing the same
+arithmetic**: above 402 sequences upstream builds its reference under GTRCAT and the fork under
+GTRGAMMA, four rate categories against one, because the two ship different `sativa.cfg` files. So the
+speed ratios are conservative and the memory ratio is inflated, and neither is like for like. How much
+that is worth was measured rather than argued, by giving the fork upstream's own reference file with
+`-r`: the rate model is worth **-0.019** of recall and the placement engine **+0.284** on the same
+cell. The qualification belongs on the ratios; it does not touch the detection result. Same table, same rule:
 read `results/resource_usage.txt` rather than this paragraph if the two disagree. They did, by a
 factor of four, until the staged runs' per-stage tasks stopped being pooled with the whole runs.
 

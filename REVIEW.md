@@ -3294,7 +3294,11 @@ Finding 33 swept every job script's `--mem` against the measured peak and found 
 two. That sweep used the table finding 149 has since corrected by a factor of four at 7 051 sequences,
 so it had to be run again. Re-swept: every script that runs a tool on the 7 051-sequence set asks
 **64 GB or more** -- `baseline.sh` 128, `sizes.sh` 128, `scaling.sh` 64, `regradient.sh` 64 -- against a
-corrected peak of 36 250 MB. The two that look low are not: `startcost.sh` asks 32 GB and starts
+**worst observed** peak of 36 454 MB over fifteen whole runs at that size. The worst and not the median,
+which is 36 147: a request has to cover the run that happens, and a median moves as runs accumulate, as
+this one did from 36 250 to 36 147 when nine more rounds were measured on 8 October. The margin is a
+factor of 1.80 on the smallest request either way, so the conclusion never depended on which was used,
+but the basis for a provisioning claim should be the maximum. The two that look low are not: `startcost.sh` asks 32 GB and starts
 containers and reads a task directory rather than placing anything, and `staged_timed.sh` asks 4 GB
 because it is a launcher whose Nextflow tasks each get their own allocation. Nothing was
 under-provisioned, and now that is measured against the right number.
