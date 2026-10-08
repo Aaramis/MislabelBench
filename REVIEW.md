@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 192 |
+| findings in this report | 193 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
-| run records, cross-checked against the files they summarise | 1156 |
+| run records, cross-checked against the files they summarise | 1158 |
 | result tables, each rebuilt by `bin/analyses.sh` | 65 |
-| `.mis` files, the flag lists every detection number is computed from | 1482 |
+| `.mis` files, the flag lists every detection number is computed from | 1484 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 156 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 158 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **65 published tables** ← 1 156 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **65 published tables** ← 1 158 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 156** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 158** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 156 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 158 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4311,13 +4311,14 @@ the `.refjson`'s `ratehet_model` field and set out what it costs the comparison.
 only to this finding's own reassurance: what the heuristic switch touches is reading the curve, and the
 gap between the curves is confounded by the rate model for the separate reason finding 140 gives.
 
-It also fails to explain the one feature of the memory law that wanted explaining. Within
-`epang_T8_K25` alone, MB per sequence is **4.59, 4.47, 4.61** at 402, 801 and 2 023 and **5.14, 5.13** at
-4 001 and 7 051: two flat regimes with a 12 % step between them and no overlap, measured over 3, 3, 8, 3
-and 15 runs. The step lies between 2 023 and 4 001, where **none of the four thresholds falls**, so it is
-not a configured switch and stays unexplained. The manuscript extrapolates its 400 000-sequence ceiling
-from 5 MB per sequence, which is the large-reference regime and therefore the right one to extrapolate
-from; a reader taking 4.59 from the smallest point would overstate the ceiling by a fifth.
+It also has nothing to explain, as it turned out. Within `epang_T8_K25` alone, MB per sequence is
+**4.59, 4.47, 4.61** at 402, 801 and 2 023 and **5.14, 5.13** at 4 001 and 7 051, which this finding
+first read as two flat regimes with a 12 % step between them and no overlap. There was no step: the gap
+between the third and the fourth size is the widest in the gradient, and one run at **3 001 sequences
+gives 4.88**, between the two groups. The rise is continuous and finding 193 is the correction. What
+survives is the advice, since the law is flat from 4 001 to 7 051: the manuscript extrapolates its
+400 000-sequence ceiling from 5 MB per sequence, which is the right value for a large reference, and a
+reader taking 4.59 from the smallest point would overstate the ceiling by a fifth.
 
 **186. The agreement measure dropped unparseable rows and kept the last of a repeated sequence, both
 without a word, and the Jaccard it computes is published for two datasets.** `bin/agreement.py` read a
@@ -4391,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 156**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 158**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -4446,7 +4447,7 @@ cmd   = ['sativa-epang', '-s', 'gtdb_arc2k.fasta', '-t', 'gtdb_arc2k.tax', '-T',
 ```
 
 The host is the node that ran the tool rather than the collector, and the five flags that decide what the
-tool does are in the record for the first time in 1 157 of them.
+tool does are in the record for the first time in 1 158 of them.
 
 **And the check failed, on its own reference.** `no single-process .mis at .../results/baseline2k/...`.
 That file is committed here and **never reaches the cluster**: `bin/restore_cluster.sh` says in its own
@@ -4497,6 +4498,40 @@ size, 5.14 below it. The subset is built by the job from the committed source wi
 every other subset uses, so the measurement needs nothing this repository does not hold, and
 `bin/subset_taxa.py` takes whole species groups, which finding 189 made a gate. Untimed, since the peak
 comes from the trace's `peak_rss` whatever the timing flag says and this job has no claim on seconds.
+
+**193. There was no step in the memory law, and finding the shape took three readings of the same
+five numbers.** Finding 185 reported two flat regimes in the fork's memory per sequence -- 4.59, 4.47 and
+4.61 MB at 402, 801 and 2 023 sequences against 5.14 and 5.13 at 4 001 and 7 051 -- with a 12 % gap and
+"no overlap between the groups". Finding 192 submitted one run in the middle to find where the step was.
+It came back 4.88 at 3 001 sequences, between the groups, so the step became a continuous rise and both
+documents were corrected to say so. Then the replicates arrived:
+
+| sequences | MB/seq | runs |
+|---|---|---|
+| 402 | 4.59 | 3 |
+| 801 | 4.47 | 3 |
+| 2 023 | 4.61 (4.10 to 4.86) | 8 |
+| 2 507 | 4.98 | 1 |
+| **3 001** | **5.12** (4.88, 5.12, 5.15) | **3** |
+| 4 001 | 5.14 | 3 |
+| 7 051 | 5.13 | 15 |
+
+**4.88 was the low member of its own spread**, and the "continuous rise to 4 000" was a curve drawn
+through one run. The median at 3 001 is 5.12, which is the upper plateau already. So the law is flat at
+about 4.56 to 2 023 sequences, has reached about 5.13 by 3 001, and is flat from there to 7 051; the
+transition lies between 2 023 and 3 001, with the single run at 2 507 inside it at 4.98.
+
+**The lesson is the same both times and it is not about memory.** Each wrong reading came from one point
+per size: the first asserted a step across the widest gap in a five-point series, the second asserted a
+slope through a single run at the one new point. The tell was in the data before either -- the eight runs
+at 2 023 spread 4.10 to 4.86, an 18 % range, so one run at any of these sizes cannot separate 4.9 from
+5.1. The published law survives all three readings because it was always a median: `resource_usage.py`
+takes medians over replicates and says so in its own docstring, "never a single run", which is the rule I
+broke twice in reading it.
+
+What this does not change is the advice, since the law is flat from 3 001 to 7 051: the manuscript
+extrapolates its 400 000-sequence ceiling from 5 MB per sequence, which is the right value for a large
+reference.
 
 ## What is outstanding
 

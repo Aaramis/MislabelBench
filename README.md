@@ -46,12 +46,17 @@ what the machine needs -- and the gap between them appears exactly where concurr
 one thread, 3.55x at eight**.
 
 The fork's footprint is proportional to its reference, **4.47 to 5.14 MB per sequence across a
-seventeen-fold size range**, where upstream's converges to 0.108. Two flat regimes rather than one
-slope, which matters to anyone extrapolating: within `epang_T8_K25` it is 4.59, 4.47 and 4.61 at 402,
-801 and 2 023 sequences and 5.14 and 5.13 at 4 001 and 7 051, with no overlap between the groups. Take
-the large-reference 5.13 for a large reference; the 4.59 of the smallest point would overstate what a
-machine holds by a fifth. The step sits between 2 023 and 4 001 and none of the tool's four size
-thresholds does, so what causes it is not known. That is the number a user needs,
+seventeen-fold size range**, where upstream's converges to 0.108. Flat, then a transition, then flat
+again, which matters to anyone extrapolating: within `epang_T8_K25` the medians are 4.59, 4.47 and 4.61
+at 402, 801 and 2 023 sequences, 4.98 at 2 507, **5.12 at 3 001**, and 5.14 and 5.13 at 4 001 and 7 051.
+So it is flat near 4.56 up to about two thousand sequences, has reached its plateau near 5.13 by three
+thousand, and stays there. Take 5.13 for a large reference; the 4.59 of the smallest point would
+overstate what a machine holds by a fifth.
+
+Read the medians and not the runs. This paragraph claimed a step and then a slope, both from one run at
+one new size, before `slurm/memstep.sh` had three: at 3 001 sequences they are 4.88, 5.12 and 5.15, and
+the eight runs at 2 023 spread 4.10 to 4.86, so a single run at any of these sizes cannot tell 4.9 from
+5.1 apart. That is the number a user needs,
 because it is a ceiling rather than a slowdown: **64 GB holds 14 227 sequences at eight threads and
 58 850 at one**. So threads buy speed and are paid for in memory, which is the other half of the
 advice the paragraph above ends on -- on a small machine, give the fork fewer.
@@ -655,7 +660,7 @@ results/figure1.svg                    an earlier composition, kept because REVI
 re-derive. That sentence was false until the 949 run directories behind the version 2 tables were
 brought back from the cluster — only `run.json` had been kept for them, and every detection number
 is computed from the `.mis` beside it. 949 was the count on the day that was fixed; the repository
-holds **1 156** run records now, and the figure is left as it was rather than silently updated because
+holds **1 158** run records now, and the figure is left as it was rather than silently updated because
 the sentence is about an event. `results/pipeline_info/` holds one Nextflow trace per
 submission, with its gaps listed.
 
