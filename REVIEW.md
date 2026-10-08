@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 179 |
+| findings in this report | 180 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4086,6 +4086,37 @@ between an artefact that cannot be rebuilt and a claim that cannot be checked.
 
 Both the script's docstring and `results/pipeline_info/README.md` now say this. The script is kept rather
 than deleted: reports are still written for every run, and a lost trace is still repairable.
+
+**180. The judgeability tool counted its own sequences twice over and compared the two counts nowhere.**
+`bin/dataset_shape.py` computes the ceiling every recall figure has to be read against, and it is the
+script whose first two passes published 85.7 % judgeability at species for a dataset where three sequences
+in four have no species name. Its reader keyed lengths by accession and also counted headers:
+
+```python
+lengths, name, n = {}, None, 0
+...
+    lengths[name] = 0
+    n += 1
+...
+return lengths
+```
+
+`n` was never read. A file carrying the same accession twice loses the first copy, so `n_sequences`, every
+length percentile and every judgeability denominator would be computed over the smaller set, and the count
+that would have revealed it was taken and discarded on the next line. That is the shape of a check someone
+meant to write.
+
+It now compares them and exits non-zero on a mismatch, verified both ways: a three-header file with two
+distinct accessions exits 1 saying so, and `gtdb_arc2k` exits 0. It has never fired on real data --
+**none of the 18 real FASTA files under `data/` has a repeated accession**, the other 240 paths there
+being symlinks into them -- which is why this is a check and not an incident.
+
+Two things in the same script were read and left alone, deliberately. The percentile is nearest-rank,
+`vals[int(q * n)]`, which is one convention among several and the one the protocol's table was computed
+with; changing it would move a published ratio for no gain. And a taxon is keyed by its whole lineage
+prefix, so the same species name under two different unresolved genera counts as two taxa. That lowers
+judgeability rather than raising it, it cannot affect GTDB, which has no placeholders at all, and for UNITE
+it is the conservative direction for a figure used as a ceiling.
 
 ## What is outstanding
 

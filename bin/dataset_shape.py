@@ -80,6 +80,11 @@ def make_is_unresolved(pattern, tail_test):
 
 
 def read_fasta_lengths(path):
+    # n is compared rather than discarded. Lengths are keyed by accession, so a file with the same
+    # accession twice loses the first one and n_sequences comes out short, with every percentile and
+    # every judgeability denominator computed over the smaller set. The count was already taken here
+    # and thrown away, which is the shape of a check someone meant to write. None of the 18 real
+    # FASTA files under data/ has a repeat, so this has never fired and is cheap enough to keep.
     lengths, name, n = {}, None, 0
     for line in Path(path).open(errors="replace"):
         if line.startswith(">"):
@@ -88,6 +93,8 @@ def read_fasta_lengths(path):
             n += 1
         elif name is not None:
             lengths[name] += len(line.strip())
+    if n != len(lengths):
+        raise SystemExit(f"{path}: {n} headers but {len(lengths)} distinct accessions")
     return lengths
 
 
