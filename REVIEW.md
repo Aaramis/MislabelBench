@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 194 |
+| findings in this report | 195 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4577,6 +4577,30 @@ The multiplier is itself worth a line, because it is not 4. The eight-thread pea
 -- the parent's own footprint, or EPA-ng's per-thread buffers, two threads to a placement -- and this
 benchmark has no measurement that separates those. It is stated as the bound it is rather than
 explained.
+
+**195. The manuscript's main stated limitation is an eight-thread limitation, and it does not say so.**
+Not a defect in the repository: `body.tex` says the fork's peak is "environ cinq mégaoctets par séquence
+contre un dixième pour SATIVA, soit 36 Go contre 0,7 Go sur les 7 051 séquences", and the figure caption
+does say "avec huit fils d'exécution par outil", so nothing there is false. What finding 194 adds is that
+the number is a property of the thread count and not of the tool, and the paragraph reads as the opposite.
+
+Three figures change their meaning at matched threads, all from the same committed table:
+
+| | one thread | eight threads |
+|---|---|---|
+| fork, MB per sequence | **1.15** | 5.13 |
+| fork against upstream, 2 023 sequences | **11x** | 45x |
+| ceiling on a 2 TB node | **1.8 million sequences** | 409 000 |
+
+The 400 000-sequence ceiling in Perspectives and the 47-fold memory gap are both consequences of running
+four placements at once. A reader who gives the tool one thread gets a tenth of the gap and four times
+the ceiling, at the cost of the speed the same section is about -- 152 s against 38 at 2 023 sequences,
+which is the trade and is also in that table.
+
+This is the author's text and is flagged rather than edited. The two sentences it would take are in the
+session's report. What belongs here is that the repository now holds the measurement behind them:
+`results/resource_usage.txt`'s thread axis for the ratio and `slurm/memstep.sh`'s two single-thread runs
+for the flat law.
 
 ## What is outstanding
 
