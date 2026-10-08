@@ -10,20 +10,20 @@
   "engine": "epang",
   "threads": 1,
   "folds": 25,
-  "host": "cpu-node-91",
+  "host": "cpu-node-93",
   "cpu_model": "AMD EPYC 7662 64-Core Processor",
-  "collected_at": "2026-10-08T11:39:16",
+  "collected_at": "2026-10-08T17:05:47",
   "n_mislabels": 466,
   "inputs": {
     "gtdb_arc1200.aligned.fasta": "4c1ab8e768d9e0b7b0136230cba01f3d4b574bcbeeb8a7e0376fda638669724b",
     "gtdb_arc1200.tax": "76573d698bbade88004961a82d47cf76045a08c70953f9dc24881c5dea0d2146"
   },
-  "wall_sec": 1436.3,
+  "wall_sec": 1521.01,
   "returncode": 0,
   "timed_out": false,
-  "max_rss_mb": 7805.4,
-  "user_cpu_sec": 1424.69,
-  "sys_cpu_sec": 140.74,
+  "max_rss_mb": 7805.3,
+  "user_cpu_sec": 1585.4,
+  "sys_cpu_sec": 79.1,
   "cmd": [
     "sativa-epang",
     "-s",
@@ -35,7 +35,7 @@
     "-n",
     "gtdb_arc1200__epang_T1_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/memstep_gtdb_arc1200_epang_T1_K25/work/4b/a983c7c5a2175a07e893e7b3c424d9/tmp",
+    "/shared/home/agardette/bench/.nf/memstep_gtdb_arc1200_epang_T1_K25/work/2a/3474b6c46321a9455dc5c7d7105cf2/tmp",
     "-m",
     "ultrafast",
     "-C",
@@ -47,8 +47,8 @@
     "-S"
   ],
   "sativa_timing": "parsed",
-  "sativa_total_sec": 1436.0,
-  "reftree_sec": 132.0,
-  "l1out_sec": 1304.0,
+  "sativa_total_sec": 1521.0,
+  "reftree_sec": 147.0,
+  "l1out_sec": 1374.0,
   "status": "ok"
 }

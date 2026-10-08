@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc400.fasta -t gtdb_arc400.tax -T 1 -n gtdb_arc400__epang_T1_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/c2/4596a772c27af3250285914f1cf5fd/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc400.fasta -t gtdb_arc400.tax -T 1 -n gtdb_arc400__epang_T1_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -32,11 +32,11 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/c2/4596a772c27af3250285914f1cf5fd/tmp/gtdb_arc400__epang_T1_K25__rep1_1791450922296/RAxML_info.mfresolv_gtdb_arc400__epang_T1_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/c2/4596a772c27af3250285914f1cf5fd/tmp/gtdb_arc400__epang_T1_K25__rep1_1791450922296/epang_l1out_seq_gtdb_arc400__epang_T1_K25__rep1 (0.2s)
-[epang-l1o] placed 25/25 folds (1 at a time, 1 threads each, 23.8s)
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/tmp/gtdb_arc400__epang_T1_K25__rep1_1791470421297/RAxML_info.mfresolv_gtdb_arc400__epang_T1_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/tmp/gtdb_arc400__epang_T1_K25__rep1_1791470421297/epang_l1out_seq_gtdb_arc400__epang_T1_K25__rep1 (0.1s)
+[epang-l1o] placed 25/25 folds (1 at a time, 1 threads each, 24.5s)
 [epang-l1o] placements produits: 402 (K=25 folds, remap 0.1s)
-[epang-l1o] timing: fold prep 0.2s, epa-ng 23.8s, remap 0.1s, elapsed 24.2s
+[epang-l1o] timing: fold prep 0.1s, epa-ng 24.5s, remap 0.1s, elapsed 24.7s
 Leave-one-out test identified 13 suspicious sequences; running final EPA test to check them...
 
 [epang-final] 13 suspects re-placed (model RAxML_info.mfresolv_gtdb_arc400__epang_T1_K25__rep1)
@@ -48,8 +48,8 @@ Species     :	1
 
 Total mislabels: 12 / 2.99 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/c2/4596a772c27af3250285914f1cf5fd/run/gtdb_arc400__epang_T1_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/c2/4596a772c27af3250285914f1cf5fd/run/gtdb_arc400__epang_T1_K25__rep1.log
+Results were saved to: /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/run/gtdb_arc400__epang_T1_K25__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/run/gtdb_arc400__epang_T1_K25__rep1.log
 
-Analysis completed successfully, elapsed time: 32 seconds (7s reftree, 25s leave-one-out)
+Analysis completed successfully, elapsed time: 32 seconds (6s reftree, 26s leave-one-out)
 
