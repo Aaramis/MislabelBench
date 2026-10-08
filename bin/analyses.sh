@@ -199,41 +199,50 @@ done
 # Protocol.md 2.1's control. The un-injected cell is the one number the injected grid cannot give:
 # on simulated data a flag on an untouched sequence is a false positive outright, because the
 # taxonomy is the tree.
-step "simulation: recall where every label is certain, and a strict false-positive rate"
-for cond in epang_T8_K25 upstream_raxml_T8; do
-    base=results/simulated/runs/sim__${cond}__rep1/sim__${cond}__rep1.mis
-    if [ -s "$base" ]; then
-        # `grep -vc` exits 1 when it counts nothing, which is the expected answer here and not a
-        # failure: zero flags on the un-injected reference is the result this control exists for.
-        n=$(grep -vc '^;' "$base" || true)
-        total=$(grep -c '^>' data/simulated/sim/sim.fasta)
-        echo "  ${cond}: ${n} flags on ${total} certainly-correct sequences"
-        aggregate_grid.py --injected-dir data/simulated --runs-dir results/simulated/runs \
-            --condition "${cond}__rep1" --baseline-mis "$base" \
-            --out "results/simulated_summary_${cond}.json"
-    else
-        echo "  ${cond}: no un-injected run yet, skipped"
-    fi
-done
+#
+# There are two such controls now, the hand-made reference and the RAxMLGrove one, and they take the
+# same three analyses. Written once as a function rather than copied, because the comment below
+# records what copying cost here already: the law and the paired test sat outside the loops that read
+# the archaeal grid, so two committed records went on describing twelve cells after the set grew to
+# thirty-six. A second copy would have been a second chance to make that mistake.
+control_analyses() {
+    local data="$1" res="$2" base="$3" label="$4" cond n total b
+    step "${label}: recall where every label is certain, and a strict false-positive rate"
+    for cond in epang_T8_K25 upstream_raxml_T8; do
+        b="$res/runs/${base}__${cond}__rep1/${base}__${cond}__rep1.mis"
+        if [ -s "$b" ]; then
+            # `grep -vc` exits 1 when it counts nothing, which is the expected answer here and not a
+            # failure: zero flags on the un-injected reference is the result this control exists for.
+            n=$(grep -vc '^;' "$b" || true)
+            total=$(grep -c '^>' "$data/$base/$base.fasta")
+            echo "  ${cond}: ${n} flags on ${total} certainly-correct sequences"
+            aggregate_grid.py --injected-dir "$data" --runs-dir "$res/runs" \
+                --condition "${cond}__rep1" --baseline-mis "$b" \
+                --out "results/${label}_summary_${cond}.json"
+        else
+            echo "  ${cond}: no un-injected run yet, skipped"
+        fi
+    done
 
-# Three committed records of this experiment were produced by hand and rebuilt by nothing, which is the
-# defect finding 73 found in the k-axis summaries and declared fixed. It was not: the law and the paired
-# test for the simulated set were outside every loop here, because those loops read the archaeal grid.
-# It mattered the moment upstream's arm finished -- it went from 12 cells on one seed to 36 on three, and
-# both records still described the twelve.
-step "the simulation's detection law and the paired comparison, on whichever arms have run"
-for cond in epang_T8_K25 upstream_raxml_T8; do
-    if [ -s "results/simulated/runs/sim__${cond}__rep1/sim__${cond}__rep1.mis" ]; then
-        detection_law.py --base-tax data/simulated/sim/sim.tax --injected-dir data/simulated \
-            --runs-dir results/simulated/runs --condition "${cond}__rep1" \
-            --out "results/detection_law_simulated_${cond}.json" >/dev/null
+    step "${label}: the detection law and the paired comparison, on whichever arms have run"
+    for cond in epang_T8_K25 upstream_raxml_T8; do
+        if [ -s "$res/runs/${base}__${cond}__rep1/${base}__${cond}__rep1.mis" ]; then
+            detection_law.py --base-tax "$data/$base/$base.tax" --injected-dir "$data" \
+                --runs-dir "$res/runs" --condition "${cond}__rep1" \
+                --out "results/detection_law_${label}_${cond}.json" >/dev/null
+        fi
+    done
+    if [ -s "$res/runs/${base}__upstream_raxml_T8__rep1/${base}__upstream_raxml_T8__rep1.mis" ]; then
+        paired_conditions.py --injected-dir "$data" --runs-dir "$res/runs" \
+            --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
+            --out "results/paired_${label}_upstream_vs_epang_T8_K25.json" >/dev/null
     fi
-done
-if [ -s results/simulated/runs/sim__upstream_raxml_T8__rep1/sim__upstream_raxml_T8__rep1.mis ]; then
-    paired_conditions.py --injected-dir data/simulated --runs-dir results/simulated/runs \
-        --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
-        --out results/paired_simulated_upstream_vs_epang_T8_K25.json >/dev/null
-fi
+}
+
+control_analyses data/simulated results/simulated sim simulated
+# The second control, on an empirical tree. Absent until slurm/grove_simulation.sh has run, which the
+# guards above report rather than fail on.
+control_analyses data/grove_sim results/grove_simulated grove grove_simulated
 
 # Does fold co-removal explain the fork's advantage on the k axis? The question is the fork's own
 # mechanism, so it belongs beside the decomposition rather than in a script nothing ran: this one had
@@ -340,6 +349,13 @@ verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
 verify_recall_independently.py --injected-dir data/simulated --runs-dir results/simulated/runs \
     --summary epang_T8_K25__rep1=results/simulated_summary_epang_T8_K25.json \
     --summary upstream_raxml_T8__rep1=results/simulated_summary_upstream_raxml_T8.json
+# Guarded, unlike the three above, because this control's runs do not exist yet and an absent summary
+# is not a disagreement.
+if [ -s results/grove_simulated_summary_epang_T8_K25.json ]; then
+    verify_recall_independently.py --injected-dir data/grove_sim --runs-dir results/grove_simulated/runs \
+        --summary epang_T8_K25__rep1=results/grove_simulated_summary_epang_T8_K25.json \
+        --summary upstream_raxml_T8__rep1=results/grove_simulated_summary_upstream_raxml_T8.json
+fi
 verify_recall_independently.py --injected-dir data/foreign --runs-dir results/foreign/runs \
     --summary epang_T8_K25__rep1=results/foreign_summary_epang_T8_K25.json \
     --summary upstream_raxml_T8__rep1=results/foreign_summary_upstream_raxml_T8.json

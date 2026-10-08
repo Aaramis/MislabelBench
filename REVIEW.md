@@ -5107,6 +5107,31 @@ species as it wants injections and that tree had 35. The tree the criteria pick 
 now probes 5 %, then 3 %, then 2 % over the twelve cells and uses the first that every cell reaches
 exactly. On this tree it reports 5 %, 20 to 21 injections per cell against the hand-made control's 43.
 
+**211. The control's analyses were three copied blocks, and a second control would have been a second
+chance at the mistake the file already records.** `bin/analyses.sh` ran the un-injected flag count, the
+detection law and the paired comparison on `data/simulated` with the directory, the results path and the
+cell name written out in each. Its own comment explains what that cost once: the law and the paired test
+sat outside the loops that read the archaeal grid, so two committed records went on describing twelve
+cells after the set had grown to thirty-six. Adding the Grove control by copying would have put a fourth
+such block in the file.
+
+They are now one function taking the data directory, the results directory, the base cell and the label,
+called twice. The output filenames are unchanged by construction, and that was checked rather than
+asserted: `bin/analyses.sh` was run over the whole repository afterwards and **every committed file under
+`results/` came back byte-identical** -- `git status` shows the script and nothing else. The second call
+finds no runs yet and says so, which is what the guards are for.
+
+The run also exercised the new manifest without being asked to: the truth checks now read **9 manifests
+and 294 datasets**, the ninth being `data/grove_sim/datasets.json`, and they immediately reported the two
+absolute symlinks my local scaffolding had left under `data/grove/` -- a gate catching the thing it was
+written for, on the first occasion it could.
+
+And the pipeline accepts the manifest: `nextflow run . -stub-run -profile stub_test` over the Grove
+manifest and both conditions completes **148 tasks, 0 failed**, which is 37 cells by two conditions by
+two processes. `bin/score_injection.py` needs nothing new for it either -- it indexes `RANKS` by the
+cell's own `distance` and compares lineage strings, and the Grove labels are unique per rank, which is
+one thing they do better than GTDB's.
+
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added
 later, for the reason `make_simulation.sh` records, and the committed manifest has carried 37 since.
