@@ -80,12 +80,16 @@ for f in glob.glob("results/*/runs/*/run.json"):
         continue
     g[(d["dataset"], d["condition"])].append(
         (d["wall_sec"], d["user_cpu_sec"], d["max_rss_mb"]))
+# On stdout, not stderr. bin/analyses.sh redirects stdout into results/resource_usage.txt and lets
+# stderr go to the job log, so a reader of the committed table could not tell that twelve trusted runs
+# had been left out of the medians above it or why. An exclusion is a methodological choice and belongs
+# where the numbers it shapes are.
 if incomplete:
     print(f"excluded {len(incomplete)} trusted runs with no CPU time or no peak memory, "
-          f"e.g. {incomplete[0]}", file=sys.stderr)
+          f"e.g. {incomplete[0]}")
 if contended:
     print(f"excluded {len(contended)} trusted runs from the staged experiments, whose whole-run "
-          f"control shares its node with the stages", file=sys.stderr)
+          f"control shares its node with the stages")
 print(f"{'dataset':14}{'condition':20}{'n':>3}{'wall':>10}{'cores':>7}{'CPU-s':>9}")
 for (ds, c), v in sorted(g.items()):
     if not ds.startswith("gtdb"):

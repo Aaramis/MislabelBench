@@ -1,3 +1,4 @@
+excluded 12 trusted runs from the staged experiments, whose whole-run control shares its node with the stages
 dataset       condition             n      wall  cores    CPU-s
 gtdb_arc1200  epang_T8_K25          4     262.4   5.54     1451
 gtdb_arc1200  upstream_raxml_T8     4    2983.6   7.97    23796
