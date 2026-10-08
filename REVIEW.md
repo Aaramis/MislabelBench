@@ -4127,11 +4127,28 @@ it is the conservative direction for a figure used as a ceiling.
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** One job, the wrong-label ramp (2297235), on its first case of four. The ragged grid finished
-in 1 h 32 m, 60 tasks, and is the subject of finding 167. The three staged timing launchers were
-cancelled for the reason finding 164 gives; the nine replicate rounds that replace them go in once the
-ramp finishes, since `bin/push_code.sh` reaches a running job's project files. The minimal-case campaign
-is at twelve sweeps and 82 cases.
+**Running.** The nine staged timing rounds, chained on `--dependency=afterany` so that no two of ours
+overlap, since without exclusivity they are each other's interference. The first has finished and the
+second is going. Nothing is committed from them yet: three replicates of a round are the measurement and
+one of them is not, so the results directory and trace stay on the cluster until a set is complete.
+
+The first round is worth flagging rather than filing, because it does not look like the published one.
+Round f25, one shard, non-exclusive, against the exclusive-less round published in
+`results/staged_scaling_f25.txt`:
+
+| | reference | tasks | placement | scoring | sum |
+|---|---|---|---|---|---|
+| published | 71.0 | 2.7 | 194.5 | 20.0 | 288.2 |
+| new, replicate 1 of 3 | **51.2** | 2.0 | **237.0** | 20.7 | 310.8 |
+
+Placement is 22 % higher and the reference build 28 % lower. The second is the direction finding 152
+predicts, since the old round built its reference while the monolithic control built the same tree, and
+the join in `main.nf` now stops that pair from overlapping. The first is larger than the 1 % that
+`Decisions.md` quoted from `sizes.sh` when it gave up exclusivity, and one round cannot tell a shift from
+a draw. That is what the other two replicates are for, and if the spread stays this wide it is the spread
+that gets published rather than the mean.
+
+The ramp finished at four counts of four, and the minimal-case campaign is at fifteen sweeps and 85 cases.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory
