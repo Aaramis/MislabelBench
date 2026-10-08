@@ -23,9 +23,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
-| run records, cross-checked against the files they summarise | 1158 |
+| run records, cross-checked against the files they summarise | 1160 |
 | result tables, each rebuilt by `bin/analyses.sh` | 65 |
-| `.mis` files, the flag lists every detection number is computed from | 1484 |
+| `.mis` files, the flag lists every detection number is computed from | 1486 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 158 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 160 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **65 published tables** ← 1 158 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **65 published tables** ← 1 160 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 158** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 160** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 158 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 160 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 158**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 160**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -4447,7 +4447,7 @@ cmd   = ['sativa-epang', '-s', 'gtdb_arc2k.fasta', '-t', 'gtdb_arc2k.tax', '-T',
 ```
 
 The host is the node that ran the tool rather than the collector, and the five flags that decide what the
-tool does are in the record for the first time in 1 158 of them.
+tool does are in the record for the first time in 1 160 of them.
 
 **And the check failed, on its own reference.** `no single-process .mis at .../results/baseline2k/...`.
 That file is committed here and **never reaches the cluster**: `bin/restore_cluster.sh` says in its own
@@ -4555,11 +4555,28 @@ and 1 for `Kexact`. The committed traces cannot answer it -- the size gradient w
 does not exist to be made and inventing it would cost three more runs for a question the thread axis
 already answers better.
 
-What is running instead separates concurrency from the reference: `epang_T1_K25` at the smallest and
-largest committed sizes. At one thread there is one placement, so if the rise from 4.56 to 5.13 MB/seq
-is a property of running four at once it should vanish, and if it is a per-placement structure growing
-with the reference it should not. `slurm/memstep.sh` gained `MEMSTEP_DATASET` and `MEMSTEP_CONDITION`
-to ask that of a size the repository already holds, rather than a second script.
+The experiment that separates concurrency from the reference has run: `epang_T1_K25` at the smallest and
+largest committed sizes, through `slurm/memstep.sh`'s new `MEMSTEP_DATASET` and `MEMSTEP_CONDITION`
+rather than a second script. **At one thread the law is flat.**
+
+| sequences | one thread | eight threads | ratio |
+|---|---|---|---|
+| 402 | 1.18 | 4.59 | 3.88 |
+| 2 023 | 1.11 | 4.61 | 4.14 |
+| 7 051 | 1.15 | 5.13 | 4.47 |
+
+1.18, 1.11 and 1.15 MB per sequence over a seventeen-fold range is a 6 % band with no trend, against
+4.59 rising to 5.13 at eight threads. **So the rise exists only with concurrency**, and the answer to
+finding 193's open question is that there is no per-placement structure growing with the reference: the
+work costs 1.15 MB per sequence at any size, and the other four fifths of the published figure are the
+price of doing it four times at once.
+
+The multiplier is itself worth a line, because it is not 4. The eight-thread peak is **3.88, 4.14 and
+4.47** times the one-thread peak at the three sizes, rising with size and passing 4 between 2 023 and
+7 051. Four concurrent placements cannot cost more than four times one unless something else scales too
+-- the parent's own footprint, or EPA-ng's per-thread buffers, two threads to a placement -- and this
+benchmark has no measurement that separates those. It is stated as the bound it is rather than
+explained.
 
 ## What is outstanding
 
