@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 178 |
+| findings in this report | 179 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 42 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4057,6 +4057,35 @@ fired once.
 Both are gone. The random stream is untouched -- the same list reaches `rng.shuffle` either way -- and the
 proof is not that argument but `bin/verify_regeneration.py`, which rebuilds every cell from the kept inputs
 and reports **731 identical, 0 differing** after the change.
+
+**179. One committed artefact cannot be rebuilt, and the file it was recovered from was destroyed by the
+same collision it was recovering from.** Counting the `bin/` scripts `bin/analyses.sh` never calls gives
+fourteen, and thirteen of them are generators with callers elsewhere -- `slurm/make_*.sh`, the pipeline
+modules, `bin/verify_regeneration.py`. The fourteenth, `bin/recover_trace_from_report.py`, has no caller
+anywhere and no input: `results/grid_fork/pipeline_info/report-kexact_k2.html` is gone from the repository
+and from the cluster. It was overwritten by a later Kexact run writing the same untagged name, which is
+the collision that destroyed the original trace in the first place and that per-tag naming in
+`nextflow.config` now prevents. Of the six reports still on the cluster, all six are per-tag.
+
+So `trace-kexact_k2_recovered.txt` is a committed file nobody can re-derive, and the figure read off it --
+**9.83 GB** for the Kexact placement, which this report says started the peak-memory work -- would be a
+number resting on a missing file. It is not, and the corroboration is close:
+
+| | peak | wall |
+|---|---|---|
+| recovered, `k2_s1` | 9.83 GB | 4 259.3 s |
+| `k1_s1`, `k10_s1` (own traces) | 9.2 GB | 4 284.9 s, 4 276.7 s |
+| `k3_s1`, `k5_s1` (own traces) | 9.7 GB | 4 164.2 s, 4 175.0 s |
+| `k2_s2` (own trace) | 9.2 GB | 4 263.8 s |
+| `k2_s1`'s own `run.json` | -- | **4 257.74 s** |
+
+Five siblings in the same condition, each measured independently and each with a committed trace, bracket
+the recovered peak; and the cell's own run record gives a wall clock within 1.6 s of the recovered one. The
+recovered file adds precision to a number the committed evidence already carries, which is the difference
+between an artefact that cannot be rebuilt and a claim that cannot be checked.
+
+Both the script's docstring and `results/pipeline_info/README.md` now say this. The script is kept rather
+than deleted: reports are still written for every run, and a lost trace is still repairable.
 
 ## What is outstanding
 

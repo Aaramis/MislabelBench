@@ -8,6 +8,17 @@ embeds the same records as JSON under `window.data`. This is the only way back t
 
 The embedded JSON holds the task scripts, whose shell escapes are not valid JSON escapes, so they
 are stripped before parsing. Nothing is read from them here.
+
+Nothing calls this and nothing can: the one report it was run on,
+results/grid_fork/pipeline_info/report-kexact_k2.html, is gone from both the repository and the
+cluster. It was overwritten by a later Kexact run writing the same untagged name, which is exactly the
+collision that per-tag naming in nextflow.config now prevents and that this script existed to repair.
+Six reports survive on the cluster and all six are per-tag.
+
+So trace-kexact_k2_recovered.txt cannot be re-derived, and the numbers it carries do not rest on it
+alone: the five sibling Kexact runs, each with its own committed trace, peak at 9.2 to 9.7 GB against
+its 9.83, and the cell's own run.json gives a wall clock of 4 257.74 s against its 4 259.3. The script
+is kept rather than deleted because reports are still written and a lost trace is still repairable.
 """
 
 import json

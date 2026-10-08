@@ -88,3 +88,11 @@ The report's `peak_rss` is calibrated against the text traces rather than assume
 thing: for a fork-grid task the report gives 9 968 144 384 where `trace-grid_fork.txt` gives 9.3 GB.
 So the 9.83 GB here is comparable, and it is what started the peak-memory finding in `REVIEW.md` —
 the `run.json` for the same run says 2.49 GB.
+
+**This file cannot be rebuilt.** `report-kexact_k2.html` is gone from the repository and from the
+cluster, overwritten by a later Kexact run writing the same untagged name: the same collision that
+destroyed the original trace and that per-tag naming now prevents. The six reports still on the
+cluster are all per-tag. What the file says is corroborated without it, which is why no number here
+depends on a file nobody has: the five sibling Kexact runs each have their own committed trace and peak
+at 9.2 to 9.7 GB against this run's 9.83, and this cell's own `run.json` gives 4 257.74 s against the
+4 259.3 recovered here.
