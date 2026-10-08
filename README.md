@@ -208,7 +208,7 @@ what the grid adds to it is the 82-case campaign where fork_raxml agrees with up
 The one axis that is now ruled out is how much reference surrounds the sequence: at a single wrong
 label, outgroups of 20, 30, 50 and 70 sequences all give the same verdict from all three arms at
 1.000 to three decimals (`outgroup_small`), so the transition is in the labels and not in the size.
-`results/minimal_case/` holds all twelve sweeps. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
+`results/minimal_case/` holds all sixteen sweeps, 91 cases in `results/minimal_case_summary.tsv`. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
 confirm the wrong label whichever engine places against them.
 
 The fold column needs one qualification. It compares twenty-five folds against strict leave-one-out and

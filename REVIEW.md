@@ -4148,7 +4148,9 @@ the join in `main.nf` now stops that pair from overlapping. The first is larger 
 a draw. That is what the other two replicates are for, and if the spread stays this wide it is the spread
 that gets published rather than the mean.
 
-The ramp finished at four counts of four, and the minimal-case campaign is at fifteen sweeps and 85 cases.
+The ramp finished at four counts of four, and the minimal-case campaign is at **16 sweeps and 91 cases**,
+counted from the directories under `results/minimal_case/` and the rows of
+`results/minimal_case_summary.tsv` rather than from the last number this paragraph carried.
 
 **Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
 tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory
