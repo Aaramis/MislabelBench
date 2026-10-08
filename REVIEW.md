@@ -5018,6 +5018,44 @@ and the species arm of the injection grid is restricted to the rest.
 sibling-order one: the same tree with every node's children written in the opposite order has to give a
 byte-identical `.tax`. Five tests, 38 in the suite.
 
+**209. The tool we are citing swallows its own failures, so the control's two scripts check what it
+does rather than what it reports.** `slurm/make_grove_simulation.sh` runs the chain -- pick, download,
+simulate, label, inject -- and `slurm/grove_simulation.sh` puts the result through the pipeline beside
+the hand-made control rather than instead of it, since the pair is what answers the objection. Reading
+`org_script.py` at the pinned commit `7d8e2aa4` before writing them found four things worth checking,
+three of which are silent:
+
+| what | why it matters |
+|---|---|
+| `download_trees()` wraps every file in `except Exception: pass` | a dataset that is not on GitHub, or a node with no network, leaves an empty directory and exit status 0 |
+| `iqt.pr_ab_matrix` is optional, and when it is absent `pr_ab_matrix_path` is set to `""` | `--insert-matrix-gaps` then does nothing at all, and the alignment that was supposed to carry the source's missing-data pattern carries none. The RAxML8-only database shipped with the scripts has no matrix for the tree the criteria pick, so this is the normal case, not the exotic one |
+| `tools/iqtree-2.2.0-beta-Linux/bin/iqtree2` is committed mode 644 | a fresh clone cannot execute it; `AliSim.execute()` catches the `PermissionError`, prints it, returns 1, and the assembly step then runs on a file that was never written. The script chmods it rather than failing |
+| the README asks for biopython, numpy, pandas and matplotlib | `org_script.py` imports `skopt` at module level, so scikit-optimize is required and unmentioned. The script takes the imports as the requirement |
+
+One thing read and found safe rather than assumed: `--force-rewrite` sounds like it would destroy the
+pinned database, and `BetterTreeDataBase.__init__` does drop every table when it is set, but line 2566
+only sets it for the `create` operation. Under `generate` it merely reuses the tree's own directory
+name instead of writing `6952_1`, `6952_2` on each rerun, which is what makes the script idempotent.
+
+**The injection rate had to come down, and the reason is a property of real topologies.**
+`inject_mislabels.py` requires a donor group to keep one correct member, so a cell at k=1 needs as many
+non-singleton species as it wants injections. The tree this was developed against has 320 singleton
+species out of 355, and the twelve cells behave accordingly: at 5 % the k=1 cells injected 31 of 41
+requested, at 3 % one cell of twelve still fell a sequence short, at 2 % all twelve are exact. So the
+control runs at 2 %, and a cell that cannot reach its rate is dropped into `skipped.txt` rather than run
+at a quietly different one, which is what Protocol.md 2.4 asks for. The hand-made reference could use
+5 % because every one of its species had six members by construction; that it could is a property of
+the hand-made tree and not of the method.
+
+The whole chain was run end to end locally against the database shipped with the pinned scripts, with
+the simulator's output stood in for, since the binary is Linux-only and no measurement is involved: 90
+candidate trees, `TREE_ID 6952` picked at seed 42 with 822 taxa and 1 497 sites, which is within 5 % of
+the hand-made control on both. 37 cells, none skipped, the manifest byte-identical on a second run.
+
+**And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
+injected ones across three distances and four k". There are 37: the three injection seeds were added
+later, for the reason `make_simulation.sh` records, and the committed manifest has carried 37 since.
+
 ## What is outstanding
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.

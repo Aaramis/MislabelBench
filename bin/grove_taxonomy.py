@@ -195,6 +195,11 @@ def main():
         "n_species": len(species),
         "n_singleton_species": sum(1 for v in species.values() if len(v) == 1),
         "largest_species": max(len(v) for v in species.values()),
+        # inject_mislabels.py needs k+1 members in a donor group, so a grid running to k=5 needs
+        # species of six. An empirical topology gives a very skewed distribution and this is the
+        # column that says whether the grid's high-k cells have anything to inject into.
+        "species_of_six_or_more": sum(1 for v in species.values() if len(v) >= 6),
+        "sequences_in_species_of_six_or_more": sum(len(v) for v in species.values() if len(v) >= 6),
         "tax_sha256": hashlib.sha256(Path(f"{args.prefix}.tax").read_bytes()).hexdigest(),
     }
     Path(f"{args.prefix}.grove_tax.json").write_text(json.dumps(record, indent=2) + "\n")
@@ -204,7 +209,8 @@ def main():
         print(f"  {rank:8} {len(snaps[r]):5d} clades (asked {targets[r]:5d}) "
               f"below height {cut[r]:.6f}, judgeable {judgeable[rank]:.1%}")
     print(f"{len(species)} species, {record['n_singleton_species']} of them singletons, "
-          f"largest {record['largest_species']}")
+          f"largest {record['largest_species']}, {record['species_of_six_or_more']} with six or "
+          f"more members holding {record['sequences_in_species_of_six_or_more']} sequences")
 
 
 if __name__ == "__main__":
