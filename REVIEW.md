@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 181 |
+| findings in this report | 182 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4176,6 +4176,33 @@ Slurm jobs and not a split across machines. Four shards on one node share the me
 would not, which makes the measured speedup a floor, and it is also why the one-shard baseline is the
 member of the series that suffers most. The check reports rather than exits non-zero, since exiting would
 refuse every round there is.
+
+**182. A truthiness test erased a whole column of the simulation's results, and the column was
+computable all along.** `bin/score_injection.py` reports added flags as
+
+```python
+"added_vs_baseline": len(others - baseline) if baseline else None,
+```
+
+while two fields below it reports `"baseline_flags": len(baseline) if args.baseline_mis else None`. The
+two conditions are different and only the second is right. `if baseline` is false for a baseline that
+exists and is empty, so a record could assert both that the baseline was known, `baseline_flags: 0`, and
+that the added count could not be derived from it, `added_vs_baseline: null`.
+
+It is not hypothetical and it is not small. The simulated reference is the one place where every label is
+certain, and **neither tool flags anything on it**: `sim__epang_T8_K25__rep1` and
+`sim__upstream_raxml_T8__rep1` hold 0 rows each. That zero is the control the README quotes, and it is
+exactly what made every added-flag figure for the simulation unreadable: **144 null values** across
+`results/simulated_summary_epang_T8_K25.json` and `results/simulated_summary_upstream_raxml_T8.json`,
+which now read 0, 1.3, 2, 9 and 15 instead. The experiment designed to make collateral flags
+interpretable was the one whose collateral column was blank.
+
+Keyed on `args.baseline_mis` now, matching the line below. Reproduced first on a fixture -- an empty
+baseline with two collateral flags reported null where the answer is 2 -- then fixed, then re-run: the
+same fixture gives 2, and passing no baseline at all still gives null for both fields, which is the case
+the flag is for. Nothing the README claims moves: its "no collateral flags from either" at *k*=1 is the
+0 the column now carries, and it had been read off the baseline `.mis` by hand rather than from the field
+that was null.
 
 ## What is outstanding
 

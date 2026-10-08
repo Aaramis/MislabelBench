@@ -14,7 +14,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -27,7 +27,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -40,7 +40,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.9922,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -53,7 +53,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.9922,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -66,7 +66,7 @@
       "recall_sd": 0.0355,
       "recall_at_injected_rank_mean": 0.969,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -79,7 +79,7 @@
       "recall_sd": 0.0355,
       "recall_at_injected_rank_mean": 0.969,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -92,7 +92,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -105,7 +105,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -118,7 +118,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -131,7 +131,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -144,7 +144,7 @@
       "recall_sd": 0.0262,
       "recall_at_injected_rank_mean": 0.9848,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -157,7 +157,7 @@
       "recall_sd": 0.0262,
       "recall_at_injected_rank_mean": 0.9848,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "family",
@@ -170,7 +170,7 @@
       "recall_sd": 0.0642,
       "recall_at_injected_rank_mean": 0.8296,
       "flags_on_non_injected_mean": 7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 7
     },
     {
       "distance": "family",
@@ -183,7 +183,7 @@
       "recall_sd": 0.0642,
       "recall_at_injected_rank_mean": 0.8296,
       "flags_on_non_injected_mean": 7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 7
     },
     {
       "distance": "family",
@@ -196,7 +196,7 @@
       "recall_sd": 0.0642,
       "recall_at_injected_rank_mean": 0.8296,
       "flags_on_non_injected_mean": 7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 7
     },
     {
       "distance": "family",
@@ -209,7 +209,7 @@
       "recall_sd": 0.0642,
       "recall_at_injected_rank_mean": 0.8296,
       "flags_on_non_injected_mean": 7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 7
     },
     {
       "distance": "family",
@@ -222,7 +222,7 @@
       "recall_sd": 0.0642,
       "recall_at_injected_rank_mean": 0.8296,
       "flags_on_non_injected_mean": 7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 7
     },
     {
       "distance": "family",
@@ -235,7 +235,7 @@
       "recall_sd": 0.0642,
       "recall_at_injected_rank_mean": 0.8296,
       "flags_on_non_injected_mean": 7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 7
     },
     {
       "distance": "family",
@@ -248,7 +248,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "family",
@@ -261,7 +261,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "family",
@@ -274,7 +274,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "family",
@@ -287,7 +287,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "family",
@@ -300,7 +300,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "family",
@@ -313,7 +313,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "genus",
@@ -326,7 +326,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -339,7 +339,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 1.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -352,7 +352,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.9922,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -365,7 +365,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.9922,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -378,7 +378,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.9845,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -391,7 +391,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.9845,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -404,7 +404,7 @@
       "recall_sd": 0.0394,
       "recall_at_injected_rank_mean": 0.9545,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -417,7 +417,7 @@
       "recall_sd": 0.0394,
       "recall_at_injected_rank_mean": 0.9545,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -430,7 +430,7 @@
       "recall_sd": 0.0394,
       "recall_at_injected_rank_mean": 0.9545,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -443,7 +443,7 @@
       "recall_sd": 0.0394,
       "recall_at_injected_rank_mean": 0.9545,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -456,7 +456,7 @@
       "recall_sd": 0.0572,
       "recall_at_injected_rank_mean": 0.9394,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -469,7 +469,7 @@
       "recall_sd": 0.0572,
       "recall_at_injected_rank_mean": 0.9394,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "genus",
@@ -482,7 +482,7 @@
       "recall_sd": 0.0463,
       "recall_at_injected_rank_mean": 0.763,
       "flags_on_non_injected_mean": 11,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 11
     },
     {
       "distance": "genus",
@@ -495,7 +495,7 @@
       "recall_sd": 0.0463,
       "recall_at_injected_rank_mean": 0.763,
       "flags_on_non_injected_mean": 11,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 11
     },
     {
       "distance": "genus",
@@ -508,7 +508,7 @@
       "recall_sd": 0.0841,
       "recall_at_injected_rank_mean": 0.7407,
       "flags_on_non_injected_mean": 10,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 10
     },
     {
       "distance": "genus",
@@ -521,7 +521,7 @@
       "recall_sd": 0.0444,
       "recall_at_injected_rank_mean": 0.6222,
       "flags_on_non_injected_mean": 10,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 10
     },
     {
       "distance": "genus",
@@ -534,7 +534,7 @@
       "recall_sd": 0.0463,
       "recall_at_injected_rank_mean": 0.6148,
       "flags_on_non_injected_mean": 10,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 10
     },
     {
       "distance": "genus",
@@ -547,7 +547,7 @@
       "recall_sd": 0.0463,
       "recall_at_injected_rank_mean": 0.6148,
       "flags_on_non_injected_mean": 10,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 10
     },
     {
       "distance": "genus",
@@ -560,7 +560,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "genus",
@@ -573,7 +573,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "genus",
@@ -586,7 +586,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "genus",
@@ -599,7 +599,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "genus",
@@ -612,7 +612,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "genus",
@@ -625,7 +625,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 9,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 9
     },
     {
       "distance": "species",
@@ -638,7 +638,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.9767,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -651,7 +651,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.9767,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -664,7 +664,7 @@
       "recall_sd": 0.0269,
       "recall_at_injected_rank_mean": 0.9612,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -677,7 +677,7 @@
       "recall_sd": 0.0269,
       "recall_at_injected_rank_mean": 0.9612,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -690,7 +690,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.031,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -703,7 +703,7 @@
       "recall_sd": 0.0134,
       "recall_at_injected_rank_mean": 0.031,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -716,7 +716,7 @@
       "recall_sd": 0.0694,
       "recall_at_injected_rank_mean": 0.9394,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -729,7 +729,7 @@
       "recall_sd": 0.0694,
       "recall_at_injected_rank_mean": 0.9394,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -742,7 +742,7 @@
       "recall_sd": 0.0656,
       "recall_at_injected_rank_mean": 0.9167,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -755,7 +755,7 @@
       "recall_sd": 0.0601,
       "recall_at_injected_rank_mean": 0.9091,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -768,7 +768,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -781,7 +781,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -794,7 +794,7 @@
       "recall_sd": 0.1018,
       "recall_at_injected_rank_mean": 0.3778,
       "flags_on_non_injected_mean": 17,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 17
     },
     {
       "distance": "species",
@@ -807,7 +807,7 @@
       "recall_sd": 0.1018,
       "recall_at_injected_rank_mean": 0.3778,
       "flags_on_non_injected_mean": 17,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 17
     },
     {
       "distance": "species",
@@ -820,7 +820,7 @@
       "recall_sd": 0.077,
       "recall_at_injected_rank_mean": 0.0444,
       "flags_on_non_injected_mean": 17,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 17
     },
     {
       "distance": "species",
@@ -833,7 +833,7 @@
       "recall_sd": 0.077,
       "recall_at_injected_rank_mean": 0.0444,
       "flags_on_non_injected_mean": 16,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 16
     },
     {
       "distance": "species",
@@ -846,7 +846,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 13.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 13.3
     },
     {
       "distance": "species",
@@ -859,7 +859,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 13,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 13
     },
     {
       "distance": "species",
@@ -872,7 +872,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0.7
     },
     {
       "distance": "species",
@@ -885,7 +885,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0.7
     },
     {
       "distance": "species",
@@ -898,7 +898,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0.7
     },
     {
       "distance": "species",
@@ -911,7 +911,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0.7
     },
     {
       "distance": "species",
@@ -924,7 +924,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     },
     {
       "distance": "species",
@@ -937,7 +937,7 @@
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": 0.0,
       "flags_on_non_injected_mean": 0,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 0
     }
   ]
 }

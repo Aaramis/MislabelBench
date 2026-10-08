@@ -115,7 +115,14 @@ def main():
                 "recall_at_injected_rank": (len(at_rank) / len(injected)
                                             if injected and rank_metric_meaningful else None),
                 "flags_on_non_injected": len(others),
-                "added_vs_baseline": len(others - baseline) if baseline else None,
+                # Keyed on whether a baseline was given, not on whether it holds anything. An
+                # empty baseline is a real answer -- a database the tool flags nothing in -- and
+                # `if baseline` called it unmeasured while the record said baseline_flags: 0 two
+                # fields below, so one record asserted both that the baseline was known and that
+                # the added count could not be computed from it. Reproduced on an empty baseline
+                # with two collateral flags: it reported null where the answer is 2.
+                "added_vs_baseline": (len(others - baseline)
+                                      if args.baseline_mis else None),
             })
         return out
 
