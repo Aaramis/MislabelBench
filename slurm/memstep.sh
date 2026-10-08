@@ -31,9 +31,30 @@ require_singularity
 nextflow_env
 export PATH="$BENCH_ROOT/bin:$PATH"
 
+# MEMSTEP_DATASET names a size the repository already holds, from data/gtdb/datasets_sizes.json, and
+# skips the subset build. That is how the same script answers the second question: the peak at 2 023
+# sequences is 1.11 MB/seq at one thread and 4.61 at eight, so it is dominated by the four placements
+# the tool runs concurrently rather than by the reference. If the rise in MB/seq with size is a
+# property of that concurrency it should vanish at one thread, and if it is a per-placement structure
+# it should not. Two runs of epang_T1_K25, at the smallest and largest committed sizes, separate them.
+CONDITION="${MEMSTEP_CONDITION:-epang_T8_K25}"
+cd "$BENCH_ROOT"
+if [ -n "${MEMSTEP_DATASET:-}" ]; then
+    NAME="$MEMSTEP_DATASET"
+    MANIFEST="$BENCH_ROOT/data/gtdb/datasets_sizes.json"
+    n=$(python3 -c "
+import json, sys
+m = json.load(open('$MANIFEST'))
+for d in m['datasets']:
+    if d['name'] == '$NAME':
+        print(d['n_seqs']); break
+else:
+    sys.exit('$NAME is not in $MANIFEST')")
+    echo "dataset $NAME from the committed manifest: $n sequences"
+else
+
 TARGET="${MEMSTEP_TARGET:-3000}"
 NAME="gtdb_arc${TARGET}"
-cd "$BENCH_ROOT"
 
 if [ ! -s "data/gtdb/$NAME.tax" ]; then
     subset_taxa.py data/gtdb/gtdb_arc1200.aligned.fasta data/gtdb/gtdb_arc1200.tax \
@@ -50,7 +71,8 @@ for l in open('data/gtdb/$NAME.fasta'):
 print(len(''.join(seq)))")
 echo "subset $NAME: $n sequences, $width columns"
 
-python3 - "$NAME" "$n" "$width" > "data/gtdb/datasets_${NAME}.json" <<'PYJ'
+MANIFEST="$BENCH_ROOT/data/gtdb/datasets_${NAME}.json"
+python3 - "$NAME" "$n" "$width" > "$MANIFEST" <<'PYJ'
 import json, sys
 name, n, width = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 json.dump({"source": f"{name}, a size point between the benchmark's 2 023 and 4 001",
@@ -58,20 +80,21 @@ json.dump({"source": f"{name}, a size point between the benchmark's 2 023 and 4 
                          "fasta": f"data/gtdb/{name}.fasta", "tax": f"data/gtdb/{name}.tax"}]},
           sys.stdout, indent=2)
 PYJ
+fi
 
-nf_launch_dir "memstep_$NAME"
+nf_launch_dir "memstep_${NAME}_${CONDITION}"
 nextflow run "$BENCH_ROOT" -profile singularity \
-  --datasets_json "$BENCH_ROOT/data/gtdb/datasets_${NAME}.json" \
+  --datasets_json "$MANIFEST" \
   --datasets "$NAME" \
-  --conditions epang_T8_K25 \
+  --conditions "$CONDITION" \
   --sativa_taxcode BAC \
   --timing_trusted false \
-  --trace_tag "memstep_${NAME}_${SLURM_JOB_ID:-local}" \
-  --outdir "$BENCH_ROOT/results/memstep_$NAME"
+  --trace_tag "memstep_${NAME}_${CONDITION}_${SLURM_JOB_ID:-local}" \
+  --outdir "$BENCH_ROOT/results/memstep_${NAME}_${CONDITION}"
 
 # The answer, from the trace rather than from run.json: run.json's max_rss_mb is the largest single
 # child and the law is stated on the process tree. resource_usage.py explains the 3.7x between them.
-python3 - "$BENCH_ROOT/results/memstep_$NAME/pipeline_info" "$n" <<'PYJ'
+python3 - "$BENCH_ROOT/results/memstep_${NAME}_${CONDITION}/pipeline_info" "$n" <<'PYJ'
 import csv, glob, os, re, sys
 UNITS = {"B": 1/1048576, "KB": 1/1024, "MB": 1, "GB": 1024, "TB": 1048576}
 info, n = sys.argv[1], int(sys.argv[2])

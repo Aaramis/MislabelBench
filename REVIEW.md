@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 193 |
+| findings in this report | 194 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4532,6 +4532,34 @@ broke twice in reading it.
 What this does not change is the advice, since the law is flat from 3 001 to 7 051: the manuscript
 extrapolates its 400 000-sequence ceiling from 5 MB per sequence, which is the right value for a large
 reference.
+
+**194. The memory peak is a property of the tool's own concurrency, and the one experiment that
+separates that from the reference is running.** Finding 193 settled the shape of the law and left the
+mechanism open. The traces already hold the clue, on the thread axis at 2 023 sequences:
+
+| condition | threads | tree peak | MB/seq |
+|---|---|---|---|
+| `epang_T1_K25` | 1 | 2 253 MB | **1.11** |
+| `epang_T8_K25` | 8 | 9 318 MB | **4.61** |
+| `epang_T16_K25` | 16 | 8 397 MB | 4.15 |
+
+**A factor of 4.2 between one thread and eight on identical input**, which is the four placements the
+tool runs concurrently at eight threads, two threads each. So the headline 5.13 MB per sequence is not
+what a reference costs; it is what a reference costs **four times over**, and the advice README already
+gives -- on a small machine give the fork fewer threads -- is the direct consequence.
+
+The first hypothesis was tested and dropped. If the peak tracked the queries placed at once, the fold
+count would move it: `epang_T8_K5` puts 405 queries in a fold at 2 023 sequences against 81 for `K25`
+and 1 for `Kexact`. The committed traces cannot answer it -- the size gradient was only ever run at
+`K25`, and the K5 and Kexact runs are on injected cells, not on the plain subsets -- so the comparison
+does not exist to be made and inventing it would cost three more runs for a question the thread axis
+already answers better.
+
+What is running instead separates concurrency from the reference: `epang_T1_K25` at the smallest and
+largest committed sizes. At one thread there is one placement, so if the rise from 4.56 to 5.13 MB/seq
+is a property of running four at once it should vanish, and if it is a per-placement structure growing
+with the reference it should not. `slurm/memstep.sh` gained `MEMSTEP_DATASET` and `MEMSTEP_CONDITION`
+to ask that of a size the repository already holds, rather than a second script.
 
 ## What is outstanding
 
