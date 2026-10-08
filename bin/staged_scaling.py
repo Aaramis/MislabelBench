@@ -45,10 +45,25 @@ def duration(text):
     return total
 
 
-def trace_span(trace_dir, run_name):
+def round_files(trace_dir, pattern, round_name):
+    """The files of one round, when several rounds share a directory.
+
+    bin/repatriate.sh flattens every round's pipeline_info into results/pipeline_info, where nine
+    staged rounds of the same cell now sit side by side. Their names carry the round --
+    trace-staged_timed_f25_r1_2302505.txt against the directory staged_timed_f25_r1 -- so the round
+    is selected by name and not by matching the cell, which would take all nine. Falls back to every
+    match when the name selects nothing, which is the case for the three rounds that keep their own
+    pipeline_info directory.
+    """
+    files = sorted(Path(trace_dir).glob(pattern))
+    mine = [f for f in files if round_name and round_name in f.name]
+    return mine or files
+
+
+def trace_span(trace_dir, run_name, round_name=None):
     """First submit to last completion, over the tasks of one run, in seconds."""
     best = None
-    for path in Path(trace_dir).glob("trace-*.txt"):
+    for path in round_files(trace_dir, "trace-*.txt", round_name):
         starts, ends = [], []
         for row in csv.DictReader(path.open(), delimiter="\t"):
             if row["status"] != "COMPLETED" or run_name.split("__")[0] not in row["name"]:
@@ -66,7 +81,7 @@ def trace_span(trace_dir, run_name):
     return best
 
 
-def shard_nodes(cell_dir, trace_dir):
+def shard_nodes(cell_dir, trace_dir, n_shards, round_name=None):
     """Which node each placement shard ran on, if anything recorded it.
 
     This replaces what --exclusive used to guarantee and the QOS will not allow: an exclusive job is
@@ -89,16 +104,21 @@ def shard_nodes(cell_dir, trace_dir):
     if hosts:
         return hosts
     if trace_dir:
-        tsv = Path(trace_dir) / "shard_nodes.tsv"
-        if tsv.exists():
+        # shard_nodes-<tag>.tsv, one per round, all of them flattened into results/pipeline_info by
+        # bin/repatriate.sh. Rows are kept on the dataset and on n_shards, which is what tells one
+        # round from another once nine of them share a directory.
+        for tsv in round_files(trace_dir, "shard_nodes*.tsv", round_name):
             for line in tsv.read_text().splitlines()[1:]:
                 parts = line.split("\t")
                 # The trace writes a cell as dataset/condition/rep and the published directory as
                 # dataset__condition__rep, so they are compared on the dataset, the way trace_span
                 # above does it. Matching the whole string found nothing and printed "not recorded"
                 # over a file that was sitting right there.
-                if len(parts) >= 5 and parts[0].split("/")[0] == cell_dir.name.split("__")[0]:
+                if (len(parts) >= 5 and parts[0].split("/")[0] == cell_dir.name.split("__")[0]
+                        and parts[2] == str(n_shards)):
                     hosts.append(parts[4])
+            if hosts:
+                break
     return hosts
 
 
@@ -106,6 +126,8 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--staged-dir", required=True, help="results/<outdir>/staged")
     p.add_argument("--trace-dir", default=None, help="where the trace-*.txt live")
+    p.add_argument("--round", default=None,
+                   help="round name, to pick this round's trace out of a shared directory")
     args = p.parse_args()
 
     cells = sorted(d for d in Path(args.staged_dir).iterdir() if d.is_dir())
@@ -135,14 +157,15 @@ def main():
         place = max(shards)
         spread = (max(shards) - min(shards)) if len(shards) > 1 else 0.0
         total = secs["reference"][0] + secs["lootasks"][0] + place + secs["looscore"][0]
-        span = trace_span(args.trace_dir, cell.name) if args.trace_dir else None
+        span = (trace_span(args.trace_dir, cell.name, args.round)
+                if args.trace_dir else None)
         print(f"{cell.name:34}{len(shards):>7}{secs['reference'][0]:>8.1f}"
               f"{secs['lootasks'][0]:>7.1f}{place:>9.1f}{spread:>8.1f}"
               f"{secs['looscore'][0]:>7.1f}{total:>9.1f}"
               + (f"{span:>9.1f}" if span else f"{'-':>9}"))
         if len(shards) > 1:
             print(f"{'':34}shards: " + ", ".join(f"{x:.1f}" for x in sorted(shards)))
-            hosts = shard_nodes(cell, args.trace_dir)
+            hosts = shard_nodes(cell, args.trace_dir, len(shards), args.round)
             if not hosts:
                 print(f"{'':34}nodes: not recorded; run slurm/shard_nodes.sh on this round")
             elif len(set(hosts)) < len(hosts):

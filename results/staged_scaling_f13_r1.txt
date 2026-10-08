@@ -1,0 +1,8 @@
+cell                               shards     ref  tasks    place  spread  score      sum     span
+gtdb_arc1200__epang_T8_K25__rep1        2    60.9    2.2    121.3    16.6   21.8    206.3    789.1
+                                  shards: 104.7, 121.3
+                                  nodes: cpu-node-121, cpu-node-121  -> cpu-node-121 carried more than one shard
+                                  folds: 13, 12  -> no split of these beats 1.92x on 2 shards
+
+shards shared a node: gtdb_arc1200__epang_T8_K25__rep1 on cpu-node-121
+so this round distributes across Slurm jobs and not across machines.

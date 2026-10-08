@@ -20,7 +20,11 @@ dir="${1:?usage: shard_nodes.sh <round directory>}"
 info="$dir/pipeline_info"
 [ -d "$info" ] || { echo "no $info" >&2; exit 1; }
 
-out="$info/shard_nodes.tsv"
+# Named after the trace it was resolved from, because bin/repatriate.sh flattens every round's
+# pipeline_info into one results/pipeline_info and an untagged name would have nine rounds overwrite
+# each other there.
+tag=$(basename "$(ls "$info"/trace-*.txt | head -1)" .txt | sed 's/^trace-//')
+out="$info/shard_nodes-$tag.tsv"
 python3 - "$info" "$out" <<'PY'
 import csv, glob, os, re, subprocess, sys
 info, out = sys.argv[1], sys.argv[2]

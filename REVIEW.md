@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 182 |
+| findings in this report | 183 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
-| run records, cross-checked against the files they summarise | 1147 |
-| result tables, each rebuilt by `bin/analyses.sh` | 56 |
-| `.mis` files, the flag lists every detection number is computed from | 1473 |
+| run records, cross-checked against the files they summarise | 1156 |
+| result tables, each rebuilt by `bin/analyses.sh` | 65 |
+| `.mis` files, the flag lists every detection number is computed from | 1482 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2054,7 +2054,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 147 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 156 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2581,7 +2581,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **56 published tables** ← 1 147 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **65 published tables** ← 1 156 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2692,7 +2692,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 147** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 156** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3925,7 +3925,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 147 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 156 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4203,6 +4203,34 @@ same fixture gives 2, and passing no baseline at all still gives null for both f
 the flag is for. Nothing the README claims moves: its "no collateral flags from either" at *k*=1 is the
 0 the column now carries, and it had been read off the baseline `.mis` by hand rather than from the field
 that was null.
+
+**183. The nine rounds are in, and the measured speedup exceeds the ceiling the fold split allows, in
+every replicate.** Three replicates of each shard count, chained so no two of ours overlapped, every
+shard on `cpu-node-121`:
+
+| placement | r1 | r2 | r3 | mean | spread |
+|---|---|---|---|---|---|
+| 1 shard | 237.0 | 243.4 | 235.3 | **238.6** | 3.4 % |
+| 2 shards | 121.3 | 119.5 | 121.0 | **120.6** | 1.5 % |
+| 4 shards | 65.4 | 64.6 | 64.9 | **65.0** | 1.2 % |
+
+So the speedup is **1.98** at two shards and **3.67** at four, against the **1.92** and **3.57** that
+25 folds split 13/12 and 7/6/6/6 allow. Above the ceiling, in all three replicates, by 3 %. A speedup
+above the arithmetic ceiling cannot be distribution, so something makes a fold cheaper in a small group:
+9.5 s per fold at one shard against 8.6 and 8.9 at two and four.
+
+The obvious explanation is wrong and was checked rather than assumed. A smaller working set per process
+would do it, and the per-shard peak is the same everywhere: 9 080 MB at one shard, 9 029 at two, 9 018 at
+four, measured on every shard of every round. So the cause is not memory footprint, it is unexplained, and
+it is bounded at 3 % -- an eighth of the 23 % that separates this session from the one three days ago. The
+honest reading is that the ceiling is not a hard bound when the baseline and the shards are measured on a
+shared node, and that a ratio 3 % above it is a sign of that rather than a result.
+
+The stage that varies is the reference build, not the placement: 45.4 to 65.2 s across the three f25
+rounds, a 20 s range on a 54 s mean, where the placement holds to 3.4 %. That is why the figure's caption
+says the three runs "agree to within 33.1 s on the total" and not to 3 %: the total carries the reference
+stage's contention. Nine rounds replace three in the panel and are not averaged with them, for the reason
+finding 181 gives.
 
 ## What is outstanding
 

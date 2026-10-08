@@ -7,7 +7,13 @@
 # Three things this exists for rather than typing an rsync.
 #
 # The include list. Only run.json, the .mis and the tool's own log are wanted, and score.json is
-# derived from committed inputs so it stays out. Getting that list wrong by hand is how 949 run
+# derived from committed inputs so it stays out.
+#
+# *.timing.json is on it because the staged rounds' seconds live nowhere else. Without it nine
+# finished rounds came home as `incomplete: []`: bin/staged_scaling.py reads one timing.json per
+# stage and per shard, the .stage.log beside it carries the fold count and not the wall clock, and
+# the three rounds already published had been fetched by hand before this script existed.
+# shard_nodes-*.tsv likewise, which is the only record of which node each shard ran on. Getting that list wrong by hand is how 949 run
 # directories first arrived with nothing but their run.json.
 #
 # .stderr is wanted too, for the experiments whose result is a failure. before_after.sh and
@@ -67,6 +73,7 @@ rsync -a --exclude='tmp/' \
       --exclude='._*' --exclude='/runs/' --exclude='/runs_injected/' --exclude='/m1_check/' \
       --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
       --include='*.stderr' --include='verdicts.tsv' --include='case.json' \
+      --include='*.timing.json' \
       --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 
@@ -86,9 +93,13 @@ fi
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"; rm -f "$remote_bad"' EXIT
-rsync -a --exclude='._*' --include='*/' --include='trace*.txt' --exclude='*' "$REMOTE:~/bench/results/" "$tmp/"
+rsync -a --exclude='._*' --include='*/' --include='trace*.txt' --include='shard_nodes-*.tsv' \
+      --exclude='*' "$REMOTE:~/bench/results/" "$tmp/"
 mkdir -p results/pipeline_info
-for f in "$tmp"/*/pipeline_info/trace*.txt; do
+# trace*.txt and shard_nodes-*.tsv: the trace and, where slurm/shard_nodes.sh has been run, which
+# node each placement shard was on. Both are tagged with the job, which is what lets every round's
+# pipeline_info flatten into this one directory without collisions.
+for f in "$tmp"/*/pipeline_info/trace*.txt "$tmp"/*/pipeline_info/shard_nodes-*.tsv; do
     [ -e "$f" ] || continue
     outdir=$(basename "$(dirname "$(dirname "$f")")")
     name=$(basename "$f")

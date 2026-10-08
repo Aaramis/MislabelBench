@@ -1,0 +1,32 @@
+{
+  "dataset": "gtdb_arc1200",
+  "n_seqs": 7051,
+  "aln_len": 1478,
+  "condition": "epang_T8_K25",
+  "rep": 1,
+  "run_name": "gtdb_arc1200__epang_T8_K25__rep1",
+  "timing_trusted": true,
+  "impl": "sativaepang",
+  "engine": "epang",
+  "threads": 8,
+  "folds": 25,
+  "host": "cpu-node-121",
+  "cpu_model": "AMD EPYC 9754 128-Core Processor",
+  "collected_at": "2026-10-08T04:27:04",
+  "n_mislabels": 469,
+  "inputs": {
+    "gtdb_arc1200.aligned.fasta": "4c1ab8e768d9e0b7b0136230cba01f3d4b574bcbeeb8a7e0376fda638669724b",
+    "gtdb_arc1200.tax": "76573d698bbade88004961a82d47cf76045a08c70953f9dc24881c5dea0d2146"
+  },
+  "wall_sec": 294.67,
+  "returncode": 0,
+  "timed_out": false,
+  "max_rss_mb": 9366.1,
+  "user_cpu_sec": 1646.33,
+  "sys_cpu_sec": 150.75,
+  "sativa_timing": "parsed",
+  "sativa_total_sec": 294.0,
+  "reftree_sec": 45.0,
+  "l1out_sec": 249.0,
+  "status": "ok"
+}

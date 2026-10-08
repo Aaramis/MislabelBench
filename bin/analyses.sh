@@ -287,7 +287,13 @@ resource_usage.py > results/resource_usage.txt
 # the spread over replicates is what bounds the interference and it cannot be read off a single run.
 for d in results/staged_timed_f*; do
     [ -d "$d/staged" ] || continue
-    staged_scaling.py --staged-dir "$d/staged" --trace-dir "$d/pipeline_info" \
+    # The trace dir is the round's own where it has one and results/pipeline_info otherwise, since
+    # bin/repatriate.sh flattens the traces of every round into that one directory. --round names
+    # the round so the span and the node record come from its trace and not from a sibling's.
+    info="$d/pipeline_info"
+    [ -d "$info" ] || info=results/pipeline_info
+    staged_scaling.py --staged-dir "$d/staged" --trace-dir "$info" \
+        --round "$(basename "$d")" \
         > "results/staged_scaling_${d#results/staged_timed_}.txt"
 done
 

@@ -1,0 +1,5 @@
+cell	shard	n_shards	job	node
+gtdb_arc1200/epang_T8_K25/rep1	0	4	2305921	cpu-node-121
+gtdb_arc1200/epang_T8_K25/rep1	1	4	2305922	cpu-node-121
+gtdb_arc1200/epang_T8_K25/rep1	2	4	2305929	cpu-node-121
+gtdb_arc1200/epang_T8_K25/rep1	3	4	2305928	cpu-node-121
