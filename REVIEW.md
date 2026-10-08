@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 180 |
+| findings in this report | 181 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 42 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1147 |
@@ -4122,6 +4122,60 @@ with; changing it would move a published ratio for no gain. And a taxon is keyed
 prefix, so the same species name under two different unresolved genera counts as two taxa. That lowers
 judgeability rather than raising it, it cannot affect GTDB, which has no placeholders at all, and for UNITE
 it is the conservative direction for a figure used as a ceiling.
+
+**181. The same cell, the same node and a byte-identical answer took 23 % longer three days later, so
+the panel's seconds are reproducible within a session and not across them.** Replicates one and two of
+the f25 round agree to 2.7 % on the placement stage, 237.0 s against 243.4 s, minutes apart. The round
+published in `results/staged_scaling_f25.txt` on 5 October gives **194.5 s** for the same stage. Every
+input to that comparison is identical and was checked rather than assumed:
+
+| | placement | %cpu | peak | `.mis` |
+|---|---|---|---|---|
+| published, 5 Oct | 194.5 s | 615.2 | 35.1 GB | `cdd76a4764065e62` |
+| replicate 1, 8 Oct | 237.0 s | 587.6 | 35.3 GB | `cdd76a4764065e62` |
+| replicate 2, 8 Oct | 243.4 s | 574.9 | 35.2 GB | `cdd76a4764065e62` |
+
+Same container image by path, same node `cpu-node-121`, same peak memory, and the **same flag list to the
+byte**. So the work did not change; the machine did. The CPU share fell from 615 % to 575, which is worse
+parallel efficiency, but the total core-seconds rose too, 1 353 to 1 735, so this is not the tool using
+fewer threads. It is a 35 GB working set on a 512-core node shared with other tenants, which is the
+exposure `--exclusive` removes and the QOS forbids.
+
+**This retires the number `Decisions.md` used to give up exclusivity.** That entry quoted 1 % from
+`sizes.sh`, three replicates of a whole run at 140 cores agreeing to 260.6, 261.7 and 263.4 s. The
+quantity here is different -- one 8-core memory-bound stage -- and so is the answer: **2.7 % within a
+session, 23 % across sessions.**
+
+What survives is the ratio, which is what the panel is for:
+
+| | 1 shard | 2 | 4 | speedup 1→2 | 1→4 |
+|---|---|---|---|---|---|
+| published | 194.5 | 111.2 | 56.4 | 1.75 | 3.45 |
+| replicate 1 | 237.0 | 121.3 | 65.4 | 1.95 | 3.62 |
+| replicate 2 | 243.4 | 119.5 | -- | 2.04 | -- |
+
+The ceiling the fold split leaves is 1.92 at two shards and 3.57 at four. Replicate 1 is at 1.95 and
+3.62, **above its own ceiling**, which cannot mean the distribution is superlinear: it means the
+one-shard baseline was penalised more than the four-shard round, which is what a shared node does to the
+most memory-bound member of a series. So a ratio read across rounds of one session is the robust
+quantity and a ratio above the ceiling is a diagnostic, not a result.
+
+`bin/paper_figure.py` pooled the unsuffixed round with the replicates, which would have averaged across
+the two dates and produced a number from no machine. It now takes the replicates when any exist and the
+unsuffixed round only when none do.
+
+**And every shard of every round ran on one node, which is how the contention got in.** The check added
+to replace exclusivity read Nextflow's `hostname` trace field, and that field is **empty under the Slurm
+executor on this cluster**, blank in every row of every round, and "-" under the local one, so it printed
+"not recorded" and answered nothing. Under `-profile ifb` a trace's `native_id` is the Slurm job id, and
+accounting knows where each job ran: `slurm/shard_nodes.sh` resolves that and writes `shard_nodes.tsv`
+beside the trace, and `bin/staged_scaling.py` reads it or the shard's own `timing.json`. The answer is the
+same for every round that exists -- all four shards of f7 on `cpu-node-121`, published round and new
+replicate alike, and both shards of f13 -- so the panel measures a split into independently scheduled
+Slurm jobs and not a split across machines. Four shards on one node share the memory bandwidth four nodes
+would not, which makes the measured speedup a floor, and it is also why the one-shard baseline is the
+member of the series that suffers most. The check reports rather than exits non-zero, since exiting would
+refuse every round there is.
 
 ## What is outstanding
 

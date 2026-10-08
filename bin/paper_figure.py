@@ -184,8 +184,14 @@ def staged_rows():
     """
     rows = []
     for fpj in (25, 13, 7):
-        files = sorted(ROOT.glob(f"results/staged_scaling_f{fpj}.txt")) \
-            + sorted(ROOT.glob(f"results/staged_scaling_f{fpj}_r*.txt"))
+        # Replicates when there are any, and then only replicates. Pooling them with the
+        # unsuffixed round would average across dates, and the dates do not agree: the same cell on
+        # the same node with a byte-identical .mis took 194.5 s for its placement on 5 October and
+        # 237.0 and 243.4 s in two rounds minutes apart on 8 October. Within a session the spread is
+        # 2.7 %, across sessions 23 %, because the node is shared and the QOS will not let a timed
+        # task have it alone. A mean over both dates would be a number from no machine.
+        files = sorted(ROOT.glob(f"results/staged_scaling_f{fpj}_r*.txt")) \
+            or sorted(ROOT.glob(f"results/staged_scaling_f{fpj}.txt"))
         reps = []
         for f in files:
             ln = f.read_text().splitlines()[1].split()
