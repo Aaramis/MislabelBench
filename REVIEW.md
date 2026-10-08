@@ -5202,6 +5202,52 @@ One mutant survives everything and is meant to: `j < len(inner)` to `j <= len(in
 loop, where the clade-count condition always stops first because no rank's target can exceed the number
 of tips. Checked by running it rather than argued: the suite passes, and it cannot be made to fail.
 
+**214. The sweep was reading stale bytecode, so some of its own numbers were wrong.** Extending it to
+the rest of the analysis layer turned up a result that could not be true: `sign_test(0, 10)` returning
+1.0 instead of 0.00195, on a working tree `git status` called clean. The cause is that python validates
+a cached `.pyc` against the source's **mtime and size**, an operator swap keeps the size identical, and
+this tool writes a mutant and then the original inside the same second. The stamp matches, so a test
+that *imports* the target gets the previous version's bytecode. Scripts the tests run as subprocesses
+are immune, because `__main__` is never cached, which is exactly why it took three sweeps to notice:
+the two scripts affected were the two whose tests import a function directly.
+
+The tool now clears the target's cache entry on every write and advances the mtime a second at a time.
+Every sweep was re-run afterwards, and the table below is the re-run.
+
+**215. Two scripts that carry published claims were barely tested, and one of them was the paper's
+mechanism.** With the cache fixed:
+
+| script | killed | |
+|---|---|---|
+| `bin/background_stability.py` | 6 of 6 | |
+| `bin/score_injection.py` | 5 of 5 | after finding 213 |
+| `bin/inject_mislabels.py` | 10 of 10 | after finding 213 |
+| `bin/paired_conditions.py` | 10 of 10 | after the tests below |
+| `bin/detection_law.py` | **1 of 13** -> 12 of 13 | after the tests below |
+| `bin/conflict_enrichment.py` | 9 of 19 | outstanding |
+| `bin/column_comparison.py` | 7 of 15 | outstanding |
+| `bin/minimal_case.py` | 4 of 7 | outstanding |
+| `bin/verify_injection.py` | 1 of 2 | outstanding |
+
+`bin/detection_law.py` produces the table behind the claim that detection is governed by what the
+removed sequence is placed against -- of the relatives that survive its removal, k-1 carry the wrong
+label and the rest carry the right one -- which is what makes the k limit a property of leave-one-out
+rather than of this fork. It killed **1 of 13**: the only test on it checked that it runs. The survivors
+were `k - 1` becoming `k + 1`, `group_size - k` becoming `group_size + k`, and the clamp
+`min(..., bins - 1)` becoming `max(...)`. Each re-bins every injected sequence in the published table,
+and the table would still have looked like a law. `tests/test_detection_law.py` works a fixture of one
+group of six, one of three and one of a single sequence, where the three bins are arithmetic a reader
+can redo, and pins the clamp at a ratio of exactly 1.0, the dropped sequence that has no surviving
+relative, `eligible_taxa`, and the `--also-present` restriction.
+
+`bin/paired_conditions.py`'s sign test was tested only at `wins = 0` and `wins = n/2`, where
+`min(wins, n - wins)` and `min(wins, n + wins)` agree -- so the mutation that turns the tail into the
+whole distribution, and every p-value into 1.0, survived. The case the grid actually reports is
+`wins == n`, a condition leading in every cell. Exact values are now pinned at 3 of 3 and 9 of 9, the
+two numbers `make_simulation.sh` quotes for running three injection seeds, and a third fixture adds the
+tied cell no fixture had: with no tie anywhere, `n = len(d) - ties` can be flipped to `+ ties` without
+any test noticing, and that changes both the p-value and the win and loss counts.
+
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added
 later, for the reason `make_simulation.sh` records, and the committed manifest has carried 37 since.

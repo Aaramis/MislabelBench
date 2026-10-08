@@ -121,11 +121,69 @@ class PairedComparison(Fixture):
         self.assertNotEqual(r.returncode, 0)
 
     def test_sign_test_is_two_sided_and_exact(self):
+        """Hand-computed values, including wins == n.
+
+        Every case here used to have wins at 0 or at n/2, where `min(wins, n - wins)` and
+        `min(wins, n + wins)` happen to agree, so a mutation of that expression survived: it turns
+        the tail into the whole distribution and every p into 1.0. wins == n is the case the grid
+        actually reports, since a condition that leads in every cell is the result being tested.
+        """
         sys.path.insert(0, str(BIN))
         from paired_conditions import sign_test
         self.assertAlmostEqual(sign_test(0, 10), 2 * 0.5 ** 10, places=12)
         self.assertEqual(sign_test(5, 10), 1.0)
         self.assertEqual(sign_test(0, 0), 1.0)
+        # Three of three is 0.25 and nine of nine is 0.0039: the two numbers make_simulation.sh
+        # quotes as the reason it runs three injection seeds instead of one.
+        self.assertAlmostEqual(sign_test(3, 3), 0.25, places=12)
+        self.assertAlmostEqual(sign_test(9, 9), 2 / 512, places=12)
+        self.assertAlmostEqual(sign_test(1, 5), 2 * 6 / 32, places=12)
+        self.assertAlmostEqual(sign_test(2, 8), 2 * 37 / 256, places=12)
+
+
+class PairedComparisonWithATie(Fixture):
+    """A third cell where the two conditions agree, which no fixture had.
+
+    Ties are excluded from the sign test and reported separately, so `n = len(d) - ties` is the line
+    that decides both the p-value and the win and loss counts. With no tied cell anywhere, flipping
+    that subtraction to an addition changes nothing and the suite passes.
+    """
+
+    CELLS = {"c1": ["i1", "i2", "i3", "i4"], "c2": ["j1", "j2", "j3", "j4"],
+             "c3": ["m1", "m2", "m3", "m4"]}
+    FLAGS = {("c1", "A"): ["i1", "i2"],       ("c1", "B"): ["i1"],
+             ("c2", "A"): ["j1", "j2", "j3"], ("c2", "B"): ["j1", "j2", "j3", "j4"],
+             ("c3", "A"): ["m1"],             ("c3", "B"): ["m1"]}
+
+    def test_a_tie_is_set_aside_and_counted(self):
+        out = self.tmp / "paired.json"
+        r = run("paired_conditions.py", "--injected-dir", self.inj, "--runs-dir", self.runs,
+                "--a", "A", "--b", "B", "--out", out)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        row = json.loads(out.read_text())["by_k"][0]
+        self.assertEqual(row["cells"], 3)
+        self.assertEqual(row["cells_tied"], 1)
+        self.assertEqual(row["cells_compared"], 2, "the tie leaves the test, not the table")
+        self.assertEqual(row["cells_b_greater"], 1)
+        self.assertEqual(row["cells_a_greater"], 1)
+        self.assertEqual(row["sign_test_p"], 1.0, "one of two is as balanced as it gets")
+
+    def test_the_printed_row_says_what_the_record_says(self):
+        """The table in the log is computed a second time in the print, from the same variables but
+        written out again: three of the ten mutations in this script live only there."""
+        r = run("paired_conditions.py", "--injected-dir", self.inj, "--runs-dir", self.runs,
+                "--a", "A", "--b", "B", "--out", self.tmp / "p.json")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        row = json.loads((self.tmp / "p.json").read_text())["by_k"][0]
+        data = [l for l in r.stdout.splitlines() if l.strip().startswith("2 ")
+                or l.strip().startswith("2\t")]
+        self.assertEqual(len(data), 1, f"one data row expected, got {data}")
+        cols = data[0].split()
+        self.assertEqual(cols[0], str(row["k"]))
+        self.assertEqual(cols[1], str(row["cells"]))
+        self.assertEqual(cols[4], str(row["cells_b_greater"]))
+        self.assertEqual(cols[5], str(row["cells_a_greater"]))
+        self.assertEqual(cols[6], str(row["cells_tied"]))
 
 
 if __name__ == "__main__":

@@ -11,17 +11,19 @@ It reports how many mutants the suite killed and prints the line of every surviv
 not automatically a defect -- some mutations cannot change the answer at all -- but it is a line no
 test distinguishes, which is worth knowing before trusting it.
 
-Three things it deliberately does. It refuses to run when the suite already fails, because then every
+Four things it deliberately does. It refuses to run when the suite already fails, because then every
 mutant counts as killed and a broken test reports a perfect score -- which is what the first run of
 this file did. It skips occurrences inside comments and string literals, taken from the tokenizer and
 not from the look of the line, because mutating prose measures nothing: filtering by line alone left
 20 survivors where 7 were real, and a `>=` inside a printed message survives every test there will
-ever be. And it restores the file in a `finally`, because leaving a mutant in the working tree when a
-run is interrupted is the one way a tool like this can do real damage.
+ever be. It restores the file in a `finally`, because leaving a mutant in the working tree when a run is
+interrupted is the one way a tool like this can do real damage. And it clears the target's cached
+bytecode on every write -- see `write` below for the silent wrong answer that cost.
 """
 
 import argparse
 import io
+import os
 import subprocess
 import sys
 import tokenize
@@ -34,6 +36,27 @@ REPO = Path(__file__).resolve().parent.parent
 PAIRS = [(">=", ">"), (">=", "=="), ("<", "<="), (" + ", " - "), (" - ", " + "),
          ("min(", "max("), ("max(", "min("), ("is None", "is not None"),
          ("start=1", "start=0"), ("reversed(", "list(")]
+
+
+def write(target, text, stamp=[0]):
+    """Write the file and make sure the next interpreter actually reads it.
+
+    Python validates a cached .pyc against the source's mtime and size. An operator swap keeps the
+    size identical, and a sweep writes the mutant and the original within the same second, so the
+    stamp matches and a test that *imports* the target gets the previous version's bytecode. That is
+    not a theoretical risk: this tool reported `sign_test` as returning 1.0 for every input, from a
+    .pyc left behind by a mutant, on a working tree git called clean. Scripts the tests run as
+    subprocesses are unaffected, since `__main__` is never cached, which is why it took a while to
+    see.
+
+    So the cache entry goes, and the mtime advances by a second each write on top of that.
+    """
+    target.write_text(text)
+    for stale in (target.parent / "__pycache__").glob(f"{target.stem}.*.pyc"):
+        stale.unlink()
+    stamp[0] += 1
+    now = os.stat(target).st_mtime + stamp[0]
+    os.utime(target, (now, now))
 
 
 def literal_spans(text):
@@ -91,7 +114,7 @@ def main():
                 if mutated == original or inside(spans, len(head)):
                     continue                     # prose in a comment or a message, not behaviour
                 mutants += 1
-                target.write_text(mutated)
+                write(target, mutated)
                 r = subprocess.run([sys.executable, "-m", "unittest", args.tests],
                                    cwd=REPO, capture_output=True, text=True)
                 if r.returncode:
@@ -100,7 +123,7 @@ def main():
                     survivors.append((old, new,
                                       original.splitlines()[original[:len(head)].count("\n")]))
     finally:
-        target.write_text(original)
+        write(target, original)
 
     print(f"{mutants} mutants in {target}, {killed} killed by {args.tests}, "
           f"{len(survivors)} survived")
