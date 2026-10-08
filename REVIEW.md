@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 196 |
+| findings in this report | 197 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4661,6 +4661,33 @@ the noisier tool at both sizes, 17.1 % against 3.5 % and 33.2 % against 1.1 %, s
 fork's advantage more often than it overstates it. That is the opposite direction from the `-m thorough`
 and GTRCAT qualifications, which both run against the fork, and all three belong together wherever the
 ratio is quoted.
+
+**197. DISTRIBUTION.md's central number was the tightest of four rounds.** "At four shards the pipeline's
+spread is **0.6 s** (55.8, 56.2, 56.3, 56.4) where the `srun` version's was 134 s. That is the whole
+difference" -- one round, and the nine of 8 October give three more:
+
+| round | shard times | spread |
+|---|---|---|
+| published, 5 Oct | 55.8, 56.2, 56.3, 56.4 | **0.6 s** |
+| replicate 1 | 59.1, 60.8, 61.9, 65.4 | 6.3 s |
+| replicate 2 | 60.6, 61.6, 61.9, 64.6 | 4.0 s |
+| replicate 3 | 59.9, 61.4, 62.7, 64.9 | 5.1 s |
+
+**4.0 to 6.3 s**, so the published 0.6 was the best of four. Against 134 s for the `srun` fan-out the
+conclusion does not move, which is why this is a correction to a number and not to an argument, and
+`DISTRIBUTION.md` now carries the four rounds rather than the one.
+
+The two-shard spread is worth the line it took to check. It is 16.6, 19.9 and 20.0 s, and the fold split
+accounts for about half: 13 folds against 12 predicts a 9 s gap on a 121 s step. The rest is that the
+13-fold shard is slower **per fold** too, 9.33 s against 8.73, so the longer shard is not merely longer.
+That is the contention every other measurement this week has met, and it is the third place it shows up
+in the same panel after the reference stage's 48 % and the cross-session 23 %.
+
+This is the fourth single-run number replaced by a replicated one in two days, after the memory law twice
+and the speed ratio. The pattern is specific enough to state as a rule: **this benchmark's own
+`resource_usage.py` says "medians over replicates, never a single run" and the documents around it did not
+follow it.** Four of the five places that broke it have now been fixed; the fifth, the `srun` fan-out's
+134 s, is three replicates already and is the number this one is measured against.
 
 ## What is outstanding
 

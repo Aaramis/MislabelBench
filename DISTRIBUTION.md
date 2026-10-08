@@ -123,12 +123,28 @@ different questions and only one of them is about overhead.
 the staged pipeline does the same placement work as the `srun` version rather than something
 cheaper.
 
-**At four shards the pipeline's spread is 0.6 s** (55.8, 56.2, 56.3, 56.4) where the `srun`
-version's was 134 s. That is the whole difference and it has one cause: each task is its own Slurm
-allocation of eight cores, so a shard cannot lose cores to another tenant the way a shard sharing one
-140-core allocation can. The expectation written here first — that a pipeline fan-out would land below
-1.58x because of staging — was wrong, and wrong for an interesting reason: the staging it pays for is
-less than the contention it avoids.
+**At four shards the pipeline's spread is 5.1 s on average** where the `srun` version's was 134 s. That
+is the whole difference and it has one cause: each task is its own Slurm allocation of eight cores, so a
+shard cannot lose cores to another tenant the way a shard sharing one 140-core allocation can. The
+expectation written here first — that a pipeline fan-out would land below 1.58x because of staging — was
+wrong, and wrong for an interesting reason: the staging it pays for is less than the contention it
+avoids.
+
+Three replicates, because this line said **0.6 s** for a year on the strength of one round, and 0.6 was
+the tightest of the four that now exist:
+
+| round | shard times | spread |
+|---|---|---|
+| published, 5 Oct | 55.8, 56.2, 56.3, 56.4 | 0.6 s |
+| replicate 1, 8 Oct | 59.1, 60.8, 61.9, 65.4 | 6.3 s |
+| replicate 2 | 60.6, 61.6, 61.9, 64.6 | 4.0 s |
+| replicate 3 | 59.9, 61.4, 62.7, 64.9 | 5.1 s |
+
+So 4.0 to 6.3 s across the three replicates, against 134 s for the `srun` fan-out: the conclusion is
+untouched and the figure quoted for it was a best case. At two shards the spread is 16.6, 19.9 and 20.0 s,
+and the fold split explains only half of it — 13 folds against 12 predicts a 9 s gap on a 121 s step, and
+the 13-fold shard is slower per fold as well, 9.33 s against 8.73, which is the same contention the rest
+of these measurements keep meeting.
 
 **The four shards were on one node, not four.** `slurm/shard_nodes.sh` resolves each shard's Slurm job
 through accounting, since Nextflow's `hostname` trace field is empty under the Slurm executor here, and
