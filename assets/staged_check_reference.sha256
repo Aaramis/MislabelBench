@@ -1,0 +1,12 @@
+# The flag list the four-stage path must reproduce, by digest rather than by file.
+#
+# slurm/staged_check.sh used to compare against the file itself, under results/baseline2k/, and that
+# file never reaches the cluster: bin/restore_cluster.sh says "results/ travels the other way" and
+# leaves results/ empty by construction, so the check worked only on a cluster that still happened to
+# hold the run from the day it was produced there. It stopped working when the cluster was rebuilt,
+# and the failure was "no single-process .mis at ...", which reads as a missing input rather than as a
+# check that cannot run where it runs.
+#
+# A digest travels with the code. bin/verify_manifests.py asserts this line against the committed
+# file, so the two cannot drift apart.
+90bcb3fb00dfdc5bc0378cc578142087d09ebaf11756864f9ab93c253c5d64f7  results/baseline2k/runs/gtdb_arc2k__epang_T8_K25__rep1/gtdb_arc2k__epang_T8_K25__rep1.mis

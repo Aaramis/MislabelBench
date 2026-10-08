@@ -19,6 +19,7 @@ A check, so it exits non-zero when something disagrees.
 """
 
 import argparse
+import hashlib
 import json
 from collections import defaultdict
 import os
@@ -82,6 +83,34 @@ def _block(text, key, value=r"([0-9.]+)\s*$"):
         if entry:
             out[entry.group(1)] = float(entry.group(2))
     return out
+
+
+def check_staged_reference(problems):
+    """assets/staged_check_reference.sha256 must match the file it names.
+
+    slurm/staged_check.sh compares the four-stage path's flag list against that digest rather than
+    against the file, because the file lives under results/ and bin/restore_cluster.sh leaves results/
+    empty by construction on the cluster: the check was passing only where the original run happened to
+    survive, and it failed with "no single-process .mis at ..." once the cluster was rebuilt. A digest
+    travels with the code, and this is what keeps it from drifting from what it describes.
+    """
+    rec = Path("assets/staged_check_reference.sha256")
+    if not rec.exists():
+        problems.append(f"{rec} is missing; slurm/staged_check.sh has nothing to compare against")
+        return 0
+    rows = [l.split() for l in rec.read_text().splitlines()
+            if l.strip() and not l.startswith("#")]
+    for row in rows:
+        if len(row) != 2:
+            problems.append(f"{rec}: expected '<digest>  <path>', got {' '.join(row)[:60]}")
+            continue
+        digest, path = row
+        target = Path(path)
+        if not target.exists():
+            problems.append(f"{rec}: {path} does not exist")
+        elif hashlib.sha256(target.read_bytes()).hexdigest() != digest:
+            problems.append(f"{rec}: {path} does not match the recorded digest")
+    return len(rows)
 
 
 def check_subsets(problems):
@@ -193,7 +222,6 @@ def check_alignment_model(problems):
     CLEN is the width of every alignment, and the archaeal and bacterial sets sharing one width is
     what makes error kind 6's concatenation possible rather than lucky.
     """
-    import hashlib
     import re as _re
 
     yml = Path("assets/datasets.yml")
@@ -324,12 +352,14 @@ def main():
     n_links = check_symlinks(problems)
     n_prov = check_provenance(problems)
     n_sub = check_subsets(problems)
+    n_ref = check_staged_reference(problems)
     print(f"{checked} datasets in {len(manifests)} manifests checked, "
           f"{checked - len(unsound)} sound; the covariance model and {n_aln} alignment widths "
           f"against it; {n_data} generated-file counts against data/README.md; {n_links} links "
           f"under data/ checked for being relative and resolving; {n_prov} provenance "
           f"figures in assets/datasets.yml against what the repository holds; {n_sub} size subsets "
-          f"for taking whole species groups")
+          f"for taking whole species groups; {n_ref} digest(s) in "
+          f"assets/staged_check_reference.sha256 against the files they name")
     for pb in problems:
         print(f"  {pb}", file=sys.stderr)
     if problems:

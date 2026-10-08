@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 189 |
+| findings in this report | 190 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -220,8 +220,8 @@ Worth stating, because an audit that only lists faults does not say what it cove
   the node exclusively with the model pinned and declares `timing_trusted true`, foreign does neither
   and declares false.
 - **`slurm/staged_check.sh`** asserts rather than reports: it compares the staged path's `.mis` against
-  the committed `baseline2k` run and exits non-zero if they differ. Its reference is tracked, so it works
-  from a clone, which is what makes its verdict worth anything.
+  the `baseline2k` run and exits non-zero if they differ. It compares a **digest**, not the file, for the
+  reason finding 190 gives: the file is tracked here and never reaches the cluster.
 - **The M1 criterion has no standing check any more.** `slurm/m1_check.sh` did the same against version
   1's `n800` run, and both went in "Remove version 1 entirely", so the plan's acceptance test -- the new
   harness landing on the v1 figure for upstream at one thread -- is recorded in `RESULTS.md` and
@@ -4420,6 +4420,40 @@ it reports as "2 species group(s) taken in part"; the real data exits 0.
 One detail worth the line it cost: the subset record names its source by basename and digest rather than
 by path, as every provenance record here does, so the check resolves it beside the record. Reading it as a
 path found nothing and said so, which is the failure mode this sweep exists to catch.
+
+**190. The one assertion script left could not run where it runs, and running it proved the provenance
+fields work.** Nothing was in the queue, so `slurm/staged_check.sh` was submitted -- the check that the
+four-stage path produces the same flag list as the single-process one -- partly to exercise the `cmd`,
+`host` and `cpu_model` fields that findings 171, 174 and 188 had armed and never seen used on a real run.
+
+**The fields work.** The first real record to carry them, `results/staged_check/runs/.../run.json`:
+
+```
+host  = cpu-node-39      cpu_model = Intel(R) Xeon(R) CPU E5-2695
+cmd   = ['sativa-epang', '-s', 'gtdb_arc2k.fasta', '-t', 'gtdb_arc2k.tax', '-T', '8',
+         '-n', 'gtdb_arc2k__epang_T8_K25__rep1', '-tmpdir', '...', '-m', 'ultrafast',
+         '-C', '0.4', '-x', 'BAC', '-p', '42', '-S']
+```
+
+The host is the node that ran the tool rather than the collector, and the five flags that decide what the
+tool does are in the record for the first time in 1 157 of them.
+
+**And the check failed, on its own reference.** `no single-process .mis at .../results/baseline2k/...`.
+That file is committed here and **never reaches the cluster**: `bin/restore_cluster.sh` says in its own
+comment that "results/ travels the other way" and leaves `results/` empty by construction, and
+`bin/push_code.sh` sends code. So the check was passing only where the original run happened to survive
+from the day it was produced there, and it stopped when the cluster was rebuilt. The bullet above said it
+"works from a clone"; a cluster working copy is not a clone, and that is now corrected.
+
+The comparison itself was done by hand to close the question the job could not: the staged `.mis` fetched
+back is **byte identical** to the committed reference, 93 flags, `90bcb3fb00dfdc5b`.
+
+Fixed so the check travels. `assets/staged_check_reference.sha256` carries the digest and the path it
+describes, the script compares against the digest and prints the committed file's own digest beside it
+when the file is there, and its failure path no longer diffs against a file that may be absent.
+`check_staged_reference` in `bin/verify_manifests.py` holds the asset to the file so the two cannot drift
+-- verified by appending one byte to the reference in a scratch copy, which makes the gate exit 1 with
+"does not match the recorded digest".
 
 ## What is outstanding
 

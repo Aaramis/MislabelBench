@@ -31,13 +31,26 @@ nextflow run "$BENCH_ROOT" -profile singularity \
   --outdir "$BENCH_ROOT/results/staged_check"
 
 # The comparison, here rather than by hand, so that a run either demonstrates equality or fails.
+#
+# Against a digest and not against the file. The single-process .mis lives under results/baseline2k/
+# in the repository and never reaches the cluster: bin/restore_cluster.sh says "results/ travels the
+# other way" and leaves results/ empty by construction, so this compared against a file that is here
+# only on a cluster still holding the run from the day it was produced there. It stopped working when
+# the cluster was rebuilt, and said "no single-process .mis at ...", which reads as a missing input
+# rather than as a check that cannot run where it runs. assets/staged_check_reference.sha256 travels
+# with the code, and bin/verify_manifests.py holds it to the committed file.
 single=$BENCH_ROOT/results/baseline2k/runs/gtdb_arc2k__epang_T8_K25__rep1/gtdb_arc2k__epang_T8_K25__rep1.mis
+expected=$(grep -v '^#' "$BENCH_ROOT/assets/staged_check_reference.sha256" | awk 'NF{print $1; exit}')
 staged=$(ls "$BENCH_ROOT"/results/staged_check/runs/*/*.mis 2>/dev/null | head -1)
-[ -s "$single" ] || { echo "no single-process .mis at $single" >&2; exit 1; }
+[ -n "$expected" ] || { echo "no digest in assets/staged_check_reference.sha256" >&2; exit 1; }
 [ -n "$staged" ] && [ -s "$staged" ] || { echo "the staged path produced no .mis" >&2; exit 1; }
-echo "single-process: $(grep -vc '^;' "$single") flags, $(md5sum "$single" | cut -d' ' -f1)"
-echo "staged:         $(grep -vc '^;' "$staged") flags, $(md5sum "$staged" | cut -d' ' -f1)"
-if cmp -s "$single" "$staged"; then
+got=$(sha256sum "$staged" | cut -d' ' -f1)
+echo "expected: $expected"
+echo "staged:   $got  ($(grep -vc '^;' "$staged") flags)"
+if [ -s "$single" ]; then
+    echo "the committed file is here too: $(sha256sum "$single" | cut -d' ' -f1)"
+fi
+if [ "$got" = "$expected" ]; then
     echo "VERDICT: byte identical"
 else
     echo "VERDICT: they differ" >&2
