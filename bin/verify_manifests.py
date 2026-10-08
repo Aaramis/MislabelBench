@@ -20,6 +20,7 @@ A check, so it exits non-zero when something disagrees.
 
 import argparse
 import json
+from collections import defaultdict
 import os
 import re as _re
 import sys
@@ -80,6 +81,54 @@ def _block(text, key, value=r"([0-9.]+)\s*$"):
         entry = _re.match(rf"\s+(\w+):\s*{value}", line)
         if entry:
             out[entry.group(1)] = float(entry.group(2))
+    return out
+
+
+def check_subsets(problems):
+    """Every size subset takes whole species groups, which is what makes it resemble its parent.
+
+    `bin/subset_taxa.py` opens by saying it cuts "by taking whole taxa, never part of one", and why:
+    leave-one-out needs a sequence to have a sibling in its taxon, so removing half the members of a
+    species turns judgeable sequences into unjudgeable ones and the subset stops resembling the set it
+    came from. Nothing checked it. `bin/verify_regeneration.py` rebuilds the four subsets and compares
+    them byte for byte, which would reproduce a wrong subset faithfully.
+
+    Two things per subset: no sequence from outside the parent, and no species group present in part.
+    """
+    n = 0
+    for rec_path in sorted(Path("data").glob("*/*.subset.json")):
+        rec = json.loads(rec_path.read_text())
+        # The record names the source by basename and digest rather than by path, the way every
+        # provenance record here does, so it resolves beside the subset it describes.
+        src = rec_path.parent / Path(rec["source_taxonomy"]).name
+        sub = rec_path.with_name(rec_path.name.replace(".subset.json", ".tax"))
+        if not src.exists() or not sub.exists():
+            problems.append(f"{rec_path}: {src} or {sub} is missing")
+            continue
+        parent = read_tax(src)
+        child = read_tax(sub)
+        groups = defaultdict(set)
+        for name, lineage in parent.items():
+            groups[lineage].add(name)
+        outside = [x for x in child if x not in parent]
+        if outside:
+            problems.append(f"{sub.name}: {len(outside)} sequence(s) not in {src.name}, "
+                            f"e.g. {outside[0]}")
+        partial = [lin for lin in {child[x] for x in child}
+                   if {x for x in child if child[x] == lin} != groups.get(lin, set())]
+        if partial:
+            problems.append(f"{sub.name}: {len(partial)} species group(s) taken in part, "
+                            f"e.g. {partial[0][-44:]}")
+        n += 1
+    return n
+
+
+def read_tax(path):
+    out = {}
+    for line in Path(path).read_text(errors="replace").splitlines():
+        if line.strip():
+            name, _, lineage = line.partition("\t")
+            out[name] = lineage
     return out
 
 
@@ -274,11 +323,13 @@ def main():
     n_data = check_data_readme(problems)
     n_links = check_symlinks(problems)
     n_prov = check_provenance(problems)
+    n_sub = check_subsets(problems)
     print(f"{checked} datasets in {len(manifests)} manifests checked, "
           f"{checked - len(unsound)} sound; the covariance model and {n_aln} alignment widths "
           f"against it; {n_data} generated-file counts against data/README.md; {n_links} links "
           f"under data/ checked for being relative and resolving; {n_prov} provenance "
-          f"figures in assets/datasets.yml against what the repository holds")
+          f"figures in assets/datasets.yml against what the repository holds; {n_sub} size subsets "
+          f"for taking whole species groups")
     for pb in problems:
         print(f"  {pb}", file=sys.stderr)
     if problems:

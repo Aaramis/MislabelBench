@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 188 |
+| findings in this report | 189 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4394,6 +4394,32 @@ a real run. The first measured run after the next `bin/push_code.sh` will be the
 The comment now gives no count at all. A corpus number inside a code comment is checked by nothing --
 `bin/verify_report_references.py` checks REVIEW.md's bold counts and the whole reason this report states
 its own is that they are verified -- so a count that belongs anywhere belongs there.
+
+**189. The property the size gradient depends on was asserted in a docstring and checked nowhere.**
+A third sweep of the same kind as findings 187 and 188, this time for invariants: every "must", "never",
+"always" and "cannot" in a `bin/` comment or docstring, **118 assertions**. Most are a gate's own
+statement of what it enforces, or prose. One is an invariant in a generator with nothing behind it.
+
+`bin/subset_taxa.py` opens with "Cut a dataset down by taking whole taxa, never part of one", and says
+why in the next paragraph: leave-one-out needs a sequence to have a sibling in its taxon, so removing
+half the members of a species turns judgeable sequences into unjudgeable ones and the subset stops
+resembling the set it came from. Every size in the gradient -- 402, 801, 2 023, 4 001 against the full
+7 051 -- is one of those subsets, so panel B's curve and the judgeability comparison both rest on it.
+`bin/verify_regeneration.py` rebuilds the four and compares byte for byte, which would reproduce a wrong
+subset faithfully.
+
+Measured: the full set holds **7 051 sequences in 3 067 species groups**, and across the four subsets
+there are **0 sequences from outside the parent and 0 groups taken in part**. The invariant holds.
+
+It is now `check_subsets` in `bin/verify_manifests.py`, beside the other provenance checks, which report
+one line together. Two things per subset, no sequence absent from the parent and no group present in
+part, and the gate's own line grew to say "4 size subsets for taking whole species groups". Checked
+against a fixture built to fail -- a parent of two species pairs and a subset keeping one of each -- which
+it reports as "2 species group(s) taken in part"; the real data exits 0.
+
+One detail worth the line it cost: the subset record names its source by basename and digest rather than
+by path, as every provenance record here does, so the check resolves it beside the record. Reading it as a
+path found nothing and said so, which is the failure mode this sweep exists to catch.
 
 ## What is outstanding
 
