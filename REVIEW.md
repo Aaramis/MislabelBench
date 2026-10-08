@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 191 |
+| findings in this report | 192 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 43 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1156 |
@@ -4485,6 +4485,18 @@ in, which is the only order that stays true as it grows, and no number -- for th
 reached about a code comment three hours earlier. "How to read it" says where the boundary between the
 grouped twenty and the sequence falls, because a thematic grouping of a list that keeps growing goes
 stale, and this one did.
+
+**192. The memory step is being narrowed rather than left unexplained.** Finding 185 measured two flat
+regimes in the fork's memory per sequence -- 4.59, 4.47, 4.61 at 402, 801 and 2 023 sequences and 5.14,
+5.13 at 4 001 and 7 051, a 12 % gap with no overlap over 3, 3, 8, 3 and 15 runs -- and established that
+none of the tool's four size thresholds falls in the gap, so it is not a configured switch. `README.md`
+tells a reader to extrapolate from the large-reference 5.13 and says the cause is unknown.
+
+`slurm/memstep.sh` halves the interval with one run at **3 000 sequences**: 4.6 puts the step above that
+size, 5.14 below it. The subset is built by the job from the committed source with the seed convention
+every other subset uses, so the measurement needs nothing this repository does not hold, and
+`bin/subset_taxa.py` takes whole species groups, which finding 189 made a gate. Untimed, since the peak
+comes from the trace's `peak_rss` whatever the timing flag says and this job has no claim on seconds.
 
 ## What is outstanding
 
