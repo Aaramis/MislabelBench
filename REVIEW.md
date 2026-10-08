@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 185 |
+| findings in this report | 186 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4308,6 +4308,31 @@ and 15 runs. The step lies between 2 023 and 4 001, where **none of the four thr
 not a configured switch and stays unexplained. The manuscript extrapolates its 400 000-sequence ceiling
 from 5 MB per sequence, which is the large-reference regime and therefore the right one to extrapolate
 from; a reader taking 4.59 from the smallest point would overstate the ceiling by a fifth.
+
+**186. The agreement measure dropped unparseable rows and kept the last of a repeated sequence, both
+without a word, and the Jaccard it computes is published for two datasets.** `bin/agreement.py` read a
+`.mis` with
+
+```python
+f = line.split("\t")
+if len(f) >= 7:
+    out[f[0]] = (f[1], f[3], f[6], float(f[4]))
+```
+
+A row with fewer than seven columns vanished, and a dict keyed by `SeqID` keeps the last of a
+duplicate. Either fault lowers the Jaccard quietly, which is the one thing a non-regression control
+must not do: the claim it supports is that the fork keeps upstream's decision rule, so a number that
+drifts downward for a parsing reason reads as the fork diverging.
+
+Swept before changing anything, over every flag list in the repository: **1 482 `.mis` files, 175 499
+data rows, 0 rows with fewer than seven columns and 0 files with a repeated `SeqID`.** So neither has
+ever happened, and `bin/score_injection.py` beside it already warns on a short row where this one said
+nothing.
+
+Both are now errors that name the file and the line, which is the right severity for a published
+number and costs nothing while the corpus is clean. Checked on three fixtures: a five-column row exits 1
+with "5 columns, need at least 7", a repeated id exits 1 with "a appears twice", and a sound pair still
+prints its table. `bin/analyses.sh` rebuilds every agreement table unchanged.
 
 ## What is outstanding
 
