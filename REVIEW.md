@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 183 |
+| findings in this report | 184 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4231,6 +4231,35 @@ rounds, a 20 s range on a 54 s mean, where the placement holds to 3.4 %. That is
 says the three runs "agree to within 33.1 s on the total" and not to 3 %: the total carries the reference
 stage's contention. Nine rounds replace three in the panel and are not averaged with them, for the reason
 finding 181 gives.
+
+**184. Twelve rounds, one answer, and nine repeats of identical work that give the panel its error bar
+for free.** The twelve staged rounds that exist -- three shard counts times three replicates on 8 October,
+plus the three published on 5 October -- all produce the **same `.mis`, `cdd76a4764065e62`, byte for
+byte**. So the staged path is invariant to the shard count, 1, 2 and 4 alike, and reproducible across
+sessions three days apart. `slurm/staged_check.sh` asserts the staged path equals the monolithic one; this
+adds that it does not depend on how the folds are dealt.
+
+That invariance is what makes the timings a controlled experiment. The reference stage does not take
+`folds_per_job` and the output proves it did the same work nine times, so its spread is contention and
+nothing else:
+
+| stage | n | median | min | max | range |
+|---|---|---|---|---|---|
+| reference | 9 | 45.9 | 43.9 | 65.2 | **48 % of the min** |
+| lootasks | 9 | 2.1 | 1.9 | 2.2 | 14 % of 2 s, which is nothing |
+| looscore | 9 | 21.8 | 20.7 | 29.2 | 41 % |
+
+The nine reference values are 43.9, 44.8, 45.4, 45.7, 45.9, 51.2, 52.9, 60.9, 65.2. Five sit in a 4.6 %
+band and four trail above it: a tight floor with a long tail, which is the shape of a shared machine and
+not of measurement noise. The floor is what the node can do and the tail is what the other tenants cost.
+
+**Two consequences, and the second is the one that matters for the paper.** The minimum, not the mean, is
+the estimator closest to an uncontended machine; the mean is what a user on this cluster actually waits
+for. The panel keeps the mean, because the comparator's seconds were measured under the same exposure and
+a floor for one tool against a mean for the other would be the unfair comparison, and it states the
+spread. And the stage the panel is *about* is the stable one: placement holds to 1.2 to 3.4 % across
+replicates while the reference build swings 48 %. The noisiest stage in the figure is the one that does
+not distribute, so the distribution claim rests on the measurement that reproduces.
 
 ## What is outstanding
 
