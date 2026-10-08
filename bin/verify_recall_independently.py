@@ -60,6 +60,11 @@ def main():
     for spec in args.summary:
         cond, _, path = spec.partition("=")
         summary = json.loads(Path(path).read_text())
+        # Checked once here and not inside the loop below, which an empty injected directory never
+        # enters: the guard was there first and the second pass over summary["rows"] still raised a
+        # KeyError from pathlib's depth with nothing naming the file.
+        if "rows" not in summary:
+            sys.exit(f"{path} has no 'rows': it is not a grid summary")
         mine = defaultdict(list)
         for truth_path in sorted(Path(args.injected_dir).glob("*/*.truth.json")):
             cell = truth_path.parent.name

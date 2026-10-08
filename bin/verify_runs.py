@@ -19,10 +19,22 @@ fatal, since wall_sec is measured independently, so that one is reported and doe
 """
 
 import argparse
+import glob
 import json
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
+
+
+def expand(pattern):
+    """Paths matching `pattern`, which may be absolute.
+
+    Path('.').glob raises NotImplementedError on an absolute pattern -- "Non-relative
+    patterns are unsupported" -- so the flag this takes only ever worked for a caller
+    already standing in the benchmark root, and pointing it at a scratch tree crashed
+    with a traceback from inside pathlib. glob.glob takes either.
+    """
+    return [Path(p) for p in glob.glob(pattern)]
 
 
 def main():
@@ -31,7 +43,7 @@ def main():
                    help="run records to check, relative to the working directory")
     args = p.parse_args()
 
-    records = sorted(Path(".").glob(args.glob))
+    records = sorted(expand(args.glob))
     if not records:
         sys.exit(f"no run record matched {args.glob}")
 

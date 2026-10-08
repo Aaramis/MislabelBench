@@ -25,9 +25,21 @@ flag set and the rank rather than the bytes. Upstream is byte-identical at 1, 8 
 
 import argparse
 import re
+import glob
 import sys
 from collections import defaultdict
 from pathlib import Path
+
+
+def expand(pattern):
+    """Paths matching `pattern`, which may be absolute.
+
+    Path('.').glob raises NotImplementedError on an absolute pattern -- "Non-relative
+    patterns are unsupported" -- so the flag this takes only ever worked for a caller
+    already standing in the benchmark root, and pointing it at a scratch tree crashed
+    with a traceback from inside pathlib. glob.glob takes either.
+    """
+    return [Path(p) for p in glob.glob(pattern)]
 
 UPSTREAM = re.compile(r"^upstream_(\w+?)_T(\d+)$")
 FORK = re.compile(r"^epang_T(\d+)_K(\d+|exact)(_tree)?$")
@@ -62,7 +74,7 @@ def main():
     args = p.parse_args()
 
     cells = defaultdict(dict)
-    for d in sorted(Path().glob(args.runs_glob)):
+    for d in sorted(expand(args.runs_glob)):
         mis = d / (d.name + ".mis")
         if not mis.is_file() or d.name.count("__") != 2:
             continue
@@ -97,6 +109,11 @@ def main():
             problems.append(f"{a} and {b} declare different batching and produced the same output "
                             f"on all {n} cells: the knob did not reach the tool")
 
+    # Nothing compared is not agreement. This printed "0 thread pairs ... over 0 cells" and exited
+    # 0 for a runs glob that matched nothing, which until the absolute-pattern fix above could not
+    # even be reached: pathlib refused the pattern before the count was taken.
+    if not thread_pairs and not knob_pairs:
+        sys.exit(f"no condition pair found under {args.runs_glob}, so nothing was compared")
     print(f"{thread_pairs} thread pairs checked for the same flags, {len(knob_pairs)} batching pairs "
           f"over {sum(n for n, _ in knob_pairs.values())} cells checked for any difference; "
           f"{len(problems)} problem(s)")

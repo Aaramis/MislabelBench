@@ -13,11 +13,23 @@ different answers is itself reported.
 """
 
 import argparse
+import glob
 import json
 import re
 import sys
 from collections import defaultdict
 from pathlib import Path
+
+
+def expand(pattern):
+    """Paths matching `pattern`, which may be absolute.
+
+    Path('.').glob raises NotImplementedError on an absolute pattern -- "Non-relative
+    patterns are unsupported" -- so the flag this takes only ever worked for a caller
+    already standing in the benchmark root, and pointing it at a scratch tree crashed
+    with a traceback from inside pathlib. glob.glob takes either.
+    """
+    return [Path(p) for p in glob.glob(pattern)]
 
 # The outdir may carry a shell variable -- results/staged_timed_f${FPJ} -- in which case the
 # literal prefix before it is what identifies the family of directories the script writes. Without
@@ -59,7 +71,7 @@ def main():
             sys.exit(1)
 
     wrong, unknown, checked, fixed = defaultdict(int), defaultdict(int), 0, 0
-    for f in sorted(Path(".").glob(args.glob)):
+    for f in sorted(expand(args.glob)):
         name = f.parts[1]
         key = name if name in declared else next(
             (k for k in declared if k.endswith("*") and name.startswith(k[:-1])), None)

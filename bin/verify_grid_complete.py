@@ -56,6 +56,13 @@ def main():
             print(f"    unexpected {e}", file=sys.stderr)
         problems += len(missing) + len(extra)
 
+    # A grid of no cells is not a complete grid. This printed "ok  <condition>  0/0" and exited 0
+    # for an empty manifest or a runs directory that was not there, which is the failure four other
+    # gates here were fixed for: the check that checks nothing is the one that gets believed.
+    if not names:
+        sys.exit(f"{args.datasets_json} holds no dataset, so there was nothing to check")
+    if not any(d.is_dir() for d in runs.glob("*__*__rep*")):
+        sys.exit(f"no run directory under {runs}, so there was nothing to check")
     if problems:
         print(f"{problems} cell(s) missing or unexpected in {runs}", file=sys.stderr)
         sys.exit(1)

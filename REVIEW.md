@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 207 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 45 |
+| findings in this report | 217 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 65 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 47 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 65 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
-| tests over the scripts that turn runs into numbers | 33 |
+| tests over the scripts that turn runs into numbers | 86 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5291,6 +5291,47 @@ the main path but the *second* computation of the same quantity, or a boundary t
 a printed table recomputed from the same variables, a count derived a second way for the record, a
 threshold tested only strictly inside its range, a tie that no fixture had. The main paths were all
 right. What nothing had checked was the arithmetic written twice.
+
+**217. Two more gates reported success over nothing, and a third defect was hiding both.** The sweep
+having run out of tested scripts, the next question was which scripts have no test at all: **37 of the
+65 in `bin/` are called by `bin/analyses.sh` and named in no test module**, and sixteen of those are
+`verify_*` gates. A gate that passes on nothing is the worst failure mode in the repository, and
+`bin/verify_injection.py`'s own comment records it happening: `verify_inputs.py` printed "0 cells, 0
+consistent" and exited 0 when a job left the working directory at the Nextflow launch directory and a
+relative glob matched nothing.
+
+So every gate was pointed at an empty tree. Two said yes:
+
+`bin/verify_grid_complete.py` printed `ok  <condition>  0/0` and exited 0 for a manifest with no
+dataset and a runs directory that was not there. It is the gate whose entire purpose is to say the grid
+is complete.
+
+`bin/verify_conditions_differ.py` printed "0 thread pairs checked for the same flags, 0 batching pairs
+over 0 cells checked for any difference; 0 problem(s)" and exited 0. It is the gate that proves a
+condition's knob reached the tool.
+
+**And the defect that kept this invisible.** `Path(".").glob(pattern)` raises
+`NotImplementedError: Non-relative patterns are unsupported` on an absolute pattern. Three gates --
+`verify_runs.py`, `verify_timing_flags.py`, `verify_conditions_differ.py` -- pass their `--glob` flag
+straight to it, so that flag only ever worked for a caller already standing in the benchmark root, and
+pointing it anywhere else crashed inside pathlib. Two of the three **already had** the guard this
+finding is about; it was simply unreachable from outside the root, and the crash looked like the guard
+working. Each now expands the pattern with `glob.glob`, which takes either form, and `verify_runs.py`
+and `verify_timing_flags.py` reach their own messages unchanged.
+
+`bin/verify_recall_independently.py` also crashed with a bare `KeyError: 'rows'` on a file that is not
+a grid summary, from a second pass over `summary["rows"]` that an empty injected directory skips the
+first guard for. It now names the file.
+
+`tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
+it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
+a gate that always fails satisfies the property and is just as useless: a complete grid passes, a missing
+cell and an unexpected cell are each named, and `--datasets` narrows what is expected.
+
+**One gate caught this very edit.** `bin/verify_report_references.py` failed the rebuild afterwards with
+four stale self-counts in this report -- 207 findings where there are 216, 63 `bin/` scripts where there
+are 65, 45 `slurm/` scripts where there are 47, 33 tests where there are 86. Corrected, and worth saying
+plainly: the table at the top of this document is checked by a script because it was wrong twice.
 
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added
