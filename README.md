@@ -588,6 +588,8 @@ bash slurm/make_grid.sh                        # the injection grid, 180 cells, 
 bash slurm/make_foreign.sh                     # error kind 6, nine cells of foreign sequences
 bash slurm/make_clade.sh                       # error kind 3, nine whole-taxon relabellings
 bash slurm/make_simulation.sh                  # 2.1's control, 37 cells on a simulated reference
+slurm/submit.sh slurm/fetch_grove.sh           # RAxMLGrove, pinned by sha256 and by commit
+slurm/submit.sh slurm/make_grove_simulation.sh # the same control on an empirical tree, 37 cells
 slurm/submit.sh slurm/baseline.sh              # both tools on the un-injected database, timed
 slurm/submit.sh slurm/grid_fork.sh             # one condition over the grid
 bin/analyses.sh                                # rebuild every table in results/ from the runs
@@ -614,6 +616,17 @@ even for a cell they skip, which is what makes a clone's links point inside the 
 gracefully: `bin/analyses.sh` reaches its truth checks and exits 1 on nine foreign datasets whose
 `.fasta` was never built, after doing twenty-three steps of work. [`data/README.md`](data/README.md) says what is kept
 and what is regenerated, with the check that the regenerated cells come back byte-identical.
+
+The fifth generator is the odd one out and is listed after the other four for that reason. The
+simulated control exists because a flag on an untouched sequence is a false positive only where every
+label is certain, and its tree was chosen by hand, which a co-author objected to. `make_grove_simulation.sh`
+rebuilds the same control on a tree, a substitution model and a missing-data pattern drawn from
+RAxMLGrove, with the taxonomy a deterministic function of the tree (`bin/grove_taxonomy.py`). Unlike the
+other four it is not self-contained: it needs the 140 MB database that `fetch_grove.sh` pins, network
+access to fetch the chosen dataset from GitHub, the Linux simulator that ships inside the pinned scripts,
+and an interpreter with biopython and scikit-optimize, which `GROVE_PY` points at. Run both controls, not
+one: the hand-made reference is regular on purpose and the pair is what separates the method from the
+data's realism.
 
 `bin/restore_cluster.sh` rebuilds a cluster working copy from this repository: code, the kept
 datasets, every generated cell from its seed, and the two container images. `--dry-run` prints the plan
