@@ -26,9 +26,22 @@ def main():
     p.add_argument("--conditions", required=True, help="comma separated, as passed to the job")
     p.add_argument("--runs-dir", required=True)
     p.add_argument("--replicates", type=int, default=1)
+    # Mirrors main.nf's own --datasets, and for the same reason: a job may be given a subset of a
+    # manifest, and the gate has to describe the grid that was actually asked for. The thread axis is
+    # where this first bit: the T1 pair was extended to 402 and 801 sequences for the sequential
+    # comparison, so results/threads/runs now holds three sizes at T1 and one at T8 and T16. Without
+    # this the two halves cannot both be described, since the enumeration is per condition and the
+    # only manifest holding those three sizes holds five.
+    p.add_argument("--datasets", help="comma separated subset of the manifest, as passed to the job")
     args = p.parse_args()
 
     names = [d["name"] for d in json.loads(Path(args.datasets_json).read_text())["datasets"]]
+    if args.datasets:
+        wanted = [x.strip() for x in args.datasets.split(",")]
+        unknown = [x for x in wanted if x not in names]
+        if unknown:
+            sys.exit(f"--datasets names {unknown} which {args.datasets_json} does not hold")
+        names = wanted
     runs = Path(args.runs_dir)
     problems = 0
     for cond in [c.strip() for c in args.conditions.split(",")]:

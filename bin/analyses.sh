@@ -374,9 +374,16 @@ verify_grid_complete.py --datasets-json data/foreign/datasets.json \
     --runs-dir results/foreign/runs --conditions epang_T8_K25,upstream_raxml_T8
 verify_grid_complete.py --datasets-json data/gtdb/datasets_sizes.json \
     --runs-dir results/sizes/runs --conditions epang_T8_K25,upstream_raxml_T8 --replicates 3
+# Two calls over one directory, because the thread axis and the sequential comparison share it and do
+# not cover the same sizes: T8 and T16 are measured at 2 023 sequences only, while the T1 pair was
+# extended to 402 and 801 for the engine-only ratio. The enumeration is per condition, so the two sets
+# do not see each other's cells.
 verify_grid_complete.py --datasets-json data/gtdb/datasets2k.json --runs-dir results/threads/runs \
-    --conditions epang_T1_K25,epang_T8_K25,epang_T16_K25,upstream_raxml_T1,upstream_raxml_T8,upstream_raxml_T16 \
+    --conditions epang_T8_K25,epang_T16_K25,upstream_raxml_T8,upstream_raxml_T16 \
     --replicates 3
+verify_grid_complete.py --datasets-json data/gtdb/datasets_sizes.json --runs-dir results/threads/runs \
+    --datasets gtdb_arc400,gtdb_arc800,gtdb_arc2k \
+    --conditions epang_T1_K25,upstream_raxml_T1 --replicates 3
 
 # Last, because it reads the records the steps above write rather than the run directories: the
 # figure can only be as current as the tables, and building it from them is what keeps the two from

@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 205 |
+| findings in this report | 206 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 45 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
-| run records, cross-checked against the files they summarise | 1162 |
+| run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 65 |
-| `.mis` files, the flag lists every detection number is computed from | 1488 |
+| `.mis` files, the flag lists every detection number is computed from | 1500 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 162 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 174 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **65 published tables** ← 1 162 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **65 published tables** ← 1 174 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 162** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 174** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 162 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 174 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 162**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 174**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -4447,7 +4447,7 @@ cmd   = ['sativa-epang', '-s', 'gtdb_arc2k.fasta', '-t', 'gtdb_arc2k.tax', '-T',
 ```
 
 The host is the node that ran the tool rather than the collector, and the five flags that decide what the
-tool does are in the record for the first time in 1 162 of them.
+tool does are in the record for the first time in 1 174 of them.
 
 **And the check failed, on its own reference.** `no single-process .mis at .../results/baseline2k/...`.
 That file is committed here and **never reaches the cluster**: `bin/restore_cluster.sh` says in its own
@@ -4922,6 +4922,31 @@ one place the design can break in silence is the taxonomy: a Grove tree has none
 is that a label cannot be wrong because the tree *is* the taxonomy, so the ranks have to be a
 deterministic function of the tree. Seven quantiles of the node-height distribution keeps that; a
 hand-picked set of cut heights would lose the whole argument one level down.
+
+**206. The sequential gain is not flat in reference size, and the comparator's one-thread run uses two
+cores at every size.** Finding 204 reported the engine-only ratio at a single size because that was the
+only size where both tools had a one-thread run. `slurm/threads.sh` gained a size argument and the pair
+was run at 402 and 801 sequences, three replicates each:
+
+| sequences | SATIVA | sativa-epang | wall | SATIVA core-s | fork core-s | core-seconds |
+|---|---|---|---|---|---|---|
+| 402 | 198.8 s | 27.6 s | **7.2x** | 395 | 26 | **15.3x** |
+| 801 | 508.6 s | 57.5 s | **8.9x** | 1 013 | 55 | **18.5x** |
+| 2 023 | 1 405.0 s | 151.9 s | **9.2x** | 2 797 | 152 | **18.4x** |
+
+So the engine's advantage **grows with the reference and then plateaus**: 15.3x in core-seconds at 402
+sequences and 18.4 to 18.5 from 801 upwards. Reporting it from one size was not wrong but it was lucky,
+since 2 023 sits on the plateau.
+
+**And open question O4 generalises.** `-T 1` gives SATIVA 1.99 cores at 2 023 sequences, which this
+repository recorded as a single observation. Across the three sizes its core-seconds are 395, 1 013 and
+2 797 against wall clocks of 198.8, 508.6 and 1 405.0: a factor of **1.99 at every one of them**. The
+fork's are 26, 55 and 152 against 27.6, 57.5 and 151.9, so it really does occupy one core. The wall-clock
+sequential ratio therefore understates the engine by almost exactly a factor of two at every size, and
+the core-second column is the one that answers the co-author's question.
+
+The manuscript's new sentence drops its single-size caveat and now reads "dès 801 séquences"; the
+supplement carries the three sizes and the occupation that explains the gap between the two columns.
 
 ## What is outstanding
 
