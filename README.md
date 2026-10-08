@@ -56,7 +56,8 @@ the tool runs at once, not of the reference.
 | 2 023 | 1.11 | 4.61 | 4.14 |
 | 7 051 | 1.15 | 5.13 | 4.47 |
 
-**At one thread the law is flat over a seventeen-fold range** -- 1.18, 1.11, 1.15, three runs each -- while
+**At one thread the law is flat over a seventeen-fold range** -- 1.18, 1.12, 1.11, 1.15 at 402, 801, 2 023
+and 7 051 sequences, three runs each and every one of the four reproducible to the megabyte -- while
 at eight it is 4.59, 4.47 and 4.61 at 402, 801 and 2 023 sequences and then 5.06, 5.12, 5.14 and 5.13 at
 2 507, 3 001, 4 001 and 7 051. So the rise exists only with concurrency and it is complete between 2 023
 and 2 507. The eight-thread peak is **4.35 to 4.51 times** the one-thread peak at 7 051 sequences against
@@ -66,11 +67,13 @@ price of doing it four times at once, which is the half of the advice this file 
 One thread is also the only reproducible figure, and it is reproducible to the megabyte: three runs give
 **2 253 MB exactly** at 2 023 sequences and **8 090 MB exactly** at 7 051. At eight threads nine runs at
 2 023 spread 8 294 to 9 830, 18 %, and at sixteen three runs spread 6 554 to 9 216, 41 %. What the peak
-measures is how many placements were live at the same moment, which is a scheduling accident: the clearest
-case is at 801 sequences, where three runs of identical work in 16 to 18 s reading the same 148 MB report
-3.5, 3.8 and **1.1 GB**, with virtual memory at a third as well. That last run had roughly one placement
-live where its siblings had three or four. So a thread count is a precision choice as much as a memory
-one, and the figures above are medians for that reason.
+measures is how many placements were live at the same moment, which is a scheduling accident, and 801
+sequences is the case where it can be counted. Three eight-thread runs of identical work, 16 to 18 s each
+and the same 148 MB read, report 3.5, 3.8 and **1.1 GB**, with virtual memory a third as well. One thread
+at that size gives **899 MB in all three runs**, so in units of a single placement those three
+eight-thread runs are **3.99, 4.33 and 1.25**: four placements live at the high-water moment, four, and
+one. So a thread count is a precision choice as much as a memory one, and the figures above are medians
+for that reason.
 
 Take 5.13 for a large reference at eight threads. Read medians and not runs: this paragraph claimed a step
 and then a slope, both from one run at one new size, before `slurm/memstep.sh` had three at 3 001 -- 4.88,
@@ -678,7 +681,7 @@ results/figure1.svg                    an earlier composition, kept because REVI
 re-derive. That sentence was false until the 949 run directories behind the version 2 tables were
 brought back from the cluster — only `run.json` had been kept for them, and every detection number
 is computed from the `.mis` beside it. 949 was the count on the day that was fixed; the repository
-holds **1 161** run records now, and the figure is left as it was rather than silently updated because
+holds **1 162** run records now, and the figure is left as it was rather than silently updated because
 the sentence is about an event. `results/pipeline_info/` holds one Nextflow trace per
 submission, with its gaps listed.
 

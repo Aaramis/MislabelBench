@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 199 |
+| findings in this report | 200 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
-| run records, cross-checked against the files they summarise | 1161 |
+| run records, cross-checked against the files they summarise | 1162 |
 | result tables, each rebuilt by `bin/analyses.sh` | 65 |
-| `.mis` files, the flag lists every detection number is computed from | 1487 |
+| `.mis` files, the flag lists every detection number is computed from | 1488 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 161 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 162 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **65 published tables** ← 1 161 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **65 published tables** ← 1 162 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 161** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 162** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 161 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 162 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 161**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 162**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -4447,7 +4447,7 @@ cmd   = ['sativa-epang', '-s', 'gtdb_arc2k.fasta', '-t', 'gtdb_arc2k.tax', '-T',
 ```
 
 The host is the node that ran the tool rather than the collector, and the five flags that decide what the
-tool does are in the record for the first time in 1 161 of them.
+tool does are in the record for the first time in 1 162 of them.
 
 **And the check failed, on its own reference.** `no single-process .mis at .../results/baseline2k/...`.
 That file is committed here and **never reaches the cluster**: `bin/restore_cluster.sh` says in its own
@@ -4741,6 +4741,32 @@ scheduling**, which is the sharp form of finding 194 and explains the pattern th
 Nothing published moves except the 2 507 figure. The median of 15 runs at 7 051 is the typical high-water
 mark at eight threads, which is the right number for provisioning a machine, and a user may well see a
 third of it.
+
+**200. The mechanism was asserted, then predicted, then measured, and the prediction held to 2 %.**
+Finding 199 inferred from a ratio that the 801-sequence outlier "had roughly one placement live where its
+siblings had three or four". An inference from a ratio is what this report keeps catching other people
+doing, so it was turned into a prediction and tested.
+
+If the eight-thread peak is the number of placements live at the high-water moment times the cost of one,
+then one thread at 801 sequences should give the cost of one placement. Interpolating the one-thread law
+between its 402 and 2 023 points predicted **913 MB**, and the 1.15 MB/seq slope predicted **921**.
+Measured: **899 MB in all three runs**, within 2 % of both.
+
+In units of a single placement the three eight-thread runs at that size are then:
+
+| run | peak | placements live |
+|---|---|---|
+| sibling | 3 584 MB | **3.99** |
+| sibling | 3 891 MB | **4.33** |
+| outlier | 1 127 MB | **1.25** |
+
+Four, four, and one. The fork runs four placements at eight threads, so the high-water mark counts how
+many of them overlapped, and across three runs of identical work it was four twice and one once. That is
+the mechanism, measured rather than inferred, and it closes findings 194 and 199.
+
+The one-thread law gains its fourth point and is now **1.18, 1.12, 1.11, 1.15** at 402, 801, 2 023 and
+7 051 sequences, three runs at each and every one of the four reproducible to the megabyte: 475, 899,
+2 253, 8 090. A seventeen-fold range, a 6 % band, no trend, no spread.
 
 ## What is outstanding
 
