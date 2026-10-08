@@ -41,12 +41,12 @@ RATES="${GROVE_RATES:-0.05 0.03 0.02}"
 # biopython and scikit-optimize, both imported at org_script.py's module level. The README names
 # biopython, numpy, pandas and matplotlib and does not mention scikit-optimize, so take the imports as
 # the requirement and not the README.
-GROVE_PY="${GROVE_PY:-python3}"
+# slurm/fetch_grove.sh builds this and records what the resolver chose in env-requirements.txt.
+GROVE_PY="${GROVE_PY:-$GROVE/env/bin/python}"
 "$GROVE_PY" -c "import Bio, skopt" 2>/dev/null || {
     echo "$GROVE_PY cannot import Bio and skopt, which org_script.py needs at module level." >&2
-    echo "Point GROVE_PY at an interpreter that can, for instance a conda environment created with" >&2
-    echo "  conda create -p $GROVE/env python=3.11 biopython scikit-optimize numpy -y" >&2
-    echo "and record its versions beside the data, since they are part of how it was made." >&2
+    echo "slurm/fetch_grove.sh builds one at $GROVE/env; run it first, or point GROVE_PY" >&2
+    echo "at an interpreter that can import both." >&2
     exit 1
 }
 

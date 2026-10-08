@@ -75,4 +75,43 @@ if "TREE" in tables:
 print(json.dumps(rec, indent=2))
 open(f"{out}/provenance.json", "w").write(json.dumps(rec, indent=2) + "\n")
 PYJ
+# The interpreter org_script.py needs. It imports biopython and scikit-optimize at module level --
+# the README names biopython, numpy, pandas and matplotlib and not scikit-optimize, so the imports are
+# the requirement and not the README -- and the cluster's python3 has neither.
+#
+# Built here rather than left as a manual step, because a prerequisite that lives in someone's shell
+# history is the opposite of what this repository is for. Versions are **recorded, not pinned**: a
+# version pinned from a laptop against the cluster's python minor version is a guess that fails on
+# first contact, whereas what the resolver chose is a fact worth keeping. It costs nothing in
+# reproducibility either, since the data this interpreter produces is pinned by sha256 downstream and
+# the simulator itself is the binary inside the pinned repository, not a package from here.
+# 13 000 files measured for biopython, scikit-optimize and the scipy that comes with it, against a
+# 100 000-file quota on $HOME that one minimal-case arm already takes a fifth of. Cheap to check, and
+# the alternative is discovering it as an OSError 122 halfway through pip.
+if [ ! -x "$OUT/env/bin/python" ]; then
+    room_for 15000
+    python3 -m venv "$OUT/env"
+    "$OUT/env/bin/pip" install --quiet --upgrade pip
+    "$OUT/env/bin/pip" install --quiet biopython scikit-optimize numpy
+fi
+"$OUT/env/bin/python" -c "import Bio, skopt, numpy" || {
+    echo "the environment at $OUT/env cannot import Bio, skopt and numpy" >&2
+    exit 1
+}
+"$OUT/env/bin/pip" freeze > "$OUT/env-requirements.txt"
+python3 - "$OUT" <<'PYE'
+import json, subprocess, sys
+from pathlib import Path
+out = Path(sys.argv[1])
+rec = json.loads((out / "provenance.json").read_text())
+rec["interpreter"] = {
+    "path": str(out / "env" / "bin" / "python"),
+    "python": subprocess.run([str(out / "env/bin/python"), "-V"], capture_output=True,
+                             text=True).stdout.strip(),
+    "requirements": "env-requirements.txt",
+}
+(out / "provenance.json").write_text(json.dumps(rec, indent=2) + "\n")
+print(rec["interpreter"]["python"], "with", len((out / "env-requirements.txt").read_text().splitlines()),
+      "packages recorded in env-requirements.txt")
+PYE
 echo "wrote $OUT/provenance.json"

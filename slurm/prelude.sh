@@ -87,3 +87,23 @@ nf_launch_dir() {
     cd "$dir"
     echo "nextflow launching from $dir"
 }
+
+# The ceph quota on $HOME counts files, not bytes: 100 000 of them. Four concurrent minimal cases once
+# filled it and the first failure's debris looked like three more failures, so a job that writes many
+# small files checks first. The argument is how many files the caller is about to need; the margin
+# above it is the caller's own, since there is no sensible default for "about to need".
+#
+# Returns 0 and says nothing when the attributes are missing, because a filesystem without them is not
+# a filesystem with no room.
+room_for() {
+    local need="${1:?room_for needs a file count}" used limit free
+    used=$(getfattr --only-values -n ceph.dir.rfiles "$HOME" 2>/dev/null) || return 0
+    limit=$(getfattr --only-values -n ceph.quota.max_files "$HOME" 2>/dev/null) || return 0
+    free=$((limit - used))
+    echo "$free of $limit files free on $HOME, this step needs about $need"
+    [ "$free" -gt "$need" ] || {
+        echo "not enough file quota left. Clear a scratch tree first, for instance:" >&2
+        echo "  find \$BENCH_ROOT/results/minimal_case -type d -name 'fold_*' -exec rm -rf {} +" >&2
+        exit 1
+    }
+}

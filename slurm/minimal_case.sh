@@ -105,20 +105,9 @@ PY
 # quota of 100 000 on the home that `getfattr -n ceph.quota.max_files` reports and that two jobs have
 # already died on. The tool's own failure mode is an OSError from inside the leave-one-out, forty
 # minutes in, naming a fold it could not create. Checking first turns that into one line now.
-room() {
-    local used free
-    used=$(getfattr --only-values -n ceph.dir.rfiles "$HOME" 2>/dev/null) || return 0
-    local limit
-    limit=$(getfattr --only-values -n ceph.quota.max_files "$HOME" 2>/dev/null) || return 0
-    free=$((limit - used))
-    echo "$free of $limit files free on $HOME"
-    [ "$free" -gt 25000 ] || {
-        echo "fewer than 25 000 files free: one arm needs about 20 300. Clear a scratch tree first:" >&2
-        echo "  find \$BENCH_ROOT/results/minimal_case -type d -name 'fold_*' -exec rm -rf {} +" >&2
-        exit 1
-    }
-}
-room
+# 25 000, because one arm writes about 20 300 files. room_for lives in prelude.sh so that the other
+# job that needs it does not copy this one.
+room_for 25000
 
 mkdir -p "$OUT"
 # A tag whose table already has rows is not overwritten. The table is built by appending one row per

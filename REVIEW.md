@@ -5134,6 +5134,28 @@ two processes. `bin/score_injection.py` needs nothing new for it either -- it in
 cell's own `distance` and compares lineage strings, and the Grove labels are unique per rank, which is
 one thing they do better than GTDB's.
 
+**212. The Grove control needed an interpreter that lived nowhere, and building it would have taken a
+seventh of the file quota without telling anyone.** `org_script.py` imports biopython and
+scikit-optimize at module level and the cluster's `python3` has neither, so the script asked the reader
+to build an environment and point `GROVE_PY` at it. A prerequisite that lives in someone's shell history
+is the opposite of what this repository is for, so `slurm/fetch_grove.sh` now builds it and records what
+the resolver chose in `env-requirements.txt`, with the interpreter's version in the provenance record
+beside the database's sha256.
+
+**Recorded and not pinned, deliberately.** A version pinned from a laptop against a cluster python minor
+version is a guess that fails on first contact; what the resolver actually chose is a fact worth keeping.
+It costs nothing here either: the simulator is the binary inside the pinned repository, not a package
+from this environment, and the data this interpreter produces is pinned downstream by sha256.
+
+**And measured before it was written, which turned up a second thing.** That environment is **12 945
+files and 371 MB** against the 100 000-file ceph quota on `$HOME` -- one minimal-case arm already takes
+a fifth of it, and four of them once filled it outright, with the first failure's debris looking like
+three more failures. So the venv gets the same pre-flight. The check was inline in
+`slurm/minimal_case.sh`; it is now `room_for <files>` in `slurm/prelude.sh`, which every job script
+already sources, and the two callers state their own need: 25 000 for an arm that writes 20 300, 15 000
+for a venv that writes 12 945. It returns without an opinion when the ceph attributes are absent, since a
+filesystem without them is not a filesystem with no room.
+
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added
 later, for the reason `make_simulation.sh` records, and the committed manifest has carried 37 since.
