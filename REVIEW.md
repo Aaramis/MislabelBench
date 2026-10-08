@@ -4920,8 +4920,8 @@ reverses the recorded argument for a forty-line simulator over a pinned containe
 reversal is right is that the argument was about a reader while the objection is a reviewer's. And the
 one place the design can break in silence is the taxonomy: a Grove tree has none, and the control's value
 is that a label cannot be wrong because the tree *is* the taxonomy, so the ranks have to be a
-deterministic function of the tree. Seven quantiles of the node-height distribution keeps that; a
-hand-picked set of cut heights would lose the whole argument one level down.
+deterministic function of the tree. A hand-picked set of cut heights would lose the whole argument one
+level down; finding 208 is the rule that keeps it, and the measurement that replaced the first one.
 
 **206. The sequential gain is not flat in reference size, and the comparator's one-thread run uses two
 cores at every size.** Finding 204 reported the engine-only ratio at a single size because that was the
@@ -4963,7 +4963,7 @@ candidates:
 | 700 to 1 000 taxa | the hand-made control had 864, and comparability is what lets them be read together |
 | 1 200 to 1 800 sites | the archaeal alignment is 1 478 columns, and per-sequence cost depends on width |
 | `MODEL in (GTR, GTRGAMMA)` | these carry the parameters a simulator needs; GTRCAT and GTRCATI are RAxML's rate-category approximations and do not |
-| `TREE_HEIGHT` present | the rank cuts are quantiles of node height |
+| `TREE_HEIGHT` present | the ranks are placed by walking node heights |
 
 Counted while writing the criteria rather than after: **2 855** DNA single-partition trees have 500 to
 1 200 taxa, **963** have 700 to 1 000, **283** have 800 to 900. So the size band alone leaves a few
@@ -4973,6 +4973,50 @@ reproducible and lets a second tree be drawn without reopening the criteria.
 The candidates are varied in exactly the way the hand-made tree was not: among six sampled at 700 to
 1 000 taxa, tree heights run from 0.09 to 100, branch-length variance over six orders of magnitude, gaps
 from 0.06 % to 82 %, and alpha from 0.10 to 1.68. That spread is the whole argument for the change.
+
+**208. The rank rule this design rests on was wrong, and it was wrong in the one way that would not
+have shown up downstream.** The control's whole claim is that a label cannot be wrong because the tree
+*is* the taxonomy, so the seven ranks have to be a deterministic function of the tree. The rule recorded
+for that, and the rule I would have implemented without measuring it, was seven cuts at the 1/8 to 7/8
+quantiles of the internal-node height distribution. `bin/grove_taxonomy.py` was written that way and run
+on Yule trees of 864 tips, one ultrametric and one with lognormal rate variation on every branch:
+
+| | ultrametric | phylogram |
+|---|---|---|
+| tips with a complete seven-rank path | 864 of 864 | **216 of 864** |
+| clades, domain to species | 110, 218, 325, 433, 541, 648, 756 | 110, 197, **257, 256, 270, 209, 108** |
+| species, of which singletons | 756, 666 | 108, 65 |
+| judgeable by leave-one-out | **22.9 %** | **17.5 %** |
+
+Two failures, and the second is the one that matters. A tip shallower than a cut has no clade at that
+rank and therefore no complete path, so three quarters of the phylogram's sequences leave the reference;
+and because lineages keep ending before the deeper cuts, those ranks come out **coarser** than the
+shallower ones, 257 down to 108, which is not a taxonomy at all. Even ultrametric, where nothing drops,
+node heights are tip-heavy enough that the cuts land on top of each other: 110 domains and 756 species
+for 864 sequences.
+
+What makes this worth a finding rather than a note is that nothing downstream would have reported it.
+SATIVA accepts any seven-rank path it is given. A reference whose genus spans two families, or whose
+species are singletons, produces flags, and those flags would have been read as the tools' behaviour on
+realistic data.
+
+**The replacement, which keeps the determinism and loses the arbitrariness.** Rank r of seven is the
+partition into round(m^(r/8)) clades, reached by splitting the shallowest branchings first; for 864 tips
+that is 2, 5, 13, 29, 68, 159, 371. A tip that ends early is its own clade, so every tip is labelled at
+every rank; each rank's node set is a subset of the next, so nesting holds by construction; and clades
+are named after their own smallest tip, so the labels do not depend on the order a Newick file lists
+siblings in. Judgeable fraction on those same two trees: **81.1 % and 72.1 %**.
+
+The hand-made control's own counts, 3, 6, 12, 24, 48, 144, would give 95 to 97 % instead, and were
+rejected on purpose: six chosen constants are the arbitrariness RAxMLGrove exists to remove, and the
+geometric ladder has the same shape while following from the tree's size. The cost is stated rather than
+hidden: about a quarter of the sequences sit in a singleton species and cannot be judged at species level
+at all, so the per-rank judgeable fractions are written into `<prefix>.grove_tax.json` beside the tree
+and the species arm of the injection grid is restricted to the rest.
+
+`tests/test_grove_taxonomy.py` pins the three properties that cannot break in silence, including the
+sibling-order one: the same tree with every node's children written in the opposite order has to give a
+byte-identical `.tax`. Five tests, 38 in the suite.
 
 ## What is outstanding
 

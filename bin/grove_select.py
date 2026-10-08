@@ -13,7 +13,8 @@ script reports how many trees satisfy them so a reader can see how much freedom 
                               change the timing for a reason unrelated to the tree
   a model with a rate         GTR and GTRGAMMA carry the parameters a simulator needs; GTRCAT and
                               GTRCATI are RAxML's rate-category approximations and do not
-  TREE_HEIGHT present         needed by the rank cuts, which are quantiles of node height
+  TREE_HEIGHT present         the ranks are placed by walking node heights, so a tree stored
+                              without any is unusable here
 
 Of the candidates the pick is by seed over the TREE_ID ordering, so it is reproducible and so a second
 tree can be drawn without reopening the criteria. The join is PARTITION.PARENT_ID = TREE.TREE_ID, which
