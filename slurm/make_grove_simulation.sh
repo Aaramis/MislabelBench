@@ -29,13 +29,14 @@ source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
 GROVE="$BENCH_ROOT/data/grove"
 OUT="$BENCH_ROOT/data/grove_sim"
 SEED="${GROVE_SEED:-42}"
-# 2 %, not the hand-made control's 5 %. An empirical topology gives mostly singleton species -- 320 of
-# 355 on the tree this was developed against -- and inject_mislabels.py needs a donor group to keep one
-# correct member, so k=1 needs as many non-singleton species as it wants injections. At 5 % it got 31
-# of 41; at 3 % one cell of twelve still fell short; at 2 % all twelve are exact. Measured per tree
-# below, not assumed: a cell that cannot reach the rate is dropped and listed rather than run at
-# another rate, which is what Protocol.md 2.4 asks for.
-RATE="${GROVE_RATE:-0.02}"
+# The rate is not ours to choose either. inject_mislabels.py keeps one correct member in every donor
+# group, so a cell at k=1 needs as many non-singleton species as it wants injections, and how many of
+# those a tree has is a property of the tree: the first tree this was developed against had 35 for 822
+# tips and could not reach 5 %, the tree the criteria actually pick has 34 for 400 and can. So the
+# ladder below is tried from the top and the first rate every cell reaches exactly is the one used.
+# 5 % is first because it is the rate the real injection grid runs at, which is what makes the control
+# readable against it.
+RATES="${GROVE_RATES:-0.05 0.03 0.02}"
 
 # biopython and scikit-optimize, both imported at org_script.py's module level. The README names
 # biopython, numpy, pandas and matplotlib and does not mention scikit-optimize, so take the imports as
@@ -159,7 +160,41 @@ ALN_REL=$(python3 -c 'import os,sys;print(os.path.relpath(sys.argv[1], sys.argv[
 # are height cuts on one tree, so above family the recipient and the donor are no longer distinguishable
 # by anything the model put in the sequences -- a property of the control and not a result.
 #
-# A cell whose rate cannot be reached is dropped and listed, never run at a quietly different rate.
+# First the rate: probe the twelve distance-by-k combinations at one seed and take the highest rate
+# at which none of them falls short. A cell that still warns when the real cells are built is dropped
+# and listed rather than run at a quietly different rate, which is what Protocol.md 2.4 asks for.
+PROBE="$OUT/.probe"
+probe_rate() {
+    # Zero when every one of the twelve cells reaches rate $1 exactly, one when any falls short.
+    local r="$1" dist k
+    rm -rf "$PROBE"; mkdir -p "$PROBE"
+    for dist in species genus family; do
+      for k in 1 2 3 5; do
+        if ! python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$OUT/grove/grove.tax" \
+             --distance "$dist" --rate "$r" --k "$k" --seed 1 --prefix "$PROBE/p" \
+             >/dev/null 2>"$PROBE/warn.txt"; then
+          return 1
+        fi
+        if grep -q "^warning:" "$PROBE/warn.txt"; then
+          return 1
+        fi
+      done
+    done
+    return 0
+}
+
+RATE=""
+for r in $RATES; do
+    if probe_rate "$r"; then
+        RATE="$r"
+        break
+    fi
+    echo "rate $r is out of reach for at least one cell on this tree"
+done
+rm -rf "$PROBE"
+[ -n "$RATE" ] || { echo "no rate in '$RATES' is reachable for every cell" >&2; exit 1; }
+echo "injecting at $RATE"
+
 : > "$OUT/skipped.txt"
 for dist in species genus family; do
   for k in 1 2 3 5; do
@@ -177,6 +212,8 @@ for dist in species genus family; do
           continue
         fi
       fi
+      # See make_grid.sh: relative, and refreshed even for a cell that already exists, so that a
+      # clone's links point inside the clone.
       ln -sfn "$ALN_REL" "$d/$name.fasta"
     done
   done

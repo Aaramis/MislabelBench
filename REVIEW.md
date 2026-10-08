@@ -5053,10 +5053,59 @@ the entry is corrected. What remains available is AliSim's indel model with rate
 dataset's own alignment by SpartaABC, which RAxMLGrove supports and whose binary the pinned repository
 does not ship.
 
-The whole chain was run end to end locally against the database shipped with the pinned scripts, with
-the simulator's output stood in for, since the binary is Linux-only and no measurement is involved: 90
-candidate trees, `TREE_ID 6952` picked at seed 42 with 822 taxa and 1 497 sites, which is within 5 % of
-the hand-made control on both. 37 cells, none skipped, the manifest byte-identical on a second run.
+The whole chain was run end to end locally, with the simulator's output stood in for, since its binary
+is Linux-only and no measurement is involved. First against the database the pinned scripts ship, then
+against the real 146 669 568-byte one, whose sha256 came back `339577e4` here -- the same value
+`fetch_grove.sh` recorded on the cluster, so the pin holds across machines, which is the only check that
+record was ever going to get.
+
+**210. Three of the five selection criteria were wrong, and the database says so.** Finding 207 recorded
+the criteria as the control's requirements. Queried against the full database rather than the shipped
+subset, three of them do not do what they say:
+
+`TREE_HEIGHT is not null` filters nothing and never could: the column is `real` for all 59 978 rows of
+the shipped database and `'None'` is stored as *text* elsewhere in this schema, not as SQL null, so even
+a missing value would pass. Its stated reason was wrong too -- the rank cuts walk the downloaded
+Newick's own branch lengths, not a database column.
+
+`MODEL in ('GTR', 'GTRGAMMA')` admits a model the simulator cannot use. AliSim's wrapper passes any name
+it does not recognise through unchanged, and `replace_model_name()` maps only JC, HKY, GTR and the
+protein models, so a `GTRGAMMA` tree reaches IQ-TREE as `-m GTRGAMMA{...}`. Read in IQ-TREE 2.2.0's own
+`model/modeldna.cpp`: `getDNAModelInfo` returns the empty string for an unknown name, `ModelDNA::init`
+then falls through to `readParameters(model_name)`, which treats the name as a parameter *file*. The run
+errors; it does not quietly become GTR+G. Checked in the source rather than assumed, because the whole
+pool depends on it.
+
+And nothing required the three fields the simulator actually reads. It builds `GTR{rates}+F{freqs}+G{alpha}`
+out of `RATE_STR`, `STATIONARY_FREQ_STR` and `ALPHA` and ignores the per-base `RATE_AC` and `FREQ_A`
+columns entirely, so a tree missing any of the three is simulated under IQ-TREE's defaults for that
+component -- which would quietly undo the one thing coming to RAxMLGrove was for. No candidate in the
+shipped subset has `STATIONARY_FREQ_STR` at all, which is how this was found rather than reasoned.
+
+**What the corrected criteria cost, in numbers.** Of the full database's 127 329 trees, 104 974 are DNA
+with one partition, 963 of those have 700 to 1 000 taxa, and 210 of those have 1 200 to 1 800 sites. The
+models in that band are GTRCAT 91, GTRCATI 55, GTRGAMMA 52, GTRGAMMAI 8, GTRCATX 2 and GTR 2. So
+requiring a model the simulator can use takes 210 to **2**, and the only two are the band's only two
+RAxML-NG datasets.
+
+Two candidates is not a pool, so the size band widened to 400 to 2 100 taxa and the pool is **11**. That
+is a better band on its own terms: every other measurement in this repository is taken at 402, 801 and
+2 023 sequences, so a control inside that range is read against numbers that exist, whereas 700 to 1 000
+only matched the hand-made control's 864. The eleven are varied in exactly the way the hand-made tree was
+not -- alpha 0.23 to 1.48, tree height 0.11 to 24.5, branch-length variance from 1.9e-5 to 0.34, gaps
+11 % to 75 % -- which is the whole argument for the change.
+
+Seed 42 picks `TREE_ID 71741`: 400 taxa, 1 778 sites, GTR with rates and frequencies on file, alpha
+0.571, 25.1 % gaps in the source alignment. Its dataset downloads, its Newick takes the rank cuts (189
+species, 155 singletons, judgeable 61.3 % at species and 84.2 % at genus), and the twelve distance-by-k
+cells all reach 5 % exactly, which is the rate the real injection grid runs at.
+
+**One more thing the tree decides rather than me.** The rate was hardcoded at 2 % on the strength of the
+822-tip tree developed against, where 5 % was out of reach because a k=1 cell needs as many non-singleton
+species as it wants injections and that tree had 35. The tree the criteria pick has 34 for 400 tips, so
+5 % is comfortable. A number that swings on which tree is drawn should not be written down: the script
+now probes 5 %, then 3 %, then 2 % over the twelve cells and uses the first that every cell reaches
+exactly. On this tree it reports 5 %, 20 to 21 injections per cell against the hand-made control's 43.
 
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added

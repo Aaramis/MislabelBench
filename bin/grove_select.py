@@ -6,15 +6,28 @@ the control's own requirements rather than preferences, each one with the reason
 script reports how many trees satisfy them so a reader can see how much freedom the pick had.
 
   DNA, one partition          the control simulates one marker, as the benchmark's references are
-  NUM_TAXA 700 to 1000        the hand-made control had 864 sequences; keeping the size comparable is
-                              what lets the two be read against each other
+  NUM_TAXA 400 to 2100        the benchmark's own size axis: every other measurement here is taken at
+                              402, 801 and 2 023 sequences, so a control inside that range is read
+                              against numbers that exist. It started as 700 to 1 000, to match the
+                              hand-made control's 864, and widened when the model requirement below
+                              left 2 candidates in that band and 11 in this one. Matching one
+                              hand-made number was the weaker reason of the two
   sites 1200 to 1800          the archaeal alignment is 1478 columns wide, and per-sequence cost
                               depends on alignment width, so a tree whose MSA is 6000 sites would
                               change the timing for a reason unrelated to the tree
-  a model with a rate         GTR and GTRGAMMA carry the parameters a simulator needs; GTRCAT and
-                              GTRCATI are RAxML's rate-category approximations and do not
-  TREE_HEIGHT present         the ranks are placed by walking node heights, so a tree stored
-                              without any is unusable here
+  MODEL = 'GTR'               AliSim's own replace_model_name() maps JC, HKY and GTR and passes
+                              anything else through unchanged, so a tree stored as GTRGAMMA would
+                              reach IQ-TREE as `-m GTRGAMMA{...}`, which is not a model it knows.
+                              GTR is also 302 147 of the 304 000 DNA partitions in the database
+                              shipped with the scripts, so this costs almost nothing
+  RATE_STR, ALPHA and         these three are what AliSim's wrapper actually reads: it builds
+  STATIONARY_FREQ_STR set     `GTR{rates}+F{freqs}+G{alpha}` out of them and ignores the per-base
+                              RATE_AC and FREQ_A columns entirely. A tree missing any one of them
+                              would be simulated under IQ-TREE's defaults for that component, and
+                              the whole point of coming here is that the parameters are the
+                              database's and not ours. The RAxML8-only database the scripts ship
+                              has STATIONARY_FREQ_STR for none of its candidates, which is how this
+                              requirement was found rather than assumed
 
 Of the candidates the pick is by seed over the TREE_ID ordering, so it is reproducible and so a second
 tree can be drawn without reopening the criteria. The join is PARTITION.PARENT_ID = TREE.TREE_ID, which
@@ -29,15 +42,19 @@ from pathlib import Path
 
 CRITERIA = """p.DATA_TYPE = 'DNA'
           and t.OVERALL_NUM_PARTITIONS = 1
-          and t.NUM_TAXA between 700 and 1000
+          and t.NUM_TAXA between 400 and 2100
           and p.NUM_ALIGNMENT_SITES between 1200 and 1800
-          and p.MODEL in ('GTR', 'GTRGAMMA')
-          and t.TREE_HEIGHT is not null"""
+          and p.MODEL = 'GTR'
+          and p.RATE_STR != 'None'
+          and p.ALPHA != 'None'
+          and p.STATIONARY_FREQ_STR != 'None'"""
 
 FIELDS = ["t.TREE_ID", "t.NUM_TAXA", "t.TREE_HEIGHT", "t.TREE_DIAMETER", "t.BRANCH_LENGTH_MEAN",
           "t.BRANCH_LENGTH_VARIANCE", "t.MISSING_DATA_RATE", "p.MODEL", "p.ALPHA",
           "p.NUM_ALIGNMENT_SITES", "p.GAPS", "p.RATE_AC", "p.RATE_AG", "p.RATE_AT", "p.RATE_CG",
-          "p.RATE_CT", "p.RATE_GT", "p.FREQ_A", "p.FREQ_C", "p.FREQ_G", "p.FREQ_T"]
+          "p.RATE_CT", "p.RATE_GT", "p.FREQ_A", "p.FREQ_C", "p.FREQ_G", "p.FREQ_T",
+          # The three the simulator reads, recorded verbatim so the model it was given is on file.
+          "p.RATE_STR", "p.STATIONARY_FREQ_STR", "p.PROPORTION_INVARIANT_SITES_STR"]
 
 
 def main():
@@ -65,7 +82,8 @@ def main():
 
     print(f"{len(rows)} tree(s) satisfy the criteria; seed {args.seed} picks TREE_ID "
           f"{chosen['TREE_ID']}")
-    for k in ("NUM_TAXA", "NUM_ALIGNMENT_SITES", "MODEL", "ALPHA", "TREE_HEIGHT",
+    for k in ("NUM_TAXA", "NUM_ALIGNMENT_SITES", "MODEL", "ALPHA", "RATE_STR",
+              "STATIONARY_FREQ_STR", "TREE_HEIGHT",
               "BRANCH_LENGTH_MEAN", "BRANCH_LENGTH_VARIANCE", "GAPS", "MISSING_DATA_RATE"):
         print(f"  {k:26} {chosen[k]}")
     if args.out:
