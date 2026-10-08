@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 197 |
+| findings in this report | 198 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4688,6 +4688,30 @@ and the speed ratio. The pattern is specific enough to state as a rule: **this b
 `resource_usage.py` says "medians over replicates, never a single run" and the documents around it did not
 follow it.** Four of the five places that broke it have now been fixed; the fifth, the `srun` fan-out's
 134 s, is three replicates already and is the number this one is measured against.
+
+**198. The replication rule holds everywhere `resource_usage.py` reaches, and the three places it does
+not are mine.** Finding 197 was the fourth single-run number replaced by a replicated one in two days, so
+the pattern was swept rather than met a fifth time: every `(dataset, condition)` with a trusted wall
+clock, counted.
+
+**14 groups, 3 to 7 runs each, 0 with a single run.** The pool that `bin/resource_usage.py` governs is
+fully replicated and always was. So the four corrections were never about that pool; they were about
+quantities outside it, which is a different and more useful thing to know:
+
+- the staged rounds' per-shard spreads, excluded from the timing pool by design because a staged
+  experiment's control shares a node with its own stages -- three replicates each since 8 October;
+- the memory probe's new size points, which did not exist until this week.
+
+Which leaves three single-run points, and all three are from my own probes: `gtdb_arc2500` at eight
+threads, and `gtdb_arc400` and `gtdb_arc1200` at one. README quotes all three -- "4.98 at 2 507" and the
+"1.18, 1.11, 1.15" that carries this week's new claim that the memory law is flat at one thread. Two more
+replicates of each are submitted, six runs, because a claim I added this week should meet the standard I
+have spent two days applying to everyone else's.
+
+One of them has an argument for needing no replication and it is not enough. At one thread the peak was
+**2 253 MB in all three runs** of the thread grid, identical to the megabyte, so a single run there is
+plausibly exact. That is an argument, and the discipline this report keeps invoking is to measure instead
+of arguing.
 
 ## What is outstanding
 
