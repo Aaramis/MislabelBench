@@ -4281,10 +4281,21 @@ heuristic from 2 023**, with a rate that falls as 500/n: **0.247 at 2 023, 0.125
 regime the aggressiveness triples from the third point to the fifth. A scaling exponent fitted across
 402 to 7 051 is fitted across that.
 
-The comparison between the tools is not affected and that is the part worth having checked: the
-thresholds are identical in the two images, `CAT_GAMMA_THRES` 500, `EPA_HEUR_THRES` 1 000,
-`CAT_LOWER_THRES` 100, `GAMMA_UPPER_THRES` 10 000, so at any one size both tools are doing the same kind
-of work. What the switch touches is reading the curve, not reading the gap between the curves.
+The four thresholds are identical in the two images, `CAT_GAMMA_THRES` 500, `EPA_HEUR_THRES` 1 000,
+`CAT_LOWER_THRES` 100, `GAMMA_UPPER_THRES` 10 000. That is not the same as the two tools doing the same
+work, and the first version of this finding said it was. Their `sativa.cfg` differ:
+
+| | `epa_use_heuristic` | `raxml_model` |
+|---|---|---|
+| sativa-epang 0.10.2 | `auto` | **`GTRGAMMA`** |
+| sativa 0.9.3 | `auto` | **`auto`** |
+
+So the heuristic switch is shared, both tools placing exhaustively below 1 000 and at 500/n above it,
+and `resolve_auto_settings` only ever changes the rate model for upstream: it goes to GTRCAT above 500
+sequences while the fork stays on GTRGAMMA at every size. That is finding 140, which measured it from
+the `.refjson`'s `ratehet_model` field and set out what it costs the comparison. The correction here is
+only to this finding's own reassurance: what the heuristic switch touches is reading the curve, and the
+gap between the curves is confounded by the rate model for the separate reason finding 140 gives.
 
 It also fails to explain the one feature of the memory law that wanted explaining. Within
 `epang_T8_K25` alone, MB per sequence is **4.59, 4.47, 4.61** at 402, 801 and 2 023 and **5.14, 5.13** at
