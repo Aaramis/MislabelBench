@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 190 |
+| findings in this report | 191 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -35,7 +35,10 @@ and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live
 
 The findings are in the order they were found, which is also the order in which the methods that found
 them arrived: reading the code, then repatriating results and cloning the repository to see whether it
-still worked, then recomputing every published number by a second implementation. That last sweep is
+still worked, then recomputing every published number by a second implementation. The first twenty are
+grouped by kind, under the four headings below; everything after them is in sequence under "Everything
+found after the first pass", because a thematic grouping of a list that keeps growing is a thing that
+goes stale, and this one did. That last sweep is
 findings 98 to 107 and is the one worth starting from if you want the shortest account of whether the
 numbers are right: ten claims, roughly four thousand recomputed values, **one wrong number**, and five
 things that were true but could not be checked from the repository as it stood.
@@ -291,10 +294,17 @@ deferring to `data/README.md`: **all 378 regenerated files byte-identical**, and
 say nothing at all. Only the three version 1 files are left alone, which is now stated rather than
 implied.
 
-## Found after this report was written
+## Everything found after the first pass
 
-The review stopped at the code. Four defects were in what the code produces, and they came out of
-repatriating results from the cluster rather than reading anything.
+The first pass stopped at the code, and findings 1 to 20 above are grouped by what they were. This
+section is everything since, in the order it was found, which is the only order that stays true as it
+grows: it began as four defects in what the code *produces* rather than in the code, found by
+repatriating results from the cluster rather than by reading anything, and it did not stop there.
+
+No count is given here on purpose. The heading said "Four defects" while 170 findings sat under it,
+which is the drift the opening paragraph warns about and which finding 188 met again in a code comment
+the same week. The number that is safe to state is the one `bin/verify_report_references.py` recomputes,
+in the table at the top of this file.
 
 **21. The evidence behind every version 2 number was not in the repository.** `README.md` said
 `results/` is tracked because the runs are the evidence and the tables are rebuilt from them. True of
@@ -4454,6 +4464,27 @@ when the file is there, and its failure path no longer diffs against a file that
 `check_staged_reference` in `bin/verify_manifests.py` holds the asset to the file so the two cannot drift
 -- verified by appending one byte to the reference in a scratch copy, which makes the gate exit 1 with
 "does not match the recorded digest".
+
+**191. A heading said "four defects" over a hundred and seventy, and the sweep that looked for worse
+found nothing.** Finding 190 ended on a script that could not run where it runs, which generalises: any
+job script reading a **committed** result is broken on a cluster `bin/restore_cluster.sh` built, since
+that script says in its own comment that "results/ travels the other way" and leaves `results/` empty.
+Swept every `slurm/*.sh` for a `results/` path it names outside its own `--outdir`, and matched each
+against the tracked files. **21 paths, three matching something committed, and all three are a job's own
+output or the reference finding 190 just replaced with a digest.** No second case.
+
+What the sweep did turn up is the report itself. Its findings are not one list: the first twenty are
+grouped by kind under four headings, and everything since sits under one heading whose opening sentence
+read "The review stopped at the code. **Four defects** were in what the code produces". **170 findings
+sat under it**, numbers 21 to 190. The opening paragraph of this file warns that its own summary went
+stale twice and says the counts are derived for that reason; this sentence was not a count in the table,
+so nothing checked it.
+
+The heading is now "Everything found after the first pass" and says what it holds: the order it was found
+in, which is the only order that stays true as it grows, and no number -- for the reason finding 188
+reached about a code comment three hours earlier. "How to read it" says where the boundary between the
+grouped twenty and the sequence falls, because a thematic grouping of a list that keeps growing goes
+stale, and this one did.
 
 ## What is outstanding
 
