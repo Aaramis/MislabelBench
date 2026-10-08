@@ -5156,6 +5156,52 @@ already sources, and the two callers state their own need: 25 000 for an arm tha
 for a venv that writes 12 945. It returns without an opinion when the ceph attributes are absent, since a
 filesystem without them is not a filesystem with no room.
 
+**213. The script that defines the ground truth of 180 cells had no test, and a mutation sweep said so
+in one line.** `tests/test_parsing.py` describes a sweep in prose -- 26 mutations, 16 survivors, four in
+code that decides a published figure -- which is a claim a reader cannot check. It is now
+`tests/mutation_sweep.py`, something to run:
+
+    python3 tests/mutation_sweep.py bin/inject_mislabels.py tests.test_injection
+
+Three runs, and the middle one is the finding:
+
+| script | before | after |
+|---|---|---|
+| `bin/grove_taxonomy.py` | 13 of 28 killed | **27 of 28** |
+| `bin/score_injection.py` | 3 of 5 killed | **5 of 5** |
+| `bin/inject_mislabels.py` | **0 of 10 killed** | **10 of 10** |
+
+`bin/inject_mislabels.py` killed nothing because nothing tested it. Among the survivors was
+`floor = args.k + 1` flipped to `args.k - 1`, which breaks the one rule the script's own docstring calls
+non-negotiable: a donor taxon always keeps a correctly labelled member, or the taxon disappears from the
+tree when the injected sequences are removed and the measurement becomes a structural limit of
+leave-one-out rather than a property of the tool. What stood in for a test was `verify_injection.py` over
+the real cells and the byte-identical regeneration of 378 of them; both check the output of one
+particular run, and neither can say what the script does to a case nobody has generated.
+`tests/test_injection.py` pins twelve invariants, including that rule at every k the grid uses, that each
+group contributes exactly k, that the wrong label differs at the requested rank and nowhere above it,
+that untouched sequences keep their exact lineage, and that the same seed gives byte-identical output --
+which is the only reason a cell can be regenerated from its seed instead of committed.
+
+**`score_injection.py`'s `added_vs_baseline` had never been exercised at all.** `--baseline-mis` appears
+nowhere in the old tests, so `len(others - baseline)` flipped to `len(others + baseline)` -- a TypeError
+on two sets -- passed the suite. That field is published, and this session had already fixed a different
+bug in it that was returning null for 144 cells. Three cases now cover it: a baseline that removes one
+flag of two, an empty baseline that is an answer and not a missing one, and no baseline at all, where the
+field must be absent rather than zero. A fourth covers `mismatch_rank`'s prefix fallback, which feeds
+`recall_at_injected_rank` and which no test had ever reached.
+
+**Two things the sweep tool itself had to learn, both found by being wrong first.** It now refuses to run
+when the suite already fails, because then every mutant counts as killed and a broken test reports a
+perfect score -- which is exactly what the first run reported, for five minutes, after a new test of mine
+raised an IndexError on its own fixture. And it takes comment and string spans from the tokenizer rather
+than from the look of a line: a `>=` inside a printed message is prose, it sits on a line of code, and
+mutating it changes nothing. Filtering by line left 20 survivors where 7 were real.
+
+One mutant survives everything and is meant to: `j < len(inner)` to `j <= len(inner)` in the expansion
+loop, where the clade-count condition always stops first because no rank's target can exceed the number
+of tips. Checked by running it rather than argued: the suite passes, and it cannot be made to fail.
+
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added
 later, for the reason `make_simulation.sh` records, and the committed manifest has carried 37 since.

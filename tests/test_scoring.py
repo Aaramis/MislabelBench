@@ -31,7 +31,13 @@ WRONG = "d__A;p__B;c__C;o__O;f__Z;g__Z;s__Z1"
 
 
 def mis_row(name, conf, excl, declared=WRONG, proposed=TRUE, level="Family"):
-    fields = [name, level, declared.split(";")[4], proposed.split(";")[4], f"{conf:.3f}",
+    # The label columns hold the family, which is rank 4 -- except for a proposal that stops above
+    # family, where the deepest rank it has is the one the tool would have named.
+    def label(path):
+        parts = path.split(";")
+        return parts[4] if len(parts) > 4 else parts[-1]
+
+    fields = [name, level, label(declared), label(proposed), f"{conf:.3f}",
               declared, proposed, "0.9;0.9;0.9"]
     if excl is not None:
         fields.append(f"{excl:.3f}")
@@ -92,6 +98,54 @@ class ScoreInjection(unittest.TestCase):
         d = self.score(self.write_mis([]))
         self.assertEqual(self.at(d, 0.0)["recall"], 0.0)
         self.assertEqual(self.at(d, 0.0)["flags_on_non_injected"], 0)
+
+    def test_added_vs_baseline_subtracts_the_baseline_and_not_the_other_way(self):
+        """`added_vs_baseline` is published, and until this test nothing exercised the flag at all.
+
+        A mutation sweep flipped `len(others - baseline)` to `len(others + baseline)`, which is a
+        TypeError on two sets, and the suite passed: no test had ever passed --baseline-mis. The
+        numbers here are chosen so the two directions differ -- one collateral flag is in the
+        baseline and one is not, so the answer is 1 and never 2 or 3.
+        """
+        base = self.tmp / "base.mis"
+        base.write_text(HEADER + "\n" + mis_row("old", 0.9, 1.0) + "\n")
+        d = self.score(self.write_mis([mis_row("i1", 0.9, 1.0), mis_row("old", 0.9, 1.0),
+                                       mis_row("new", 0.9, 1.0)]), "--baseline-mis", base)
+        row = self.at(d, 0.0)
+        self.assertEqual(row["flags_on_non_injected"], 2, "old and new")
+        self.assertEqual(row["added_vs_baseline"], 1, "new only")
+        self.assertEqual(d["baseline_flags"], 1)
+
+    def test_an_empty_baseline_is_an_answer_and_not_a_missing_one(self):
+        """A database the tool flags nothing in is a real baseline, and the field used to report
+        null for it while `baseline_flags: 0` sat two lines above. Recovered 144 null values in the
+        simulated summaries when it was fixed, so it is pinned here."""
+        base = self.tmp / "empty.mis"
+        base.write_text(HEADER + "\n")
+        d = self.score(self.write_mis([mis_row("a", 0.9, 1.0), mis_row("b", 0.9, 1.0)]),
+                       "--baseline-mis", base)
+        self.assertEqual(d["baseline_flags"], 0)
+        self.assertEqual(self.at(d, 0.0)["added_vs_baseline"], 2)
+
+    def test_without_a_baseline_the_field_is_absent_rather_than_zero(self):
+        d = self.score(self.write_mis([mis_row("a", 0.9, 1.0)]))
+        self.assertIsNone(self.at(d, 0.0)["added_vs_baseline"])
+        self.assertIsNone(d["baseline_flags"])
+
+    def test_a_proposal_that_is_a_prefix_lands_at_the_shorter_depth(self):
+        """mismatch_rank's fallback, for a proposed path that agrees everywhere it exists.
+
+        It is reached whenever the tool proposes a lineage shorter than the declared one, and it
+        feeds recall_at_injected_rank. `min` to `max` survived the sweep because nothing came down
+        this branch. The proposal here agrees on all four ranks it has, so the shorter length is 4,
+        which is exactly the family index this cell injected at: `min` counts the row at rank and
+        `max` would return 7 and not count it. One sequence of four, so 0.25 either way for recall
+        and 0.25 against 0.0 for the rank metric.
+        """
+        short = "d__A;p__B;c__C;o__O"
+        d = self.score(self.write_mis([mis_row("i1", 0.9, 1.0, declared=WRONG, proposed=short)]))
+        self.assertEqual(self.at(d, 0.0)["recall"], 0.25)
+        self.assertEqual(self.at(d, 0.0)["recall_at_injected_rank"], 0.25)
 
     def test_names_that_do_not_join_give_zero_recall_and_say_so_in_the_counts(self):
         """The silent-zero class. A name mismatch cannot be distinguished from genuine non-detection
