@@ -88,7 +88,10 @@ def inside(spans, offset):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("target", help="script to mutate, e.g. bin/grove_taxonomy.py")
-    p.add_argument("tests", help="test module to run, e.g. tests.test_grove_taxonomy")
+    # More than one, because a script's parsing and its arithmetic are tested in different modules
+    # here: conflict_enrichment.py has its tail in tests.test_scoring and its .mis reading in
+    # tests.test_parsing, and sweeping it against either alone reports survivors the other kills.
+    p.add_argument("tests", nargs="+", help="test modules to run, e.g. tests.test_scoring")
     args = p.parse_args()
 
     target = Path(args.target)
@@ -96,10 +99,11 @@ def main():
 
     # The suite has to pass before anything is mutated, or every mutant counts as killed and the
     # sweep reports a perfect score for a broken test. That happened on the first run of this file.
-    first = subprocess.run([sys.executable, "-m", "unittest", args.tests],
+    names = " ".join(args.tests)
+    first = subprocess.run([sys.executable, "-m", "unittest", *args.tests],
                            cwd=REPO, capture_output=True, text=True)
     if first.returncode:
-        print(f"{args.tests} already fails on unmutated code; fix that first", file=sys.stderr)
+        print(f"{names} already fails on unmutated code; fix that first", file=sys.stderr)
         print(first.stderr[-2000:], file=sys.stderr)
         return 1
 
@@ -115,7 +119,7 @@ def main():
                     continue                     # prose in a comment or a message, not behaviour
                 mutants += 1
                 write(target, mutated)
-                r = subprocess.run([sys.executable, "-m", "unittest", args.tests],
+                r = subprocess.run([sys.executable, "-m", "unittest", *args.tests],
                                    cwd=REPO, capture_output=True, text=True)
                 if r.returncode:
                     killed += 1
@@ -125,7 +129,7 @@ def main():
     finally:
         write(target, original)
 
-    print(f"{mutants} mutants in {target}, {killed} killed by {args.tests}, "
+    print(f"{mutants} mutants in {target}, {killed} killed by {names}, "
           f"{len(survivors)} survived")
     for old, new, line in survivors:
         print(f"  SURVIVED  {old!r} -> {new!r}  {line.strip()[:90]}")

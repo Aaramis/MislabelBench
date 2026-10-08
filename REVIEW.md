@@ -5217,17 +5217,33 @@ Every sweep was re-run afterwards, and the table below is the re-run.
 **215. Two scripts that carry published claims were barely tested, and one of them was the paper's
 mechanism.** With the cache fixed:
 
-| script | killed | |
+Every script below was swept against the **whole** suite, not against the module that happens to name
+it, because this repository tests a script's parsing and its arithmetic in different places: sweeping
+`conflict_enrichment.py` against `tests.test_parsing` alone reported ten survivors that
+`tests.test_scoring` kills. Getting that wrong is how a sweep manufactures a finding, so the tool now
+takes several modules and the table is the honest version.
+
+| script | before | after |
 |---|---|---|
-| `bin/background_stability.py` | 6 of 6 | |
-| `bin/score_injection.py` | 5 of 5 | after finding 213 |
-| `bin/inject_mislabels.py` | 10 of 10 | after finding 213 |
-| `bin/paired_conditions.py` | 10 of 10 | after the tests below |
-| `bin/detection_law.py` | **1 of 13** -> 12 of 13 | after the tests below |
-| `bin/conflict_enrichment.py` | 9 of 19 | outstanding |
-| `bin/column_comparison.py` | 7 of 15 | outstanding |
-| `bin/minimal_case.py` | 4 of 7 | outstanding |
-| `bin/verify_injection.py` | 1 of 2 | outstanding |
+| `bin/background_stability.py` | 6 of 6 | 6 of 6 |
+| `bin/conflict_enrichment.py` | 18 of 19 | 18 of 19 |
+| `bin/score_injection.py` | 3 of 5 | **5 of 5** |
+| `bin/inject_mislabels.py` | **0 of 10** | **10 of 10** |
+| `bin/detection_law.py` | **1 of 13** | **12 of 13** |
+| `bin/paired_conditions.py` | 6 of 10 | **10 of 10** |
+| `bin/column_comparison.py` | 7 of 15 | **14 of 15** |
+| `bin/minimal_case.py` | 4 of 7 | **6 of 7** |
+| `bin/verify_injection.py` | 1 of 2 | **2 of 2** |
+| `bin/grove_taxonomy.py` | 13 of 28 | **27 of 28** |
+| total | 59 of 115 | **110 of 115** |
+
+The five that survive everything were each checked by running them, not argued away: the expansion
+loop's `j < len(inner)`, which the clade-count condition always stops first; `min(ties, ...)`'s
+companion in `minimal_case.py`, where an inner break on the cap makes the `while` bound redundant;
+`p >= 1.0` in the binomial tail, where p is a rate and cannot exceed one; `abs(conf - 0.510) < 1e-9`,
+where the difference is either zero or a thousand times the tolerance; and one arithmetic in
+`detection_law.py`'s "fell outside the printed bins" message, which the clamp above it makes
+unreachable and whose own comment says so.
 
 `bin/detection_law.py` produces the table behind the claim that detection is governed by what the
 removed sequence is placed against -- of the relatives that survive its removal, k-1 carry the wrong
@@ -5247,6 +5263,34 @@ whole distribution, and every p-value into 1.0, survived. The case the grid actu
 two numbers `make_simulation.sh` quotes for running three injection seeds, and a third fixture adds the
 tied cell no fixture had: with no tie anywhere, `n = len(d) - ties` can be flipped to `+ ties` without
 any test noticing, and that changes both the p-value and the win and loss counts.
+
+**216. Three more scripts, and the pattern in what was missing.** `bin/column_comparison.py` produces
+the comparison the new column exists to justify -- confidence against `OriginalLabelExclusion`, ranked
+on injected truth -- and the only tests on it were the two that fixed a `ZeroDivisionError`. Nothing
+touched the curves, the floors, the matched budget or the `>= 0.99` share README quotes. Seven of
+fifteen. The new fixture is seven flags whose every number is countable by hand and whose two columns
+deliberately disagree: confidence can be pushed to zero calls on untouched sequences, exclusion bottoms
+out at two, which is the saturation the comparison exists to show. It pins both curves point by point,
+both floors, the matched-budget row in the printed log, and the boundary at exactly 0.99, where three of
+the fifteen mutants lived.
+
+`bin/verify_injection.py` is a gate, and its own summary line was unpinned: every existing case had
+either no problem or a single cell, where `checked - len(problems)` and `checked + len(problems)` agree.
+Two cells with one tampered now assert "2 cells checked, 1 sound". A gate that miscounts what it passed
+is worse than no gate.
+
+`bin/minimal_case.py` builds the case that gets sent to someone else. Two of its three survivors were
+real holes: `--injected-count` equal to the target's own group, which is the smallest case that keeps k
+and which `<=` instead of `<` would refuse outright; and the rank truncation behind `--keep-rank`, where
+one rank short puts all seven fixture sequences inside the kept clade, leaves nothing outside, and
+builds a case with **no outgroup at all** -- a different experiment, since the placement would have
+nowhere else to go. `n_outgroup` was already recorded, so both are one assertion each.
+
+**The pattern, stated because it predicts where to look next.** In every case the untested thing was not
+the main path but the *second* computation of the same quantity, or a boundary the fixture never reached:
+a printed table recomputed from the same variables, a count derived a second way for the record, a
+threshold tested only strictly inside its range, a tie that no fixture had. The main paths were all
+right. What nothing had checked was the arithmetic written twice.
 
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added

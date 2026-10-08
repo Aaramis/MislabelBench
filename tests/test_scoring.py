@@ -189,6 +189,27 @@ class VerifyInjection(unittest.TestCase):
         self.assertNotEqual(self.verify().returncode, 0,
                             "s1 was changed without being declared")
 
+    def test_the_sound_count_is_the_cells_minus_the_problems(self):
+        """Two cells, one tampered: the line has to read 2 checked and 1 sound.
+
+        The existing cases all have either no problem or one cell, where `checked - len(problems)`
+        and `checked + len(problems)` agree. This is the gate's own summary, read by whoever runs
+        bin/analyses.sh, and a gate that miscounts what it passed is worse than no gate.
+        """
+        lines = [f"s{i}\t{WRONG if i == 0 else TRUE}\n" for i in range(6)]
+        self.write_cell(lines, {"s0": {"true": TRUE, "wrong": WRONG}})
+        bad = self.tmp / "inj" / "c2"
+        bad.mkdir(parents=True)
+        (bad / "c2.tax").write_text("".join(
+            f"s{i}\t{WRONG if i in (0, 1) else TRUE}\n" for i in range(6)))
+        (bad / "c2.truth.json").write_text(json.dumps({
+            "distance": "family", "rate": 0.1, "k": 1, "seed": 1,
+            "injected": {"s0": {"true": TRUE, "wrong": WRONG}}}))
+        r = self.verify()
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("2 cells checked, 1 sound", r.stdout)
+        self.assertIn("1 cells failed", r.stderr)
+
     def test_a_missing_sequence_is_caught(self):
         lines = [f"s{i}\t{WRONG if i == 0 else TRUE}\n" for i in range(5)]
         self.write_cell(lines, {"s0": {"true": TRUE, "wrong": WRONG}})
@@ -227,6 +248,82 @@ class ColumnComparison(unittest.TestCase):
         r = self.run_it()
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertIn("100.0%", r.stdout)
+
+
+class ColumnComparisonCurves(unittest.TestCase):
+    """The two curves and the stem table, on seven flags whose every number is countable by hand.
+
+    The class above checks that the script survives a grid with no stem flag, which was a real
+    ZeroDivisionError. It does not touch the curves, the floors, the matched-budget row or the
+    exclusion thresholds -- so a mutation sweep killed 7 of 15, and among the survivors were the
+    `>= 0.99` that produces the share README quotes, the `min` that picks the matched budget, and the
+    `max` that reads the best point off it. Those are the script's output.
+
+    The fixture is built so that the two columns disagree: the confidence column can be pushed to
+    zero calls on untouched sequences, the exclusion column bottoms out at two, which is the
+    saturation the whole comparison exists to show.
+    """
+
+    #       name  injected  confidence  exclusion
+    ROWS = [("i1", True, 0.510, 0.990),
+            ("i2", True, 0.900, 0.500),
+            ("i3", True, 0.800, 0.600),
+            ("u1", False, 0.510, 0.980),
+            ("u2", False, 0.700, 1.000),
+            ("u3", False, 0.600, 0.990),
+            ("u4", False, 0.510, 1.000)]
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        cell = self.tmp / "inj" / "c1"
+        cell.mkdir(parents=True)
+        (cell / "c1.truth.json").write_text(json.dumps({
+            "distance": "family", "rate": 0.1, "k": 1, "seed": 1,
+            "injected": {n: {"true": TRUE, "wrong": WRONG}
+                         for n, inj, _, _ in self.ROWS if inj}}))
+        runs = self.tmp / "runs"
+        d = runs / "c1__cond"
+        d.mkdir(parents=True)
+        (d / "c1__cond.mis").write_text(
+            HEADER + "\n" + "\n".join(mis_row(n, c, e) for n, _, c, e in self.ROWS) + "\n")
+        self.out = self.tmp / "cols.json"
+        self.r = run("column_comparison.py", "--injected-dir", self.tmp / "inj",
+                     "--runs-dir", runs, "--condition", "cond", "--out", self.out)
+        self.assertEqual(self.r.returncode, 0, self.r.stderr)
+        self.doc = json.loads(self.out.read_text())
+
+    def test_the_curves_are_cumulative_from_the_threshold_up(self):
+        self.assertEqual(self.doc["n_flags"], 7)
+        self.assertEqual(self.doc["n_injected_flags"], 3)
+        self.assertEqual(
+            [(p["threshold"], p["injected_kept"], p["untouched_kept"])
+             for p in self.doc["curves"]["confidence"]],
+            [(0.510, 3, 4), (0.600, 2, 2), (0.700, 2, 1), (0.800, 2, 0), (0.900, 1, 0)])
+        self.assertEqual(
+            [(p["threshold"], p["injected_kept"], p["untouched_kept"])
+             for p in self.doc["curves"]["exclusion"]],
+            [(0.500, 3, 4), (0.600, 2, 4), (0.980, 1, 4), (0.990, 1, 3), (1.000, 0, 2)])
+
+    def test_the_floor_is_the_lowest_reachable_call_count_per_column(self):
+        self.assertEqual(self.doc["untouched_floor"], {"confidence": 0, "exclusion": 2})
+
+    def test_the_matched_budget_is_the_higher_floor_and_takes_the_best_point_in_it(self):
+        """The budget has to be the larger of the two floors, or the saturated column cannot reach
+        it at all, and within the budget the informative point is the one keeping the most injected
+        flags. Here the budget is 2: confidence keeps 2 injected flags there and exclusion keeps 0.
+        """
+        line = next(l for l in self.r.stdout.splitlines() if l.strip().startswith("budget"))
+        self.assertIn("budget      2", line)
+        self.assertRegex(line, r"confidence\s+2\b")
+        self.assertRegex(line, r"exclusion\s+0\b")
+
+    def test_the_exclusion_threshold_counts_the_boundary_itself(self):
+        """0.99 exactly is in, and two of the fixture's rows sit on it. README quotes this share as
+        the reason the exclusion floor is where it is, so off by one row is off in print."""
+        self.assertEqual(self.doc["flags_exclusion_ge_099"], 4, "0.990, 0.990, 1.000, 1.000")
+        self.assertEqual(self.doc["stem_flags"], 3, "three flags at confidence 0.510")
+        self.assertEqual(self.doc["stem_exclusion_ge_099"], 2, "0.990 and 1.000 among those three")
+        self.assertEqual(self.doc["stem_injected"], 1)
 
 
 class BinomialTail(unittest.TestCase):

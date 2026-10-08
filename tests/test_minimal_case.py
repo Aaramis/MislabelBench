@@ -99,6 +99,37 @@ class MinimalCase(unittest.TestCase):
             self.assertEqual(r.returncode, 1)
             self.assertIn("below the target's own group", r.stderr)
 
+    def test_a_count_equal_to_the_group_is_allowed(self):
+        """One below the group is refused and the group itself is the smallest case that still has
+        the same k. The refusal is `<`, and `<=` would reject the only count that matters."""
+        with tempfile.TemporaryDirectory() as tmp:
+            d = write_inputs(tmp)
+            r = build(d, "--truth", d / "truth.json", "--injected-count", 2,
+                      "--keep-rank", "order", "--outgroup", 99, "--out", d / "case")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            got = read_tax(d / "case" / "case.tax")
+            self.assertEqual({n for n in got if got[n] != TAX[n]}, {"s1", "s2"})
+
+    def test_the_kept_rank_decides_what_counts_as_outside(self):
+        """--keep-rank names the clade the case keeps, and everything else is outgroup material.
+
+        `--keep-rank order` must truncate to four ranks. Truncating to three would put all seven
+        sequences inside the kept clade, leave nothing outside, and silently build a case with no
+        outgroup at all -- which is a different experiment, since the placement would have nowhere
+        else to go. The count is recorded, so it can be asserted.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            d = write_inputs(tmp)
+            r = build(d, "--truth", d / "truth.json", "--keep-rank", "order", "--outgroup", 1,
+                      "--out", d / "case")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            case = json.loads((d / "case" / "case.json").read_text())
+            self.assertEqual(case["n_outgroup"], 1, "exactly the cap, from outside the order")
+            got = read_tax(d / "case" / "case.tax")
+            outside = {n for n, l in got.items() if l.startswith(OUT_ORDER)}
+            self.assertEqual(outside, {"s6"}, "one per clade in turn, lowest name first")
+            self.assertEqual(set(got), {"s1", "s2", "s3", "s4", "s5", "s6"})
+
     def test_the_selection_does_not_depend_on_a_draw(self):
         with tempfile.TemporaryDirectory() as tmp:
             d = write_inputs(tmp)
