@@ -59,9 +59,15 @@ the tool runs at once, not of the reference.
 **At one thread the law is flat over a seventeen-fold range** -- 1.18, 1.11, 1.15, a 6 % band with no
 trend -- while at eight it is 4.59, 4.47, 4.61 at 402, 801 and 2 023 sequences, 4.98 at 2 507, 5.12 at
 3 001, and 5.14 and 5.13 at 4 001 and 7 051. So the rise exists only with concurrency, and the eight-thread
-peak is 3.9 to 4.5 times the one-thread peak against the four placements the tool runs side by side. The
-work costs 1.15 MB per sequence; the other four fifths are the price of doing it four times at once, and
-that is the half of the advice this file opens with.
+peak is **4.35 to 4.51 times** the one-thread peak at 7 051 sequences against the four placements the tool
+runs side by side. The work costs 1.15 MB per sequence; the rest is the price of doing it four times at
+once, and that is the half of the advice this file opens with.
+
+One thread is also the only reproducible figure. At 2 023 sequences the peak is **2 253 MB in all three
+runs**, identical to the megabyte; at eight threads nine runs spread 8 294 to 9 830, 18 %; at sixteen,
+three runs spread 6 554 to 9 216, 41 %. With one placement the high-water mark is a property of the work
+and with several it depends on how their allocations interleave, so a thread count is a precision choice
+as well as a memory one.
 
 Take 5.13 for a large reference at eight threads. Read medians and not runs: this paragraph claimed a step
 and then a slope, both from one run at one new size, before `slurm/memstep.sh` had three at 3 001 -- 4.88,

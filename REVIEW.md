@@ -4571,12 +4571,30 @@ finding 193's open question is that there is no per-placement structure growing 
 work costs 1.15 MB per sequence at any size, and the other four fifths of the published figure are the
 price of doing it four times at once.
 
-The multiplier is itself worth a line, because it is not 4. The eight-thread peak is **3.88, 4.14 and
-4.47** times the one-thread peak at the three sizes, rising with size and passing 4 between 2 023 and
-7 051. Four concurrent placements cannot cost more than four times one unless something else scales too
--- the parent's own footprint, or EPA-ng's per-thread buffers, two threads to a placement -- and this
-benchmark has no measurement that separates those. It is stated as the bound it is rather than
-explained.
+The multiplier was first stated here as "3.88, 4.14 and 4.47, rising with size and passing 4", which was
+a median over a spread read as a trend. The spreads are the finding:
+
+| condition, 2 023 sequences | runs | peak, min to max | spread |
+|---|---|---|---|
+| `epang_T1_K25` | 3 | 2 253 to 2 253 | **0 %** |
+| `epang_T8_K25` | 9 | 8 294 to 9 830 | 18 % |
+| `epang_T16_K25` | 3 | 6 554 to 9 216 | 41 % |
+
+**At one thread the peak is identical to the megabyte across three runs.** The spread then grows with the
+thread count, which is what concurrency does: with one placement the high-water mark is a property of the
+work, and with several it depends on how their allocations interleave in time. So the one-thread figure is
+the trustworthy one and the eight-thread figure the paper quotes carries an 18 % spread.
+
+Read against those, the multiplier is **4.35 to 4.51 at 7 051 sequences** and **3.68 to 4.36 at 2 023**.
+Above four robustly at the large size and straddling it at the small one, so "passing 4 between the two"
+was the right direction for the wrong reason. Why it exceeds four when four placements run is still
+unexplained, and the candidates -- the parent's own footprint, EPA-ng's per-thread buffers at two threads
+to a placement -- are not separated by anything here.
+
+It also retires a reading of the thread axis that was never stated but was available: `epang_T16_K25`'s
+median peak, 8 397 MB, is **below** `epang_T8_K25`'s 9 318, which would say sixteen threads cost less
+memory than eight. The ranges overlap entirely, 6 554 to 9 216 against 8 294 to 9 830, so there is nothing
+there. Three replicates at 41 % spread cannot separate two medians 11 % apart.
 
 **195. The manuscript's main stated limitation is an eight-thread limitation, and it does not say so.**
 Not a defect in the repository: `body.tex` says the fork's peak is "environ cinq mégaoctets par séquence
