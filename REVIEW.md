@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 200 |
+| findings in this report | 201 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4767,6 +4767,39 @@ the mechanism, measured rather than inferred, and it closes findings 194 and 199
 The one-thread law gains its fourth point and is now **1.18, 1.12, 1.11, 1.15** at 402, 801, 2 023 and
 7 051 sequences, three runs at each and every one of the four reproducible to the megabyte: 475, 899,
 2 253, 8 090. A seventeen-fold range, a 6 % band, no trend, no spread.
+
+**201. The memory panel decomposes exactly, and what is left over is named rather than explained.** With
+the one-thread law measured at four sizes and the mechanism of finding 200 in hand, the eight-thread peak
+divides into the cost of one placement times the number live at the high-water moment:
+
+| sequences | one thread | eight threads | ratio | above four placements |
+|---|---|---|---|---|
+| 402 | 475 MB | 1 843 MB | **3.88** | -57 MB, -0.12 placement |
+| 801 | 899 | 3 584 | **3.99** | -12 MB, -0.01 |
+| 2 023 | 2 253 | 9 318 | **4.14** | 306 MB, 0.14 |
+| 7 051 | 8 090 | 36 147 | **4.47** | 3 787 MB, 0.47 |
+
+So the whole of panel B's memory axis is two laws multiplied: a per-placement cost flat at 1.11 to 1.18
+MB per sequence, and an effective concurrency rising from 3.88 to 4.47. The rise in MB per sequence that
+findings 185, 192 and 193 chased through three wrong readings is **entirely** the second factor. There
+was never anything in the first.
+
+**The residual is bounded and unattributed, and that is where this stops.** At the two smallest sizes the
+peak is slightly *below* four placements, which is placements finishing before the next starts: a run at
+402 sequences lasts 10 s, so they stagger, and the 801 outlier of finding 200 is the extreme of that at
+1.25 placements. At the two largest it is above four by 0.14 and 0.47 of a placement. A run at 7 051
+lasts about 290 s and its placements about 60 s each, so they cannot stagger and all four overlap -- but
+that explains reaching four, not exceeding it. The candidates for the extra 3 787 MB are the parent
+process holding its own copy of the reference and EPA-ng's per-thread buffers at two threads to a
+placement, and **no measurement here separates them.**
+
+It is recorded as a bound because the bound is what a user needs: four and a half times what one
+placement costs, which is 5.13 MB per sequence at the published size, and the parts of it that are not
+the four placements amount to a tenth of the total. Nothing published changes.
+
+This closes the memory thread, which ran from finding 185 to here on one question that turned out to be
+two: the shape of the law, settled by replication after three readings, and its mechanism, settled by a
+prediction that held to 2 %.
 
 ## What is outstanding
 
