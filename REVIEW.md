@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 202 |
+| findings in this report | 203 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4830,6 +4830,36 @@ findings quote and silently changing it would break their arithmetic.
 The sixteen-thread row is from 2 023 sequences because that is the only size the thread axis covers, so
 its 505 256 is not comparable with the rows above it. Stated rather than hidden: the `from n` column
 exists for that reason.
+
+**203. Leave-one-out is not quadratic in either tool, and the one segment that comes close is the one
+below the heuristic threshold.** The question was whether the manuscript should say that RAxML
+leave-one-out costs O(n^2). The naive expectation says it should: n sequences, each placed against a tree
+of n-1 leaves, each placement evaluating every branch. The committed timings say otherwise.
+
+| sequences | SATIVA | per sequence | sativa-epang | per sequence | ratio |
+|---|---|---|---|---|---|
+| 402 | 78.8 s | 196 ms | 9.6 s | 23.9 ms | 8.2x |
+| 801 | 237.8 | 297 | 16.1 | 20.1 | 14.8x |
+| 2 023 | 635.6 | 314 | 38.5 | 19.0 | 16.5x |
+| 4 001 | 1 343.9 | 336 | 129.0 | 32.2 | 10.4x |
+| 7 051 | 2 983.6 | 423 | 262.4 | 37.2 | 11.4x |
+
+Fitted log-log over the whole seventeen-fold range the exponent is **1.27 for SATIVA and 1.16 for the
+fork**. Quadratic would mean the per-sequence cost grows with n, a factor of 17.5 across this gradient;
+SATIVA's grows by **2.16**. So the claim is wrong by a factor of eight, and it is wrong for a reason the
+tool states in its own configuration: `EPA_HEUR_THRES` is 1 000 and `epa_heur_rate` is `0.5 * 1000 / n`,
+so above a thousand sequences the number of branches a query is placed against is roughly **constant**,
+and both tools set `epa_use_heuristic=auto` (finding 185). The quadratic cost is what the tools would have
+without the heuristic.
+
+The segment slopes say the same thing from the other side. SATIVA's steepest segment is **402 to 801 at
+1.60**, which is the only one entirely below the threshold where placement is exhaustive, and it flattens
+to 1.06 and 1.10 immediately above it.
+
+**What is worth saying instead, and it bounds the paper's claim rather than strengthening it:** the
+advantage is a constant factor, 8 to 17 times with no trend across a seventeen-fold range, and not a
+better exponent. A reader who extrapolates a speed-up that grows with database size would be extrapolating
+something this benchmark does not show.
 
 ## What is outstanding
 
