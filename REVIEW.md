@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 184 |
+| findings in this report | 185 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4260,6 +4260,39 @@ a floor for one tool against a mean for the other would be the unfair comparison
 spread. And the stage the panel is *about* is the stable one: placement holds to 1.2 to 3.4 % across
 replicates while the reference build swings 48 %. The noisiest stage in the figure is the one that does
 not distribute, so the distribution claim rests on the measurement that reproduces.
+
+**185. Both tools change algorithm with the size of the reference, so the size gradient is not one
+algorithm scaled.** `epac/config.py` is in both images -- `/usr/local/share/sativa-epang-0.10.2-0/epac/`
+in the fork and `/usr/local/bin/epac/` in upstream -- and both carry the same four size thresholds and
+the same formula:
+
+```python
+if self.epa_use_heuristic == "AUTO":
+    if tree_size > EpacConfig.EPA_HEUR_THRES:        # 1000
+        self.epa_use_heuristic = "TRUE"
+        self.epa_heur_rate = 0.5 * float(EpacConfig.EPA_HEUR_THRES) / tree_size
+    else:
+        self.epa_use_heuristic = "FALSE"
+```
+
+So across the five sizes the benchmark measures, the placement is **exhaustive at 402 and 801 and
+heuristic from 2 023**, with a rate that falls as 500/n: **0.247 at 2 023, 0.125 at 4 001, 0.071 at
+7 051.** The switch sits between the second and third point of the gradient, and inside the heuristic
+regime the aggressiveness triples from the third point to the fifth. A scaling exponent fitted across
+402 to 7 051 is fitted across that.
+
+The comparison between the tools is not affected and that is the part worth having checked: the
+thresholds are identical in the two images, `CAT_GAMMA_THRES` 500, `EPA_HEUR_THRES` 1 000,
+`CAT_LOWER_THRES` 100, `GAMMA_UPPER_THRES` 10 000, so at any one size both tools are doing the same kind
+of work. What the switch touches is reading the curve, not reading the gap between the curves.
+
+It also fails to explain the one feature of the memory law that wanted explaining. Within
+`epang_T8_K25` alone, MB per sequence is **4.59, 4.47, 4.61** at 402, 801 and 2 023 and **5.14, 5.13** at
+4 001 and 7 051: two flat regimes with a 12 % step between them and no overlap, measured over 3, 3, 8, 3
+and 15 runs. The step lies between 2 023 and 4 001, where **none of the four thresholds falls**, so it is
+not a configured switch and stays unexplained. The manuscript extrapolates its 400 000-sequence ceiling
+from 5 MB per sequence, which is the large-reference regime and therefore the right one to extrapolate
+from; a reader taking 4.59 from the smallest point would overstate the ceiling by a fifth.
 
 ## What is outstanding
 

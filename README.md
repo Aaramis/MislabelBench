@@ -43,7 +43,12 @@ what the machine needs -- and the gap between them appears exactly where concurr
 one thread, 3.55x at eight**.
 
 The fork's footprint is proportional to its reference, **4.47 to 5.14 MB per sequence across a
-seventeen-fold size range**, where upstream's converges to 0.108. That is the number a user needs,
+seventeen-fold size range**, where upstream's converges to 0.108. Two flat regimes rather than one
+slope, which matters to anyone extrapolating: within `epang_T8_K25` it is 4.59, 4.47 and 4.61 at 402,
+801 and 2 023 sequences and 5.14 and 5.13 at 4 001 and 7 051, with no overlap between the groups. Take
+the large-reference 5.13 for a large reference; the 4.59 of the smallest point would overstate what a
+machine holds by a fifth. The step sits between 2 023 and 4 001 and none of the tool's four size
+thresholds does, so what causes it is not known. That is the number a user needs,
 because it is a ceiling rather than a slowdown: **64 GB holds 14 227 sequences at eight threads and
 58 850 at one**. So threads buy speed and are paid for in memory, which is the other half of the
 advice the paragraph above ends on -- on a small machine, give the fork fewer. Same table, same rule:
