@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 206 |
+| findings in this report | 207 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 45 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4947,6 +4947,32 @@ the core-second column is the one that answers the co-author's question.
 
 The manuscript's new sentence drops its single-size caveat and now reads "dès 801 séquences"; the
 supplement carries the three sizes and the occupation that explains the gap between the two columns.
+
+**207. The Grove tree is chosen by stated requirements, and the script reports how little freedom the
+choice had.** The database is in: 127 329 trees, pinned by sha256 and by byte count, with
+`RAxMLGroveScripts` pinned by commit `7d8e2aa4`. Its schema took one wrong query to learn, since
+`PARTITION` joins `TREE` on `PARENT_ID` and not on a column called `TREE_ID`.
+
+Moving off a hand-made tree only helps if the choice stops being ours, so `bin/grove_select.py` states
+the criteria as the control's own requirements, each with the reason it exists, and prints the number of
+candidates:
+
+| requirement | why |
+|---|---|
+| DNA, one partition | the control simulates one marker, as the benchmark's references are |
+| 700 to 1 000 taxa | the hand-made control had 864, and comparability is what lets them be read together |
+| 1 200 to 1 800 sites | the archaeal alignment is 1 478 columns, and per-sequence cost depends on width |
+| `MODEL in (GTR, GTRGAMMA)` | these carry the parameters a simulator needs; GTRCAT and GTRCATI are RAxML's rate-category approximations and do not |
+| `TREE_HEIGHT` present | the rank cuts are quantiles of node height |
+
+Counted while writing the criteria rather than after: **2 855** DNA single-partition trees have 500 to
+1 200 taxa, **963** have 700 to 1 000, **283** have 800 to 900. So the size band alone leaves a few
+hundred, and the pick among the survivors is by seed over the `TREE_ID` ordering, which makes it
+reproducible and lets a second tree be drawn without reopening the criteria.
+
+The candidates are varied in exactly the way the hand-made tree was not: among six sampled at 700 to
+1 000 taxa, tree heights run from 0.09 to 100, branch-length variance over six orders of magnitude, gaps
+from 0.06 % to 82 %, and alpha from 0.10 to 1.68. That spread is the whole argument for the change.
 
 ## What is outstanding
 
