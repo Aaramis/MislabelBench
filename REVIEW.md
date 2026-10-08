@@ -5028,7 +5028,7 @@ three of which are silent:
 | what | why it matters |
 |---|---|
 | `download_trees()` wraps every file in `except Exception: pass` | a dataset that is not on GitHub, or a node with no network, leaves an empty directory and exit status 0 |
-| `iqt.pr_ab_matrix` is optional, and when it is absent `pr_ab_matrix_path` is set to `""` | `--insert-matrix-gaps` then does nothing at all, and the alignment that was supposed to carry the source's missing-data pattern carries none. The RAxML8-only database shipped with the scripts has no matrix for the tree the criteria pick, so this is the normal case, not the exotic one |
+| `--insert-matrix-gaps` cannot do what its name suggests here | `assemble_sequences()` indexes the matrix by partition and not by site, so a zero bit blanks a taxon's whole partition. On the single-partition dataset the criteria ask for, the flag can only do nothing or destroy a sequence. It is not used, and the control has no gaps, like the hand-made one |
 | `tools/iqtree-2.2.0-beta-Linux/bin/iqtree2` is committed mode 644 | a fresh clone cannot execute it; `AliSim.execute()` catches the `PermissionError`, prints it, returns 1, and the assembly step then runs on a file that was never written. The script chmods it rather than failing |
 | the README asks for biopython, numpy, pandas and matplotlib | `org_script.py` imports `skopt` at module level, so scikit-optimize is required and unmentioned. The script takes the imports as the requirement |
 
@@ -5046,6 +5046,12 @@ control runs at 2 %, and a cell that cannot reach its rate is dropped into `skip
 at a quietly different one, which is what Protocol.md 2.4 asks for. The hand-made reference could use
 5 % because every one of its species had six members by construction; that it could is a property of
 the hand-made tree and not of the method.
+
+That one cost a wrong sentence in `Decisions.md`, which had already recorded the matrix as closing the
+gap-pattern hole with the same citable provenance it closes the tree-choice hole with. It does not, and
+the entry is corrected. What remains available is AliSim's indel model with rates inferred from the
+dataset's own alignment by SpartaABC, which RAxMLGrove supports and whose binary the pinned repository
+does not ship.
 
 The whole chain was run end to end locally against the database shipped with the pinned scripts, with
 the simulator's output stood in for, since the binary is Linux-only and no measurement is involved: 90

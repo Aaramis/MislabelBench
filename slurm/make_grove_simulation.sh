@@ -77,11 +77,19 @@ print(d['TREE_ID'], d['NUM_TAXA'], d['NUM_ALIGNMENT_SITES'])")
 echo "tree $TREE_ID, $NUM_TAXA taxa, $NUM_SITES sites"
 RAW="$OUT/raw/$TREE_ID"
 
-# 2. Download and simulate. --insert-matrix-gaps reproduces the source alignment's own missing-data
-# pattern rather than simulating indels under a model we would then have to defend; it needs the
-# dataset's iqt.pr_ab_matrix, which not every dataset has, so the check below is not a formality.
-# --avoid-empty-sequences because inserting that pattern can leave a sequence with no residue at all,
-# and a gap-only sequence in a reference is not a sequence.
+# 2. Download and simulate.
+#
+# No --insert-matrix-gaps, and the reason is worth stating because the flag sounds like exactly what
+# this control wants. The presence/absence matrix is indexed by partition, not by site:
+# assemble_sequences() does `bit = matrix[taxon][j]` over partitions j and, when the bit is 0, fills
+# that taxon's whole partition with the blank symbol. On a single-partition dataset -- which is what
+# the criteria ask for, because our references are single-marker -- the only two things it can do are
+# nothing at all and blanking an entire sequence. It cannot produce a within-sequence gap pattern. So
+# this alignment has no gaps, exactly like the hand-made control's, and the control's claim is about
+# the topology and the substitution model, not about the alignment. The alternative was to drop the
+# single-partition requirement and take a concatenation's genuine per-gene missing data, which was
+# rejected: it would make the simulated reference differ from the real ones in a second way in order
+# to fix the first.
 #
 # --force-rewrite only destroys a database under `create` (org_script.py line 2566 guards it on the
 # operation); under `generate` it merely reuses the tree's own directory name instead of writing
@@ -90,20 +98,12 @@ if [ ! -s "$RAW/assembled_sequences.fasta" ]; then
     mkdir -p "$OUT/raw"
     "$GROVE_PY" "$GROVE/scripts/org_script.py" generate \
         -n "$GROVE/latest_all.db" -q "TREE_ID = '$TREE_ID'" \
-        -g alisim --insert-matrix-gaps --avoid-empty-sequences \
+        -g alisim \
         --seed "$SEED" --force-rewrite -o "$OUT/raw" 2>&1 | tee "$OUT/generate.log"
 fi
 
 # 3. Everything the upstream script would have let pass in silence.
 [ -s "$RAW/tree_best.newick" ] || { echo "no tree downloaded: $RAW/tree_best.newick" >&2; exit 1; }
-[ -s "$RAW/iqt.pr_ab_matrix" ] || {
-    echo "dataset $TREE_ID has no presence/absence matrix, so --insert-matrix-gaps did nothing and" >&2
-    echo "the alignment carries no missing data. Pick a tree whose dataset has one." >&2
-    exit 1; }
-if [ -f "$RAW/failed_to_insert_gaps" ]; then
-    echo "three attempts left gap-only sequences in $TREE_ID; the fallback alignment has no gaps" >&2
-    exit 1
-fi
 [ -s "$RAW/assembled_sequences.fasta" ] || { echo "AliSim produced no alignment" >&2; exit 1; }
 
 # 4. The taxonomy, from the tree alone.
