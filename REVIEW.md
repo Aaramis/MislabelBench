@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 201 |
+| findings in this report | 202 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4800,6 +4800,36 @@ the four placements amount to a tenth of the total. Nothing published changes.
 This closes the memory thread, which ran from finding 185 to here on one question that turned out to be
 two: the shape of the law, settled by replication after three readings, and its mechanism, settled by a
 prediction that held to 2 %.
+
+**202. The manuscript's ceiling was not derivable from any committed table, and the table that came
+closest extrapolated from the wrong size.** The paper now gives two ceilings on a 2 TB node, about
+**400 000** sequences at eight threads and **1.8 million** at one. Both come from the per-sequence law at
+7 051 sequences, 5.13 and 1.15 MB. The only committed extrapolation was the "max seqs in 64 GB" column of
+the thread-axis table, and that column is computed from the **2 023-sequence** row, where the law reads
+4.61 and 1.11. Scaled to 2 TB it gives 455 000 and 1.89 million.
+
+So a referee checking the paper against the repository would have found 455 000 where the paper says
+400 000, an 11 % discrepancy with no stated reason. And the repository's figure is the wrong one at eight
+threads: finding 199 placed the end of the rise between 2 023 and 2 507, so the 2 023 row is **below the
+plateau** and extrapolating from it overstates what a machine holds.
+
+`bin/resource_usage.py` gains a table computed from the largest size each thread count was measured on,
+beside the one that was there:
+
+| tool | T | from n | MB/seq | in 64 GB | in 2 TB |
+|---|---|---|---|---|---|
+| fork | 1 | 7 051 | 1.15 | 57 122 | **1 827 904** |
+| fork | 8 | 7 051 | 5.13 | 12 783 | **409 077** |
+| fork | 16 | 2 023 | 4.15 | 15 789 | 505 256 |
+| upstream | 8 | 7 051 | 0.10 | 635 443 | 20 334 184 |
+
+The paper's two numbers are the first two rows. The old column stays, with a comment saying which size it
+uses and why that is the wrong size for a ceiling at eight threads, because it is the figure three earlier
+findings quote and silently changing it would break their arithmetic.
+
+The sixteen-thread row is from 2 023 sequences because that is the only size the thread axis covers, so
+its 505 256 is not comparable with the rows above it. Stated rather than hidden: the `from n` column
+exists for that reason.
 
 ## What is outstanding
 

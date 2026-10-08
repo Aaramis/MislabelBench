@@ -55,3 +55,12 @@ fork        16      30      8397      2668   3.15         4.15             15,78
 upstream     1    1405       205       138   1.48         0.10            646,728
 upstream     8     636       209       142   1.47         0.10            633,744
 upstream    16     582       217       150   1.44         0.11            610,402
+
+how large a reference fits, from the largest size each thread count was measured on
+tool         T  from n  tree MB/seq    in 64 GB       in 2 TB
+fork         1    7051         1.15      57,122     1,827,904
+fork         8    7051         5.13      12,783       409,077
+fork        16    2023         4.15      15,789       505,256
+upstream     1    2023         0.10     646,728    20,695,309
+upstream     8    7051         0.10     635,443    20,334,184
+upstream    16    2023         0.11     610,402    19,532,866

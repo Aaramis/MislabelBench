@@ -161,6 +161,11 @@ print()
 # machine needs and is not. Which one a reader wants depends on whether they are sizing a node or
 # wondering how large a database they can handle, so the last column says the second outright.
 print("peak memory on the thread axis at 2023 sequences, tree against largest child")
+# The capacity column below is computed from this size, 2 023 sequences, and that is the wrong size
+# for it at eight threads: MB per sequence is 4.61 here and reaches its plateau of 5.13 only above
+# 2 507, so extrapolating from this row overstates what a machine holds by 11 %. The table at the
+# bottom gives the capacity at the largest size each thread count was measured at, which is the
+# figure the manuscript's ceiling is taken from.
 print(f"{'tool':10}{'T':>4}{'wall s':>8}{'tree MB':>10}{'child MB':>10}{'ratio':>7}"
       f"{'tree MB/seq':>13}{'max seqs in 64 GB':>19}")
 for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}")):
@@ -174,6 +179,23 @@ for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}
         per = tree / 2023
         print(f"{tool:10}{t:>4}{wall:8.0f}{tree:10.0f}{child:10.0f}{tree / child:7.2f}"
               f"{per:13.2f}{int(65536 / per):>19,}")
+
+print()
+# What a machine holds, from the largest reference each thread count was measured on rather than from
+# the 2 023-sequence row above. At eight threads the law has not reached its plateau at 2 023, so this
+# is the honest basis for a ceiling, and it is where the manuscript's two numbers come from.
+print("how large a reference fits, from the largest size each thread count was measured on")
+print(f"{'tool':10}{'T':>4}{'from n':>8}{'tree MB/seq':>13}{'in 64 GB':>12}{'in 2 TB':>14}")
+for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}")):
+    for t in (1, 8, 16):
+        cand = [(dict(sizes)[ds], st.median(v)) for (ds, c), v in peaks.items()
+                 if c == prefix.format(t) and ds in dict(sizes)]
+        if not cand:
+            continue
+        n, tree = max(cand)
+        per = tree / n
+        print(f"{tool:10}{t:>4}{n:>8}{per:13.2f}{int(65536 / per):>12,}"
+              f"{int(2 * 1024 * 1024 / per):>14,}")
 
 
 # The law this table states is that the fork's footprint is proportional to the reference, and the
