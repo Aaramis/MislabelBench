@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 204 |
+| findings in this report | 205 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 44 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 45 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1162 |
@@ -4895,6 +4895,32 @@ of two, and the core-second figure, 18.4x, is the one that isolates the engine.
 the accumulated core-seconds are 1 909, 1 930 and 2 080 at one, two and four shards: four shards cut the
 wall clock by 3.67x and **raise** the CPU consumed by 9 %. A protocol sentence that lists distribution
 beside a speed gain invites the reader to add them, and they do not add.
+
+**205. The simulated reference's tree was chosen by hand, and that is now being fixed with a citable
+source.** A co-author's comment on Protocol.md 2.1 asked how the tree and the model parameters are
+chosen. `bin/simulate_reference.py` answers it in its own flags: a balanced `3,2,2,2,2,3` branching,
+144 species of 6 sequences, branch lengths fixed per rank from 0.30 to 0.004, Jukes-Cantor with no rate
+heterogeneity, and no gaps. Its docstring already concedes the point, "as regular as the model that made
+it".
+
+The first half of the comment is already answered and it passes: **0 of 864 flagged, both tools**, which
+is the check he asks for before trusting supposedly perfect data. What the second half gets right is that
+zero flags on a balanced ultrametric tree is weak evidence about a realistic one.
+
+`slurm/fetch_grove.sh` pins the two sources RAxMLGrove needs, the way every other fetch script here does:
+the scripts repository by commit, since it is a repository, and `latest_all.db` by sha256 and byte count,
+since it is a file. **146 669 568 bytes**, confirmed reachable from the cluster before the script was
+written rather than after. It also dumps the schema and the DNA tree counts by size band into
+`data/grove/provenance.json`, so the query that eventually picks a tree is written against measured
+numbers.
+
+Two things recorded in `Decisions.md` rather than here, because they are design and not defect. This
+reverses the recorded argument for a forty-line simulator over a pinned container, and the reason the
+reversal is right is that the argument was about a reader while the objection is a reviewer's. And the
+one place the design can break in silence is the taxonomy: a Grove tree has none, and the control's value
+is that a label cannot be wrong because the tree *is* the taxonomy, so the ranks have to be a
+deterministic function of the tree. Seven quantiles of the node-height distribution keeps that; a
+hand-picked set of cut heights would lose the whole argument one level down.
 
 ## What is outstanding
 
