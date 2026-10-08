@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 186 |
+| findings in this report | 187 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4333,6 +4333,36 @@ Both are now errors that name the file and the line, which is the right severity
 number and costs nothing while the corpus is clean. Checked on three fixtures: a five-column row exits 1
 with "5 columns, need at least 7", a repeated id exits 1 with "a appears twice", and a sound pair still
 prints its table. `bin/analyses.sh` rebuilds every agreement table unchanged.
+
+**187. Three findings in a row had the same shape, so the shape was swept for mechanically, and the rest
+of it is unreachable.** Findings 180, 182 and 186 were each a quantity that went missing without a word:
+a count taken and discarded, a truthiness test that called an empty baseline unmeasured, a parse that
+dropped a short row. Rather than meet the fourth by accident, every script in `bin/` was walked as a
+syntax tree looking for three patterns -- an `if ...: continue` that is the whole body of a parse loop's
+skip, a conditional expression whose test is a bare container name, and a bare `except`. **110 candidate
+sites across 48 files.**
+
+Most are formatting ternaries and legitimate filters. Triaged down, five say **zero where the honest
+answer is undefined**, which is the shape that matters because a fabricated zero reads as a measurement:
+
+- `bin/cluster_conflict.py:47` and `bin/inject_clade.py:66`, the same line in both:
+  `return same / tot if tot else 0.0`. Two sequences with no position where both carry a base would be
+  reported **0 % identical** rather than not comparable, and `mean_identity` averages that in.
+- `bin/disagreement_truth.py:80` and `:92`, `100 * t['injected'] / n if n else 0`, which prints `0.0%`
+  for an empty bucket where no sequence was classified at all.
+- `bin/fold_composition.py:63` and `:64`, `sizes[0] if sizes else 0` for a task directory with no folds,
+  which `n_folds: 0` beside it already says.
+
+**All five are unreachable on the committed data, and that was measured rather than argued.** Over 4 000
+random pairs of `gtdb_arc1200.aligned.fasta`, the minimum number of positions where both sequences carry
+a base is **858**, the 1st percentile 1 079 and the median 1 457; no pair falls below 100, let alone to
+zero. And in `results/disagreement_truth.json` the smallest bucket holds **408** sequences, across the
+nine distance strata as well as the three overall, so no denominator is zero there either.
+
+So nothing is changed. The code is left as it stands because a branch that cannot be entered on any input
+this benchmark has is not worth the churn, and what the review owes is the record that it was looked for
+and bounded: if `identity()` ever meets a pair with no overlap it will call them completely different, and
+the number that keeps that from happening is 858.
 
 ## What is outstanding
 
