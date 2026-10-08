@@ -4910,9 +4910,10 @@ zero flags on a balanced ultrametric tree is weak evidence about a realistic one
 `slurm/fetch_grove.sh` pins the two sources RAxMLGrove needs, the way every other fetch script here does:
 the scripts repository by commit, since it is a repository, and `latest_all.db` by sha256 and byte count,
 since it is a file. **146 669 568 bytes**, confirmed reachable from the cluster before the script was
-written rather than after. It also dumps the schema and the DNA tree counts by size band into
-`data/grove/provenance.json`, so the query that eventually picks a tree is written against measured
-numbers.
+written rather than after. It also dumps the schema and the DNA tree counts by size band into a
+provenance record beside the database, so the query that eventually picks a tree is written against
+measured numbers rather than guessed ones. The record is named here only once it exists, since this
+report's own gate refuses a path the repository does not hold.
 
 Two things recorded in `Decisions.md` rather than here, because they are design and not defect. This
 reverses the recorded argument for a forty-line simulator over a pinned container, and the reason the
