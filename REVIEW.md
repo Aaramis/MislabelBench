@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 195 |
+| findings in this report | 196 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4619,6 +4619,38 @@ This is the author's text and is flagged rather than edited. The two sentences i
 session's report. What belongs here is that the repository now holds the measurement behind them:
 `results/resource_usage.txt`'s thread axis for the ratio and `slurm/memstep.sh`'s two single-thread runs
 for the flat law.
+
+**196. The speed ratio is a ratio of medians and the paper states it as a number.** The same question
+finding 194 asked of memory, asked of time, on the committed trusted runs:
+
+| | runs | wall clock, min to max | spread |
+|---|---|---|---|
+| fork, 2 023 sequences, T8 | 7 | 37.9 to 39.2 s | **3.5 %** |
+| upstream, 2 023, T8 | 7 | 627.2 to 734.3 s | **17.1 %** |
+| fork, 7 051, T8 | 16 | 260.6 to 320.4 s | **22.9 %** |
+| upstream, 7 051, T8 | 4 | 2 949.8 to 3 928.1 s | **33.2 %** |
+
+Median against median gives **16.5x** at 2 023 sequences and **11.4x** at 7 051, which is what
+`results/resource_usage.txt` publishes and what the abstract's "onze fois plus rapide" rests on. Pairing
+the extremes instead gives **16.0 to 19.4x** and **9.2 to 15.1x**. So the eleven-fold claim is a median
+whose range over the runs that exist is nine to fifteen.
+
+Nothing here is wrong: the repository publishes medians, says so in `resource_usage.py`'s own docstring --
+"Medians over replicates, never a single run" -- and README tells a reader to read the table rather than
+the prose. What is worth noting is that the paper carries the point value without the spread, and the
+spread is not small.
+
+Two of the four spreads have a known cause and one does not. The fork's 22.9 % at 7 051 is the
+cross-session contention finding 181 measured at 23 %, and it grew to that from about 1 % when the nine
+staged rounds of 8 October added their controls to the pool -- so it is the shared node and not the tool.
+Upstream's 17.1 % at 2 023 over seven runs is the asymmetry `resource_usage.py` already documents,
+"upstream differs by a third between two nodes of the same CPU model while the fork differs by one
+percent". Upstream's 33.2 % at 7 051 is four runs and cannot be attributed to anything.
+
+The direction of the error is the one that matters for a claim of speed: the comparator is the noisier
+tool at both sizes, so a median understates the fork's advantage less often than it overstates it. That is
+the opposite of the `-m thorough` and GTRCAT qualifications, which both run against the fork, and all
+three belong together wherever the ratio is quoted.
 
 ## What is outstanding
 
