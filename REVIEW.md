@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 187 |
+| findings in this report | 188 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 43 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4363,6 +4363,37 @@ So nothing is changed. The code is left as it stands because a branch that canno
 this benchmark has is not worth the churn, and what the review owes is the record that it was looked for
 and bounded: if `identity()` ever meets a pair with no overlap it will call them completely different, and
 the number that keeps that from happening is 858.
+
+**188. Two more sweeps, one clean and one that caught a comment wrong within twelve hours.** The
+mandate names comment-against-code inconsistency as a defect class, and finding 187 showed that sweeping
+for a shape beats meeting it a night at a time. Two things a comment can assert and be checked against
+are a path and a count.
+
+**Paths: clean.** Every `bin/*.py`, `slurm/*.sh`, `*.nf` and `*.config` comment was scanned for anything
+shaped like a repository path with an extension and checked against `git ls-files` and the filesystem.
+One apparent miss, raised against `bin/review_coverage.py:59` -- and that line is the comment explaining
+why the coverage gate needed a lookbehind, because `/usr/local/bin/sativa.py`, the comparator's entry
+point inside its container, reads as a missing repository path without one. The sweep made exactly the
+mistake the comment it flagged was written to document, which is as good a confirmation as the comment
+could ask for, and this paragraph had to be reworded for the same reason: naming the bare form here made
+the gate flag the report. **Zero real misses.**
+
+**Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
+most are accounts of a particular day and are meant to be. One was a claim about now and was already
+false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
+produced it", written twelve hours earlier, and the repository now holds **1 156**. The quoted 1 147 is
+deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
+beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
+flagged this paragraph until the quote obeyed it.
+
+The interesting part is why it drifted. The nine staged rounds ran from the cluster's copy of
+`_timeit.py`, which predated the change, so they carry no `cmd` either: **0 of 1 156 records** have the
+field, and the agreement check finding 174 added to `bin/verify_runs.py` is armed and has still never met
+a real run. The first measured run after the next `bin/push_code.sh` will be the first.
+
+The comment now gives no count at all. A corpus number inside a code comment is checked by nothing --
+`bin/verify_report_references.py` checks REVIEW.md's bold counts and the whole reason this report states
+its own is that they are verified -- so a count that belongs anywhere belongs there.
 
 ## What is outstanding
 

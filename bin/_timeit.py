@@ -90,9 +90,16 @@ def main():
         # The argv, because nothing else recorded it. -m, -C, -x, -p and -S decide what the tool does
         # and they come from params with defaults, one --sativa_mode away from being something else;
         # conf/modules.config's own comment says a stage once ran -m thorough by accident and cost a
-        # scaling measurement. Of the 1 147 run records written before this line, not one says which
-        # flags produced it. Taken from the command actually executed rather than rebuilt from the
-        # params, which is the difference between evidence and a second copy that can drift.
+        # scaling measurement. No run record written before this line says which flags produced it,
+        # and none written since does either: the nine staged rounds of 8 October ran from the
+        # cluster's copy of this file, which predated the change, so the field and the agreement check
+        # in bin/verify_runs.py are armed and have never met a real run. The first measured run after
+        # the next bin/push_code.sh will be the first. No count is given here on purpose -- a corpus
+        # number inside a comment is checked by nothing and this one was wrong within twelve hours;
+        # REVIEW.md's are checked by bin/verify_report_references.py, so they go there.
+        #
+        # Taken from the command actually executed rather than rebuilt from the params, which is the
+        # difference between evidence and a second copy that can drift.
         "cmd": cmd,
         **where(),
     }))
