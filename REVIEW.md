@@ -5122,9 +5122,11 @@ asserted: `bin/analyses.sh` was run over the whole repository afterwards and **e
 finds no runs yet and says so, which is what the guards are for.
 
 The run also exercised the new manifest without being asked to: the truth checks now read **9 manifests
-and 294 datasets**, the ninth being `data/grove_sim/datasets.json`, and they immediately reported the two
-absolute symlinks my local scaffolding had left under `data/grove/` -- a gate catching the thing it was
-written for, on the first occasion it could.
+and 294 datasets**, the ninth being the Grove control's own manifest, and they immediately reported the
+two absolute symlinks my local scaffolding had left behind -- a gate catching the thing it was written
+for, on the first occasion it could. The manifest is not named by path here, because it does not exist
+until the cluster has run the generator, and this report's own gate refuses a path the repository does
+not hold. That gate caught this paragraph too.
 
 And the pipeline accepts the manifest: `nextflow run . -stub-run -profile stub_test` over the Grove
 manifest and both conditions completes **148 tasks, 0 failed**, which is 37 cells by two conditions by
