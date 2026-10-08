@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 203 |
+| findings in this report | 204 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 63 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 44 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -4860,6 +4860,41 @@ to 1.06 and 1.10 immediately above it.
 advantage is a constant factor, 8 to 17 times with no trend across a seventeen-fold range, and not a
 better exponent. A reader who extrapolates a speed-up that grows with database size would be extrapolating
 something this benchmark does not show.
+
+**204. A co-author asked for three quantities to be separated where the protocol says "a large speed
+gain", and all three are already measured.** The comment on Protocol.md is to distinguish the sequential
+gain from plugging in EPA-ng, the time to completion, and the accumulated CPU hours. The committed records
+answer it, and `results/resource_usage.txt` already publishes two of the three side by side in its own
+last line, "wall 16.5x CPU-time 29.7x".
+
+At 2 023 sequences, where both tools have a one-thread and an eight-thread measurement:
+
+| quantity | SATIVA | sativa-epang | ratio |
+|---|---|---|---|
+| wall clock, one thread | 1 405.0 s | 151.9 s | **9.2x** |
+| core-seconds, one thread | 2 797 | 152 | **18.4x** |
+| wall clock, eight threads | 635.6 s | 38.5 s | **16.5x** |
+| core-seconds, eight threads | 5 061 | 170 | **29.7x** |
+| cores actually occupied at T8 | 7.97 | 4.49 | |
+
+At 7 051 sequences, eight threads only: **11.4x** in wall clock and **16.4x** in core-seconds.
+
+Two things fall out that matter more than the ratios.
+
+**The CPU-hour gain is larger than the wall-clock gain, at both sizes.** 29.7x against 16.5x, and 16.4x
+against 11.4x, because the fork occupies 4.49 of its eight cores where the comparator occupies 7.97. The
+objection the distinction is usually raised to catch -- that a tool looks fast only because it
+parallelises harder -- runs the other way here.
+
+**The sequential row is not strictly sequential on the comparator's side.** `upstream_raxml_T1` occupies
+**1.99 cores**, which is open question O4 in this repository and already recorded: `-T 1` does not give
+SATIVA one core. So a sequential comparison in wall clock, 9.2x, flatters the comparator by about a factor
+of two, and the core-second figure, 18.4x, is the one that isolates the engine.
+
+**Distribution is a fourth quantity, not part of the third.** On the placement step at 7 051 sequences,
+the accumulated core-seconds are 1 909, 1 930 and 2 080 at one, two and four shards: four shards cut the
+wall clock by 3.67x and **raise** the CPU consumed by 9 %. A protocol sentence that lists distribution
+beside a speed gain invites the reader to add them, and they do not add.
 
 ## What is outstanding
 
