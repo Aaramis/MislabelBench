@@ -195,10 +195,11 @@ Where that changes is now measured, one wrong-label count at a time on the whole
 | 2, 10, **20** | miss | miss | miss |
 | **40** | miss | **FLAG 1.000** | **miss** |
 | **60** | miss | **FLAG 1.000** | **miss** |
+| **80** | miss | **FLAG 1.000** | **miss** |
 | 102 | miss | **FLAG 1.000** | miss |
 
-So the fork starts finding this sequence between **20 and 40** wrong labels in its reference, and at both
-40 and 60 the third arm says what does it: the same codebase driving RAxML misses where driving EPA-ng
+So the fork starts finding this sequence between **20 and 40** wrong labels in its reference, and at 40,
+60 and 80 alike the third arm says what does it: the same codebase driving RAxML misses where driving EPA-ng
 flags, so the cause is the engine and not the scoring, as it is at 102. The advantage is not a better
 placement of a hard sequence, it is a placement that survives a reference whose labels are already wrong,
 and it needs a certain amount of wrongness before it appears at all. One sequence is one sequence, and

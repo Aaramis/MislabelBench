@@ -25,7 +25,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1147 |
 | result tables, each rebuilt by `bin/analyses.sh` | 56 |
-| `.mis` files, the flag lists every detection number is computed from | 1470 |
+| `.mis` files, the flag lists every detection number is computed from | 1473 |
 | tests over the scripts that turn runs into numbers | 33 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -3958,8 +3958,13 @@ identify". Measured one count at a time on the whole reference, each case its ow
 | 20 | miss | miss | miss |
 | 40 | miss | **FLAG 1.000** | **miss** |
 | 60 | miss | **FLAG 1.000** | **miss** |
+| 80 | miss | **FLAG 1.000** | **miss** |
 
-So the transition sits between 20 and 40, and at both counts the third arm attributes it: the same codebase
+The ramp is complete: four counts, each its own job, each printing its own verdict. Above the threshold
+the picture does not drift -- the fork driving EPA-ng flags at 1.000 and nothing else flags at all, at 40,
+60, 80 and the cell's own 102.
+
+So the transition sits between 20 and 40, and at every count above it the third arm attributes it: the same codebase
 driving RAxML misses where driving EPA-ng flags, which is the engine and not the scoring, as at 102. The
 job says so itself -- `divergence reproduced for case(s) [('GB_GCA_003352285.1_QQVN01000005.1',
 '0,999999,60')]` -- which is the line finding 163 added the third spec field to be able to print.
