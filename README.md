@@ -513,7 +513,9 @@ tool's own default stands. Both are measured here and neither changes which sequ
 more than the fold count implies.
 
 The same run as four stages, which is what lets the placement cross machines. Each stage is a
-separate process and the first three write what the next one reads:
+separate process and the first three write what the next one reads. Allows rather than demonstrates:
+in every round measured here the scheduler put all the shards on one node, which
+`pipeline_info/shard_nodes.tsv` records and `DISTRIBUTION.md` discusses.
 
 ```bash
 sativa-epang -s aln.fasta -t taxonomy.tax -T 8 -n run -o . <args> -stage reference

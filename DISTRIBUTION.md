@@ -125,10 +125,20 @@ cheaper.
 
 **At four shards the pipeline's spread is 0.6 s** (55.8, 56.2, 56.3, 56.4) where the `srun`
 version's was 134 s. That is the whole difference and it has one cause: each task is its own Slurm
-allocation, so a shard cannot be slowed by another tenant holding 370 of a node's 510 cores. The
-expectation written here first — that a pipeline fan-out would land below 1.58x because of staging —
-was wrong, and wrong for an interesting reason: the staging it pays for is less than the contention
-it avoids.
+allocation of eight cores, so a shard cannot lose cores to another tenant the way a shard sharing one
+140-core allocation can. The expectation written here first — that a pipeline fan-out would land below
+1.58x because of staging — was wrong, and wrong for an interesting reason: the staging it pays for is
+less than the contention it avoids.
+
+**The four shards were on one node, not four.** `slurm/shard_nodes.sh` resolves each shard's Slurm job
+through accounting, since Nextflow's `hostname` trace field is empty under the Slurm executor here, and
+the answer for this round is `cpu-node-121` four times; `pipeline_info/shard_nodes.tsv` records it, and
+the two-shard round is the same. So what these numbers measure is a split into independently scheduled
+jobs, each with its own cores and its own staged inputs, that the scheduler happened to place together
+on one 512-core machine. Separate machines are what the mode allows and not what was measured, and the
+difference is memory bandwidth rather than cores: four shards on one node share it, so a run on four
+nodes should be no slower than this and the speedup here is a floor. Nothing forces the spread, because
+`--exclusive` is the mechanism that would and the QOS refuses it at two shards, let alone four.
 
 **What does not scale is the end-to-end wall clock.**
 

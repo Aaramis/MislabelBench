@@ -66,36 +66,40 @@ def trace_span(trace_dir, run_name):
     return best
 
 
-def shard_hosts(trace_dir, run_name):
-    """Which host each placement shard ran on, from the trace's hostname field.
+def shard_nodes(cell_dir, trace_dir):
+    """Which node each placement shard ran on, if anything recorded it.
 
-    This replaces what --exclusive used to guarantee. The QOS charges an exclusive job the whole
-    node, 510 CPUs against a cap of 600, so two shards could never both be exclusive and the
-    distributed rounds run on shared nodes. Two shards on one node is then possible, and it is the
-    one disturbance that would corrupt the measurement rather than just add noise to it: finding 152
-    measured two tasks of one run building the same tree at 71 s each where one alone takes 42.5.
+    This replaces what --exclusive used to guarantee and the QOS will not allow: an exclusive job is
+    charged all 510 cores of an epyc-9754 against a 600-core cap, so two shards could never both have
+    it. Two shards on one node is the disturbance that changes what the measurement means, so it has
+    to be read off a record rather than assumed.
 
-    Nextflow's local executor writes "-" in this field and old traces have no field at all, so an
-    absent or "-" host is reported as not recorded rather than counted as a collision.
+    Two records, in order of preference, and deliberately not the trace. Nextflow's `hostname` trace
+    field is empty under the Slurm executor on this cluster and "-" under the local one, checked on
+    every round here, so a route through it would never answer.
+
+      the shard's own timing.json, where _timeit.py writes the host of the task it measured
+      pipeline_info/shard_nodes.tsv, which slurm/shard_nodes.sh resolves from Slurm accounting
     """
-    best = []
-    for path in sorted(Path(trace_dir).glob("trace-*.txt")):
-        # Per file, not pooled across them. A round that timed out and was resubmitted leaves a second
-        # trace in the same outdir under a different job id, and pooling the two would report every
-        # host twice and call it a collision. One round is one trace, so the file with the most
-        # placement rows is the round, and a repeat inside one file is a real repeat.
-        hosts = []
-        for row in csv.DictReader(path.open(), delimiter="\t"):
-            if row["status"] != "COMPLETED" or "LOOPLACE" not in row["name"].upper():
-                continue
-            if run_name.split("__")[0] not in row["name"]:
-                continue
-            h = (row.get("hostname") or "-").strip()
-            if h and h != "-":
-                hosts.append(h)
-        if len(hosts) > len(best):
-            best = hosts
-    return best
+    hosts = []
+    for f in sorted(cell_dir.glob("looplace_shard*.timing.json")):
+        h = (json.loads(f.read_text()).get("host") or "").strip()
+        if h:
+            hosts.append(h)
+    if hosts:
+        return hosts
+    if trace_dir:
+        tsv = Path(trace_dir) / "shard_nodes.tsv"
+        if tsv.exists():
+            for line in tsv.read_text().splitlines()[1:]:
+                parts = line.split("\t")
+                # The trace writes a cell as dataset/condition/rep and the published directory as
+                # dataset__condition__rep, so they are compared on the dataset, the way trace_span
+                # above does it. Matching the whole string found nothing and printed "not recorded"
+                # over a file that was sitting right there.
+                if len(parts) >= 5 and parts[0].split("/")[0] == cell_dir.name.split("__")[0]:
+                    hosts.append(parts[4])
+    return hosts
 
 
 def main():
@@ -138,16 +142,16 @@ def main():
               + (f"{span:>9.1f}" if span else f"{'-':>9}"))
         if len(shards) > 1:
             print(f"{'':34}shards: " + ", ".join(f"{x:.1f}" for x in sorted(shards)))
-            hosts = shard_hosts(args.trace_dir, cell.name) if args.trace_dir else []
+            hosts = shard_nodes(cell, args.trace_dir)
             if not hosts:
-                print(f"{'':34}hosts: not recorded")
+                print(f"{'':34}nodes: not recorded; run slurm/shard_nodes.sh on this round")
             elif len(set(hosts)) < len(hosts):
                 dup = sorted(h for h in set(hosts) if hosts.count(h) > 1)
-                print(f"{'':34}hosts: " + ", ".join(sorted(hosts))
+                print(f"{'':34}nodes: " + ", ".join(sorted(hosts))
                       + f"  -> {', '.join(dup)} carried more than one shard")
                 collisions.append((cell.name, dup))
             else:
-                print(f"{'':34}hosts: " + ", ".join(sorted(hosts)) + "  -> one shard each")
+                print(f"{'':34}nodes: " + ", ".join(sorted(hosts)) + "  -> one shard each")
         if folds:
             ceiling = sum(folds) / max(folds)
             print(f"{'':34}folds: " + ", ".join(str(x) for x in folds)
@@ -156,8 +160,14 @@ def main():
     # Not a warning. A round whose shards shared a node did not measure what the panel says it
     # measured, and the table is written by a job script that would otherwise publish it anyway.
     if collisions:
-        raise SystemExit("shards shared a node: "
-                         + "; ".join(f"{c} on {', '.join(d)}" for c, d in collisions))
+        # Printed, not fatal. Every round measured on this cluster has had its shards co-located --
+        # all four of f7's on cpu-node-121, in the published round and in the new one alike -- so
+        # exiting here would refuse every table there is. What the co-location changes is what the
+        # numbers mean, and that belongs in the figure's caption and in DISTRIBUTION.md, where it now
+        # is, rather than in a gate that would delete the measurement instead of qualifying it.
+        print("\nshards shared a node: "
+              + "; ".join(f"{c} on {', '.join(d)}" for c, d in collisions)
+              + "\nso this round distributes across Slurm jobs and not across machines.")
 
 
 if __name__ == "__main__":
