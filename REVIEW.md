@@ -18,13 +18,13 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 217 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 65 |
+| findings in this report | 218 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 66 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 47 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1174 |
-| result tables, each rebuilt by `bin/analyses.sh` | 65 |
+| result tables, each rebuilt by `bin/analyses.sh` | 66 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
 | tests over the scripts that turn runs into numbers | 86 |
 
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **65 published tables** ← 1 174 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **66 published tables** ← 1 174 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -5333,6 +5333,44 @@ four stale self-counts in this report -- 207 findings where there are 216, 63 `b
 are 65, 45 `slurm/` scripts where there are 47, 33 tests where there are 86. Corrected, and worth saying
 plainly: the table at the top of this document is checked by a script because it was wrong twice.
 
+**218. The nine staged rounds say the shard split works, that it beats its own ceiling, and that the
+earlier session's numbers cannot be mixed with them.** Three shard counts by three replicates, all
+complete, every `.mis` byte-identical at `cdd76a4764065e62` -- the same digest twelve earlier rounds
+produced, so the staged path still does not depend on how the folds are dealt. `bin/staged_rounds.py`
+pools them, because nine per-round files leave the medians to the reader and this repository's own rule
+is medians over replicates:
+
+| shards | rounds | ref | tasks | place | score | sum | speedup | s/fold | fold ceiling |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 3 | 51.2 | 2.0 | **237.0** | 20.8 | 310.8 | 1.00x | 9.48 | 1.00x |
+| 2 | 3 | 52.9 | 2.2 | **121.0** | 20.9 | 195.4 | **1.96x** | 9.31 | 1.92x |
+| 4 | 3 | 45.7 | 2.1 | **64.9** | 22.2 | 135.2 | **3.65x** | 9.27 | 3.57x |
+
+Within a shard count the three rounds are 1.3 % to 3.5 % apart, so the medians are not a single run's
+luck.
+
+**The speedup beats the fold-count ceiling, and the per-fold column says why.** Twenty-five folds split
+seven and six and six and six cannot do better than 25/7 = 3.57x if every fold costs the same, and the
+measurement is 3.65x. Per fold it is 9.48 s on one shard against 9.27 on four, a 2.2 % drop, which is
+exactly the 2.2 % the speedup exceeds the ceiling by. Fewer folds live at once is a smaller resident set
+-- 1.15 MB per sequence per live placement, finding 190 -- so the extra is not in the split but in what
+each shard no longer carries.
+
+**And the caveat that had to be measured rather than assumed.** Finding 205 flagged the first new round
+as 22 % slower than the published one and guessed at exclusivity. It is not that: `sacct` puts job
+2177388, the published round, on **cpu-node-121**, and `shard_nodes` puts all nine new rounds on
+cpu-node-121 as well, same `epyc-9754` feature, same eight cores. So the same cell on the same machine
+takes 194.5 s on 2026-10-03 and a median of 237.0 s on 2026-10-08, **+21.8 %**, with f13 at +8.8 % and
+f7 at +15.1 %. Our own jobs were chained so they never overlapped each other; what differs is the 512-CPU
+node's other occupants. The within-session spread being 1.3 to 3.5 % and the between-session gap being
+9 to 22 % is the whole argument for never mixing the two sets, and the speedup above is taken inside one
+of them.
+
+**What the distribution distributed, stated once more because it is easy to read past.** Every shard of
+every round landed on one node. This is distribution across Slurm jobs, not across machines, and the
+3.65x is what one machine's memory bandwidth allowed. `DISTRIBUTION.md` says the same; the number's own
+producer now says it too.
+
 **And a stale comment found on the way.** `slurm/simulation.sh` announced "thirteen cells ... twelve
 injected ones across three distances and four k". There are 37: the three injection seeds were added
 later, for the reason `make_simulation.sh` records, and the committed manifest has carried 37 since.
@@ -5341,10 +5379,9 @@ later, for the reason `make_simulation.sh` records, and the committed manifest h
 
 Nothing in this report is held back by choice. What remains is blocked on someone else, or is running.
 
-**Running.** The nine staged timing rounds, chained on `--dependency=afterany` so that no two of ours
-overlap, since without exclusivity they are each other's interference. The first has finished and the
-second is going. Nothing is committed from them yet: three replicates of a round are the measurement and
-one of them is not, so the results directory and trace stay on the cluster until a set is complete.
+**Landed.** The nine staged timing rounds, chained on `--dependency=afterany` so that no two of ours
+overlap, since without exclusivity they are each other's interference. All nine finished, came home and
+are committed; finding 218 is what they say.
 
 The first round is worth flagging rather than filing, because it does not look like the published one.
 Round f25, one shard, non-exclusive, against the exclusive-less round published in

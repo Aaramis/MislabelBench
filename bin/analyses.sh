@@ -306,6 +306,11 @@ for d in results/staged_timed_f*; do
         > "results/staged_scaling_${d#results/staged_timed_}.txt"
 done
 
+# The same nine rounds as one table. The per-round files above leave the medians to the reader, and
+# this repository's own rule is medians over replicates and never a single run, so the scaling claim
+# gets a producer of its own rather than being assembled by eye from nine files.
+staged_rounds.py --out results/staged_rounds.txt > /dev/null
+
 # What an incomplete lineage costs detection. The ragged cells are the grid's own at family distance
 # and the top rate, with a quarter of the untouched lineages cut to genus and a quarter to family, so
 # the injected truth is unchanged and recall is comparable cell for cell. Skipped rather than failed
