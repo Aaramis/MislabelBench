@@ -316,6 +316,11 @@ done
 # this repository's own rule is medians over replicates and never a single run, so the scaling claim
 # gets a producer of its own rather than being assembled by eye from nine files.
 staged_rounds.py --out results/staged_rounds.txt > /dev/null
+# The same four-shard round with every shard pinned to a different machine (slurm/staged_nodes.sh),
+# once it has run: the other half of "across jobs" against "across machines".
+if ls -d results/staged_nodes_n4_r1 >/dev/null 2>&1; then
+    staged_rounds.py --prefix staged_nodes --tags n4 --out results/staged_nodes.txt > /dev/null
+fi
 
 # Error kind 7, chimeras: detection along the two axes the protocol names, and whether the proposal
 # sides with the unlabelled parent. Skipped when the runs are not here, as for the ragged cells.

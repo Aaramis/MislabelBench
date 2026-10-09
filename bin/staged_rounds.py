@@ -96,6 +96,9 @@ def main():
     p.add_argument("--tags", default="f25,f13,f7",
                    help="round tags, coarsest shard count first")
     p.add_argument("--replicates", default="r1,r2,r3")
+    p.add_argument("--prefix", default="staged_timed",
+                   help="results/<prefix>_<tag>_<replicate>; staged_nodes for the rounds whose shards "
+                        "were pinned to distinct machines")
     p.add_argument("--out")
     args = p.parse_args()
 
@@ -112,18 +115,18 @@ def main():
     for tag in tags:
         rounds = []
         for rep in reps:
-            d = results / f"staged_timed_{tag}_{rep}" / "staged"
+            d = results / f"{args.prefix}_{tag}_{rep}" / "staged"
             if d.is_dir():
                 r = round_seconds(d)
                 if r:
                     r["tag"] = f"{tag}_{rep}"
-                    r["round"] = f"staged_timed_{tag}_{rep}"
+                    r["round"] = f"{args.prefix}_{tag}_{rep}"
                     rounds.append(r)
         if rounds:
             pooled[tag] = rounds
         # The same tag without a replicate suffix is the earlier session's round, kept for the
         # cross-session line and deliberately not pooled with the others.
-        d = results / f"staged_timed_{tag}" / "staged"
+        d = results / f"{args.prefix}_{tag}" / "staged"
         if d.is_dir():
             r = round_seconds(d)
             if r:
@@ -170,8 +173,15 @@ def main():
         hosts = [h for r in rs for h in nodes_of(results / "pipeline_info", r["round"])]
         if hosts:
             uniq = sorted(set(hosts))
+            per_round = [nodes_of(results / "pipeline_info", r["round"]) for r in rs]
+            distinct = all(len(set(h)) == len(h) for h in per_round if h)
             say(f"{'':15}nodes: {', '.join(uniq)}"
-                + ("  -> one machine, so this is distribution across jobs" if len(uniq) == 1 else ""))
+                + ("  -> one machine, so this is distribution across jobs" if len(uniq) == 1
+                   else "  -> one shard per machine in every round" if distinct
+                   else "  -> shards shared a machine in some round"))
+            # A set that claims distinct machines and has two shards on one is not that set.
+            if args.prefix == "staged_nodes" and not distinct:
+                raise SystemExit(f"{tag}: shards shared a node in a round meant to pin them apart")
         else:
             say(f"{'':15}nodes: not recorded; run slurm/shard_nodes.sh on these rounds")
 

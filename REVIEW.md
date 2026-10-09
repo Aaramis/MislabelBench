@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 226 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 73 |
+| findings in this report | 227 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 10 |
 | run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 68 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
-| tests over the scripts that turn runs into numbers | 100 |
+| tests over the scripts that turn runs into numbers | 104 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5496,6 +5496,20 @@ the protocol's dataset table for the clade from `bin/dataset_table.py`, its shap
 manifest of two sets. `slurm/make_grid_bac.sh` makes the fifteen cells, `slurm/bac.sh` runs the
 timed baseline on the whole clade and the untimed k axis on the subset, both tools. Nothing here has
 run; the `datasets.yml` entry and the model's sha256 are written once it has.
+
+**227. "Did you check" now has a script.** `bin/placement_locality.py` reads the jplace files
+`slurm/placements.sh` keeps -- the tree's `{n}` edge labels, the best edge by `like_weight_ratio`
+through the file's own `fields` order, so no column position is assumed -- and for every injected
+sequence reports the edge, its weight, the leaves below it, the lowest rank those leaves share with the
+declared and with the true lineage, and whether the edge sits inside the clade its k−1 co-carriers
+span: the other injected sequences given the same wrong label from the same donor group. Summed by
+flagged and missed. `tests/test_placement_locality.py` works a six-leaf tree by hand: a placement on
+the branch above the only co-carrier is among them, one on the branch above the wrong label's own
+members is not, and a parser that assumed `edge_num` first would have read a weight of 0.7 as an
+edge. It has no data yet; the runs that produce it are queued behind the push.
+
+`bin/staged_rounds.py` takes `--prefix` so the pinned-node set reads through the same code, and
+refuses, rather than tabulates, a set meant to pin shards apart in which two shared a machine.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
