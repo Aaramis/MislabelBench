@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 225 |
+| findings in this report | 226 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 73 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 51 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 10 |
 | run records, cross-checked against the files they summarise | 1174 |
@@ -5482,6 +5482,20 @@ until then.
 And `docs/issue_epang_options.md` is the issue to open on `Aaramis/sativa-epang` for the option
 passthrough the engine comparison needs, with the 84 / 4 figure and the asymmetry it would test;
 drafted here and not posted, since posting is the maintainer's.
+
+**226. The bacterial replication, as scripts, before it has run.** `slurm/fetch_bacterial_clade.sh`
+reads the clade from `data/gtdb/bacterial_clade_selection.json` rather than naming it, fetches the
+same `ssu_all_r226.fna.gz` by the sha256 the archaea pin, selects and filters it with
+`bin/prepare_gtdb.py` -- whose `--domain` was always a lineage prefix and now says so -- and aligns it
+against **Rfam RF00177**, the bacterial SSU model, extracted by `cmfetch` from the same pinned
+`Rfam.cm.gz` as the archaeal RF01959 was. The donor pool had to share the archaeal alignment's width
+to be concatenated into it; this set runs alone, so the model is the one for the molecule. The
+extraction is a step of the record this time: RF01959.cm was extracted by hand once and committed.
+Then the whole-taxa subset of about 2 000 by `bin/subset_taxa.py` with seed 42 as `gtdb_arc2k` was,
+the protocol's dataset table for the clade from `bin/dataset_table.py`, its shape record, and a
+manifest of two sets. `slurm/make_grid_bac.sh` makes the fifteen cells, `slurm/bac.sh` runs the
+timed baseline on the whole clade and the untimed k axis on the subset, both tools. Nothing here has
+run; the `datasets.yml` entry and the model's sha256 are written once it has.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

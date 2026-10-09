@@ -49,7 +49,10 @@ def records(path):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("fasta", help="ssu_all_r226.fna.gz")
-    p.add_argument("--domain", default="d__Archaea", help="keep lineages starting with this")
+    # A lineage prefix, not only a domain: "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales"
+    # selects the bacterial clade the archaeal results are replicated on. The flag keeps its name so
+    # the archaeal commands recorded in assets/datasets.yml still run as written.
+    p.add_argument("--domain", default="d__Archaea", help="keep lineages starting with this prefix")
     p.add_argument("--min-len", type=int, default=0, help="drop sequences shorter than this")
     p.add_argument("--prefix", default="gtdb_archaea")
     args = p.parse_args()
