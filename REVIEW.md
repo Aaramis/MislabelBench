@@ -19,7 +19,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | | count |
 |---|---|
 | findings in this report | 218 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 66 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 67 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 47 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
@@ -5322,6 +5322,19 @@ and `verify_timing_flags.py` reach their own messages unchanged.
 `bin/verify_recall_independently.py` also crashed with a bare `KeyError: 'rows'` on a file that is not
 a grid summary, from a second pass over `summary["rows"]` that an empty injected directory skips the
 first guard for. It now names the file.
+
+**Two more gates had the same glob defect, and one of them is the gate this finding is named after.**
+`bin/verify_manifests.py` and `bin/verify_inputs.py` pass `--glob` to `Path(".").glob` as well, so five
+gates in total took a flag they could not use. `verify_inputs.py` is the one whose "0 cells, 0
+consistent" the repository records as the original silent pass, and its guard was likewise unreachable
+from outside the root. Both now reach their own messages: "no manifest matched ..." and "0 run records
+matched ...".
+
+The helper is `bin/_paths.py` rather than five copies of itself, which makes it this repository's first
+imported module -- `bin/_timeit.py` is a wrapper command, not an import. It resolves without PYTHONPATH
+because `sys.path[0]` is the script's own directory for every way these are run, including
+`bin/analyses.sh`'s `PATH`-based invocation, and the reasoning is written into the module so the next
+reader does not have to rederive it.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

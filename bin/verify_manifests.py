@@ -27,6 +27,8 @@ import re as _re
 import sys
 from pathlib import Path
 
+from _paths import expand
+
 
 def measure(fasta):
     """Sequence count and the set of sequence lengths, counted rather than trusted."""
@@ -310,7 +312,7 @@ def main():
                    help="manifests to check, relative to the working directory")
     args = p.parse_args()
 
-    manifests = sorted(Path(".").glob(args.glob))
+    manifests = sorted(expand(args.glob))
     if not manifests:
         sys.exit(f"no manifest matched {args.glob}")
 

@@ -25,21 +25,12 @@ flag set and the rank rather than the bytes. Upstream is byte-identical at 1, 8 
 
 import argparse
 import re
-import glob
 import sys
 from collections import defaultdict
 from pathlib import Path
 
+from _paths import expand
 
-def expand(pattern):
-    """Paths matching `pattern`, which may be absolute.
-
-    Path('.').glob raises NotImplementedError on an absolute pattern -- "Non-relative
-    patterns are unsupported" -- so the flag this takes only ever worked for a caller
-    already standing in the benchmark root, and pointing it at a scratch tree crashed
-    with a traceback from inside pathlib. glob.glob takes either.
-    """
-    return [Path(p) for p in glob.glob(pattern)]
 
 UPSTREAM = re.compile(r"^upstream_(\w+?)_T(\d+)$")
 FORK = re.compile(r"^epang_T(\d+)_K(\d+|exact)(_tree)?$")

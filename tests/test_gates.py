@@ -8,9 +8,10 @@ nobody looked again.
 
 Pointing each gate at an empty tree found two more of them, and a third defect that was hiding both:
 `Path(".").glob` raises `NotImplementedError: Non-relative patterns are unsupported` on an absolute
-pattern, so the `--glob` flags of three gates only ever worked for a caller already standing in the
-benchmark root. Two of those three already had the guard this file tests for -- it was simply
-unreachable from outside the root.
+pattern, so the `--glob` flags of five gates only ever worked for a caller already standing in the
+benchmark root. Three of those five already had the guard this file tests for -- it was simply
+unreachable from outside the root, and `verify_inputs.py` is the gate whose own silent pass is the
+reason this file exists.
 
 The positive cases matter as much: a gate that always fails passes the property above and is just as
 useless, so verify_grid_complete is also checked on a sound grid and on one with a cell missing.
@@ -56,6 +57,8 @@ class NothingCheckedMustFail(unittest.TestCase):
             ("verify_timed_one_model.py", ["--results", e]),
             ("verify_timing_flags.py", ["--glob", f"{e}/*/run.json", "--slurm", e]),
             ("verify_foreign.py", ["--base", t / "base.tax", "--foreign-dir", e]),
+            ("verify_manifests.py", ["--glob", f"{e}/*.json"]),
+            ("verify_inputs.py", ["--glob", f"{e}/*/run.json"]),
         ]
 
     def test_each_gate_refuses_an_empty_tree(self):
@@ -78,7 +81,9 @@ class NothingCheckedMustFail(unittest.TestCase):
         which is why the message above is reachable at all."""
         for script, flag in (("verify_runs.py", "--glob"),
                              ("verify_timing_flags.py", "--glob"),
-                             ("verify_conditions_differ.py", "--runs-glob")):
+                             ("verify_conditions_differ.py", "--runs-glob"),
+                             ("verify_manifests.py", "--glob"),
+                             ("verify_inputs.py", "--glob")):
             with self.subTest(script=script):
                 args = [flag, f"{self.empty}/*/run.json"]
                 if script == "verify_timing_flags.py":

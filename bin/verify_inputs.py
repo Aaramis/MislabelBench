@@ -22,6 +22,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from _paths import expand
+
 
 def main():
     p = argparse.ArgumentParser()
@@ -30,7 +32,7 @@ def main():
 
     by_cell = defaultdict(dict)
     without = []
-    for f in sorted(Path(".").glob(args.glob)):
+    for f in sorted(expand(args.glob)):
         d = json.loads(f.read_text())
         if "inputs" not in d:
             without.append(str(f))
