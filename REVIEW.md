@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 227 |
+| findings in this report | 228 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -5510,6 +5510,35 @@ edge. It has no data yet; the runs that produce it are queued behind the push.
 
 `bin/staged_rounds.py` takes `--prefix` so the pinned-node set reads through the same code, and
 refuses, rather than tabulates, a set meant to pin shards apart in which two shared a machine.
+
+**228. Five of the seven jobs submitted after the push failed, each for a different reason, and one
+of the reasons is a reproducibility defect this review had not seen.** In the order they died:
+
+`fetchgrove`, two seconds: the first attempt had left a venv built by a python without `ensurepip`,
+an interpreter and no packages, and the `-x env/bin/python` guard skipped the rebuild, so the import
+check failed on a directory that could never pass. A venv that cannot import is now rebuilt, once.
+
+`fetchbac`, zero seconds, an empty log and exit 2: the Infernal image was found by globbing
+`~/.singularity_cache`, the cache had been pruned, the glob matched nothing, and under `pipefail` the
+empty `ls | head` exited 2 before the message meant for that case could print. **The image was never
+pinned anywhere in the repository** -- `grep -rn infernal` finds only the two globs -- so every
+alignment here depended on a file someone pulled by hand once. Both scripts now pull
+`quay.io/biocontainers/infernal:1.1.5--pl5321h7b50bb2_4` by tag when the cache does not hold it and
+print the image's sha256 for `assets/datasets.yml`. The selection record was absent on the cluster
+too, since `push_code.sh` sends code and truth and not `data/gtdb` records; the fetch script now
+recomputes it from the release file, which is a function of that file and gives the same record.
+
+`chimera`, eight seconds: the cells' `.fasta` and `.tax` regenerate from the seed and travel with
+nothing, as the grid's do, and nothing had generated them on the cluster. `chimera.sh` runs
+`make_chimera.sh` when the first cell's alignment is missing.
+
+`stagednodes`, three rounds, nine minutes each: the pin worked mechanically and `sbatch` refused it,
+"Requested node configuration is not available", because `sinfo` had returned four idle `epyc-9754`
+nodes of the `long` partition and the shards go to `fast`. The script now reads
+`SLURM_JOB_PARTITION` and picks from that partition, which holds six mixed `epyc-9754` nodes today.
+
+`placements`, before any of these: `PartitionTimeLimit` at 48 hours against a one-day partition;
+resubmitted at 24, which one Kexact cell inside a 24-hour grid job already fits.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

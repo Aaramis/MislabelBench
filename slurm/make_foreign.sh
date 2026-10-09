@@ -27,8 +27,18 @@ cd "$BAC"
 # could not do while this script demanded an image it was about to skip.
 if [ ! -s donor_pool.aligned.fasta ]; then
     require_singularity
-    IMG=$(ls "$HOME"/.singularity_cache/*infernal*1.1.5* 2>/dev/null | head -1)
-    [ -n "$IMG" ] || { echo "no infernal image in $HOME/.singularity_cache" >&2; exit 1; }
+    # The Infernal image, pinned by tag and pulled when the cache does not hold it. It used to be found
+    # by globbing ~/.singularity_cache, which the first run of this script showed is a cache and not a
+    # record: the glob matched nothing, and under pipefail the empty `ls | head` exited 2 before the
+    # message meant for that case could print. The tag is biocontainers' latest 1.1.5 build; the digest
+    # the pull resolves to is printed so it can go in assets/datasets.yml.
+    INFERNAL_TAG="1.1.5--pl5321h7b50bb2_4"
+    IMG="$HOME/.singularity_cache/infernal-${INFERNAL_TAG}.sif"
+    mkdir -p "$HOME/.singularity_cache"
+    if [ ! -s "$IMG" ]; then
+        singularity pull --name "$IMG" "docker://quay.io/biocontainers/infernal:${INFERNAL_TAG}"
+    fi
+    echo "infernal image $IMG sha256 $(sha256sum "$IMG" | cut -d' ' -f1)"
     singularity exec -B "$BAC:$BAC" --pwd "$BAC" "$IMG" \
         cmalign --cpu "${SLURM_CPUS_PER_TASK:-8}" --dnaout --matchonly --outformat Pfam \
         -o donor_pool.pfam --sfile donor_pool.cmalign.txt \

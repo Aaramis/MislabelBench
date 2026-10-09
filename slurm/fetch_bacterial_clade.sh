@@ -25,14 +25,22 @@ export PATH="$BENCH_ROOT/bin:$PATH"
 RAW="$BENCH_ROOT/data/raw"
 OUT="$BENCH_ROOT/data/gtdb"
 mkdir -p "$RAW"
-IMG=$(ls "$HOME"/.singularity_cache/*infernal*1.1.5* 2>/dev/null | head -1)
-[ -n "$IMG" ] || { echo "no infernal image in $HOME/.singularity_cache" >&2; exit 1; }
+# The Infernal image, pinned by tag and pulled when the cache does not hold it. It used to be found
+# by globbing ~/.singularity_cache, which the first run of this script showed is a cache and not a
+# record: the glob matched nothing, and under pipefail the empty `ls | head` exited 2 before the
+# message meant for that case could print. The tag is biocontainers' latest 1.1.5 build; the digest
+# the pull resolves to is printed so it can go in assets/datasets.yml.
+INFERNAL_TAG="1.1.5--pl5321h7b50bb2_4"
+IMG="$HOME/.singularity_cache/infernal-${INFERNAL_TAG}.sif"
+mkdir -p "$HOME/.singularity_cache"
+if [ ! -s "$IMG" ]; then
+    singularity pull --name "$IMG" "docker://quay.io/biocontainers/infernal:${INFERNAL_TAG}"
+fi
+echo "infernal image $IMG sha256 $(sha256sum "$IMG" | cut -d' ' -f1)"
 
-CLADE=$(python3 -c "import json;print(json.load(open('$OUT/bacterial_clade_selection.json'))['chosen']['clade'])")
-TAG=$(echo "$CLADE" | awk -F';' '{print tolower($NF)}' | sed 's/^o__//; s/^c__//')
-echo "clade: $CLADE  -> gtdb_bac_${TAG}"
-
-# The release file, by the sha256 assets/datasets.yml records for the archaea: same file.
+# The selection record is made here when it is not here: bin/push_code.sh sends code and truth and
+# not data/gtdb records, and the choice is a function of the release file, so recomputing it on the
+# cluster from the same file gives the same record, which git then shows.
 SHA=$(dataset_field.py gtdb_archaea_ssu sha256)
 URL=$(dataset_field.py gtdb_archaea_ssu url)
 cd "$RAW"
@@ -40,6 +48,11 @@ if [ ! -f ssu_all_r226.fna.gz ] || [ "$(sha256sum ssu_all_r226.fna.gz | cut -d' 
     curl -fsSL -o ssu_all_r226.fna.gz "$URL"
 fi
 echo "$SHA  ssu_all_r226.fna.gz" | sha256sum -c -
+[ -s "$OUT/bacterial_clade_selection.json" ] || python3 "$BENCH_ROOT/bin/select_bacterial_clade.py" \
+    --fasta "$RAW/ssu_all_r226.fna.gz" --out "$OUT/bacterial_clade_selection.json"
+CLADE=$(python3 -c "import json;print(json.load(open('$OUT/bacterial_clade_selection.json'))['chosen']['clade'])")
+TAG=$(echo "$CLADE" | awk -F';' '{print tolower($NF)}' | sed 's/^o__//; s/^c__//')
+echo "clade: $CLADE  -> gtdb_bac_${TAG}"
 
 # The model, from the pinned Rfam.cm.gz. RF01959.cm was extracted by hand once and committed; this
 # makes the extraction a step of the record for RF00177, and prints the sha256 for datasets.yml.

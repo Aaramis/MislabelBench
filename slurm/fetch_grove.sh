@@ -101,6 +101,14 @@ BASE_PY=/shared/software/miniconda_deployment/envs/python-3.12/bin/python
     echo "pick one, update BASE_PY in slurm/fetch_grove.sh, and record the change" >&2
     exit 1
 }
+# An environment that cannot import what it was built for is rebuilt, not reported. The first run
+# of this script left a venv made by a python without ensurepip, so it had an interpreter and no
+# packages; the `-x env/bin/python` guard then skipped the build on the second run and the import
+# check below failed on a directory that would never pass. One rebuild, from the pinned python.
+if [ -x "$OUT/env/bin/python" ] && ! "$OUT/env/bin/python" -c "import Bio, skopt, numpy" 2>/dev/null; then
+    echo "the environment at $OUT/env cannot import its packages; rebuilding it"
+    rm -rf "$OUT/env"
+fi
 if [ ! -x "$OUT/env/bin/python" ]; then
     room_for 15000
     "$BASE_PY" -m venv "$OUT/env"
@@ -108,7 +116,7 @@ if [ ! -x "$OUT/env/bin/python" ]; then
     "$OUT/env/bin/pip" install --quiet biopython scikit-optimize numpy
 fi
 "$OUT/env/bin/python" -c "import Bio, skopt, numpy" || {
-    echo "the environment at $OUT/env cannot import Bio, skopt and numpy" >&2
+    echo "the environment at $OUT/env cannot import Bio, skopt and numpy even after a rebuild" >&2
     exit 1
 }
 "$OUT/env/bin/pip" freeze > "$OUT/env-requirements.txt"

@@ -15,6 +15,11 @@ nf_launch_dir chimera
 
 echo "running on $(hostname)"
 
+# The cells' .fasta and .tax regenerate from the seed and travel with nothing, so a fresh working
+# copy holds only the truth; the first run of this job failed on the first cell's missing .fasta.
+[ -s "$BENCH_ROOT/data/chimera/chi_family_b0.25_s1/chi_family_b0.25_s1.fasta" ] \
+    || bash "$BENCH_ROOT/slurm/make_chimera.sh"
+
 # Error kind 7, both tools: 36 cells, four parent distances by three breakpoints by three seeds.
 # The question is detection and which parent the proposal sides with, not rank accuracy, which a
 # half-correct label has no answer to.

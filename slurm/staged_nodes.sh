@@ -28,13 +28,17 @@ export PATH="$BENCH_ROOT/bin:$PATH"
 REP="${STAGED_REP:-}"
 TAG="n4${REP:+_r$REP}"
 
-# Four distinct epyc-9754 nodes, idle or mixed first so the pins do not queue behind full nodes.
-# Chosen inside the job rather than at submission: a node free when the chain was submitted is not
-# necessarily free when replicate three starts, and a pin to a full node waits for it.
-NODES="${SHARD_NODES:-$(sinfo -N -h -t idle,mix -o '%N %f' | awk '$2 ~ /epyc-9754/ {print $1}' \
+# Four distinct epyc-9754 nodes, idle or mixed first so the pins do not queue behind full nodes, and
+# from the partition this job runs in: the shards are submitted to the same partition, and a
+# --nodelist naming a node of another one is refused by sbatch as "Requested node configuration is
+# not available", which is how the first three rounds died nine minutes in. Chosen inside the job
+# rather than at submission: a node free when the chain was submitted is not necessarily free when
+# replicate three starts, and a pin to a full node waits for it.
+PART="${SLURM_JOB_PARTITION:-fast}"
+NODES="${SHARD_NODES:-$(sinfo -N -h -p "$PART" -t idle,mix -o '%N %f' | awk '$2 ~ /epyc-9754/ {print $1}' \
         | sort -u | head -4 | paste -sd, -)}"
 n=$(echo "$NODES" | tr ',' '\n' | grep -c .)
-[ "$n" = 4 ] || { echo "need four idle or mixed epyc-9754 nodes, found $n: '$NODES'" >&2; exit 1; }
+[ "$n" = 4 ] || { echo "need four idle or mixed epyc-9754 nodes in partition $PART, found $n: '$NODES'" >&2; exit 1; }
 echo "shards pinned to: $NODES"
 nf_launch_dir "staged_nodes_${TAG}"
 
