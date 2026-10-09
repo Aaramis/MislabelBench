@@ -59,8 +59,9 @@ def mismatch_rank(row, declared=None):
     cluster representative's path, marked `__TAXCLUSTER<n>__` in the lineage: measured over the
     whole grid, 2 642 of 127 172 flagged rows, 2.08 %, carry a path that is not a prefix of the
     named sequence's own lineage, and 185 of those are injected sequences -- 0.71 % of all injected
-    rows. Nothing published reads this function's result, which is why the figure is a bound and
-    not a correction.
+    rows. `recall_at_injected_rank` is read off this function, so the 0.71 % is the bound on how
+    far that figure can be off; it is not corrected here because the declared path is preferred
+    whenever the cell supplies one, which it always does.
     """
     a = (declared or row["OriginalTaxonomyPath"]).split(";")
     b = row["ProposedTaxonomyPath"].split(";")
@@ -90,6 +91,17 @@ def main():
     baseline = set(read_mis(args.baseline_mis)) if args.baseline_mis else set()
 
     distance_rank = RANKS.index(truth["distance"])
+    # The third question the protocol asks of every injected sequence: does the label the tool
+    # proposes match the true one? Exact, the whole lineage; and at rank, agreement down to the
+    # rank that was changed, which is the correction a user would apply. The first two questions,
+    # flagged and at which rank, were answered here from the start; this one was not, and nothing
+    # in the repository compared ProposedTaxonomyPath with rec["true"].
+    true_of = {name: rec["true"] for name, rec in injected.items()}
+
+    def proposed_matches(s, exact):
+        a = true_of[s].split(";")
+        b = flagged[s]["ProposedTaxonomyPath"].split(";")
+        return a == b if exact else a[:distance_rank + 1] == b[:distance_rank + 1]
     # Error kind 6 adds bacterial sequences under an archaeal label. The taxonomy the tool is
     # given contains no bacteria, so it cannot name the true lineage at any rank and
     # mismatch_rank can never reach the domain. "Was it flagged at all" is the only meaningful
@@ -108,12 +120,18 @@ def main():
             hits = {s for s in injected if s in flagged and passes(flagged[s])}
             at_rank = {s for s in hits
                        if mismatch_rank(flagged[s], declared_of.get(s)) == distance_rank}
+            label_exact = {s for s in hits if proposed_matches(s, True)}
+            label_at_rank = {s for s in hits if proposed_matches(s, False)}
             others = {s for s, r in flagged.items() if s not in injected and passes(r)}
             out.append({
                 "threshold": t,
                 "recall": len(hits) / len(injected) if injected else None,
                 "recall_at_injected_rank": (len(at_rank) / len(injected)
                                             if injected and rank_metric_meaningful else None),
+                "recall_label_correct": (len(label_exact) / len(injected)
+                                         if injected and rank_metric_meaningful else None),
+                "recall_label_correct_at_rank": (len(label_at_rank) / len(injected)
+                                                 if injected and rank_metric_meaningful else None),
                 "flags_on_non_injected": len(others),
                 # Keyed on whether a baseline was given, not on whether it holds anything. An
                 # empty baseline is a real answer -- a database the tool flags nothing in -- and
@@ -137,6 +155,10 @@ def main():
         "n_injected": len(injected),
         "n_flagged_total": len(flagged),
         "baseline_flags": len(baseline) if args.baseline_mis else None,
+        # As a rate too: the protocol reports "the baseline flag rate before any injection", and a
+        # count of 93 means nothing without the 2 023 it is counted over.
+        "baseline_rate": (round(len(baseline) / truth["n_total"], 4)
+                          if args.baseline_mis and truth.get("n_total") else None),
         "has_exclusion_column": have_exclusion,
         "by_confidence": score("confidence"),
         "by_exclusion": score("exclusion") if have_exclusion else None,

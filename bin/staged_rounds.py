@@ -133,8 +133,10 @@ def main():
         raise SystemExit(f"no round of {tags} has replicates {reps} under {results}")
 
     say(f"{'shards':>7}{'rounds':>8}{'ref':>8}{'tasks':>7}{'place':>9}{'spread':>8}"
-        f"{'score':>7}{'sum':>9}{'speedup':>9}{'s/fold':>9}{'ceiling':>9}")
+        f"{'score':>7}{'sum':>9}{'speedup':>9}{'s/fold':>9}{'ceiling':>9}"
+        f"{'eff place':>11}{'total':>8}{'eff total':>11}")
     base = None
+    base_sum = None
     for tag in tags:
         if tag not in pooled:
             continue
@@ -145,14 +147,22 @@ def main():
         med = {s: st.median(r[s] for r in rs) for s in STAGES + ["sum", "shard_spread"]}
         if base is None:
             base = med["looplace"]
+            base_sum = med["sum"]
+            # Amdahl: the three stages that do not divide bound the whole, however many shards.
+            serial = (med["reference"] + med["lootasks"] + med["looscore"]) / med["sum"]
         fmax = rs[0]["folds_max"]
         ftot = rs[0]["folds_total"]
         per_fold = med["looplace"] / fmax if fmax else 0.0
         ceiling = ftot / fmax if fmax else 0.0
+        # Efficiency is speedup over shards, per stage and for the whole run: the reviewed
+        # protocol asks for both, "otherwise this could be interpreted as cheating by a parallel
+        # computing person with respect to Amdahl's law".
         say(f"{n_shards:>7}{len(rs):>8}{med['reference']:>8.1f}{med['lootasks']:>7.1f}"
             f"{med['looplace']:>9.1f}{med['shard_spread']:>8.1f}{med['looscore']:>7.1f}"
             f"{med['sum']:>9.1f}{base / med['looplace']:>8.2f}x"
-            + (f"{per_fold:>9.2f}{ceiling:>8.2f}x" if fmax else f"{'-':>9}{'-':>9}"))
+            + (f"{per_fold:>9.2f}{ceiling:>8.2f}x" if fmax else f"{'-':>9}{'-':>9}")
+            + f"{100 * base / med['looplace'] / n_shards:>10.0f}%"
+            f"{base_sum / med['sum']:>7.2f}x{100 * base_sum / med['sum'] / n_shards:>10.0f}%")
         place = sorted(r["looplace"] for r in rs)
         span = 100 * (place[-1] - place[0]) / place[0]
         say(f"{'':15}placement over {len(rs)} rounds: "
@@ -164,6 +174,9 @@ def main():
                 + ("  -> one machine, so this is distribution across jobs" if len(uniq) == 1 else ""))
         else:
             say(f"{'':15}nodes: not recorded; run slurm/shard_nodes.sh on these rounds")
+
+    say(f"{'':15}serial share at one shard {100 * serial:.1f}% (reference, tasks, scoring), "
+        f"so the whole run cannot beat {1 / serial:.2f}x however many shards: Amdahl")
 
     # The caveat, as its own rows. Same cell, same node, same CPU model, different day.
     cross = [(t, singles[t]["looplace"], st.median(r["looplace"] for r in pooled[t]))

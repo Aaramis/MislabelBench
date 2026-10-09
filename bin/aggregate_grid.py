@@ -81,6 +81,10 @@ def main():
         # foreign cells, where the reference holds no bacteria and no rank can be named.
         at_rank = [r["recall_at_injected_rank"] for r in rows
                    if r.get("recall_at_injected_rank") is not None]
+        label_ok = [r["recall_label_correct"] for r in rows
+                    if r.get("recall_label_correct") is not None]
+        label_ok_rank = [r["recall_label_correct_at_rank"] for r in rows
+                         if r.get("recall_label_correct_at_rank") is not None]
         others = [r["flags_on_non_injected"] for r in rows]
         added = [r["added_vs_baseline"] for r in rows if r["added_vs_baseline"] is not None]
         summary.append({
@@ -89,6 +93,9 @@ def main():
             "recall_mean": round(st.mean(recalls), 4) if recalls else None,
             "recall_sd": round(st.stdev(recalls), 4) if len(recalls) > 1 else 0.0,
             "recall_at_injected_rank_mean": round(st.mean(at_rank), 4) if at_rank else None,
+            "recall_label_correct_mean": round(st.mean(label_ok), 4) if label_ok else None,
+            "recall_label_correct_at_rank_mean": (round(st.mean(label_ok_rank), 4)
+                                                  if label_ok_rank else None),
             "flags_on_non_injected_mean": round(st.mean(others), 1) if others else None,
             "added_vs_baseline_mean": round(st.mean(added), 1) if added else None,
         })

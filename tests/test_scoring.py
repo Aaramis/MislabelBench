@@ -147,6 +147,29 @@ class ScoreInjection(unittest.TestCase):
         self.assertEqual(self.at(d, 0.0)["recall"], 0.25)
         self.assertEqual(self.at(d, 0.0)["recall_at_injected_rank"], 0.25)
 
+    def test_the_proposed_label_is_scored_against_the_true_one(self):
+        """The third question the protocol asks of every injected sequence, which nothing computed.
+
+        Four injected, all flagged. i1's proposal is the true lineage, whole; i2's agrees with the
+        truth down to family, the rank that was changed, and differs at species; i3 proposes the
+        wrong lineage back; i4 is not flagged. So exact 1 of 4, at rank 2 of 4, recall 3 of 4.
+        """
+        at_rank_only = "d__A;p__B;c__C;o__O;f__F;g__G;s__OTHER"
+        d = self.score(self.write_mis([mis_row("i1", 0.9, 1.0, proposed=TRUE),
+                                       mis_row("i2", 0.9, 1.0, proposed=at_rank_only),
+                                       mis_row("i3", 0.9, 1.0, proposed=WRONG)]))
+        row = self.at(d, 0.0)
+        self.assertEqual(row["recall"], 0.75)
+        self.assertEqual(row["recall_label_correct"], 0.25)
+        self.assertEqual(row["recall_label_correct_at_rank"], 0.5)
+
+    def test_the_baseline_is_also_a_rate(self):
+        base = self.tmp / "base.mis"
+        base.write_text(HEADER + "\n" + mis_row("old", 0.9, 1.0) + "\n")
+        d = self.score(self.write_mis([mis_row("i1", 0.9, 1.0)]), "--baseline-mis", base)
+        self.assertEqual(d["baseline_flags"], 1)
+        self.assertEqual(d["baseline_rate"], 0.1, "one flag over the fixture's n_total of 10")
+
     def test_names_that_do_not_join_give_zero_recall_and_say_so_in_the_counts(self):
         """The silent-zero class. A name mismatch cannot be distinguished from genuine non-detection
         by recall alone, so the test pins what the other fields show: flags exist, none are injected."""

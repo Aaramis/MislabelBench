@@ -26,6 +26,7 @@ from collections import defaultdict
 from pathlib import Path
 
 CONFIDENCE = 4  # column 5 of the .mis, 0-based
+PROPOSED_PATH = 6  # column 7, the lineage the tool proposes instead
 
 
 def cell_counts(truth_path, mis_path, threshold):
@@ -35,17 +36,23 @@ def cell_counts(truth_path, mis_path, threshold):
     verified: recall is the share of injected sequences the run reports, collateral is every other
     sequence it reports. A flag that is neither would mean a name in the .mis that is in no cell.
     """
-    injected = set(json.loads(truth_path.read_text())["injected"])
+    truth = json.loads(truth_path.read_text())
+    injected = set(truth["injected"])
+    true_lineage = {s: rec["true"] for s, rec in truth["injected"].items()}
     flagged = set()
+    proposed = {}
     for line in mis_path.read_text().splitlines():
         if line.startswith(";") or not line.strip():
             continue
         f = line.split("\t")
         if float(f[CONFIDENCE]) >= threshold:
             flagged.add(f[0])
+            proposed[f[0]] = f[PROPOSED_PATH]
     if not injected:
-        return None, None
-    return len(injected & flagged) / len(injected), len(flagged - injected)
+        return None, None, None
+    # The third question, by the second route: the proposed lineage equals the true one, whole.
+    correct = sum(1 for s in injected & flagged if proposed[s] == true_lineage[s])
+    return len(injected & flagged) / len(injected), len(flagged - injected), correct / len(injected)
 
 
 def main():
@@ -80,10 +87,10 @@ def main():
                 # here and left error kind 6 outside this check entirely.
                 if any(row.get(f) != t.get(f) for f in ("distance", "k", "rate")):
                     continue
-                r, collateral = cell_counts(truth_path, mis, row["threshold"])
+                r, collateral, label_ok = cell_counts(truth_path, mis, row["threshold"])
                 if r is not None:
                     mine[(row["distance"], row["k"], row["rate"], row["threshold"])].append(
-                        (r, collateral))
+                        (r, collateral, label_ok))
 
         for row in summary["rows"]:
             if row["metric"] != "by_confidence":
@@ -92,8 +99,9 @@ def main():
             if key not in mine:
                 continue
             checked += 2
-            recalls = [r for r, _ in mine[key]]
-            collateral = [c for _, c in mine[key]]
+            recalls = [r for r, _, _ in mine[key]]
+            collateral = [c for _, c, _ in mine[key]]
+            label_ok = [l for _, _, l in mine[key]]
             # The summaries round to four places, so agreement is to that and not to float equality.
             if abs(round(st.mean(recalls), 4) - row["recall_mean"]) > 5e-5:
                 problems.append(f"{cond} {key}: recall {round(st.mean(recalls), 4)} recomputed "
@@ -104,12 +112,22 @@ def main():
             if published is not None and abs(st.mean(collateral) - published) > 0.5:
                 problems.append(f"{cond} {key}: collateral {st.mean(collateral):.2f} recomputed "
                                 f"against {published} published")
+            # The third question, where the summary carries it. Older summaries do not, and a
+            # missing field is not a disagreement.
+            published = row.get("recall_label_correct_mean")
+            if published is not None:
+                checked += 1
+                if abs(round(st.mean(label_ok), 4) - published) > 5e-5:
+                    problems.append(f"{cond} {key}: label-correct recall "
+                                    f"{round(st.mean(label_ok), 4)} recomputed against "
+                                    f"{published} published")
 
     # A check that compared nothing must not report success.
     if not checked:
         sys.exit("no published recall could be recomputed; check --injected-dir and --runs-dir")
-    print(f"{checked} published values recomputed from truth.json and .mis -- recall and collateral "
-          f"flags for every by_confidence row -- {checked - len(problems)} agree")
+    print(f"{checked} published values recomputed from truth.json and .mis -- recall, collateral "
+          f"flags and label-correct recall for every by_confidence row -- "
+          f"{checked - len(problems)} agree")
     for pb in problems[:10]:
         print(f"  {pb}", file=sys.stderr)
     if problems:

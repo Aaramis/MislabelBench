@@ -90,12 +90,15 @@ if incomplete:
 if contended:
     print(f"excluded {len(contended)} trusted runs from the staged experiments, whose whole-run "
           f"control shares its node with the stages")
-print(f"{'dataset':14}{'condition':20}{'n':>3}{'wall':>10}{'cores':>7}{'CPU-s':>9}")
+# core-h beside CPU-s: the protocol's "accumulated CPU hours" in its own unit, so nobody divides
+# by 3 600 in their head and gets it wrong.
+print(f"{'dataset':14}{'condition':20}{'n':>3}{'wall':>10}{'cores':>7}{'CPU-s':>9}{'core-h':>8}")
 for (ds, c), v in sorted(g.items()):
     if not ds.startswith("gtdb"):
         continue
     print(f"{ds:14}{c:20}{len(v):>3}{st.median(x[0] for x in v):10.1f}"
-          f"{st.median(x[1] / x[0] for x in v):7.2f}{st.median(x[1] for x in v):9.0f}")
+          f"{st.median(x[1] / x[0] for x in v):7.2f}{st.median(x[1] for x in v):9.0f}"
+          f"{st.median(x[1] for x in v) / 3600:8.2f}")
 print()
 for ds in sorted({k[0] for k in g if k[0].startswith("gtdb")}):
     up, fk = g.get((ds, "upstream_raxml_T8")), g.get((ds, "epang_T8_K25"))

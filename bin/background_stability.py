@@ -47,12 +47,15 @@ def main():
 
     base = set(flagged(args.baseline))
     rows = []
+    n_total = None
     for mis in sorted(Path(args.runs).glob(f"*__{args.condition}/*.mis")):
         cell = mis.parent.name.split("__")[0]
         truth = Path(args.injected_dir) / cell / f"{cell}.truth.json"
         if not truth.exists():
             continue
-        injected = set(json.loads(truth.read_text())["injected"])
+        record = json.loads(truth.read_text())
+        injected = set(record["injected"])
+        n_total = record.get("n_total") or n_total
         after = set(flagged(mis)) - injected
         # An injected sequence flagged at baseline was already suspect before we touched it,
         # so it cannot count as lost: exclude it from the baseline side too.
@@ -75,7 +78,10 @@ def main():
     n = len(rows)
     if not n:
         raise SystemExit(f"no cell matched {args.runs}/*__{args.condition}/*.mis")
-    print(f"{n} cells against a baseline of {len(base)} flags")
+    # As a rate too, from truth.json's n_total: the protocol reports "the baseline flag rate before
+    # any injection", and 93 is not a rate.
+    print(f"{n} cells against a baseline of {len(base)} flags"
+          + (f", {100 * len(base) / n_total:.2f}% of {n_total} sequences" if n_total else ""))
     for key in ("lost", "gained"):
         v = sorted(r[key] for r in rows)
         # st.median, not v[n // 2], which is the upper middle element for an even n. It happens to

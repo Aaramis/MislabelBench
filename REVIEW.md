@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 221 |
+| findings in this report | 222 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 69 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 49 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -26,7 +26,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 66 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
-| tests over the scripts that turn runs into numbers | 87 |
+| tests over the scripts that turn runs into numbers | 89 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5397,6 +5397,34 @@ question is answered by the sequences a cell holds.
 
 All three checked by a stub run of the staged path with `--keep_placements true --shard_nodes
 a,b,c,d`: eight tasks, none failed, the closures evaluate.
+
+**222. The protocol asks three questions of every injected sequence, and the scoring answered two.**
+Was it flagged; did the tool name the rank at which the label is wrong; does the label it proposes
+match the true one. `bin/score_injection.py` computed `recall` and `recall_at_injected_rank` from the
+start and never compared `ProposedTaxonomyPath` with the truth's `true` lineage -- no script in `bin/`
+did. It now reports `recall_label_correct` (the whole proposed lineage equals the true one) and
+`recall_label_correct_at_rank` (agreement down to the rank that was changed, which is the correction a
+user would actually apply); `bin/aggregate_grid.py` carries both means and
+`bin/verify_recall_independently.py` recomputes the exact one by its second route: **5 400 published
+values agree** where it checked 3 600 before.
+
+The answer is a result in its own right. At k = 1 and 5 %, threshold 0, the fork flags 100 % of
+phylum-distance injections and names the rank for 99.3 %, but proposes the exact true lineage for
+**77.2 %**, and the correct lineage down to phylum for 97.7 %; at species, where all three questions
+collapse into one, 55.4 %. Upstream's exact figure is 50.2 % at phylum and 58.4 % at species. So the
+two tools name the rank equally well and the fork names the whole lineage more often at every distance
+above species -- 65 % against 52 % at family -- which is a second thing the engine changes, beside the
+k-axis recall. The stale comment claiming "nothing published reads this function's result" about
+`mismatch_rank` is corrected: `recall_at_injected_rank` does, and the 0.71 % figure is its bound.
+
+**Efficiency, in the record and not left to the reader.** `results/staged_rounds.txt` now carries
+speedup over shards for the placement stage and for the whole run, with the serial share and the Amdahl
+bound the reviewed protocol asks for "otherwise this could be interpreted as cheating by a parallel
+computing person": placement **98 %** efficient at two shards and **91 %** at four; the whole run
+1.59× and 2.30×, **80 % and 57 %**; the three undivided stages are 23.8 % of one shard's run, so the
+whole run cannot beat 4.20× at any shard count. `bin/resource_usage.py` reports core-hours beside
+CPU-seconds, and the baseline is a rate as well as a count: `baseline_rate` in every score record,
+and "93 flags, 4.60 % of 2 023 sequences" in `background_stability.py`'s summary.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

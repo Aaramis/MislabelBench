@@ -13,6 +13,8 @@
       "recall_mean": 1.0,
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 91.3,
       "added_vs_baseline_mean": 8.3
     },
@@ -26,6 +28,8 @@
       "recall_mean": 1.0,
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 89.7,
       "added_vs_baseline_mean": 7
     },
@@ -39,6 +43,8 @@
       "recall_mean": 1.0,
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 49,
       "added_vs_baseline_mean": 2
     },
@@ -52,6 +58,8 @@
       "recall_mean": 1.0,
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 47,
       "added_vs_baseline_mean": 2
     },
@@ -65,6 +73,8 @@
       "recall_mean": 1.0,
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 46.3,
       "added_vs_baseline_mean": 1.7
     },
@@ -78,6 +88,8 @@
       "recall_mean": 1.0,
       "recall_sd": 0.0,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 43.3,
       "added_vs_baseline_mean": 1.3
     },
@@ -91,6 +103,8 @@
       "recall_mean": 0.9333,
       "recall_sd": 0.0764,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 92,
       "added_vs_baseline_mean": 9
     },
@@ -104,6 +118,8 @@
       "recall_mean": 0.9333,
       "recall_sd": 0.0764,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 91,
       "added_vs_baseline_mean": 8.7
     },
@@ -117,6 +133,8 @@
       "recall_mean": 0.9333,
       "recall_sd": 0.0764,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 49,
       "added_vs_baseline_mean": 2
     },
@@ -130,6 +148,8 @@
       "recall_mean": 0.9333,
       "recall_sd": 0.0764,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 46.7,
       "added_vs_baseline_mean": 2
     },
@@ -143,6 +163,8 @@
       "recall_mean": 0.9333,
       "recall_sd": 0.0764,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 46,
       "added_vs_baseline_mean": 1.7
     },
@@ -156,6 +178,8 @@
       "recall_mean": 0.9167,
       "recall_sd": 0.1041,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 44.3,
       "added_vs_baseline_mean": 1.7
     },
@@ -169,6 +193,8 @@
       "recall_mean": 0.9571,
       "recall_sd": 0.0229,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 102.7,
       "added_vs_baseline_mean": 20
     },
@@ -182,6 +208,8 @@
       "recall_mean": 0.9571,
       "recall_sd": 0.0229,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 102,
       "added_vs_baseline_mean": 19.7
     },
@@ -195,6 +223,8 @@
       "recall_mean": 0.9571,
       "recall_sd": 0.0229,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 52,
       "added_vs_baseline_mean": 2.7
     },
@@ -208,6 +238,8 @@
       "recall_mean": 0.9538,
       "recall_sd": 0.0286,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 48.3,
       "added_vs_baseline_mean": 2.3
     },
@@ -221,6 +253,8 @@
       "recall_mean": 0.9538,
       "recall_sd": 0.0286,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 47,
       "added_vs_baseline_mean": 2.3
     },
@@ -234,6 +268,8 @@
       "recall_mean": 0.9538,
       "recall_sd": 0.0286,
       "recall_at_injected_rank_mean": null,
+      "recall_label_correct_mean": null,
+      "recall_label_correct_at_rank_mean": null,
       "flags_on_non_injected_mean": 43.7,
       "added_vs_baseline_mean": 2.3
     }
