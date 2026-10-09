@@ -78,4 +78,12 @@ done
 rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \
       --exclude='*' data/foreign/ "$REMOTE:~/bench/data/foreign/"
 
-ssh "${REMOTE%%:*}" 'cd ~/bench && n=$(find . -name "._*" | wc -l) && echo "AppleDouble files left behind: $n" && [ "$n" = "0" ]'
+# Over the trees this script writes, not over all of ~/bench. The pinned RAxMLGroveScripts clone has
+# carried ._.DS_Store and ._tree.nwk since 2022 -- upstream commit dcdd375, three files -- so a check
+# that counts every ._* under the cluster home now fails on every push for content neither this script
+# nor the cluster put there. A gate that cannot pass is a gate that gets ignored, and this one guards
+# something real: eighteen AppleDouble forks landed here once and the timing-flag gate died on one of
+# them before reading a record.
+ssh "${REMOTE%%:*}" 'cd ~/bench && n=$(find main.nf nextflow.config conf modules bin slurm assets \
+    tests data/injected data/clade data/simulated data/foreign -name "._*" 2>/dev/null | wc -l) \
+    && echo "AppleDouble files left behind: $n" && [ "$n" = "0" ]'

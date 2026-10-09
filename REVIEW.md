@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 218 |
+| findings in this report | 219 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 67 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 47 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -5335,6 +5335,16 @@ imported module -- `bin/_timeit.py` is a wrapper command, not an import. It reso
 because `sys.path[0]` is the script's own directory for every way these are run, including
 `bin/analyses.sh`'s `PATH`-based invocation, and the reasoning is written into the module so the next
 reader does not have to rederive it.
+
+**219. The deploy script's last gate can no longer pass, for content that is not ours.**
+`bin/push_code.sh` ends by counting `._*` files anywhere under `~/bench` and failing if there are any.
+The guard is real -- eighteen AppleDouble forks landed there once and the timing-flag gate died on one
+before reading a record -- but `slurm/fetch_grove.sh` now clones RAxMLGroveScripts, which has carried
+`._.DS_Store` and `._tree.nwk` in its own repository since **upstream commit dcdd375, February 2022**,
+three files. So every push from here on exits non-zero having succeeded, and a gate that cannot pass is
+a gate that gets read as noise, which is how the next real one gets ignored. Measured before the change
+and after: three under `~/bench`, zero under the trees this script writes. The count is now taken over
+those trees only.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
