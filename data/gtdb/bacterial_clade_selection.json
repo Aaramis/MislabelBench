@@ -1,0 +1,135 @@
+{
+  "targets": {
+    "sequences_over_1200": 7051,
+    "judgeable_species_pct": 72.7
+  },
+  "score": "abs(n - 7051) / 7051 + abs(judg - 72.7) / 72.7",
+  "ranks_considered": [
+    "class",
+    "order"
+  ],
+  "minimum_sequences": 1000,
+  "chosen": {
+    "clade": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales",
+    "rank": "order",
+    "sequences": 14473,
+    "over_1200": 6929,
+    "judgeable_species_pct": 96.2,
+    "judgeable_species_two_genomes_pct": 88.5,
+    "judgeable_genus_pct": 99.2,
+    "n_species": 724,
+    "score": 0.3408
+  },
+  "candidates": [
+    {
+      "clade": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales",
+      "rank": "order",
+      "sequences": 14473,
+      "over_1200": 6929,
+      "judgeable_species_pct": 96.2,
+      "judgeable_species_two_genomes_pct": 88.5,
+      "judgeable_genus_pct": 99.2,
+      "n_species": 724,
+      "score": 0.3408
+    },
+    {
+      "clade": "d__Bacteria;p__Pseudomonadota;c__Gammaproteobacteria;o__Xanthomonadales",
+      "rank": "order",
+      "sequences": 8444,
+      "over_1200": 7510,
+      "judgeable_species_pct": 96.0,
+      "judgeable_species_two_genomes_pct": 92.5,
+      "judgeable_genus_pct": 99.7,
+      "n_species": 656,
+      "score": 0.3855
+    },
+    {
+      "clade": "d__Bacteria;p__Pseudomonadota;c__Alphaproteobacteria;o__Rhodobacterales",
+      "rank": "order",
+      "sequences": 5321,
+      "over_1200": 4377,
+      "judgeable_species_pct": 80.9,
+      "judgeable_species_two_genomes_pct": 70.0,
+      "judgeable_genus_pct": 98.0,
+      "n_species": 1411,
+      "score": 0.4917
+    },
+    {
+      "clade": "d__Bacteria;p__Bacillota;c__Bacilli;o__Paenibacillales",
+      "rank": "order",
+      "sequences": 8429,
+      "over_1200": 5988,
+      "judgeable_species_pct": 97.8,
+      "judgeable_species_two_genomes_pct": 81.6,
+      "judgeable_genus_pct": 99.8,
+      "n_species": 400,
+      "score": 0.4955
+    },
+    {
+      "clade": "d__Bacteria;p__Bacteroidota;c__Bacteroidia;o__Flavobacteriales",
+      "rank": "order",
+      "sequences": 11662,
+      "over_1200": 9240,
+      "judgeable_species_pct": 87.5,
+      "judgeable_species_two_genomes_pct": 72.0,
+      "judgeable_genus_pct": 98.9,
+      "n_species": 2322,
+      "score": 0.5134
+    },
+    {
+      "clade": "d__Bacteria;p__Bacillota;c__Clostridia;o__Peptostreptococcales",
+      "rank": "order",
+      "sequences": 22458,
+      "over_1200": 8227,
+      "judgeable_species_pct": 99.1,
+      "judgeable_species_two_genomes_pct": 94.2,
+      "judgeable_genus_pct": 99.7,
+      "n_species": 199,
+      "score": 0.5303
+    },
+    {
+      "clade": "d__Bacteria;p__Pseudomonadota;c__Alphaproteobacteria;o__Sphingomonadales",
+      "rank": "order",
+      "sequences": 3829,
+      "over_1200": 2839,
+      "judgeable_species_pct": 74.5,
+      "judgeable_species_two_genomes_pct": 61.5,
+      "judgeable_genus_pct": 99.0,
+      "n_species": 1157,
+      "score": 0.6216
+    },
+    {
+      "clade": "d__Bacteria;p__Cyanobacteriota;c__Cyanobacteriia",
+      "rank": "class",
+      "sequences": 4717,
+      "over_1200": 3713,
+      "judgeable_species_pct": 84.8,
+      "judgeable_species_two_genomes_pct": 69.2,
+      "judgeable_genus_pct": 97.8,
+      "n_species": 1121,
+      "score": 0.64
+    },
+    {
+      "clade": "d__Bacteria;p__Bacillota;c__Bacilli;o__Bacillales_B",
+      "rank": "order",
+      "sequences": 6372,
+      "over_1200": 4623,
+      "judgeable_species_pct": 97.0,
+      "judgeable_species_two_genomes_pct": 78.7,
+      "judgeable_genus_pct": 99.8,
+      "n_species": 344,
+      "score": 0.6788
+    },
+    {
+      "clade": "d__Bacteria;p__Verrucomicrobiota;c__Verrucomicrobiia",
+      "rank": "class",
+      "sequences": 3548,
+      "over_1200": 1824,
+      "judgeable_species_pct": 74.2,
+      "judgeable_species_two_genomes_pct": 69.2,
+      "judgeable_genus_pct": 94.0,
+      "n_species": 651,
+      "score": 0.7624
+    }
+  ]
+}

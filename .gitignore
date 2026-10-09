@@ -40,3 +40,9 @@ results/nf/
 # cell warned when half of them do. The note is a transcript; the record is truth.json, which carries
 # n_requested, n_injected and rate_effective for every cell.
 warn.txt
+
+# Placement files kept by --keep_placements. About 20 MB per staged cell and one file per fold, so
+# they stay on disk here and on the cluster; what is committed is what bin/placement_locality.py
+# derives from them, and the runs that produced them are reproducible.
+*.jplace
+results/**/placements_shard*/

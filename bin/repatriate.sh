@@ -74,6 +74,7 @@ rsync -a --exclude='tmp/' \
       --include='*/' --include='run.json' --include='*.mis' --include='*.log' \
       --include='*.stderr' --include='verdicts.tsv' --include='case.json' \
       --include='*.timing.json' \
+      --include='*.jplace' --include='ref.nwk' --include='query.fasta' \
       --exclude='score.json' --exclude='*' \
       "$REMOTE:~/bench/results/" results/
 

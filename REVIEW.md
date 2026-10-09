@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 220 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 68 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 47 |
+| findings in this report | 221 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 69 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 49 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1174 |
@@ -5363,6 +5363,40 @@ checks 356 labels over seven ranks and finds nothing; with two tips' lineages sw
 labels that are no longer clades. It runs inside `make_grove_simulation.sh` after the taxonomy is
 written, from `bin/analyses.sh` on the committed control, and refuses an empty taxonomy with the
 other gates in `tests/test_gates.py`.
+
+**221. Three things the reviewed protocol promises that the harness could not do: a bacterial clade
+chosen by the criteria, shards on different machines, and placements that survive the run.**
+
+*The clade.* `bin/select_bacterial_clade.py` scores every bacterial class and order of `ssu_all_r226`
+on the two numbers the archaeal set is characterised by, 7 051 sequences over 1 200 nt and 72.7 %
+judgeable at species, by importing `bin/dataset_shape.py`'s rule rather than restating it. The score
+is the sum of the two relative distances and the ten nearest candidates are printed. It picks
+**o__Lachnospirales**: 6 929 sequences over 1 200 nt, 96.2 % judgeable at species, 724 species. The
+runner-up, o__Xanthomonadales, is 7 510 and 96.0 %; the nearest on judgeability alone,
+o__Rhodobacterales at 80.9 %, has only 4 377 sequences. What the table says about bacteria as a
+whole is that no order of the right size is as sparse as the archaea: every candidate near 7 000
+sequences is above 85 % at species, because bacterial orders of that size are a few hundred species
+with many genomes each rather than many species with few. That difference is itself part of what
+the replication will show. Recorded in `data/gtdb/bacterial_clade_selection.json`, under `data/`
+and not `results/` because it is derived from the release file and not from a run.
+
+*The machines.* `params.shard_nodes` names the nodes, and the `ifb` profile's `clusterOptions`
+became a closure that appends `--nodelist=<i-th name>` to shard i of `STAGEDLOOPLACE` and nothing
+else. `slurm/staged_nodes.sh` picks four idle or mixed `epyc-9754` nodes from `sinfo` inside the
+job, pins the four-shard round to them, and runs `slurm/shard_nodes.sh` afterwards so the pin is
+checked against `sacct` and not trusted. Three replicates, chained like the one-node set.
+
+*The placements.* `params.keep_placements` publishes upstream's two jplace files beside its `.mis`
+and, on the staged path, every fold's `epa_result.jplace` with the `ref.nwk` its edge numbers refer
+to and the query it placed; `bin/repatriate.sh` brings them home, and `.gitignore` keeps them out of
+git, since a staged Kexact cell is two thousand files and what will be committed is what the
+placement-locality analysis derives from them. `slurm/placements.sh` re-runs one Kexact cell under
+both tools and two K25 cells under the production condition. One Kexact cell and not three, because
+at 2 023 folds a staged cell is six thousand small files against a home quota of 100 000, and the
+question is answered by the sequences a cell holds.
+
+All three checked by a stub run of the staged path with `--keep_placements true --shard_nodes
+a,b,c,d`: eight tasks, none failed, the closures evaluate.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

@@ -19,6 +19,9 @@ process SATIVA {
     tuple val(meta), path("inputs.txt")              , emit: inputs
     tuple val(meta), path("run/${meta.run_name}.log"), emit: log
     tuple val(meta), path("run/stdout.log")          , emit: stdout
+    // Upstream writes <run>.l1out_seq.jplace and <run>.final_epa.jplace beside the .mis. Optional,
+    // because a run that fails before placement has none, and published only on request.
+    tuple val(meta), path("run/*.jplace")            , emit: placements, optional: true
     path "versions.yml"                              , emit: versions, topic: versions
 
     when:
