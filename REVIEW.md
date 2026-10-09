@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 224 |
+| findings in this report | 225 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 73 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 51 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -5469,6 +5469,19 @@ and breakpoint for both tools; `slurm/chimera.sh` runs the 72 cells. The `.fasta
 cells are regenerated from the seed and gitignored, as the grid's are; the truth is committed.
 `tests/test_chimera.py` pins the breakpoint arithmetic on a gapped sequence, the parent relation,
 determinism, both gates and the scoring, on a six-sequence alignment written by hand.
+
+**225. Two small things the review asked for that had a home and no producer.** The protocol wants
+the foreign sequences' alignment reported "before and after" beside the recall; the gap was measured
+once, 1 009 bits against 1 509, and lived in a docstring and in the decisions log, so the supplement
+could not cite a file for it. `bin/foreign_score_vs_flag.py` was already handed the base scores for
+the printed contrast and now writes them: `base` and `donor_minus_base_median_bits`, which is
+**−500.0** bits for both conditions' records. The MSA-difficulty predictor the co-author pointed at is
+noted in `Decisions.md` as the tool to try once it is installable; the cmalign gap is the measurement
+until then.
+
+And `docs/issue_epang_options.md` is the issue to open on `Aaramis/sativa-epang` for the option
+passthrough the engine comparison needs, with the 84 / 4 figure and the asymmetry it would test;
+drafted here and not posted, since posting is the maintainer's.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

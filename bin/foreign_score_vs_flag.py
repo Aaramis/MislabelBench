@@ -92,6 +92,7 @@ def main():
 
     print(f"donors flagged     {describe(hit)}")
     print(f"donors not flagged {describe(miss)}")
+    base = []
     if args.base_scores:
         base = list(cmalign_scores(args.base_scores).values())
         print(f"archaeal set       {describe(base)}")
@@ -125,6 +126,12 @@ def main():
             "unflagged": {"n": len(miss), "median": round(st.median(miss), 2) if miss else None},
             "low_score_tail": tail,
             "by_label_sharing": strata,
+            # The before/after the protocol asks to see beside the recall: how the foreign sequences
+            # align against how the reference's own do. The gap was in a docstring and in the
+            # decisions log; nothing wrote it, so the supplement could not cite it.
+            "base": {"n": len(base), "median": round(st.median(base), 2) if base else None},
+            "donor_minus_base_median_bits": (round(st.median(hit + miss) - st.median(base), 2)
+                                             if base and (hit or miss) else None),
         }, indent=2))
 
 

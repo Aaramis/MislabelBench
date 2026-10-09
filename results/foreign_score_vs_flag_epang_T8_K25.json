@@ -39,5 +39,10 @@
       "flagged": 74,
       "recall": 0.7872
     }
-  }
+  },
+  "base": {
+    "n": 7051,
+    "median": 1509.41
+  },
+  "donor_minus_base_median_bits": -500.27
 }
