@@ -103,5 +103,36 @@ class PlacementLocality(unittest.TestCase):
         self.assertIn("no injected sequence", r.stderr)
 
 
+class PlacementComparison(unittest.TestCase):
+    """bin/placement_comparison.py joins two locality records on the sequence and keeps the
+    sequences one engine flagged and the other did not."""
+
+    def test_deviating_rows_and_the_same_edge_count(self):
+        tmp = Path(tempfile.mkdtemp())
+        up = {"rows": [{"sequence": "i1", "flagged": False, "edge": 1, "lwr": 0.7,
+                        "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
+                        "among_co_carriers": True},
+                       {"sequence": "i2", "flagged": True, "edge": 7, "lwr": 0.9,
+                        "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
+                        "among_co_carriers": False}]}
+        fk = {"rows": [{"sequence": "i1", "flagged": True, "edge": 1, "lwr": 0.55,
+                        "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
+                        "among_co_carriers": True},
+                       {"sequence": "i2", "flagged": True, "edge": 7, "lwr": 0.9,
+                        "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
+                        "among_co_carriers": False}]}
+        (tmp / "up.json").write_text(json.dumps(up))
+        (tmp / "fk.json").write_text(json.dumps(fk))
+        r = subprocess.run([sys.executable, str(BIN / "placement_comparison.py"),
+                            "--upstream", str(tmp / "up.json"), "--fork", str(tmp / "fk.json"),
+                            "--out", str(tmp / "cmp.tsv")], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("1 flagged by one only; of those, 1 sit on the same edge", r.stdout)
+        rows = [l.split("\t") for l in (tmp / "cmp.tsv").read_text().splitlines()]
+        self.assertEqual(rows[0][0], "sequence")
+        i1 = next(x for x in rows[1:] if x[0] == "i1")
+        self.assertEqual((i1[1], i1[2], i1[5]), ("False", "True", "True"), "same edge, one flag")
+
+
 if __name__ == "__main__":
     unittest.main()

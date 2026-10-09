@@ -19,14 +19,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 | | count |
 |---|---|
 | findings in this report | 232 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
 | run records, cross-checked against the files they summarise | 1295 |
 | result tables, each rebuilt by `bin/analyses.sh` | 73 |
 | `.mis` files, the flag lists every detection number is computed from | 1621 |
-| tests over the scripts that turn runs into numbers | 104 |
+| tests over the scripts that turn runs into numbers | 105 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5623,6 +5623,11 @@ the flag, none. The SATIVA stub now touches the two jplace files upstream leaves
 exercised. `cleanup = true` deletes the work directory on success, which is why the stub's own task
 directory could not be inspected and the publishDir failure could not be diagnosed beyond
 "nothing arrived".
+
+`bin/placement_comparison.py` is the join the co-author's suggestion needs once the files are here:
+two locality records, upstream's and the fork's for one cell, one row per sequence flagged by one
+engine only, with both edges, both weights and both clade readings, so a deviation can be read as a
+different edge, the same edge at a different weight, or the same placement scored differently.
 
 **And the pinned rounds flapped on one node.** `cpu-node-121` alternated between `mixed` and
 `drained` during the evening: listed mixed at pick time, drained by submission, so a shard pinned to
