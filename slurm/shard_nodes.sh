@@ -23,13 +23,18 @@ info="$dir/pipeline_info"
 # Named after the trace it was resolved from, because bin/repatriate.sh flattens every round's
 # pipeline_info into one results/pipeline_info and an untagged name would have nine rounds overwrite
 # each other there.
-tag=$(basename "$(ls "$info"/trace-*.txt | head -1)" .txt | sed 's/^trace-//')
+# The newest trace by the job id in its name, not the first one ls returns. A round resubmitted
+# after a cancelled attempt holds one trace per attempt in the same directory -- three for the
+# second pinned round -- and resolving all of them lists every attempt's shards as if they were one
+# round's, seven shards for four and the verdict "shared". The attempt that completed is the last.
+trace=$(ls "$info"/trace-*.txt | sed 's/.*_\([0-9]*\)\.txt$/\1 &/' | sort -n | tail -1 | cut -d' ' -f2)
+tag=$(basename "$trace" .txt | sed 's/^trace-//')
 out="$info/shard_nodes-$tag.tsv"
-python3 - "$info" "$out" <<'PY'
+python3 - "$info" "$out" "$trace" <<'PY'
 import csv, glob, os, re, subprocess, sys
-info, out = sys.argv[1], sys.argv[2]
+info, out, trace = sys.argv[1], sys.argv[2], sys.argv[3]
 rows = []
-for p in sorted(glob.glob(os.path.join(info, "trace-*.txt"))):
+for p in [trace]:
     for r in csv.DictReader(open(p), delimiter="\t"):
         if "LOOPLACE" not in (r.get("name") or "").upper() or r.get("status") != "COMPLETED":
             continue
