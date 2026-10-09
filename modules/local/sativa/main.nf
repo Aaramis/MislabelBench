@@ -19,9 +19,11 @@ process SATIVA {
     tuple val(meta), path("inputs.txt")              , emit: inputs
     tuple val(meta), path("run/${meta.run_name}.log"), emit: log
     tuple val(meta), path("run/stdout.log")          , emit: stdout
-    // Upstream writes <run>.l1out_seq.jplace and <run>.final_epa.jplace beside the .mis. Optional,
-    // because a run that fails before placement has none, and published only on request.
-    tuple val(meta), path("run/*.jplace")            , emit: placements, optional: true
+    // Upstream writes <run>.l1out_seq.jplace and <run>.final_epa.jplace beside the .mis, and the
+    // .refjson whose "tree" carries the {n} edge labels the leave-one-out jplace refers to: that
+    // jplace has no tree of its own (RAxML -f O), and the first kept run was unreadable without it.
+    // Optional, because a run that fails before placement has none, and published only on request.
+    tuple val(meta), path("run/*.{jplace,refjson}")  , emit: placements, optional: true
     path "versions.yml"                              , emit: versions, topic: versions
 
     when:
@@ -67,7 +69,7 @@ process SATIVA {
     mkdir -p run
     touch run/${meta.run_name}.mis run/${meta.run_name}.log run/stdout.log
     # The two placement files upstream leaves beside the .mis, so a stub run exercises --keep_placements.
-    touch run/${meta.run_name}.l1out_seq.jplace run/${meta.run_name}.final_epa.jplace
+    touch run/${meta.run_name}.l1out_seq.jplace run/${meta.run_name}.final_epa.jplace run/${meta.run_name}.refjson
     echo '{"wall_sec": 0.0, "returncode": 0, "timed_out": false, "max_rss_mb": 0.0}' > timing.json
     printf 'stub  %s\nstub  %s\n' ${fasta} ${tax} > inputs.txt
     cat <<-END_VERSIONS > versions.yml

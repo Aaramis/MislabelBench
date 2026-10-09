@@ -24,9 +24,10 @@ process KEEPPLACEMENTS {
     script:
     """
     mkdir -p ${meta.run_name}/${origin}
-    # jplace, the tree the edge numbers refer to, and the query: per fold on the staged path, two
-    # files at the top for upstream. Anything else a fold holds stays behind.
-    find -L in -type f \\( -name '*.jplace' -o -name 'ref.nwk' -o -name 'query.fasta' \\) \\
+    # jplace, the tree the edge numbers refer to, and the query: per fold on the staged path; for
+    # upstream two jplace at the top and the refjson, the only file holding its edge-labelled tree.
+    # Anything else a fold holds stays behind.
+    find -L in -type f \\( -name '*.jplace' -o -name '*.refjson' -o -name 'ref.nwk' -o -name 'query.fasta' \\) \\
         | while read -r f; do
             rel=\${f#in/}
             mkdir -p "${meta.run_name}/${origin}/\$(dirname "\$rel")"

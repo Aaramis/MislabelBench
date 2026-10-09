@@ -28,13 +28,14 @@ TAX = {"i1": WRONG, "i2": WRONG, "i3": TRUE, "c1": WRONG, "c2": WRONG,
        "o1": "d__A;p__P;c__C;o__O;f__F3;g__G3;s__S3"}
 
 
-def jplace(path, placements):
-    Path(path).write_text(json.dumps({
-        "tree": TREE, "version": 3,
+def jplace(path, placements, tree=TREE):
+    doc = {"version": 3, "metadata": {}}
+    if tree is not None:
+        doc["tree"] = tree
+    Path(path).write_text(json.dumps({**doc,
         "fields": ["like_weight_ratio", "edge_num", "distal_length", "pendant_length", "likelihood"],
         "placements": [{"p": [[lwr, edge, 0.01, 0.02, -100.0] for edge, lwr in rows], "n": [name]}
-                       for name, rows in placements.items()],
-        "metadata": {}}))
+                       for name, rows in placements.items()]}))
 
 
 class PlacementLocality(unittest.TestCase):
@@ -92,6 +93,44 @@ class PlacementLocality(unittest.TestCase):
         row = d["rows"][0]
         self.assertEqual(sorted([row["co_carriers_below"], row["leaves_below"]]), [1, 2])
         self.assertTrue(row["among_co_carriers"])
+
+    def test_sativa_r_prefix_on_tree_leaves_and_placed_names_is_stripped(self):
+        # The real files carry r_ before every name, tree and placements alike; the first run on a
+        # cell said "no injected sequence was placed" and read the tree's clades as unknown taxa.
+        jplace(self.tmp / "p.jplace", {"r_i2": [(0, 1.0)]}, tree=TREE.replace("(", "(r_").replace(",", ",r_"))
+        out = self.tmp / "loc.json"
+        r = subprocess.run([sys.executable, str(BIN / "placement_locality.py"),
+                            "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
+                            "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace"),
+                            "--out", str(out)], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        row = json.loads(out.read_text())["rows"][0]
+        self.assertEqual(row["sequence"], "i2")
+        self.assertTrue(row["among_co_carriers"])
+
+    def test_a_jplace_without_a_tree_needs_one_and_reads_it_from_a_refjson(self):
+        # Upstream's leave-one-out jplace has no tree; its .refjson carries the labelled one.
+        jplace(self.tmp / "p.jplace", {"i2": [(5, 1.0)]}, tree=None)
+        (self.tmp / "run.refjson").write_text(json.dumps({"tree": TREE, "sequences": []}))
+        cmd = [sys.executable, str(BIN / "placement_locality.py"),
+               "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
+               "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace"),
+               "--out", str(self.tmp / "loc.json")]
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("--tree", r.stderr)
+        r = subprocess.run(cmd + ["--tree", str(self.tmp / "run.refjson")], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        row = json.loads((self.tmp / "loc.json").read_text())["rows"][0]
+        self.assertEqual(row["edge"], 5)
+        self.assertFalse(row["among_co_carriers"])
+
+    def test_a_leave_one_out_placement_on_the_sequence_own_edge_reads_the_clade_it_hung_from(self):
+        # Edge 1 is i2's own pendant edge in the full tree: below it, nothing but i2. The clade it
+        # hung from is (i1, i2), so the placement is among the co-carrier.
+        out = self.run_it({"i2": [(1, 1.0)]})
+        self.assertEqual(out["rows"][0]["leaves_below"], 1)
+        self.assertTrue(out["rows"][0]["among_co_carriers"])
 
     def test_no_injected_sequence_placed_is_an_error(self):
         jplace(self.tmp / "p.jplace", {"o1": [(8, 1.0)]})

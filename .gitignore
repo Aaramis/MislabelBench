@@ -45,6 +45,7 @@ warn.txt
 # they stay on disk here and on the cluster; what is committed is what bin/placement_locality.py
 # derives from them, and the runs that produced them are reproducible.
 *.jplace
+*.refjson
 results/**/placements_shard*/
 data/chimera/*/*.tax
 data/chimera/*/*.fasta

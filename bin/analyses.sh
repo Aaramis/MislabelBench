@@ -332,6 +332,37 @@ if [ -d results/chimera/runs ]; then
     done
 fi
 
+# Where the injected sequences' placements landed, read off the jplace files slurm/placements.sh
+# keeps. The files stay out of git (about 540 MB for the Kexact cell), so this runs only where they
+# are, and the committed record under results/placement_locality/ is what the paper cites. Upstream's
+# leave-one-out jplace carries no tree; its .refjson does, and is passed as --tree.
+if ls results/placements_*/placements/*/*/*.jplace >/dev/null 2>&1; then
+    step "placement locality: the edge each injected sequence landed on, per kept cell"
+    mkdir -p results/placement_locality
+    for run in results/placements_*/placements/*; do
+        name=$(basename "$run"); cell=${name%%__*}; tool=${name#*__}; tool=${tool%__*}
+        d=$(dirname "$(dirname "$run")")
+        if [ -d "$run/upstream" ]; then
+            refjson=$(ls "$run"/upstream/*.refjson 2>/dev/null | head -1)
+            [ -n "$refjson" ] || { echo "  $name: no refjson kept, skipped"; continue; }
+            placement_locality.py --truth "data/injected/$cell/$cell.truth.json" \
+                --tax "data/injected/$cell/$cell.tax" --mis "$d/runs/$name/$name.mis" \
+                --jplace "$run"/upstream/*.l1out_seq.jplace --tree "$refjson" \
+                --out "results/placement_locality/$name.json" > /dev/null
+        else
+            placement_locality.py --truth "data/injected/$cell/$cell.truth.json" \
+                --tax "data/injected/$cell/$cell.tax" --mis "$d/runs/$name/$name.mis" \
+                --jplace "$run"/shard*/fold_*/epa_result.jplace \
+                --out "results/placement_locality/$name.json" > /dev/null
+        fi
+    done
+    pair=results/placement_locality/inj_family_r0.05_k2_s1
+    if [ -f "${pair}__upstream_raxml_T8__rep1.json" ] && [ -f "${pair}__epang_T8_Kexact__rep1.json" ]; then
+        placement_comparison.py --upstream "${pair}__upstream_raxml_T8__rep1.json" \
+            --fork "${pair}__epang_T8_Kexact__rep1.json" --out results/placement_comparison.tsv > /dev/null
+    fi
+fi
+
 # What an incomplete lineage costs detection. The ragged cells are the grid's own at family distance
 # and the top rate, with a quarter of the untouched lineages cut to genus and a quarter to family, so
 # the injected truth is unchanged and recall is comparable cell for cell. Skipped rather than failed

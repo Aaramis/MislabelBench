@@ -27,6 +27,11 @@ from pathlib import Path
 RANKS = ["domain", "phylum", "class", "order", "family", "genus", "species"]
 
 
+def dataset_name(n):
+    """SATIVA prefixes every sequence with r_ in its own files; the dataset, truth and .mis do not."""
+    return n[2:] if n.startswith("r_") else n
+
+
 def parse_edge_tree(text):
     """A jplace tree: like Newick, with `{n}` after each node naming the edge above it.
 
@@ -71,7 +76,7 @@ def parse_edge_tree(text):
                 pos += 1
             if cur is None:
                 cur = add(stack[-1] if stack else None)
-            nodes[cur]["name"] = text[start:pos].strip().strip("'\"")
+            nodes[cur]["name"] = dataset_name(text[start:pos].strip().strip("'\""))
     if stack:
         raise SystemExit("unbalanced parentheses in the jplace tree")
     edges = {n["edge"]: i for i, n in enumerate(nodes) if n["edge"] is not None}
@@ -109,13 +114,16 @@ def lineage_depth_of_clade(leaves, tax, lineage):
     return depth - 1 if leaves else -1
 
 
-def read_jplace(path):
+def read_jplace(path, tree=None):
     doc = json.loads(Path(path).read_text())
     fields = doc["fields"]
-    nodes, edges = parse_edge_tree(doc["tree"])
+    if "tree" not in doc and tree is None:
+        sys.exit(f"{path} carries no tree; upstream's leave-one-out jplace (RAxML -f O) never does, "
+                 "pass --tree with the run's .refjson, whose tree carries the same edge numbers")
+    nodes, edges = parse_edge_tree(doc.get("tree", tree))
     out = {}
     for pl in doc["placements"]:
-        names = [n[0] if isinstance(n, list) else n for n in pl.get("nm", pl.get("n", []))]
+        names = [dataset_name(n[0] if isinstance(n, list) else n) for n in pl.get("nm", pl.get("n", []))]
         rows = [dict(zip(fields, p)) for p in pl["p"]]
         best = max(rows, key=lambda r: r["like_weight_ratio"])
         for name in names:
@@ -131,8 +139,15 @@ def main():
     p.add_argument("--mis", required=True, help="the run's .mis, for which sequences were flagged")
     p.add_argument("--jplace", nargs="+", required=True,
                    help="placement files; a staged run has one per fold, upstream has one for all")
+    p.add_argument("--tree", help="edge-labelled tree for jplace files without one: upstream's "
+                                  ".refjson, or a Newick with {n} labels")
     p.add_argument("--out")
     args = p.parse_args()
+
+    tree = None
+    if args.tree:
+        text = Path(args.tree).read_text()
+        tree = json.loads(text)["tree"] if text.lstrip().startswith("{") else text
 
     truth = json.loads(Path(args.truth).read_text())
     injected = truth["injected"]
@@ -152,12 +167,16 @@ def main():
 
     rows = []
     for jp in args.jplace:
-        nodes, edges, placed = read_jplace(jp)
+        nodes, edges, placed = read_jplace(jp, tree)
         for name, hit in placed.items():
             if name not in injected:
                 continue
             rec = injected[name]
             node = edges[hit["edge"]]
+            # Upstream numbers edges on the full tree, the held-out leaf included, so a placement
+            # back on that leaf's own edge is "where it was": read the clade it hung from.
+            if nodes[node]["name"] == name and nodes[node]["parent"] is not None:
+                node = nodes[node]["parent"]
             below = [x for x in leaves_below(nodes, node) if x != name]
             sibs = group[(rec.get("donor_group", rec["true"]), rec["wrong"])] - {name}
             # Among the k-1: the edge's clade is within the clade the co-carriers span, which is
