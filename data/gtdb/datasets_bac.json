@@ -1,0 +1,19 @@
+{
+  "source": "GTDB r226 ssu_all, d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales, >= 1200 nt, aligned against Rfam RF00177; the bacterial replication",
+  "datasets": [
+    {
+      "name": "gtdb_bac_lachnospirales",
+      "n_seqs": 6929,
+      "aln_len": 1533,
+      "fasta": "data/gtdb/gtdb_bac_lachnospirales.aligned.fasta",
+      "tax": "data/gtdb/gtdb_bac_lachnospirales.tax"
+    },
+    {
+      "name": "gtdb_bac2k",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/gtdb/gtdb_bac2k.fasta",
+      "tax": "data/gtdb/gtdb_bac2k.tax"
+    }
+  ]
+}

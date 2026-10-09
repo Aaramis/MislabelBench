@@ -1,0 +1,344 @@
+{
+  "source": "RAxMLGrove tree, AliSim along it, taxonomy from the tree (Protocol 2.1)",
+  "tree": {
+    "TREE_ID": "71741",
+    "NUM_TAXA": 400,
+    "TREE_HEIGHT": 1.2327,
+    "TREE_DIAMETER": 1.60517,
+    "BRANCH_LENGTH_MEAN": 0.04083291468005019,
+    "BRANCH_LENGTH_VARIANCE": 0.0024640825014273847,
+    "MISSING_DATA_RATE": "None",
+    "MODEL": "GTR",
+    "ALPHA": 0.570792,
+    "NUM_ALIGNMENT_SITES": 1778,
+    "GAPS": 25.13,
+    "RATE_AC": 1.233906,
+    "RATE_AG": 2.547923,
+    "RATE_AT": 1.502573,
+    "RATE_CG": 0.894541,
+    "RATE_CT": 3.314076,
+    "RATE_GT": 1.0,
+    "FREQ_A": 0.253377,
+    "FREQ_C": 0.20529,
+    "FREQ_G": 0.293039,
+    "FREQ_T": 0.248294,
+    "RATE_STR": "GTR{1.233906/2.547923/1.502573/0.894541/3.314076/1.000000}",
+    "STATIONARY_FREQ_STR": "FU{0.253377/0.205290/0.293039/0.248294}",
+    "PROPORTION_INVARIANT_SITES_STR": "IU{0.150935}",
+    "n_candidates": 11,
+    "seed": 42,
+    "criteria": "p.DATA_TYPE = 'DNA' and t.OVERALL_NUM_PARTITIONS = 1 and t.NUM_TAXA between 400 and 2100 and p.NUM_ALIGNMENT_SITES between 1200 and 1800 and p.MODEL = 'GTR' and p.RATE_STR != 'None' and p.ALPHA != 'None' and p.STATIONARY_FREQ_STR != 'None'"
+  },
+  "taxonomy": {
+    "tree": "/shared/home/agardette/bench/data/grove_sim/raw/71741/tree_best.newick",
+    "tree_sha256": "a05985fcb130d59636de64c1c9e7a1da37381147e0254b7d5c34b52a99414c67",
+    "rule": "rank r of 7 is the partition into round(m ** (r/8)) clades, splitting the shallowest branchings first",
+    "n_tips": 400,
+    "targets": {
+      "domain": 2,
+      "phylum": 4,
+      "class": 9,
+      "order": 20,
+      "family": 42,
+      "genus": 89,
+      "species": 189
+    },
+    "clades": {
+      "domain": 3,
+      "phylum": 4,
+      "class": 9,
+      "order": 20,
+      "family": 42,
+      "genus": 89,
+      "species": 189
+    },
+    "cut_height": {
+      "domain": 0.0,
+      "phylum": 1e-06,
+      "class": 0.018682,
+      "order": 0.183593,
+      "family": 0.325836,
+      "genus": 0.396362,
+      "species": 0.514404
+    },
+    "judgeable_fraction": {
+      "domain": 0.9975,
+      "phylum": 0.995,
+      "class": 0.9875,
+      "order": 0.9575,
+      "family": 0.94,
+      "genus": 0.8425,
+      "species": 0.6125
+    },
+    "n_species": 189,
+    "n_singleton_species": 155,
+    "largest_species": 71,
+    "species_of_six_or_more": 7,
+    "sequences_in_species_of_six_or_more": 163,
+    "tax_sha256": "e5b46ad954265802087af99579f96f641220868d636c78554cb33c3f2a681a0f"
+  },
+  "requested_rate": 0.05,
+  "alignment_sha256": "157202245266454d247d5a8c8a9756253ca44d172edb3aed090d30cfd299904d",
+  "newick_sha256": "a05985fcb130d59636de64c1c9e7a1da37381147e0254b7d5c34b52a99414c67",
+  "datasets": [
+    {
+      "name": "grove",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove/grove.fasta",
+      "tax": "data/grove_sim/grove/grove.tax"
+    },
+    {
+      "name": "grove_family_k1_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k1_s1/grove_family_k1_s1.fasta",
+      "tax": "data/grove_sim/grove_family_k1_s1/grove_family_k1_s1.tax"
+    },
+    {
+      "name": "grove_family_k1_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k1_s2/grove_family_k1_s2.fasta",
+      "tax": "data/grove_sim/grove_family_k1_s2/grove_family_k1_s2.tax"
+    },
+    {
+      "name": "grove_family_k1_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k1_s3/grove_family_k1_s3.fasta",
+      "tax": "data/grove_sim/grove_family_k1_s3/grove_family_k1_s3.tax"
+    },
+    {
+      "name": "grove_family_k2_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k2_s1/grove_family_k2_s1.fasta",
+      "tax": "data/grove_sim/grove_family_k2_s1/grove_family_k2_s1.tax"
+    },
+    {
+      "name": "grove_family_k2_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k2_s2/grove_family_k2_s2.fasta",
+      "tax": "data/grove_sim/grove_family_k2_s2/grove_family_k2_s2.tax"
+    },
+    {
+      "name": "grove_family_k2_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k2_s3/grove_family_k2_s3.fasta",
+      "tax": "data/grove_sim/grove_family_k2_s3/grove_family_k2_s3.tax"
+    },
+    {
+      "name": "grove_family_k3_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k3_s1/grove_family_k3_s1.fasta",
+      "tax": "data/grove_sim/grove_family_k3_s1/grove_family_k3_s1.tax"
+    },
+    {
+      "name": "grove_family_k3_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k3_s2/grove_family_k3_s2.fasta",
+      "tax": "data/grove_sim/grove_family_k3_s2/grove_family_k3_s2.tax"
+    },
+    {
+      "name": "grove_family_k3_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k3_s3/grove_family_k3_s3.fasta",
+      "tax": "data/grove_sim/grove_family_k3_s3/grove_family_k3_s3.tax"
+    },
+    {
+      "name": "grove_family_k5_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k5_s1/grove_family_k5_s1.fasta",
+      "tax": "data/grove_sim/grove_family_k5_s1/grove_family_k5_s1.tax"
+    },
+    {
+      "name": "grove_family_k5_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k5_s2/grove_family_k5_s2.fasta",
+      "tax": "data/grove_sim/grove_family_k5_s2/grove_family_k5_s2.tax"
+    },
+    {
+      "name": "grove_family_k5_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_family_k5_s3/grove_family_k5_s3.fasta",
+      "tax": "data/grove_sim/grove_family_k5_s3/grove_family_k5_s3.tax"
+    },
+    {
+      "name": "grove_genus_k1_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k1_s1/grove_genus_k1_s1.fasta",
+      "tax": "data/grove_sim/grove_genus_k1_s1/grove_genus_k1_s1.tax"
+    },
+    {
+      "name": "grove_genus_k1_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k1_s2/grove_genus_k1_s2.fasta",
+      "tax": "data/grove_sim/grove_genus_k1_s2/grove_genus_k1_s2.tax"
+    },
+    {
+      "name": "grove_genus_k1_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k1_s3/grove_genus_k1_s3.fasta",
+      "tax": "data/grove_sim/grove_genus_k1_s3/grove_genus_k1_s3.tax"
+    },
+    {
+      "name": "grove_genus_k2_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k2_s1/grove_genus_k2_s1.fasta",
+      "tax": "data/grove_sim/grove_genus_k2_s1/grove_genus_k2_s1.tax"
+    },
+    {
+      "name": "grove_genus_k2_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k2_s2/grove_genus_k2_s2.fasta",
+      "tax": "data/grove_sim/grove_genus_k2_s2/grove_genus_k2_s2.tax"
+    },
+    {
+      "name": "grove_genus_k2_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k2_s3/grove_genus_k2_s3.fasta",
+      "tax": "data/grove_sim/grove_genus_k2_s3/grove_genus_k2_s3.tax"
+    },
+    {
+      "name": "grove_genus_k3_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k3_s1/grove_genus_k3_s1.fasta",
+      "tax": "data/grove_sim/grove_genus_k3_s1/grove_genus_k3_s1.tax"
+    },
+    {
+      "name": "grove_genus_k3_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k3_s2/grove_genus_k3_s2.fasta",
+      "tax": "data/grove_sim/grove_genus_k3_s2/grove_genus_k3_s2.tax"
+    },
+    {
+      "name": "grove_genus_k3_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k3_s3/grove_genus_k3_s3.fasta",
+      "tax": "data/grove_sim/grove_genus_k3_s3/grove_genus_k3_s3.tax"
+    },
+    {
+      "name": "grove_genus_k5_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k5_s1/grove_genus_k5_s1.fasta",
+      "tax": "data/grove_sim/grove_genus_k5_s1/grove_genus_k5_s1.tax"
+    },
+    {
+      "name": "grove_genus_k5_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k5_s2/grove_genus_k5_s2.fasta",
+      "tax": "data/grove_sim/grove_genus_k5_s2/grove_genus_k5_s2.tax"
+    },
+    {
+      "name": "grove_genus_k5_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_genus_k5_s3/grove_genus_k5_s3.fasta",
+      "tax": "data/grove_sim/grove_genus_k5_s3/grove_genus_k5_s3.tax"
+    },
+    {
+      "name": "grove_species_k1_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k1_s1/grove_species_k1_s1.fasta",
+      "tax": "data/grove_sim/grove_species_k1_s1/grove_species_k1_s1.tax"
+    },
+    {
+      "name": "grove_species_k1_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k1_s2/grove_species_k1_s2.fasta",
+      "tax": "data/grove_sim/grove_species_k1_s2/grove_species_k1_s2.tax"
+    },
+    {
+      "name": "grove_species_k1_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k1_s3/grove_species_k1_s3.fasta",
+      "tax": "data/grove_sim/grove_species_k1_s3/grove_species_k1_s3.tax"
+    },
+    {
+      "name": "grove_species_k2_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k2_s1/grove_species_k2_s1.fasta",
+      "tax": "data/grove_sim/grove_species_k2_s1/grove_species_k2_s1.tax"
+    },
+    {
+      "name": "grove_species_k2_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k2_s2/grove_species_k2_s2.fasta",
+      "tax": "data/grove_sim/grove_species_k2_s2/grove_species_k2_s2.tax"
+    },
+    {
+      "name": "grove_species_k2_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k2_s3/grove_species_k2_s3.fasta",
+      "tax": "data/grove_sim/grove_species_k2_s3/grove_species_k2_s3.tax"
+    },
+    {
+      "name": "grove_species_k3_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k3_s1/grove_species_k3_s1.fasta",
+      "tax": "data/grove_sim/grove_species_k3_s1/grove_species_k3_s1.tax"
+    },
+    {
+      "name": "grove_species_k3_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k3_s2/grove_species_k3_s2.fasta",
+      "tax": "data/grove_sim/grove_species_k3_s2/grove_species_k3_s2.tax"
+    },
+    {
+      "name": "grove_species_k3_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k3_s3/grove_species_k3_s3.fasta",
+      "tax": "data/grove_sim/grove_species_k3_s3/grove_species_k3_s3.tax"
+    },
+    {
+      "name": "grove_species_k5_s1",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k5_s1/grove_species_k5_s1.fasta",
+      "tax": "data/grove_sim/grove_species_k5_s1/grove_species_k5_s1.tax"
+    },
+    {
+      "name": "grove_species_k5_s2",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k5_s2/grove_species_k5_s2.fasta",
+      "tax": "data/grove_sim/grove_species_k5_s2/grove_species_k5_s2.tax"
+    },
+    {
+      "name": "grove_species_k5_s3",
+      "n_seqs": 400,
+      "aln_len": 1778,
+      "fasta": "data/grove_sim/grove_species_k5_s3/grove_species_k5_s3.fasta",
+      "tax": "data/grove_sim/grove_species_k5_s3/grove_species_k5_s3.tax"
+    }
+  ]
+}

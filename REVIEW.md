@@ -18,11 +18,11 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 229 |
+| findings in this report | 230 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
-| dataset manifests, against the files they describe | 10 |
+| dataset manifests, against the files they describe | 13 |
 | run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 68 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
@@ -5554,6 +5554,32 @@ The sort is numeric now, and each shard checks that every fold it holds has the 
 ask for and refuses with the fold named otherwise, at submission rather than inside the container.
 Exercised by a stub run of the staged path at two folds per job; the 2 023-fold case is the re-run of
 `slurm/placements.sh`, queued behind the pipelines reading the current `main.nf`.
+
+**230. The Grove control and the bacterial clade exist as data now, and the manifest gate learned
+that there are two models.** `make_grove_simulation.sh` ran on the cluster: `TREE_ID 71741`
+downloaded, AliSim along it, 400 sequences of 1 778 columns named as the taxonomy names them, the
+monophyly gate finding nothing over 356 labels, the rate probe landing on 5 %, 37 cells. The venv it
+needed came from the pinned python-3.12 and the first attempt's broken one was rebuilt. All of it is
+under `data/grove_sim/` with the Newick and AliSim's own logs, and `data/grove/` holds the provenance
+record, the chosen tree's database row and the resolver's package list.
+
+`fetch_bacterial_clade.sh` ran too: Lachnospirales, 14 473 sequences in the release, 7 544 under
+1 200 nt, **6 929 kept**, aligned against RF00177 at **1 533 columns** (CLEN 1 533 against RF01959's
+1 478), a 2 008-sequence whole-taxa subset, and the protocol's table for the clade: 99.2 % evaluable
+at genus, 96.2 % at species, 88.5 % from two genomes. The order is what the selection said it would
+be, a few hundred species with many genomes each. The fifteen k-axis cells are generated and their
+job is queued.
+
+`bin/verify_manifests.py` compared every alignment's width with one model's consensus length and
+refused the bacterial set for being 1 533 wide. It now holds each alignment to the model its path
+names, RF01959 for the archaea and the donors and RF00177 for the clade, each with its own recorded
+sha256 and CLEN: five alignment widths checked where there were four. `assets/datasets.yml` gains the
+clade, the second model, the Infernal image by tag and sha256, and RAxMLGrove by sha256, byte count
+and scripts commit; 347 datasets in 12 manifests, all sound.
+
+One pinned round sat on `ReqNodeNotAvail` for an hour: `sinfo` had listed `cpu-node-121` mixed and
+Slurm drained it between the pick and the submission. `staged_nodes.sh` re-reads each chosen node's
+state at launch and refuses the pin in one line if it has changed, so the next replicate picks afresh.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

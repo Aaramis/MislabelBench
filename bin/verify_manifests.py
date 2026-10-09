@@ -249,52 +249,67 @@ def check_provenance(problems):
 
 
 def check_alignment_model(problems):
-    """The covariance model and the width it imposes, which nothing else here checks.
+    """The covariance models and the widths they impose, which nothing else here checks.
 
     assets/datasets.yml records the sha256 of the whole Rfam.cm.gz, not of the model extracted from
     it, so the file every alignment was actually built against had no recorded identity. It does
     now, along with the consensus length: cmalign --matchonly keeps the model's own columns, so
-    CLEN is the width of every alignment, and the archaeal and bacterial sets sharing one width is
-    what makes error kind 6's concatenation possible rather than lucky.
+    CLEN is the width of every alignment built against that model, and the archaeal set and the
+    bacterial donors sharing RF01959's width is what makes error kind 6's concatenation possible
+    rather than lucky.
+
+    Two models since the bacterial replication: RF01959 for the archaea and the donors, RF00177 for
+    the bacterial clade, which runs alone and is aligned against the model for its own molecule.
+    Each alignment is checked against the model its path names, not against one width for all.
     """
     import re as _re
 
     yml = Path("assets/datasets.yml")
-    cm = Path("data/gtdb/RF01959.cm")
-    if not yml.exists() or not cm.exists():
+    if not yml.exists():
         return 0
     text = yml.read_text()
-    want = _re.search(r"extracted_sha256:\s*([0-9a-f]{64})", text)
-    clen = _re.search(r"consensus_length:\s*(\d+)", text)
-    if not want or not clen:
-        problems.append("assets/datasets.yml records no extracted_sha256 or consensus_length "
-                        "for the covariance model")
-        return 0
-    got = hashlib.sha256(cm.read_bytes()).hexdigest()
-    if got != want.group(1):
-        problems.append(f"{cm}: sha256 {got[:16]}... against {want.group(1)[:16]}... recorded")
-    header = dict(line.split(None, 1) for line in cm.read_text().splitlines()[:12]
-                  if " " in line and not line.startswith("INFERNAL"))
-    if header.get("CLEN", "").strip() != clen.group(1):
-        problems.append(f"{cm}: CLEN {header.get('CLEN')} against consensus_length {clen.group(1)}")
+    models = {
+        "rfam_ssu_archaea": ("data/gtdb/RF01959.cm", ("data/gtdb/gtdb_arc", "data/bacteria/")),
+        "rfam_ssu_bacteria": ("data/gtdb/RF00177.cm", ("data/gtdb/gtdb_bac",)),
+    }
     checked = 0
-    for aln in sorted(Path("data").rglob("*.aligned.fasta")) + [Path("data/gtdb/gtdb_arc2k.fasta")]:
-        if not aln.exists():
+    for key, (cm_path, prefixes) in models.items():
+        cm = Path(cm_path)
+        block = _re.search(rf"^  {key}:\n((?:    .*\n|\s*#.*\n)+)", text, _re.M)
+        if not cm.exists() or not block:
             continue
-        widths, cur = set(), 0
-        for line in aln.read_text().splitlines():
-            if line.startswith(">"):
-                if cur:
-                    widths.add(cur)
-                cur = 0
-            else:
-                cur += len(line.strip())
-        if cur:
-            widths.add(cur)
-        checked += 1
-        if widths != {int(clen.group(1))}:
-            problems.append(f"{aln}: widths {sorted(widths)} against the model's "
-                            f"{clen.group(1)} columns")
+        want = _re.search(r"extracted_sha256:\s*([0-9a-f]{64})", block.group(1))
+        clen = _re.search(r"consensus_length:\s*(\d+)", block.group(1))
+        if not want or not clen:
+            problems.append(f"assets/datasets.yml: {key} records no extracted_sha256 or "
+                            f"consensus_length")
+            continue
+        got = hashlib.sha256(cm.read_bytes()).hexdigest()
+        if got != want.group(1):
+            problems.append(f"{cm}: sha256 {got[:16]}... against {want.group(1)[:16]}... recorded")
+        header = dict(line.split(None, 1) for line in cm.read_text().splitlines()[:12]
+                      if " " in line and not line.startswith("INFERNAL"))
+        if header.get("CLEN", "").strip() != clen.group(1):
+            problems.append(f"{cm}: CLEN {header.get('CLEN')} against consensus_length "
+                            f"{clen.group(1)}")
+        alns = [a for a in sorted(Path("data").rglob("*.aligned.fasta"))
+                + [Path("data/gtdb/gtdb_arc2k.fasta"), Path("data/gtdb/gtdb_bac2k.fasta")]
+                if a.exists() and any(str(a).startswith(pr) for pr in prefixes)]
+        for aln in alns:
+            widths, cur = set(), 0
+            for line in aln.read_text().splitlines():
+                if line.startswith(">"):
+                    if cur:
+                        widths.add(cur)
+                    cur = 0
+                else:
+                    cur += len(line.strip())
+            if cur:
+                widths.add(cur)
+            checked += 1
+            if widths != {int(clen.group(1))}:
+                problems.append(f"{aln}: widths {sorted(widths)} against {key}'s "
+                                f"{clen.group(1)} columns")
     return checked
 
 

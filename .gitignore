@@ -48,3 +48,5 @@ warn.txt
 results/**/placements_shard*/
 data/chimera/*/*.tax
 data/chimera/*/*.fasta
+data/injected_bac/*/*.tax
+data/injected_bac/*/*.fasta

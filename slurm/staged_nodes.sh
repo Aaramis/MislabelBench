@@ -39,6 +39,14 @@ NODES="${SHARD_NODES:-$(sinfo -N -h -p "$PART" -t idle,mix -o '%N %f' | awk '$2 
         | sort -u | head -4 | paste -sd, -)}"
 n=$(echo "$NODES" | tr ',' '\n' | grep -c .)
 [ "$n" = 4 ] || { echo "need four idle or mixed epyc-9754 nodes in partition $PART, found $n: '$NODES'" >&2; exit 1; }
+# Checked again at this moment, because the first round pinned a shard to cpu-node-121 between
+# sinfo listing it mixed and Slurm draining it, and the shard then sat on ReqNodeNotAvail for an
+# hour while the rest of the round waited. A node that is no longer idle or mixed fails the job
+# here, in one line, and the next replicate picks afresh.
+for node in $(echo "$NODES" | tr ',' ' '); do
+    state=$(sinfo -N -h -n "$node" -o '%T' | head -1)
+    case "$state" in idle|mixed|mix) ;; *) echo "$node is $state, not idle or mixed; refusing the pin" >&2; exit 1;; esac
+done
 echo "shards pinned to: $NODES"
 nf_launch_dir "staged_nodes_${TAG}"
 

@@ -1,0 +1,525 @@
+{
+  "source": "gtdb_bac2k.tax",
+  "source_sha256": "72ff10d290f20e46af219dd23835c8e87500f28c3b7678ff4822d42d2c505ab0",
+  "distance": "family",
+  "rate": 0.05,
+  "n_requested": 100,
+  "rate_effective": 0.050797,
+  "k": 3,
+  "seed": 1,
+  "allow_empty_donor": false,
+  "n_total": 2008,
+  "n_injected": 102,
+  "injected": {
+    "GB_GCA_963675115.1_OY775898.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Laedolimicola;s__Laedolimicola sp910574255",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805"
+    },
+    "GB_GCA_038396585.1_CP121691.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Laedolimicola;s__Laedolimicola sp910574255",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805"
+    },
+    "GB_GCA_963677265.1_OY781922.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Laedolimicola;s__Laedolimicola sp910574255",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805"
+    },
+    "GB_GCA_041332175.1_JBGKII010000002.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnospira;s__Lachnospira sp900545725",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Cellulosilyticum;s__Cellulosilyticum ruminicola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnospira;s__Lachnospira sp900545725"
+    },
+    "GB_GCA_041332175.1_JBGKII010000002.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnospira;s__Lachnospira sp900545725",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Cellulosilyticum;s__Cellulosilyticum ruminicola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnospira;s__Lachnospira sp900545725"
+    },
+    "GB_GCA_041332175.1_JBGKII010000002.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnospira;s__Lachnospira sp900545725",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Cellulosilyticum;s__Cellulosilyticum ruminicola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnospira;s__Lachnospira sp900545725"
+    },
+    "RS_GCF_000018685.1_NC_010001.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnoclostridium;s__Lachnoclostridium phytofermentans",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Fimicola;s__Fimicola cottocaccae",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnoclostridium;s__Lachnoclostridium phytofermentans"
+    },
+    "RS_GCF_000018685.1_NC_010001.1-_6": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnoclostridium;s__Lachnoclostridium phytofermentans",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Fimicola;s__Fimicola cottocaccae",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnoclostridium;s__Lachnoclostridium phytofermentans"
+    },
+    "RS_GCF_000018685.1_NC_010001.1-_8": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnoclostridium;s__Lachnoclostridium phytofermentans",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Fimicola;s__Fimicola cottocaccae",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lachnoclostridium;s__Lachnoclostridium phytofermentans"
+    },
+    "GB_GCA_905186155.1_LR994469.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A sp900541345",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum_A;s__Anaerotignum_A sp910576545",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A sp900541345"
+    },
+    "GB_GCA_905186155.1_LR994469.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A sp900541345",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum_A;s__Anaerotignum_A sp910576545",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A sp900541345"
+    },
+    "GB_GCA_905186155.1_LR994469.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A sp900541345",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum_A;s__Anaerotignum_A sp910576545",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A sp900541345"
+    },
+    "RS_GCF_030644385.1_NZ_CP130060.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella sp030644385",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum;s__Anaerotignum sp022786605",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella sp030644385"
+    },
+    "RS_GCF_030644385.1_NZ_CP130060.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella sp030644385",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum;s__Anaerotignum sp022786605",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella sp030644385"
+    },
+    "RS_GCF_030644385.1_NZ_CP130060.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella sp030644385",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum;s__Anaerotignum sp022786605",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella sp030644385"
+    },
+    "GB_GCA_000702525.1_JNIN01000001.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__FD2005;s__FD2005 sp000702525",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__FD2005;s__FD2005 sp000702525"
+    },
+    "GB_GCA_000702525.1_JNIN01000001.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__FD2005;s__FD2005 sp000702525",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__FD2005;s__FD2005 sp000702525"
+    },
+    "GB_GCA_000622105.1_JHWK01000001.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__FD2005;s__FD2005 sp000702525",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__FD2005;s__FD2005 sp000702525"
+    },
+    "GB_GCA_003584705.1_AP018536.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor acetigignens",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor acetigignens"
+    },
+    "GB_GCA_041404345.1_JBGKRD010000005.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor acetigignens",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor acetigignens"
+    },
+    "GB_GCA_041405305.1_JBGKLH010000002.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor acetigignens",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor acetigignens"
+    },
+    "RS_GCF_030913705.1_NZ_CP133190.1-_7": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerocolumna;s__Anaerocolumna sp030913705",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerocolumna;s__Anaerocolumna sp030913705"
+    },
+    "RS_GCF_030913705.1_NZ_CP133190.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerocolumna;s__Anaerocolumna sp030913705",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerocolumna;s__Anaerocolumna sp030913705"
+    },
+    "RS_GCF_030913705.1_NZ_CP133190.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerocolumna;s__Anaerocolumna sp030913705",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerocolumna;s__Anaerocolumna sp030913705"
+    },
+    "GB_GCA_948844975.1_CAQNXA010000330.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp000403335",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Chakrabartyella;s__Chakrabartyella sp030908465",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp000403335"
+    },
+    "GB_GCA_000403335.2_KE159628.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp000403335",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Chakrabartyella;s__Chakrabartyella sp030908465",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp000403335"
+    },
+    "GB_GCA_000403335.2_KE159617.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp000403335",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Chakrabartyella;s__Chakrabartyella sp030908465",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp000403335"
+    },
+    "RS_GCF_900086725.1_NZ_LT574837.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Bariatricus;s__Bariatricus massiliensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Cellulosilyticum;s__Cellulosilyticum ruminicola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Bariatricus;s__Bariatricus massiliensis"
+    },
+    "RS_GCF_020563335.1_NZ_JAJCQI010000038.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Bariatricus;s__Bariatricus massiliensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Cellulosilyticum;s__Cellulosilyticum ruminicola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Bariatricus;s__Bariatricus massiliensis"
+    },
+    "RS_GCF_020555365.1_NZ_JAJCIR010000038.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Bariatricus;s__Bariatricus massiliensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Cellulosilyticum;s__Cellulosilyticum ruminicola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Bariatricus;s__Bariatricus massiliensis"
+    },
+    "RS_GCF_020538335.1_NZ_JAJBOG010000051.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia;s__Blautia sp900541955",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia;s__Blautia sp900541955"
+    },
+    "RS_GCF_037890365.1_NZ_JBBKBX010000058.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia;s__Blautia sp900541955",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia;s__Blautia sp900541955"
+    },
+    "RS_GCF_041326835.1_NZ_JBGLCI010000001.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia;s__Blautia sp900541955",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia;s__Blautia sp900541955"
+    },
+    "RS_GCF_900604355.1_NZ_UWOE01000001.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis"
+    },
+    "RS_GCF_900604355.1_NZ_UWOE01000001.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis"
+    },
+    "RS_GCF_900604355.1_NZ_UWOE01000002.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis"
+    },
+    "GB_GCA_963927335.1_CAWVAJ010000008.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp944382085",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__Petrocella;s__Petrocella sp029210395",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp944382085"
+    },
+    "GB_GCA_963927335.1_CAWVAJ010000010.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp944382085",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__Petrocella;s__Petrocella sp029210395",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp944382085"
+    },
+    "GB_GCA_963927335.1_CAWVAJ010000010.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp944382085",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__Petrocella;s__Petrocella sp029210395",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp944382085"
+    },
+    "GB_GCA_902366845.1_CABJNA010000116.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__UBA9414;s__UBA9414 sp003458885",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum;s__Anaerotignum sp022786605",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__UBA9414;s__UBA9414 sp003458885"
+    },
+    "RS_GCF_003458885.1_NZ_QRVX01000116.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__UBA9414;s__UBA9414 sp003458885",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum;s__Anaerotignum sp022786605",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__UBA9414;s__UBA9414 sp003458885"
+    },
+    "GB_GCA_018228665.1_CP073692.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__UBA9414;s__UBA9414 sp003458885",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Anaerotignum;s__Anaerotignum sp022786605",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__UBA9414;s__UBA9414 sp003458885"
+    },
+    "RS_GCF_005844125.1_NZ_SPHM01000093.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Sellimonas;s__Sellimonas catena",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Bianqueaceae;g__Bianquea;s__Bianquea renquensis",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Sellimonas;s__Sellimonas catena"
+    },
+    "GB_GCA_003481655.1_QULK01000008.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Sellimonas;s__Sellimonas catena",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Bianqueaceae;g__Bianquea;s__Bianquea renquensis",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Sellimonas;s__Sellimonas catena"
+    },
+    "RS_GCF_016900655.1_NZ_JACJKH010000072.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Sellimonas;s__Sellimonas catena",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Bianqueaceae;g__Bianquea;s__Bianquea renquensis",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Sellimonas;s__Sellimonas catena"
+    },
+    "GB_GCA_022483525.1_JAKVNC010000001.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Chordicoccus;s__Chordicoccus sp900315305",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Chordicoccus;s__Chordicoccus sp900315305"
+    },
+    "GB_GCA_022483525.1_JAKVNC010000001.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Chordicoccus;s__Chordicoccus sp900315305",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Chordicoccus;s__Chordicoccus sp900315305"
+    },
+    "GB_GCA_022483745.1_JAKVMP010000001.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Chordicoccus;s__Chordicoccus sp900315305",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Chordicoccus;s__Chordicoccus sp900315305"
+    },
+    "GB_GCA_916438525.1_CAKAER010000001.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Catonella;s__Catonella sp916438525",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Catonella;s__Catonella sp916438525"
+    },
+    "GB_GCA_916438525.1_CAKAER010000003.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Catonella;s__Catonella sp916438525",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Catonella;s__Catonella sp916438525"
+    },
+    "GB_GCA_916438525.1_CAKAER010000003.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Catonella;s__Catonella sp916438525",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Catonella;s__Catonella sp916438525"
+    },
+    "RS_GCF_013304305.1_NZ_JAAITT010000113.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Enterocloster;s__Enterocloster aldenensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Enterocloster;s__Enterocloster aldenensis"
+    },
+    "GB_GCA_003434745.1_QVIB01000074.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Enterocloster;s__Enterocloster aldenensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Enterocloster;s__Enterocloster aldenensis"
+    },
+    "GB_GCA_020736975.1_QYRY01000221.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Enterocloster;s__Enterocloster aldenensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Enterocloster;s__Enterocloster aldenensis"
+    },
+    "RS_GCF_005280655.1_NZ_CP040058.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerostipes;s__Anaerostipes rhamnosivorans",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Bianqueaceae;g__Bianquea;s__Bianquea renquensis",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerostipes;s__Anaerostipes rhamnosivorans"
+    },
+    "RS_GCF_005280655.1_NZ_CP040058.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerostipes;s__Anaerostipes rhamnosivorans",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Bianqueaceae;g__Bianquea;s__Bianquea renquensis",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerostipes;s__Anaerostipes rhamnosivorans"
+    },
+    "RS_GCF_005280655.1_NZ_CP040058.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerostipes;s__Anaerostipes rhamnosivorans",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Bianqueaceae;g__Bianquea;s__Bianquea renquensis",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Anaerostipes;s__Anaerostipes rhamnosivorans"
+    },
+    "RS_GCF_900155545.1_NZ_LT732526.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp900155545",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp900155545"
+    },
+    "RS_GCF_900155545.1_NZ_LT732526.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp900155545",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp900155545"
+    },
+    "RS_GCF_900155545.1_NZ_LT732526.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp900155545",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp900155545"
+    },
+    "GB_GCA_041330415.1_JBGKMF010000004.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A wexlerae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Chakrabartyella;s__Chakrabartyella propionicum",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A wexlerae"
+    },
+    "RS_GCF_013301925.1_NZ_JAAIPE010000105.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A wexlerae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Chakrabartyella;s__Chakrabartyella propionicum",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A wexlerae"
+    },
+    "RS_GCF_028314255.1_NZ_JAQKQN010000042.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A wexlerae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Chakrabartyella;s__Chakrabartyella propionicum",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A wexlerae"
+    },
+    "GB_GCA_030434875.1_JAUISW010000001.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__NK4A144;s__NK4A144 sp024682575",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__NK4A144;s__NK4A144 sp024682575"
+    },
+    "GB_GCA_030434875.1_JAUISW010000001.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__NK4A144;s__NK4A144 sp024682575",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__NK4A144;s__NK4A144 sp024682575"
+    },
+    "GB_GCA_030434875.1_JAUISW010000001.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__NK4A144;s__NK4A144 sp024682575",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__JAAYNZ01;g__JAAYNZ01;s__JAAYNZ01 sp012524135",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__NK4A144;s__NK4A144 sp024682575"
+    },
+    "GB_GCA_037067055.1_JBAMUH010000010.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp902363665",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp902363665"
+    },
+    "GB_GCA_037067055.1_JBAMUH010000013.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp902363665",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp902363665"
+    },
+    "GB_GCA_902363665.1_CABJAW010000027.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp902363665",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Choladousia;s__Choladousia sp902363665"
+    },
+    "GB_GCA_948818855.1_CAQKAE010000097.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp014239155",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp910583755",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp014239155"
+    },
+    "GB_GCA_948655225.1_CAPLUT010000139.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp014239155",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp910583755",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp014239155"
+    },
+    "GB_GCA_948645075.1_CAPKHO010000106.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp014239155",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp910583755",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__COE1;s__COE1 sp014239155"
+    },
+    "RS_GCF_040207125.1_NZ_CP157940.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp040207125",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp040207125"
+    },
+    "RS_GCF_040207125.1_NZ_CP157940.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp040207125",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp040207125"
+    },
+    "RS_GCF_040207125.1_NZ_CP157940.1-_5": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp040207125",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__UBA1351;s__UBA1351 sp002382805",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sp040207125"
+    },
+    "RS_GCF_900105215.1_NZ_FOIP01000001.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sphenoides_A",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Holtiella;s__Holtiella tumoricola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sphenoides_A"
+    },
+    "RS_GCF_900105215.1_NZ_FOIP01000001.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sphenoides_A",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Holtiella;s__Holtiella tumoricola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sphenoides_A"
+    },
+    "GB_GCA_000585315.1_JFBV01000001.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sphenoides_A",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Holtiella;s__Holtiella tumoricola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lacrimispora;s__Lacrimispora sphenoides_A"
+    },
+    "RS_GCF_900120345.1_NZ_LT635479.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Claveliimonas;s__Claveliimonas monacensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Epulopiscium_B;s__Epulopiscium_B sp001983555",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Claveliimonas;s__Claveliimonas monacensis"
+    },
+    "RS_GCF_900120345.1_NZ_LT635479.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Claveliimonas;s__Claveliimonas monacensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Epulopiscium_B;s__Epulopiscium_B sp001983555",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Claveliimonas;s__Claveliimonas monacensis"
+    },
+    "RS_GCF_900120345.1_NZ_LT635479.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Claveliimonas;s__Claveliimonas monacensis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Epulopiscium_B;s__Epulopiscium_B sp001983555",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Claveliimonas;s__Claveliimonas monacensis"
+    },
+    "RS_GCF_003481445.1_NZ_QULE01000043.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Butyribacter;s__Butyribacter sp003529475",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Butyribacter;s__Butyribacter sp003529475"
+    },
+    "GB_GCA_041331375.1_JBGKJX010000006.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Butyribacter;s__Butyribacter sp003529475",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Butyribacter;s__Butyribacter sp003529475"
+    },
+    "GB_GCA_041331375.1_JBGKJX010000006.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Butyribacter;s__Butyribacter sp003529475",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Butyribacter;s__Butyribacter sp003529475"
+    },
+    "RS_GCF_018866245.1_NZ_CP076458.1-_3": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Novisyntrophococcus;s__Novisyntrophococcus fermenticellae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__Vallitalea;s__Vallitalea sp036985595",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Novisyntrophococcus;s__Novisyntrophococcus fermenticellae"
+    },
+    "RS_GCF_018866245.1_NZ_CP076458.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Novisyntrophococcus;s__Novisyntrophococcus fermenticellae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__Vallitalea;s__Vallitalea sp036985595",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Novisyntrophococcus;s__Novisyntrophococcus fermenticellae"
+    },
+    "RS_GCF_018866245.1_NZ_CP076458.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Novisyntrophococcus;s__Novisyntrophococcus fermenticellae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Vallitaleaceae;g__Vallitalea;s__Vallitalea sp036985595",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Novisyntrophococcus;s__Novisyntrophococcus fermenticellae"
+    },
+    "RS_GCF_025289255.1_NZ_JAESIR010000015.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A hydrogenotrophica",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A hydrogenotrophica"
+    },
+    "RS_GCF_034356035.1_NZ_CP136423.1-_4": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A hydrogenotrophica",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A hydrogenotrophica"
+    },
+    "RS_GCF_034356035.1_NZ_CP136423.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A hydrogenotrophica",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__DSM-24629;g__Natranaerovirga;s__Natranaerovirga hydrolytica",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Blautia_A;s__Blautia_A hydrogenotrophica"
+    },
+    "RS_GCF_015550395.1_NZ_JADNAU010000039.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Extibacter;s__Extibacter hylemonae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Extibacter;s__Extibacter hylemonae"
+    },
+    "RS_GCF_008281175.1_NZ_CP036524.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Extibacter;s__Extibacter hylemonae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Extibacter;s__Extibacter hylemonae"
+    },
+    "RS_GCF_005844135.1_NZ_SPFR01000039.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Extibacter;s__Extibacter hylemonae",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp041223565",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Extibacter;s__Extibacter hylemonae"
+    },
+    "GB_GCA_902365035.1_CABJFY010000062.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Jutongia;s__Jutongia sp003524945",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Epulopiscium_B;s__Epulopiscium_B viviparus",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Jutongia;s__Jutongia sp003524945"
+    },
+    "GB_GCA_041336375.1_JBGKWR010000020.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Jutongia;s__Jutongia sp003524945",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Epulopiscium_B;s__Epulopiscium_B viviparus",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Jutongia;s__Jutongia sp003524945"
+    },
+    "GB_GCA_041336375.1_JBGKWR010000021.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Jutongia;s__Jutongia sp003524945",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Epulopiscium_B;s__Epulopiscium_B viviparus",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Jutongia;s__Jutongia sp003524945"
+    },
+    "GB_GCA_041403905.1_JBGLGC010000004.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor intestinalis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Holtiella;s__Holtiella tumoricola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor intestinalis"
+    },
+    "GB_GCA_041404425.1_JBGKQD010000009.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor intestinalis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Holtiella;s__Holtiella tumoricola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor intestinalis"
+    },
+    "GB_GCA_041403905.1_JBGLGC010000003.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor intestinalis",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Cellulosilyticaceae;g__Holtiella;s__Holtiella tumoricola",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Acetatifactor;s__Acetatifactor intestinalis"
+    },
+    "RS_GCF_000242235.1_NZ_JH590863.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella longum",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella longum"
+    },
+    "RS_GCF_000242235.1_NZ_JH590862.1-_2": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella longum",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella longum"
+    },
+    "RS_GCF_000242235.1_NZ_JH590865.1": {
+      "true": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella longum",
+      "wrong": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815",
+      "donor_group": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Moryella;s__Moryella longum"
+    }
+  }
+}

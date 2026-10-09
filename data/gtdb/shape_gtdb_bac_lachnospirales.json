@@ -1,0 +1,62 @@
+{
+  "convention": "gtdb",
+  "n_sequences": 6929,
+  "n_with_lineage": 6929,
+  "length": {
+    "min": 1533,
+    "p5": 1533,
+    "median": 1533,
+    "p95": 1533,
+    "max": 1533,
+    "p95_over_p5": 1.0
+  },
+  "lineage_depths": {
+    "7": 6929
+  },
+  "empty_lineages": 0,
+  "placeholder_by_rank": {
+    "domain": 0,
+    "phylum": 0,
+    "class": 0,
+    "order": 0,
+    "family": 0,
+    "genus": 0,
+    "species": 0
+  },
+  "judgeable_pct_of_labelled": {
+    "domain": 100.0,
+    "phylum": 100.0,
+    "class": 100.0,
+    "order": 100.0,
+    "family": 99.9,
+    "genus": 99.2,
+    "species": 96.2
+  },
+  "judgeable_pct_of_all": {
+    "domain": 100.0,
+    "phylum": 100.0,
+    "class": 100.0,
+    "order": 100.0,
+    "family": 99.9,
+    "genus": 99.2,
+    "species": 96.2
+  },
+  "judgeable_denominator": {
+    "domain": 6929,
+    "phylum": 6929,
+    "class": 6929,
+    "order": 6929,
+    "family": 6929,
+    "genus": 6929,
+    "species": 6929
+  },
+  "n_taxa": {
+    "domain": 1,
+    "phylum": 1,
+    "class": 1,
+    "order": 1,
+    "family": 15,
+    "genus": 229,
+    "species": 724
+  }
+}

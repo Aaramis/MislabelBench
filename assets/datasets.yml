@@ -138,6 +138,66 @@ datasets:
     consensus_length: 1478
     citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database. Nucleic Acids Res (2025)"
 
+  rfam_ssu_bacteria:
+    description: Rfam RF00177, SSU_rRNA_bacteria, the covariance model the bacterial clade is aligned against
+    release: Rfam 15.1
+    accession: RF00177
+    # The same pinned Rfam.cm.gz as rfam_ssu_archaea, extracted by cmfetch inside
+    # slurm/fetch_bacterial_clade.sh rather than by hand, from the Infernal image pinned below.
+    source: rfam_ssu_archaea's Rfam.cm.gz, same url and sha256
+    extract: "cmfetch Rfam.cm RF00177"
+    extracted_file: data/gtdb/RF00177.cm
+    extracted_sha256: 1b3f89384c82c215e9f840637fdf8588e58e4c33954240e761a8d91ec6dd9d8e
+    # The bacterial model is 55 columns wider than the archaeal one, so this clade's alignment is
+    # 1533 wide and cannot be concatenated with the archaeal one; it never needs to be.
+    consensus_length: 1533
+    citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database. Nucleic Acids Res (2025)"
+
+  infernal_image:
+    description: the container every cmalign and cmfetch here runs in, pinned by tag and pulled when the cache lacks it
+    image: quay.io/biocontainers/infernal:1.1.5--pl5321h7b50bb2_4
+    sif_sha256: 40c12bdb4bb59443accc09f5b15e0e8a6d3b9d086fded8e46329f4c4b52f70ac
+    # It used to be found by globbing ~/.singularity_cache, and the cache was pruned between two
+    # runs: review finding 228. slurm/fetch_bacterial_clade.sh and slurm/make_foreign.sh pull it.
+
+  gtdb_bacteria_clade:
+    description: GTDB r226 SSU, the bacterial order the archaeal results are replicated on
+    release: r226 (226.0)
+    source: gtdb_archaea_ssu's file, the same ssu_all_r226.fna.gz and the same sha256
+    clade: d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales
+    clade_rule: >
+      the bacterial class or order minimising |n_1200 - 7051| / 7051 + |judgeable_species - 72.7| / 72.7,
+      computed by bin/select_bacterial_clade.py over every candidate of the release and recorded with
+      the ten runners-up in data/gtdb/bacterial_clade_selection.json
+    select: "lineage starts with d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales, then length >= 1200 nt"
+    aligned_with: Rfam RF00177 (rfam_ssu_bacteria), cmalign --matchonly, in infernal_image
+    counts:
+      in_release: 1053664
+      after_domain: 14473
+      after_length: 6929
+      subset: 2008
+    subset_rule: bin/subset_taxa.py --target 2000 --seed 42, whole species groups, as gtdb_arc2k
+    # From data/gtdb/dataset_table_bac.json, the protocol's table for this clade.
+    judgeable_pct_after_length:
+      genus: 99.2
+      species: 96.2
+      species_two_genomes: 88.5
+    citation: "Parks DH et al. GTDB: an ongoing census of bacterial and archaeal diversity. Nucleic Acids Res (2022)"
+    licence: CC BY-SA 4.0
+
+  raxmlgrove:
+    description: RAxMLGrove, the database the simulated control's tree and model parameters are drawn from
+    url: https://cme.h-its.org/exelixis/material/raxmlgrove/latest_all.db
+    sha256: 339577e4e427c2df95ea9ce7c69eb3f1cab10f279a2d3ecb98eda980e53f1182
+    bytes: 146669568
+    scripts: https://github.com/angtft/RAxMLGroveScripts
+    scripts_commit: 7d8e2aa469968b49a52db5cc437307deb18eb233
+    n_trees: 127329
+    tree_id: "71741"
+    # bin/grove_select.py's criteria and candidate count are in data/grove/tree.json; the
+    # simulator is the AliSim shipped inside the pinned scripts repository.
+    citation: "Höhler D et al. RAxML Grove: an empirical phylogenetic tree database. Bioinformatics 38(6):1741 (2022)"
+
   unite_fungi:
     description: UNITE general FASTA release for Fungi, RepS subset
     release: v10.0 (2025-02-19)

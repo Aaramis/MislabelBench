@@ -1,0 +1,110 @@
+{
+  "source": "the k axis at family distance and 5 % on the bacterial clade's subset",
+  "datasets": [
+    {
+      "name": "binj_family_r0.05_k10_s1",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k10_s1/binj_family_r0.05_k10_s1.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k10_s1/binj_family_r0.05_k10_s1.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k10_s2",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k10_s2/binj_family_r0.05_k10_s2.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k10_s2/binj_family_r0.05_k10_s2.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k10_s3",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k10_s3/binj_family_r0.05_k10_s3.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k10_s3/binj_family_r0.05_k10_s3.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k1_s1",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k1_s1/binj_family_r0.05_k1_s1.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k1_s1/binj_family_r0.05_k1_s1.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k1_s2",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k1_s2/binj_family_r0.05_k1_s2.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k1_s2/binj_family_r0.05_k1_s2.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k1_s3",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k1_s3/binj_family_r0.05_k1_s3.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k1_s3/binj_family_r0.05_k1_s3.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k2_s1",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k2_s1/binj_family_r0.05_k2_s1.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k2_s1/binj_family_r0.05_k2_s1.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k2_s2",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k2_s2/binj_family_r0.05_k2_s2.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k2_s2/binj_family_r0.05_k2_s2.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k2_s3",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k2_s3/binj_family_r0.05_k2_s3.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k2_s3/binj_family_r0.05_k2_s3.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k3_s1",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k3_s1/binj_family_r0.05_k3_s1.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k3_s1/binj_family_r0.05_k3_s1.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k3_s2",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k3_s2/binj_family_r0.05_k3_s2.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k3_s2/binj_family_r0.05_k3_s2.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k3_s3",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k3_s3/binj_family_r0.05_k3_s3.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k3_s3/binj_family_r0.05_k3_s3.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k5_s1",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k5_s1/binj_family_r0.05_k5_s1.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k5_s1/binj_family_r0.05_k5_s1.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k5_s2",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k5_s2/binj_family_r0.05_k5_s2.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k5_s2/binj_family_r0.05_k5_s2.tax"
+    },
+    {
+      "name": "binj_family_r0.05_k5_s3",
+      "n_seqs": 2008,
+      "aln_len": 1533,
+      "fasta": "data/injected_bac/binj_family_r0.05_k5_s3/binj_family_r0.05_k5_s3.fasta",
+      "tax": "data/injected_bac/binj_family_r0.05_k5_s3/binj_family_r0.05_k5_s3.tax"
+    }
+  ]
+}

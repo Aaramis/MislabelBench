@@ -1,0 +1,12 @@
+11 tree(s) satisfy the criteria; seed 42 picks TREE_ID 71741
+  NUM_TAXA                   400
+  NUM_ALIGNMENT_SITES        1778
+  MODEL                      GTR
+  ALPHA                      0.570792
+  RATE_STR                   GTR{1.233906/2.547923/1.502573/0.894541/3.314076/1.000000}
+  STATIONARY_FREQ_STR        FU{0.253377/0.205290/0.293039/0.248294}
+  TREE_HEIGHT                1.2327
+  BRANCH_LENGTH_MEAN         0.04083291468005019
+  BRANCH_LENGTH_VARIANCE     0.0024640825014273847
+  GAPS                       25.13
+  MISSING_DATA_RATE          None

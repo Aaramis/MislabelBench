@@ -1,0 +1,9 @@
+400 tips, every one labelled at all 7 ranks
+  domain       3 clades (asked     2) below height 0.000000, judgeable 99.8%
+  phylum       4 clades (asked     4) below height 0.000001, judgeable 99.5%
+  class        9 clades (asked     9) below height 0.018682, judgeable 98.8%
+  order       20 clades (asked    20) below height 0.183593, judgeable 95.8%
+  family      42 clades (asked    42) below height 0.325836, judgeable 94.0%
+  genus       89 clades (asked    89) below height 0.396362, judgeable 84.2%
+  species    189 clades (asked   189) below height 0.514404, judgeable 61.3%
+189 species, 155 of them singletons, largest 71, 7 with six or more members holding 163 sequences

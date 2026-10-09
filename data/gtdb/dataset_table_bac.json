@@ -1,0 +1,24 @@
+{
+  "clade": "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales",
+  "min_len": 1200,
+  "sources": {
+    "ssu_all": "ssu_all_r226.fna.gz",
+    "ssu_reps": null
+  },
+  "rows": {
+    "ssu_all": {
+      "sequences": 14473,
+      "evaluable_genus_pct": 99.5,
+      "evaluable_species_pct": 95.6,
+      "evaluable_species_two_genomes_pct": 90.9,
+      "n_species": 1605
+    },
+    "ssu_all_over_1200": {
+      "sequences": 6929,
+      "evaluable_genus_pct": 99.2,
+      "evaluable_species_pct": 96.2,
+      "evaluable_species_two_genomes_pct": 88.5,
+      "n_species": 724
+    }
+  }
+}
