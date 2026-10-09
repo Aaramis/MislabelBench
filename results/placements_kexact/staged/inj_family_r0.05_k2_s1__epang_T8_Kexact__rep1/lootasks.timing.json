@@ -1,0 +1,1 @@
+{"wall_sec": 31.3, "returncode": 0, "timed_out": false, "max_rss_mb": 81.7, "user_cpu_sec": 30.11, "sys_cpu_sec": 5.83, "cmd": ["sativa-epang", "-r", "run.refjson", "-T", "8", "-n", "run", "-o", ".", "-stage", "loo-tasks"], "host": "cpu-node-37", "cpu_model": "Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz"}

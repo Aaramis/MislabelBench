@@ -1,0 +1,16 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r run.refjson -T 8 -n run -o . -stage loo-tasks
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/ca/adf3b8512f46b6fb22b57fe6541766/run.model
+[epang-l1o] wrote 25 fold tasks to ./run.l1o_tasks (2.4s)
+
+25 leave-one-out folds written to: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/ca/adf3b8512f46b6fb22b57fe6541766/run.l1o_tasks
+Place them (any scheduler, one EPA-ng per fold directory), then:
+  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/ca/adf3b8512f46b6fb22b57fe6541766/run.refjson -n run -o /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/ca/adf3b8512f46b6fb22b57fe6541766 -stage loo-score -taskdir /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/ca/adf3b8512f46b6fb22b57fe6541766/run.l1o_tasks
+
+

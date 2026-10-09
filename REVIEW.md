@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 230 |
+| findings in this report | 231 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 13 |
-| run records, cross-checked against the files they summarise | 1174 |
-| result tables, each rebuilt by `bin/analyses.sh` | 68 |
-| `.mis` files, the flag lists every detection number is computed from | 1500 |
+| run records, cross-checked against the files they summarise | 1295 |
+| result tables, each rebuilt by `bin/analyses.sh` | 73 |
+| `.mis` files, the flag lists every detection number is computed from | 1621 |
 | tests over the scripts that turn runs into numbers | 104 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 174 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 295 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **68 published tables** ← 1 174 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **73 published tables** ← 1 295 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 174** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 295** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 174 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 295 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 174**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 295**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -5580,6 +5580,32 @@ and scripts commit; 347 datasets in 12 manifests, all sound.
 One pinned round sat on `ReqNodeNotAvail` for an hour: `sinfo` had listed `cpu-node-121` mixed and
 Slurm drained it between the pick and the submission. `staged_nodes.sh` re-reads each chosen node's
 state at launch and refuses the pin in one line if it has changed, so the next replicate picks afresh.
+
+**231. The Grove control has run, and it does what the co-author said a realistic control would:
+it flags sequences nothing was done to.** 148 tasks, 74 run directories, 37 cells under both tools,
+50 minutes. On the un-injected reference, where every label is a clade of the tree the sequences
+evolved along, **sativa-epang flags 4 of 400 sequences and SATIVA 3**; the hand-made control had
+flagged none. Two of them are the same in both tools and are not placement errors: `taxon397` and
+`taxon400`, flagged at the top rank, are the lone members of the two small "domains" the root's
+trifurcation produced when the ladder asked for two clades and got three, so leave-one-out removes
+the only sequence of its domain and has nothing to place it against. They are unjudgeable by
+construction, the case `grove_tax.json`'s per-rank judgeable fraction already counts (99.5 % at
+domain), and they are reported as such rather than as false positives. The rest -- `taxon102` in
+both tools, `taxon2` in the fork alone -- are flagged at confidence exactly **0.510**, the stem value
+finding 184 traced to `parent_lhw_coeff`: on the judgeable sequences the strict false-positive rate
+is 2 of 398 for the fork and 1 of 398 for SATIVA, and every one of them is the artefact the
+manuscript's threshold section is about.
+
+Detection on the empirical tree is a different regime from the hand-made one. Where the balanced
+ultrametric reference gave recall 1.000 at k = 1 and 2 at every distance, this one gives 0.93 at
+species and 1.00 at family for k = 1, then 0.67 / 0.75 / 0.87 at k = 2 and 0.35 / 0.59 / 0.52 at
+k = 3 for the fork, with SATIVA at 0.57 / 0.68 / 0.60 and 0.33 / 0.46 / 0.48 -- the shape of the real
+grid, with the fork ahead where several sequences share the error: better in 6 of 9 cells at k = 2
+(sign test 0.031) and 5 of 9 at k = 3, tied everywhere at k = 1 and k = 5. The hand-made control had
+put the whole difference at k = 3. Collateral flags under injection run 8 to 16 per cell on 400
+sequences, against none on the hand-made reference. All of it is in
+`results/grove_simulated_summary_*.json`, `results/detection_law_grove_simulated_*.json` and
+`results/paired_grove_simulated_upstream_vs_epang_T8_K25.json`, rebuilt by `bin/analyses.sh`.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

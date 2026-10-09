@@ -1,0 +1,99 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s grove_genus_k2_s2.fasta -t grove_genus_k2_s2.tax -T 8 -n grove_genus_k2_s2__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/grove_simulation/work/57/c456fefba943092185e455ee2bd283/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: grove_genus_k2_s2.tax ...
+
+==> Loading reference alignment from file: grove_genus_k2_s2.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0018;s__0054
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0019;s__0057
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0022;s__0061
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0023;s__0062
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0024;s__0063
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0025;s__0065
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0026;s__0068
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0018;__TAXCLUSTER1__s__0054
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0012;g__0031;s__0073
+d__0001;p__0001;c__0002;o__0003;f__0012;g__0031;s__0074
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0012;g__0031;__TAXCLUSTER2__s__0073
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0015;g__0037;s__0089
+d__0001;p__0001;c__0002;o__0003;f__0015;g__0038;s__0091
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0015;g__0037;__TAXCLUSTER3__s__0089
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0024;g__0052;s__0114
+d__0001;p__0001;c__0002;o__0003;f__0024;g__0053;s__0115
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0024;g__0052;__TAXCLUSTER4__s__0114
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0013;g__0066;s__0128
+d__0001;p__0001;c__0002;o__0003;f__0013;g__0066;s__0130
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0013;g__0066;__TAXCLUSTER5__s__0128
+
+WARNING: 15 indistinguishable taxa have been merged into 5 clusters.
+
+====> Building a multifurcating tree from taxonomy with 400 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./grove_genus_k2_s2__epang_T8_K25__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/grove_simulation/work/57/c456fefba943092185e455ee2bd283/tmp/grove_genus_k2_s2__epang_T8_K25__rep1_1791573734901/RAxML_info.mfresolv_grove_genus_k2_s2__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/grove_simulation/work/57/c456fefba943092185e455ee2bd283/tmp/grove_genus_k2_s2__epang_T8_K25__rep1_1791573734901/epang_l1out_seq_grove_genus_k2_s2__epang_T8_K25__rep1 (0.1s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 8.7s)
+[epang-l1o] placements produits: 400 (K=25 folds, remap 0.1s)
+[epang-l1o] timing: fold prep 0.1s, epa-ng 8.7s, remap 0.1s, elapsed 9.0s
+Leave-one-out test identified 38 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 38 suspects re-placed (model RAxML_info.mfresolv_grove_genus_k2_s2__epang_T8_K25__rep1)
+Mislabeled sequences by rank:
+Kingdom     :	2
+Class       :	1
+Order       :	2
+Family      :	1
+Genus       :	17
+Species     :	6
+
+Total mislabels: 29 / 7.25 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grove_simulation/work/57/c456fefba943092185e455ee2bd283/run/grove_genus_k2_s2__epang_T8_K25__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grove_simulation/work/57/c456fefba943092185e455ee2bd283/run/grove_genus_k2_s2__epang_T8_K25__rep1.log
+
+Analysis completed successfully, elapsed time: 14 seconds (4s reftree, 10s leave-one-out)
+

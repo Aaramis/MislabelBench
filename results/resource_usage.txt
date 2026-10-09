@@ -1,4 +1,4 @@
-excluded 12 trusted runs from the staged experiments, whose whole-run control shares its node with the stages
+excluded 15 trusted runs from the staged experiments, whose whole-run control shares its node with the stages
 dataset       condition             n      wall  cores    CPU-s  core-h
 gtdb_arc1200  epang_T8_K25          4     262.4   5.54     1451    0.40
 gtdb_arc1200  upstream_raxml_T8     4    2983.6   7.97    23796    6.61
@@ -47,14 +47,14 @@ tree is the Nextflow trace's process-tree peak; child is run.json's ru_maxrss.
  sequences  fork tree  fork child  up tree  up child  tree ratio  child ratio  fork MB/seq
        402       1843         454      148        99        12.4          4.6         4.59
        801       3584        1052      113        57        31.7         18.5         4.47
-      2023       9318        2626      209       142        44.5         18.4         4.61
+      2023       9421        2626      209       142        45.0         18.4         4.66
       4001      20582        5359      391       302        52.6         17.8         5.14
       7051      36147        9396      727       603        49.7         15.6         5.13
 
 peak memory on the thread axis at 2023 sequences, tree against largest child
 tool         T  wall s   tree MB  child MB  ratio  tree MB/seq  max seqs in 64 GB
 fork         1     152      2253      2103   1.07         1.11             58,850
-fork         8      38      9318      2626   3.55         4.61             14,227
+fork         8      38      9421      2626   3.59         4.66             14,073
 fork        16      30      8397      2668   3.15         4.15             15,789
 upstream     1    1405       205       138   1.48         0.10            646,728
 upstream     8     636       209       142   1.47         0.10            633,744

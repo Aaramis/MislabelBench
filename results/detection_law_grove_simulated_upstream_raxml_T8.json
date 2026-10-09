@@ -1,0 +1,85 @@
+{
+  "by_ratio": [
+    {
+      "low": 0.0,
+      "high": 0.2,
+      "detected": 323,
+      "injected": 343,
+      "recall": 0.9417
+    },
+    {
+      "low": 0.2,
+      "high": 0.4,
+      "detected": 74,
+      "injected": 109,
+      "recall": 0.6789
+    },
+    {
+      "low": 0.4,
+      "high": 0.6,
+      "detected": 29,
+      "injected": 163,
+      "recall": 0.1779
+    },
+    {
+      "low": 0.6,
+      "high": 0.8,
+      "detected": 6,
+      "injected": 99,
+      "recall": 0.0606
+    },
+    {
+      "low": 0.8,
+      "high": 1.0,
+      "detected": 0,
+      "injected": 15,
+      "recall": 0.0
+    }
+  ],
+  "by_k": [
+    {
+      "k": 1,
+      "detected": 176,
+      "injected": 180,
+      "recall": 0.9778,
+      "donor_groups": 180,
+      "distinct_donor_taxa": 33,
+      "median_group_size": 3.0,
+      "mean_share_relabelled": 0.32,
+      "eligible_taxa": 34
+    },
+    {
+      "k": 2,
+      "detected": 111,
+      "injected": 180,
+      "recall": 0.6167,
+      "donor_groups": 90,
+      "distinct_donor_taxa": 21,
+      "median_group_size": 5.0,
+      "mean_share_relabelled": 0.41,
+      "eligible_taxa": 22
+    },
+    {
+      "k": 3,
+      "detected": 80,
+      "injected": 189,
+      "recall": 0.4233,
+      "donor_groups": 63,
+      "distinct_donor_taxa": 13,
+      "median_group_size": 5,
+      "mean_share_relabelled": 0.48,
+      "eligible_taxa": 16
+    },
+    {
+      "k": 5,
+      "detected": 65,
+      "injected": 180,
+      "recall": 0.3611,
+      "donor_groups": 36,
+      "distinct_donor_taxa": 7,
+      "median_group_size": 8.0,
+      "mean_share_relabelled": 0.48,
+      "eligible_taxa": 7
+    }
+  ]
+}

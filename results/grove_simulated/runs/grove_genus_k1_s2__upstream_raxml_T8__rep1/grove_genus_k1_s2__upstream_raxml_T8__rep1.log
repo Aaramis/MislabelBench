@@ -1,0 +1,82 @@
+SATIVA v0.9.1, released on 2023-08-16. Last version: https://github.com/amkozlov/sativa 
+By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
+
+SATIVA was called as follows:
+
+/usr/local/bin/sativa.py -s grove_genus_k1_s2.fasta -t grove_genus_k1_s2.tax -T 8 -n grove_genus_k1_s2__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/grove_simulation/work/7a/acdafff34bacd7cdb25f414c826296/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: grove_genus_k1_s2.tax ...
+
+==> Loading reference alignment from file: grove_genus_k1_s2.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0018;s__0054
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0019;s__0057
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0022;s__0061
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0023;s__0062
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0024;s__0063
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0025;s__0065
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0026;s__0068
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0002;f__0008;g__0018;__TAXCLUSTER1__s__0054
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0012;g__0031;s__0073
+d__0001;p__0001;c__0002;o__0003;f__0012;g__0031;s__0074
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0012;g__0031;__TAXCLUSTER2__s__0073
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0024;g__0052;s__0114
+d__0001;p__0001;c__0002;o__0003;f__0024;g__0053;s__0115
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0024;g__0052;__TAXCLUSTER3__s__0114
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__0001;p__0001;c__0002;o__0003;f__0013;g__0066;s__0128
+d__0001;p__0001;c__0002;o__0003;f__0013;g__0066;s__0130
+For the purpose of mislabels identification, they were merged into one taxon:
+d__0001;p__0001;c__0002;o__0003;f__0013;g__0066;__TAXCLUSTER4__s__0128
+
+WARNING: 13 indistinguishable taxa have been merged into 4 clusters.
+
+====> Building a multifurcating tree from taxonomy with 400 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./grove_genus_k1_s2__upstream_raxml_T8__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+Leave-one-out test identified 45 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Kingdom     :	2
+Genus       :	20
+Species     :	9
+
+Total mislabels: 31 / 7.75 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grove_simulation/work/7a/acdafff34bacd7cdb25f414c826296/run/grove_genus_k1_s2__upstream_raxml_T8__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grove_simulation/work/7a/acdafff34bacd7cdb25f414c826296/run/grove_genus_k1_s2__upstream_raxml_T8__rep1.log
+
+Analysis completed successfully, elapsed time: 176 seconds (3s reftree, 173s leave-one-out)
+

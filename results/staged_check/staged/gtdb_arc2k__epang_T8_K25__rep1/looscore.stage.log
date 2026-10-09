@@ -4,11 +4,11 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r run.refjson -T 8 -n run -o . -C 0.4 -S -stage loo-score -taskdir /shared/home/agardette/bench/.nf/staged_check/work/aa/12f74b925949e1b217e0408a4cddb4/run.l1o_tasks
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r run.refjson -T 8 -n run -o . -C 0.4 -S -stage loo-score -taskdir /shared/home/agardette/bench/.nf/staged_check/work/71/9359a11ee00de540bdf5240188f57b/run.l1o_tasks
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] placements produits: 2021 (K=25 folds, remap 1.1s)
+[epang-l1o] placements produits: 2021 (K=25 folds, remap 1.0s)
 Leave-one-out test identified 109 suspicious sequences; running final EPA test to check them...
 
 [epang-final] 109 suspects re-placed (model model)
@@ -22,9 +22,9 @@ Species     :	19
 
 Total mislabels: 93 / 4.60 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/staged_check/work/aa/12f74b925949e1b217e0408a4cddb4/run.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/staged_check/work/aa/12f74b925949e1b217e0408a4cddb4/run.log
+Results were saved to: /shared/home/agardette/bench/.nf/staged_check/work/71/9359a11ee00de540bdf5240188f57b/run.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/staged_check/work/71/9359a11ee00de540bdf5240188f57b/run.log
 
-Analysis completed successfully, elapsed time: 5 seconds (0s reftree, 4s leave-one-out)
+Analysis completed successfully, elapsed time: 4 seconds (0s reftree, 4s leave-one-out)
 
 
