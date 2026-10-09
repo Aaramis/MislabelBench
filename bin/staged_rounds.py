@@ -31,7 +31,7 @@ one a single machine's memory bandwidth allows. DISTRIBUTION.md carries the same
 well because this is the file the numbers come from.
 
 **The same round with every shard on its own machine**, `--prefix staged_nodes --base staged_timed_f25`:
-placement 62.7 s against 64.9 s on one node, 3 % apart, inside the 1 to 4 % the replicates of either
+placement 63.4 s against 64.9 s on one node, 2 % apart, inside the 1 to 4 % the replicates of either
 set spread over. One node's memory bandwidth was therefore not what bounded the four-shard round, and
 "jobs" against "machines" is a distinction the measurement does not see at this size. The reference
 stage, which is not pinned, came back 17 s slower in that set, which is the other node's occupants and

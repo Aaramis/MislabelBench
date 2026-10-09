@@ -694,7 +694,7 @@ results/figure1.svg                    an earlier composition, kept because REVI
 re-derive. That sentence was false until the 949 run directories behind the version 2 tables were
 brought back from the cluster — only `run.json` had been kept for them, and every detection number
 is computed from the `.mis` beside it. 949 was the count on the day that was fixed; the repository
-holds **1 296** run records now, and the figure is left as it was rather than silently updated because
+holds **1 297** run records now, and the figure is left as it was rather than silently updated because
 the sentence is about an event. `results/pipeline_info/` holds one Nextflow trace per
 submission, with its gaps listed.
 
