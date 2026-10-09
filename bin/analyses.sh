@@ -243,6 +243,12 @@ control_analyses data/simulated results/simulated sim simulated
 # The second control, on an empirical tree. Absent until slurm/grove_simulation.sh has run, which the
 # guards above report rather than fail on.
 control_analyses data/grove_sim results/grove_simulated grove grove_simulated
+# And the promise the control rests on, re-checked on the committed files rather than trusted from
+# the day they were generated: every label is a clade of the tree the sequences evolved along.
+if [ -s data/grove_sim/grove/grove.tax ]; then
+    verify_grove_taxonomy.py --tree data/grove_sim/raw/*/tree_best.newick \
+        --tax data/grove_sim/grove/grove.tax
+fi
 
 # Does fold co-removal explain the fork's advantage on the k axis? The question is the fork's own
 # mechanism, so it belongs beside the decomposition rather than in a script nothing ran: this one had

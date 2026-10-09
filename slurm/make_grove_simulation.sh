@@ -112,6 +112,13 @@ mkdir -p "$OUT/grove"
 python3 "$BENCH_ROOT/bin/grove_taxonomy.py" --tree "$RAW/tree_best.newick" \
     --prefix "$OUT/grove/grove" | tee "$OUT/grove/grove.txt"
 
+# The check the protocol promises: the taxonomy is the tree. Every label at every rank is a clade of
+# the Newick the sequences were simulated along, ranks nest, every tip is labelled. It passes by
+# construction when grove_taxonomy.py did its job; it exists for the day something between the two
+# files is edited by hand.
+python3 "$BENCH_ROOT/bin/verify_grove_taxonomy.py" --tree "$RAW/tree_best.newick" \
+    --tax "$OUT/grove/grove.tax"
+
 # The alignment and the taxonomy have to name the same sequences: AliSim labels tips from the tree it
 # was given, so a mismatch here means they came from different trees, which no later step would notice.
 # The copy is unwrapped on the way out, both because biopython writes 60-column FASTA and the rest of

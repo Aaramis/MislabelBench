@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 219 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 67 |
+| findings in this report | 220 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 68 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 47 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 66 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
-| tests over the scripts that turn runs into numbers | 86 |
+| tests over the scripts that turn runs into numbers | 87 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5345,6 +5345,24 @@ three files. So every push from here on exits non-zero having succeeded, and a g
 a gate that gets read as noise, which is how the next real one gets ignored. Measured before the change
 and after: three under `~/bench`, zero under the trees this script writes. The count is now taken over
 those trees only.
+
+**220. The Grove chain failed on the compute node's python, and the check the protocol promises did
+not exist.** `fetchgrove` (job 2325894) died in two seconds: the compute image's `python3` is 3.8
+without `ensurepip`, so `python3 -m venv` cannot bootstrap pip there, while the login node, where
+the script was reasoned about, has 3.12. The venv is now built from
+`/shared/software/miniconda_deployment/envs/python-3.12/bin/python` (3.12.12, `ensurepip` present,
+visible from every node), pinned the way `prelude.sh` pins `NEXTFLOW_ENV`: checked, and listing the
+`python-3.11.2` and `python-3.9` alternatives when it is gone.
+
+The reviewed protocol says of the simulated control: "we will check that the taxonomy matches the
+generating tree". `tests/test_grove_taxonomy.py` pins the builder on synthetic trees, which says
+nothing about the committed files. `bin/verify_grove_taxonomy.py` is the check on the data: every
+tip has a lineage and every lineage names a tip; every label at every rank is a clade, by the most
+recent common ancestor of its tips holding exactly that many tips; ranks nest. On `TREE_ID 71741` it
+checks 356 labels over seven ranks and finds nothing; with two tips' lineages swapped it names five
+labels that are no longer clades. It runs inside `make_grove_simulation.sh` after the taxonomy is
+written, from `bin/analyses.sh` on the committed control, and refuses an empty taxonomy with the
+other gates in `tests/test_gates.py`.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

@@ -216,6 +216,28 @@ class GroveTaxonomy(unittest.TestCase):
             if not ok:
                 self.assertIn("too few", r.stderr)
 
+    def test_the_gate_passes_what_the_builder_wrote_and_refuses_one_swapped_label(self):
+        """bin/verify_grove_taxonomy.py is the check the protocol promises, on the committed files.
+
+        The builder cannot produce a label that is not a clade, so the gate passing here says little;
+        the second half is the point. Two tips swap lineages, which leaves every count intact and
+        every rank nested, and the only thing wrong is that two clades each now hold one foreign tip.
+        """
+        gate = [sys.executable, str(BIN / "verify_grove_taxonomy.py"),
+                "--tree", str(self.tmp / "tree.newick")]
+        r = subprocess.run(gate + ["--tax", str(self.tmp / "tree.tax")],
+                           capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("0 problem(s)", r.stdout)
+        lines = (self.tmp / "tree.tax").read_text().splitlines()
+        a, b = lines[0].split("\t"), lines[-1].split("\t")
+        lines[0], lines[-1] = a[0] + "\t" + b[1], b[0] + "\t" + a[1]
+        (self.tmp / "swapped.tax").write_text("\n".join(lines) + "\n")
+        r = subprocess.run(gate + ["--tax", str(self.tmp / "swapped.tax")],
+                           capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("is not a clade of the tree", r.stderr)
+
     def test_negative_branch_length_refused(self):
         bad = self.tmp / "bad.newick"
         bad.write_text("((a:1,b:1):-1,(c:1,d:1):1,(e:1,f:1):1,(g:1,h:1):1);")

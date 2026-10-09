@@ -88,9 +88,22 @@ PYJ
 # 13 000 files measured for biopython, scikit-optimize and the scipy that comes with it, against a
 # 100 000-file quota on $HOME that one minimal-case arm already takes a fifth of. Cheap to check, and
 # the alternative is discovering it as an OSError 122 halfway through pip.
+# Built from a pinned cluster interpreter and not from the node's python3. The login node has
+# 3.12 but the compute image has 3.8 without ensurepip, so `python3 -m venv` fails there with
+# "ensurepip is not available" -- which is where the first run of this script died. The
+# deployment's own python environments are visible from every node and carry ensurepip; the
+# pin follows prelude.sh's NEXTFLOW_ENV: checked rather than trusted, alternatives listed when it
+# is gone, since the deployment prunes old environments eventually.
+BASE_PY=/shared/software/miniconda_deployment/envs/python-3.12/bin/python
+[ -x "$BASE_PY" ] || {
+    echo "no interpreter at $BASE_PY: the pinned environment is gone. Available:" >&2
+    ls -d /shared/software/miniconda_deployment/envs/python-3.* 2>/dev/null >&2
+    echo "pick one, update BASE_PY in slurm/fetch_grove.sh, and record the change" >&2
+    exit 1
+}
 if [ ! -x "$OUT/env/bin/python" ]; then
     room_for 15000
-    python3 -m venv "$OUT/env"
+    "$BASE_PY" -m venv "$OUT/env"
     "$OUT/env/bin/pip" install --quiet --upgrade pip
     "$OUT/env/bin/pip" install --quiet biopython scikit-optimize numpy
 fi

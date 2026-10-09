@@ -43,6 +43,8 @@ class NothingCheckedMustFail(unittest.TestCase):
         (self.tmp / "manifest.json").write_text(json.dumps({"datasets": []}))
         (self.tmp / "summary.json").write_text(json.dumps({"a": 1}))
         (self.tmp / "base.tax").write_text("")
+        (self.tmp / "two.newick").write_text("(a:1,b:1);")
+        (self.tmp / "empty.tax").write_text("")
 
     def cases(self):
         t, e = self.tmp, self.empty
@@ -59,6 +61,7 @@ class NothingCheckedMustFail(unittest.TestCase):
             ("verify_foreign.py", ["--base", t / "base.tax", "--foreign-dir", e]),
             ("verify_manifests.py", ["--glob", f"{e}/*.json"]),
             ("verify_inputs.py", ["--glob", f"{e}/*/run.json"]),
+            ("verify_grove_taxonomy.py", ["--tree", t / "two.newick", "--tax", t / "empty.tax"]),
         ]
 
     def test_each_gate_refuses_an_empty_tree(self):
