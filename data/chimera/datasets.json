@@ -1,0 +1,257 @@
+{
+  "source": "chimeras of two gtdb_arc2k sequences labelled as parent A (Protocol 3, kind 7)",
+  "datasets": [
+    {
+      "name": "chi_family_b0.25_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.25_s1/chi_family_b0.25_s1.fasta",
+      "tax": "data/chimera/chi_family_b0.25_s1/chi_family_b0.25_s1.tax"
+    },
+    {
+      "name": "chi_family_b0.25_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.25_s2/chi_family_b0.25_s2.fasta",
+      "tax": "data/chimera/chi_family_b0.25_s2/chi_family_b0.25_s2.tax"
+    },
+    {
+      "name": "chi_family_b0.25_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.25_s3/chi_family_b0.25_s3.fasta",
+      "tax": "data/chimera/chi_family_b0.25_s3/chi_family_b0.25_s3.tax"
+    },
+    {
+      "name": "chi_family_b0.5_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.5_s1/chi_family_b0.5_s1.fasta",
+      "tax": "data/chimera/chi_family_b0.5_s1/chi_family_b0.5_s1.tax"
+    },
+    {
+      "name": "chi_family_b0.5_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.5_s2/chi_family_b0.5_s2.fasta",
+      "tax": "data/chimera/chi_family_b0.5_s2/chi_family_b0.5_s2.tax"
+    },
+    {
+      "name": "chi_family_b0.5_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.5_s3/chi_family_b0.5_s3.fasta",
+      "tax": "data/chimera/chi_family_b0.5_s3/chi_family_b0.5_s3.tax"
+    },
+    {
+      "name": "chi_family_b0.75_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.75_s1/chi_family_b0.75_s1.fasta",
+      "tax": "data/chimera/chi_family_b0.75_s1/chi_family_b0.75_s1.tax"
+    },
+    {
+      "name": "chi_family_b0.75_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.75_s2/chi_family_b0.75_s2.fasta",
+      "tax": "data/chimera/chi_family_b0.75_s2/chi_family_b0.75_s2.tax"
+    },
+    {
+      "name": "chi_family_b0.75_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_family_b0.75_s3/chi_family_b0.75_s3.fasta",
+      "tax": "data/chimera/chi_family_b0.75_s3/chi_family_b0.75_s3.tax"
+    },
+    {
+      "name": "chi_genus_b0.25_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.25_s1/chi_genus_b0.25_s1.fasta",
+      "tax": "data/chimera/chi_genus_b0.25_s1/chi_genus_b0.25_s1.tax"
+    },
+    {
+      "name": "chi_genus_b0.25_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.25_s2/chi_genus_b0.25_s2.fasta",
+      "tax": "data/chimera/chi_genus_b0.25_s2/chi_genus_b0.25_s2.tax"
+    },
+    {
+      "name": "chi_genus_b0.25_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.25_s3/chi_genus_b0.25_s3.fasta",
+      "tax": "data/chimera/chi_genus_b0.25_s3/chi_genus_b0.25_s3.tax"
+    },
+    {
+      "name": "chi_genus_b0.5_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.5_s1/chi_genus_b0.5_s1.fasta",
+      "tax": "data/chimera/chi_genus_b0.5_s1/chi_genus_b0.5_s1.tax"
+    },
+    {
+      "name": "chi_genus_b0.5_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.5_s2/chi_genus_b0.5_s2.fasta",
+      "tax": "data/chimera/chi_genus_b0.5_s2/chi_genus_b0.5_s2.tax"
+    },
+    {
+      "name": "chi_genus_b0.5_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.5_s3/chi_genus_b0.5_s3.fasta",
+      "tax": "data/chimera/chi_genus_b0.5_s3/chi_genus_b0.5_s3.tax"
+    },
+    {
+      "name": "chi_genus_b0.75_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.75_s1/chi_genus_b0.75_s1.fasta",
+      "tax": "data/chimera/chi_genus_b0.75_s1/chi_genus_b0.75_s1.tax"
+    },
+    {
+      "name": "chi_genus_b0.75_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.75_s2/chi_genus_b0.75_s2.fasta",
+      "tax": "data/chimera/chi_genus_b0.75_s2/chi_genus_b0.75_s2.tax"
+    },
+    {
+      "name": "chi_genus_b0.75_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_genus_b0.75_s3/chi_genus_b0.75_s3.fasta",
+      "tax": "data/chimera/chi_genus_b0.75_s3/chi_genus_b0.75_s3.tax"
+    },
+    {
+      "name": "chi_order_b0.25_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.25_s1/chi_order_b0.25_s1.fasta",
+      "tax": "data/chimera/chi_order_b0.25_s1/chi_order_b0.25_s1.tax"
+    },
+    {
+      "name": "chi_order_b0.25_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.25_s2/chi_order_b0.25_s2.fasta",
+      "tax": "data/chimera/chi_order_b0.25_s2/chi_order_b0.25_s2.tax"
+    },
+    {
+      "name": "chi_order_b0.25_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.25_s3/chi_order_b0.25_s3.fasta",
+      "tax": "data/chimera/chi_order_b0.25_s3/chi_order_b0.25_s3.tax"
+    },
+    {
+      "name": "chi_order_b0.5_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.5_s1/chi_order_b0.5_s1.fasta",
+      "tax": "data/chimera/chi_order_b0.5_s1/chi_order_b0.5_s1.tax"
+    },
+    {
+      "name": "chi_order_b0.5_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.5_s2/chi_order_b0.5_s2.fasta",
+      "tax": "data/chimera/chi_order_b0.5_s2/chi_order_b0.5_s2.tax"
+    },
+    {
+      "name": "chi_order_b0.5_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.5_s3/chi_order_b0.5_s3.fasta",
+      "tax": "data/chimera/chi_order_b0.5_s3/chi_order_b0.5_s3.tax"
+    },
+    {
+      "name": "chi_order_b0.75_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.75_s1/chi_order_b0.75_s1.fasta",
+      "tax": "data/chimera/chi_order_b0.75_s1/chi_order_b0.75_s1.tax"
+    },
+    {
+      "name": "chi_order_b0.75_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.75_s2/chi_order_b0.75_s2.fasta",
+      "tax": "data/chimera/chi_order_b0.75_s2/chi_order_b0.75_s2.tax"
+    },
+    {
+      "name": "chi_order_b0.75_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_order_b0.75_s3/chi_order_b0.75_s3.fasta",
+      "tax": "data/chimera/chi_order_b0.75_s3/chi_order_b0.75_s3.tax"
+    },
+    {
+      "name": "chi_phylum_b0.25_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.25_s1/chi_phylum_b0.25_s1.fasta",
+      "tax": "data/chimera/chi_phylum_b0.25_s1/chi_phylum_b0.25_s1.tax"
+    },
+    {
+      "name": "chi_phylum_b0.25_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.25_s2/chi_phylum_b0.25_s2.fasta",
+      "tax": "data/chimera/chi_phylum_b0.25_s2/chi_phylum_b0.25_s2.tax"
+    },
+    {
+      "name": "chi_phylum_b0.25_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.25_s3/chi_phylum_b0.25_s3.fasta",
+      "tax": "data/chimera/chi_phylum_b0.25_s3/chi_phylum_b0.25_s3.tax"
+    },
+    {
+      "name": "chi_phylum_b0.5_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.5_s1/chi_phylum_b0.5_s1.fasta",
+      "tax": "data/chimera/chi_phylum_b0.5_s1/chi_phylum_b0.5_s1.tax"
+    },
+    {
+      "name": "chi_phylum_b0.5_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.5_s2/chi_phylum_b0.5_s2.fasta",
+      "tax": "data/chimera/chi_phylum_b0.5_s2/chi_phylum_b0.5_s2.tax"
+    },
+    {
+      "name": "chi_phylum_b0.5_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.5_s3/chi_phylum_b0.5_s3.fasta",
+      "tax": "data/chimera/chi_phylum_b0.5_s3/chi_phylum_b0.5_s3.tax"
+    },
+    {
+      "name": "chi_phylum_b0.75_s1",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.75_s1/chi_phylum_b0.75_s1.fasta",
+      "tax": "data/chimera/chi_phylum_b0.75_s1/chi_phylum_b0.75_s1.tax"
+    },
+    {
+      "name": "chi_phylum_b0.75_s2",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.75_s2/chi_phylum_b0.75_s2.fasta",
+      "tax": "data/chimera/chi_phylum_b0.75_s2/chi_phylum_b0.75_s2.tax"
+    },
+    {
+      "name": "chi_phylum_b0.75_s3",
+      "n_seqs": 2043,
+      "aln_len": 1478,
+      "fasta": "data/chimera/chi_phylum_b0.75_s3/chi_phylum_b0.75_s3.fasta",
+      "tax": "data/chimera/chi_phylum_b0.75_s3/chi_phylum_b0.75_s3.tax"
+    }
+  ]
+}

@@ -317,6 +317,16 @@ done
 # gets a producer of its own rather than being assembled by eye from nine files.
 staged_rounds.py --out results/staged_rounds.txt > /dev/null
 
+# Error kind 7, chimeras: detection along the two axes the protocol names, and whether the proposal
+# sides with the unlabelled parent. Skipped when the runs are not here, as for the ragged cells.
+if [ -d results/chimera/runs ]; then
+    step "error kind 7: chimeras, by parent distance and breakpoint, both tools"
+    for cond in epang_T8_K25 upstream_raxml_T8; do
+        chimera_detection.py --chimera-dir data/chimera --runs-dir results/chimera/runs \
+            --condition "${cond}__rep1" --out "results/chimera_detection_${cond}.json"
+    done
+fi
+
 # What an incomplete lineage costs detection. The ragged cells are the grid's own at family distance
 # and the top rate, with a quarter of the untouched lineages cut to genus and a quarter to family, so
 # the injected truth is unchanged and recall is comparable cell for cell. Skipped rather than failed

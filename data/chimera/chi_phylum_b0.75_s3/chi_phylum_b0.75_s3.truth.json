@@ -1,0 +1,192 @@
+{
+  "kind": "chimera",
+  "distance": "phylum",
+  "breakpoint": 0.75,
+  "seed": 3,
+  "rate": 0.009886,
+  "base_sequences": 2023,
+  "n_total": 2023,
+  "n_injected": 20,
+  "injected": {
+    "chimera_001": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__Bilamarchaeaceae;g__Bilamarchaeum;s__Bilamarchaeum sp035455205",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__Bilamarchaeaceae;g__Bilamarchaeum;s__Bilamarchaeum sp035455205",
+      "parent_a": "GB_GCA_035455205.1_DATIFM010000004.1",
+      "parent_b": "GB_GCA_002502885.1_DAQM01000049.1",
+      "lineage_a": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Anstonellales;f__Bilamarchaeaceae;g__Bilamarchaeum;s__Bilamarchaeum sp035455205",
+      "lineage_b": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__UBA509;s__UBA509 sp002498845",
+      "breakpoint_column": 1114
+    },
+    "chimera_002": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloferax;s__Haloferax prahovense",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloferax;s__Haloferax prahovense",
+      "parent_a": "RS_GCF_000723845.1_NZ_LK053000.1-_3",
+      "parent_b": "GB_GCA_038727495.1_JAVYVT010000004.1",
+      "lineage_a": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloferax;s__Haloferax prahovense",
+      "lineage_b": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Fervidicoccaceae;g__ARK-14;s__ARK-14 sp038734945",
+      "breakpoint_column": 1104
+    },
+    "chimera_003": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__CG1-02-33-12;g__CG1-02-33-12;s__CG1-02-33-12 sp017609385",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__CG1-02-33-12;g__CG1-02-33-12;s__CG1-02-33-12 sp017609385",
+      "parent_a": "GB_GCA_017609385.1_JAFCEA010000001.1",
+      "parent_b": "GB_GCA_002505065.1_DAUH01000060.1",
+      "lineage_a": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__CG1-02-33-12;g__CG1-02-33-12;s__CG1-02-33-12 sp017609385",
+      "lineage_b": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__Thermoplasmataceae;g__Cuniculiplasma;s__Cuniculiplasma divulgatum",
+      "breakpoint_column": 1117
+    },
+    "chimera_004": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__VYCS01;s__VYCS01 sp009840065",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__VYCS01;s__VYCS01 sp009840065",
+      "parent_a": "GB_GCA_009841735.1_VYGT01000114.1",
+      "parent_b": "RS_GCF_013377755.1_NZ_JABXWR010000001.1",
+      "lineage_a": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrosopumilaceae;g__VYCS01;s__VYCS01 sp009840065",
+      "lineage_b": "d__Archaea;p__Halobacteriota;c__Methanomicrobia;o__Methanomicrobiales;f__Methanofollaceae;g__Methanofollis;s__Methanofollis tationis",
+      "breakpoint_column": 1109
+    },
+    "chimera_005": {
+      "true": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Fervidicoccaceae;g__ARK-14;s__ARK-14 sp038734945",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Fervidicoccaceae;g__ARK-14;s__ARK-14 sp038734945",
+      "parent_a": "GB_GCA_038727785.1_JAVYVE010000005.1",
+      "parent_b": "GB_GCA_034399495.1_DASCSU010000026.1",
+      "lineage_a": "d__Archaea;p__Thermoproteota;c__Thermoprotei_A;o__Sulfolobales;f__Fervidicoccaceae;g__ARK-14;s__ARK-14 sp038734945",
+      "lineage_b": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__MGIIb-Q1;s__MGIIb-Q1 sp034399495",
+      "breakpoint_column": 1110
+    },
+    "chimera_006": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__UBA36;s__UBA36 sp002722735",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__UBA36;s__UBA36 sp002722735",
+      "parent_a": "GB_GCA_030749595.1_JASMJQ010000006.1",
+      "parent_b": "GB_GCA_027364015.1_DAHXQD010000013.1",
+      "lineage_a": "d__Archaea;p__Thermoplasmatota;c__Poseidoniia;o__Poseidoniales;f__Thalassarchaeaceae;g__UBA36;s__UBA36 sp002722735",
+      "lineage_b": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJYVH01;s__JAJYVH01 sp021818925",
+      "breakpoint_column": 1108
+    },
+    "chimera_007": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "parent_a": "GB_GCA_027355015.1_DAHWVH010000002.1",
+      "parent_b": "GB_GCA_023269855.1_JAGDWP010000045.1",
+      "lineage_a": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Micrarchaeales;f__CABMGC01;g__JAJZIZ01;s__JAJZIZ01 sp021804095",
+      "lineage_b": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria_A;o__Caldarchaeales;f__Wolframiiraptoraceae;g__Geocrenenecus;s__Geocrenenecus sp023269855",
+      "breakpoint_column": 1109
+    },
+    "chimera_008": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA213;g__JAWCSA01;s__JAWCSA01 sp038868975",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA213;g__JAWCSA01;s__JAWCSA01 sp038868975",
+      "parent_a": "GB_GCA_038868495.1_JAWCTB010000012.1",
+      "parent_b": "GB_GCA_946496635.1_CAMMHK010000002.1",
+      "lineage_a": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__UBA213;g__JAWCSA01;s__JAWCSA01 sp038868975",
+      "lineage_b": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomassiliicoccaceae;g__Methanomassiliicoccus_A;s__Methanomassiliicoccus_A sp944319735",
+      "breakpoint_column": 1109
+    },
+    "chimera_009": {
+      "true": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Norongarragalinales;f__Norongarragalinaceae;g__UBA93;s__UBA93 sp002792915",
+      "wrong": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Norongarragalinales;f__Norongarragalinaceae;g__UBA93;s__UBA93 sp002792915",
+      "parent_a": "GB_GCA_002785255.1_PFLY01000107.1",
+      "parent_b": "GB_GCA_041479945.1_JBGOYZ010000005.1",
+      "lineage_a": "d__Archaea;p__Micrarchaeota;c__Micrarchaeia;o__Norongarragalinales;f__Norongarragalinaceae;g__UBA93;s__UBA93 sp002792915",
+      "lineage_b": "d__Archaea;p__Thermoproteota;c__EX4484-205;o__EX4484-205;f__JAAOZO01;g__JBGOYZ01;s__JBGOYZ01 sp041479945",
+      "breakpoint_column": 1080
+    },
+    "chimera_010": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Pacearchaeales;f__GW2011-AR1;g__RBG-13-33-26;s__RBG-13-33-26 sp001786415",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Pacearchaeales;f__GW2011-AR1;g__RBG-13-33-26;s__RBG-13-33-26 sp001786415",
+      "parent_a": "GB_GCA_001786415.1_MFWP01000008.1",
+      "parent_b": "GB_GCA_040770885.1_JAXGIF010000015.1",
+      "lineage_a": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Pacearchaeales;f__GW2011-AR1;g__RBG-13-33-26;s__RBG-13-33-26 sp001786415",
+      "lineage_b": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomassiliicoccaceae;g__UBA6;s__UBA6 sp012719175",
+      "breakpoint_column": 1059
+    },
+    "chimera_011": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "parent_a": "GB_GCA_027378575.1_DAIFBO010000115.1",
+      "parent_b": "GB_GCA_029259185.1_JAPDJF010000028.1",
+      "lineage_a": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__UBA184;f__UBA184;g__JAJZYH01;s__JAJZYH01 sp021798195",
+      "lineage_b": "d__Archaea;p__Hadarchaeota;c__Hadarchaeia;o__Hadarchaeales;f__WYZ-LMO6;g__JAPDJF01;s__JAPDJF01 sp029259185",
+      "breakpoint_column": 1109
+    },
+    "chimera_012": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Salinibaculum;s__Salinibaculum litoreum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Salinibaculum;s__Salinibaculum litoreum",
+      "parent_a": "GB_GCA_009789175.1_CP046866.1",
+      "parent_b": "RS_GCF_000091665.1_NC_000909.1",
+      "lineage_a": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Salinibaculum;s__Salinibaculum litoreum",
+      "lineage_b": "d__Archaea;p__Methanobacteriota;c__Methanococci;o__Methanococcales;f__Methanocaldococcaceae;g__Methanocaldococcus;s__Methanocaldococcus jannaschii",
+      "breakpoint_column": 1104
+    },
+    "chimera_013": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Haloglomus;s__Haloglomus halophilum",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Haloglomus;s__Haloglomus halophilum",
+      "parent_a": "RS_GCF_024298885.1_NZ_CP101166.1",
+      "parent_b": "GB_GCA_938091805.1_CALKGV010000108.1",
+      "lineage_a": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Haloglomus;s__Haloglomus halophilum",
+      "lineage_b": "d__Archaea;p__Thermoproteota;c__Bathyarchaeia;o__Bathyarchaeales;f__DTEX01;g__DTEX01;s__DTEX01 sp938091805",
+      "breakpoint_column": 1104
+    },
+    "chimera_014": {
+      "true": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "wrong": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "parent_a": "RS_GCF_000237865.1_NC_017459.1",
+      "parent_b": "GB_GCA_035289105.1_DATDYF010000027.1",
+      "lineage_a": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloferacaceae;g__Haloquadratum;s__Haloquadratum walsbyi",
+      "lineage_b": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__JACQSR01;g__JACQSR01;s__JACQSR01 sp035289105",
+      "breakpoint_column": 1103
+    },
+    "chimera_015": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "parent_a": "GB_GCA_031316275.1_JALDRD010000001.1",
+      "parent_b": "RS_GCF_029530365.1_NZ_JARDAC010000054.1",
+      "lineage_a": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Nitrososphaerales;f__Nitrososphaeraceae;g__Nitrosocosmicus;s__Nitrosocosmicus sp008389435",
+      "lineage_b": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Haloarculaceae;g__Haloarcula;s__Haloarcula laminariae",
+      "breakpoint_column": 1110
+    },
+    "chimera_016": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Pacearchaeales;f__GW2011-AR1;g__CAIQQL01;s__CAIQQL01 sp903873955",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Pacearchaeales;f__GW2011-AR1;g__CAIQQL01;s__CAIQQL01 sp903873955",
+      "parent_a": "GB_GCA_903873955.1_CAIQQL010000093.1",
+      "parent_b": "RS_GCF_017874455.1_NZ_JAGGLN010000016.1",
+      "lineage_a": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Pacearchaeales;f__GW2011-AR1;g__CAIQQL01;s__CAIQQL01 sp903873955",
+      "lineage_b": "d__Archaea;p__Methanobacteriota;c__Methanobacteria;o__Methanobacteriales;f__Methanobacteriaceae;g__Methanobacterium_C;s__Methanobacterium_C aggregans",
+      "breakpoint_column": 995
+    },
+    "chimera_017": {
+      "true": "d__Archaea;p__Iainarchaeota;c__Iainarchaeia;o__Iainarchaeales;f__GCA-2688035;g__JAGVNX01;s__JAGVNX01 sp020053055",
+      "wrong": "d__Archaea;p__Iainarchaeota;c__Iainarchaeia;o__Iainarchaeales;f__GCA-2688035;g__JAGVNX01;s__JAGVNX01 sp020053055",
+      "parent_a": "GB_GCA_020053055.1_JAGVNX010000072.1",
+      "parent_b": "GB_GCA_024399155.1_JAKSHX010000002.1",
+      "lineage_a": "d__Archaea;p__Iainarchaeota;c__Iainarchaeia;o__Iainarchaeales;f__GCA-2688035;g__JAGVNX01;s__JAGVNX01 sp020053055",
+      "lineage_b": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Methanomassiliicoccales;f__Methanomethylophilaceae;g__JAKSHX01;s__JAKSHX01 sp024399155",
+      "breakpoint_column": 1109
+    },
+    "chimera_018": {
+      "true": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__UBA525;g__UBA153;s__UBA153 sp028279755",
+      "wrong": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__UBA525;g__UBA153;s__UBA153 sp028279755",
+      "parent_a": "GB_GCA_028279755.1_JANQNB010000011.1",
+      "parent_b": "GB_GCA_041489155.1_JBGPQP010000005.1",
+      "lineage_a": "d__Archaea;p__Nanobdellota;c__Nanobdellia;o__Woesearchaeales;f__UBA525;g__UBA153;s__UBA153 sp028279755",
+      "lineage_b": "d__Archaea;p__Aenigmatarchaeota;c__Aenigmatarchaeia;o__QMZP01;f__QMZT01;g__JBGPQP01;s__JBGPQP01 sp041489155",
+      "breakpoint_column": 1113
+    },
+    "chimera_019": {
+      "true": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Conexivisphaerales;f__Conexivisphaeraceae;g__Conexivisphaera;s__Conexivisphaera sp009903775",
+      "wrong": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Conexivisphaerales;f__Conexivisphaeraceae;g__Conexivisphaera;s__Conexivisphaera sp009903775",
+      "parent_a": "GB_GCA_028275605.1_JAPWUG010000016.1",
+      "parent_b": "RS_GCF_012163165.1_NZ_JAAVUO010000081.1",
+      "lineage_a": "d__Archaea;p__Thermoproteota;c__Nitrososphaeria;o__Conexivisphaerales;f__Conexivisphaeraceae;g__Conexivisphaera;s__Conexivisphaera sp009903775",
+      "lineage_b": "d__Archaea;p__Halobacteriota;c__Halobacteria;o__Halobacteriales;f__Natrialbaceae;g__Natronococcus;s__Natronococcus jeotgali",
+      "breakpoint_column": 1109
+    },
+    "chimera_020": {
+      "true": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "wrong": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "parent_a": "GB_GCA_027368935.1_DAICPR010000002.1",
+      "parent_b": "GB_GCA_038882635.1_JAVZNV010000008.1",
+      "lineage_a": "d__Archaea;p__Thermoplasmatota;c__Thermoplasmata;o__Thermoplasmatales;f__GCA-001856825;g__GCA-001856825;s__GCA-001856825 sp021831005",
+      "lineage_b": "d__Archaea;p__Thermoproteota;c__EX4484-205;o__EX4484-205;f__JAAOZO01;g__JAAOZO01;s__JAAOZO01 sp017601145",
+      "breakpoint_column": 1108
+    }
+  }
+}

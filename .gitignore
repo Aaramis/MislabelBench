@@ -46,3 +46,5 @@ warn.txt
 # derives from them, and the runs that produced them are reproducible.
 *.jplace
 results/**/placements_shard*/
+data/chimera/*/*.tax
+data/chimera/*/*.fasta

@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 223 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 70 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 49 |
+| findings in this report | 224 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 73 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 51 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
-| dataset manifests, against the files they describe | 9 |
+| dataset manifests, against the files they describe | 10 |
 | run records, cross-checked against the files they summarise | 1174 |
 | result tables, each rebuilt by `bin/analyses.sh` | 68 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
-| tests over the scripts that turn runs into numbers | 92 |
+| tests over the scripts that turn runs into numbers | 100 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5447,6 +5447,28 @@ all three of upstream's own flags on the 2,023-sequence baseline sit at confiden
 `bin/kexact_decomposition.py`'s pairs table gains the cell and both tools' confidences and carries
 both directions, 84 and 4; it is renamed `results/kexact_one_sided.tsv`, since a file named
 `fork_only` that holds upstream's rows is the kind of inconsistency this review exists to remove.
+
+**224. Error kind 7, chimeras, which the review added and nothing here had.** `grep -ri chimer`
+found one word in a comment. `bin/inject_chimera.py` builds a chimera from two real sequences of the
+grid's base: parent B shares parent A's lineage above the chosen rank and differs at it, the same
+relation a wrong label has to the right one, and the chimera is A's aligned columns up to a breakpoint
+and B's after it, so it has the alignment's width and needs no realignment. The breakpoint is a fraction
+of A's **ungapped** length, because a fraction of the gapped width would fall at different points of the
+molecule for sequences with different gap patterns; the fixture has a sequence with four gaps in twelve
+columns to pin that. It is added under A's lineage, parents kept, base untouched, as kind 6 is.
+
+`slurm/make_chimera.sh` makes 36 cells -- parents at genus, family, order or phylum, breakpoint at a
+quarter, a half or three quarters, three seeds, twenty chimeras per cell -- and `bin/verify_chimera.py`
+refuses a cell whose chimeras are not their parents' columns, whose parents do not differ exactly at
+the rank, whose base changed, or whose label is not A's; on the 36 it finds nothing, and on one changed
+column it names the chimera. `bin/score_injection.py` treats the kind like kind 6 for the rank questions,
+which a half-right label has no answer to, and asks the one question it does have: of the chimeras
+flagged, how many had a proposed lineage siding with the unlabelled parent at the rank where the two
+differ, `proposed_sides_with_other_parent`. `bin/chimera_detection.py` pools that over seeds by distance
+and breakpoint for both tools; `slurm/chimera.sh` runs the 72 cells. The `.fasta` and `.tax` of the
+cells are regenerated from the seed and gitignored, as the grid's are; the truth is committed.
+`tests/test_chimera.py` pins the breakpoint arithmetic on a gapped sequence, the parent relation,
+determinism, both gates and the scoring, on a six-sequence alignment written by hand.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

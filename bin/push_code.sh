@@ -71,7 +71,7 @@ rsync -a --exclude='._*' --exclude='bad_nodes.txt' --relative \
 # Sent only when the cluster has none, so a fresh ~/bench inherits what is known and an existing one
 # keeps what it has learned. bin/repatriate.sh brings the union back the other way.
 rsync -a --ignore-existing slurm/bad_nodes.txt "$REMOTE:~/bench/slurm/"
-for d in injected clade simulated; do
+for d in injected clade simulated chimera; do
     rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \
           --exclude='*' "data/$d/" "$REMOTE:~/bench/data/$d/"
 done

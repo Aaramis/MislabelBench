@@ -107,7 +107,14 @@ def main():
     # mismatch_rank can never reach the domain. "Was it flagged at all" is the only meaningful
     # question there, so the at-rank metric is reported as absent rather than as zero.
     kind = truth.get("kind", "relabel")
-    rank_metric_meaningful = kind != "foreign"
+    # Kind 7, a chimera, is like kind 6 for the rank questions: the label it carries is one parent's
+    # and names a real clade it is half from, so "the rank at which the label is wrong" has no
+    # answer. What can be asked is whether the lineage the tool proposes instead sides with the
+    # other parent at the rank where the two differ -- that is, whether the placement went to the
+    # unlabelled half.
+    rank_metric_meaningful = kind not in ("foreign", "chimera")
+    other_of = ({name: rec["lineage_b"] for name, rec in injected.items()}
+                if kind == "chimera" else {})
     thresholds = [float(t) for t in args.thresholds.split(",")]
     have_exclusion = any(r["OriginalLabelExclusion"] is not None for r in flagged.values())
 
@@ -122,6 +129,9 @@ def main():
                        if mismatch_rank(flagged[s], declared_of.get(s)) == distance_rank}
             label_exact = {s for s in hits if proposed_matches(s, True)}
             label_at_rank = {s for s in hits if proposed_matches(s, False)}
+            sides_b = {s for s in hits if s in other_of
+                       and (flagged[s]["ProposedTaxonomyPath"].split(";")[:distance_rank + 1]
+                            == other_of[s].split(";")[:distance_rank + 1])}
             others = {s for s, r in flagged.items() if s not in injected and passes(r)}
             out.append({
                 "threshold": t,
@@ -132,6 +142,8 @@ def main():
                                          if injected and rank_metric_meaningful else None),
                 "recall_label_correct_at_rank": (len(label_at_rank) / len(injected)
                                                  if injected and rank_metric_meaningful else None),
+                "proposed_sides_with_other_parent": (len(sides_b) / len(hits) if hits else None)
+                                                    if kind == "chimera" else None,
                 "flags_on_non_injected": len(others),
                 # Keyed on whether a baseline was given, not on whether it holds anything. An
                 # empty baseline is a real answer -- a database the tool flags nothing in -- and
@@ -149,6 +161,7 @@ def main():
         "mis": args.mis,
         "kind": kind,
         "distance": truth["distance"],
+        "breakpoint": truth.get("breakpoint"),
         "rate": truth.get("rate"),
         "k": truth.get("k"),
         "seed": truth["seed"],
