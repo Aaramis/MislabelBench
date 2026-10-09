@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 228 |
+| findings in this report | 229 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
@@ -5539,6 +5539,21 @@ nodes of the `long` partition and the shards go to `fast`. The script now reads
 
 `placements`, before any of these: `PartitionTimeLimit` at 48 hours against a one-day partition;
 resubmitted at 24, which one Kexact cell inside a 24-hour grid job already fits.
+
+**229. The staged path shards folds by name, the tool strides them by number, and the two agree only
+below a thousand folds.** `placements` died 2 min 47 s into its Kexact cell: `FileNotFoundError` on
+`taskdir/fold_101/epang.log`, after 29 folds placed. `main.nf` sorted the fold directories with
+`.sort { it.name }` and dealt shard i the entries at positions i, i+T, i+2T of that order; the tool,
+given `-folds i/T`, places the folds whose *number* is i modulo T. Names are `fold_000` with three
+digits, so for the 25 folds every round here had ever used the two orders coincide, and for 2 023 they
+do not: `fold_1000` sorts before `fold_101`, shard 1 staged one set and the tool asked for another,
+and the first fold it could not find was the 26th. A hardcoded padding on one side and a lexicographic
+sort on the other, each fine alone.
+
+The sort is numeric now, and each shard checks that every fold it holds has the number the tool will
+ask for and refuses with the fold named otherwise, at submission rather than inside the container.
+Exercised by a stub run of the staged path at two folds per job; the 2 023-fold case is the re-run of
+`slurm/placements.sh`, queued behind the pipelines reading the current `main.nf`.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

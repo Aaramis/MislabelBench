@@ -114,12 +114,26 @@ workflow {
             // man and mod, not manifest and model: `manifest` is already a name in the workflow
             // scope, taken by the config's manifest block, and the parser says so.
             .flatMap { meta, folds, man, mod ->
-                def all = (folds instanceof List ? folds : [folds]).sort { it.name }
+                // Numeric order, not name order. The tool names folds fold_000 ... with three
+                // digits, so past a thousand folds fold_1000 sorts before fold_101 and a stride
+                // over the sorted names is not the stride -folds i/N takes over fold numbers: the
+                // shard stages one set and the tool asks for another, and the run dies on the first
+                // fold it cannot find -- FileNotFoundError on fold_101, 29 folds into a 2 023-fold
+                // Kexact cell. Twenty-five folds never showed it, since 000 to 024 sort both ways.
+                def number = { f -> (f.name =~ /\d+/)[0] as int }
+                def all = (folds instanceof List ? folds : [folds]).sort { number.call(it) }
                 // Integer arithmetic, not a cast: the config parser rejects `(int) Math.ceil(...)`.
                 def per = Math.max(params.folds_per_job as int, 1)
                 def shards = Math.max((all.size() + per - 1).intdiv(per), 1)
                 (0..<shards).collect { i ->
                     def mine = (i..<all.size()).step(shards).collect { all[it] }
+                    // What the tool will look for is every fold whose number is i modulo the shard
+                    // count; refuse here, with the fold named, rather than three minutes into it.
+                    def off = mine.findAll { number.call(it) % shards != i }
+                    if (off) {
+                        error "shard ${i} of ${shards} for ${meta.run_name} holds ${off[0].name}, " +
+                              "whose number is not ${i} modulo ${shards}: the fold order is not numeric"
+                    }
                     tuple(meta + [shard: i, n_shards: shards], man, mod, mine)
                 }
             }
