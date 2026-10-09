@@ -14,6 +14,7 @@ include { STAGEDREFERENCE   } from './modules/local/stagedreference/main'
 include { STAGEDLOOTASKS    } from './modules/local/stagedlootasks/main'
 include { STAGEDLOOPLACE    } from './modules/local/stagedlooplace/main'
 include { STAGEDLOOSCORE    } from './modules/local/stagedlooscore/main'
+include { KEEPPLACEMENTS    } from './modules/local/keepplacements/main'
 
 // A manifest's relative paths are relative to the project, not to wherever the job was launched
 // from. Each job now launches from its own directory so that several can run at once, and without
@@ -181,6 +182,19 @@ workflow {
         .join(SATIVA.out.inputs.mix(SATIVAEPANG.out.inputs))
 
     COLLECTRUN(ch_runs)
+
+    // The placement files, on request. Upstream's come from its own run; the fork's from the staged
+    // path's shards, one task per shard, since its monolithic run removes them itself.
+    if (params.keep) {
+        ch_keep = SATIVA.out.placements.map { meta, files -> tuple(meta, 'upstream', files) }
+        if (params.staged) {
+            ch_keep = ch_keep.mix(STAGEDLOOPLACE.out.folds.map { meta, folds ->
+                tuple(meta.findAll { k, v -> !(k in ['shard', 'n_shards']) },
+                      "shard${meta.shard}of${meta.n_shards}", folds)
+            })
+        }
+        KEEPPLACEMENTS(ch_keep)
+    }
 
     // join() pairs on the meta map and silently drops whatever finds no partner, so a cell that
     // lost one of its four outputs would never reach COLLECTRUN and the grid would look complete

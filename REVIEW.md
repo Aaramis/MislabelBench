@@ -18,10 +18,10 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 231 |
+| findings in this report | 232 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 74 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 54 |
-| `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
+| `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
 | run records, cross-checked against the files they summarise | 1295 |
 | result tables, each rebuilt by `bin/analyses.sh` | 73 |
@@ -5606,6 +5606,30 @@ put the whole difference at k = 3. Collateral flags under injection run 8 to 16 
 sequences, against none on the hand-made reference. All of it is in
 `results/grove_simulated_summary_*.json`, `results/detection_law_grove_simulated_*.json` and
 `results/paired_grove_simulated_upstream_vs_epang_T8_K25.json`, rebuilt by `bin/analyses.sh`.
+
+**232. A publishDir that never fired, and what replaced it.** The first `placements` run finished
+its upstream half with the two jplace files sitting in the task's `run/` and nothing in
+`results/`. Four attempts to publish them by `publishDir` on the SATIVA process -- as a second map in
+the existing list, with `enabled` as a closure, as a plain value, in a block of its own, with the
+pattern as a path and as a basename, with the `enabled: false` entry that shared the block removed --
+published nothing, on the cluster and in a stub run alike, and none of them said why. The one
+publishDir known to work here is COLLECTRUN's, which publishes its own process's whole output, so the
+placements now go through a process of their own, `modules/local/keepplacements/main.nf`:
+`KEEPPLACEMENTS` takes upstream's two files, or one
+staged shard's folds, copies the jplace, the `ref.nwk` its edge numbers refer to and the query, fails
+if no jplace was among them, and publishes under `results/<outdir>/placements/<run>/<origin>/`. A
+stub run of both tools on the staged path at two folds per job publishes three directories; without
+the flag, none. The SATIVA stub now touches the two jplace files upstream leaves, so this stays
+exercised. `cleanup = true` deletes the work directory on success, which is why the stub's own task
+directory could not be inspected and the publishDir failure could not be diagnosed beyond
+"nothing arrived".
+
+**And the pinned rounds flapped on one node.** `cpu-node-121` alternated between `mixed` and
+`drained` during the evening: listed mixed at pick time, drained by submission, so a shard pinned to
+it sat on `ReqNodeNotAvail`, in the first set of rounds and in the second, each time an orphan shard
+job outliving its cancelled driver. The state check at launch (finding 230) does not help against a
+node that drains after the pick, so the replicates were resubmitted with the four nodes named
+explicitly, 119, 120, 122 and 123, the orphan shards cancelled by id.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

@@ -66,6 +66,8 @@ process SATIVA {
     """
     mkdir -p run
     touch run/${meta.run_name}.mis run/${meta.run_name}.log run/stdout.log
+    # The two placement files upstream leaves beside the .mis, so a stub run exercises --keep_placements.
+    touch run/${meta.run_name}.l1out_seq.jplace run/${meta.run_name}.final_epa.jplace
     echo '{"wall_sec": 0.0, "returncode": 0, "timed_out": false, "max_rss_mb": 0.0}' > timing.json
     printf 'stub  %s\nstub  %s\n' ${fasta} ${tax} > inputs.txt
     cat <<-END_VERSIONS > versions.yml
