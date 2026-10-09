@@ -318,8 +318,8 @@ done
 staged_rounds.py --out results/staged_rounds.txt > /dev/null
 # The same four-shard round with every shard pinned to a different machine (slurm/staged_nodes.sh),
 # once it has run: the other half of "across jobs" against "across machines".
-if ls -d results/staged_nodes_n4_r1 >/dev/null 2>&1; then
-    staged_rounds.py --prefix staged_nodes --tags n4 --out results/staged_nodes.txt > /dev/null
+if ls -d results/staged_nodes_n4_r* >/dev/null 2>&1; then
+    staged_rounds.py --prefix staged_nodes --tags n4 --base staged_timed_f25 --out results/staged_nodes.txt > /dev/null
 fi
 
 # Error kind 7, chimeras: detection along the two axes the protocol names, and whether the proposal

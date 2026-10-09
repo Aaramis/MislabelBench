@@ -29,6 +29,13 @@ sequence per live placement -- so the gain is not in the split but in what each 
 is distribution across Slurm jobs rather than across machines, and the ceiling it demonstrates is the
 one a single machine's memory bandwidth allows. DISTRIBUTION.md carries the same caveat; it is here as
 well because this is the file the numbers come from.
+
+**The same round with every shard on its own machine**, `--prefix staged_nodes --base staged_timed_f25`:
+placement 62.7 s against 64.9 s on one node, 3 % apart, inside the 1 to 4 % the replicates of either
+set spread over. One node's memory bandwidth was therefore not what bounded the four-shard round, and
+"jobs" against "machines" is a distinction the measurement does not see at this size. The reference
+stage, which is not pinned, came back 17 s slower in that set, which is the other node's occupants and
+not the pin; the per-stage columns are there so that this can be read rather than guessed.
 """
 
 import argparse
@@ -99,6 +106,9 @@ def main():
     p.add_argument("--prefix", default="staged_timed",
                    help="results/<prefix>_<tag>_<replicate>; staged_nodes for the rounds whose shards "
                         "were pinned to distinct machines")
+    p.add_argument("--base", help="results/<base>_<replicate>, the one-shard rounds the pinned set "
+                                  "is measured against, printed as its first row; a set of "
+                                  "four-shard rounds alone has nothing to divide by")
     p.add_argument("--out")
     args = p.parse_args()
 
@@ -111,22 +121,27 @@ def main():
         print(s)
         lines.append(s)
 
+    sets = [(args.prefix, t) for t in tags]
+    if args.base:
+        sets.insert(0, tuple(args.base.rsplit("_", 1)))
+        tags.insert(0, sets[0][1])
     pooled, singles = {}, {}
-    for tag in tags:
+    for prefix, tag in sets:
         rounds = []
         for rep in reps:
-            d = results / f"{args.prefix}_{tag}_{rep}" / "staged"
+            d = results / f"{prefix}_{tag}_{rep}" / "staged"
             if d.is_dir():
                 r = round_seconds(d)
                 if r:
                     r["tag"] = f"{tag}_{rep}"
-                    r["round"] = f"{args.prefix}_{tag}_{rep}"
+                    r["round"] = f"{prefix}_{tag}_{rep}"
+                    r["prefix"] = prefix
                     rounds.append(r)
         if rounds:
             pooled[tag] = rounds
         # The same tag without a replicate suffix is the earlier session's round, kept for the
         # cross-session line and deliberately not pooled with the others.
-        d = results / f"{args.prefix}_{tag}" / "staged"
+        d = results / f"{prefix}_{tag}" / "staged"
         if d.is_dir():
             r = round_seconds(d)
             if r:
@@ -180,7 +195,7 @@ def main():
                    else "  -> one shard per machine in every round" if distinct
                    else "  -> shards shared a machine in some round"))
             # A set that claims distinct machines and has two shards on one is not that set.
-            if args.prefix == "staged_nodes" and not distinct:
+            if rs[0]["prefix"] == "staged_nodes" and not distinct:
                 raise SystemExit(f"{tag}: shards shared a node in a round meant to pin them apart")
         else:
             say(f"{'':15}nodes: not recorded; run slurm/shard_nodes.sh on these rounds")

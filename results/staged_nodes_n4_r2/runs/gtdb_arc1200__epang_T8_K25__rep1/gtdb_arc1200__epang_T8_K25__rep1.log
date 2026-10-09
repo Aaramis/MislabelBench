@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc1200.aligned.fasta -t gtdb_arc1200.tax -T 8 -n gtdb_arc1200__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/94/3311c36d25f4828cd9a502b25b5149/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc1200.aligned.fasta -t gtdb_arc1200.tax -T 8 -n gtdb_arc1200__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/60/ac5973c8b782f037f742f3b91535db/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -190,11 +190,11 @@ WARNING: 46 indistinguishable taxa have been merged into 22 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/94/3311c36d25f4828cd9a502b25b5149/tmp/gtdb_arc1200__epang_T8_K25__rep1_1791576443443/RAxML_info.mfresolv_gtdb_arc1200__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/94/3311c36d25f4828cd9a502b25b5149/tmp/gtdb_arc1200__epang_T8_K25__rep1_1791576443443/epang_l1out_seq_gtdb_arc1200__epang_T8_K25__rep1 (2.1s)
-[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 195.9s)
-[epang-l1o] placements produits: 7051 (K=25 folds, remap 4.9s)
-[epang-l1o] timing: fold prep 2.1s, epa-ng 195.9s, remap 4.9s, elapsed 203.0s
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/60/ac5973c8b782f037f742f3b91535db/tmp/gtdb_arc1200__epang_T8_K25__rep1_1791580074387/RAxML_info.mfresolv_gtdb_arc1200__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/60/ac5973c8b782f037f742f3b91535db/tmp/gtdb_arc1200__epang_T8_K25__rep1_1791580074387/epang_l1out_seq_gtdb_arc1200__epang_T8_K25__rep1 (2.2s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 207.4s)
+[epang-l1o] placements produits: 7051 (K=25 folds, remap 5.0s)
+[epang-l1o] timing: fold prep 2.2s, epa-ng 207.4s, remap 5.0s, elapsed 214.6s
 Leave-one-out test identified 611 suspicious sequences; running final EPA test to check them...
 
 [epang-final] 611 suspects re-placed (model RAxML_info.mfresolv_gtdb_arc1200__epang_T8_K25__rep1)
@@ -208,8 +208,8 @@ Species     :	195
 
 Total mislabels: 469 / 6.65 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/94/3311c36d25f4828cd9a502b25b5149/run/gtdb_arc1200__epang_T8_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/94/3311c36d25f4828cd9a502b25b5149/run/gtdb_arc1200__epang_T8_K25__rep1.log
+Results were saved to: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/60/ac5973c8b782f037f742f3b91535db/run/gtdb_arc1200__epang_T8_K25__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/staged_nodes_n4_r2/work/60/ac5973c8b782f037f742f3b91535db/run/gtdb_arc1200__epang_T8_K25__rep1.log
 
-Analysis completed successfully, elapsed time: 268 seconds (50s reftree, 218s leave-one-out)
+Analysis completed successfully, elapsed time: 296 seconds (64s reftree, 232s leave-one-out)
 
