@@ -63,6 +63,6 @@ nextflow run "$BENCH_ROOT" -profile ifb \
   --outdir "$BENCH_ROOT/results/staged_nodes_${TAG}"
 
 # Which node each shard really ran on, from sacct, so the pin is checked and not trusted.
-bash "$BENCH_ROOT/slurm/shard_nodes.sh" "$BENCH_ROOT/results/staged_nodes_${TAG}/pipeline_info"/trace-*.txt
+bash "$BENCH_ROOT/slurm/shard_nodes.sh" "$BENCH_ROOT/results/staged_nodes_${TAG}"
 staged_scaling.py --staged-dir "$BENCH_ROOT/results/staged_nodes_${TAG}/staged" \
     --trace-dir "$BENCH_ROOT/results/staged_nodes_${TAG}/pipeline_info"
