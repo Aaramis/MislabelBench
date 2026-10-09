@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 222 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 69 |
+| findings in this report | 223 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 70 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 49 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 8 |
 | dataset manifests, against the files they describe | 9 |
 | run records, cross-checked against the files they summarise | 1174 |
-| result tables, each rebuilt by `bin/analyses.sh` | 66 |
+| result tables, each rebuilt by `bin/analyses.sh` | 68 |
 | `.mis` files, the flag lists every detection number is computed from | 1500 |
-| tests over the scripts that turn runs into numbers | 89 |
+| tests over the scripts that turn runs into numbers | 92 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **66 published tables** ← 1 174 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **68 published tables** ← 1 174 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -5425,6 +5425,28 @@ computing person": placement **98 %** efficient at two shards and **91 %** at fo
 whole run cannot beat 4.20× at any shard count. `bin/resource_usage.py` reports core-hours beside
 CPU-seconds, and the baseline is a rate as well as a count: `baseline_rate` in every score record,
 and "93 flags, 4.60 % of 2 023 sequences" in `background_stability.py`'s summary.
+
+**223. The dataset table had no producer, and the disagreement had no per-sequence record.** The
+protocol's §7 table -- `ssu_reps` 4,448 / 78.4 % / 0.0 %, `ssu_all` 13,754 / 95.7 % / 81.5 %, the
+filtered set 7,051 / 91.7 % / 72.7 % with 64.1 % from two distinct genomes -- lived in this repository
+as one YAML comment holding two of the twelve numbers, and the two-genome share lived nowhere.
+`bin/dataset_table.py` computes all twelve from the release files, importing `bin/dataset_shape.py`'s
+rule so the 72.7 here and the 72.7 in `results/shape_gtdb_arc1200.json` are one definition, and
+reproduces every figure of the table exactly; `data/gtdb/dataset_table.json` is the record, under
+`data/` because it is derived from the release and not from a run, and `bin/verify_manifests.py` now
+holds the YAML's `judgeable_pct_after_domain` and the shape record to it: 22 provenance figures checked
+where there were 17. The two-genome column counts a species as judgeable only when its members come
+from two genomes, since two SSU copies of one genome are siblings for leave-one-out but not two
+isolates, and the fixture in `tests/test_dataset_table.py` has exactly that case; the same file
+pins the clade selection's ordering on two orders, one on the targets and one off them.
+
+On question 2, `bin/agreement.py` computed the one-sided sets and wrote their sizes, so the 51 and 119
+of the 7,051-sequence baseline had no per-sequence record anywhere; it now writes them as rows with
+level, proposed label, path and confidence beside the JSON, and the table shows what a count cannot:
+all three of upstream's own flags on the 2,023-sequence baseline sit at confidence exactly 0.51.
+`bin/kexact_decomposition.py`'s pairs table gains the cell and both tools' confidences and carries
+both directions, 84 and 4; it is renamed `results/kexact_one_sided.tsv`, since a file named
+`fork_only` that holds upstream's rows is the kind of inconsistency this review exists to remove.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

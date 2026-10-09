@@ -9,6 +9,10 @@
 # set. The two sets the benchmark actually runs on are the two GTDB subsets:
 #
 #   GTDB r226 ar53_ssu_reps     :  4448 sequences ->  0.0 %   one sequence per species
+#                                 (78.4 % at genus; the whole protocol table, reps and ssu_all
+#                                 before and after the length filter with the two-genome share,
+#                                 is data/gtdb/dataset_table.json from bin/dataset_table.py, and
+#                                 bin/verify_manifests.py holds this file to it)
 #   gtdb_arc2k, the grid's set  :  2023 sequences -> 74.9 %
 #   gtdb_arc1200, the headline  :  7051 sequences -> 72.7 %
 #   UNITE v10.0 RefS            : 20295 sequences ->  4.3 %

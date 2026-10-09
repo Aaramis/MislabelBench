@@ -1,0 +1,31 @@
+{
+  "clade": "d__Archaea",
+  "min_len": 1200,
+  "sources": {
+    "ssu_all": "ssu_all_r226.fna.gz",
+    "ssu_reps": "ar53_ssu_reps_r226.fna.gz"
+  },
+  "rows": {
+    "ssu_reps": {
+      "sequences": 4448,
+      "evaluable_genus_pct": 78.4,
+      "evaluable_species_pct": 0.0,
+      "evaluable_species_two_genomes_pct": 0.0,
+      "n_species": 4448
+    },
+    "ssu_all": {
+      "sequences": 13754,
+      "evaluable_genus_pct": 95.7,
+      "evaluable_species_pct": 81.5,
+      "evaluable_species_two_genomes_pct": 69.4,
+      "n_species": 4774
+    },
+    "ssu_all_over_1200": {
+      "sequences": 7051,
+      "evaluable_genus_pct": 91.7,
+      "evaluable_species_pct": 72.7,
+      "evaluable_species_two_genomes_pct": 64.1,
+      "n_species": 3067
+    }
+  }
+}

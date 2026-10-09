@@ -46,7 +46,7 @@ SKIP_SUFFIX = (".pyc",)
 REMOVED = ("scripts/", "sativa_epang/", "data_ascii/", "data_injected/", "config.sh",
            "modules/local/fetchdataset/", "bin/_timeit.py",
            # Renamed, and the findings about the rename have to be able to name the old path.
-           "bin/figure_candidates.py", "bin/unite_shape.py",
+           "bin/figure_candidates.py", "bin/unite_shape.py", "results/kexact_fork_only.tsv",
            # Version 1's, deleted with it; findings 14 and the plot one are about the deletion.
            "bin/plot.py", "conf/ifb.config",
            # A runtime log on the cluster, gitignored here, which is the subject of its finding.

@@ -128,21 +128,40 @@ def main():
                                                       if fork[n][1] is not None]),
                 "both_median_exclusion": median([fork[n][1] for n in both
                                                  if fork[n][1] is not None]),
+                # Per sequence and per tool, for the table the co-author's question needs: which
+                # sequences, in which cell, at what confidence in each engine. A missing tool is
+                # the sequence not being flagged there, written as null and not as zero.
+                "pairs": {n: {"fork_confidence": fork[n][0] if n in fork else None,
+                              "fork_exclusion": fork[n][1] if n in fork else None,
+                              "upstream_confidence": up[n][0] if n in up else None}
+                          for n in sorted(set(fork_only) | (injected & set(up)) - set(fork))},
             }
         rows.append(rec)
 
     Path(args.out).write_text(json.dumps({"cells": rows}, indent=2))
 
     if args.pairs_out:
-        lines = []
+        # One row per one-sided sequence, both directions, with the cell it comes from and each
+        # tool's confidence. The first version wrote the fork-only names and their wrong label and
+        # nothing else, so the 84 names were on file and the cell and the confidences were not.
+        lines = ["cell\tside\tsequence\twrong_label\tfork_confidence\tfork_exclusion"
+                 "\tupstream_confidence"]
+        n_rows = 0
         for rec in rows:
-            if not rec.get("one_sided"):
+            os = rec.get("one_sided")
+            if not os:
                 continue
             truth = json.loads((Path(args.injected_dir) / rec["cell"] /
                                 f"{rec['cell']}.truth.json").read_text())["injected"]
-            lines += [f"{n}\t{truth[n]['wrong']}" for n in rec["one_sided"]["fork_only"]]
+            for side, names in (("fork_only", os["fork_only"]), ("upstream_only", os["upstream_only"])):
+                for n in names:
+                    pr = os["pairs"][n]
+                    lines.append(f"{rec['cell']}\t{side}\t{n}\t{truth[n]['wrong']}\t"
+                                 f"{pr['fork_confidence']}\t{pr['fork_exclusion']}\t"
+                                 f"{pr['upstream_confidence']}")
+                    n_rows += 1
         Path(args.pairs_out).write_text("\n".join(lines) + "\n")
-        print(f"{len(lines)} fork-only sequences written to {args.pairs_out}")
+        print(f"{n_rows} one-sided sequences written to {args.pairs_out}")
     for rec in rows:
         print(f"{rec['cell']} (k={rec['k']})")
         for cond, v in rec["recall"].items():

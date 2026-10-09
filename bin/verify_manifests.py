@@ -203,6 +203,39 @@ def check_provenance(problems):
                                 f"{have[rank]} for {what}")
             checked += 1
 
+    # The protocol's dataset table, produced by bin/dataset_table.py from the release files and
+    # committed as data/gtdb/dataset_table.json. Its filtered row and results/shape_gtdb_arc1200.json
+    # are two computations of one quantity and must agree; its ssu_all row is what the YAML's
+    # judgeable_pct_after_domain asserts, which nothing could rebuild before the table existed.
+    table = Path("data/gtdb/dataset_table.json")
+    if table.exists():
+        rows = json.loads(table.read_text())["rows"]
+        have = shape("results/shape_gtdb_arc1200.json") or {}
+        row = rows.get("ssu_all_over_1200", {})
+        for rank in ("genus", "species"):
+            a, b = row.get(f"evaluable_{rank}_pct"), have.get(rank)
+            if a is not None and b is not None:
+                checked += 1
+                if abs(a - b) > 0.05:
+                    problems.append(f"dataset_table.json says {a} at {rank} after the length "
+                                    f"filter, results/shape_gtdb_arc1200.json computes {b}")
+        want = _block(text, "judgeable_pct_after_domain")
+        row = rows.get("ssu_all", {})
+        for rank, v in (want or {}).items():
+            a = row.get(f"evaluable_{rank}_pct")
+            if a is not None:
+                checked += 1
+                if abs(a - v) > 0.05:
+                    problems.append(f"datasets.yml: judgeable_pct_after_domain.{rank} says {v}, "
+                                    f"dataset_table.json computes {a}")
+        n = rows.get("ssu_all", {}).get("sequences")
+        m = _re.search(r"^\s*after_domain:\s*(\d+)\s*$", text, _re.M)
+        if m and n is not None:
+            checked += 1
+            if int(m.group(1)) != n:
+                problems.append(f"datasets.yml: after_domain says {m.group(1)}, "
+                                f"dataset_table.json holds {n}")
+
     for key, path, label in (("after_length", "data/gtdb/gtdb_arc1200.fasta", "archaeal"),
                              ("drawn", "data/bacteria/donor_pool.fasta", "donor")):
         m = _re.search(rf"^\s*{key}:\s*(\d+)\s*$", text, _re.M)
