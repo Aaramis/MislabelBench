@@ -2,7 +2,7 @@
 #SBATCH --job-name=bacterial
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
-#SBATCH --time=48:00:00
+#SBATCH --time=24:00:00
 #SBATCH --constraint=epyc-9754
 #SBATCH --output=%x-%j.log
 #
