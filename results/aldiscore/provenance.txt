@@ -1,0 +1,2 @@
+Python 3.12.12
+aldiscore cc2de71f7ca1096a9cf3ef1ea3b83622e9a27a51

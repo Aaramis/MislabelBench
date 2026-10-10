@@ -1,0 +1,66 @@
+{
+  "scores": "results/aldiscore/scores.jsonl",
+  "base": "gtdb_arc2k",
+  "sets": {
+    "gtdb_arc2k": {
+      "n_sequences": 2023,
+      "difficulty": 0.10116981651634271
+    },
+    "fgn_r0.005_s1": {
+      "n_sequences": 2033,
+      "difficulty": 0.10303791307531895
+    },
+    "fgn_r0.005_s2": {
+      "n_sequences": 2033,
+      "difficulty": 0.10297359773431584
+    },
+    "fgn_r0.005_s3": {
+      "n_sequences": 2033,
+      "difficulty": 0.10132982123882134
+    },
+    "fgn_r0.01_s1": {
+      "n_sequences": 2043,
+      "difficulty": 0.11043161213393603
+    },
+    "fgn_r0.01_s2": {
+      "n_sequences": 2043,
+      "difficulty": 0.10963574032310452
+    },
+    "fgn_r0.01_s3": {
+      "n_sequences": 2043,
+      "difficulty": 0.10899440246310378
+    },
+    "fgn_r0.05_s1": {
+      "n_sequences": 2124,
+      "difficulty": 0.10341552947340255
+    },
+    "fgn_r0.05_s2": {
+      "n_sequences": 2124,
+      "difficulty": 0.10258773397597357
+    },
+    "fgn_r0.05_s3": {
+      "n_sequences": 2124,
+      "difficulty": 0.10235337414953692
+    }
+  },
+  "foreign_vs_base": {
+    "0.005": {
+      "cells": 3,
+      "mean_delta": 0.00128,
+      "min_delta": 0.00016,
+      "max_delta": 0.00187
+    },
+    "0.01": {
+      "cells": 3,
+      "mean_delta": 0.00852,
+      "min_delta": 0.00782,
+      "max_delta": 0.00926
+    },
+    "0.05": {
+      "cells": 3,
+      "mean_delta": 0.00162,
+      "min_delta": 0.00118,
+      "max_delta": 0.00225
+    }
+  }
+}

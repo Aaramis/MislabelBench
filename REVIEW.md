@@ -18,13 +18,13 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 241 |
+| findings in this report | 242 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 76 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 57 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
 | run records, cross-checked against the files they summarise | 1361 |
-| result tables, each rebuilt by `bin/analyses.sh` | 88 |
+| result tables, each rebuilt by `bin/analyses.sh` | 89 |
 | `.mis` files, the flag lists every detection number is computed from | 1687 |
 | tests over the scripts that turn runs into numbers | 113 |
 
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **88 published tables** ← 1 361 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **89 published tables** ← 1 361 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -5794,6 +5794,21 @@ pass that test and fail this one), and reports the foreign cells as a delta from
 rate, which is the before-and-after the protocol asks of error kind 6; `bin/analyses.sh` runs it
 when the file exists. `tests/test_aldiscore_summary.py`: three tests, and the sweep kills all six
 mutants once min and max are pinned, which they were not at first.
+
+**242. Alignment difficulty before and after the donors: at most 0.009 on a scale of one.**
+`results/aldiscore_summary.json`, from `results/aldiscore/scores.jsonl` (commit `cc2de71f`, python
+3.12.12, lightgbm 4.7.0, parasail 1.3.4 in `results/aldiscore/env-requirements.txt`): the archaeal
+subset scores 0.1012; the foreign cells 0.1013 to 0.1030 at 0.5 %, 0.1090 to 0.1104 at 1 %, 0.1024
+to 0.1034 at 5 %. The deltas by rate are +0.0013, +0.0085 and +0.0016, three seeds each; the 1 %
+cells sit above the 5 % ones, so the predictor does not order the rates, and the largest movement is
+under a hundredth of its range. The predictor samples a hundred sequence triplets for its pairwise
+features (`max_samples` in its `DifficultyPredictor`), which is the resolution those deltas should be
+read at. The reading for the supplement: adding bacterial sequences to the archaeal set does not
+make the set harder to align in this predictor's sense, while each donor itself aligns 500 bits
+worse to the archaeal model (finding on `bin/foreign_score_vs_flag.py`); the two measurements are
+of different things, a set and a sequence, and both are given. The two large sets are still
+running and `scores.jsonl` is extended in place when they land; the summary is rebuilt by
+`bin/analyses.sh` from whatever the file holds.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

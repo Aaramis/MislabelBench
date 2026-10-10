@@ -1,0 +1,10 @@
+{"set": "gtdb_arc2k", "n_sequences": 2023, "stdout": "0.10116981651634271", "numbers_in_output": ["0.10116981651634271"]}
+{"set": "fgn_r0.005_s1", "n_sequences": 2033, "stdout": "0.10303791307531895", "numbers_in_output": ["0.10303791307531895"]}
+{"set": "fgn_r0.005_s2", "n_sequences": 2033, "stdout": "0.10297359773431584", "numbers_in_output": ["0.10297359773431584"]}
+{"set": "fgn_r0.005_s3", "n_sequences": 2033, "stdout": "0.10132982123882134", "numbers_in_output": ["0.10132982123882134"]}
+{"set": "fgn_r0.01_s1", "n_sequences": 2043, "stdout": "0.11043161213393603", "numbers_in_output": ["0.11043161213393603"]}
+{"set": "fgn_r0.01_s2", "n_sequences": 2043, "stdout": "0.10963574032310452", "numbers_in_output": ["0.10963574032310452"]}
+{"set": "fgn_r0.01_s3", "n_sequences": 2043, "stdout": "0.10899440246310378", "numbers_in_output": ["0.10899440246310378"]}
+{"set": "fgn_r0.05_s1", "n_sequences": 2124, "stdout": "0.10341552947340255", "numbers_in_output": ["0.10341552947340255"]}
+{"set": "fgn_r0.05_s2", "n_sequences": 2124, "stdout": "0.10258773397597357", "numbers_in_output": ["0.10258773397597357"]}
+{"set": "fgn_r0.05_s3", "n_sequences": 2124, "stdout": "0.10235337414953692", "numbers_in_output": ["0.10235337414953692"]}
