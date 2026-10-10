@@ -365,6 +365,12 @@ if [ -d results/grid_bac/runs ]; then
         --tax data/gtdb/gtdb_bac_lachnospirales.tax --out results/shape_gtdb_bac_lachnospirales.json
 fi
 
+# Alignment difficulty per set (slurm/aldiscore.sh), the foreign cells as a delta from the subset.
+if [ -s results/aldiscore/scores.jsonl ]; then
+    step "alignment difficulty of every set, the foreign cells against their base"
+    aldiscore_summary.py --out results/aldiscore_summary.json > /dev/null
+fi
+
 # Where the injected sequences' placements landed, read off the jplace files slurm/placements.sh
 # keeps. The files stay out of git (about 540 MB for the Kexact cell), so this runs only where they
 # are, and the committed record under results/placement_locality/ is what the paper cites. Upstream's

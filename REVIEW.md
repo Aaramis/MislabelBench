@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 240 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
+| findings in this report | 241 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 76 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 57 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
 | run records, cross-checked against the files they summarise | 1361 |
 | result tables, each rebuilt by `bin/analyses.sh` | 88 |
 | `.mis` files, the flag lists every detection number is computed from | 1687 |
-| tests over the scripts that turn runs into numbers | 110 |
+| tests over the scripts that turn runs into numbers | 113 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5782,6 +5782,18 @@ subset rows of `results/resource_usage.txt` are the records, and the bacterial g
 carry `added_vs_baseline_mean`: at 5 % the fork adds 34 to 56 flags over its 82 and upstream 28 to
 60 over its 76, the same order as the archaeal grid's, so the bacterial cells are not flagging the
 subset wholesale.
+
+**241. The predictor's output, and its reader.** AlDiScore prints one number per set and nothing
+else: 0.1012 for the archaeal subset, 0.1030 for the first 0.5 % foreign cell, about twenty minutes
+a set at 2,000 sequences on one core. The first submission was cancelled after ninety minutes on
+the 7,051 with no output, and `slurm/aldiscore.sh` now scores the 2,000-sequence sets first and the
+two large ones last, so that a time limit costs only those. `bin/aldiscore_summary.py` reads
+`results/aldiscore/scores.jsonl`, requires each set's whole stdout to parse as one number rather
+than trusting the numbers the job pulled out of the text (a warning printed beside the score would
+pass that test and fail this one), and reports the foreign cells as a delta from `gtdb_arc2k` by
+rate, which is the before-and-after the protocol asks of error kind 6; `bin/analyses.sh` runs it
+when the file exists. `tests/test_aldiscore_summary.py`: three tests, and the sweep kills all six
+mutants once min and max are pinned, which they were not at first.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
