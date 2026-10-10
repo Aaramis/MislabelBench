@@ -1,0 +1,104 @@
+{
+  "epang_T1_K25": {
+    "intercept_mb": 973.89,
+    "kb_per_seq_per_column": 0.389,
+    "rows": [
+      {
+        "cell": "w0300",
+        "columns": 300,
+        "n_seqs": 2023,
+        "max_rss_mb": 1191.5,
+        "mb_per_seq": 0.589,
+        "fit_mb": 1204.4,
+        "residual_mb": -12.9
+      },
+      {
+        "cell": "w0600",
+        "columns": 600,
+        "n_seqs": 2023,
+        "max_rss_mb": 1448.0,
+        "mb_per_seq": 0.7158,
+        "fit_mb": 1435.0,
+        "residual_mb": 13.0
+      },
+      {
+        "cell": "w0900",
+        "columns": 900,
+        "n_seqs": 2023,
+        "max_rss_mb": 1672.2,
+        "mb_per_seq": 0.8266,
+        "fit_mb": 1665.5,
+        "residual_mb": 6.7
+      },
+      {
+        "cell": "w1200",
+        "columns": 1200,
+        "n_seqs": 2023,
+        "max_rss_mb": 1896.0,
+        "mb_per_seq": 0.9372,
+        "fit_mb": 1896.1,
+        "residual_mb": -0.1
+      },
+      {
+        "cell": "w1478",
+        "columns": 1478,
+        "n_seqs": 2023,
+        "max_rss_mb": 2103.1,
+        "mb_per_seq": 1.0396,
+        "fit_mb": 2109.7,
+        "residual_mb": -6.6
+      }
+    ]
+  },
+  "epang_T8_K25": {
+    "intercept_mb": 922.26,
+    "kb_per_seq_per_column": 0.5827,
+    "rows": [
+      {
+        "cell": "w0300",
+        "columns": 300,
+        "n_seqs": 2023,
+        "max_rss_mb": 1263.6,
+        "mb_per_seq": 0.6246,
+        "fit_mb": 1267.6,
+        "residual_mb": -4.0
+      },
+      {
+        "cell": "w0600",
+        "columns": 600,
+        "n_seqs": 2023,
+        "max_rss_mb": 1618.5,
+        "mb_per_seq": 0.8,
+        "fit_mb": 1613.0,
+        "residual_mb": 5.5
+      },
+      {
+        "cell": "w0900",
+        "columns": 900,
+        "n_seqs": 2023,
+        "max_rss_mb": 1956.0,
+        "mb_per_seq": 0.9669,
+        "fit_mb": 1958.3,
+        "residual_mb": -2.3
+      },
+      {
+        "cell": "w1200",
+        "columns": 1200,
+        "n_seqs": 2023,
+        "max_rss_mb": 2308.2,
+        "mb_per_seq": 1.141,
+        "fit_mb": 2303.7,
+        "residual_mb": 4.5
+      },
+      {
+        "cell": "w1478",
+        "columns": 1478,
+        "n_seqs": 2023,
+        "max_rss_mb": 2620.1,
+        "mb_per_seq": 1.2952,
+        "fit_mb": 2623.7,
+        "residual_mb": -3.6
+      }
+    ]
+  }
+}

@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 245 |
+| findings in this report | 246 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 78 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 59 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 14 |
-| run records, cross-checked against the files they summarise | 1361 |
-| result tables, each rebuilt by `bin/analyses.sh` | 89 |
-| `.mis` files, the flag lists every detection number is computed from | 1687 |
+| run records, cross-checked against the files they summarise | 1371 |
+| result tables, each rebuilt by `bin/analyses.sh` | 90 |
+| `.mis` files, the flag lists every detection number is computed from | 1697 |
 | tests over the scripts that turn runs into numbers | 119 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 361 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 371 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **89 published tables** ← 1 361 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **90 published tables** ← 1 371 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 361** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 371** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 361 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 371 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 361**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 371**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -5854,6 +5854,21 @@ after the timing record. A fold that fails should stop the run with that fold's 
 twenty-four folds later with a parser's; this goes in `docs/issue_epang_options.md`'s companion
 list for the user to raise upstream, and the benchmark's own gate (`verify_fold_counts.py`) would
 have caught a 24-of-25 run that produced a `.mis`.
+
+**246. The width term, measured: half the footprint, not all of it.** `slurm/width.sh` ran the
+fork on the same 2,023 sequences at five widths, one thread and eight, ten runs in fourteen minutes;
+`results/memory_width.json` holds the fit. The largest process's peak is linear in columns with
+residuals under 13 MB: 974 MB + 0.389 kB per sequence and per column at one thread, 922 MB + 0.583
+kB at eight. Finding 243 had deduced 0.78 kB per sequence and per column from "one likelihood
+vector per node and per site", which is what the width-dependent part costs if it were the whole
+footprint; it is half of it. The other half, 0.48 MB per sequence at one thread, does not move with
+the width and does move with the sequences (the per-sequence peak at fixed width is flat from 402
+to 7,051, README's table), so the law is peak per placement = sequences x (0.48 MB + 0.39 kB x
+columns) at one thread. The article, README.md and Decisions.md say so now, and the deduced figure
+is corrected rather than left beside the measured one. The earlier reading of the bacterial and
+Grove widths (+3 % and +15 % per sequence for +4 % and +20 % columns) is consistent with the
+measured slope, which is why it looked like proportionality: on a 4 to 20 % change, half of
+proportional and all of it differ by less than the run-to-run spread.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

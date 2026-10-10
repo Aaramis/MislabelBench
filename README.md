@@ -64,13 +64,15 @@ and 2 507. The eight-thread peak is **4.35 to 4.51 times** the one-thread peak a
 the four placements the tool runs side by side: the work costs 1.15 MB per sequence and the rest is the
 price of doing it four times at once, which is the half of the advice this file opens with.
 
-**The 1.15 MB carries an alignment width.** What EPA-ng holds is one conditional likelihood vector per
-node and per site, so the footprint is proportional to sequences x columns x concurrent placements, and
-1.15 MB is the coefficient at the 1,478 columns every archaeal alignment here has (cmalign --matchonly
-on RF01959): 0.78 kB per sequence and per column. The benchmark barely varied the width. The two other
-widths it holds go the expected way, by the largest process's `max_rss_mb` at eight threads: 1.30 MB
-per sequence at 1,478 columns (2,023 sequences), 1.34 at 1,533 (the bacterial subset, +3 % for +4 %
-columns), 1.49 at 1,778 (the Grove reference, +15 % for +20 %).
+**The 1.15 MB carries an alignment width, and the width is half of it.** Measured on the same 2,023
+sequences at 300, 600, 900, 1,200 and 1,478 columns (`slurm/width.sh`, `results/memory_width.json`),
+the largest process's peak is linear in columns: 974 MB + 0.389 kB per sequence and per column at one
+thread, 922 MB + 0.583 kB at eight, residuals under 13 MB. Per sequence and per placement that is
+0.48 MB independent of the width plus 0.39 kB per column, 1.04 MB at 1,478 columns; doubling the
+alignment adds 55 % at one thread and 65 % at eight, not 100 %. The width-independent part scales
+with the sequences, since at fixed width the per-sequence peak is flat from 402 to 7,051. Every
+archaeal alignment here is 1,478 columns (cmalign --matchonly on RF01959), which is why the width
+never showed; the bacterial 1,533 and the Grove 1,778 agree with the line.
 
 One thread is also the only reproducible figure, and it is reproducible to the megabyte: three runs give
 **2 253 MB exactly** at 2 023 sequences and **8 090 MB exactly** at 7 051. At eight threads nine runs at
@@ -702,7 +704,7 @@ results/figure1.svg                    an earlier composition, kept because REVI
 re-derive. That sentence was false until the 949 run directories behind the version 2 tables were
 brought back from the cluster — only `run.json` had been kept for them, and every detection number
 is computed from the `.mis` beside it. 949 was the count on the day that was fixed; the repository
-holds **1 361** run records now, and the figure is left as it was rather than silently updated because
+holds **1 371** run records now, and the figure is left as it was rather than silently updated because
 the sentence is about an event. `results/pipeline_info/` holds one Nextflow trace per
 submission, with its gaps listed.
 
