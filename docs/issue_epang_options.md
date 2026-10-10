@@ -35,3 +35,11 @@ The benchmark's harness already fails a condition whose knob does not reach the 
 (`bin/verify_conditions_differ.py`), so a release with this can be tested the day it lands. Planned
 for the 1.0.0 release before the application note is submitted; not blocking the current benchmark,
 which compares the placements themselves on the deviating sequences in the meantime.
+
+
+## Companion note, not part of the issue above: a failed fold does not stop the run
+
+Observed with 0.10.2 on an alignment where one query had no non-gap site: the tool logged
+`EPA-ng FAIL fold 18: ... does not appear to have any non-gap sites!`, continued, reported
+`placed 24/25 folds`, and then raised `JSONDecodeError` reading the jplace the failed fold never
+wrote. The useful message is the first one; a run with a failed fold should stop there, with it.

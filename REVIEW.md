@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 244 |
+| findings in this report | 245 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 78 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 59 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
@@ -26,7 +26,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | run records, cross-checked against the files they summarise | 1361 |
 | result tables, each rebuilt by `bin/analyses.sh` | 89 |
 | `.mis` files, the flag lists every detection number is computed from | 1687 |
-| tests over the scripts that turn runs into numbers | 118 |
+| tests over the scripts that turn runs into numbers | 119 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5841,6 +5841,19 @@ five tests, including a fit that must recover a hand-set line to three decimals.
 reader alive: two flip `(y - my)` to `(y + my)` in the slope, which is the same number because the
 deviations of x sum to zero, and one flips the sign of a residual that is only printed; none is a
 gap a test could close.
+
+**245. A prefix is not a sample, and the fork does not stop on a failed fold.** The first width job
+died 102 s in: the 300-column cell kept the first 300 columns, 5'-truncated sequences are all gaps
+there, and EPA-ng refuses a query with no non-gap site ("does not appear to have any non-gap
+sites!", fold 18). `bin/truncate_alignment.py` now spreads the kept columns evenly over the
+alignment and refuses an output in which any sequence is left without a residue, with a test for
+each. The second half is the tool's: sativa-epang 0.10.2 logged `EPA-ng FAIL fold 18`, went on to
+report `placed 24/25 folds`, and then died on `JSONDecodeError` while reading the jplace the failed
+fold never wrote, exit status 0 from the wrapper's point of view since the Python traceback came
+after the timing record. A fold that fails should stop the run with that fold's message, not
+twenty-four folds later with a parser's; this goes in `docs/issue_epang_options.md`'s companion
+list for the user to raise upstream, and the benchmark's own gate (`verify_fold_counts.py`) would
+have caught a 24-of-25 run that produced a `.mis`.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
