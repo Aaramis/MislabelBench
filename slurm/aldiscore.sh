@@ -50,6 +50,8 @@ echo "aldiscore $COMMIT" >> "$OUT/provenance.txt"
 # sets first: the before-and-after is the subset against the foreign cells built on it, and the first
 # submission spent ninety minutes on the 7 051 without a line of output, the two large sets being
 # the ones whose pairwise features scale worst. They come last, so a time limit costs only them.
+# It did: the 7 051 ran out of 32 GB after three and a half hours and the clade was never reached;
+# the two are listed for the record, and scoring them needs more memory and a longer limit.
 sets="$OUT/sets.tsv"
 {
     printf 'gtdb_arc2k\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
