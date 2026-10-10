@@ -46,16 +46,19 @@ fi
 "$TOOL/env/bin/python" --version > "$OUT/provenance.txt"
 echo "aldiscore $COMMIT" >> "$OUT/provenance.txt"
 
-# name<TAB>fasta, aligned or not; gaps are stripped into a scratch copy either way.
+# name<TAB>fasta, aligned or not; gaps are stripped into a scratch copy either way. The 2 000-sequence
+# sets first: the before-and-after is the subset against the foreign cells built on it, and the first
+# submission spent ninety minutes on the 7 051 without a line of output, the two large sets being
+# the ones whose pairwise features scale worst. They come last, so a time limit costs only them.
 sets="$OUT/sets.tsv"
 {
-    printf 'gtdb_arc1200\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_arc1200.fasta"
     printf 'gtdb_arc2k\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
-    printf 'gtdb_bac_lachnospirales\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_bac_lachnospirales.aligned.fasta"
-    printf 'gtdb_bac2k\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_bac2k.fasta"
     for d in "$BENCH_ROOT"/data/foreign/fgn_*; do
         printf '%s\t%s\n' "$(basename "$d")" "$d/$(basename "$d").fasta"
     done
+    printf 'gtdb_bac2k\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_bac2k.fasta"
+    printf 'gtdb_arc1200\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_arc1200.fasta"
+    printf 'gtdb_bac_lachnospirales\t%s\n' "$BENCH_ROOT/data/gtdb/gtdb_bac_lachnospirales.aligned.fasta"
 } > "$sets"
 
 : > "$OUT/scores.jsonl"
