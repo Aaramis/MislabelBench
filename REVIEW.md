@@ -5890,11 +5890,15 @@ The ramp finished at four counts of four, and the minimal-case campaign is at **
 counted from the directories under `results/minimal_case/` and the rows of
 `results/minimal_case_summary.tsv` rather than from the last number this paragraph carried.
 
-**Blocked on a decision that is not mine.** Six places where this benchmark contradicts what Protocol.md
-tells a co-author are implemented here and flagged there, with the protocol untouched: the fork's memory
-per sequence, UNITE's species judgeability, the claim that under-supplied cells are dropped rather than
-rounded, the primary dataset's size, error kind 6 reported as one number where it is two strata, and
-kind 3's mechanism, whose sign is reversed. Each needs a ruling on whether the document is corrected.
+**Blocked on a decision that is not mine.** Six places where this benchmark contradicted what Protocol.md
+told a co-author were implemented here and flagged there. The reviewed protocol (2026-10-09) settled
+four: it gives the fork's memory as 1.15 MB per concurrent placement, the primary dataset as the 7,051
+after the length filter, the distribution as jobs and not nodes, and the control as RAxMLGrove; and it
+no longer mentions UNITE or the rounding of under-supplied cells, so those two have nothing left to
+contradict. Two remain in its wording: error kind 6 described as one case where the runs give two strata
+(a lone foreign sequence, 299 of 299; one sharing its label, 74 of 94), and kind 3's mechanism, which
+the table states as "no correctly labelled member remains to confirm its identity". Both are measured
+and reported as two strata and as the measured direction; the document's wording is the authors'.
 
 **Blocked on others.** Error kind 5 waits on nf-core/taxmarker#39, which Protocol.md's own typology says
 it waits on. The UNITE dataset is verified end to end and waits only on an ITS alignment method, which is
