@@ -4,8 +4,10 @@
 The memory law was stated per sequence at the one width every archaeal alignment here has, 1 478
 columns, and the width term was deduced from what EPA-ng stores rather than measured. This keeps the
 first N columns of an alignment and copies the taxonomy unchanged, so that the fork can be run on the
-same 2 023 sequences at several widths and the per-process peak read against N. The first N columns
-and not a sample: the tree only has to be buildable, and a prefix is the choice with nothing to seed.
+same 2 023 sequences at several widths and the per-process peak read against N. The N columns are
+spread evenly over the alignment rather than taken as a prefix: 5'-truncated sequences are all gaps
+over the first 300 columns, and EPA-ng refuses a query with no non-gap site, which is how the first
+run of this died on fold 18. A sequence left without a residue is refused here instead.
 """
 
 import argparse
@@ -41,9 +43,15 @@ def main():
     if not 1 <= args.columns <= width:
         raise SystemExit(f"--columns {args.columns} is not within 1..{width}")
 
+    keep = sorted({(i * width) // args.columns for i in range(args.columns)})
+    cut = {n: "".join(s[i] for i in keep) for n, s in records}
+    empty = [n for n, s in cut.items() if not s.strip("-.")]
+    if empty:
+        raise SystemExit(f"{len(empty)} sequence(s) have no residue in the {args.columns} kept "
+                         f"columns, {empty[0]} first; EPA-ng refuses such a query")
     out = Path(args.prefix + ".fasta")
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text("".join(f"{n}\n{s[:args.columns]}\n" for n, s in records))
+    out.write_text("".join(f"{n}\n{cut[n]}\n" for n, _ in records))
     shutil.copyfile(args.tax, args.prefix + ".tax")
     print(f"{len(records)} sequences, {width} -> {args.columns} columns, {out}")
 

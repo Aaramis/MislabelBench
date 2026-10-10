@@ -1,4 +1,4 @@
-{"source": "gtdb_arc2k, the first N columns of the alignment, taxonomy unchanged",
+{"source": "gtdb_arc2k, N columns spread evenly over the alignment, taxonomy unchanged",
  "datasets": [
   {"name": "w0300", "n_seqs": 2023, "aln_len": 300, "fasta": "data/width/w0300/w0300.fasta", "tax": "data/width/w0300/w0300.tax"},
   {"name": "w0600", "n_seqs": 2023, "aln_len": 600, "fasta": "data/width/w0600/w0600.fasta", "tax": "data/width/w0600/w0600.tax"},

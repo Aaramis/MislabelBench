@@ -22,12 +22,22 @@ class Truncate(unittest.TestCase):
         (self.tmp / "a.fasta").write_text(">s1\nACGTACGT\nAC\n>s2\nTTTTTTTTTT\n")
         (self.tmp / "a.tax").write_text("s1\td__A;p__P\ns2\td__A;p__Q\n")
 
-    def test_prefix_columns_and_the_taxonomy_unchanged(self):
+    def test_columns_spread_over_the_alignment_and_the_taxonomy_unchanged(self):
+        # 10 columns, 4 kept: indices 0, 2, 5, 7 of ACGTACGTAC -> A G C T.
         r = run("truncate_alignment.py", "--fasta", self.tmp / "a.fasta", "--tax", self.tmp / "a.tax",
                 "--columns", 4, "--prefix", self.tmp / "w" / "w")
         self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertEqual((self.tmp / "w" / "w.fasta").read_text(), ">s1\nACGT\n>s2\nTTTT\n")
+        self.assertEqual((self.tmp / "w" / "w.fasta").read_text(), ">s1\nAGCT\n>s2\nTTTT\n")
         self.assertEqual((self.tmp / "w" / "w.tax").read_text(), (self.tmp / "a.tax").read_text())
+
+    def test_a_sequence_left_without_a_residue_is_refused(self):
+        # s3 has residues only in columns 1 and 3, which a 2-column cut (indices 0, 5) drops.
+        (self.tmp / "c.fasta").write_text(">s1\nACGTACGTAC\n>s3\n-C-T------\n")
+        r = run("truncate_alignment.py", "--fasta", self.tmp / "c.fasta", "--tax", self.tmp / "a.tax",
+                "--columns", 2, "--prefix", self.tmp / "w" / "w")
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("no residue", r.stderr)
+        self.assertIn("s3", r.stderr)
 
     def test_a_width_beyond_the_alignment_is_refused(self):
         r = run("truncate_alignment.py", "--fasta", self.tmp / "a.fasta", "--tax", self.tmp / "a.tax",

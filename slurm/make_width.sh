@@ -3,7 +3,8 @@
 #
 #   bash slurm/make_width.sh        # writes data/width/w<N>/ and data/width/datasets.json
 #
-# Columns are a prefix of the alignment, taxonomy unchanged. Deterministic, no seed.
+# Columns are spread evenly over the alignment (a prefix left 5'-truncated sequences all gaps),
+# taxonomy unchanged. Deterministic, no seed.
 set -euo pipefail
 ROOT="${BENCH_ROOT:-$HOME/bench}"
 OUT="$ROOT/data/width"
@@ -20,7 +21,7 @@ for w in $WIDTHS; do
     entries+=("{\"name\": \"$cell\", \"n_seqs\": $n, \"aln_len\": $w, \"fasta\": \"data/width/$cell/$cell.fasta\", \"tax\": \"data/width/$cell/$cell.tax\"}")
 done
 {
-    echo '{"source": "gtdb_arc2k, the first N columns of the alignment, taxonomy unchanged",'
+    echo '{"source": "gtdb_arc2k, N columns spread evenly over the alignment, taxonomy unchanged",'
     echo ' "datasets": ['
     printf '  %s' "${entries[0]}"; for e in "${entries[@]:1}"; do printf ',\n  %s' "$e"; done
     echo; echo ' ]}'
