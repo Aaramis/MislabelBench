@@ -18,9 +18,9 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 238 |
+| findings in this report | 239 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 56 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 57 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
 | run records, cross-checked against the files they summarise | 1359 |
@@ -5762,6 +5762,17 @@ record under `runs/<cell>/`; no staged strict run existed before this one, so th
 run. It resolves the record two levels up for a stage log now, the real tree passes with 1,961 runs
 checked, and `tests/test_gates.py` holds a staged strict tree that must pass, since the empty-tree
 property the file already held says nothing about a tree whose logs are in the right place.
+
+**239. The alignment-difficulty predictor, submitted.** `slurm/aldiscore.sh` (job 2339226) clones
+AlDiScore at commit `cc2de71f` into a venv made by the deployment's python 3.12, the pattern of
+`slurm/fetch_grove.sh` and for its reasons, and scores every set unaligned: the archaeal 7,051 and
+2,023, the bacterial clade and subset, and the nine foreign cells with their donors, gap columns
+stripped into a scratch copy first since the predictor takes raw sequences. The tool's output format
+is not known before it runs, so the job keeps each set's stdout whole in
+`results/aldiscore/scores.jsonl` beside the numbers found in it, and the reader that turns those
+into the before-and-after row is written against the real output rather than against a guess.
+`data/aldiscore/` (clone and venv) is ignored; `results/aldiscore/` carries the pinned commit and
+the frozen requirements.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

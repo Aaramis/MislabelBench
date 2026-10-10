@@ -51,3 +51,7 @@ data/chimera/*/*.tax
 data/chimera/*/*.fasta
 data/injected_bac/*/*.tax
 data/injected_bac/*/*.fasta
+
+# AlDiScore's clone and venv, made by slurm/aldiscore.sh on the cluster; results/aldiscore/ holds
+# what it produced and the pinned commit.
+data/aldiscore/
