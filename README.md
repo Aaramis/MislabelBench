@@ -64,6 +64,14 @@ and 2 507. The eight-thread peak is **4.35 to 4.51 times** the one-thread peak a
 the four placements the tool runs side by side: the work costs 1.15 MB per sequence and the rest is the
 price of doing it four times at once, which is the half of the advice this file opens with.
 
+**The 1.15 MB carries an alignment width.** What EPA-ng holds is one conditional likelihood vector per
+node and per site, so the footprint is proportional to sequences x columns x concurrent placements, and
+1.15 MB is the coefficient at the 1,478 columns every archaeal alignment here has (cmalign --matchonly
+on RF01959): 0.78 kB per sequence and per column. The benchmark barely varied the width. The two other
+widths it holds go the expected way, by the largest process's `max_rss_mb` at eight threads: 1.30 MB
+per sequence at 1,478 columns (2,023 sequences), 1.34 at 1,533 (the bacterial subset, +3 % for +4 %
+columns), 1.49 at 1,778 (the Grove reference, +15 % for +20 %).
+
 One thread is also the only reproducible figure, and it is reproducible to the megabyte: three runs give
 **2 253 MB exactly** at 2 023 sequences and **8 090 MB exactly** at 7 051. At eight threads nine runs at
 2 023 spread 8 294 to 9 830, 18 %, and at sixteen three runs spread 6 554 to 9 216, 41 %. What the peak

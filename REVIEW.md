@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 242 |
+| findings in this report | 243 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 76 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 57 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
@@ -5812,6 +5812,20 @@ pairwise features being over every pair of a set and not over the hundred sample
 They are left unscored, since the before-and-after the protocol asks for is the subset against the
 cells built on it, which is answered; `slurm/aldiscore.sh` says so where it lists them, and the
 summary is rebuilt by `bin/analyses.sh` from what `scores.jsonl` holds.
+
+**243. The memory law hid its alignment width.** "1.15 MB per sequence per concurrent placement" was
+stated, in README.md, the article and Protocol.md, as if it depended on the reference's size alone.
+It does not: EPA-ng keeps one conditional likelihood vector per node and per site, so the footprint
+is proportional to sequences x columns x concurrent placements, and 1.15 MB is the coefficient at
+1,478 columns, the width of every archaeal alignment here (cmalign --matchonly on RF01959 gives the
+consensus length), 0.78 kB per sequence and per column. Nothing in the benchmark varied the width on
+purpose, which is why the constant went unnoticed; the two widths it holds by accident go the expected
+way, from the `max_rss_mb` of the largest process at eight threads: 1.30 MB per sequence at 1,478
+columns, 1.34 at 1,533 (the bacterial subset, +3 % for +4 % columns), 1.49 at 1,778 (the Grove
+reference, +15 % for +20 %, at 400 taxa where the fixed part weighs more). The law is restated with
+its width in README.md, in the article's body and supplement, and flagged against Protocol.md §8,
+which gives the figure without it; the number itself does not change. A reader scaling to another
+marker gene should scale by its alignment width, not take 1.15 MB as a property of the tool.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
