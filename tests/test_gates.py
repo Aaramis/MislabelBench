@@ -144,5 +144,22 @@ class GridCompleteness(unittest.TestCase):
         self.assertIn("1/1", r.stdout)
 
 
+class FoldCountsOnAStagedStrictRun(unittest.TestCase):
+    """A strict leave-one-out run on the staged path keeps its run.json under runs/<cell>/ and its
+    stage logs under staged/<cell>/; the gate once looked for the one beside the other."""
+
+    def test_stage_logs_find_the_run_record_two_levels_up(self):
+        root = Path(tempfile.mkdtemp())
+        cell = "inj_x__epang_T8_Kexact__rep1"
+        (root / "runs" / cell).mkdir(parents=True)
+        (root / "runs" / cell / "run.json").write_text(json.dumps({"n_seqs": 4, "folds": 999999}))
+        (root / "runs" / cell / f"{cell}.log").write_text("wrote 4 fold tasks\n")
+        (root / "staged" / cell).mkdir(parents=True)
+        (root / "staged" / cell / "reference.stage.log").write_text("reference built\n")
+        r = gate("verify_fold_counts.py", "--results", root)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertIn("0 problem(s)", r.stdout)
+
+
 if __name__ == "__main__":
     unittest.main()

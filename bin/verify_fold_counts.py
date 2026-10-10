@@ -62,6 +62,10 @@ def main():
             # sequence. A run.json that records n_seqs is required, since without it there is
             # nothing to check against and silence is what this whole gate exists to prevent.
             rj = log.parent / "run.json"
+            # A staged run's stage logs live under staged/<cell>/ and its run.json under
+            # runs/<cell>/; the first strict staged run reported "no n_seqs" for each of them.
+            if not rj.exists() and log.name.endswith(".stage.log"):
+                rj = log.parent.parent.parent / "runs" / cell / "run.json"
             n_seqs = json.loads(rj.read_text()).get("n_seqs") if rj.exists() else None
             matched += 1
             if not n_seqs:

@@ -18,7 +18,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 237 |
+| findings in this report | 238 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 56 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
@@ -26,7 +26,7 @@ one drifts, which is the only way a summary of a growing document stays true.
 | run records, cross-checked against the files they summarise | 1359 |
 | result tables, each rebuilt by `bin/analyses.sh` | 86 |
 | `.mis` files, the flag lists every detection number is computed from | 1685 |
-| tests over the scripts that turn runs into numbers | 109 |
+| tests over the scripts that turn runs into numbers | 110 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5749,6 +5749,19 @@ bacterial summaries carry that column empty, `slurm/baseline_bac2k.sh` runs the 
 tools (job 2339220), and the block passes `--baseline-mis` the moment its `.mis` exists. And
 `detection_law.py` writes its record with every top-level field a table, so the one-line check that
 printed `{}` for it was reading nothing; the record itself is five rows by k and five by the share of surviving labels, as for the archaea.
+
+**238. The end-to-end rebuild after the four chains, and one gate that looked beside the wrong
+file.** `bin/analyses.sh` from the top, `BENCH_ROOT` set to the clone: 737 regenerable files
+identical to a tree rebuilt from the kept inputs alone, every table byte-identical to the committed
+one except `results/resource_usage.txt`, which gains the three bacterial rows (fork 523 s and 3.4 GB
+peak, upstream 5,120 s and 40.9 GB, 9.8x wall and 12.1x CPU) and is committed with this. One gate
+failed: `bin/verify_fold_counts.py` reported "strict leave-one-out with no n_seqs to check against"
+three times, once per stage log of the staged Kexact run that kept its placements. The gate looked
+for `run.json` beside the log, and a staged run keeps its stage logs under `staged/<cell>/` and its
+record under `runs/<cell>/`; no staged strict run existed before this one, so the branch had never
+run. It resolves the record two levels up for a stage log now, the real tree passes with 1,961 runs
+checked, and `tests/test_gates.py` holds a staged strict tree that must pass, since the empty-tree
+property the file already held says nothing about a tree whose logs are in the right place.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
