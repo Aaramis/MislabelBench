@@ -1,0 +1,8 @@
+{"source": "gtdb_arc2k, the first N columns of the alignment, taxonomy unchanged",
+ "datasets": [
+  {"name": "w0300", "n_seqs": 2023, "aln_len": 300, "fasta": "data/width/w0300/w0300.fasta", "tax": "data/width/w0300/w0300.tax"},
+  {"name": "w0600", "n_seqs": 2023, "aln_len": 600, "fasta": "data/width/w0600/w0600.fasta", "tax": "data/width/w0600/w0600.tax"},
+  {"name": "w0900", "n_seqs": 2023, "aln_len": 900, "fasta": "data/width/w0900/w0900.fasta", "tax": "data/width/w0900/w0900.tax"},
+  {"name": "w1200", "n_seqs": 2023, "aln_len": 1200, "fasta": "data/width/w1200/w1200.fasta", "tax": "data/width/w1200/w1200.tax"},
+  {"name": "w1478", "n_seqs": 2023, "aln_len": 1478, "fasta": "data/width/w1478/w1478.fasta", "tax": "data/width/w1478/w1478.tax"}
+ ]}

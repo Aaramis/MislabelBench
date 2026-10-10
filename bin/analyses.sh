@@ -365,6 +365,13 @@ if [ -d results/grid_bac/runs ]; then
         --tax data/gtdb/gtdb_bac_lachnospirales.tax --out results/shape_gtdb_bac_lachnospirales.json
 fi
 
+# The memory law's width term, measured: the fork on the same 2 023 sequences at five alignment
+# widths (slurm/width.sh), peak RSS against sequences x columns.
+if ls results/width/runs/*/run.json >/dev/null 2>&1; then
+    step "peak memory against alignment width, the law's coefficient per sequence and per column"
+    memory_width.py --out results/memory_width.json > /dev/null
+fi
+
 # Alignment difficulty per set (slurm/aldiscore.sh), the foreign cells as a delta from the subset.
 if [ -s results/aldiscore/scores.jsonl ]; then
     step "alignment difficulty of every set, the foreign cells against their base"

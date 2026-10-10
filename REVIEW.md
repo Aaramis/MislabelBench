@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 243 |
-| `bin/` scripts: paths, error handling, division guards, condition selection | 76 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 57 |
+| findings in this report | 244 |
+| `bin/` scripts: paths, error handling, division guards, condition selection | 78 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 59 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
-| dataset manifests, against the files they describe | 13 |
+| dataset manifests, against the files they describe | 14 |
 | run records, cross-checked against the files they summarise | 1361 |
 | result tables, each rebuilt by `bin/analyses.sh` | 89 |
 | `.mis` files, the flag lists every detection number is computed from | 1687 |
-| tests over the scripts that turn runs into numbers | 113 |
+| tests over the scripts that turn runs into numbers | 118 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -5826,6 +5826,21 @@ reference, +15 % for +20 %, at 400 taxa where the fixed part weighs more). The l
 its width in README.md, in the article's body and supplement, and flagged against Protocol.md §8,
 which gives the figure without it; the number itself does not change. A reader scaling to another
 marker gene should scale by its alignment width, not take 1.15 MB as a property of the tool.
+
+**244. The width term, measured rather than deduced.** Finding 243 restated the memory law with an
+alignment width it had never varied; the coefficient per column was deduced from what EPA-ng stores
+and from two widths present by accident. `slurm/make_width.sh` writes the 2,023-sequence subset at
+300, 600, 900, 1,200 and 1,478 columns (`bin/truncate_alignment.py`: a prefix of the alignment,
+taxonomy unchanged, refuses a width beyond the alignment or an input that is not one), and
+`slurm/width.sh` (job 2341519) runs the fork on the five at one thread and at eight, timings marked
+untrusted since only the peak RSS is read and that does not depend on the node's other occupants.
+`bin/memory_width.py` fits peak = a + b x sequences x columns per condition and prints the per-width
+residuals beside the line, so a reader sees whether the points make one; `tests/test_width.py` holds
+five tests, including a fit that must recover a hand-set line to three decimals. The cells'
+`datasets.json` is committed, the fasta and tax regenerated. The sweep leaves three mutants of the
+reader alive: two flip `(y - my)` to `(y + my)` in the slope, which is the same number because the
+deviations of x sum to zero, and one flips the sign of a residual that is only printed; none is a
+gap a test could close.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
