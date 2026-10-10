@@ -41,6 +41,10 @@
     "fgn_r0.05_s3": {
       "n_sequences": 2124,
       "difficulty": 0.10235337414953692
+    },
+    "gtdb_bac2k": {
+      "n_sequences": 2008,
+      "difficulty": 0.04390891978594436
     }
   },
   "foreign_vs_base": {

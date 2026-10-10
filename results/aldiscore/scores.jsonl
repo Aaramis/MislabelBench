@@ -8,3 +8,4 @@
 {"set": "fgn_r0.05_s1", "n_sequences": 2124, "stdout": "0.10341552947340255", "numbers_in_output": ["0.10341552947340255"]}
 {"set": "fgn_r0.05_s2", "n_sequences": 2124, "stdout": "0.10258773397597357", "numbers_in_output": ["0.10258773397597357"]}
 {"set": "fgn_r0.05_s3", "n_sequences": 2124, "stdout": "0.10235337414953692", "numbers_in_output": ["0.10235337414953692"]}
+{"set": "gtdb_bac2k", "n_sequences": 2008, "stdout": "0.04390891978594436", "numbers_in_output": ["0.04390891978594436"]}

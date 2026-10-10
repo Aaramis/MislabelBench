@@ -5806,7 +5806,7 @@ features (`max_samples` in its `DifficultyPredictor`), which is the resolution t
 read at. The reading for the supplement: adding bacterial sequences to the archaeal set does not
 make the set harder to align in this predictor's sense, while each donor itself aligns 500 bits
 worse to the archaeal model (finding on `bin/foreign_score_vs_flag.py`); the two measurements are
-of different things, a set and a sequence, and both are given. The two large sets are still
+of different things, a set and a sequence, and both are given. The bacterial subset scores 0.0439, one order against a domain. The two large sets are still
 running and `scores.jsonl` is extended in place when they land; the summary is rebuilt by
 `bin/analyses.sh` from whatever the file holds.
 
