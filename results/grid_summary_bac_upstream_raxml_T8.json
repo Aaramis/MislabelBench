@@ -1,7 +1,7 @@
 {
   "n_cells": 15,
   "n_missing": 0,
-  "baseline_mis": null,
+  "baseline_mis": "results/baseline_bac2k/runs/gtdb_bac2k__upstream_raxml_T8__rep1/gtdb_bac2k__upstream_raxml_T8__rep1.mis",
   "rows": [
     {
       "distance": "family",
@@ -16,7 +16,7 @@
       "recall_label_correct_mean": 0.7567,
       "recall_label_correct_at_rank_mean": 0.99,
       "flags_on_non_injected_mean": 94.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 28.3
     },
     {
       "distance": "family",
@@ -31,7 +31,7 @@
       "recall_label_correct_mean": 0.7567,
       "recall_label_correct_at_rank_mean": 0.99,
       "flags_on_non_injected_mean": 92.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 26.7
     },
     {
       "distance": "family",
@@ -46,7 +46,7 @@
       "recall_label_correct_mean": 0.74,
       "recall_label_correct_at_rank_mean": 0.9133,
       "flags_on_non_injected_mean": 52.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 6.7
     },
     {
       "distance": "family",
@@ -61,7 +61,7 @@
       "recall_label_correct_mean": 0.73,
       "recall_label_correct_at_rank_mean": 0.89,
       "flags_on_non_injected_mean": 34.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 3.3
     },
     {
       "distance": "family",
@@ -76,7 +76,7 @@
       "recall_label_correct_mean": 0.6967,
       "recall_label_correct_at_rank_mean": 0.8567,
       "flags_on_non_injected_mean": 29.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 3
     },
     {
       "distance": "family",
@@ -91,7 +91,7 @@
       "recall_label_correct_mean": 0.6767,
       "recall_label_correct_at_rank_mean": 0.8267,
       "flags_on_non_injected_mean": 23.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 3
     },
     {
       "distance": "family",
@@ -106,7 +106,7 @@
       "recall_label_correct_mean": 0.4,
       "recall_label_correct_at_rank_mean": 0.5133,
       "flags_on_non_injected_mean": 124.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 57.3
     },
     {
       "distance": "family",
@@ -121,7 +121,7 @@
       "recall_label_correct_mean": 0.4,
       "recall_label_correct_at_rank_mean": 0.5133,
       "flags_on_non_injected_mean": 122,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 55.7
     },
     {
       "distance": "family",
@@ -136,7 +136,7 @@
       "recall_label_correct_mean": 0.3967,
       "recall_label_correct_at_rank_mean": 0.4967,
       "flags_on_non_injected_mean": 82,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 40.3
     },
     {
       "distance": "family",
@@ -151,7 +151,7 @@
       "recall_label_correct_mean": 0.3967,
       "recall_label_correct_at_rank_mean": 0.4833,
       "flags_on_non_injected_mean": 68.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 35.3
     },
     {
       "distance": "family",
@@ -166,7 +166,7 @@
       "recall_label_correct_mean": 0.3867,
       "recall_label_correct_at_rank_mean": 0.4733,
       "flags_on_non_injected_mean": 61.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 30
     },
     {
       "distance": "family",
@@ -181,7 +181,7 @@
       "recall_label_correct_mean": 0.3833,
       "recall_label_correct_at_rank_mean": 0.4667,
       "flags_on_non_injected_mean": 52,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 28.7
     },
     {
       "distance": "family",
@@ -196,7 +196,7 @@
       "recall_label_correct_mean": 0.3529,
       "recall_label_correct_at_rank_mean": 0.4281,
       "flags_on_non_injected_mean": 127.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 60.3
     },
     {
       "distance": "family",
@@ -211,7 +211,7 @@
       "recall_label_correct_mean": 0.3529,
       "recall_label_correct_at_rank_mean": 0.4281,
       "flags_on_non_injected_mean": 124.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 58.3
     },
     {
       "distance": "family",
@@ -226,7 +226,7 @@
       "recall_label_correct_mean": 0.3464,
       "recall_label_correct_at_rank_mean": 0.402,
       "flags_on_non_injected_mean": 84.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 42.7
     },
     {
       "distance": "family",
@@ -241,7 +241,7 @@
       "recall_label_correct_mean": 0.3366,
       "recall_label_correct_at_rank_mean": 0.3725,
       "flags_on_non_injected_mean": 70,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 38.7
     },
     {
       "distance": "family",
@@ -256,7 +256,7 @@
       "recall_label_correct_mean": 0.3301,
       "recall_label_correct_at_rank_mean": 0.3595,
       "flags_on_non_injected_mean": 63,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 33.3
     },
     {
       "distance": "family",
@@ -271,7 +271,7 @@
       "recall_label_correct_mean": 0.3039,
       "recall_label_correct_at_rank_mean": 0.3235,
       "flags_on_non_injected_mean": 53.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 30.7
     },
     {
       "distance": "family",
@@ -286,7 +286,7 @@
       "recall_label_correct_mean": 0.35,
       "recall_label_correct_at_rank_mean": 0.36,
       "flags_on_non_injected_mean": 119.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 50.7
     },
     {
       "distance": "family",
@@ -301,7 +301,7 @@
       "recall_label_correct_mean": 0.3467,
       "recall_label_correct_at_rank_mean": 0.3567,
       "flags_on_non_injected_mean": 117.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 50
     },
     {
       "distance": "family",
@@ -316,7 +316,7 @@
       "recall_label_correct_mean": 0.3167,
       "recall_label_correct_at_rank_mean": 0.3267,
       "flags_on_non_injected_mean": 86.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 40.7
     },
     {
       "distance": "family",
@@ -331,7 +331,7 @@
       "recall_label_correct_mean": 0.3133,
       "recall_label_correct_at_rank_mean": 0.3233,
       "flags_on_non_injected_mean": 62.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 30
     },
     {
       "distance": "family",
@@ -346,7 +346,7 @@
       "recall_label_correct_mean": 0.2933,
       "recall_label_correct_at_rank_mean": 0.3033,
       "flags_on_non_injected_mean": 54.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 25.7
     },
     {
       "distance": "family",
@@ -361,7 +361,7 @@
       "recall_label_correct_mean": 0.2867,
       "recall_label_correct_at_rank_mean": 0.2967,
       "flags_on_non_injected_mean": 45.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 24
     },
     {
       "distance": "family",
@@ -376,7 +376,7 @@
       "recall_label_correct_mean": 0.21,
       "recall_label_correct_at_rank_mean": 0.2833,
       "flags_on_non_injected_mean": 97.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 33.7
     },
     {
       "distance": "family",
@@ -391,7 +391,7 @@
       "recall_label_correct_mean": 0.21,
       "recall_label_correct_at_rank_mean": 0.2833,
       "flags_on_non_injected_mean": 93.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 33
     },
     {
       "distance": "family",
@@ -406,7 +406,7 @@
       "recall_label_correct_mean": 0.1933,
       "recall_label_correct_at_rank_mean": 0.2633,
       "flags_on_non_injected_mean": 64.7,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 28.3
     },
     {
       "distance": "family",
@@ -421,7 +421,7 @@
       "recall_label_correct_mean": 0.1833,
       "recall_label_correct_at_rank_mean": 0.2533,
       "flags_on_non_injected_mean": 54,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 23.3
     },
     {
       "distance": "family",
@@ -436,7 +436,7 @@
       "recall_label_correct_mean": 0.1733,
       "recall_label_correct_at_rank_mean": 0.2433,
       "flags_on_non_injected_mean": 45.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 19
     },
     {
       "distance": "family",
@@ -451,7 +451,7 @@
       "recall_label_correct_mean": 0.16,
       "recall_label_correct_at_rank_mean": 0.21,
       "flags_on_non_injected_mean": 40.3,
-      "added_vs_baseline_mean": null
+      "added_vs_baseline_mean": 18
     }
   ]
 }

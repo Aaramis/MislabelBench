@@ -343,6 +343,10 @@ if [ -d results/grid_bac/runs ]; then
     bfk=results/baseline_bac/runs/gtdb_bac_lachnospirales__epang_T8_K25__rep1/gtdb_bac_lachnospirales__epang_T8_K25__rep1.mis
     [ -f "$bup" ] && [ -f "$bfk" ] && agreement.py --a "$bup" --b "$bfk" \
         --out results/agreement_gtdb_bac_lachnospirales.json || echo "   skipped the clade agreement"
+    sup=results/baseline_bac2k/runs/gtdb_bac2k__upstream_raxml_T8__rep1/gtdb_bac2k__upstream_raxml_T8__rep1.mis
+    sfk=results/baseline_bac2k/runs/gtdb_bac2k__epang_T8_K25__rep1/gtdb_bac2k__epang_T8_K25__rep1.mis
+    [ -f "$sup" ] && [ -f "$sfk" ] && agreement.py --a "$sup" --b "$sfk" \
+        --out results/agreement_gtdb_bac2k.json || echo "   skipped the subset agreement"
     for cond in epang_T8_K25 upstream_raxml_T8; do
         base=results/baseline_bac2k/runs/gtdb_bac2k__${cond}__rep1/gtdb_bac2k__${cond}__rep1.mis
         aggregate_grid.py --injected-dir data/injected_bac --runs-dir results/grid_bac/runs \

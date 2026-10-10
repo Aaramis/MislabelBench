@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 239 |
+| findings in this report | 240 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 57 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
-| run records, cross-checked against the files they summarise | 1359 |
-| result tables, each rebuilt by `bin/analyses.sh` | 86 |
-| `.mis` files, the flag lists every detection number is computed from | 1685 |
+| run records, cross-checked against the files they summarise | 1361 |
+| result tables, each rebuilt by `bin/analyses.sh` | 88 |
+| `.mis` files, the flag lists every detection number is computed from | 1687 |
 | tests over the scripts that turn runs into numbers | 110 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 359 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 361 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **86 published tables** ← 1 359 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **88 published tables** ← 1 361 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 359** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 361** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 359 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 361 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 359**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 361**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -5773,6 +5773,15 @@ is not known before it runs, so the job keeps each set's stdout whole in
 into the before-and-after row is written against the real output rather than against a guess.
 `data/aldiscore/` (clone and venv) is ignored; `results/aldiscore/` carries the pinned commit and
 the frozen requirements.
+
+**240. The bacterial subset baseline, and the column it fills.** `slurm/baseline_bac2k.sh` ran in
+twelve minutes: on the un-injected 2,008, upstream 76 flags and the fork 82, 72 shared, Jaccard
+0.837, against 0.796 on the archaeal 2,023 (92 and 93 flags, 82 shared); fork 64.8 s against
+upstream 619.9 s, 9.6x wall and 14.1x CPU, single runs. `results/agreement_gtdb_bac2k.json` and the
+subset rows of `results/resource_usage.txt` are the records, and the bacterial grid summaries now
+carry `added_vs_baseline_mean`: at 5 % the fork adds 34 to 56 flags over its 82 and upstream 28 to
+60 over its 76, the same order as the archaeal grid's, so the bacterial cells are not flagging the
+subset wholesale.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
