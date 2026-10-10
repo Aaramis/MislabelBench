@@ -148,6 +148,8 @@ def main():
     if args.tree:
         text = Path(args.tree).read_text()
         tree = json.loads(text)["tree"] if text.lstrip().startswith("{") else text
+        # SATIVA stores the labelled tree as [&&NHX:B=n] on every edge, the jplace form being {n}.
+        tree = re.sub(r"\[&&NHX:B=(\d+)\]", r"{\1}", tree)
 
     truth = json.loads(Path(args.truth).read_text())
     injected = truth["injected"]

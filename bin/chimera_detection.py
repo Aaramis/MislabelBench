@@ -10,6 +10,7 @@ record for the cell, so the definition is in one place.
 import argparse
 import json
 import subprocess
+import tempfile
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -33,9 +34,12 @@ def main():
         if not mis.exists():
             continue
         truth = json.loads(truth_p.read_text())
-        score = json.loads(subprocess.run(
-            [sys.executable, args.scorer, "--truth", str(truth_p), "--mis", str(mis),
-             "--out", "/dev/stdout"], capture_output=True, text=True, check=True).stdout)
+        # Into a file and not /dev/stdout: the scorer prints its own summary there too, and the
+        # first run on the 72 cells died on "Extra data" after the JSON.
+        with tempfile.NamedTemporaryFile(suffix=".json") as tmp:
+            subprocess.run([sys.executable, args.scorer, "--truth", str(truth_p), "--mis", str(mis),
+                            "--out", tmp.name], capture_output=True, text=True, check=True)
+            score = json.loads(Path(tmp.name).read_text())
         row = next(r for r in score["by_confidence"] if r["threshold"] == 0.0)
         key = (truth["distance"], truth["breakpoint"])
         c = cells[key]

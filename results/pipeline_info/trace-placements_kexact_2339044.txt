@@ -1,0 +1,4 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	memory	peak_rss	peak_vmem	rchar	wchar	container	hostname
+1	14/3d67f9	2339045	SATIVA (inj_family_r0.05_k2_s1/upstream_raxml_T8/rep1)	COMPLETED	0	2026-10-10 01:14:13.967	20m 14s	19m 24s	801.2%	4 GB	212.5 MB	617.4 MB	54.1 MB	427.8 MB	/shared/home/agardette/.singularity_cache/depot.galaxyproject.org-singularity-sativa-0.9.3--py312h031d066_0.img	-
+2	3a/0c9311	2339093	COLLECTRUN (inj_family_r0.05_k2_s1/upstream_raxml_T8/rep1)	COMPLETED	0	2026-10-10 01:34:28.489	34.5s	3s	14.2%	2 GB	21.4 MB	25.8 MB	2.5 MB	76.1 KB	/shared/home/agardette/.singularity_cache/depot.galaxyproject.org-singularity-python-3.12.12.img	-
+3	fb/331017	2339092	KEEPPLACEMENTS (inj_family_r0.05_k2_s1__upstream_raxml_T8__rep1/upstream)	COMPLETED	0	2026-10-10 01:34:28.295	34.7s	1s	9.1%	2 GB	3.1 MB	4.3 MB	6.7 MB	6.6 MB	/shared/home/agardette/.singularity_cache/depot.galaxyproject.org-singularity-python-3.12.12.img	-

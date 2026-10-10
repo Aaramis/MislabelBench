@@ -10,6 +10,7 @@ a placement whose edge sits inside the co-carriers' clade, and one that does not
 """
 
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -111,7 +112,8 @@ class PlacementLocality(unittest.TestCase):
     def test_a_jplace_without_a_tree_needs_one_and_reads_it_from_a_refjson(self):
         # Upstream's leave-one-out jplace has no tree; its .refjson carries the labelled one.
         jplace(self.tmp / "p.jplace", {"i2": [(5, 1.0)]}, tree=None)
-        (self.tmp / "run.refjson").write_text(json.dumps({"tree": TREE, "sequences": []}))
+        nhx = re.sub(r"\{(\d+)\}", r"[&&NHX:B=\1]", TREE)  # SATIVA's own encoding of the labels
+        (self.tmp / "run.refjson").write_text(json.dumps({"tree": nhx, "sequences": []}))
         cmd = [sys.executable, str(BIN / "placement_locality.py"),
                "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
                "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace"),
@@ -146,7 +148,7 @@ class PlacementComparison(unittest.TestCase):
     """bin/placement_comparison.py joins two locality records on the sequence and keeps the
     sequences one engine flagged and the other did not."""
 
-    def test_deviating_rows_and_the_same_edge_count(self):
+    def test_deviating_rows_and_the_same_clade_count(self):
         tmp = Path(tempfile.mkdtemp())
         up = {"rows": [{"sequence": "i1", "flagged": False, "edge": 1, "lwr": 0.7,
                         "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
@@ -154,7 +156,8 @@ class PlacementComparison(unittest.TestCase):
                        {"sequence": "i2", "flagged": True, "edge": 7, "lwr": 0.9,
                         "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
                         "among_co_carriers": False}]}
-        fk = {"rows": [{"sequence": "i1", "flagged": True, "edge": 1, "lwr": 0.55,
+        # i1: a different edge number in the fork's fold tree, the same clade reading.
+        fk = {"rows": [{"sequence": "i1", "flagged": True, "edge": 4, "lwr": 0.55,
                         "below_agree_with_wrong_to_rank": 6, "below_agree_with_true_to_rank": 3,
                         "among_co_carriers": True},
                        {"sequence": "i2", "flagged": True, "edge": 7, "lwr": 0.9,
@@ -166,11 +169,12 @@ class PlacementComparison(unittest.TestCase):
                             "--upstream", str(tmp / "up.json"), "--fork", str(tmp / "fk.json"),
                             "--out", str(tmp / "cmp.tsv")], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("1 flagged by one only; of those, 1 sit on the same edge", r.stdout)
+        self.assertIn("1 flagged by one only; of those, 1 read the same clade", r.stdout)
+        self.assertIn("flagged by fork only: 1", r.stdout)
         rows = [l.split("\t") for l in (tmp / "cmp.tsv").read_text().splitlines()]
         self.assertEqual(rows[0][0], "sequence")
         i1 = next(x for x in rows[1:] if x[0] == "i1")
-        self.assertEqual((i1[1], i1[2], i1[5]), ("False", "True", "True"), "same edge, one flag")
+        self.assertEqual((i1[1], i1[2], i1[5]), ("False", "True", "True"), "same clade, one flag")
 
 
 if __name__ == "__main__":

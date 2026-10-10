@@ -1,0 +1,125 @@
+{
+  "condition": "epang_T8_K25__rep1",
+  "rows": [
+    {
+      "distance": "genus",
+      "breakpoint": 0.25,
+      "cells": 3,
+      "injected": 60,
+      "detected": 54,
+      "sides_b": 53,
+      "recall": 0.9,
+      "sides_with_other_parent_of_flagged": 0.9815
+    },
+    {
+      "distance": "genus",
+      "breakpoint": 0.5,
+      "cells": 3,
+      "injected": 60,
+      "detected": 20,
+      "sides_b": 19,
+      "recall": 0.3333,
+      "sides_with_other_parent_of_flagged": 0.95
+    },
+    {
+      "distance": "genus",
+      "breakpoint": 0.75,
+      "cells": 3,
+      "injected": 60,
+      "detected": 0,
+      "sides_b": 0,
+      "recall": 0.0,
+      "sides_with_other_parent_of_flagged": null
+    },
+    {
+      "distance": "family",
+      "breakpoint": 0.25,
+      "cells": 3,
+      "injected": 60,
+      "detected": 57,
+      "sides_b": 55,
+      "recall": 0.95,
+      "sides_with_other_parent_of_flagged": 0.9649
+    },
+    {
+      "distance": "family",
+      "breakpoint": 0.5,
+      "cells": 3,
+      "injected": 60,
+      "detected": 9,
+      "sides_b": 9,
+      "recall": 0.15,
+      "sides_with_other_parent_of_flagged": 1.0
+    },
+    {
+      "distance": "family",
+      "breakpoint": 0.75,
+      "cells": 3,
+      "injected": 60,
+      "detected": 0,
+      "sides_b": 0,
+      "recall": 0.0,
+      "sides_with_other_parent_of_flagged": null
+    },
+    {
+      "distance": "order",
+      "breakpoint": 0.25,
+      "cells": 3,
+      "injected": 60,
+      "detected": 59,
+      "sides_b": 58,
+      "recall": 0.9833,
+      "sides_with_other_parent_of_flagged": 0.9831
+    },
+    {
+      "distance": "order",
+      "breakpoint": 0.5,
+      "cells": 3,
+      "injected": 60,
+      "detected": 19,
+      "sides_b": 18,
+      "recall": 0.3167,
+      "sides_with_other_parent_of_flagged": 0.9474
+    },
+    {
+      "distance": "order",
+      "breakpoint": 0.75,
+      "cells": 3,
+      "injected": 60,
+      "detected": 2,
+      "sides_b": 0,
+      "recall": 0.0333,
+      "sides_with_other_parent_of_flagged": 0.0
+    },
+    {
+      "distance": "phylum",
+      "breakpoint": 0.25,
+      "cells": 3,
+      "injected": 60,
+      "detected": 59,
+      "sides_b": 59,
+      "recall": 0.9833,
+      "sides_with_other_parent_of_flagged": 1.0
+    },
+    {
+      "distance": "phylum",
+      "breakpoint": 0.5,
+      "cells": 3,
+      "injected": 60,
+      "detected": 11,
+      "sides_b": 11,
+      "recall": 0.1833,
+      "sides_with_other_parent_of_flagged": 1.0
+    },
+    {
+      "distance": "phylum",
+      "breakpoint": 0.75,
+      "cells": 3,
+      "injected": 60,
+      "detected": 1,
+      "sides_b": 0,
+      "recall": 0.0167,
+      "sides_with_other_parent_of_flagged": 0.0
+    }
+  ]
+}

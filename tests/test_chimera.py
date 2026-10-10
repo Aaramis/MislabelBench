@@ -158,6 +158,25 @@ class Chimera(unittest.TestCase):
         self.assertIsNone(row["recall_at_injected_rank"], "no rank is wrong for a half-right label")
         self.assertEqual(row["proposed_sides_with_other_parent"], 0.5)
 
+    def test_detection_table_sums_cells_through_the_scorer(self):
+        # The scorer prints a summary to stdout beside the JSON it writes; the first run on the 72
+        # real cells read both from /dev/stdout and died on "Extra data".
+        d, truth = self.make("sc", n=2)
+        runs = self.tmp / "runs" / "sc__epang__rep1"
+        runs.mkdir(parents=True)
+        (runs / "sc__epang__rep1.mis").write_text(HEADER + "\n" + "\n".join(
+            f"{c}\tFamily\tf__x\tf__y\t0.900\t{rec['wrong']}\t{rec['lineage_b']}\t0.9\t1.000"
+            for c, rec in sorted(truth["injected"].items())) + "\n")
+        out = self.tmp / "det.json"
+        r = run("chimera_detection.py", "--chimera-dir", self.tmp / "cells", "--runs-dir",
+                self.tmp / "runs", "--condition", "epang__rep1", "--out", out)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        rows = json.loads(out.read_text())["rows"]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual((rows[0]["distance"], rows[0]["breakpoint"], rows[0]["injected"],
+                          rows[0]["detected"], rows[0]["sides_with_other_parent_of_flagged"]),
+                         ("family", 0.5, 2, 2, 1.0))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -18,15 +18,15 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 234 |
+| findings in this report | 236 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
 | `slurm/` job scripts, the prelude and the submit wrapper | 55 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
-| run records, cross-checked against the files they summarise | 1297 |
-| result tables, each rebuilt by `bin/analyses.sh` | 74 |
-| `.mis` files, the flag lists every detection number is computed from | 1623 |
-| tests over the scripts that turn runs into numbers | 108 |
+| run records, cross-checked against the files they summarise | 1327 |
+| result tables, each rebuilt by `bin/analyses.sh` | 77 |
+| `.mis` files, the flag lists every detection number is computed from | 1653 |
+| tests over the scripts that turn runs into numbers | 109 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
 and the four-way join into `COLLECTRUN`, whose cardinality guard was proved live in finding 110.
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 297 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 327 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **74 published tables** ← 1 297 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **77 published tables** ← 1 327 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 297** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 327** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 297 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 327 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 297**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 327**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -5681,6 +5681,47 @@ flagged from missed at k = 2 is therefore not where the sequence lands but the m
 best edge, 0.50 against 0.59, which is the two-edge split a sequence with a near-identical neighbour
 gets. `bin/analyses.sh` rebuilds the records wherever the jplace files are, skips upstream's until
 its refjson is here, and joins the Kexact pair with `bin/placement_comparison.py` once both exist.
+
+**235. Upstream's placements read, and the engine disagreement is a tie broken two ways.** The
+rerun with the refjson kept took 21 minutes and its `.mis` is byte-identical to the committed one
+(only `run.json` and the log differ, by their timestamps), which is the determinism the fixed `-p`
+seed promised and the first direct check of it. The refjson's `"tree"` labels every edge
+`[&&NHX:B=n]`, SATIVA's own encoding and not the jplace `{n}` the reader expected from the
+`get_raxml_readable_tree` code path, 4,043 labels for 4,043 edges; the reader translates the one to
+the other on `--tree` and the hand-built test writes the refjson in NHX form. Then
+`bin/placement_comparison.py` reported "1 of 31 on the same edge", which was a coincidence of
+numbers: upstream numbers edges on its full tree and the fork on each fold's tree, so an equal
+number names unrelated branches. The table compares clade readings now -- the rank to which the
+leaves below the edge agree with the wrong label and with the true one, and whether the edge sits
+among the co-carriers -- and keeps both numbers only as the way back to the files; the test's
+"same" row carries different numbers and the same reading.
+
+What the clade readings say, `results/placement_comparison.tsv`, Kexact cell at k = 2 and family
+distance, 102 injected sequences placed by both engines: 40 flagged by both, 31 by neither, 30 by
+the fork only, 1 by upstream only. For 29 of the 30, upstream put the sequence on its co-carrier's
+own leaf (the leaves below agree with the wrong label to species: the co-carrier is the only leaf
+there), weight 1.000 at the median, which confirms the label; the fork put it with its true
+relatives (agreement with the true lineage to species), weight 0.997. Both are inside the same
+species clade, since the co-carrier is a member of the true species given the same wrong label, so
+"among the k−1" is true on both sides (39 of 41 flagged and 57 of 61 missed for upstream) and does
+not separate them. The engines are not scoring one placement differently: they choose different
+branches of a near-tie between a sequence's two closest neighbours, and the branch chosen decides
+whether the wrong label is confirmed or contradicted. Over the whole cell the two readings agree
+for 53 of 102 sequences.
+
+**236. Chimeras: 72 runs, one reader bug, and the result is a breakpoint law.**
+`bin/chimera_detection.py` ran the scorer with `--out /dev/stdout` and parsed stdout, where the
+scorer also prints its summary, and died on "Extra data" after the JSON; it reads a temporary file
+now, and `tests/test_chimera.py` runs the table end to end on a two-chimera cell, which the suite did
+not do before. `results/chimera_detection_<condition>.json`, 36 cells of 20 chimeras under each
+tool: recall is set by the breakpoint and barely by the parents' distance. With parent A, whose
+lineage the chimera carries, contributing the first quarter, 0.90 to 0.98 of the chimeras are
+flagged at every distance from genus to phylum and 95 to 100 % of the proposals name parent B; at
+the midpoint 0.15 to 0.33; at three quarters, none to one in sixty. A half-and-half chimera of two
+phyla is flagged 11 times in 60 by the fork and 9 by upstream. The tools agree within two or three
+chimeras per cell. The reading: leave-one-out sees a chimera as a mislabel only when the unlabelled
+parent dominates the sequence, and a chimera that is mostly its labelled parent is, to a placement,
+that parent.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since
