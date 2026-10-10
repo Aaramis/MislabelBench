@@ -1,0 +1,56 @@
+SATIVA v0.9.1, released on 2023-08-16. Last version: https://github.com/amkozlov/sativa 
+By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
+
+SATIVA was called as follows:
+
+/usr/local/bin/sativa.py -s binj_family_r0.05_k3_s2.fasta -t binj_family_r0.05_k3_s2.tax -T 8 -n binj_family_r0.05_k3_s2__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_bac/work/ec/8f85644d23bb0faf7bcdbe9a3f9390/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: binj_family_r0.05_k3_s2.tax ...
+
+==> Loading reference alignment from file: binj_family_r0.05_k3_s2.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;s__CANEHT01 sp948543815
+d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Lientehia;s__Lientehia dongpingensis
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__CAMVHY01;g__CANEHT01;__TAXCLUSTER1__s__CANEHT01 sp948543815
+
+WARNING: 2 indistinguishable taxa have been merged into 1 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2008 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./binj_family_r0.05_k3_s2__upstream_raxml_T8__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+Leave-one-out test identified 225 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Family      :	89
+Genus       :	47
+Species     :	43
+
+Total mislabels: 179 / 8.91 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grid_bac/work/ec/8f85644d23bb0faf7bcdbe9a3f9390/run/binj_family_r0.05_k3_s2__upstream_raxml_T8__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grid_bac/work/ec/8f85644d23bb0faf7bcdbe9a3f9390/run/binj_family_r0.05_k3_s2__upstream_raxml_T8__rep1.log
+
+Analysis completed successfully, elapsed time: 1080 seconds (12s reftree, 1068s leave-one-out)
+

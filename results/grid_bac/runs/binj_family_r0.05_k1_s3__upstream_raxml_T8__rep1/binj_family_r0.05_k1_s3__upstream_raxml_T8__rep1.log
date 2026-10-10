@@ -1,0 +1,47 @@
+SATIVA v0.9.1, released on 2023-08-16. Last version: https://github.com/amkozlov/sativa 
+By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
+
+SATIVA was called as follows:
+
+/usr/local/bin/sativa.py -s binj_family_r0.05_k1_s3.fasta -t binj_family_r0.05_k1_s3.tax -T 8 -n binj_family_r0.05_k1_s3__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_bac/work/c8/c36d5c9fb8f3d0a56cc5893f03e2f8/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: binj_family_r0.05_k1_s3.tax ...
+
+==> Loading reference alignment from file: binj_family_r0.05_k1_s3.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+====> Building a multifurcating tree from taxonomy with 2008 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./binj_family_r0.05_k1_s3__upstream_raxml_T8__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+Leave-one-out test identified 277 suspicious sequences; running final EPA test to check them...
+
+Mislabeled sequences by rank:
+Family      :	102
+Genus       :	55
+Species     :	37
+
+Total mislabels: 194 / 9.66 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grid_bac/work/c8/c36d5c9fb8f3d0a56cc5893f03e2f8/run/binj_family_r0.05_k1_s3__upstream_raxml_T8__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grid_bac/work/c8/c36d5c9fb8f3d0a56cc5893f03e2f8/run/binj_family_r0.05_k1_s3__upstream_raxml_T8__rep1.log
+
+Analysis completed successfully, elapsed time: 1031 seconds (11s reftree, 1020s leave-one-out)
+

@@ -1,0 +1,67 @@
+{
+  "a": "upstream_raxml_T8__rep1",
+  "b": "epang_T8_K25__rep1",
+  "n_cells": 15,
+  "by_k": [
+    {
+      "k": 1,
+      "cells": 3,
+      "mean_difference": 0.0033,
+      "sd_of_difference": 0.0115,
+      "cells_b_greater": 2,
+      "cells_a_greater": 1,
+      "cells_tied": 0,
+      "cells_compared": 3,
+      "sign_test_p": 1.0,
+      "reading": "no difference"
+    },
+    {
+      "k": 2,
+      "cells": 3,
+      "mean_difference": 0.3167,
+      "sd_of_difference": 0.0321,
+      "cells_b_greater": 3,
+      "cells_a_greater": 0,
+      "cells_tied": 0,
+      "cells_compared": 3,
+      "sign_test_p": 0.25,
+      "reading": "no difference"
+    },
+    {
+      "k": 3,
+      "cells": 3,
+      "mean_difference": 0.2092,
+      "sd_of_difference": 0.063,
+      "cells_b_greater": 3,
+      "cells_a_greater": 0,
+      "cells_tied": 0,
+      "cells_compared": 3,
+      "sign_test_p": 0.25,
+      "reading": "no difference"
+    },
+    {
+      "k": 5,
+      "cells": 3,
+      "mean_difference": 0.0067,
+      "sd_of_difference": 0.0569,
+      "cells_b_greater": 1,
+      "cells_a_greater": 2,
+      "cells_tied": 0,
+      "cells_compared": 3,
+      "sign_test_p": 1.0,
+      "reading": "no difference"
+    },
+    {
+      "k": 10,
+      "cells": 3,
+      "mean_difference": 0.0233,
+      "sd_of_difference": 0.0231,
+      "cells_b_greater": 3,
+      "cells_a_greater": 0,
+      "cells_tied": 0,
+      "cells_compared": 3,
+      "sign_test_p": 0.25,
+      "reading": "no difference"
+    }
+  ]
+}

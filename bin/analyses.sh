@@ -332,6 +332,35 @@ if [ -d results/chimera/runs ]; then
     done
 fi
 
+# The bacterial replication: the same questions on an order chosen by the evaluability criteria
+# (data/gtdb/bacterial_clade_selection.json), both tools. Agreement on the un-injected clade, the
+# grid summaries and the surviving-label law on the fifteen family-distance cells, and the subset's
+# shape. The subset baseline (results/baseline_bac2k) gives the added-vs-baseline column when it has
+# run; without it the summaries carry none, as the archaeal grid's did before baseline2k.
+if [ -d results/grid_bac/runs ]; then
+    step "bacterial clade: agreement, grid summaries, detection law, shape"
+    bup=results/baseline_bac/runs/gtdb_bac_lachnospirales__upstream_raxml_T8__rep1/gtdb_bac_lachnospirales__upstream_raxml_T8__rep1.mis
+    bfk=results/baseline_bac/runs/gtdb_bac_lachnospirales__epang_T8_K25__rep1/gtdb_bac_lachnospirales__epang_T8_K25__rep1.mis
+    [ -f "$bup" ] && [ -f "$bfk" ] && agreement.py --a "$bup" --b "$bfk" \
+        --out results/agreement_gtdb_bac_lachnospirales.json || echo "   skipped the clade agreement"
+    for cond in epang_T8_K25 upstream_raxml_T8; do
+        base=results/baseline_bac2k/runs/gtdb_bac2k__${cond}__rep1/gtdb_bac2k__${cond}__rep1.mis
+        aggregate_grid.py --injected-dir data/injected_bac --runs-dir results/grid_bac/runs \
+            --condition "${cond}__rep1" $([ -f "$base" ] && echo --baseline-mis "$base") \
+            --out "results/grid_summary_bac_${cond}.json"
+        detection_law.py --base-tax data/gtdb/gtdb_bac2k.tax --injected-dir data/injected_bac \
+            --runs-dir results/grid_bac/runs --condition "${cond}__rep1" \
+            --out "results/detection_law_bac_${cond}.json" >/dev/null
+    done
+    paired_conditions.py --injected-dir data/injected_bac --runs-dir results/grid_bac/runs \
+        --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
+        --out results/paired_bac_upstream_vs_epang_T8_K25.json
+    dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_bac2k.fasta --tax data/gtdb/gtdb_bac2k.tax \
+        --out results/shape_gtdb_bac2k.json
+    dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_bac_lachnospirales.aligned.fasta \
+        --tax data/gtdb/gtdb_bac_lachnospirales.tax --out results/shape_gtdb_bac_lachnospirales.json
+fi
+
 # Where the injected sequences' placements landed, read off the jplace files slurm/placements.sh
 # keeps. The files stay out of git (about 540 MB for the Kexact cell), so this runs only where they
 # are, and the committed record under results/placement_locality/ is what the paper cites. Upstream's

@@ -1,0 +1,13 @@
+{
+  "a": "results/baseline_bac/runs/gtdb_bac_lachnospirales__upstream_raxml_T8__rep1/gtdb_bac_lachnospirales__upstream_raxml_T8__rep1.mis",
+  "b": "results/baseline_bac/runs/gtdb_bac_lachnospirales__epang_T8_K25__rep1/gtdb_bac_lachnospirales__epang_T8_K25__rep1.mis",
+  "n_a": 352,
+  "n_b": 443,
+  "both": 314,
+  "only_a": 38,
+  "only_b": 129,
+  "jaccard": 0.6528,
+  "agree_rank": 305,
+  "agree_label": 204,
+  "agree_path": 190
+}

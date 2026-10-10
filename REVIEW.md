@@ -18,14 +18,14 @@ one drifts, which is the only way a summary of a growing document stays true.
 
 | | count |
 |---|---|
-| findings in this report | 236 |
+| findings in this report | 237 |
 | `bin/` scripts: paths, error handling, division guards, condition selection | 75 |
-| `slurm/` job scripts, the prelude and the submit wrapper | 55 |
+| `slurm/` job scripts, the prelude and the submit wrapper | 56 |
 | `modules/local/`: containers, declared outputs against stub blocks, tool flags | 9 |
 | dataset manifests, against the files they describe | 13 |
-| run records, cross-checked against the files they summarise | 1327 |
-| result tables, each rebuilt by `bin/analyses.sh` | 77 |
-| `.mis` files, the flag lists every detection number is computed from | 1653 |
+| run records, cross-checked against the files they summarise | 1359 |
+| result tables, each rebuilt by `bin/analyses.sh` | 86 |
+| `.mis` files, the flag lists every detection number is computed from | 1685 |
 | tests over the scripts that turn runs into numbers | 109 |
 
 `main.nf` is reviewed too and has no count of its own: grid construction, the branch by implementation,
@@ -2064,7 +2064,7 @@ the whole size gradient reproduces exactly: **9.6 against 78.8 s at 402 sequence
 which is README's headline and the committed table to the decimal.
 
 **The trusted-timing filter does what it claims, and it had almost nothing to do.** README says no
-figure reads seconds from a run marked untrusted. True: of **1 327 run records, 55 are trusted and
+figure reads seconds from a run marked untrusted. True: of **1 359 run records, 55 are trusted and
 1 062 are not**, the field is present on every one, and `resource_usage.py` and this second route treat
 an absent field the same way. Exactly one untrusted run sits in a published condition -- `gtdb_arc2k`
 fork at 65.0 s -- and dropping the filter would move that median from 38.5 to 38.6 and leave the
@@ -2591,7 +2591,7 @@ With findings 118 to 120 that leaves no link in this repository asserted rather 
 | every alignment's width ← the model's `CLEN` | 1 478 on all three sets, finding 120 |
 | the fork's container ← commit `e687646` | recipe, tarball checksum, tree diff, finding 118 |
 | the comparator's container ← upstream v0.9.3, unpatched | recipe with no patches, checksum, finding 119 |
-| **77 published tables** ← 1 327 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
+| **86 published tables** ← 1 359 run records | `bin/analyses.sh` in a fresh clone: 33 steps, 0 diffs |
 | ~4 000 published values ← a second implementation | findings 98 to 107 |
 
 Each of those was a sentence in a manifest or a document before it was a measurement.
@@ -2702,7 +2702,7 @@ the paired comparison's **119 cells to the fork, 8 to upstream, 53 tied**, which
 exactly those three numbers summing to 180. Nothing drifted.
 
 One figure reads as if it had. "That sentence was false until the **949** run directories ... were
-brought back from the cluster" sits in a repository holding **1 327** run records. It is not a stale
+brought back from the cluster" sits in a repository holding **1 359** run records. It is not a stale
 count but a statement about a day, and the difference matters only because a reader cannot tell which
 from the sentence. It now says both, with the 949 kept rather than updated, because updating it would
 turn a true account of an event into a false one.
@@ -3939,7 +3939,7 @@ in the workflow for a mistake nobody has made.
 changing.** Every condition reaches the tool with the same five flags, built once in
 `conf/modules.config` from `params.sativa_mode`, `sativa_conf`, `sativa_taxcode` and `sativa_seed`:
 `-m ultrafast -C 0.4 -x BAC -p 42 -S`. That uniformity is real and was checked -- **no job script in
-`slurm/` overrides any of the four** -- and it is not recorded: of **1 327 run records, none carries
+`slurm/` overrides any of the four** -- and it is not recorded: of **1 359 run records, none carries
 them**. A record names its dataset, condition, threads, engine, folds, host, CPU model and the sha256 of
 the two files it read, and is silent about what the tool was told to do.
 
@@ -4392,7 +4392,7 @@ the gate flag the report. **Zero real misses.**
 **Counts: one wrong.** Scanning comments for a number next to a corpus noun found 23 claims, of which
 most are accounts of a particular day and are meant to be. One was a claim about now and was already
 false: `bin/_timeit.py` said "of the 1 147 run records written before this line, not one says which flags
-produced it", written twelve hours earlier, and the repository now holds **1 327**. The quoted 1 147 is
+produced it", written twelve hours earlier, and the repository now holds **1 359**. The quoted 1 147 is
 deliberately not bold: `bin/verify_report_references.py`'s own comment sets that convention, a bold count
 beside a corpus noun being a claim about now and a plain one being part of an account, and the gate duly
 flagged this paragraph until the quote obeyed it.
@@ -5722,6 +5722,33 @@ phyla is flagged 11 times in 60 by the fork and 9 by upstream. The tools agree w
 chimeras per cell. The reading: leave-one-out sees a chimera as a mislabel only when the unlabelled
 parent dominates the sequence, and a chimera that is mostly its labelled parent is, to a placement,
 that parent.
+
+**237. The bacterial replication, and what three seeds can and cannot say.** The chain
+finished: the Lachnospirales clade (6,929 sequences) under both tools, timed, and fifteen
+family-distance cells on its 2,008-sequence subset. `bin/analyses.sh` gains the block that reads
+them with the archaeal scripts unchanged: `results/agreement_gtdb_bac_lachnospirales.json` (upstream
+352 flags, fork 443, 314 shared, Jaccard 0.653, against 0.67 on the archaeal 7,051),
+`results/grid_summary_bac_<condition>.json` and `results/detection_law_bac_<condition>.json`,
+`results/paired_bac_upstream_vs_epang_T8_K25.json`, and the shapes of the clade and the subset
+(`results/shape_gtdb_bac*.json`; the subset is 95.4 % judgeable at species, the clade 96.2 %, which
+`assets/datasets.yml` already carried from `data/gtdb/dataset_table_bac.json`). Recall at threshold
+zero, fork against upstream: 0.997 / 0.993 at k = 1, 0.843 / 0.527 at k = 2, 0.637 / 0.428 at k = 3,
+0.367 / 0.360 at k = 5, 0.307 / 0.283 at k = 10. The archaeal pattern, the fork ahead at k = 2 and 3
+and the two equal elsewhere, is reproduced in magnitude (+0.32 and +0.21 against +0.24 and +0.15).
+It is not reproduced in significance, and cannot be: three seeds per k give an exact sign test a
+floor of 0.25 at 3 of 3, and the table says so ("no difference") where the archaeal 36 cells said
+1.2e-10. The protocol asked for a clade of comparable size with the same criteria, which this is;
+it did not ask for the archaeal grid's 36 cells per k, and the supplement reports the effect sizes
+with the test's floor stated rather than a p-value that cannot move. Timed on the clade: the fork
+523 s against 5,120 s upstream, 9.8x, against 14.9x on the archaeal 7,051 (263 against 3,928 s);
+both single runs, so the supplement gives them as such and not as medians.
+
+Two things the chain did not do. `slurm/bac.sh` ran the clade baseline and the grid, not the
+un-injected subset, which is what `aggregate_grid.py` reads `added_vs_baseline` against; the
+bacterial summaries carry that column empty, `slurm/baseline_bac2k.sh` runs the subset under both
+tools (job 2339220), and the block passes `--baseline-mis` the moment its `.mis` exists. And
+`detection_law.py` writes its record with every top-level field a table, so the one-line check that
+printed `{}` for it was reading nothing; the record itself is five rows by k and five by the share of surviving labels, as for the archaea.
 
 `tests/test_gates.py` holds the property for all eight gates at once -- refuse an empty tree, and refuse
 it with a sentence rather than a traceback -- plus the positive half for `verify_grid_complete.py`, since

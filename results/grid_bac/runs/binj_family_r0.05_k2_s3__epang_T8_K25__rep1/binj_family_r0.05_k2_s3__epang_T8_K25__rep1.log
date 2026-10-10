@@ -1,0 +1,63 @@
+SATIVA, EPA-ng fork 0.10.2, based on SATIVA v0.9.3 released on 2018-01-16.
+SATIVA by A.Kozlov and J.Zhang, the Exelixis Lab, on RAxML 8.2.3 by A.Stamatakis.
+Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sativa-epang
+
+SATIVA was called as follows:
+
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s binj_family_r0.05_k2_s3.fasta -t binj_family_r0.05_k2_s3.tax -T 8 -n binj_family_r0.05_k2_s3__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_bac/work/05/a2d6379283bc442124b3887ab0a7c1/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+
+*** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
+
+=> Loading taxonomy from file: binj_family_r0.05_k2_s3.tax ...
+
+==> Loading reference alignment from file: binj_family_r0.05_k2_s3.fasta ...
+
+===> Validating taxonomy and alignment ...
+
+
+WARNING: Following taxa share >60% indentical sequences und thus considered indistinguishable:
+d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;s__Coprocola sp910583755
+d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Lachnospiraceae;g__Luxibacter;s__Luxibacter massiliensis
+For the purpose of mislabels identification, they were merged into one taxon:
+d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales;f__Anaerotignaceae;g__Coprocola;__TAXCLUSTER1__s__Coprocola sp910583755
+
+WARNING: 2 indistinguishable taxa have been merged into 1 clusters.
+
+====> Building a multifurcating tree from taxonomy with 2008 seqs ...
+
+=====> Building the reference alignment ...
+
+======> Saving the outgroup for later re-rooting ...
+
+=======> Resolving multifurcation: choosing the best topology from 1 independent RAxML runs ...
+
+========> Calling RAxML-EPA to obtain branch labels ...
+
+=========> Post-processing the EPA tree (re-rooting, taxonomic labeling etc.) ...
+
+==========> Saving the reference JSON file: ./binj_family_r0.05_k2_s3__epang_T8_K25__rep1.refjson
+
+*** STEP 2: Searching for mislabels ***
+
+Running the leave-one-sequence-out test...
+
+[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/grid_bac/work/05/a2d6379283bc442124b3887ab0a7c1/tmp/binj_family_r0.05_k2_s3__epang_T8_K25__rep1_1791583163728/RAxML_info.mfresolv_binj_family_r0.05_k2_s3__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/grid_bac/work/05/a2d6379283bc442124b3887ab0a7c1/tmp/binj_family_r0.05_k2_s3__epang_T8_K25__rep1_1791583163728/epang_l1out_seq_binj_family_r0.05_k2_s3__epang_T8_K25__rep1 (1.1s)
+[epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 53.9s)
+[epang-l1o] placements produits: 2008 (K=25 folds, remap 1.4s)
+[epang-l1o] timing: fold prep 1.1s, epa-ng 53.9s, remap 1.4s, elapsed 56.4s
+Leave-one-out test identified 230 suspicious sequences; running final EPA test to check them...
+
+[epang-final] 230 suspects re-placed (model RAxML_info.mfresolv_binj_family_r0.05_k2_s3__epang_T8_K25__rep1)
+Mislabeled sequences by rank:
+Family      :	95
+Genus       :	51
+Species     :	48
+
+Total mislabels: 194 / 9.66 %
+
+Results were saved to: /shared/home/agardette/bench/.nf/grid_bac/work/05/a2d6379283bc442124b3887ab0a7c1/run/binj_family_r0.05_k2_s3__epang_T8_K25__rep1.mis
+Execution log was saved to: /shared/home/agardette/bench/.nf/grid_bac/work/05/a2d6379283bc442124b3887ab0a7c1/run/binj_family_r0.05_k2_s3__epang_T8_K25__rep1.log
+
+Analysis completed successfully, elapsed time: 96 seconds (34s reftree, 62s leave-one-out)
+
