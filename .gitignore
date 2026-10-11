@@ -50,6 +50,8 @@ warn.txt
 *.jplace
 *.refjson
 results/**/placements_shard*/
+results/*/placements/**/query.fasta
+results/*/placements/**/ref.nwk
 data/chimera/*/*.tax
 data/chimera/*/*.fasta
 data/injected_bac/*/*.tax

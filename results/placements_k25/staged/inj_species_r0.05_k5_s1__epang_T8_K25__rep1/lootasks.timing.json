@@ -1,0 +1,1 @@
+{"wall_sec": 0.86, "returncode": 0, "timed_out": false, "max_rss_mb": 77.9, "user_cpu_sec": 0.42, "sys_cpu_sec": 0.08, "cmd": ["sativa-epang", "-r", "run.refjson", "-T", "8", "-n", "run", "-o", ".", "-stage", "loo-tasks"], "host": "cpu-node-93", "cpu_model": "AMD EPYC 7662 64-Core Processor"}

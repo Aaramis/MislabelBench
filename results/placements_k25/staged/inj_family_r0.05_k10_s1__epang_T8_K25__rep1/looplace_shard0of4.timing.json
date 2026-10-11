@@ -1,0 +1,1 @@
+{"wall_sec": 9.23, "returncode": 0, "timed_out": false, "max_rss_mb": 2455.1, "user_cpu_sec": 45.81, "sys_cpu_sec": 5.9, "cmd": ["sativa-epang", "-stage", "loo-place", "-taskdir", "/shared/home/agardette/bench/.nf/placements_k25/work/89/e868e4b61e4af96a2cdf7512bfdf58/taskdir", "-T", "8", "-folds", "0/4"], "host": "cpu-node-92", "cpu_model": "AMD EPYC 7662 64-Core Processor"}
