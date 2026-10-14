@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One property, over every gate bin/analyses.sh runs: a check that checked nothing must fail.
 
-This repository has been bitten by it four times, and the comment in bin/verify_injection.py records
+This repository has been bitten by it four times, and the comment in bin/verify/verify_injection.py records
 the shape: `verify_inputs.py` printed "0 cells, 0 consistent" and exited 0 when a job left the working
 directory at the Nextflow launch directory and a relative glob matched nothing. The gate said yes, and
 nobody looked again.
@@ -26,11 +26,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 
 
 def gate(script, *args):
-    return subprocess.run([sys.executable, str(BIN / script), *map(str, args)],
+    return subprocess.run([sys.executable, str(find(script)), *map(str, args)],
                           capture_output=True, text=True)
 
 

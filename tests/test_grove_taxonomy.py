@@ -23,7 +23,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 RANKS = 7
 
 
@@ -67,7 +68,7 @@ class NewickParser(unittest.TestCase):
     """
 
     def setUp(self):
-        spec = importlib.util.spec_from_file_location("gt", BIN / "grove_taxonomy.py")
+        spec = importlib.util.spec_from_file_location("gt", find("grove_taxonomy.py"))
         self.gt = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.gt)
 
@@ -116,7 +117,7 @@ class GroveTaxonomy(unittest.TestCase):
         (cls.tmp / "tree.newick").write_text(plain)
         (cls.tmp / "flipped.newick").write_text(flipped)
         for tag in ("tree", "flipped"):
-            r = subprocess.run([sys.executable, str(BIN / "grove_taxonomy.py"),
+            r = subprocess.run([sys.executable, str(find("grove_taxonomy.py")),
                                 "--tree", str(cls.tmp / f"{tag}.newick"),
                                 "--prefix", str(cls.tmp / tag)],
                                capture_output=True, text=True)
@@ -210,20 +211,20 @@ class GroveTaxonomy(unittest.TestCase):
         for n, ok in ((7, False), (8, True)):
             tree = self.tmp / f"n{n}.newick"
             tree.write_text("(" + ",".join(f"t{i}:0.{i}" for i in range(1, n + 1)) + ");")
-            r = subprocess.run([sys.executable, str(BIN / "grove_taxonomy.py"), "--tree", str(tree),
+            r = subprocess.run([sys.executable, str(find("grove_taxonomy.py")), "--tree", str(tree),
                                 "--prefix", str(self.tmp / f"n{n}")], capture_output=True, text=True)
             self.assertEqual(r.returncode == 0, ok, r.stderr)
             if not ok:
                 self.assertIn("too few", r.stderr)
 
     def test_the_gate_passes_what_the_builder_wrote_and_refuses_one_swapped_label(self):
-        """bin/verify_grove_taxonomy.py is the check the protocol promises, on the committed files.
+        """bin/data/verify_grove_taxonomy.py is the check the protocol promises, on the committed files.
 
         The builder cannot produce a label that is not a clade, so the gate passing here says little;
         the second half is the point. Two tips swap lineages, which leaves every count intact and
         every rank nested, and the only thing wrong is that two clades each now hold one foreign tip.
         """
-        gate = [sys.executable, str(BIN / "verify_grove_taxonomy.py"),
+        gate = [sys.executable, str(find("verify_grove_taxonomy.py")),
                 "--tree", str(self.tmp / "tree.newick")]
         r = subprocess.run(gate + ["--tax", str(self.tmp / "tree.tax")],
                            capture_output=True, text=True)
@@ -241,7 +242,7 @@ class GroveTaxonomy(unittest.TestCase):
     def test_negative_branch_length_refused(self):
         bad = self.tmp / "bad.newick"
         bad.write_text("((a:1,b:1):-1,(c:1,d:1):1,(e:1,f:1):1,(g:1,h:1):1);")
-        r = subprocess.run([sys.executable, str(BIN / "grove_taxonomy.py"), "--tree", str(bad),
+        r = subprocess.run([sys.executable, str(find("grove_taxonomy.py")), "--tree", str(bad),
                             "--prefix", str(self.tmp / "bad")], capture_output=True, text=True)
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("negative branch length", r.stderr)

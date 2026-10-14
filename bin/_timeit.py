@@ -93,8 +93,8 @@ def main():
         # scaling measurement. No run record written before this line says which flags produced it,
         # and none written since does either: the nine staged rounds of 8 October ran from the
         # cluster's copy of this file, which predated the change, so the field and the agreement check
-        # in bin/verify_runs.py are armed and have never met a real run. The first measured run after
-        # the next bin/push_code.sh will be the first. No count is given here on purpose -- a corpus
+        # in bin/verify/verify_runs.py are armed and have never met a real run. The first measured run after
+        # the next bin/ops/push_code.sh will be the first. No count is given here on purpose -- a corpus
         # number inside a comment is checked by nothing and this one was wrong within twelve hours.
         #
         # Taken from the command actually executed rather than rebuilt from the params, which is the

@@ -7,7 +7,7 @@ the share of species represented by two distinct genomes. Two of those numbers l
 repository except as a comment in assets/datasets.yml, and one, the two-genome share, nowhere at all.
 A figure with no producer is a figure that is wrong once and then believed.
 
-Judgeability is bin/dataset_shape.py's rule, imported: among sequences with a real label at a rank,
+Judgeability is bin/data/dataset_shape.py's rule, imported: among sequences with a real label at a rank,
 the share whose label is carried by at least one other sequence. The two-genome column counts a
 species as judgeable only when its members come from at least two genomes, the accession before `~`
 being the genome; two SSU copies of one genome are siblings for leave-one-out but not evidence that

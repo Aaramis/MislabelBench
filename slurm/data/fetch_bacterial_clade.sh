@@ -8,7 +8,7 @@
 # The bacterial clade the archaeal results are replicated on, fetched, filtered, aligned and
 # subsetted the way the archaeal set was.
 #
-# Which clade is not decided here. bin/select_bacterial_clade.py scored every bacterial class and
+# Which clade is not decided here. bin/data/select_bacterial_clade.py scored every bacterial class and
 # order of the release on the two numbers the archaeal set is characterised by, and wrote the choice
 # and the runners-up to data/gtdb/bacterial_clade_selection.json; this script reads it. Changing the
 # clade means changing that record, which is where the reasoning is.
@@ -20,7 +20,7 @@
 set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"
 require_singularity
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 RAW="$BENCH_ROOT/data/raw"
 OUT="$BENCH_ROOT/data/gtdb"
@@ -38,7 +38,7 @@ if [ ! -s "$IMG" ]; then
 fi
 echo "infernal image $IMG sha256 $(sha256sum "$IMG" | cut -d' ' -f1)"
 
-# The selection record is made here when it is not here: bin/push_code.sh sends code and truth and
+# The selection record is made here when it is not here: bin/ops/push_code.sh sends code and truth and
 # not data/gtdb records, and the choice is a function of the release file, so recomputing it on the
 # cluster from the same file gives the same record, which git then shows.
 SHA=$(dataset_field.py gtdb_archaea_ssu sha256)
@@ -48,7 +48,7 @@ if [ ! -f ssu_all_r226.fna.gz ] || [ "$(sha256sum ssu_all_r226.fna.gz | cut -d' 
     curl -fsSL -o ssu_all_r226.fna.gz "$URL"
 fi
 echo "$SHA  ssu_all_r226.fna.gz" | sha256sum -c -
-[ -s "$OUT/bacterial_clade_selection.json" ] || python3 "$BENCH_ROOT/bin/select_bacterial_clade.py" \
+[ -s "$OUT/bacterial_clade_selection.json" ] || python3 "$BENCH_ROOT/bin/data/select_bacterial_clade.py" \
     --fasta "$RAW/ssu_all_r226.fna.gz" --out "$OUT/bacterial_clade_selection.json"
 CLADE=$(python3 -c "import json;print(json.load(open('$OUT/bacterial_clade_selection.json'))['chosen']['clade'])")
 TAG=$(echo "$CLADE" | awk -F';' '{print tolower($NF)}' | sed 's/^o__//; s/^c__//')
@@ -70,7 +70,7 @@ echo "RF00177.cm sha256 $(sha256sum "$OUT/RF00177.cm" | cut -d' ' -f1), CLEN $(g
 
 # Select, filter, align: the archaeal steps with the clade as the prefix.
 cd "$OUT"
-python3 "$BENCH_ROOT/bin/prepare_gtdb.py" "$RAW/ssu_all_r226.fna.gz" \
+python3 "$BENCH_ROOT/bin/data/prepare_gtdb.py" "$RAW/ssu_all_r226.fna.gz" \
     --domain "$CLADE" --min-len 1200 --prefix "gtdb_bac_${TAG}"
 singularity exec -B "$OUT:$OUT" --pwd "$OUT" "$IMG" \
     cmalign --cpu "${SLURM_CPUS_PER_TASK:-8}" --dnaout --matchonly --outformat Pfam \
@@ -83,12 +83,12 @@ N=$(grep -c '^>' "gtdb_bac_${TAG}.aligned.fasta")
 echo "aligned: $N sequences, width $W"
 
 # The grid's subset, by whole taxa, as gtdb_arc2k was.
-python3 "$BENCH_ROOT/bin/subset_taxa.py" "gtdb_bac_${TAG}.aligned.fasta" "gtdb_bac_${TAG}.tax" \
+python3 "$BENCH_ROOT/bin/data/subset_taxa.py" "gtdb_bac_${TAG}.aligned.fasta" "gtdb_bac_${TAG}.tax" \
     --target 2000 --seed 42 --prefix "gtdb_bac2k"
 N2=$(grep -c '^>' gtdb_bac2k.fasta)
 
 # The protocol's dataset table for this clade, from the same release files.
-python3 "$BENCH_ROOT/bin/dataset_table.py" --ssu-all "$RAW/ssu_all_r226.fna.gz" \
+python3 "$BENCH_ROOT/bin/data/dataset_table.py" --ssu-all "$RAW/ssu_all_r226.fna.gz" \
     --clade "$CLADE" --out "$OUT/dataset_table_bac.json"
 
 python3 - "$OUT" "$BENCH_ROOT" "$TAG" "$N" "$N2" "$W" "$CLADE" <<'PY'
@@ -105,5 +105,5 @@ rel = lambda p: str((out / p).relative_to(root))
          "fasta": rel("gtdb_bac2k.fasta"), "tax": rel("gtdb_bac2k.tax")}]}, indent=2) + "\n")
 print(f"manifest: gtdb_bac_{tag} ({n}) and gtdb_bac2k ({n2}), width {w}")
 PY
-python3 "$BENCH_ROOT/bin/dataset_shape.py" --convention gtdb --fasta "gtdb_bac_${TAG}.aligned.fasta" \
+python3 "$BENCH_ROOT/bin/data/dataset_shape.py" --convention gtdb --fasta "gtdb_bac_${TAG}.aligned.fasta" \
     --tax "gtdb_bac_${TAG}.tax" --out "$OUT/shape_gtdb_bac_${TAG}.json" | tail -9

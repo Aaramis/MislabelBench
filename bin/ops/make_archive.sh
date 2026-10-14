@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Pack the run outputs that git does not keep (placements, reference trees, tool logs) for the data
-# record on Zenodo. Usage: bin/make_archive.sh [output_dir]   (default: ./archive)
+# record on Zenodo. Usage: bin/ops/make_archive.sh [output_dir]   (default: ./archive)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 out="${1:-archive}"; mkdir -p "$out"

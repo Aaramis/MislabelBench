@@ -22,9 +22,9 @@ the largest experiments are in the release archive, not in git.
 | `determinism/`, `inputs_check/` | byte-identical repeats, input checks | `slurm/checks/determinism.sh`, `slurm/checks/inputs_check.sh` |
 | `aldiscore/` | alignment difficulty | `slurm/checks/aldiscore.sh` |
 | `pipeline_info/` | one Nextflow trace per submission, see its README | the workflow |
-| `figure3.svg`, `figure3_values.tsv` | figure 3 of the note and its values | `bin/main_figure.py` |
-| `supplement_figures/`, `supplement_figures_values.tsv`, `paired_stats.tsv`, `upset_tables.txt` | the supplement's figures and statistics | `bin/supplement_figures.py`, `paired_stats.py`, `upset_tables.py` |
+| `figure3.svg`, `figure3_values.tsv` | figure 3 of the note and its values | `bin/figures/main_figure.py` |
+| `supplement_figures/`, `supplement_figures_values.tsv`, `paired_stats.tsv`, `upset_tables.txt` | the supplement's figures and statistics | `bin/figures/supplement_figures.py`, `paired_stats.py`, `upset_tables.py` |
 
 The other `*.json`, `*.txt` and `*.tsv` at this level are tables read by the supplement or by another step. Each is made by
-the script of the same name in `bin/`, for example `resource_usage.txt` by `bin/resource_usage.py`. [docs/reproduce.md](../docs/reproduce.md) maps each experiment to its script,
+the script of the same name in `bin/`, for example `resource_usage.txt` by `bin/timing/resource_usage.py`. [docs/reproduce.md](../docs/reproduce.md) maps each experiment to its script,
 and [docs/results.md](../docs/results.md) says what the numbers show.

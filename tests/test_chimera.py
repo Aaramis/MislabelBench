@@ -17,7 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 HEADER = (";SeqID\tMislabeledLevel\tOriginalLabel\tProposedLabel\tConfidence"
           "\tOriginalTaxonomyPath\tProposedTaxonomyPath\tPerRankConfidence\tOriginalLabelExclusion")
 # Two families under one order, each with two genera of one species of one or two sequences.
@@ -35,7 +36,7 @@ SEQ = {"a1": "AA--AAAA--AA", "a2": "AAAAAAAAAAAA", "b1": "CCCCCCCCCCCC",
 
 
 def run(script, *args):
-    return subprocess.run([sys.executable, str(BIN / script), *map(str, args)],
+    return subprocess.run([sys.executable, str(find(script)), *map(str, args)],
                           capture_output=True, text=True)
 
 

@@ -2,7 +2,7 @@
 """The Grove control's taxonomy must be the tree, and this is the check.
 
 The protocol requires of the simulated control that "the taxonomy matches the
-generating tree". bin/grove_taxonomy.py builds the labels from the tree by construction, and its
+generating tree". bin/data/grove_taxonomy.py builds the labels from the tree by construction, and its
 tests pin that construction on synthetic trees; this is the gate on the committed data, so that a
 reference whose labels were edited, regenerated from another tree, or truncated by a copy is refused
 before either tool sees it.

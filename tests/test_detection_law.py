@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""bin/detection_law.py, which carries the paper's mechanistic claim and almost nothing pinned it.
+"""bin/analysis/detection_law.py, which carries the paper's mechanistic claim and almost nothing pinned it.
 
 The claim is that recall on a shared mislabel is governed by what the removed sequence is placed
 against: of the relatives that survive its removal, k-1 carry the wrong label and the rest carry the
@@ -14,7 +14,7 @@ sequence in the published table, and the table would still have looked like a la
 The fixture here is small enough that every number below is arithmetic a reader can redo: one donor
 group of six, one of three, one of a single sequence.
 
-    python3 tests/mutation_sweep.py bin/detection_law.py tests.test_detection_law
+    python3 tests/mutation_sweep.py bin/analysis/detection_law.py tests.test_detection_law
 """
 
 import json
@@ -24,7 +24,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 HEADER = (";SeqID\tMislabeledLevel\tOriginalLabel\tProposedLabel\tConfidence"
           "\tOriginalTaxonomyPath\tProposedTaxonomyPath\tPerRankConfidence\tOriginalLabelExclusion")
 
@@ -63,7 +64,7 @@ class DetectionLaw(unittest.TestCase):
 
     def law(self, *extra):
         out = self.tmp / "law.json"
-        r = subprocess.run([sys.executable, str(BIN / "detection_law.py"),
+        r = subprocess.run([sys.executable, str(find("detection_law.py")),
                             "--base-tax", str(self.base), "--injected-dir", str(self.inj),
                             "--runs-dir", str(self.runs), "--condition", COND,
                             "--out", str(out), *extra], capture_output=True, text=True)

@@ -14,13 +14,13 @@
 # -profile singularity native_id is a process id instead and this script would resolve nonsense, so
 # it refuses a round whose ids do not look like job ids.
 #
-# bin/staged_scaling.py reads the file this writes. Run it on the cluster, after the round.
+# bin/timing/staged_scaling.py reads the file this writes. Run it on the cluster, after the round.
 set -euo pipefail
 dir="${1:?usage: shard_nodes.sh <round directory>}"
 info="$dir/pipeline_info"
 [ -d "$info" ] || { echo "no $info" >&2; exit 1; }
 
-# Named after the trace it was resolved from, because bin/repatriate.sh flattens every round's
+# Named after the trace it was resolved from, because bin/ops/repatriate.sh flattens every round's
 # pipeline_info into one results/pipeline_info and an untagged name would have nine rounds overwrite
 # each other there.
 # The newest trace by the job id in its name, not the first one ls returns. A round resubmitted

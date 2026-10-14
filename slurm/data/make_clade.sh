@@ -27,7 +27,7 @@ for dist in species family phylum; do
     d="$OUT/$name"
     if [ ! -s "$d/$name.tax" ]; then
       mkdir -p "$d"
-      python3 "$BENCH_ROOT/bin/inject_clade.py" "$TAX" --alignment "$ALN" \
+      python3 "$BENCH_ROOT/bin/data/inject_clade.py" "$TAX" --alignment "$ALN" \
         --distance "$dist" --n-clades 6 --seed "$seed" --prefix "$d/$name" \
         >"$d/clades.txt" 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
     fi

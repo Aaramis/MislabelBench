@@ -22,7 +22,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 
 HEADER = (";SeqID\tMislabeledLevel\tOriginalLabel\tProposedLabel\tConfidence"
           "\tOriginalTaxonomyPath\tProposedTaxonomyPath\tPerRankConfidence\tOriginalLabelExclusion")
@@ -45,7 +46,7 @@ def mis_row(name, conf, excl, declared=WRONG, proposed=TRUE, level="Family"):
 
 
 def run(script, *args):
-    r = subprocess.run([sys.executable, str(BIN / script), *map(str, args)],
+    r = subprocess.run([sys.executable, str(find(script)), *map(str, args)],
                        capture_output=True, text=True)
     return r
 

@@ -5,7 +5,7 @@
 them in code that decides a published figure. The prose is a claim a reader cannot check, so the
 sweep is here as something to run:
 
-    python3 tests/mutation_sweep.py bin/grove_taxonomy.py tests.test_grove_taxonomy
+    python3 tests/mutation_sweep.py bin/data/grove_taxonomy.py tests.test_grove_taxonomy
 
 It reports how many mutants the suite killed and prints the line of every survivor. A survivor is
 not automatically a defect -- some mutations cannot change the answer at all -- but it is a line no
@@ -87,7 +87,7 @@ def inside(spans, offset):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("target", help="script to mutate, e.g. bin/grove_taxonomy.py")
+    p.add_argument("target", help="script to mutate, e.g. bin/data/grove_taxonomy.py")
     # More than one, because a script's parsing and its arithmetic can be tested in different modules,
     # and sweeping it against either alone reports survivors the other kills.
     p.add_argument("tests", nargs="+", help="test modules to run, e.g. tests.test_scoring")

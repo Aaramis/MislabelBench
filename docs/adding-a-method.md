@@ -30,7 +30,7 @@ column, `OriginalLabelExclusion`, is read when present.
 ## Score it
 
 ```bash
-python3 bin/score_injection.py \
+python3 bin/analysis/score_injection.py \
   --truth data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.truth.json \
   --mis   my_method.mis \
   --baseline-mis my_method_on_unmodified_database.mis \
@@ -45,7 +45,7 @@ with `data/gtdb/gtdb_arc2k.tax`.
 
 To score the 180 cells with the aggregation the article uses, put each cell's `.mis` in
 `results/<experiment>/runs/<cell>__<condition>__rep1/<cell>__<condition>__rep1.mis` and run
-`bin/aggregate_grid.py`, or follow how `slurm/detection/grid_fork.sh` does it.
+`bin/analysis/aggregate_grid.py`, or follow how `slurm/detection/grid_fork.sh` does it.
 
 ## Run it inside the workflow
 

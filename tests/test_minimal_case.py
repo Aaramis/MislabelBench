@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tests that a cut-down case is the same problem as the run it is cut from.
 
-The case built by bin/minimal_case.py is what gets sent to someone else, so two things have to hold
+The case built by bin/analysis/minimal_case.py is what gets sent to someone else, so two things have to hold
 that reading the code cannot establish. At full count the case must reproduce the cell exactly, or a
 negative result means nothing: it would be a different experiment. And the selection must not depend
 on a draw, because the case is found by shrinking and each step has to differ from the last by the
@@ -21,7 +21,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 ORDER = "d__A;p__P;c__C;o__O"
 OUT_ORDER = "d__A;p__P;c__C;o__Q"
 TARGET = "s1"
@@ -59,7 +60,7 @@ def write_inputs(d):
 
 
 def build(d, *args):
-    return subprocess.run([sys.executable, str(BIN / "minimal_case.py"),
+    return subprocess.run([sys.executable, str(find("minimal_case.py")),
                            "--alignment", str(Path(d) / "aln.fasta"),
                            "--taxonomy", str(Path(d) / "tax.tsv"),
                            "--sequence", TARGET, "--wrong-label", WRONG, *map(str, args)],
@@ -150,7 +151,7 @@ class MinimalCase(unittest.TestCase):
     def test_a_label_no_sequence_carries_is_refused(self):
         with tempfile.TemporaryDirectory() as tmp:
             d = write_inputs(tmp)
-            r = subprocess.run([sys.executable, str(BIN / "minimal_case.py"),
+            r = subprocess.run([sys.executable, str(find("minimal_case.py")),
                                 "--alignment", str(d / "aln.fasta"),
                                 "--taxonomy", str(d / "tax.tsv"), "--sequence", TARGET,
                                 "--wrong-label", f"{ORDER};f__NOPE;g__NOPE;s__NOPE",

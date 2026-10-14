@@ -15,7 +15,7 @@ mkdir -p "$OUT"
 entries=()
 for w in $WIDTHS; do
     cell=$(printf 'w%04d' "$w")
-    python3 "$ROOT/bin/truncate_alignment.py" --fasta "$ALN" --tax "$TAX" --columns "$w" \
+    python3 "$ROOT/bin/data/truncate_alignment.py" --fasta "$ALN" --tax "$TAX" --columns "$w" \
         --prefix "$OUT/$cell/$cell"
     n=$(grep -c '>' "$OUT/$cell/$cell.fasta")
     entries+=("{\"name\": \"$cell\", \"n_seqs\": $n, \"aln_len\": $w, \"fasta\": \"data/width/$cell/$cell.fasta\", \"tax\": \"data/width/$cell/$cell.tax\"}")

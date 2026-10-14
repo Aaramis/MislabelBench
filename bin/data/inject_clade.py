@@ -23,7 +23,7 @@ The hard case the protocol names -- "a wrong label inside the correct genus" -- 
 species`, where the clade keeps its genus and is given a sibling species. The easy end is
 `--distance phylum`.
 
-The donor-survivor rule that bin/inject_mislabels.py enforces is lifted here by construction. That
+The donor-survivor rule that bin/data/inject_mislabels.py enforces is lifted here by construction. That
 is the point of the kind and not an oversight, which is why this is a separate script: the rule is
 not negotiable there and must not be made so.
 """

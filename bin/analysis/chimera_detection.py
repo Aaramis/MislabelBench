@@ -3,7 +3,7 @@
 
 One row per (distance, breakpoint) per condition, pooled over the three seeds: how many chimeras
 were flagged, and among those, how many had a proposed lineage that sided with the unlabelled
-parent at the rank where the parents differ. Both numbers come from bin/score_injection.py's
+parent at the rank where the parents differ. Both numbers come from bin/analysis/score_injection.py's
 record for the cell, so the definition is in one place.
 """
 

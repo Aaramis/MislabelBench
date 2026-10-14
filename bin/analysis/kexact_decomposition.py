@@ -72,7 +72,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--injected-dir", required=True)
     p.add_argument("--runs-dir", required=True)
-    p.add_argument("--scorer", default="score_injection.py")
+    p.add_argument("--scorer", default=str(Path(__file__).with_name("score_injection.py")))
     # Required, with no default. A default that names a committed record means running the script
     # from the repository root without --out overwrites that record, which is how grid_summary.json
     # and shape.json were each created and then silently replaced. Third instance of the same trap.

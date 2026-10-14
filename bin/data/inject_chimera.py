@@ -17,7 +17,7 @@ reference, so the base is untouched and the baseline flag set stays comparable, 
 Truth records both parents, their lineages, the rank they differ at and the breakpoint column. The
 label the chimera carries is A's, so "wrong" is A's lineage and "true" is A's lineage too: the error
 here is not that the label names the wrong taxon but that half the molecule is from another one.
-bin/score_injection.py reports detection for this kind, as for kind 6, plus whether the proposed
+bin/analysis/score_injection.py reports detection for this kind, as for kind 6, plus whether the proposed
 lineage sides with the unlabelled parent.
 """
 

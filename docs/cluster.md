@@ -9,11 +9,11 @@ partition and node constraint in `slurm/prelude.sh`.
 
 ```bash
 export BENCH_ROOT=/path/to/a/working/copy      # the scripts default to the repository they sit in
-export BENCH_REMOTE=user@cluster               # only for bin/push_code.sh, repatriate.sh, restore_cluster.sh
+export BENCH_REMOTE=user@cluster               # only for bin/ops/push_code.sh, repatriate.sh, restore_cluster.sh
 ```
 
-`bin/push_code.sh` copies the code to the cluster. `bin/repatriate.sh` brings the runs back.
-`bin/restore_cluster.sh` rebuilds a cluster working copy from this repository: code, kept datasets,
+`bin/ops/push_code.sh` copies the code to the cluster. `bin/ops/repatriate.sh` brings the runs back.
+`bin/ops/restore_cluster.sh` rebuilds a cluster working copy from this repository: code, kept datasets,
 every generated cell from its seed, and the container images. `--dry-run` prints the plan. It refuses to
 run against a directory that already holds results.
 

@@ -16,7 +16,7 @@ for k in 1 2 3 5 10; do
     d="$OUT/$name"
     if [ ! -s "$d/$name.tax" ]; then
       mkdir -p "$d"
-      python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" --distance family --rate 0.05 \
+      python3 "$BENCH_ROOT/bin/data/inject_mislabels.py" "$TAX" --distance family --rate 0.05 \
         --k "$k" --seed "$seed" --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
     fi
     ln -sfn "$ALN_REL" "$d/$name.fasta"

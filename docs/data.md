@@ -10,17 +10,17 @@
 | RAxML Grove | database of 2026, tree 71741 | the tree and model of the simulated control | none stated upstream |
 
 `assets/datasets.yml` gives each source's URL, sha256, download date, record counts and the rule that
-selects sequences. `bin/verify_inputs.py` and `bin/verify_manifests.py` check the files in `data/`
+selects sequences. `bin/verify/verify_inputs.py` and `bin/verify/verify_manifests.py` check the files in `data/`
 against it.
 
 ## From the database to a dataset
 
-1. `bin/prepare_gtdb.py` keeps archaeal sequences of at least 1 200 nt, 7 051 of the 13 754 in the
+1. `bin/data/prepare_gtdb.py` keeps archaeal sequences of at least 1 200 nt, 7 051 of the 13 754 in the
    domain, and aligns them with `cmalign --matchonly` on RF01959. The alignment has 1 478 columns.
-2. `bin/subset_taxa.py` draws the 2 023-sequence set the grid uses, by whole taxa so that the share of
+2. `bin/data/subset_taxa.py` draws the 2 023-sequence set the grid uses, by whole taxa so that the share of
    judgeable sequences stays close to the full set.
 3. The injection scripts rewrite labels with a fixed seed. Each dataset records what was injected in its
-   `truth.json`, and `bin/verify_injection.py` checks the file against the taxonomy.
+   `truth.json`, and `bin/verify/verify_injection.py` checks the file against the taxonomy.
 
 The 7 051-sequence set is the headline for time and memory. The 2 023-sequence set carries every
 detection result.
@@ -29,7 +29,7 @@ detection result.
 
 `data/README.md` lists both. In short, the base sets, the alignment, the covariance model, the manifests
 and the ground truth are committed. The 180 injected taxonomies, the foreign and chimera cells are
-rebuilt from their seeds by the `slurm/data/make_*.sh` scripts, and `bin/verify_regeneration.py` compares the
+rebuilt from their seeds by the `slurm/data/make_*.sh` scripts, and `bin/verify/verify_regeneration.py` compares the
 rebuilt files with the committed ones. The raw GTDB download is fetched by URL and checked by sha256.
 
 ## Licence

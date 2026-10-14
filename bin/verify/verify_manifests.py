@@ -91,7 +91,7 @@ def check_staged_reference(problems):
     """assets/staged_check_reference.sha256 must match the file it names.
 
     slurm/timing/staged_check.sh compares the four-stage path's flag list against that digest rather than
-    against the file, because the file lives under results/ and bin/restore_cluster.sh leaves results/
+    against the file, because the file lives under results/ and bin/ops/restore_cluster.sh leaves results/
     empty by construction on the cluster: the check was passing only where the original run happened to
     survive, and it failed with "no single-process .mis at ..." once the cluster was rebuilt. A digest
     travels with the code, and this is what keeps it from drifting from what it describes.
@@ -118,10 +118,10 @@ def check_staged_reference(problems):
 def check_subsets(problems):
     """Every size subset takes whole species groups, which is what makes it resemble its parent.
 
-    `bin/subset_taxa.py` opens by saying it cuts "by taking whole taxa, never part of one", and why:
+    `bin/data/subset_taxa.py` opens by saying it cuts "by taking whole taxa, never part of one", and why:
     leave-one-out needs a sequence to have a sibling in its taxon, so removing half the members of a
     species turns judgeable sequences into unjudgeable ones and the subset stops resembling the set it
-    came from. Nothing checked it. `bin/verify_regeneration.py` rebuilds the four subsets and compares
+    came from. Nothing checked it. `bin/verify/verify_regeneration.py` rebuilds the four subsets and compares
     them byte for byte, which would reproduce a wrong subset faithfully.
 
     Two things per subset: no sequence from outside the parent, and no species group present in part.
@@ -201,7 +201,7 @@ def check_provenance(problems):
                                 f"{have[rank]} for {what}")
             checked += 1
 
-    # The protocol's dataset table, produced by bin/dataset_table.py from the release files and
+    # The protocol's dataset table, produced by bin/data/dataset_table.py from the release files and
     # committed as data/gtdb/dataset_table.json. Its filtered row and results/shape_gtdb_arc1200.json
     # are two computations of one quantity and must agree; its ssu_all row is what the YAML's
     # judgeable_pct_after_domain asserts, which nothing could rebuild before the table existed.

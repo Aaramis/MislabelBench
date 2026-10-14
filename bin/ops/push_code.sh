@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Send the harness to the cluster. The counterpart of bin/repatriate.sh.
+# Send the harness to the cluster. The counterpart of bin/ops/repatriate.sh.
 #
-#   bin/push_code.sh [user@host]
+#   bin/ops/push_code.sh [user@host]
 #
 # Code and ground truth only. results/ goes the other way and data/raw is fetched there by sha256,
 # so neither belongs in this direction.
@@ -39,8 +39,8 @@ if [ -n "$running" ]; then
     # One ssh for all of them rather than one per file: the per-file version dropped the connection
     # part way through and reported the file it was on as changed, which is a check that invents
     # findings when the network hiccups.
-    files=$(ls slurm/*.sh slurm/*/*.sh nextflow.config main.nf conf/*.config modules/local/*/main.nf bin/*.py \
-            bin/*.sh 2>/dev/null)
+    files=$(ls slurm/*.sh slurm/*/*.sh nextflow.config main.nf conf/*.config modules/local/*/main.nf bin/*.py bin/*/*.py \
+            bin/*.sh bin/*/*.sh 2>/dev/null)
     remote=$(printf '%s\n' "$files" | ssh "${REMOTE%%:*}" \
              'cd ~/bench && tr -d "\r" | xargs -d "\n" md5sum 2>/dev/null' || true)
     changed=""
@@ -69,7 +69,7 @@ rsync -a --exclude='._*' --exclude='bad_nodes.txt' --relative \
       README.md "$REMOTE:~/bench/"
 
 # Sent only when the cluster has none, so a fresh ~/bench inherits what is known and an existing one
-# keeps what it has learned. bin/repatriate.sh brings the union back the other way.
+# keeps what it has learned. bin/ops/repatriate.sh brings the union back the other way.
 [ ! -f slurm/bad_nodes.txt ] || rsync -a --ignore-existing slurm/bad_nodes.txt "$REMOTE:~/bench/slurm/"
 for d in injected clade chimera; do
     rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \

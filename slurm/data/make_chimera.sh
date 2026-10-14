@@ -25,13 +25,13 @@ for dist in genus family order phylum; do
       name="chi_${dist}_b${bp}_s${seed}"
       d="$OUT/$name"
       mkdir -p "$d"
-      python3 "$BENCH_ROOT/bin/inject_chimera.py" --base-fasta "$ALN" --base-tax "$TAX" \
+      python3 "$BENCH_ROOT/bin/data/inject_chimera.py" --base-fasta "$ALN" --base-tax "$TAX" \
         --distance "$dist" --breakpoint "$bp" --n 20 --seed "$seed" --prefix "$d/$name" >/dev/null
     done
   done
 done
 
-python3 "$BENCH_ROOT/bin/verify_chimera.py" --base-fasta "$ALN" --base-tax "$TAX" --chimera-dir "$OUT"
+python3 "$BENCH_ROOT/bin/data/verify_chimera.py" --base-fasta "$ALN" --base-tax "$TAX" --chimera-dir "$OUT"
 
 # The manifest in the shape main.nf reads, paths relative to BENCH_ROOT as in make_grid.sh.
 python3 - "$OUT" "$BENCH_ROOT" <<'PY'

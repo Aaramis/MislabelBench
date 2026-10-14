@@ -57,7 +57,7 @@ for rate in 0.005 0.01 0.05; do
         name="fgn_r${rate}_s${seed}"
         d="$OUT/$name"
         mkdir -p "$d"
-        python3 "$ROOT/bin/inject_foreign.py" \
+        python3 "$ROOT/bin/data/inject_foreign.py" \
             --base-fasta "$ALN" --base-tax "$TAX" \
             --donor-fasta "$BAC/donor_pool.aligned.fasta" --donor-tax "$BAC/donor_pool.tax" \
             --n "$n" --seed "$seed" --prefix "$d/$name"

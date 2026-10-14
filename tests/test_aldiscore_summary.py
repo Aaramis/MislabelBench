@@ -1,4 +1,4 @@
-"""bin/aldiscore_summary.py on three hand-written score lines."""
+"""bin/analysis/aldiscore_summary.py on three hand-written score lines."""
 
 import json
 import subprocess
@@ -7,7 +7,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 
 
 def line(name, n, out):
@@ -22,7 +23,7 @@ class AldiscoreSummary(unittest.TestCase):
         tmp = Path(tempfile.mkdtemp())
         (tmp / "scores.jsonl").write_text("\n".join(lines) + "\n")
         out = tmp / "s.json"
-        r = subprocess.run([sys.executable, str(BIN / "aldiscore_summary.py"), "--scores",
+        r = subprocess.run([sys.executable, str(find("aldiscore_summary.py")), "--scores",
                             str(tmp / "scores.jsonl"), "--out", str(out)], capture_output=True, text=True)
         return r, out
 

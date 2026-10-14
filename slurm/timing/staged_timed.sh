@@ -37,7 +37,7 @@ nextflow_env
 
 # bin on PATH, as bin/analyses.sh does. Without it the summary at the end exits 127 -- which it
 # did, in all three runs, after the pipeline itself had succeeded.
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 FPJ="${FOLDS_PER_JOB:-7}"
 REP="${STAGED_REP:-}"

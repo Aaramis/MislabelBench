@@ -17,7 +17,7 @@
 # byte for byte, against the committed files.
 set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 RAW="$BENCH_ROOT/data/raw"
 SHA=$(dataset_field.py gtdb_archaea_ssu sha256)

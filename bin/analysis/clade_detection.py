@@ -3,7 +3,7 @@
 
 The protocol states the limit rather than scoring it: with a whole taxon relabelled, nothing
 correctly labelled remains to confirm it, so leave-one-out's usual handle is gone. What is left is
-whether the clade is distinguishable from the taxon it has been assigned to, and bin/inject_clade.py
+whether the clade is distinguishable from the taxon it has been assigned to, and bin/data/inject_clade.py
 measures that as separation -- mean identity within the clade minus mean identity to the recipient.
 
 This reports detection against that, per clade, which is what makes the characterisation falsifiable:

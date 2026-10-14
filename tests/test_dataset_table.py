@@ -18,7 +18,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 ARC = "d__Archaea;p__P;c__C;o__O;f__F;g__G"
 BAC = "d__Bacteria;p__Bacillota;c__Clostridia;o__Lachno;f__F;g__G"
 
@@ -50,7 +51,7 @@ class DatasetTable(unittest.TestCase):
 
     def table(self):
         out = self.tmp / "table.json"
-        r = subprocess.run([sys.executable, str(BIN / "dataset_table.py"), "--ssu-all", str(self.all),
+        r = subprocess.run([sys.executable, str(find("dataset_table.py")), "--ssu-all", str(self.all),
                             "--ssu-reps", str(self.reps), "--out", str(out)],
                            capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)
@@ -97,13 +98,13 @@ class BacterialCladeSelection(unittest.TestCase):
             fh.write(record("GB_GCA_7.1", f"{near};s__S b", 1500))
             for i in range(10, 14):
                 fh.write(record(f"GB_GCA_{i}.1", f"{far};s__S c", 1500))
-        src = (BIN / "select_bacterial_clade.py").read_text()
+        src = (find("select_bacterial_clade.py")).read_text()
         # The targets are the archaeal set's; the fixture cannot have 7 051 sequences, so the test
         # checks the ordering and the record, not the absolute score.
         r = subprocess.run([sys.executable, "-c", src.replace("if n < 1000:", "if n < 1:")
                             .replace('if __name__ == "__main__":\n    main()', "main()"),
                             "--fasta", str(fa), "--ranks", "order", "--out", str(tmp / "sel.json")],
-                           capture_output=True, text=True, cwd=BIN)
+                           capture_output=True, text=True, cwd=find("select_bacterial_clade.py").parent)
         self.assertEqual(r.returncode, 0, r.stderr)
         sel = json.loads((tmp / "sel.json").read_text())
         self.assertEqual(len(sel["candidates"]), 2)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""bin/placement_locality.py on a six-leaf tree and a jplace written by hand.
+"""bin/analysis/placement_locality.py on a six-leaf tree and a jplace written by hand.
 
 The claim it exists to check -- that a removed sequence's placement lands among its k-1 co-carriers
 -- has to be readable off an edge number, so the fixture pins the parser (edge labels on a Newick),
@@ -17,7 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 HEADER = (";SeqID\tMislabeledLevel\tOriginalLabel\tProposedLabel\tConfidence"
           "\tOriginalTaxonomyPath\tProposedTaxonomyPath\tPerRankConfidence\tOriginalLabelExclusion")
 TRUE = "d__A;p__P;c__C;o__O;f__F1;g__G1;s__S1"
@@ -54,7 +55,7 @@ class PlacementLocality(unittest.TestCase):
     def run_it(self, placements):
         jplace(self.tmp / "p.jplace", placements)
         out = self.tmp / "loc.json"
-        r = subprocess.run([sys.executable, str(BIN / "placement_locality.py"),
+        r = subprocess.run([sys.executable, str(find("placement_locality.py")),
                             "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
                             "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace"),
                             "--out", str(out)], capture_output=True, text=True)
@@ -100,7 +101,7 @@ class PlacementLocality(unittest.TestCase):
         # cell said "no injected sequence was placed" and read the tree's clades as unknown taxa.
         jplace(self.tmp / "p.jplace", {"r_i2": [(0, 1.0)]}, tree=TREE.replace("(", "(r_").replace(",", ",r_"))
         out = self.tmp / "loc.json"
-        r = subprocess.run([sys.executable, str(BIN / "placement_locality.py"),
+        r = subprocess.run([sys.executable, str(find("placement_locality.py")),
                             "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
                             "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace"),
                             "--out", str(out)], capture_output=True, text=True)
@@ -114,7 +115,7 @@ class PlacementLocality(unittest.TestCase):
         jplace(self.tmp / "p.jplace", {"i2": [(5, 1.0)]}, tree=None)
         nhx = re.sub(r"\{(\d+)\}", r"[&&NHX:B=\1]", TREE)  # SATIVA's own encoding of the labels
         (self.tmp / "run.refjson").write_text(json.dumps({"tree": nhx, "sequences": []}))
-        cmd = [sys.executable, str(BIN / "placement_locality.py"),
+        cmd = [sys.executable, str(find("placement_locality.py")),
                "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
                "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace"),
                "--out", str(self.tmp / "loc.json")]
@@ -136,7 +137,7 @@ class PlacementLocality(unittest.TestCase):
 
     def test_no_injected_sequence_placed_is_an_error(self):
         jplace(self.tmp / "p.jplace", {"o1": [(8, 1.0)]})
-        r = subprocess.run([sys.executable, str(BIN / "placement_locality.py"),
+        r = subprocess.run([sys.executable, str(find("placement_locality.py")),
                             "--truth", str(self.tmp / "truth.json"), "--tax", str(self.tmp / "cell.tax"),
                             "--mis", str(self.tmp / "run.mis"), "--jplace", str(self.tmp / "p.jplace")],
                            capture_output=True, text=True)
@@ -145,7 +146,7 @@ class PlacementLocality(unittest.TestCase):
 
 
 class PlacementComparison(unittest.TestCase):
-    """bin/placement_comparison.py joins two locality records on the sequence and keeps the
+    """bin/analysis/placement_comparison.py joins two locality records on the sequence and keeps the
     sequences one engine flagged and the other did not."""
 
     def test_deviating_rows_and_the_same_clade_count(self):
@@ -165,7 +166,7 @@ class PlacementComparison(unittest.TestCase):
                         "among_co_carriers": False}]}
         (tmp / "up.json").write_text(json.dumps(up))
         (tmp / "fk.json").write_text(json.dumps(fk))
-        r = subprocess.run([sys.executable, str(BIN / "placement_comparison.py"),
+        r = subprocess.run([sys.executable, str(find("placement_comparison.py")),
                             "--upstream", str(tmp / "up.json"), "--fork", str(tmp / "fk.json"),
                             "--out", str(tmp / "cmp.tsv")], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr)

@@ -19,10 +19,10 @@ jobs:
           for g in make_grid make_foreign make_clade make_chimera make_ragged make_width make_grid_bac; do bash slurm/data/$g.sh; done
       - name: Manifests, regeneration, trace table, document paths
         run: |
-          python3 bin/verify_manifests.py
-          python3 bin/verify_regeneration.py
-          python3 bin/verify_trace_table.py
-          python3 bin/verify_doc_paths.py
+          python3 bin/verify/verify_manifests.py
+          python3 bin/verify/verify_regeneration.py
+          python3 bin/verify/verify_trace_table.py
+          python3 bin/verify/verify_doc_paths.py
   workflow:
     runs-on: ubuntu-latest
     steps:

@@ -37,7 +37,7 @@ for dist in species genus family order class phylum; do
         d="$OUT/$name"
         if [ ! -s "$d/$name.tax" ]; then
           mkdir -p "$d"
-          python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$TAX" \
+          python3 "$BENCH_ROOT/bin/data/inject_mislabels.py" "$TAX" \
             --distance "$dist" --rate "$rate" --k "$k" --seed "$seed" \
             --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || {
               echo "FAILED $name" >&2; continue; }

@@ -23,7 +23,7 @@ echo "running on $(hostname)"
 # Error kind 3: whole taxa relabelled, so nothing correctly labelled remains to confirm them.
 # Both tools, because the question is whether the clade is detectable at all once leave-one-out's
 # usual handle is gone, and upstream is the reference for that. Nine cells, three distances by
-# three seeds, six clades each spread over the compactness range -- see bin/inject_clade.py for
+# three seeds, six clades each spread over the compactness range -- see bin/data/inject_clade.py for
 # what separation means and why it is the variable.
 #
 # Not a timed comparison, so timing_trusted is false and several cells run at once.

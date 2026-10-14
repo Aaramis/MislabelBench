@@ -6,7 +6,7 @@ predictor's whole stdout because its format was not known before the first run; 
 one number per set, the predicted difficulty from 0 to 1. This reads those lines, refuses a set whose
 stdout is not exactly one number, and reports the foreign cells as a difference from gtdb_arc2k, the
 2 023 sequences every cell adds its donors to: that difference is the "before and after" the protocol
-asks of error kind 6. The cmalign bit-score gap (bin/foreign_score_vs_flag.py) stays beside it as the
+asks of error kind 6. The cmalign bit-score gap (bin/analysis/foreign_score_vs_flag.py) stays beside it as the
 per-sequence measurement; this one is per set.
 """
 

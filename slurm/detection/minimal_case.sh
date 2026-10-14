@@ -31,7 +31,7 @@
 #   CASE_PAIRS=results/kexact_fork_only.tsv CASE_SPECS=0,10 slurm/submit.sh slurm/detection/minimal_case.sh
 #
 # CASE_PAIRS sweeps candidates instead of sizes. One sequence reproducing nothing is not evidence
-# that none would, and bin/kexact_decomposition.py --pairs-out writes the whole list of sequences
+# that none would, and bin/analysis/kexact_decomposition.py --pairs-out writes the whole list of sequences
 # the fork catches and upstream misses, so the search runs over all of them.
 #
 # No timing is taken here, so nothing requires exclusivity or a pinned CPU model. Which also
@@ -129,7 +129,7 @@ run_case() {
     # A sequence whose wrong label sits outside the kept clade is skipped and not fatal: over 64
     # candidates some are injected across a wider distance than --keep-rank spans, and the sweep is
     # worth more than its most awkward member.
-    python3 "$ROOT/bin/minimal_case.py" --alignment "$ALN" --taxonomy "$TAX" \
+    python3 "$ROOT/bin/analysis/minimal_case.py" --alignment "$ALN" --taxonomy "$TAX" \
         --sequence "$seq" --wrong-label "$wrong" --keep-rank "$RANK" \
         ${TRUTH:+--truth "$TRUTH"} ${count:+--injected-count "$count"} \
         --per-family "$pf" --outgroup "$outgroup" --out "$case_dir" || {

@@ -21,7 +21,7 @@ def main():
     p.add_argument("--runs-dir", required=True, help="collected runs")
     p.add_argument("--condition", required=True, help="condition suffix of the run directories")
     p.add_argument("--baseline-mis", help=".mis of the same tool on the un-injected subset")
-    p.add_argument("--scorer", default="score_injection.py")
+    p.add_argument("--scorer", default=str(Path(__file__).with_name("score_injection.py")))
     # No default. It used to be grid_summary.json, which is how a run without --out from the
     # repository root created and then overwrote a committed file of that name -- one holding a
     # 600-row snapshot of a 150-cell grid, superseded by the five per-condition summaries and read

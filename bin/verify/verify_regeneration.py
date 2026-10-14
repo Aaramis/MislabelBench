@@ -19,7 +19,7 @@ So: build a root holding only what is kept, run the generators into it, and comp
 they write against this tree's. Nothing in this tree is touched -- the kept inputs are copied rather
 than linked, because make_foreign.sh writes into data/bacteria on the branch that aligns the donors.
 
-    bin/verify_regeneration.py [--keep]
+    bin/verify/verify_regeneration.py [--keep]
 
 The size subsets are checked the same way and were the last regeneration claim with no gate. They are
 committed, because every measurement in this benchmark runs on one of them, and each carries a
@@ -101,7 +101,7 @@ def main():
                 if spec.get(key) and digest(path) != spec[key]:
                     problems.append(f"{rec.name}: {key} is not the sha256 of {path.name}")
             stem = rec.name[:-len(".subset.json")]
-            r = subprocess.run([str(here / "bin/subset_taxa.py"), str(src_fa), str(src_tax),
+            r = subprocess.run([str(here / "bin/data/subset_taxa.py"), str(src_fa), str(src_tax),
                                 "--target", str(spec["target"]), "--seed", str(spec["seed"]),
                                 "--prefix", str(scratch / "data/gtdb" / stem)],
                                capture_output=True, text=True)

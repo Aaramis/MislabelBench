@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """The staged path's shard scaling, as medians over replicates rather than as nine separate files.
 
-bin/staged_scaling.py reports one round. Nine of them have now run -- three shard counts by three
+bin/timing/staged_scaling.py reports one round. Nine of them have now run -- three shard counts by three
 replicates, chained on --dependency=afterany so no two of ours overlapped -- and reading a scaling
 claim off nine files leaves the medians to whoever is reading. This repository's own rule, stated in
-bin/resource_usage.py, is medians over replicates and never a single run; three successive wrong
+bin/timing/resource_usage.py, is medians over replicates and never a single run; three successive wrong
 readings of the memory law came from ignoring it.
 
 Two things this reports that no per-round file can.

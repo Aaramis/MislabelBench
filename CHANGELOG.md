@@ -6,7 +6,7 @@ First release. The repository is the evidence behind the SATIVA-epang applicatio
 
 - 180 injected datasets, datasets for the four other error types, a control on
   sequences simulated along a RAxML Grove tree, and a bacterial replication, all rebuilt from seeds and checked byte for byte
-  (`bin/verify_regeneration.py`).
+  (`bin/verify/verify_regeneration.py`).
 - A Nextflow workflow running SATIVA and SATIVA-epang in containers pinned by tag and by digest
   (`assets/containers.yml`), with the leave-one-out split in four stages.
 - `bin/analyses.sh` rebuilds every table and runs every check.

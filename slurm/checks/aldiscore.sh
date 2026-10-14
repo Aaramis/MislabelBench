@@ -13,7 +13,7 @@
 # Scored: the archaeal 7 051 and its 2 023 subset, the bacterial clade and its subset, and the nine
 # foreign cells (the 2 023 plus their donors). Every input is given unaligned: the gap columns of an
 # aligned file are stripped here, since the predictor takes raw sequences. One JSON line per set in
-# results/aldiscore/scores.jsonl, read by bin/aldiscore_summary.py.
+# results/aldiscore/scores.jsonl, read by bin/analysis/aldiscore_summary.py.
 #
 # Not on PyPI; installed from a clone at a pinned commit into a venv made by the deployment's own
 # python 3.12, the way slurm/data/fetch_grove.sh does, with the same reasons (the compute image's python

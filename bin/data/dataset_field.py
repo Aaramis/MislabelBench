@@ -23,7 +23,7 @@ def main():
     if len(sys.argv) != 3:
         sys.exit("usage: dataset_field.py <dataset> <field>")
     name, field = sys.argv[1], sys.argv[2]
-    here = Path(__file__).resolve().parent.parent / "assets" / "datasets.yml"
+    here = Path(__file__).resolve().parents[2] / "assets" / "datasets.yml"
     data = yaml.safe_load(here.read_text())["datasets"]
     if name not in data:
         sys.exit(f"no dataset {name} in {here}; known: {', '.join(sorted(data))}")

@@ -29,8 +29,8 @@ These are rebuilt from their seeds, without a cluster, a container or the networ
 An injected dataset's `.fasta` is a symlink to `data/gtdb/gtdb_arc2k.fasta`, since injection rewrites a
 taxonomy and never an alignment. The links are relative.
 
-`bin/verify_regeneration.py` builds the first four generators' output in a scratch tree and compares
-every file, symlinks by target, with the committed one. `bin/verify_manifests.py` checks that each
+`bin/verify/verify_regeneration.py` builds the first four generators' output in a scratch tree and compares
+every file, symlinks by target, with the committed one. `bin/verify/verify_manifests.py` checks that each
 manifest describes its files: sequence counts, one alignment width, no absolute path. Both run in
 `bin/analyses.sh`.
 

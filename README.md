@@ -31,7 +31,7 @@ Nothing below needs a cluster or a container. Python 3.12 and the standard libra
 ```bash
 git clone https://github.com/Aaramis/MislabelBench && cd MislabelBench
 python3 -m unittest discover -s tests          # the analysis layer's tests
-for g in make_grid make_foreign make_clade; do bash slurm/$g.sh; done
+for g in make_grid make_foreign make_clade; do bash slurm/data/$g.sh; done
 bin/analyses.sh                                # rebuild every table from the committed runs, then run every check
 ```
 
@@ -46,8 +46,8 @@ table matches its runs and every check passes. To rerun the experiments themselv
 |---|---|
 | `data/` | base datasets, alignments, injected ground truth, manifests. See [docs/data.md](docs/data.md) |
 | `results/` | every run and every table built from them. See [results/README.md](results/README.md) |
-| `bin/` | preparation, injection, scoring, analysis and the `verify_*` checks. `analyses.sh` runs them all |
-| `slurm/` | one script per experiment, plus `make_*.sh` generators |
+| `bin/` | `analyses.sh` runs them all. In `data/` the preparation and injection, in `analysis/` the scoring and tables, in `verify/` the checks, in `figures/`, `timing/` and `ops/` the rest |
+| `slurm/` | one script per experiment, grouped by kind, with the `make_*.sh` generators in `data/` |
 | `main.nf`, `modules/`, `conf/`, `nextflow.config` | the Nextflow workflow, one container per tool |
 | `assets/` | `datasets.yml` (every source with URL and sha256) and `containers.yml` (every image with digest) |
 | `tests/` | unit tests and a stub run of the workflow |
@@ -75,7 +75,7 @@ A method reads an alignment and a taxonomy and writes a SATIVA-style `.mis` tabl
 command.
 
 ```bash
-python3 bin/score_injection.py --truth data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.truth.json \
+python3 bin/analysis/score_injection.py --truth data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.truth.json \
   --mis my_method.mis --out score.json
 ```
 
@@ -85,7 +85,7 @@ inside the workflow. To run SATIVA-epang itself, see [docs/usage.md](docs/usage.
 ## Reproducibility
 
 Every tool runs in a container pinned by tag and registry digest, and every input is pinned by sha256.
-The datasets are deterministic from their seeds, and `bin/verify_regeneration.py` checks that a rebuild
+The datasets are deterministic from their seeds, and `bin/verify/verify_regeneration.py` checks that a rebuild
 is byte-identical to the committed files. At fixed dataset and seed the workflow gives the same `.mis` on
 three CPU models. Timed runs pin one CPU model and the seconds are comparable only within it.
 

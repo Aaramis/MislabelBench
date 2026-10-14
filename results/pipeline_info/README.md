@@ -45,7 +45,7 @@ Where a row names several files, the count is their total.
 | `trace-staged_nodes_n4_r1_2337807.txt`, `trace-staged_nodes_n4_r2_2337624.txt`, `trace-staged_nodes_n4_r3_2337625.txt`, `trace-staged_nodes_n4_r4_2360006.txt` | 36 | Staged runs on four nodes, four replicates. `shard_nodes-*.tsv` lists the node of each shard. |
 | `trace-staged_timed_f13_2177363.txt`, `trace-staged_timed_f13_2281828.txt`, `trace-staged_timed_f13_2296743.txt`, `trace-staged_timed_f25_2177362.txt`, `trace-staged_timed_f25_2281826.txt`, `trace-staged_timed_f25_2296742.txt`, `trace-staged_timed_f7_2177364.txt`, `trace-staged_timed_f7_2281829.txt`, `trace-staged_timed_f7_2296744.txt` | 22 | Earlier staged timing rounds. The header-only files come from attempts with `--exclusive`, whose jobs stayed pending because an exclusive job is charged all 510 cores of a node against a 600-core cap. |
 
-`bin/verify_trace_table.py` checks this page. Every `trace-*.txt` here must be named in the table,
+`bin/verify/verify_trace_table.py` checks this page. Every `trace-*.txt` here must be named in the table,
 every row count must match its files, and every run collected since 2026-10-03 must appear in some
 trace. A trace left on the cluster is therefore a failure and not a silence. It runs in
 `bin/analyses.sh`.

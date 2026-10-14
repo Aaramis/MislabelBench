@@ -12,7 +12,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 DIRS = ("bin/", "slurm/", "data/", "results/", "docs/", "assets/", "tests/", "modules/", "conf/")
 TOP = {p.name for p in ROOT.iterdir() if p.is_file() and not p.name.startswith(".")}
 SPAN = re.compile(r"`([^`\n]+)`")

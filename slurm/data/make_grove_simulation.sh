@@ -10,11 +10,11 @@
 # Why: a co-author asked how the simulated reference's tree
 # and parameters are chosen. Here the topology, the substitution
 # model, its rates and base frequencies, the alpha of the gamma, the alignment width and the empirical
-# missing-data pattern all come out of the database, and the tree is picked by bin/grove_select.py
+# missing-data pattern all come out of the database, and the tree is picked by bin/data/grove_select.py
 # from stated requirements. Nothing in this file chooses a number that affects the data.
 #
 # The chain is: pick a tree -> let RAxMLGrove download it and simulate along it with AliSim -> give it
-# a taxonomy that is a function of the tree (bin/grove_taxonomy.py) -> inject known mislabels. Every
+# a taxonomy that is a function of the tree (bin/data/grove_taxonomy.py) -> inject known mislabels. Every
 # step checked, because the upstream script swallows its own failures: download_trees() wraps each
 # file in `except Exception: pass`, so a tree that is not on GitHub, a missing presence/absence matrix
 # and a simulator that never ran all look the same from outside, which is an empty or absent file and
@@ -65,9 +65,9 @@ IQTREE="$GROVE/scripts/tools/iqtree-2.2.0-beta-Linux/bin/iqtree2"
 
 mkdir -p "$OUT"
 
-# 1. The tree. Reproducible from the seed and the criteria; see bin/grove_select.py for both.
+# 1. The tree. Reproducible from the seed and the criteria; see bin/data/grove_select.py for both.
 if [ ! -s "$GROVE/tree.json" ]; then
-    python3 "$BENCH_ROOT/bin/grove_select.py" --db "$GROVE/latest_all.db" --seed "$SEED" \
+    python3 "$BENCH_ROOT/bin/data/grove_select.py" --db "$GROVE/latest_all.db" --seed "$SEED" \
         --out "$GROVE/tree.json" | tee "$GROVE/tree.txt"
 fi
 read -r TREE_ID NUM_TAXA NUM_SITES < <(python3 -c "
@@ -109,14 +109,14 @@ fi
 
 # 4. The taxonomy, from the tree alone.
 mkdir -p "$OUT/grove"
-python3 "$BENCH_ROOT/bin/grove_taxonomy.py" --tree "$RAW/tree_best.newick" \
+python3 "$BENCH_ROOT/bin/data/grove_taxonomy.py" --tree "$RAW/tree_best.newick" \
     --prefix "$OUT/grove/grove" | tee "$OUT/grove/grove.txt"
 
 # The check the protocol promises: the taxonomy is the tree. Every label at every rank is a clade of
 # the Newick the sequences were simulated along, ranks nest, every tip is labelled. It passes by
 # construction when grove_taxonomy.py did its job; it exists for the day something between the two
 # files is edited by hand.
-python3 "$BENCH_ROOT/bin/verify_grove_taxonomy.py" --tree "$RAW/tree_best.newick" \
+python3 "$BENCH_ROOT/bin/data/verify_grove_taxonomy.py" --tree "$RAW/tree_best.newick" \
     --tax "$OUT/grove/grove.tax"
 
 # The alignment and the taxonomy have to name the same sequences: AliSim labels tips from the tree it
@@ -177,7 +177,7 @@ probe_rate() {
     rm -rf "$PROBE"; mkdir -p "$PROBE"
     for dist in species genus family; do
       for k in 1 2 3 5; do
-        if ! python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$OUT/grove/grove.tax" \
+        if ! python3 "$BENCH_ROOT/bin/data/inject_mislabels.py" "$OUT/grove/grove.tax" \
              --distance "$dist" --rate "$r" --k "$k" --seed 1 --prefix "$PROBE/p" \
              >/dev/null 2>"$PROBE/warn.txt"; then
           return 1
@@ -210,7 +210,7 @@ for dist in species genus family; do
       d="$OUT/$name"
       if [ ! -s "$d/$name.tax" ]; then
         mkdir -p "$d"
-        python3 "$BENCH_ROOT/bin/inject_mislabels.py" "$OUT/grove/grove.tax" \
+        python3 "$BENCH_ROOT/bin/data/inject_mislabels.py" "$OUT/grove/grove.tax" \
           --distance "$dist" --rate "$RATE" --k "$k" --seed "$seed" \
           --prefix "$d/$name" >/dev/null 2>"$d/warn.txt" || { echo "FAILED $name" >&2; continue; }
         if grep -q "^warning:" "$d/warn.txt"; then

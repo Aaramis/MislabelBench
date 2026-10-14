@@ -5,14 +5,14 @@
 # same taxon to place it against. Any representative database has one sequence per species by
 # construction, which makes species-level leave-one-out impossible, not merely hard:
 #
-# Judgeable at species, every row by one rule in bin/dataset_shape.py, as a fraction of the whole
+# Judgeable at species, every row by one rule in bin/data/dataset_shape.py, as a fraction of the whole
 # set. The two sets the benchmark actually runs on are the two GTDB subsets:
 #
 #   GTDB r226 ar53_ssu_reps     :  4448 sequences ->  0.0 %   one sequence per species
 #                                 (78.4 % at genus; the whole protocol table, reps and ssu_all
 #                                 before and after the length filter with the two-genome share,
-#                                 is data/gtdb/dataset_table.json from bin/dataset_table.py, and
-#                                 bin/verify_manifests.py holds this file to it)
+#                                 is data/gtdb/dataset_table.json from bin/data/dataset_table.py, and
+#                                 bin/verify/verify_manifests.py holds this file to it)
 #   gtdb_arc2k, the grid's set  :  2023 sequences -> 74.9 %
 #   gtdb_arc1200, the headline  :  7051 sequences -> 72.7 %
 #
@@ -57,10 +57,10 @@ datasets:
     # label was off by 35 points while the numbers stayed put.
     #
     # Recorded for both stages because the length filter is not free, and the figure that
-    # belongs beside a result is the one for the set that produced it. bin/subset_taxa.py
+    # belongs beside a result is the one for the set that produced it. bin/data/subset_taxa.py
     # reasons from 72.7 %; this file once said 81.5 %.
     # Both blocks reproduce with:
-    #   bin/dataset_shape.py --fasta data/gtdb/gtdb_arc1200.fasta \
+    #   bin/data/dataset_shape.py --fasta data/gtdb/gtdb_arc1200.fasta \
     #     --tax data/gtdb/gtdb_arc1200.tax --convention gtdb
     judgeable_pct_after_length:   # the 7051 sequences every measurement here was made on
       domain: 100.0
@@ -164,7 +164,7 @@ datasets:
     clade: d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales
     clade_rule: >
       the bacterial class or order minimising |n_1200 - 7051| / 7051 + |judgeable_species - 72.7| / 72.7,
-      computed by bin/select_bacterial_clade.py over every candidate of the release and recorded with
+      computed by bin/data/select_bacterial_clade.py over every candidate of the release and recorded with
       the ten runners-up in data/gtdb/bacterial_clade_selection.json
     select: "lineage starts with d__Bacteria;p__Bacillota;c__Clostridia;o__Lachnospirales, then length >= 1200 nt"
     aligned_with: Rfam RF00177 (rfam_ssu_bacteria), cmalign --matchonly, in infernal_image
@@ -173,7 +173,7 @@ datasets:
       after_domain: 14473
       after_length: 6929
       subset: 2008
-    subset_rule: bin/subset_taxa.py --target 2000 --seed 42, whole species groups, as gtdb_arc2k
+    subset_rule: bin/data/subset_taxa.py --target 2000 --seed 42, whole species groups, as gtdb_arc2k
     # From data/gtdb/dataset_table_bac.json, the protocol's table for this clade.
     judgeable_pct_after_length:
       genus: 99.2
@@ -192,6 +192,6 @@ datasets:
     licence: none stated upstream; only the derived tree and model parameters are redistributed here
     n_trees: 127329
     tree_id: "71741"
-    # bin/grove_select.py's criteria and candidate count are in data/grove/tree.json; the
+    # bin/data/grove_select.py's criteria and candidate count are in data/grove/tree.json; the
     # simulator is the AliSim shipped inside the pinned scripts repository.
     citation: "Höhler D et al. RAxML Grove: an empirical phylogenetic tree database. Bioinformatics 38(6):1741 (2022)"

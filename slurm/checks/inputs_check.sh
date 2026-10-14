@@ -16,7 +16,7 @@
 # the conditions may share a node.
 set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 require_singularity
 nextflow_env
 nf_launch_dir inputs_check

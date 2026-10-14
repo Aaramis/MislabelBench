@@ -2,7 +2,7 @@
 # Bring the run directories and the Nextflow traces back from the cluster, then repair what the
 # copy undoes.
 #
-#   bin/repatriate.sh [user@host]
+#   bin/ops/repatriate.sh [user@host]
 #
 # Three things this exists for rather than typing an rsync.
 #
@@ -10,7 +10,7 @@
 # derived from committed inputs so it stays out.
 #
 # *.timing.json is on it because the staged rounds' seconds live nowhere else. Without it nine
-# finished rounds came home as `incomplete: []`: bin/staged_scaling.py reads one timing.json per
+# finished rounds came home as `incomplete: []`: bin/timing/staged_scaling.py reads one timing.json per
 # stage and per shard, the .stage.log beside it carries the fold count and not the wall clock, and
 # the three rounds already published had been fetched by hand before this script existed.
 # shard_nodes-*.tsv likewise, which is the only record of which node each shard ran on. Getting that list wrong by hand is how 949 run
@@ -61,7 +61,7 @@ cd "$(dirname "$0")/.."
 # verdicts.tsv and case.json are the minimal-case experiment's result and its record of what was
 # built. The case.fasta and case.tax they describe are deliberately not fetched: case.json carries
 # the sha256 of the two source files and the selection is deterministic, so any case can be rebuilt
-# byte for byte by bin/minimal_case.py, and the full-reference ones are 3 MB each.
+# byte for byte by bin/analysis/minimal_case.py, and the full-reference ones are 3 MB each.
 # 'tmp/' unanchored, which is the opposite of the lesson above and deliberate. A tool's scratch
 # directory is named tmp wherever it sits, and --include='*.log' matches the per-fold epang.log and
 # epa_info.log inside it: one strict leave-one-out run on 2 023 sequences is two thousand folds, and a
@@ -109,5 +109,5 @@ done
 
 find results -type d -empty -delete
 
-bin/verify_timing_flags.py --fix
-bin/verify_runs.py
+bin/verify/verify_timing_flags.py --fix
+bin/verify/verify_runs.py

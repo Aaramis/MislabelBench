@@ -7,7 +7,7 @@
 #
 # The fork on the same 2 023 sequences at five alignment widths, one thread and eight, so that the
 # memory law's width term is measured and not deduced from what EPA-ng stores. Only the peak RSS of
-# each run is read (bin/memory_width.py); it does not depend on the node's other occupants, so this
+# each run is read (bin/timing/memory_width.py); it does not depend on the node's other occupants, so this
 # job is not pinned and its timings are marked untrusted.
 set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"

@@ -8,7 +8,7 @@ has 392 425 sequences over 1 200 nt -- so the candidates are every bacterial cla
 `ssu_all_r226`, scored on the two numbers the archaeal set is characterised by: 7 051 sequences after
 the 1 200 nt filter, and 72.7 % of them judgeable at species (a sibling with the same species label).
 
-Judgeability is computed the way bin/dataset_shape.py computes it, by importing its rule rather than
+Judgeability is computed the way bin/data/dataset_shape.py computes it, by importing its rule rather than
 restating it, so the figure here and the figure in results/shape_*.json are one definition. The
 score is the sum of the two relative distances, |n - 7051| / 7051 + |judg - 72.7| / 72.7, and the
 ten nearest candidates are printed so the choice is visible and a reader can see what the runner-up

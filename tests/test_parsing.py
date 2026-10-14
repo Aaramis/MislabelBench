@@ -12,7 +12,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 
 HEADER = (";SeqID\tMislabeledLevel\tOriginalLabel\tProposedLabel\tConfidence"
           "\tOriginalTaxonomyPath\tProposedTaxonomyPath\tPerRankConfidence\tOriginalLabelExclusion")
@@ -27,7 +28,7 @@ def mis(names):
 
 
 def run(script, *args):
-    return subprocess.run([sys.executable, str(BIN / script), *map(str, args)],
+    return subprocess.run([sys.executable, str(find(script)), *map(str, args)],
                           capture_output=True, text=True)
 
 
@@ -37,7 +38,7 @@ class MisFlags(unittest.TestCase):
     becomes a flag named ";SeqID", present in every file, and nothing else would notice."""
 
     def test_header_and_blank_lines_are_not_flags_and_the_key_is_the_id(self):
-        sys.path.insert(0, str(BIN))
+        sys.path.insert(0, str(find("mis_flags.py").parent))
         import mis_flags
         path = Path(tempfile.mkdtemp()) / "x.mis"
         path.write_text(mis(["u1", "u2"]))

@@ -1,4 +1,4 @@
-"""bin/truncate_alignment.py and bin/memory_width.py on hand-written inputs."""
+"""bin/data/truncate_alignment.py and bin/timing/memory_width.py on hand-written inputs."""
 
 import json
 import subprocess
@@ -7,11 +7,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 
 
 def run(script, *args):
-    return subprocess.run([sys.executable, str(BIN / script), *map(str, args)],
+    return subprocess.run([sys.executable, str(find(script)), *map(str, args)],
                           capture_output=True, text=True)
 
 

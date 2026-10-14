@@ -14,7 +14,7 @@
 # large enough for three disjoint seeds at the highest injection rate.
 set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 ROOT="$BENCH_ROOT"
 RAW="$ROOT/data/raw"
@@ -42,11 +42,11 @@ PHYLUM=$(head -1 "$OUT/bacterial_phyla.txt" | awk '{print $2}')
 echo "donor phylum: $PHYLUM"
 
 cd "$OUT"
-python3 "$ROOT/bin/prepare_gtdb.py" "$RAW/ssu_all_r226.fna.gz" \
+python3 "$ROOT/bin/data/prepare_gtdb.py" "$RAW/ssu_all_r226.fna.gz" \
     --domain "d__Bacteria;$PHYLUM" --min-len 1200 --prefix donor_full
 
 # 600 is the pool: three seeds x 101 sequences at the top rate of 5 % of 2 023, with room over.
-python3 "$ROOT/bin/subsample_fasta.py" --fasta donor_full.fasta --tax donor_full.tax \
+python3 "$ROOT/bin/data/subsample_fasta.py" --fasta donor_full.fasta --tax donor_full.tax \
     --n 600 --seed 42 --prefix donor_pool
 rm -f donor_full.fasta donor_full.tax
 wc -l donor_pool.tax

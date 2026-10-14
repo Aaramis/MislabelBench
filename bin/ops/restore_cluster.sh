@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # Rebuild ~/bench on the cluster from this repository.
 #
-#   bin/restore_cluster.sh --dry-run [user@host]     print the plan, touch nothing
-#   bin/restore_cluster.sh [user@host]               do it
+#   bin/ops/restore_cluster.sh --dry-run [user@host]     print the plan, touch nothing
+#   bin/ops/restore_cluster.sh [user@host]               do it
 #
 # Written after a cleanup command deleted the cluster home directory. Nothing was lost -- every run
 # record, every .mis and every table is committed here, and every generated cell rebuilds from its
 # seed -- but nothing in the repository knew how to put the cluster back, and the knowledge was in
 # one person's head.
 #
-# bin/push_code.sh sends code only, deliberately: data/raw is fetched on the cluster by sha256 and
+# bin/ops/push_code.sh sends code only, deliberately: data/raw is fetched on the cluster by sha256 and
 # results/ travels the other way. That is right for a cluster that already holds the datasets and
 # wrong for one that holds nothing, which is the case this exists for. The kept datasets are 38 MB
 # across 28 committed files and they are copied rather than refetched, because the copy is exact and
@@ -19,7 +19,7 @@
 # against a ~/bench that already holds results. A restore that can overwrite a working cluster is a
 # second incident waiting for the first.
 #
-# No caller, by design: this belongs with bin/push_code.sh and bin/repatriate.sh, the operator scripts
+# No caller, by design: this belongs with bin/ops/push_code.sh and bin/ops/repatriate.sh, the operator scripts
 # that move things between here and the cluster. The rule that a script in bin/ has a caller or does
 # not belong there is about analysis scripts, whose silence means a result nobody rebuilds.
 set -euo pipefail
@@ -58,7 +58,7 @@ echo "== 1b. the directory skeleton, which rsync will not create for itself"
 run ssh "$HOST" 'mkdir -p ~/bench/data/injected ~/bench/data/foreign ~/bench/data/clade ~/bench/results'
 
 echo "== 2. code, which is what push_code.sh already sends"
-run bash bin/push_code.sh "$REMOTE"
+run bash bin/ops/push_code.sh "$REMOTE"
 
 echo "== 3. the kept datasets, which push_code.sh does not send"
 # data/gtdb holds the base sets, their subsets and the covariance model; data/bacteria the donor

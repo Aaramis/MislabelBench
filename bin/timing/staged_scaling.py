@@ -48,7 +48,7 @@ def duration(text):
 def round_files(trace_dir, pattern, round_name):
     """The files of one round, when several rounds share a directory.
 
-    bin/repatriate.sh flattens every round's pipeline_info into results/pipeline_info, where nine
+    bin/ops/repatriate.sh flattens every round's pipeline_info into results/pipeline_info, where nine
     staged rounds of the same cell now sit side by side. Their names carry the round --
     trace-staged_timed_f25_r1_2302505.txt against the directory staged_timed_f25_r1 -- so the round
     is selected by name and not by matching the cell, which would take all nine. Falls back to every
@@ -105,7 +105,7 @@ def shard_nodes(cell_dir, trace_dir, n_shards, round_name=None):
         return hosts
     if trace_dir:
         # shard_nodes-<tag>.tsv, one per round, all of them flattened into results/pipeline_info by
-        # bin/repatriate.sh. Rows are kept on the dataset and on n_shards, which is what tells one
+        # bin/ops/repatriate.sh. Rows are kept on the dataset and on n_shards, which is what tells one
         # round from another once nine of them share a directory.
         for tsv in round_files(trace_dir, "shard_nodes*.tsv", round_name):
             for line in tsv.read_text().splitlines()[1:]:

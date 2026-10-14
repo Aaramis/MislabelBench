@@ -12,7 +12,7 @@
 # now says "jobs" for that reason. This is the other measurement: params.shard_nodes pins shard i
 # to the i-th of four epyc-9754 nodes with --nodelist, chosen here from sinfo at submission so the
 # list is what the cluster had free and not a guess written months earlier. The nodes go in the log
-# and, through slurm/timing/shard_nodes.sh afterwards, in the trace table that bin/staged_rounds.py reads.
+# and, through slurm/timing/shard_nodes.sh afterwards, in the trace table that bin/timing/staged_rounds.py reads.
 #
 # Three replicates, chained with --dependency=afterany like the one-node set:
 #
@@ -23,7 +23,7 @@
 set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"
 nextflow_env
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 REP="${STAGED_REP:-}"
 TAG="n4${REP:+_r$REP}"

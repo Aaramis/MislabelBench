@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The invariants of bin/inject_mislabels.py, which defines the ground truth of 180 grid cells.
+"""The invariants of bin/data/inject_mislabels.py, which defines the ground truth of 180 grid cells.
 
 Nothing tested this script. A mutation sweep over it survived eleven mutations out of eleven,
 including `floor = args.k + 1` flipped to `args.k - 1`, which breaks the one rule its own docstring
@@ -7,13 +7,13 @@ calls non-negotiable: a donor taxon always keeps at least one correctly labelled
 rule the taxon vanishes from the tree when the injected sequences are removed, and the measurement
 becomes a structural limit of leave-one-out rather than a property of the tool.
 
-What stood in for a test was `bin/verify_injection.py` over the real cells, which checks that a cell's
+What stood in for a test was `bin/verify/verify_injection.py` over the real cells, which checks that a cell's
 .tax matches its truth.json, and the byte-identical regeneration of 378 cells recorded in
 data/README.md. Both are checks on the output of one particular run; neither can say what the script
 does to a case nobody has generated.
 
     python3 -m unittest tests.test_injection
-    python3 tests/mutation_sweep.py bin/inject_mislabels.py tests.test_injection
+    python3 tests/mutation_sweep.py bin/data/inject_mislabels.py tests.test_injection
 """
 
 import json
@@ -23,7 +23,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 RANKS = ["domain", "phylum", "class", "order", "family", "genus", "species"]
 PER_SPECIES = 6
 
@@ -57,7 +58,7 @@ class InjectMislabels(unittest.TestCase):
 
     def inject(self, distance="genus", rate=0.25, k=2, seed=1, prefix="c", extra=()):
         out = self.tmp / prefix
-        r = subprocess.run([sys.executable, str(BIN / "inject_mislabels.py"), str(self.base),
+        r = subprocess.run([sys.executable, str(find("inject_mislabels.py")), str(self.base),
                             "--distance", distance, "--rate", str(rate), "--k", str(k),
                             "--seed", str(seed), "--prefix", str(out), *extra],
                            capture_output=True, text=True)
@@ -181,7 +182,7 @@ class InjectMislabels(unittest.TestCase):
         # with the wrong comparison, the second catches one that only tests equality and then walks
         # off the end of the lineage with an IndexError instead of a sentence.
         for distance, ranks_needed in (("order", 4), ("species", 7)):
-            r = subprocess.run([sys.executable, str(BIN / "inject_mislabels.py"), str(shallow),
+            r = subprocess.run([sys.executable, str(find("inject_mislabels.py")), str(shallow),
                                 "--distance", distance, "--prefix", str(self.tmp / "sh")],
                                capture_output=True, text=True)
             self.assertNotEqual(r.returncode, 0, distance)
@@ -191,7 +192,7 @@ class InjectMislabels(unittest.TestCase):
     def test_ragged_lineages_are_refused(self):
         bad = self.tmp / "ragged.tax"
         bad.write_text("a\td__A;p__B\nb\td__A;p__B;c__C\n")
-        r = subprocess.run([sys.executable, str(BIN / "inject_mislabels.py"), str(bad),
+        r = subprocess.run([sys.executable, str(find("inject_mislabels.py")), str(bad),
                             "--distance", "phylum", "--prefix", str(self.tmp / "r")],
                            capture_output=True, text=True)
         self.assertNotEqual(r.returncode, 0)

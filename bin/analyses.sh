@@ -20,7 +20,7 @@ set -euo pipefail
 BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 [ -d "$BENCH_ROOT" ] || { echo "BENCH_ROOT does not name a directory: '$BENCH_ROOT'" >&2; exit 1; }
 cd "$BENCH_ROOT"
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 TAX=data/gtdb/gtdb_arc2k.tax
 ALN=data/gtdb/gtdb_arc2k.fasta
@@ -238,7 +238,7 @@ resource_usage.py > results/resource_usage.txt
 for d in results/staged_timed_f*_r*; do
     [ -d "$d/staged" ] || continue
     # The trace dir is the round's own where it has one and results/pipeline_info otherwise, since
-    # bin/repatriate.sh flattens the traces of every round into that one directory. --round names
+    # bin/ops/repatriate.sh flattens the traces of every round into that one directory. --round names
     # the round so the span and the node record come from its trace and not from a sibling's.
     info="$d/pipeline_info"
     [ -d "$info" ] || info=results/pipeline_info

@@ -19,7 +19,7 @@
 #
 # The subset is built here rather than committed, from the committed source and the seed convention
 # every other subset uses, so the measurement needs nothing this repository does not already hold.
-# bin/subset_taxa.py takes whole species groups, which bin/verify_manifests.py now checks, and the
+# bin/data/subset_taxa.py takes whole species groups, which bin/verify/verify_manifests.py now checks, and the
 # record it writes carries the source's digest. If the answer is worth keeping, the subset is
 # regenerated on any machine from the same two arguments.
 #
@@ -29,7 +29,7 @@ set -euo pipefail
 source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
-export PATH="$BENCH_ROOT/bin:$PATH"
+export PATH="$BENCH_ROOT/bin:$(printf '%s:' "$BENCH_ROOT"/bin/*/)$PATH"
 
 # MEMSTEP_DATASET names a size the repository already holds, from data/gtdb/datasets_sizes.json, and
 # skips the subset build. That is how the same script answers the second question: the peak at 2 023

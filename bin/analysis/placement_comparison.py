@@ -2,7 +2,7 @@
 """Side by side: where each engine put the sequences the two tools disagree on.
 
 The co-author's suggestion on the engine disagreement was to "compare the placements for those
-cases where results deviate". bin/placement_locality.py reads one tool's placements for one cell;
+cases where results deviate". bin/analysis/placement_locality.py reads one tool's placements for one cell;
 this joins two of its records -- upstream's and the fork's, same cell -- on the sequence, restricted
 to the sequences flagged by exactly one of them, and writes one row per sequence with both edges,
 both weights, both clade readings and whether each landed among the k-1 co-carriers.

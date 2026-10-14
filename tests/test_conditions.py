@@ -20,7 +20,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-BIN = Path(__file__).resolve().parent.parent / "bin"
+from binpath import find
+
 TRUE = "d__A;p__B;c__C;o__O;f__F;g__G;s__S1"
 WRONG = "d__A;p__B;c__C;o__O;f__Z;g__Z;s__Z1"
 HEADER = ";SeqID\tLevel\tOrig\tProp\tConfidence\tOrigPath\tPropPath\tPerRank\tExclusion"
@@ -34,7 +35,7 @@ def mis(names):
 
 
 def run(script, *args):
-    return subprocess.run([sys.executable, str(BIN / script), *map(str, args)],
+    return subprocess.run([sys.executable, str(find(script)), *map(str, args)],
                           capture_output=True, text=True)
 
 
@@ -114,7 +115,7 @@ class PairedComparison(Fixture):
         the tail into the whole distribution and every p into 1.0. wins == n is the case the grid
         actually reports, since a condition that leads in every cell is the result being tested.
         """
-        sys.path.insert(0, str(BIN))
+        sys.path.insert(0, str(find("paired_conditions.py").parent))
         from paired_conditions import sign_test
         self.assertAlmostEqual(sign_test(0, 10), 2 * 0.5 ** 10, places=12)
         self.assertEqual(sign_test(5, 10), 1.0)

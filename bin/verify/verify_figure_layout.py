@@ -18,7 +18,7 @@ So the figure is measured rather than looked at. Helvetica's average advance ove
 about 0.52 em; 0.55 is used here, which errs towards reporting a collision that is only a near miss.
 That is the right direction for a check whose output a human then looks at.
 
-    bin/verify_figure_layout.py results/figure3.svg [more.svg ...]
+    bin/verify/verify_figure_layout.py results/figure3.svg [more.svg ...]
 
 Four rules:
 

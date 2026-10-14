@@ -11,7 +11,7 @@ bin/analyses.sh
 git status results/     # only logs and tables whose inputs changed should differ
 ```
 
-`bin/analyses.sh` stops at the first failing check. It runs each `bin/verify_*.py` gate: the datasets
+`bin/analyses.sh` stops at the first failing check. It runs each `bin/verify/verify_*.py` gate: the datasets
 against their manifests, each generated cell against its seed, the grid against its design, every
 timed run against its flags, and every published recall against a second implementation.
 
@@ -32,8 +32,8 @@ Each script writes into `results/<name>/`. The resources are the request in the 
 | `slurm/data/fetch_grove.sh`, `slurm/data/make_grove_simulation.sh` | the simulated control on a RAxML Grove tree | network, about 140 MB |
 
 The base sets (GTDB r226 archaea, alignment on Rfam RF01959) are committed under `data/gtdb/`. The
-download and the filtering are in `bin/prepare_gtdb.py`, and every source is pinned by sha256 in
-`assets/datasets.yml`. `bin/verify_regeneration.py` rebuilds the first four generators in a scratch
+download and the filtering are in `bin/data/prepare_gtdb.py`, and every source is pinned by sha256 in
+`assets/datasets.yml`. `bin/verify/verify_regeneration.py` rebuilds the first four generators in a scratch
 directory and compares every file with the committed one.
 
 ## Experiments
@@ -69,8 +69,8 @@ the rules in [cluster.md](cluster.md). Their seconds are comparable only within 
 ## Where each result is made
 
 `bin/analyses.sh` is the index. Each step is named when it runs, and each script says in its header
-what it reads and writes. The figures are `bin/main_figure.py` (figure 3 of the paper, with its values in
-`results/figure3_values.tsv`) and `bin/supplement_figures.py`. Every supplement table is named by its
+what it reads and writes. The figures are `bin/figures/main_figure.py` (figure 3 of the paper, with its values in
+`results/figure3_values.tsv`) and `bin/figures/supplement_figures.py`. Every supplement table is named by its
 `\fichier{...}` in the supplement source.
 
 ## What is not committed
@@ -79,6 +79,6 @@ The runs of the largest experiments carry their placement files, which are too l
 archived on Zenodo, see the main [README](../README.md#citation). Everything the tables need is in the
 repository.
 
-`bin/make_archive.sh` packs these ignored files under `results/` into one `.tar.zst` with a
+`bin/ops/make_archive.sh` packs these ignored files under `results/` into one `.tar.zst` with a
 `SHA256SUMS`, which is what the second Zenodo record holds. Unpack it at the repository root to restore
 them.
