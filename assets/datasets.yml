@@ -122,7 +122,8 @@ datasets:
     url: https://ftp.ebi.ac.uk/pub/databases/Rfam/15.1/Rfam.cm.gz
     sha256: e2e636e9ce138dae506769aa74d067ce35466e94002818cfe125ea2a3cab8168
     downloaded: 2026-10-01
-    built_with: INFERNAL 1.1.4
+    # The version in the model file's header. The alignments ran in infernal_image.
+    model_built_with: INFERNAL 1.1.4
     licence: CC0 1.0
     extract: "cmfetch Rfam.cm RF01959"
     # The sha256 above is the whole Rfam.cm.gz; this is the extracted model as committed, so the
@@ -137,7 +138,7 @@ datasets:
     # subset, 600 bacterial donors. That shared width is what lets the donors be concatenated into
     # the archaeal alignment for error kind 6, and it is a property of the model, not a coincidence.
     consensus_length: 1478
-    citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database. Nucleic Acids Res (2025)"
+    citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database in 2025. Nucleic Acids Res (2025)"
 
   rfam_ssu_bacteria:
     description: Rfam RF00177, SSU_rRNA_bacteria, the covariance model the bacterial clade is aligned against
@@ -152,7 +153,7 @@ datasets:
     # The bacterial model is 55 columns wider than the archaeal one, so this clade's alignment is
     # 1533 wide and cannot be concatenated with the archaeal one; it never needs to be.
     consensus_length: 1533
-    citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database. Nucleic Acids Res (2025)"
+    citation: "Ontiveros-Palacios N et al. Rfam 15: RNA families database in 2025. Nucleic Acids Res (2025)"
 
   infernal_image:
     description: the container every cmalign and cmfetch here runs in, pinned by tag and pulled when the cache lacks it
