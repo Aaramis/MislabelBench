@@ -15,7 +15,7 @@
 # rerun: its folds carry ref.nwk already. SATIVA seeds RAxML with a fixed -p, so the .mis this
 # produces is expected to equal the committed one byte for byte, which is checked on repatriation.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 echo "running on $(hostname)"

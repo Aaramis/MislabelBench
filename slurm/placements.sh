@@ -21,7 +21,7 @@
 # answered by the sequences a cell holds, not by the count of cells. Then two K25 cells for the k-1
 # question at the k where the law bites, species k=5 and family k=10, under the production condition.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 

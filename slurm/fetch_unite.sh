@@ -6,8 +6,7 @@
 #SBATCH --output=%x-%j.log
 #
 # The secondary dataset: UNITE v10.0, fungal ITS, RepS subset. Secondary because the primary is
-# 16S and a reviewer is entitled to ask whether anything here is specific to one marker -- the
-# question D. Lundin put as "all are rRNA, maybe use coI".
+# 16S and the question is whether anything here is specific to one marker.
 #
 # RepS and not RefS, which is the more curated subset, for a reason that is measured rather than
 # preferred: leave-one-out cannot judge a sequence with no sibling of the same taxon, and RefS is
@@ -28,7 +27,7 @@
 # No alignment here. UNITE ships none, ITS alignment is contested, and what that costs is an open
 # question in the protocol rather than something to settle by picking an aligner quietly.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 export PATH="$BENCH_ROOT/bin:$PATH"
 
 ROOT="$BENCH_ROOT"

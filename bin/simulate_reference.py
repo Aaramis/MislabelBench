@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Protocol.md 2.1's sanity check: a reference where every label is certain by construction.
+"""Sanity check on simulated data: a reference where every label is certain by construction.
 
 Injection is the primary source of truth and leaves one hole in itself, which 2.1 and 2.4 both
 name: the sequences we did not touch are only assumed correct, because real references contain
@@ -22,7 +22,7 @@ changes with probability 3/4 (1 - exp(-4d/3)) and then picks one of the other th
 
 No gaps are produced. A simulated alignment is aligned by construction, which is the one
 simplification worth naming up front: it removes the alignment from the question entirely, and
-Protocol.md 2.2's kind 6 caveat is precisely about what the alignment carries.
+the caveat on the foreign-sequence error type is precisely about what the alignment carries.
 """
 
 import argparse

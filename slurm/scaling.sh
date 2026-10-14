@@ -41,7 +41,7 @@
 # reporting the three phases separately is what makes the speedup readable rather than
 # flattered by the serial parts.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 
 N="${SLURM_JOB_NUM_NODES:-1}"

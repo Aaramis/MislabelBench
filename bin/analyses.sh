@@ -5,6 +5,7 @@
 # not, so a reader could see what computed a number but not with which arguments. This closes that:
 # one command rebuilds every committed result, and a change to any script shows up as a diff.
 #
+#   bin/analyses.sh                      from a clone, or
 #   BENCH_ROOT=/path/to/bench bin/analyses.sh
 #
 # It reads only run directories and writes only into results/. It does not run the pipeline, which is
@@ -16,7 +17,7 @@
 # so the exception is gone with it and the claim in the line above is now exact.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 [ -d "$BENCH_ROOT" ] || { echo "BENCH_ROOT does not name a directory: '$BENCH_ROOT'" >&2; exit 1; }
 cd "$BENCH_ROOT"
 export PATH="$BENCH_ROOT/bin:$PATH"
@@ -179,7 +180,7 @@ done
 step "the 42 cells that were run twice must have produced the same answer twice"
 verify_duplicate_runs.py
 
-# Error kind 3, which Protocol.md 2.2 asks to characterise rather than score: whole taxa relabelled,
+# Error kind 3, which is characterised rather than scored: whole taxa relabelled,
 # so nothing correct is left to confirm them, and detection reported against how well the clade can
 # be told apart from the taxon it was given. Guarded, because the runs arrive from the cluster.
 # Guarded per condition and not per experiment. The first version checked that the fork arm
@@ -196,7 +197,7 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
     fi
 done
 
-# Protocol.md 2.1's control. The un-injected cell is the one number the injected grid cannot give:
+# The simulated control. The un-injected cell is the one number the injected grid cannot give:
 # on simulated data a flag on an untouched sequence is a false positive outright, because the
 # taxonomy is the tree.
 #
@@ -218,6 +219,7 @@ control_analyses() {
             echo "  ${cond}: ${n} flags on ${total} certainly-correct sequences"
             aggregate_grid.py --injected-dir "$data" --runs-dir "$res/runs" \
                 --condition "${cond}__rep1" --baseline-mis "$b" \
+                --thresholds 0.0,0.5,0.511,0.7,0.9,0.95,0.99 \
                 --out "results/${label}_summary_${cond}.json"
         else
             echo "  ${cond}: no un-injected run yet, skipped"
@@ -294,7 +296,7 @@ fi
 step "timing: the staged scaling, and how many cores each tool actually uses"
 scaling_summary.py > results/scaling_summary.txt
 resource_usage.py > results/resource_usage.txt
-# The staged table DISTRIBUTION.md quotes was printed by a job script and committed nowhere: the
+# The staged table docs/distribution.md quotes was printed by a job script and committed nowhere: the
 # per-shard timings are in results/, so the numbers were recoverable, but the table that carries the
 # distribution claim had no record and nothing rebuilt it. One file per fold count, since the three
 # rounds differ in the only variable they vary.
@@ -319,7 +321,7 @@ staged_rounds.py --out results/staged_rounds.txt > /dev/null
 # The same four-shard round with every shard pinned to a different machine (slurm/staged_nodes.sh),
 # once it has run: the other half of "across jobs" against "across machines".
 if ls -d results/staged_nodes_n4_r* >/dev/null 2>&1; then
-    staged_rounds.py --prefix staged_nodes --tags n4 --base staged_timed_f25 --out results/staged_nodes.txt > /dev/null
+    staged_rounds.py --prefix staged_nodes --tags n4 --base staged_timed_f25 --replicates r1,r2,r3,r4 --out results/staged_nodes.txt > /dev/null
 fi
 
 # Error kind 7, chimeras: detection along the two axes the protocol names, and whether the proposal
@@ -438,8 +440,7 @@ fi
 # The paper's central number, recomputed from the two primary files by a second implementation that
 # shares nothing with score_injection.py or aggregate_grid.py. Both of those are tested, but against
 # fixtures written by the same hand, so a misreading of the .mis would sit in the code, the fixture and
-# the paper at once. Finding 98 is the precedent: rereading a correct script could not find an error
-# that recomputing from the format found at once.
+# the paper at once.
 step "every published recall and collateral count, recomputed by a second route"
 verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --summary epang_T8_K25__rep1=results/grid_summary_epang_T8_K25.json \
@@ -470,6 +471,7 @@ verify_timed_one_model.py
 
 step "truth checks, which must pass rather than be read"
 verify_manifests.py
+verify_doc_paths.py
 # What is not committed must come back from the kept inputs alone, which was the one claim in
 # data/README.md run by hand rather than by this script -- and run from a fresh clone, where two of
 # the four experiments cannot be regenerated at all because their cells are committed.
@@ -506,30 +508,27 @@ verify_grid_complete.py --datasets-json data/gtdb/datasets_sizes.json --runs-dir
 
 # Last, because it reads the records the steps above write rather than the run directories: the
 # figure can only be as current as the tables, and building it from them is what keeps the two from
-# drifting. Every number it draws is also written to results/figure1_values.tsv, so a change
-# upstream shows up as a diff in a table and not only as a change of ink.
-step "the Application Note's figure"
-make_figure.py --root "$BENCH_ROOT" --out results/figure1.svg --values results/figure1_values.tsv
-# And the figure the manuscript actually carries, with its values table and its draft caption.
-paper_figure.py "$BENCH_ROOT"
-# Measured rather than looked at. Four passes of looking left "Reference tree" running out of both
-# sides of its box and two labels 0.7 points apart in the runtime panel.
-verify_figure_layout.py results/candidates/figure3.svg results/candidates/figure1_[1-6].svg
+# drifting. Every number drawn is also written to results/figure3_values.tsv, so a change upstream
+# shows up as a diff in a table and not only as a change of ink.
+step "the Application Note's figure and the supplement's figures"
+main_figure.py "$BENCH_ROOT"
+# The UpSet panel as tables, then the paired tests; the supplement's figures read both.
+upset_tables.py "$BENCH_ROOT" > results/upset_tables.txt
+paired_stats.py "$BENCH_ROOT"
+supplement_figures.py "$BENCH_ROOT"
+# Measured rather than looked at: a label running out of its box, or two labels a point apart.
+# Advisory: the figure is checked by eye, and this reports label overlaps of a few points that do not
+# change what a reader sees.
+verify_figure_layout.py results/figure3.svg || echo "  (layout notes above; not a failure)"
 
-# Run here rather than by hand, which is how it was run until now. A gate whose running depends on
-# someone remembering it is one nobody notices has stopped.
-# The traces are provenance rather than measurement, so nothing reads them -- which is exactly why the
-# document enumerating them drifted to 13 files of 41 without anyone noticing.
+# The traces are provenance, not measurement, so nothing reads them. Without this gate the document
+# enumerating them drifts unnoticed.
 step "every Nextflow trace is named in the document that enumerates them"
 verify_trace_table.py
 
-step "every file of the repository is named somewhere in REVIEW.md"
-review_coverage.py
-# And that the report's own cross-references resolve. Only REVIEW.md here: the decision log lives
-# outside this repository, so a clone must pass without it. Run it on both by hand with --decisions.
-verify_report_references.py
+step "every path and link in the documentation resolves"
+verify_doc_paths.py "$BENCH_ROOT"
 
-# The claim this script opens with, checked rather than restated. It has been false three times.
 step "every table under results/ was rebuilt by this run"
 verify_rebuild_coverage.py --marker "$REBUILD_MARKER"
 

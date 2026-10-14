@@ -26,7 +26,7 @@
 # Untimed on purpose: --timing_trusted false. The peak comes from the Nextflow trace's peak_rss,
 # which is recorded whatever the timing flag says, and this job has no claim on seconds.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 export PATH="$BENCH_ROOT/bin:$PATH"

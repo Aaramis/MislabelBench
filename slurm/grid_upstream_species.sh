@@ -16,7 +16,7 @@
 # deterministic, so it overwrites with identical content; the waste is compute, and the quota is
 # otherwise idle at 32 of 600 CPUs.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir grid_up_species

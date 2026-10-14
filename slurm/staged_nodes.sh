@@ -21,7 +21,7 @@
 #     prev=${out##* }
 #   done
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 nextflow_env
 export PATH="$BENCH_ROOT/bin:$PATH"
 

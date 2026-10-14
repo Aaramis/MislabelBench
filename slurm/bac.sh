@@ -10,7 +10,7 @@
 # model as baseline.sh is, then the fifteen-cell k axis on the clade's subset, untimed. 128G for the
 # reason baseline.sh gives: the fork's process tree peaks near 36 GB on 7 051 sequences.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 echo "running on $(hostname)"

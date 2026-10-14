@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Did every condition of a cell read the same database?
 
-Protocol.md 2.5 rests on it: "Both run on the identical database in every cell, so whatever errors
+The comparison rests on it: "Both run on the identical database in every cell, so whatever errors
 the base already contains are shared between them and the comparison between the two tools does not
 depend on knowing what those errors are." Nothing recorded it. run.json carried the dataset's name,
 which is a label, and the guarantee came from main.nf resolving one path per cell and handing it to

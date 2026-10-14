@@ -16,7 +16,7 @@
 #
 # FOLDS_PER_JOB sets the shard count on 25 folds: 25 gives one shard, 13 gives two, 7 gives four,
 # which are the three node counts scaling.sh measured. Below four the tool loses its own internal
-# concurrency and a fold costs 22 s instead of 8; see DISTRIBUTION.md.
+# concurrency and a fold costs 22 s instead of 8; see docs/distribution.md.
 #
 # STAGED_REP numbers a replicate of the same round. The stages no longer hold a node to themselves --
 # an exclusive job is charged all 510 CPUs of an epyc-9754 against a QOS cap of 600, so two shards
@@ -32,7 +32,7 @@
 # are each other's interference, and two rounds of this on one node is the one disturbance we can
 # still rule out.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 nextflow_env
 
 # bin on PATH, as bin/analyses.sh does. Without it the summary at the end exits 127 -- which it

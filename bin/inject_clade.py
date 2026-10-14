@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Error kind 3: relabel a whole taxon, so nothing correctly labelled remains to confirm it.
 
-Protocol.md 2.2 keeps kind 3 as a case to characterise rather than to score like kinds 1 and 2,
+The protocol keeps kind 3 as a case to characterise rather than to score like kinds 1 and 2,
 and says why: with every member of a taxon relabelled, leave-one-out has nothing to place the
 removed sequence against, so the taxon cannot be confirmed. The clade is still placed, though, and
 if its own signal points elsewhere then every member lands away from where its new label says it
 belongs. So detection does not disappear -- it moves from "is this label contradicted by its
 relatives" to "is this clade distinguishable from the taxon it has been assigned to".
 
-**That is what is varied here, and it is Q7's answer in operational form.** The protocol says the
+**That is what is varied here.** The protocol says the
 cells have to vary compactness and not just distance. Compactness is measured against the recipient
 rather than against the whole database, because that is the comparison the question is about:
 
@@ -20,7 +20,7 @@ Measured on the alignment, over columns where both sequences have a base, which 
 bin/cluster_conflict.py uses. All-against-all would be 3 billion character comparisons in pure
 python; against the recipient alone it is a few hundred pairs and is the quantity in the hypothesis.
 
-The hard case Protocol.md names -- "a wrong label inside the correct genus" -- is `--distance
+The hard case the protocol names -- "a wrong label inside the correct genus" -- is `--distance
 species`, where the clade keeps its genus and is given a sibling species. The easy end is
 `--distance phylum`.
 

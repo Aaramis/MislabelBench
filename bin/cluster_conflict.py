@@ -86,8 +86,7 @@ def main():
                 counts[t][k][1] += 1
 
     # A run that matched no cell printed this header, wrote {"by_k": []} and exited 0, and
-    # analyses.sh discards stdout, so the empty file was the only trace. Same shape as the four
-    # gates in D110.
+    # analyses.sh discards stdout, so the empty file was the only trace.
     if not counts[thresholds[0]]:
         raise SystemExit(f"no cell matched {args.injected_dir}/*/*.truth.json")
 

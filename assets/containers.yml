@@ -1,0 +1,18 @@
+# Every container the benchmark runs, by tag and by registry digest. A tag can be re-pushed; the
+# digest cannot. Digests were read from the quay.io API on 2026-10-14.
+sativa:
+  image: quay.io/biocontainers/sativa:0.9.3--py312h031d066_0
+  digest: sha256:2f3e7a6e17f7a5321abebae3066ffa150b9a1979bdf5dc0fa6391ee68631f368
+  role: SATIVA (RAxML-EPA), the reference method
+sativa-epang:
+  image: quay.io/biocontainers/sativa-epang:0.10.2--py314hab16a5f_0
+  digest: sha256:be4420ef7a99c208e53ebe499d31ac305186b8bf1a5df291dda6458000b12921
+  role: SATIVA-epang (EPA-ng), the method under test
+infernal:
+  image: quay.io/biocontainers/infernal:1.1.5--pl5321h7b50bb2_4
+  digest: sha256:05ae1ca6cc76c27180524bc38c5b1e17adf9377be5b8c644d3e8e707848d4d99
+  role: cmalign and cmfetch, used to align the sequences on the Rfam model
+python:
+  image: quay.io/biocontainers/python:3.12.12
+  digest: sha256:4cc84261c4b7a77a23cfbaa5b5316416a507b42ac8cde330b002631666d99ca2
+  role: scoring and table scripts

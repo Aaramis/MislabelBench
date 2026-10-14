@@ -16,9 +16,8 @@
 # shard_nodes-*.tsv likewise, which is the only record of which node each shard ran on. Getting that list wrong by hand is how 949 run
 # directories first arrived with nothing but their run.json.
 #
-# .stderr is wanted too, for the experiments whose result is a failure. before_after.sh and
-# ragged_check.sh answer "does SATIVA accept this input" and the answer for two of their five
-# inputs is no; the .log stops at "Loading taxonomy from file" and the traceback -- IndexError in
+# .stderr is wanted too, for the experiments whose result is a failure. Some experiments
+# ask "does SATIVA accept this input" and the answer for some inputs is no; the .log stops at "Loading taxonomy from file" and the traceback -- IndexError in
 # epac/taxonomy_util.py line 337 -- is on stderr, which was not collected. So the fact of the
 # failure was committed and its diagnosis was not.
 #
@@ -38,7 +37,7 @@
 # anyone looked. verify_timing_flags.py --fix is part of copying, not something to remember after.
 set -euo pipefail
 
-REMOTE="${1:-agardette@core.cluster.france-bioinformatique.fr}"
+REMOTE="${1:-${BENCH_REMOTE:?usage: $0 user@cluster, or set BENCH_REMOTE}}"
 cd "$(dirname "$0")/.."
 
 # --exclude='._*' in both directions. A Mac rsync leaves an AppleDouble resource fork beside

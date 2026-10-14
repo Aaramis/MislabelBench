@@ -39,7 +39,7 @@ def flagged(p):
 base_tax = lineages(args.base_tax)
 base = flagged(args.baseline)
 
-tot_near = tot_gained = 0
+tot_near = tot_gained = ref_near = ref_n = 0
 per_dist = {}
 for mis in sorted(Path(args.runs_dir).glob(f"*__{args.condition}/*.mis")):
     cell = mis.parent.name.split("__")[0]
@@ -61,6 +61,11 @@ for mis in sorted(Path(args.runs_dir).glob(f"*__{args.condition}/*.mis")):
         touched.add(tuple(rec["wrong"].split(";")[:r + 1]))
 
     near = sum(1 for g in gained if tuple(base_tax[g][:r + 1]) in touched)
+    # The same test on the baseline flags that survived: if they sit in the touched clades as often,
+    # a collateral flag being there says nothing about contamination.
+    kept = (base - set(inj)) & (flagged(mis) - set(inj))
+    ref_near += sum(1 for g in kept if tuple(base_tax[g][:r + 1]) in touched)
+    ref_n += len(kept)
     tot_near += near
     tot_gained += len(gained)
     d = truth["distance"]
@@ -68,6 +73,8 @@ for mis in sorted(Path(args.runs_dir).glob(f"*__{args.condition}/*.mis")):
     per_dist[d] = (a + near, b + len(gained))
 
 print(f"collateral flags: {tot_gained}, of which {tot_near} ({100*tot_near/tot_gained:.1f}%) "
+      f"lie in a clade the injection touched")
+print(f"baseline flags kept: {ref_n}, of which {ref_near} ({100*ref_near/ref_n:.1f}%) "
       f"lie in a clade the injection touched")
 for d in RANKS[1:]:
     if d not in per_dist:

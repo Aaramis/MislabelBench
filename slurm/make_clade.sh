@@ -1,16 +1,15 @@
 #!/bin/bash
 # Build the error kind 3 cells: whole taxa relabelled, so nothing correct is left to confirm them.
 #
-# Protocol.md 2.2 keeps kind 3 as a case to characterise rather than a grid to score, and Q7 asks
-# whether it is worth the compute at all, answering that the cells would have to vary compactness
-# and not just distance. So this is nine cells, not 180: three distances spanning the range the
+# The protocol keeps kind 3 as a case to characterise rather than a grid to score. It is only worth
+# the compute if the cells vary compactness and not just distance. So this is nine cells, not 180: three distances spanning the range the
 # protocol names -- species is "a wrong label inside the correct genus", the hard case, and phylum
 # the easy end -- by three seeds, six clades each spread over the separation range.
 #
 # Pure python and seconds to run, like make_grid.sh. No cluster needed.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 OUT="$BENCH_ROOT/data/clade"
 mkdir -p "$OUT"
 ALN="$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"

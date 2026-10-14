@@ -7,7 +7,7 @@
 # that fails once is never drawn again.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+export BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 BAD_NODES="$BENCH_ROOT/slurm/bad_nodes.txt"
 script="${1:?usage: submit.sh <job script> [extra sbatch args]}"
 shift || true

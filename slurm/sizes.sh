@@ -15,7 +15,7 @@
 #
 # 140 cores of 254 are reserved rather than the node held exclusively, because --exclusive bills all
 # 254 against a 600-CPU per-user quota and would make this the only job we can run. That check has
-# since landed: D39 found reserving most of a node times the same as holding it and more
+# since landed: reserving most of a node times the same as holding it and more
 # reproducibly, which is what threads.sh already states. Every timing here still carries the model
 # and the allocation it ran under, so it can be rechecked rather than re-run.
 #
@@ -23,7 +23,7 @@
 # judgeability at species runs 73.8 to 76.2 % against 72.7 % for the source, so the sizes are
 # comparable in difficulty and not just in count.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir sizes

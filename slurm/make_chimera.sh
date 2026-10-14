@@ -13,7 +13,7 @@
 # sequences are 36 copies of the alignment, which is why only the truth is committed.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 ALN="$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax"
 OUT="$BENCH_ROOT/data/chimera"
@@ -48,7 +48,7 @@ for d in sorted(out.iterdir()):
     sets.append({"name": d.name, "n_seqs": n, "aln_len": w,
                  "fasta": str(fa.relative_to(root)), "tax": str(tax.relative_to(root))})
 (out / "datasets.json").write_text(json.dumps(
-    {"source": "chimeras of two gtdb_arc2k sequences labelled as parent A (Protocol 3, kind 7)",
+    {"source": "chimeras of two gtdb_arc2k sequences labelled as parent A",
      "datasets": sets}, indent=2) + "\n")
 print(f"{len(sets)} chimera cells, {sets[0]['n_seqs']} sequences of {sets[0]['aln_len']} columns")
 PY

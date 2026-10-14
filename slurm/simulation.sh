@@ -9,15 +9,15 @@
 
 #SBATCH --output=%x-%j.log
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir simulation
 
 echo "running on $(hostname)"
 
-# Protocol.md 2.1's control. Thirty-seven cells: the un-injected simulated reference, whose flags are
-# false positives in the strict sense that 2.4 says real data cannot offer, and 36 injected ones,
+# The simulated-reference control. Thirty-seven cells: the un-injected simulated reference, whose flags are
+# false positives in the strict sense that real data cannot offer, and 36 injected ones,
 # three distances by four k by three seeds. It said thirteen until the three injection seeds were
 # added, for the reason make_simulation.sh records: with one seed a sign test cannot report below
 # 0.25 however consistent the data.

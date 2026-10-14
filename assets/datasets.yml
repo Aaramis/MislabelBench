@@ -63,8 +63,8 @@ datasets:
     # label was off by 35 points while the numbers stayed put.
     #
     # Recorded for both stages because the length filter is not free, and the figure that
-    # belongs beside a result is the one for the set that produced it. bin/subset_taxa.py and
-    # REVIEW.md already reason from 72.7 %; only this file and the protocol said 81.5 %.
+    # belongs beside a result is the one for the set that produced it. bin/subset_taxa.py
+    # reasons from 72.7 %; this file once said 81.5 %.
     # Both blocks reproduce with:
     #   bin/dataset_shape.py --fasta data/gtdb/gtdb_arc1200.fasta \
     #     --tax data/gtdb/gtdb_arc1200.tax --convention gtdb
@@ -113,8 +113,8 @@ datasets:
     licence: CC BY-SA 4.0
 
   # Alignment model. A covariance model represents rRNA secondary structure; a profile HMM
-  # does not. Alignment is not what this paper is about, so the point is to use the method a
-  # reviewer cannot argue with.
+  # does not. Alignment is not what this paper is about, so the point is to use the method that
+  # leaves no room for argument.
   rfam_ssu_archaea:
     description: Rfam RF01959, SSU_rRNA_archaea, the covariance model the archaeal SSU is aligned against
     release: Rfam 15.1
@@ -123,6 +123,7 @@ datasets:
     sha256: e2e636e9ce138dae506769aa74d067ce35466e94002818cfe125ea2a3cab8168
     downloaded: 2026-10-01
     built_with: INFERNAL 1.1.4
+    licence: CC0 1.0
     extract: "cmfetch Rfam.cm RF01959"
     # The sha256 above is the whole Rfam.cm.gz; this is the extracted model as committed, so the
     # file the alignments actually used can be checked without downloading 15.1 again. It is Rfam's
@@ -156,9 +157,10 @@ datasets:
   infernal_image:
     description: the container every cmalign and cmfetch here runs in, pinned by tag and pulled when the cache lacks it
     image: quay.io/biocontainers/infernal:1.1.5--pl5321h7b50bb2_4
+    licence: BSD-3-Clause
     sif_sha256: 40c12bdb4bb59443accc09f5b15e0e8a6d3b9d086fded8e46329f4c4b52f70ac
     # It used to be found by globbing ~/.singularity_cache, and the cache was pruned between two
-    # runs: review finding 228. slurm/fetch_bacterial_clade.sh and slurm/make_foreign.sh pull it.
+    # runs. slurm/fetch_bacterial_clade.sh and slurm/make_foreign.sh pull it.
 
   gtdb_bacteria_clade:
     description: GTDB r226 SSU, the bacterial order the archaeal results are replicated on
@@ -192,6 +194,7 @@ datasets:
     bytes: 146669568
     scripts: https://github.com/angtft/RAxMLGroveScripts
     scripts_commit: 7d8e2aa469968b49a52db5cc437307deb18eb233
+    licence: none stated upstream; only the derived tree and model parameters are redistributed here
     n_trees: 127329
     tree_id: "71741"
     # bin/grove_select.py's criteria and candidate count are in data/grove/tree.json; the

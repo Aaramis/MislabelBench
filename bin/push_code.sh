@@ -16,7 +16,7 @@
 # resume cache. Six hours of RAxML went that way once.
 set -euo pipefail
 
-REMOTE="${1:-agardette@core.cluster.france-bioinformatique.fr}"
+REMOTE="${1:-${BENCH_REMOTE:?usage: $0 user@cluster, or set BENCH_REMOTE}}"
 cd "$(dirname "$0")/.."
 
 running=$(ssh "${REMOTE%%:*}" 'squeue -u $USER -h -o %j' | grep -v '^$' | tr '\n' ' ' || true)
@@ -65,12 +65,12 @@ fi
 # what the cluster knows. The two copies happen to be identical today, four nodes each, which is why
 # this had never shown itself.
 rsync -a --exclude='._*' --exclude='bad_nodes.txt' --relative \
-      main.nf nextflow.config conf modules bin slurm assets tests \
-      README.md REVIEW.md DISTRIBUTION.md "$REMOTE:~/bench/"
+      main.nf nextflow.config conf modules bin slurm assets tests docs \
+      README.md "$REMOTE:~/bench/"
 
 # Sent only when the cluster has none, so a fresh ~/bench inherits what is known and an existing one
 # keeps what it has learned. bin/repatriate.sh brings the union back the other way.
-rsync -a --ignore-existing slurm/bad_nodes.txt "$REMOTE:~/bench/slurm/"
+[ ! -f slurm/bad_nodes.txt ] || rsync -a --ignore-existing slurm/bad_nodes.txt "$REMOTE:~/bench/slurm/"
 for d in injected clade simulated chimera; do
     rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \
           --exclude='*' "data/$d/" "$REMOTE:~/bench/data/$d/"

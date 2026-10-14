@@ -13,7 +13,7 @@
 # clade baseline, so the two tools' seconds on 2 008 bacterial sequences are usable beside the
 # archaeal 2 023.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 echo "running on $(hostname)"

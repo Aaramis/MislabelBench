@@ -1,7 +1,7 @@
 // Stage 1 of 4 of the distributed leave-one-out: build the reference tree and model.
 //
 // The four stages exist because only the third distributes, and reporting them separately is what
-// makes the speedup readable rather than flattered by the serial parts. See DISTRIBUTION.md.
+// makes the speedup readable rather than flattered by the serial parts. See docs/distribution.md.
 process STAGEDREFERENCE {
     tag "${meta.dataset}/${meta.condition}/rep${meta.rep}"
     label 'process_timed'

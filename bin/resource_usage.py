@@ -205,8 +205,8 @@ for tool, prefix in (("fork", "epang_T{}_K25"), ("upstream", "upstream_raxml_T{}
 # table is the only place that law is written down. So it is checked against itself here, because the
 # one time it was wrong it was wrong in a way the eye should have caught and did not: 1.22 MB per
 # sequence at 7 051 in a column reading 4.4 to 5.1 everywhere else, printed for as long as it took
-# the staged runs' per-stage tasks to be pooled with the whole runs and nobody to look. REVIEW.md
-# finding 31 held the right numbers the whole time, three of them, and nothing compared the two.
+# the staged runs' per-stage tasks to be pooled with the whole runs and nobody to look. The right
+# numbers were in the record the whole time and nothing compared the two.
 problems = []
 if per_seq:
     lo, hi = min(v for _, v in per_seq), max(v for _, v in per_seq)

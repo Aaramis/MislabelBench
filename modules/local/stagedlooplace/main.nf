@@ -3,10 +3,10 @@
 // The group is a stride, folds i, i+T, i+2T …, because that is the form the tool's -folds flag
 // takes and it lets one invocation cover the whole group. One invocation per fold would be the
 // worst available granularity: at eight threads the tool runs four placements of two threads each,
-// so a fold costs 7.8 s in a group of 25 and 22.1 s alone. DISTRIBUTION.md has the numbers.
+// so a fold costs 7.8 s in a group of 25 and 22.1 s alone. docs/distribution.md has the numbers.
 //
 // A task directory holding manifest.json, model and only this group's folds is enough -- checked
-// with slurm/fold_subset_probe.sh, which placed fold_007 from a 12 MB directory where the whole
+// by placing fold_007 from a 12 MB directory where the whole
 // one is 284 MB. That is what keeps the staging cost proportional to the work.
 process STAGEDLOOPLACE {
     tag "${meta.dataset}/${meta.condition}/rep${meta.rep} shard ${meta.shard}/${meta.n_shards}"

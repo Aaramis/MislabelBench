@@ -16,7 +16,7 @@
 # Rebuilds gtdb_arc1200 from the release with the parameters the manifest records and compares,
 # byte for byte, against the committed files.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 export PATH="$BENCH_ROOT/bin:$PATH"
 
 RAW="$BENCH_ROOT/data/raw"

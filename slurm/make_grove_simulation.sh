@@ -5,9 +5,9 @@
 #SBATCH --time=4:00:00
 #SBATCH --output=%x-%j.log
 #
-# Protocol.md 2.1's control, rebuilt on a RAxMLGrove tree instead of a hand-made one.
+# The simulated-reference control, rebuilt on a RAxMLGrove tree instead of a hand-made one.
 #
-# What it replaces and why is in Decisions.md: a co-author asked how the simulated reference's tree
+# What it replaces and why: a co-author asked how the simulated reference's tree
 # and parameters are chosen, and the honest answer was "by hand". Here the topology, the substitution
 # model, its rates and base frequencies, the alpha of the gamma, the alignment width and the empirical
 # missing-data pattern all come out of the database, and the tree is picked by bin/grove_select.py
@@ -24,7 +24,7 @@
 # interpreter with biopython and scikit-optimize rather than a pinned container; the data it produces
 # is pinned instead, by sha256, in the record it writes.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 
 GROVE="$BENCH_ROOT/data/grove"
 OUT="$BENCH_ROOT/data/grove_sim"
@@ -169,7 +169,7 @@ ALN_REL=$(python3 -c 'import os,sys;print(os.path.relpath(sys.argv[1], sys.argv[
 #
 # First the rate: probe the twelve distance-by-k combinations at one seed and take the highest rate
 # at which none of them falls short. A cell that still warns when the real cells are built is dropped
-# and listed rather than run at a quietly different rate, which is what Protocol.md 2.4 asks for.
+# and listed rather than run at a quietly different rate, which is what the protocol asks for.
 PROBE="$OUT/.probe"
 probe_rate() {
     # Zero when every one of the twelve cells reaches rate $1 exactly, one when any falls short.
@@ -249,7 +249,7 @@ for d in sorted(out.glob("grove_*")):
                       "fasta": str((d / f"{d.name}.fasta").relative_to(root)),
                       "tax": str(tax.relative_to(root))})
 (out / "datasets.json").write_text(json.dumps(
-    {"source": "RAxMLGrove tree, AliSim along it, taxonomy from the tree (Protocol 2.1)",
+    {"source": "RAxMLGrove tree, AliSim along it, taxonomy from the tree",
      "tree": json.loads(treejson.read_text()),
      "taxonomy": json.loads((out / "grove/grove.grove_tax.json").read_text()),
      "requested_rate": rate,

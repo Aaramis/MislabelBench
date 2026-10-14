@@ -19,12 +19,12 @@
 # python 3.12, the way slurm/fetch_grove.sh does, with the same reasons (the compute image's python
 # has no ensurepip). parasail and lightgbm come as x86-64 wheels. No timing is read off this job.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 echo "running on $(hostname)"
 
 REPO_URL=https://github.com/MaBody/aldiscore
 COMMIT=cc2de71f7ca1096a9cf3ef1ea3b83622e9a27a51
-BASE_PY=/shared/software/miniconda_deployment/envs/python-3.12/bin/python
+BASE_PY="${BASE_PY:-/shared/software/miniconda_deployment/envs/python-3.12/bin/python}"
 OUT="$BENCH_ROOT/results/aldiscore"
 TOOL="$BENCH_ROOT/data/aldiscore"
 mkdir -p "$OUT" "$TOOL"

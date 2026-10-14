@@ -1,5 +1,5 @@
 #!/bin/bash
-# Protocol.md 2.1's control: a reference where every label is certain, un-injected and injected.
+# The simulated-reference control: a reference where every label is certain, un-injected and injected.
 #
 # Two things it gives that the injected grid cannot.
 #
@@ -15,7 +15,7 @@
 # reference and six injected cells against the grid's 180.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 OUT="$BENCH_ROOT/data/simulated"
 mkdir -p "$OUT"
 
@@ -80,7 +80,7 @@ for d in sorted(out.glob("sim_*")):
                       "fasta": str((d / f"{d.name}.fasta").relative_to(root)),
                       "tax": str(tax.relative_to(root))})
 (out / "datasets.json").write_text(json.dumps(
-    {"source": "simulated under Jukes-Cantor, labels certain by construction (Protocol 2.1)",
+    {"source": "simulated under Jukes-Cantor, labels certain by construction",
      "datasets": cells}, indent=2))
 print(f"{len(cells)} cells: one un-injected reference and {len(cells)-1} injected, "
       f"{n} sequences of {width} columns")

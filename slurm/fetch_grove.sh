@@ -8,7 +8,7 @@
 # RAxMLGrove: empirical trees and model parameter estimates, to replace the simulated reference's
 # hand-picked tree.
 #
-# Why this arrives at all. Protocol.md 2.1's simulated reference is the control that closes the one
+# Why this arrives at all. The simulated reference is the control that closes the one
 # hole injection leaves: there, every label is correct by construction, so a flag on an untouched
 # sequence is a false positive in the strict sense. A co-author's comment on that paragraph asked how
 # the tree and the parameters are chosen, and the honest answer was "by hand": a balanced 3,2,2,2,2,3
@@ -21,14 +21,14 @@
 #
 # It reverses a decision this repository records. bin/simulate_reference.py argues for forty lines of
 # Jukes-Cantor rather than a pinned container, on the grounds that what matters is a model a reader can
-# check. That argument is about a reader; the objection is a reviewer's. Decisions.md carries the
-# reversal and the reason.
+# check. That argument is about a reader; the objection is a reviewer's, and a hand-made tree
+# leaves the choice of tree and parameters open.
 #
 # Two sources, both pinned. The scripts are a git repository, so the commit is the pin; the database is
 # a file, so the sha256 is. Both go into the provenance record, with the size and the date, the way
 # every other fetch script here records what it took.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 
 DB_URL="https://cme.h-its.org/exelixis/material/raxmlgrove/latest_all.db"
 SCRIPTS_URL="https://github.com/angtft/RAxMLGroveScripts.git"
@@ -94,7 +94,7 @@ PYJ
 # deployment's own python environments are visible from every node and carry ensurepip; the
 # pin follows prelude.sh's NEXTFLOW_ENV: checked rather than trusted, alternatives listed when it
 # is gone, since the deployment prunes old environments eventually.
-BASE_PY=/shared/software/miniconda_deployment/envs/python-3.12/bin/python
+BASE_PY="${BASE_PY:-/shared/software/miniconda_deployment/envs/python-3.12/bin/python}"
 [ -x "$BASE_PY" ] || {
     echo "no interpreter at $BASE_PY: the pinned environment is gone. Available:" >&2
     ls -d /shared/software/miniconda_deployment/envs/python-3.* 2>/dev/null >&2
@@ -126,7 +126,7 @@ from pathlib import Path
 out = Path(sys.argv[1])
 rec = json.loads((out / "provenance.json").read_text())
 rec["interpreter"] = {
-    "path": str(out / "env" / "bin" / "python"),
+    "path": "env/bin/python",
     "python": subprocess.run([str(out / "env/bin/python"), "-V"], capture_output=True,
                              text=True).stdout.strip(),
     "requirements": "env-requirements.txt",

@@ -16,7 +16,7 @@ from the root to a sequence is unique. Clades are named after their own smallest
 depends on the order the file happens to be written in.
 
 **Why not cut at fixed heights.** The first version of this rule cut at the 1/8 ... 7/8 quantiles of
-the internal-node height distribution, which is what Decisions.md recorded. Measured on a Yule tree
+the internal-node height distribution. Measured on a Yule tree
 of 864 tips it fails twice over, and the second failure is the fatal one. A tip shallower than a cut
 has no clade at that rank, so it has no complete path at all: on a phylogram with lognormal rate
 variation, **648 of 864 tips were dropped**, and because lineages keep dropping out the deeper cuts
@@ -183,7 +183,7 @@ def main():
     Path(f"{args.prefix}.tax").write_text("".join(f"{n}\t{tax[n]}\n" for n in sorted(tax)))
 
     record = {
-        "tree": args.tree,
+        "tree": Path(args.tree).name,
         "tree_sha256": hashlib.sha256(Path(args.tree).read_bytes()).hexdigest(),
         "rule": "rank r of 7 is the partition into round(m ** (r/8)) clades, splitting the "
                 "shallowest branchings first",

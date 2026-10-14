@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pick the bacterial clade the archaeal results are replicated on, by the criteria and not by hand.
 
-The reviewed protocol: "to check that our conclusions are not specific to archaea, we repeat the
+The protocol is "to check that our conclusions are not specific to archaea, we repeat the
 baseline and part of the injection grid on one bacterial clade of comparable size, chosen by the
 same evaluability criteria". A whole bacterial phylum is out of the question -- Pseudomonadota alone
 has 392 425 sequences over 1 200 nt -- so the candidates are every bacterial class and order in

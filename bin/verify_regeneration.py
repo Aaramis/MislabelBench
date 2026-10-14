@@ -11,7 +11,7 @@ itself. Their reproducibility was unmeasured until this script measured it.
 It also hid a defect of its own. The 225 cell alignments are symlinks, and the claim made for them
 was that "the link is remade and points where it should". The link was not remade -- `ln -sf` sat
 inside the skip guard -- and the 45 committed ones pointed at
-/Users/auguste/Documents/git/sativa-epang-benchmark, so every clone on another machine had 45
+an absolute path on the author's machine, so every clone on another machine had 45
 dangling alignments that no documented command repaired. A link is compared here by its target, which
 is what makes that visible.
 
@@ -24,7 +24,7 @@ than linked, because make_foreign.sh writes into data/bacteria on the branch tha
 The size subsets are checked the same way and were the last regeneration claim with no gate. They are
 committed, because every measurement in this benchmark runs on one of them, and each carries a
 .subset.json recording the source file, its sha256, the seed and the target -- everything needed to
-build it again. Finding 97 established once, by hand, that they come back byte-identical; nothing ran
+build it again. They were once checked by hand to come back byte-identical; nothing ran
 that again. The parameters come from the record rather than from this file, so a subset added later is
 checked without editing anything here.
 

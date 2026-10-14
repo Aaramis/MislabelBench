@@ -186,7 +186,7 @@ def main():
         # Printed, not fatal. Every round measured on this cluster has had its shards co-located --
         # all four of f7's on cpu-node-121, in the published round and in the new one alike -- so
         # exiting here would refuse every table there is. What the co-location changes is what the
-        # numbers mean, and that belongs in the figure's caption and in DISTRIBUTION.md, where it now
+        # numbers mean, and that belongs in the figure's caption and in docs/distribution.md, where it now
         # is, rather than in a gate that would delete the measurement instead of qualifying it.
         print("\nshards shared a node: "
               + "; ".join(f"{c} on {', '.join(d)}" for c, d in collisions)

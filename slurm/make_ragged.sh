@@ -1,8 +1,8 @@
 #!/bin/bash
 # Cells of the injection grid with a quarter of the OTHER lineages truncated.
 #
-# slurm/ragged_check.sh already established that the tool accepts lineages of unequal depth: 402
-# sequences with a quarter cut to genus and a quarter to family run through and flag 11. That is a
+# A one-off check established that the tool accepts lineages of unequal depth: 402
+# sequences with a quarter cut to genus and a quarter to family ran through and flagged 11. That is a
 # robustness measurement -- nothing was mislabelled in it, so 11 is a count and not a recall -- and
 # it leaves the question a user actually has: does an incomplete lineage hide a real mislabel?
 #
@@ -14,11 +14,11 @@
 # of the error is no longer declared and "was it detected" has no agreed answer. That is a convention
 # to settle, not an experiment to run.
 #
-# The truncation rule is ragged_check.sh's, deliberately: the two then say something about the same
+# The truncation rule is that check's, deliberately: the two then say something about the same
 # shape of input.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 SRC="$BENCH_ROOT/data/injected"
 OUT="$BENCH_ROOT/data/ragged"
 # Family distance at the top rate, every k the grid uses, three seeds. Family because it is the

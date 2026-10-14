@@ -21,7 +21,7 @@
 # so 16 should help it; the fork uses 4.4 of 8 at this size, so 16 should not. If both improve, the
 # fork's thread utilisation is not the ceiling it looks like.
 # THREADS_DATASET and THREADS_CONDITIONS narrow the axis to another size or to one thread count.
-# A co-author's comment on Protocol.md is that "a large speed gain" runs together three quantities --
+# A co-author's comment is that "a large speed gain" runs together three quantities --
 # the sequential gain from the placement engine, the time to completion, and the accumulated CPU time --
 # and the sequential one is the only axis this script measures. It had one size, 2 023 sequences, so the
 # sequential ratio had no size dependence at all: 9.2x in wall clock and 18.4x in core-seconds, at one
@@ -31,7 +31,7 @@
 #   THREADS_DATASET=gtdb_arc400 THREADS_CONDITIONS=upstream_raxml_T1,epang_T1_K25 \
 #       slurm/submit.sh slurm/threads.sh
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 

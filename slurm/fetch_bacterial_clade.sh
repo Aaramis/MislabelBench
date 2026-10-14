@@ -18,7 +18,7 @@
 # runs on its own, so the model is the one for the molecule. Extracted from the same pinned Rfam.cm.gz
 # as RF01959 was, with cmfetch from the same Infernal image.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 export PATH="$BENCH_ROOT/bin:$PATH"
 

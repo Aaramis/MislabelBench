@@ -10,13 +10,13 @@
 # (slurm/make_ragged.sh). The injected sequences keep their full lineage, so the truth is unchanged
 # and recall is comparable cell for cell with results/grid_fork and results/grid_upstream.
 #
-# Both tools, because slurm/ragged_check.sh only ever ran the fork: whether SATIVA accepts ragged
-# lineages at all is unmeasured, and if the two differ that is itself the answer.
+# Both tools, because whether SATIVA accepts ragged
+# lineages at all is otherwise unmeasured, and if the two differ that is itself the answer.
 #
 # Not --exclusive and no pinned model: these cells answer a detection question and declare
 # timing_trusted false, so no figure can pick their seconds up.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir ragged

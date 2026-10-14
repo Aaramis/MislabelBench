@@ -42,7 +42,7 @@
 # tasks held the fast partition's epyc-9754 nodes for an hour and a half and this job sat
 # behind them, while long had 1 412 idle cores and no constraint to satisfy.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 
 ROOT="$BENCH_ROOT"

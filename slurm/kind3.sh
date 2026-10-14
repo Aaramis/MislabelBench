@@ -12,7 +12,7 @@
 set -euo pipefail
 
 # Slurm copies the batch script to /var/spool, so $0 does not point at the repo.
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 
 nextflow_env
@@ -24,7 +24,7 @@ echo "running on $(hostname)"
 # Both tools, because the question is whether the clade is detectable at all once leave-one-out's
 # usual handle is gone, and upstream is the reference for that. Nine cells, three distances by
 # three seeds, six clades each spread over the compactness range -- see bin/inject_clade.py for
-# what separation means and Protocol.md 2.2 and Q7 for why it is the variable.
+# what separation means and why it is the variable.
 #
 # Not a timed comparison, so timing_trusted is false and several cells run at once.
 nextflow run "$BENCH_ROOT" -profile singularity -resume \

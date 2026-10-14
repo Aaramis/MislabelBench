@@ -10,7 +10,7 @@
 # each run is read (bin/memory_width.py); it does not depend on the node's other occupants, so this
 # job is not pinned and its timings are marked untrusted.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 echo "running on $(hostname)"

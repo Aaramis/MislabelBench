@@ -9,7 +9,7 @@
 
 #SBATCH --output=%x-%j.log
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir grove_simulation
@@ -18,7 +18,7 @@ echo "running on $(hostname)"
 
 # The same control as slurm/simulation.sh, on the RAxMLGrove reference instead of the hand-made one:
 # an empirical topology, the database's own substitution model and alpha, and the source alignment's
-# own missing-data pattern. Decisions.md carries why, and what it reverses.
+# own missing-data pattern. It reverses the earlier choice of a hand-made tree.
 #
 # Run beside the hand-made one rather than instead of it. The pair is the measurement: if the fork
 # and SATIVA agree on the regular reference and part ways on the empirical one, the difference is in

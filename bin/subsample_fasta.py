@@ -44,7 +44,7 @@ def main():
 
     Path(f"{args.prefix}.fasta").write_text("".join(f">{n}\n{seqs[n]}\n" for n in picked))
     Path(f"{args.prefix}.tax").write_text("".join(f"{n}\t{tax[n]}\n" for n in picked))
-    # The record said how many were drawn and not what from, which is the gap finding 22 closed for
+    # The record said how many were drawn and not what from, which is the gap already closed for
     # truth.json and left open here: fetch_bacteria.sh deletes donor_full after drawing, so nothing
     # downstream could say which file the pool came out of.
     def sha256(path):

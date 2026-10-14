@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Error kind 3: does detection track how compact the relabelled clade is?
 
-Protocol.md 2.2 states the limit rather than scoring it: with a whole taxon relabelled, nothing
+The protocol states the limit rather than scoring it: with a whole taxon relabelled, nothing
 correctly labelled remains to confirm it, so leave-one-out's usual handle is gone. What is left is
 whether the clade is distinguishable from the taxon it has been assigned to, and bin/inject_clade.py
 measures that as separation -- mean identity within the clade minus mean identity to the recipient.
 
 This reports detection against that, per clade, which is what makes the characterisation falsifiable:
-if detection does not track separation, compactness is not the variable and Protocol.md 2.2's account
+if detection does not track separation, compactness is not the variable and the protocol's account
 of the kind is wrong. Recall is reported per clade and not pooled, because a clade is the unit that
 was relabelled and pooling 226 sequences over 54 clades of different sizes would weight by size.
 """
@@ -70,7 +70,7 @@ def main():
     # Two gradients, because the first measurement showed the protocol's variable is not the one
     # that predicts detection and `within` is. Equal-count bins rather than equal-width: neither
     # quantity is uniformly distributed and a fixed grid would put most clades in one bin.
-    for var, label in (("separation", "separation from the recipient, Protocol.md 2.2's variable"),
+    for var, label in (("separation", "separation from the recipient, the protocol's variable"),
                        ("within", "cohesion within the clade")):
         order = sorted(rows, key=lambda x: x[var])
         per = max(1, len(order) // args.bins)
@@ -95,7 +95,7 @@ def main():
             print(f"  {lab:42} {len(g):3} clades {seqs:4} seqs  recall {det / seqs:.3f}")
 
     # The json keeps both gradients. It kept only the separation one, on the grounds that a reader
-    # comparing against Protocol.md 2.2 needs the protocol's variable in the record -- which is true
+    # comparing against the protocol needs its variable in the record -- which is true
     # and was half the requirement. The claim made from this record is about `within`, and a record
     # that bins by the variable the claim does not use cannot support it; recomputing the within
     # gradient from per_clade was possible but nobody checking the claim should have to.

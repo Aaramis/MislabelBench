@@ -37,7 +37,7 @@ process SATIVA {
     mkdir -p run tmp
     cp ${fasta} ${tax} run/
 
-    # The sha256 of the two files this run actually read. Protocol.md 2.5 rests on both tools
+    # The sha256 of the two files this run actually read. The comparison rests on both tools
     # seeing the identical database in every cell, and nothing recorded it: run.json carried the
     # dataset's name, which is a label and not evidence. The digests make the claim checkable and
     # they cost milliseconds on a 10 MB alignment.

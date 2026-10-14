@@ -23,13 +23,14 @@ import statistics as st
 from pathlib import Path
 
 
-def flagged(mis_path):
+def flagged(mis_path, min_confidence=0.0):
     out = {}
     for line in Path(mis_path).read_text().splitlines():
         if line.startswith(";") or not line.strip():
             continue
         f = line.split("\t")
-        out[f[0]] = f[1]
+        if float(f[4]) >= min_confidence:
+            out[f[0]] = f[1]
     return out
 
 
@@ -43,9 +44,12 @@ def main():
                         "silently mixes four fold conditions and the comparator now that they have")
     p.add_argument("--injected-dir", required=True, help="directory of <cell>/<cell>.truth.json")
     p.add_argument("--out", required=True)
+    p.add_argument("--min-confidence", type=float, default=0.0,
+                   help="count only flags with Confidence >= this, in the baseline and after injection alike. "
+                        "Above 0 the table gains a `found` column, the injected sequences still flagged")
     args = p.parse_args()
 
-    base = set(flagged(args.baseline))
+    base = set(flagged(args.baseline, args.min_confidence))
     rows = []
     n_total = None
     for mis in sorted(Path(args.runs).glob(f"*__{args.condition}/*.mis")):
@@ -56,7 +60,8 @@ def main():
         record = json.loads(truth.read_text())
         injected = set(record["injected"])
         n_total = record.get("n_total") or n_total
-        after = set(flagged(mis)) - injected
+        flags = set(flagged(mis, args.min_confidence))
+        after = flags - injected
         # An injected sequence flagged at baseline was already suspect before we touched it,
         # so it cannot count as lost: exclude it from the baseline side too.
         ref = base - injected
@@ -67,9 +72,12 @@ def main():
             "retained": len(ref & after),
             "lost": len(ref - after),
             "gained": len(after - ref),
+            "found": len(flags & injected),
         })
 
     hdr = ["cell", "n_injected", "baseline", "retained", "lost", "gained"]
+    if args.min_confidence > 0:
+        hdr.append("found")
     with open(args.out, "w") as fh:
         fh.write("\t".join(hdr) + "\n")
         for r in rows:

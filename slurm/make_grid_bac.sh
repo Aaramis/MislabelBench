@@ -3,7 +3,7 @@
 # 5 %, three seeds, fifteen cells, on the clade's whole-taxa subset. Not the full grid: the question
 # is whether the detection law has the same shape on another domain, and the k axis answers it.
 set -euo pipefail
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 ALN="$BENCH_ROOT/data/gtdb/gtdb_bac2k.fasta"
 TAX="$BENCH_ROOT/data/gtdb/gtdb_bac2k.tax"
 OUT="$BENCH_ROOT/data/injected_bac"

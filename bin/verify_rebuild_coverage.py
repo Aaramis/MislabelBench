@@ -3,8 +3,8 @@
 
 analyses.sh opens with "one command rebuilds every committed result, and a change to any script
 shows up as a diff". That claim has now been false three times, and each time it was found by
-hand: three version 1 tables and four side-grid summaries (finding 73), then the simulated set's
-two detection laws and its paired comparison (finding 91). The last of those hid a worse problem
+hand: three version 1 tables and four side-grid summaries, then the simulated set's
+two detection laws and its paired comparison. The last of those hid a worse problem
 than a stale file -- README published figures the record it cites no longer held -- and it
 surfaced only because a number that should have moved did not.
 

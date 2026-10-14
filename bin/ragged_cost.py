@@ -6,8 +6,8 @@ A quarter of each cell's untouched lineages is cut to genus and a quarter to fam
 cell's own. So recall is comparable cell for cell against the full-lineage grid, which is checked
 here rather than assumed: the run aborts if any cell's injected set differs from the full cell's.
 
-Both tools, because slurm/ragged_check.sh only ever ran the fork and whether SATIVA accepts ragged
-lineages at all was unmeasured. If the two differ, that difference is the answer.
+Both tools, because whether SATIVA accepts ragged
+lineages at all was otherwise unmeasured. If the two differ, that difference is the answer.
 
 Two quantities, not one. Recall is the question asked; the count of flags on untouched sequences is
 the one that can move for a reason that is not detection, since a sequence whose lineage stops at

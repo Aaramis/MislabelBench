@@ -27,7 +27,7 @@ sequence per live placement -- so the gain is not in the split but in what each 
 
 **What the distribution actually distributed.** All shards of every round landed on one node, so this
 is distribution across Slurm jobs rather than across machines, and the ceiling it demonstrates is the
-one a single machine's memory bandwidth allows. DISTRIBUTION.md carries the same caveat; it is here as
+one a single machine's memory bandwidth allows. docs/distribution.md carries the same caveat; it is here as
 well because this is the file the numbers come from.
 
 **The same round with every shard on its own machine**, `--prefix staged_nodes --base staged_timed_f25`:
@@ -172,9 +172,8 @@ def main():
         ftot = rs[0]["folds_total"]
         per_fold = med["looplace"] / fmax if fmax else 0.0
         ceiling = ftot / fmax if fmax else 0.0
-        # Efficiency is speedup over shards, per stage and for the whole run: the reviewed
-        # protocol asks for both, "otherwise this could be interpreted as cheating by a parallel
-        # computing person with respect to Amdahl's law".
+        # Efficiency is speedup over shards, per stage and for the whole run: both are reported, so that the speedup
+        # is not overstated against Amdahl's law.
         say(f"{n_shards:>7}{len(rs):>8}{med['reference']:>8.1f}{med['lootasks']:>7.1f}"
             f"{med['looplace']:>9.1f}{med['shard_spread']:>8.1f}{med['looscore']:>7.1f}"
             f"{med['sum']:>9.1f}{base / med['looplace']:>8.2f}x"

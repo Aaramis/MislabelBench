@@ -7,7 +7,7 @@
 # Written after a cleanup command deleted the cluster home directory. Nothing was lost -- every run
 # record, every .mis and every table is committed here, and every generated cell rebuilds from its
 # seed -- but nothing in the repository knew how to put the cluster back, and the knowledge was in
-# one person's head. See D158.
+# one person's head.
 #
 # bin/push_code.sh sends code only, deliberately: data/raw is fetched on the cluster by sha256 and
 # results/ travels the other way. That is right for a cluster that already holds the datasets and
@@ -20,13 +20,13 @@
 # second incident waiting for the first.
 #
 # No caller, by design: this belongs with bin/push_code.sh and bin/repatriate.sh, the operator scripts
-# that move things between here and the cluster. D145's rule -- a script in bin/ has a caller or does
-# not belong there -- is about analysis scripts, whose silence means a result nobody rebuilds.
+# that move things between here and the cluster. The rule that a script in bin/ has a caller or does
+# not belong there is about analysis scripts, whose silence means a result nobody rebuilds.
 set -euo pipefail
 
 DRY=0
 if [ "${1:-}" = "--dry-run" ]; then DRY=1; shift; fi
-REMOTE="${1:-agardette@core.cluster.france-bioinformatique.fr}"
+REMOTE="${1:-${BENCH_REMOTE:?usage: $0 user@cluster, or set BENCH_REMOTE}}"
 HOST="${REMOTE%%:*}"
 cd "$(dirname "$0")/.."
 
@@ -39,7 +39,7 @@ if [ "$DRY" = "1" ]; then
     echo "  would check: ssh $HOST 'ls ~/bench/results | wc -l'"
 else
     # The remote command is single-quoted here and contains no $: every path it needs is literal.
-    # That is the lesson of D158, where a "$HOME" inside such a string was expanded by the remote
+    # A "$HOME" inside such a string was once expanded by the remote
     # shell and deleted the home directory.
     existing=$(ssh "$HOST" 'ls ~/bench/results 2>/dev/null | wc -l' | tr -d ' ')
     if [ "${existing:-0}" != "0" ]; then

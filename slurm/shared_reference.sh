@@ -7,7 +7,7 @@
 #
 # Does the rate heterogeneity model explain any of the fork's advantage?
 #
-# Finding 140: every run writes its reference with a ratehet_model field, and above 402 sequences it
+# Every run writes its reference with a ratehet_model field, and above 402 sequences it
 # reads GTRCAT for upstream and GTRGAMMA for the fork. The benchmark's claim is that only the
 # placement engine differs, and above that size it is false in one more respect. The model cannot be
 # forced from either command line, so it cannot be held fixed by a flag.
@@ -15,8 +15,8 @@
 # It can be held fixed by sharing the reference. Both tools take -r to reuse one that has already
 # been built, so upstream builds it once, with its own GTRCAT, and the fork's staged leave-one-out
 # runs against that same file. Model, tree and branch lengths are then identical and the only thing
-# left between the two sets of flags is the placement engine. That is the experiment D185 believed
-# it was running.
+# left between the two sets of flags is the placement engine. That is the experiment the earlier
+# comparison was meant to be.
 #
 # Three arms on one cell, in one job:
 #   upstream        its own reference, its own placement           the published comparator
@@ -27,7 +27,7 @@
 # sentence. If it flags what upstream flags, part of what this benchmark calls the engine is the
 # rate model, and the attribution has to be redone.
 set -uo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 
 ROOT="$BENCH_ROOT"

@@ -30,7 +30,7 @@
 # removes the work directory on success. The peak is real and the cost is not cumulative, so the limit
 # is on cells running at once rather than on how many may be run.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir kexact_k2

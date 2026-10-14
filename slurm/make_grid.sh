@@ -5,7 +5,7 @@
 # its .tax. That also means a cell is reproducible from its seed alone.
 set -euo pipefail
 
-BENCH_ROOT="${BENCH_ROOT:-$HOME/bench}"
+BENCH_ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 cd "$BENCH_ROOT/data/gtdb"
 OUT="$BENCH_ROOT/data/injected"
@@ -25,9 +25,8 @@ TAX="$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax"
 ALN_REL=$(python3 -c 'import os, sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' \
           "$ALN" "$OUT/any_cell")
 
-# Rates: the two Protocol.md 2.3 defines. A 2 % arm was generated and then removed, the repository
-# being scoped to exactly what the protocol defines. What that arm would have bought is recorded in
-# D125 and D128: the axis is not flat, 0.042 recall at 1 % against 0.148 at 5 % at k=10, and 2 % is the
+# Rates: the two the protocol defines. A 2 % arm was generated and then removed, the repository
+# being scoped to exactly what the protocol defines. What that arm would have bought is that the axis is not flat, 0.042 recall at 1 % against 0.148 at 5 % at k=10, and 2 % is the
 # only one of the two missing rates that is informative at every k -- at 0.5 % a cell holds one donor
 # group at k=10, where recall is a single draw. If the axis is ever widened, 2 % is the one to add.
 for dist in species genus family order class phylum; do
@@ -53,7 +52,7 @@ done
 
 # Paths go in relative to BENCH_ROOT, the way data/gtdb/datasets.json already writes them. An
 # absolute path makes the manifest work on exactly one machine under exactly one home: the committed
-# one named /shared/home/agardette/bench in all 180 entries. main.nf resolves a relative path against
+# one named an absolute cluster path in all 180 entries. main.nf resolves a relative path against
 # projectDir, which is what resolvePath is there for.
 python3 - "$OUT" "$ALN" "$BENCH_ROOT" <<'PY'
 import json, sys

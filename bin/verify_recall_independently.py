@@ -12,7 +12,7 @@ in a few lines that deliberately share nothing with those scripts: a sequence co
 the run reports it with a Confidence at or above the threshold, and a cell's recall is the fraction of
 its injected sequences that are. Then it compares against every by_confidence row of every summary.
 
-Finding 98 is why this exists. The exclusion column's headline number was attached to the wrong
+This exists because the exclusion column's headline number was attached to the wrong
 threshold, and no amount of rereading the producing script would have shown it -- the script was
 right. Recomputing from the format is what found it, and the same method applied here agrees to the
 fourth decimal on all ten headline values. A gate is the way to keep that true.

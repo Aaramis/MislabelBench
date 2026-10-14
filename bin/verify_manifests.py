@@ -12,7 +12,7 @@ the aligned one, and it looked entirely plausible until the widths were measured
 And it refuses an absolute path twice over: in a manifest entry, and in the symlink a relative entry
 may point at. Those are the same defect and only the first was checked. Every cell's alignment is a
 link to the one file the cells share, 45 of them are committed, and all 45 named
-/Users/auguste/Documents/git/sativa-epang-benchmark -- so every clone on any other machine had 45
+an absolute path on the author's machine -- so every clone on any other machine had 45
 dangling alignments, and no documented command repaired them.
 
 A check, so it exits non-zero when something disagrees.
@@ -371,7 +371,7 @@ def main():
             before = len(problems)
             # An absolute path in a manifest is a defect, not a style: it binds the file to one
             # machine under one home. All 180 entries of data/injected/datasets.json named
-            # /shared/home/agardette/bench, and this check tolerated it, so nothing said so.
+            # an absolute cluster path, and this check tolerated it, so nothing said so.
             # main.nf resolves a relative path against projectDir.
             for key in ("fasta", "tax"):
                 if Path(ds[key]).is_absolute():

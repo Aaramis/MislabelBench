@@ -18,7 +18,7 @@ So the figure is measured rather than looked at. Helvetica's average advance ove
 about 0.52 em; 0.55 is used here, which errs towards reporting a collision that is only a near miss.
 That is the right direction for a check whose output a human then looks at.
 
-    bin/verify_figure_layout.py results/candidates/figure3.svg [more.svg ...]
+    bin/verify_figure_layout.py results/figure3.svg [more.svg ...]
 
 Four rules:
 
@@ -35,11 +35,7 @@ are not caught by it; a legend, an annotation or a point label inside the plot i
 Rotated text is measured along its own axis. A text that sits in no rectangle is checked by the
 first and third rules only, which is every axis label and every point label.
 
-What bin/analyses.sh passes it is the manuscript's figure and the six standalone panels it was chosen
-from. The two earlier compositions are not passed and do not pass: results/figure1.svg has 14
-problems and results/candidates/figure2.svg 13, both from packing six panels into a space that fits
-five. They are kept because they are what the chosen figure was chosen against, and they are not
-going to be printed. That is an exclusion, so it is written down here rather than left to be noticed.
+bin/analyses.sh passes it the manuscript's figure, results/figure3.svg.
 """
 
 import argparse

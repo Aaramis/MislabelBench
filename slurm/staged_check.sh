@@ -14,7 +14,7 @@
 #
 # 2023 sequences rather than 7051: the point is equality, and the smaller set gives it in minutes.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir staged_check

@@ -87,7 +87,7 @@ workflow {
         // The stages wait for the monolithic run of the same cell. Both consume ch_by_impl.fork, so
         // without this they are submitted together -- 48 ms apart, measured in
         // trace-staged_timed_f25 -- and STAGEDREFERENCE and the control then build the same
-        // reference tree at the same time, each taking 71 s where one alone takes 42.5. Finding 152.
+        // reference tree at the same time, each taking 71 s where one alone takes 42.5.
         // The join is on meta, so a cell whose monolithic run failed never reaches the stages, which
         // is what the count guard below would report.
         STAGEDREFERENCE(

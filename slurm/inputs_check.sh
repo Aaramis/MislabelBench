@@ -7,7 +7,7 @@
 #
 # One cell under both tools, so that verify_inputs.py has something to compare.
 #
-# Protocol.md 2.5 rests on both tools reading the identical database in every cell. That was true by
+# The comparison rests on both tools reading the identical database in every cell. That was true by
 # construction -- main.nf resolves one path per cell and hands it to both branches -- and unprovable
 # from the records, which carried the dataset's name and not its content. The tool modules now write
 # the sha256 of what they read.
@@ -15,7 +15,7 @@
 # Untimed on purpose: the question is whether the two digests match, not how long the runs take, so
 # the conditions may share a node.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 export PATH="$BENCH_ROOT/bin:$PATH"
 require_singularity
 nextflow_env

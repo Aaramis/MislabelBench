@@ -73,7 +73,7 @@ def main():
 
     for (dist, k, rate, metric, thr), rows in sorted(grouped.items(), key=order):
         recalls = [r["recall"] for r in rows if r["recall"] is not None]
-        # Protocol.md 2.2's kind 4 is "correct to genus, wrong at species only ... tests resolution
+        # The protocol's kind 4 is "correct to genus, wrong at species only ... tests resolution
         # rather than detection", and this is the quantity that tests it: of the injected sequences,
         # the share flagged *and* named at the rank the injection actually moved.
         # score_injection.py has computed it per cell all along and this aggregator dropped it, so

@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests
+      - name: Regenerate the datasets from their seeds
+        run: |
+          for g in make_grid make_foreign make_clade make_simulation; do bash slurm/$g.sh; done
+      - name: Manifests, regeneration, trace table, document paths
+        run: |
+          python3 bin/verify_manifests.py
+          python3 bin/verify_regeneration.py
+          python3 bin/verify_trace_table.py          python3 bin/verify_doc_paths.py
+  workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Install Nextflow
+        run: |
+          curl -fsSL https://get.nextflow.io | bash
+          echo "$PWD" >> "$GITHUB_PATH"
+        env:
+          NXF_VER: "26.04.4"
+      - name: Stub run
+        run: bash tests/smoke.sh

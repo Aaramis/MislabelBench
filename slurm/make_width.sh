@@ -6,7 +6,7 @@
 # Columns are spread evenly over the alignment (a prefix left 5'-truncated sequences all gaps),
 # taxonomy unchanged. Deterministic, no seed.
 set -euo pipefail
-ROOT="${BENCH_ROOT:-$HOME/bench}"
+ROOT="${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 OUT="$ROOT/data/width"
 ALN="$ROOT/data/gtdb/gtdb_arc2k.fasta"
 TAX="$ROOT/data/gtdb/gtdb_arc2k.tax"

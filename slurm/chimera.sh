@@ -8,7 +8,7 @@
 # Not --exclusive, for the reason the other untimed grids give: these cells declare
 # timing_trusted false, and exclusivity would bill 510 cores against a 600-CPU quota.
 set -euo pipefail
-source "${BENCH_ROOT:-$HOME/bench}/slurm/prelude.sh"
+source "${BENCH_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/slurm/prelude.sh"
 require_singularity
 nextflow_env
 nf_launch_dir chimera
