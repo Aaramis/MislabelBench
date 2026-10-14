@@ -100,5 +100,6 @@ source are in [docs/data.md](docs/data.md).
 If you use the benchmark, cite the paper and the archived release. [CITATION.cff](CITATION.cff) holds the
 reference.
 
-The release is archived on Zenodo. The code is at DOI 10.5281/zenodo.23371116 (all versions; v1.0 is 10.5281/zenodo.23371117) and the full runs, with
-the placement files that are too large for git, are at DOI 10.5281/zenodo.YYYYYYY.
+The release is archived on Zenodo. The code is at DOI 10.5281/zenodo.23371116 (all versions; v1.0 is
+10.5281/zenodo.23371117). The full runs, with the placement files that are too large for git, are at
+DOI 10.5281/zenodo.23373680.
