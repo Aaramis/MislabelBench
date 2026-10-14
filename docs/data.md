@@ -29,7 +29,7 @@ detection result.
 
 `data/README.md` lists both. In short, the base sets, the alignment, the covariance model, the manifests
 and the ground truth are committed. The 180 injected taxonomies, the foreign and chimera cells are
-rebuilt from their seeds by the `slurm/make_*.sh` scripts, and `bin/verify_regeneration.py` compares the
+rebuilt from their seeds by the `slurm/data/make_*.sh` scripts, and `bin/verify_regeneration.py` compares the
 rebuilt files with the committed ones. The raw GTDB download is fetched by URL and checked by sha256.
 
 ## Licence

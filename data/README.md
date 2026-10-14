@@ -21,10 +21,10 @@ These are rebuilt from their seeds, without a cluster, a container or the networ
 
 | generator | rebuilds |
 |---|---|
-| `slurm/make_grid.sh` | the `.tax` of the 180 injected datasets and their `.fasta` links |
-| `slurm/make_foreign.sh` | the nine foreign-sequence datasets |
-| `slurm/make_clade.sh` | refreshes the links of the committed clade datasets |
-| `slurm/make_chimera.sh`, `make_ragged.sh`, `make_width.sh`, `make_grid_bac.sh` | the chimera, ragged, width and bacterial datasets |
+| `slurm/data/make_grid.sh` | the `.tax` of the 180 injected datasets and their `.fasta` links |
+| `slurm/data/make_foreign.sh` | the nine foreign-sequence datasets |
+| `slurm/data/make_clade.sh` | refreshes the links of the committed clade datasets |
+| `slurm/data/make_chimera.sh`, `make_ragged.sh`, `make_width.sh`, `make_grid_bac.sh` | the chimera, ragged, width and bacterial datasets |
 
 An injected dataset's `.fasta` is a symlink to `data/gtdb/gtdb_arc2k.fasta`, since injection rewrites a
 taxonomy and never an alignment. The links are relative.

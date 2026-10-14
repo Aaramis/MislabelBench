@@ -5,7 +5,7 @@ The protocol's type-2 mechanism says that removing one of k co-labelled relative
 placement to land among the k-1 that still carry the wrong label, so the error is confirmed rather
 than found. Every number supporting that so far was recall against the share of wrong-labelled
 relatives, which is consistent with the mechanism and is not the mechanism. A co-author asked "did
-you check". This reads the placement files slurm/placements.sh keeps and checks.
+you check". This reads the placement files slurm/checks/placements.sh keeps and checks.
 
 Per injected sequence, from the fold that held it out: the edge carrying the most placement weight,
 that weight, the leaves on either side of the edge, the lowest rank the leaves below the edge share

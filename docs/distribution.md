@@ -6,7 +6,7 @@ and only the third distributes.
 
 The pipeline now has the staged mode: `STAGEDREFERENCE`, `STAGEDLOOTASKS`, `STAGEDLOOPLACE` and
 `STAGEDLOOSCORE`, behind `--staged`, with `--folds_per_job` setting the shard size and the `ifb`
-profile putting each task in its own Slurm job. `slurm/scaling.sh` keeps the `srun` version, because
+profile putting each task in its own Slurm job. `slurm/timing/scaling.sh` keeps the `srun` version, because
 it is the measurement the pipeline has to match.
 
 The rest of this file is what the design had to account for, measured rather than assumed.
@@ -137,7 +137,7 @@ and the fold split explains only half of it (13 folds against 12 predicts a 9 s 
 the 13-fold shard is slower per fold as well, 9.33 s against 8.73, which is the same contention the rest
 of these measurements keep meeting.
 
-**The four shards were on one node, not four.** `slurm/shard_nodes.sh` resolves each shard's Slurm job
+**The four shards were on one node, not four.** `slurm/timing/shard_nodes.sh` resolves each shard's Slurm job
 through accounting, since Nextflow's `hostname` trace field is empty under the Slurm executor here, and
 the answer for this round is `cpu-node-121` four times; the `results/pipeline_info/shard_nodes-*.tsv` files record it, and
 the two-shard round is the same. So what these numbers measure is a split into independently scheduled
@@ -193,5 +193,5 @@ fails there rather than scoring part of the database. Both compare with `-eq` an
 
 ## What this does not change
 
-The claim itself is about the tool and `slurm/scaling.sh` measures it. What is missing is the claim
+The claim itself is about the tool and `slurm/timing/scaling.sh` measures it. What is missing is the claim
 being reproducible *through the harness*, which is what the rest of this repository is for.

@@ -8,19 +8,19 @@ the largest experiments are in the release archive, not in git.
 
 | folder | experiment | made by |
 |---|---|---|
-| `baseline*`, `agreement_*` | both tools on the unmodified databases | `baseline.sh`, `base2k.sh`, `baseline_bac2k.sh`, `bac.sh` |
-| `grid_fork/` | the 180 datasets, SATIVA-epang and SATIVA | `grid_fork.sh`, `grid_upstream*.sh`, `grid_k5.sh`, `grid_treeorder.sh` |
+| `baseline*`, `agreement_*` | both tools on the unmodified databases | `slurm/detection/baseline.sh`, `slurm/detection/base2k.sh`, `slurm/detection/baseline_bac2k.sh`, `slurm/detection/bac.sh` |
+| `grid_fork/` | the 180 datasets, SATIVA-epang and SATIVA | `slurm/detection/grid_fork.sh`, `slurm/detection/grid_upstream*.sh`, `slurm/detection/grid_k5.sh`, `slurm/detection/grid_treeorder.sh` |
 | `grid_summary_*.json`, `detection_law_*.json`, `paired_*.json` | recall tables built from `grid_fork/` | `bin/analyses.sh` |
-| `kaxis/`, `ksweep/` | the *k* axis and the *K* sweep | `kaxis_upstream.sh`, `ksweep.sh` |
-| `clade/`, `foreign/`, `chimera/`, `ragged/` | the other error types | `kind3.sh`, `foreign.sh`, `chimera.sh`, `ragged_grid.sh` |
-| `grove_simulated/` | the simulated control | `grove_simulation.sh` |
-| `grid_bac/` | the bacterial replication | `bac.sh` |
-| `sizes/`, `scaling/`, `threads/`, `memstep_*`, `width/` | time and memory against size, threads and width | `sizes.sh`, `scaling.sh`, `threads.sh`, `memstep.sh`, `width.sh` |
-| `staged_*` | the four-stage run on one and several nodes | `staged_timed.sh`, `staged_nodes.sh`, `staged_check.sh` |
-| `placements_k25/`, `placements_kexact/`, `shared_reference/` | placements of both engines on one dataset | `placements*.sh`, `shared_reference.sh` |
-| `minimal_case/` | the smallest dataset where the tools disagree | `minimal_case.sh` |
-| `determinism/`, `inputs_check/` | byte-identical repeats, input checks | `determinism.sh`, `inputs_check.sh` |
-| `aldiscore/` | alignment difficulty | `aldiscore.sh` |
+| `kaxis/`, `ksweep/` | the *k* axis and the *K* sweep | `slurm/detection/kaxis_upstream.sh`, `slurm/detection/ksweep.sh` |
+| `clade/`, `foreign/`, `chimera/`, `ragged/` | the other error types | `slurm/detection/kind3.sh`, `slurm/detection/foreign.sh`, `slurm/detection/chimera.sh`, `slurm/detection/ragged_grid.sh` |
+| `grove_simulated/` | the simulated control | `slurm/detection/grove_simulation.sh` |
+| `grid_bac/` | the bacterial replication | `slurm/detection/bac.sh` |
+| `sizes/`, `scaling/`, `threads/`, `memstep_*`, `width/` | time and memory against size, threads and width | `slurm/timing/sizes.sh`, `slurm/timing/scaling.sh`, `slurm/timing/threads.sh`, `slurm/timing/memstep.sh`, `slurm/timing/width.sh` |
+| `staged_*` | the four-stage run on one and several nodes | `slurm/timing/staged_timed.sh`, `slurm/timing/staged_nodes.sh`, `slurm/timing/staged_check.sh` |
+| `placements_k25/`, `placements_kexact/`, `shared_reference/` | placements of both engines on one dataset | `slurm/checks/placements*.sh`, `slurm/detection/shared_reference.sh` |
+| `minimal_case/` | the smallest dataset where the tools disagree | `slurm/detection/minimal_case.sh` |
+| `determinism/`, `inputs_check/` | byte-identical repeats, input checks | `slurm/checks/determinism.sh`, `slurm/checks/inputs_check.sh` |
+| `aldiscore/` | alignment difficulty | `slurm/checks/aldiscore.sh` |
 | `pipeline_info/` | one Nextflow trace per submission, see its README | the workflow |
 | `figure3.svg`, `figure3_values.tsv` | figure 3 of the note and its values | `bin/main_figure.py` |
 | `supplement_figures/`, `supplement_figures_values.tsv`, `paired_stats.tsv`, `upset_tables.txt` | the supplement's figures and statistics | `bin/supplement_figures.py`, `paired_stats.py`, `upset_tables.py` |

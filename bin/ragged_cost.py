@@ -2,7 +2,7 @@
 """What does an incomplete lineage cost detection?
 
 A quarter of each cell's untouched lineages is cut to genus and a quarter to family
-(slurm/make_ragged.sh), the injected sequences keep their full lineage, and the truth file is the
+(slurm/data/make_ragged.sh), the injected sequences keep their full lineage, and the truth file is the
 cell's own. So recall is comparable cell for cell against the full-lineage grid, which is checked
 here rather than assumed: the run aborts if any cell's injected set differs from the full cell's.
 

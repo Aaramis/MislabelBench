@@ -31,7 +31,7 @@ if [ -n "$running" ]; then
     # The file list goes over stdin and is never part of the command string. Interpolating it was
     # the worst mistake made on this project: `ssh host "cd ~/bench && md5sum $files"` with a
     # newline-separated list made every name after the first a command for the remote shell, so the
-    # login node ran slurm/submit.sh, slurm/scaling.sh and the rest of the repository in sequence.
+    # login node ran slurm/submit.sh, slurm/timing/scaling.sh and the rest of the repository in sequence.
     # scaling.sh built a reference tree and placed folds there for fourteen minutes before failing,
     # and two srun allocations were created. Nothing was lost -- determinism.sh and make_foreign.sh
     # both begin with rm -rf and both targets are committed and deterministic -- but that was luck.
@@ -39,7 +39,7 @@ if [ -n "$running" ]; then
     # One ssh for all of them rather than one per file: the per-file version dropped the connection
     # part way through and reported the file it was on as changed, which is a check that invents
     # findings when the network hiccups.
-    files=$(ls slurm/*.sh nextflow.config main.nf conf/*.config modules/local/*/main.nf bin/*.py \
+    files=$(ls slurm/*.sh slurm/*/*.sh nextflow.config main.nf conf/*.config modules/local/*/main.nf bin/*.py \
             bin/*.sh 2>/dev/null)
     remote=$(printf '%s\n' "$files" | ssh "${REMOTE%%:*}" \
              'cd ~/bench && tr -d "\r" | xargs -d "\n" md5sum 2>/dev/null' || true)

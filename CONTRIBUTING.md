@@ -16,7 +16,7 @@ bin/analyses.sh
 `score.json` of the 180 datasets and of the unmodified database, the command and the version of the tool.
 A method that cannot be run here can still be listed if its outputs are given.
 
-**A new error type or dataset.** Add the generator under `bin/`, a `slurm/make_*.sh` that builds the cells
+**A new error type or dataset.** Add the generator under `bin/`, a `slurm/data/make_*.sh` that builds the cells
 from a seed, a `verify_*` check against the declared truth, and the source in `assets/datasets.yml`
 with its sha256.
 

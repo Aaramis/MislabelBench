@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Per-stage timings of the staged pipeline, in the shape slurm/scaling.sh reports.
+"""Per-stage timings of the staged pipeline, in the shape slurm/timing/scaling.sh reports.
 
-The point of comparison is slurm/scaling.sh, which drives the tool with srun from inside one
+The point of comparison is slurm/timing/scaling.sh, which drives the tool with srun from inside one
 allocation and measures t0..t4 around each stage. Two things make the pipeline's numbers not
 directly comparable unless they are kept apart, so this prints both.
 
@@ -94,7 +94,7 @@ def shard_nodes(cell_dir, trace_dir, n_shards, round_name=None):
     every round here, so a route through it would never answer.
 
       the shard's own timing.json, where _timeit.py writes the host of the task it measured
-      pipeline_info/shard_nodes.tsv, which slurm/shard_nodes.sh resolves from Slurm accounting
+      pipeline_info/shard_nodes.tsv, which slurm/timing/shard_nodes.sh resolves from Slurm accounting
     """
     hosts = []
     for f in sorted(cell_dir.glob("looplace_shard*.timing.json")):
@@ -167,7 +167,7 @@ def main():
             print(f"{'':34}shards: " + ", ".join(f"{x:.1f}" for x in sorted(shards)))
             hosts = shard_nodes(cell, args.trace_dir, len(shards), args.round)
             if not hosts:
-                print(f"{'':34}nodes: not recorded; run slurm/shard_nodes.sh on this round")
+                print(f"{'':34}nodes: not recorded; run slurm/timing/shard_nodes.sh on this round")
             elif len(set(hosts)) < len(hosts):
                 dup = sorted(h for h in set(hosts) if hosts.count(h) > 1)
                 print(f"{'':34}nodes: " + ", ".join(sorted(hosts))

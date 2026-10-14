@@ -23,13 +23,13 @@ The first eight scripts regenerate the datasets from their seeds. They need neit
 container nor the network, and take a couple of minutes.
 
 ```bash
-bash slurm/make_grid.sh                        # the injection grid, 180 cells
-bash slurm/make_foreign.sh                     # error kind 6, foreign sequences
-bash slurm/make_clade.sh                       # error kind 3, whole-taxon relabelling
-bash slurm/make_chimera.sh                     # chimeras
-bash slurm/make_ragged.sh                      # error kind 5, ragged lineages
-bash slurm/make_width.sh                       # the memory law against alignment width
-bash slurm/make_grid_bac.sh                    # bacterial replication
+bash slurm/data/make_grid.sh                        # the injection grid, 180 cells
+bash slurm/data/make_foreign.sh                     # error kind 6, foreign sequences
+bash slurm/data/make_clade.sh                       # error kind 3, whole-taxon relabelling
+bash slurm/data/make_chimera.sh                     # chimeras
+bash slurm/data/make_ragged.sh                      # error kind 5, ragged lineages
+bash slurm/data/make_width.sh                       # the memory law against alignment width
+bash slurm/data/make_grid_bac.sh                    # bacterial replication
 ```
 
 Run all of them. `bin/analyses.sh` stops at its truth checks if a dataset was never built.
@@ -39,8 +39,8 @@ the regenerated cells are byte-identical.
 The control on a real tree is separate because it needs outside material.
 
 ```bash
-slurm/submit.sh slurm/fetch_grove.sh           # RAxML Grove, pinned by sha256 and by commit
-slurm/submit.sh slurm/make_grove_simulation.sh # the control on an empirical tree, 37 cells
+slurm/submit.sh slurm/data/fetch_grove.sh           # RAxML Grove, pinned by sha256 and by commit
+slurm/submit.sh slurm/data/make_grove_simulation.sh # the control on an empirical tree, 37 cells
 ```
 
 It needs the 140 MB Grove database, network access, the AliSim binary that ships inside the pinned
@@ -49,8 +49,8 @@ Grove scripts, and a Python with biopython and scikit-optimize (`GROVE_PY`).
 Then the measurements. Each script is one experiment, listed in [reproduce.md](reproduce.md).
 
 ```bash
-slurm/submit.sh slurm/baseline.sh              # both tools on the unmodified database, timed
-slurm/submit.sh slurm/grid_fork.sh             # SATIVA-epang over the grid
+slurm/submit.sh slurm/detection/baseline.sh              # both tools on the unmodified database, timed
+slurm/submit.sh slurm/detection/grid_fork.sh             # SATIVA-epang over the grid
 bin/analyses.sh                                # rebuild every table, then run every check
 ```
 

@@ -78,7 +78,7 @@ def main():
     # and shape.json were each created and then silently replaced. Third instance of the same trap.
     p.add_argument("--out", required=True)
     # The sequences only the fork catches, as 'name<TAB>wrong label', which is what
-    # slurm/minimal_case.sh takes to hunt for a case small enough to send to someone. Written by
+    # slurm/detection/minimal_case.sh takes to hunt for a case small enough to send to someone. Written by
     # this script rather than typed, because a hand-made list of 64 names and lineages is the kind
     # of file that is wrong once and then believed.
     p.add_argument("--pairs-out", help="write the fork-only sequences and their injected labels here")

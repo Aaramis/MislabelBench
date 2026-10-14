@@ -84,7 +84,7 @@ def main():
 
         env = dict(os.environ, BENCH_ROOT=str(scratch))
         for g in GENERATORS:
-            r = subprocess.run(["bash", str(here / "slurm" / g)], env=env,
+            r = subprocess.run(["bash", str(here / "slurm" / "data" / g)], env=env,
                                capture_output=True, text=True)
             if r.returncode != 0:
                 print(r.stdout[-2000:], r.stderr[-2000:], file=sys.stderr)

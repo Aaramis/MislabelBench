@@ -22,14 +22,14 @@ Each script writes into `results/<name>/`. The resources are the request in the 
 
 | script | builds | needs |
 |---|---|---|
-| `slurm/make_grid.sh` | the 180 injected cells (kinds 1, 2 and 4) | nothing |
-| `slurm/make_foreign.sh` | 9 cells of foreign sequences (kind 6) | nothing |
-| `slurm/make_clade.sh` | 9 cells with a whole taxon relabelled (kind 3) | nothing |
-| `slurm/make_chimera.sh` | 36 chimera cells (kind 7) | nothing |
-| `slurm/make_ragged.sh` | the ragged-lineage cells (kind 5) | nothing |
-| `slurm/make_width.sh` | the 2023-sequence set at five alignment widths | nothing |
-| `slurm/make_grid_bac.sh` | the 15 cells of the bacterial replication | `slurm/fetch_bacterial_clade.sh` |
-| `slurm/fetch_grove.sh`, `make_grove_simulation.sh` | the simulated control on a RAxML Grove tree | network, about 140 MB |
+| `slurm/data/make_grid.sh` | the 180 injected cells (kinds 1, 2 and 4) | nothing |
+| `slurm/data/make_foreign.sh` | 9 cells of foreign sequences (kind 6) | nothing |
+| `slurm/data/make_clade.sh` | 9 cells with a whole taxon relabelled (kind 3) | nothing |
+| `slurm/data/make_chimera.sh` | 36 chimera cells (kind 7) | nothing |
+| `slurm/data/make_ragged.sh` | the ragged-lineage cells (kind 5) | nothing |
+| `slurm/data/make_width.sh` | the 2023-sequence set at five alignment widths | nothing |
+| `slurm/data/make_grid_bac.sh` | the 15 cells of the bacterial replication | `slurm/data/fetch_bacterial_clade.sh` |
+| `slurm/data/fetch_grove.sh`, `slurm/data/make_grove_simulation.sh` | the simulated control on a RAxML Grove tree | network, about 140 MB |
 
 The base sets (GTDB r226 archaea, alignment on Rfam RF01959) are committed under `data/gtdb/`. The
 download and the filtering are in `bin/prepare_gtdb.py`, and every source is pinned by sha256 in
@@ -38,30 +38,30 @@ directory and compares every file with the committed one.
 
 ## Experiments
 
-Run `slurm/submit.sh slurm/<script>.sh`. The runs are committed, so none of this is needed to check the
+Run `slurm/submit.sh slurm/<folder>/<script>.sh`. The runs are committed, so none of this is needed to check the
 tables.
 
 | script | experiment | output in `results/` |
 |---|---|---|
-| `baseline.sh`, `base2k.sh`, `baseline_bac2k.sh`, `bac.sh` | both tools on the unmodified databases | `baseline*/`, `agreement_*.json` |
-| `grid_fork.sh`, `grid_k5.sh`, `grid_treeorder.sh` | SATIVA-epang over the 180 cells, with *K* = 25 and 5 and tree-ordered folds | `grid_fork/`, `grid_summary_*.json` |
-| `grid_upstream.sh`, `grid_upstream_species.sh`, `grid_upstream_missing.sh` | SATIVA over the same cells | `grid_fork/`, `grid_summary_upstream_raxml_T8.json` |
-| `kaxis_upstream.sh`, `ksweep.sh` | the *k* axis and the *K* sweep | `kaxis/`, `ksweep/` |
-| `kexact_k2.sh` | strict leave-one-out (one sequence per fold) | `grid_fork/`, `kexact_*` |
-| `foreign.sh` | kind 6, foreign sequences | `foreign/`, `foreign_summary_*.json` |
-| `kind3.sh` | kind 3, whole taxa relabelled | `clade/`, `clade_detection_*.json` |
-| `chimera.sh` | kind 7, chimeras | `chimera/`, `chimera_detection_*.json` |
-| `ragged_grid.sh` | kind 5, ragged lineages | `ragged/`, `ragged_cost.json` |
-| `grove_simulation.sh` | the control on a Grove tree | `grove_simulated/` |
-| `bac.sh` | the bacterial replication | `grid_bac/`, `grid_summary_bac_*.json` |
-| `sizes.sh`, `scaling.sh` | time and memory against reference size | `sizes/`, `scaling/`, `resource_usage.txt` |
-| `threads.sh` | the thread sweep | `threads/` |
-| `memstep.sh`, `width.sh` | the memory law, against size and alignment width | `memstep_*/`, `width/`, `memory_width.json` |
-| `staged_timed.sh`, `staged_nodes.sh`, `staged_check.sh` | the four-stage run, distributed over shards | `staged_*/`, `staged_scaling_*.txt` |
-| `placements.sh`, `placements_upstream.sh` | placements of both engines on one cell, for the engine comparison | `placements_*/` |
-| `minimal_case.sh` | the smallest dataset where the tools disagree | `minimal_case/` |
-| `determinism.sh` | the same cell and seed twice | `determinism/` |
-| `aldiscore.sh` | alignment difficulty of each set | `aldiscore/` |
+| `slurm/detection/baseline.sh`, `slurm/detection/base2k.sh`, `slurm/detection/baseline_bac2k.sh`, `slurm/detection/bac.sh` | both tools on the unmodified databases | `baseline*/`, `agreement_*.json` |
+| `slurm/detection/grid_fork.sh`, `slurm/detection/grid_k5.sh`, `slurm/detection/grid_treeorder.sh` | SATIVA-epang over the 180 cells, with *K* = 25 and 5 and tree-ordered folds | `grid_fork/`, `grid_summary_*.json` |
+| `slurm/detection/grid_upstream.sh`, `slurm/detection/grid_upstream_species.sh`, `slurm/detection/grid_upstream_missing.sh` | SATIVA over the same cells | `grid_fork/`, `grid_summary_upstream_raxml_T8.json` |
+| `slurm/detection/kaxis_upstream.sh`, `slurm/detection/ksweep.sh` | the *k* axis and the *K* sweep | `kaxis/`, `ksweep/` |
+| `slurm/detection/kexact_k2.sh` | strict leave-one-out (one sequence per fold) | `grid_fork/`, `kexact_*` |
+| `slurm/detection/foreign.sh` | kind 6, foreign sequences | `foreign/`, `foreign_summary_*.json` |
+| `slurm/detection/kind3.sh` | kind 3, whole taxa relabelled | `clade/`, `clade_detection_*.json` |
+| `slurm/detection/chimera.sh` | kind 7, chimeras | `chimera/`, `chimera_detection_*.json` |
+| `slurm/detection/ragged_grid.sh` | kind 5, ragged lineages | `ragged/`, `ragged_cost.json` |
+| `slurm/detection/grove_simulation.sh` | the control on a Grove tree | `grove_simulated/` |
+| `slurm/detection/bac.sh` | the bacterial replication | `grid_bac/`, `grid_summary_bac_*.json` |
+| `slurm/timing/sizes.sh`, `slurm/timing/scaling.sh` | time and memory against reference size | `sizes/`, `scaling/`, `resource_usage.txt` |
+| `slurm/timing/threads.sh` | the thread sweep | `threads/` |
+| `slurm/timing/memstep.sh`, `slurm/timing/width.sh` | the memory law, against size and alignment width | `memstep_*/`, `width/`, `memory_width.json` |
+| `slurm/timing/staged_timed.sh`, `slurm/timing/staged_nodes.sh`, `slurm/timing/staged_check.sh` | the four-stage run, distributed over shards | `staged_*/`, `staged_scaling_*.txt` |
+| `slurm/checks/placements.sh`, `slurm/checks/placements_upstream.sh` | placements of both engines on one cell, for the engine comparison | `placements_*/` |
+| `slurm/detection/minimal_case.sh` | the smallest dataset where the tools disagree | `minimal_case/` |
+| `slurm/checks/determinism.sh` | the same cell and seed twice | `determinism/` |
+| `slurm/checks/aldiscore.sh` | alignment difficulty of each set | `aldiscore/` |
 
 The timed experiments (`baseline`, `sizes`, `threads`, `scaling`, `staged_*`) pin the CPU model, see
 the rules in [cluster.md](cluster.md). Their seconds are comparable only within one model.

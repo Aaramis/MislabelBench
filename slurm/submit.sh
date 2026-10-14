@@ -1,7 +1,7 @@
 #!/bin/bash
 # Submit a job script, excluding the nodes already known to lack singularity.
 #
-#   slurm/submit.sh slurm/grid_fork.sh
+#   slurm/submit.sh slurm/detection/grid_fork.sh
 #
 # The exclude list is built by the jobs themselves, in prelude.sh, so it converges: a node
 # that fails once is never drawn again.

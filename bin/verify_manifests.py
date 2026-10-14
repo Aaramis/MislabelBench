@@ -90,7 +90,7 @@ def _block(text, key, value=r"([0-9.]+)\s*$"):
 def check_staged_reference(problems):
     """assets/staged_check_reference.sha256 must match the file it names.
 
-    slurm/staged_check.sh compares the four-stage path's flag list against that digest rather than
+    slurm/timing/staged_check.sh compares the four-stage path's flag list against that digest rather than
     against the file, because the file lives under results/ and bin/restore_cluster.sh leaves results/
     empty by construction on the cluster: the check was passing only where the original run happened to
     survive, and it failed with "no single-process .mis at ..." once the cluster was rebuilt. A digest
@@ -98,7 +98,7 @@ def check_staged_reference(problems):
     """
     rec = Path("assets/staged_check_reference.sha256")
     if not rec.exists():
-        problems.append(f"{rec} is missing; slurm/staged_check.sh has nothing to compare against")
+        problems.append(f"{rec} is missing; slurm/timing/staged_check.sh has nothing to compare against")
         return 0
     rows = [l.split() for l in rec.read_text().splitlines()
             if l.strip() and not l.startswith("#")]

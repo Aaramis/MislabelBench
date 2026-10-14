@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The alignment difficulty of each set, and the foreign cells against the subset they were built on.
 
-slurm/aldiscore.sh writes one JSON line per set to results/aldiscore/scores.jsonl, keeping the
+slurm/checks/aldiscore.sh writes one JSON line per set to results/aldiscore/scores.jsonl, keeping the
 predictor's whole stdout because its format was not known before the first run; it turned out to be
 one number per set, the predicted difficulty from 0 to 1. This reads those lines, refuses a set whose
 stdout is not exactly one number, and reports the foreign cells as a difference from gtdb_arc2k, the

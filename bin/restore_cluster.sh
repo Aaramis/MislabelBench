@@ -70,11 +70,11 @@ echo "== 4. the generated cells, rebuilt on the cluster from their seeds"
 # Not copied: they are 92 MB and they regenerate in a couple of minutes from committed truth files,
 # which the clone test checks byte for byte on every run of bin/analyses.sh.
 for g in make_grid make_foreign make_clade; do
-    run ssh "$HOST" "cd ~/bench && BENCH_ROOT=\$PWD bash slurm/${g}.sh"
+    run ssh "$HOST" "cd ~/bench && BENCH_ROOT=\$PWD bash slurm/data/${g}.sh"
 done
 
 echo "== 5. the container images, which Nextflow caches and the timing scripts find by glob"
-# The name below only has to satisfy the glob those scripts use -- slurm/scaling.sh looks for
+# The name below only has to satisfy the glob those scripts use -- slurm/timing/scaling.sh looks for
 # *sativa-epang*0.10.2*py314hab16a5f_0* precisely because Nextflow and `singularity pull` name the
 # same image differently. A Nextflow run would populate the cache on its own, but then every timing
 # script would fail until one had been launched, which is the wrong order for a restore.
@@ -86,7 +86,7 @@ done
 echo "== 6. what remains for a person"
 cat <<'NOTES'
   - data/raw/ssu_all_r226.fna.gz is not restored here. It is fetched by URL and sha256 from
-    assets/datasets.yml, and only slurm/rebuild_primary.sh needs it; the base sets themselves came
+    assets/datasets.yml, and only slurm/data/rebuild_primary.sh needs it; the base sets themselves came
     across in step 3.
   - slurm/bad_nodes.txt arrives with the code, so the cluster starts with what was learned.
   - Verify before submitting anything: ssh HOST 'cd ~/bench && BENCH_ROOT=$PWD bin/analyses.sh'

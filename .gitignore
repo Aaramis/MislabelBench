@@ -12,7 +12,7 @@ results/concordance_vs_gamma_details.tsv
 results/**/stdout.log
 results/**/score.json
 
-# Datasets rebuilt from their seeds by slurm/make_*.sh. The truth.json of each stays in git.
+# Datasets rebuilt from their seeds by slurm/data/make_*.sh. The truth.json of each stays in git.
 data/injected/*/*.tax
 data/injected/*/*.fasta
 data/foreign/*/*.tax
@@ -40,7 +40,7 @@ results/**/placements_shard*/
 results/*/placements/**/query.fasta
 results/*/placements/**/ref.nwk
 
-# AlDiScore's clone and venv, made by slurm/aldiscore.sh
+# AlDiScore's clone and venv, made by slurm/checks/aldiscore.sh
 data/aldiscore/
 
 # Cluster state written by the jobs (see slurm/bad_nodes.txt.example)

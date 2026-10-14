@@ -1,6 +1,6 @@
 # The flag list the four-stage path must reproduce, by digest rather than by file.
 #
-# slurm/staged_check.sh used to compare against the file itself, under results/baseline2k/, and that
+# slurm/timing/staged_check.sh used to compare against the file itself, under results/baseline2k/, and that
 # file never reaches the cluster: bin/restore_cluster.sh says "results/ travels the other way" and
 # leaves results/ empty by construction, so the check worked only on a cluster that still happened to
 # hold the run from the day it was produced there. It stopped working when the cluster was rebuilt,

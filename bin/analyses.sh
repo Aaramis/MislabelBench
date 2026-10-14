@@ -9,7 +9,7 @@
 #   BENCH_ROOT=/path/to/bench bin/analyses.sh
 #
 # It reads only run directories and writes only into results/. It does not run the pipeline, which is
-# what slurm/*.sh is for.
+# what slurm/*/*.sh is for.
 #
 # Every committed file under results/ is rebuilt by this script. That was not true twice over until
 # recently: the k-axis and fold-sweep summaries were never rebuilt, and three files from version 1 on
@@ -203,7 +203,7 @@ control_analyses() {
     fi
 }
 
-# Absent until slurm/grove_simulation.sh has run, which the guards above report rather than fail on.
+# Absent until slurm/detection/grove_simulation.sh has run, which the guards above report rather than fail on.
 control_analyses data/grove_sim results/grove_simulated grove grove_simulated
 # And the promise the control rests on, re-checked on the committed files rather than trusted from
 # the day they were generated: every label is a clade of the tree the sequences evolved along.
@@ -251,7 +251,7 @@ done
 # this repository's own rule is medians over replicates and never a single run, so the scaling claim
 # gets a producer of its own rather than being assembled by eye from nine files.
 staged_rounds.py --out results/staged_rounds.txt > /dev/null
-# The same four-shard round with every shard pinned to a different machine (slurm/staged_nodes.sh),
+# The same four-shard round with every shard pinned to a different machine (slurm/timing/staged_nodes.sh),
 # once it has run: the other half of "across jobs" against "across machines".
 if ls -d results/staged_nodes_n4_r* >/dev/null 2>&1; then
     staged_rounds.py --prefix staged_nodes --tags n4 --base staged_timed_f25 --replicates r1,r2,r3,r4 --out results/staged_nodes.txt > /dev/null
@@ -296,19 +296,19 @@ if [ -d results/grid_bac/runs ]; then
 fi
 
 # The memory law's width term, measured: the fork on the same 2 023 sequences at five alignment
-# widths (slurm/width.sh), peak RSS against sequences x columns.
+# widths (slurm/timing/width.sh), peak RSS against sequences x columns.
 if ls results/width/runs/*/run.json >/dev/null 2>&1; then
     step "peak memory against alignment width, the law's coefficient per sequence and per column"
     memory_width.py --out results/memory_width.json > /dev/null
 fi
 
-# Alignment difficulty per set (slurm/aldiscore.sh), the foreign cells as a delta from the subset.
+# Alignment difficulty per set (slurm/checks/aldiscore.sh), the foreign cells as a delta from the subset.
 if [ -s results/aldiscore/scores.jsonl ]; then
     step "alignment difficulty of every set, the foreign cells against their base"
     aldiscore_summary.py --out results/aldiscore_summary.json > /dev/null
 fi
 
-# Where the injected sequences' placements landed, read off the jplace files slurm/placements.sh
+# Where the injected sequences' placements landed, read off the jplace files slurm/checks/placements.sh
 # keeps. The files stay out of git (about 540 MB for the Kexact cell), so this runs only where they
 # are, and the committed record under results/placement_locality/ is what the paper cites. Upstream's
 # leave-one-out jplace carries no tree; its .refjson does, and is passed as --tree.

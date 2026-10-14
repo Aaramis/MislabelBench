@@ -81,7 +81,7 @@ def round_seconds(staged_dir):
 
 
 def nodes_of(trace_dir, round_name):
-    """Which nodes a round's shards ran on, from slurm/shard_nodes.sh's table.
+    """Which nodes a round's shards ran on, from slurm/timing/shard_nodes.sh's table.
 
     The table is named after the trace tag, which is the output directory's own name and not the
     round's short tag -- shard_nodes-staged_timed_f25_r1_<jobid>.tsv for the round called f25_r1.
@@ -197,7 +197,7 @@ def main():
             if rs[0]["prefix"] == "staged_nodes" and not distinct:
                 raise SystemExit(f"{tag}: shards shared a node in a round meant to pin them apart")
         else:
-            say(f"{'':15}nodes: not recorded; run slurm/shard_nodes.sh on these rounds")
+            say(f"{'':15}nodes: not recorded; run slurm/timing/shard_nodes.sh on these rounds")
 
     say(f"{'':15}serial share at one shard {100 * serial:.1f}% (reference, tasks, scoring), "
         f"so the whole run cannot beat {1 / serial:.2f}x however many shards: Amdahl")

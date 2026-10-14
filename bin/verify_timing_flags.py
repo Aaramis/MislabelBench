@@ -7,7 +7,7 @@ because the string "false" arriving from the command line coerced to a true Groo
 What protected the published tables was resource_usage.py skipping any dataset not named
 gtdb*, which is a name convention and not the guard that was designed for this.
 
-The intent is not restated here. It is read out of slurm/*.sh, so a script that changes its
+The intent is not restated here. It is read out of slurm/*/*.sh, so a script that changes its
 mind is followed rather than contradicted, and two scripts writing into one outdir with
 different answers is itself reported.
 """
@@ -33,7 +33,7 @@ TRUST_RE = re.compile(r"--timing_trusted\s+(true|false)")
 def intent(slurm_dir):
     """outdir name -> {declared value: [scripts that declare it]}, from the job scripts."""
     out = defaultdict(lambda: defaultdict(list))
-    for script in sorted(Path(slurm_dir).glob("*.sh")):
+    for script in sorted(Path(slurm_dir).rglob("*.sh")):
         # errors="replace" because *.sh also matches ._baseline.sh and the like: AppleDouble
         # resource forks, which an rsync from a Mac leaves beside every file it copies and which
         # are binary. They match neither regex below, so tolerating them is the whole fix; dying

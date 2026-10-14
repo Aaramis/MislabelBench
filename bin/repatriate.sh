@@ -96,7 +96,7 @@ trap 'rm -rf "$tmp"; rm -f "$remote_bad"' EXIT
 rsync -a --exclude='._*' --include='*/' --include='trace*.txt' --include='shard_nodes-*.tsv' \
       --exclude='*' "$REMOTE:~/bench/results/" "$tmp/"
 mkdir -p results/pipeline_info
-# trace*.txt and shard_nodes-*.tsv: the trace and, where slurm/shard_nodes.sh has been run, which
+# trace*.txt and shard_nodes-*.tsv: the trace and, where slurm/timing/shard_nodes.sh has been run, which
 # node each placement shard was on. Both are tagged with the job, which is what lets every round's
 # pipeline_info flatten into this one directory without collisions.
 for f in "$tmp"/*/pipeline_info/trace*.txt "$tmp"/*/pipeline_info/shard_nodes-*.tsv; do

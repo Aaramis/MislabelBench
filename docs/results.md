@@ -43,7 +43,7 @@ the four placements the tool runs side by side: the work costs 1.15 MB per seque
 price of doing it four times at once.
 
 **The 1.15 MB carries an alignment width, and the width is half of it.** Measured on the same 2,023
-sequences at 300, 600, 900, 1,200 and 1,478 columns (`slurm/width.sh`, `results/memory_width.json`),
+sequences at 300, 600, 900, 1,200 and 1,478 columns (`slurm/timing/width.sh`, `results/memory_width.json`),
 the largest process's peak is linear in columns: 974 MB + 0.389 kB per sequence and per column at one
 thread, 922 MB + 0.583 kB at eight, residuals under 13 MB. Per sequence and per placement that is
 0.48 MB independent of the width plus 0.39 kB per column, 1.04 MB at 1,478 columns; doubling the
@@ -64,7 +64,7 @@ one. So a thread count is a precision choice as much as a memory one, and the fi
 for that reason.
 
 Take 5.13 for a large reference at eight threads. Read medians and not single runs: the eight runs at
-2 023 spread 4.10 to 4.86, and `slurm/memstep.sh` has three at 3 001, 4.88, 5.12 and 5.15. That is the
+2 023 spread 4.10 to 4.86, and `slurm/timing/memstep.sh` has three at 3 001, 4.88, 5.12 and 5.15. That is the
 number a user needs, because it is a ceiling rather than a slowdown: **64 GB holds 14 227 sequences at
 eight threads and 58 850 at one**. Threads buy speed and are paid for in memory, so on a small machine,
 give the fork fewer.
@@ -119,7 +119,7 @@ its own output directory and its successor wiped that run's `.mis`. What survive
 `results/pipeline_info/trace-determinism.txt` giving the task 1m 9s against the rerun's 58.7 s. The
 cross-vendor claim does not rest on it: the surviving determinism record is the Intel one,
 `cpu-node-16`, and the grid cell is `cpu-node-123`, which Slurm reports as `epyc-9754`. That record
-carries no `cpu_model` of its own, which is the gap `bin/verify_runs.py` reports on every run. `slurm/determinism.sh` is what
+carries no `cpu_model` of its own, which is the gap `bin/verify_runs.py` reports on every run. `slurm/checks/determinism.sh` is what
 re-runs it, and it is also the only check that exercises the pipeline rather than the analysis layer:
 `bin/analyses.sh` rebuilds every number from the run directories and never invokes Nextflow.
 
@@ -193,7 +193,7 @@ fold scheme's share is 0.000 in all six.
 **And "the engine" means the engine, not the rate model and not the fork's scoring code.** Above 500
 sequences upstream builds its reference under GTRCAT and the fork under GTRGAMMA, because
 `sativa.cfg` sets `raxml_model=auto` in one and `GTRGAMMA` in the other while the rule they share
-switches at 500. `slurm/shared_reference.sh` removes that difference: upstream builds the
+switches at 500. `slurm/detection/shared_reference.sh` removes that difference: upstream builds the
 reference, the fork's staged leave-one-out places against that same file, and the borrowed arm's own
 record says GTRCAT. On `inj_family_r0.05_k2_s1` recall is then **0.402 for upstream, 0.686 for the fork
 on upstream's reference, 0.667 for the fork on its own**. The engine is worth +0.284 with model and tree

@@ -80,7 +80,7 @@ datasets:
       species: 81.5
 
   # The kind 6 donors. Declared here because the phylum was a parameter nothing recorded:
-  # slurm/fetch_bacteria.sh takes the most abundant bacterial phylum in the release, by counting
+  # slurm/data/fetch_bacteria.sh takes the most abundant bacterial phylum in the release, by counting
   # headers, so the choice lived in `head -1` over a generated file and in nothing a reader could
   # consult. It resolves to Pseudomonadota for r226 at 543726 sequences against Bacillota's 306490,
   # and a release where that order changed would quietly change what error kind 6 means. Naming it
@@ -139,7 +139,7 @@ datasets:
     release: Rfam 15.1
     accession: RF00177
     # The same pinned Rfam.cm.gz as rfam_ssu_archaea, extracted by cmfetch inside
-    # slurm/fetch_bacterial_clade.sh rather than by hand, from the Infernal image pinned below.
+    # slurm/data/fetch_bacterial_clade.sh rather than by hand, from the Infernal image pinned below.
     source: rfam_ssu_archaea's Rfam.cm.gz, same url and sha256
     extract: "cmfetch Rfam.cm RF00177"
     extracted_file: data/gtdb/RF00177.cm
@@ -155,7 +155,7 @@ datasets:
     licence: BSD-3-Clause
     sif_sha256: 40c12bdb4bb59443accc09f5b15e0e8a6d3b9d086fded8e46329f4c4b52f70ac
     # It used to be found by globbing ~/.singularity_cache, and the cache was pruned between two
-    # runs. slurm/fetch_bacterial_clade.sh and slurm/make_foreign.sh pull it.
+    # runs. slurm/data/fetch_bacterial_clade.sh and slurm/data/make_foreign.sh pull it.
 
   gtdb_bacteria_clade:
     description: GTDB r226 SSU, the bacterial order the archaeal results are replicated on
