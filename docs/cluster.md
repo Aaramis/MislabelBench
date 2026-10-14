@@ -54,7 +54,7 @@ slurm/submit.sh slurm/grid_fork.sh             # SATIVA-epang over the grid
 bin/analyses.sh                                # rebuild every table, then run every check
 ```
 
-`slurm/submit.sh` excludes the nodes listed in `slurm/bad_nodes.txt`, which jobs append to when they
+`slurm/submit.sh` excludes the nodes listed in a `bad_nodes.txt` file beside it (ignored by git), which jobs append to when they
 land on a node without Singularity. Start from `slurm/bad_nodes.txt.example`.
 
 ## Without a cluster
