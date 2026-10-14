@@ -28,8 +28,6 @@ INJ=data/injected
 RUNS=results/grid_fork/runs
 BASE_FORK=results/baseline2k/runs/gtdb_arc2k__epang_T8_K25__rep1/gtdb_arc2k__epang_T8_K25__rep1.mis
 
-# Conditions whose grid has been run. Each needs its own summary and its own recall-by-ratio table,
-# because the whole point of having four of them is comparing them.
 FOLD_CONDITIONS="epang_T8_K25 epang_T8_K25_tree epang_T8_K5 epang_T8_K5_tree"
 
 step() { printf '\n== %s\n' "$*"; }
@@ -56,8 +54,8 @@ verify_timing_flags.py
 step "every condition of a cell read the same database"
 verify_inputs.py
 
-step "grid summaries and the surviving-label law, per fold condition"
-for cond in $FOLD_CONDITIONS; do
+step "grid summaries and the surviving-label law, for K = 25 and K = 5"
+for cond in epang_T8_K25 epang_T8_K5; do
     aggregate_grid.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition "${cond}__rep1" \
         --baseline-mis "$BASE_FORK" --out "results/grid_summary_${cond}.json"
     detection_law.py --base-tax "$TAX" --injected-dir "$INJ" --runs-dir "$RUNS" \
@@ -77,17 +75,6 @@ if ls "$RUNS"/*__upstream_raxml_T8__rep1 >/dev/null 2>&1; then
 else
     echo "   skipped: no upstream cells yet"
 fi
-
-step "paired comparisons, which is how two conditions may be compared at all"
-paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
-    --a epang_T8_K25__rep1 --b epang_T8_K5__rep1 \
-    --out results/paired_epang_T8_K25_vs_epang_T8_K5.json
-paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
-    --a epang_T8_K25__rep1 --b epang_T8_K25_tree__rep1 \
-    --out results/paired_epang_T8_K25_vs_epang_T8_K25_tree.json
-paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
-    --a epang_T8_K5__rep1 --b epang_T8_K5_tree__rep1 \
-    --out results/paired_epang_T8_K5_vs_epang_T8_K5_tree.json
 
 # Strict leave-one-out through EPA-ng, which is the one condition that tells the engine apart from
 # the fold scheme. Runs on whichever cells have it; it is expensive, so that is one or two.
@@ -116,9 +103,6 @@ if ls "$RUNS"/*__upstream_raxml_T8__rep1 >/dev/null 2>&1; then
     disagreement_truth.py --injected-dir "$INJ" --runs-dir "$RUNS" \
         --condition-a upstream_raxml_T8__rep1 --condition-b epang_T8_K25__rep1 \
         --out results/disagreement_truth.json
-    paired_conditions.py --injected-dir "$INJ" --runs-dir "$RUNS" \
-        --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
-        --out results/paired_upstream_vs_epang_T8_K25.json
 else
     echo "   skipped: no upstream cells yet"
 fi
@@ -130,26 +114,10 @@ threshold_holdout.py --injected-dir "$INJ" --runs-dir "$RUNS" --condition epang_
     --baseline-mis "$BASE_FORK" --out results/threshold_holdout.json >/dev/null
 stem_flags.py > results/stem_flags.txt
 
-step "the background, and whether the collateral flags are local"
-# Both take --condition. Without it their globs match every condition in the runs directory at
-# once, which was harmless while only one had been run and mixes four fold conditions and the
-# comparator now: the first rebuild after the K=5 grid landed reported 772 cells instead of 180.
-background_stability.py --baseline "$BASE_FORK" --runs "$RUNS" --injected-dir "$INJ" \
-    --condition epang_T8_K25__rep1 --out results/background_stability.tsv
+step "whether the collateral flags are local"
+# --condition is required: without it the glob matches every condition in the runs directory at once.
 collateral_locality.py --base-tax "$TAX" --baseline "$BASE_FORK" --injected-dir "$INJ" \
     --runs-dir "$RUNS" --condition epang_T8_K25__rep1 > results/collateral_locality.txt
-
-step "identical sequences under conflicting labels, in the reference itself"
-duplicate_conflicts.py --alignment data/gtdb/gtdb_arc1200.aligned.fasta \
-    --taxonomy data/gtdb/gtdb_arc1200.tax --unaligned data/gtdb/gtdb_arc1200.fasta \
-    --out results/duplicate_conflicts.json
-duplicate_conflicts.py --alignment "$ALN" --taxonomy "$TAX" \
-    --unaligned data/gtdb/gtdb_arc1200.fasta --baseline-mis "$BASE_FORK" \
-    --out results/duplicate_conflicts_2k.json
-
-step "what a cluster-level check would catch that leave-one-out misses"
-cluster_conflict.py --alignment "$ALN" --base-tax "$TAX" --injected-dir "$INJ" \
-    --out results/cluster_conflict.json >/dev/null
 
 step "error kind 6: is the detection phylogenetic, or is it the alignment score?"
 for cond in epang_T8_K25 upstream_raxml_T8; do
@@ -261,16 +229,6 @@ fold_mechanism.py --upstream results/grid_summary_upstream_raxml_T8.json \
     --fork-k5 results/grid_summary_epang_T8_K5.json \
     --out results/fold_mechanism.json
 
-# Whether the 0.510 artefact is upstream's, as the protocol claims, and how concentrated the column is.
-step "the shape of the Confidence column, both tools"
-for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
-    d=${pair%%:*}; ds=${pair##*:}
-    up=results/$d/runs/${ds}__upstream_raxml_T8__rep1/${ds}__upstream_raxml_T8__rep1.mis
-    fk=results/$d/runs/${ds}__epang_T8_K25__rep1/${ds}__epang_T8_K25__rep1.mis
-    [ -f "$up" ] && [ -f "$fk" ] && confidence_shape.py --mis "upstream=$up" --mis "fork=$fk" \
-        --out "results/confidence_shape_${ds}.json" || echo "   skipped $ds"
-done
-
 # The non-regression control, and the only reason an agreement measure is kept at all.
 step "agreement between the two tools on the un-injected sets"
 for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
@@ -281,28 +239,11 @@ for pair in baseline2k:gtdb_arc2k baseline:gtdb_arc1200; do
         --out "results/agreement_${ds}.json" || echo "   skipped $ds"
 done
 
-# The only truth un-injected data offers, used to ask whether each tool's unique calls find anything.
-step "are the tools' unique flags enriched in the reference's own label conflicts?"
-up7=results/baseline/runs/gtdb_arc1200__upstream_raxml_T8__rep1/gtdb_arc1200__upstream_raxml_T8__rep1.mis
-fk7=results/baseline/runs/gtdb_arc1200__epang_T8_K25__rep1/gtdb_arc1200__epang_T8_K25__rep1.mis
-if [ -f "$up7" ] && [ -f "$fk7" ]; then
-    conflict_enrichment.py --alignment data/gtdb/gtdb_arc1200.aligned.fasta \
-        --taxonomy data/gtdb/gtdb_arc1200.tax --mis-a "$up7" --mis-b "$fk7" \
-        --out results/conflict_enrichment.json
-else
-    echo "   skipped: the full-set baseline is not both there"
-fi
-
 step "timing: the staged scaling, and how many cores each tool actually uses"
-scaling_summary.py > results/scaling_summary.txt
 resource_usage.py > results/resource_usage.txt
-# The staged table docs/distribution.md quotes was printed by a job script and committed nowhere: the
-# per-shard timings are in results/, so the numbers were recoverable, but the table that carries the
-# distribution claim had no record and nothing rebuilt it. One file per fold count, since the three
-# rounds differ in the only variable they vary.
-# One file per round, and per replicate where there is one: the rounds are no longer exclusive, so
-# the spread over replicates is what bounds the interference and it cannot be read off a single run.
-for d in results/staged_timed_f*; do
+# One file per fold count and replicate: the spread over replicates is what bounds the interference
+# between shards, and it cannot be read off a single run. The main figure reads these.
+for d in results/staged_timed_f*_r*; do
     [ -d "$d/staged" ] || continue
     # The trace dir is the round's own where it has one and results/pipeline_info otherwise, since
     # bin/repatriate.sh flattens the traces of every round into that one directory. --round names
@@ -336,11 +277,10 @@ fi
 
 # The bacterial replication: the same questions on an order chosen by the evaluability criteria
 # (data/gtdb/bacterial_clade_selection.json), both tools. Agreement on the un-injected clade, the
-# grid summaries and the surviving-label law on the fifteen family-distance cells, and the subset's
-# shape. The subset baseline (results/baseline_bac2k) gives the added-vs-baseline column when it has
+# grid summaries and the surviving-label law on the fifteen family-distance cells. The subset baseline (results/baseline_bac2k) gives the added-vs-baseline column when it has
 # run; without it the summaries carry none, as the archaeal grid's did before baseline2k.
 if [ -d results/grid_bac/runs ]; then
-    step "bacterial clade: agreement, grid summaries, detection law, shape"
+    step "bacterial clade: agreement, grid summaries, detection law"
     bup=results/baseline_bac/runs/gtdb_bac_lachnospirales__upstream_raxml_T8__rep1/gtdb_bac_lachnospirales__upstream_raxml_T8__rep1.mis
     bfk=results/baseline_bac/runs/gtdb_bac_lachnospirales__epang_T8_K25__rep1/gtdb_bac_lachnospirales__epang_T8_K25__rep1.mis
     [ -f "$bup" ] && [ -f "$bfk" ] && agreement.py --a "$bup" --b "$bfk" \
@@ -361,10 +301,6 @@ if [ -d results/grid_bac/runs ]; then
     paired_conditions.py --injected-dir data/injected_bac --runs-dir results/grid_bac/runs \
         --a upstream_raxml_T8__rep1 --b epang_T8_K25__rep1 \
         --out results/paired_bac_upstream_vs_epang_T8_K25.json
-    dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_bac2k.fasta --tax data/gtdb/gtdb_bac2k.tax \
-        --out results/shape_gtdb_bac2k.json
-    dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_bac_lachnospirales.aligned.fasta \
-        --tax data/gtdb/gtdb_bac_lachnospirales.tax --out results/shape_gtdb_bac_lachnospirales.json
 fi
 
 # The memory law's width term, measured: the fork on the same 2 023 sequences at five alignment
@@ -419,16 +355,12 @@ fi
 # when the runs are not here, since the cells are a late addition and a clone may predate them.
 if [ -d results/ragged/runs ]; then
     step "what an incomplete lineage costs detection, for both tools"
-    ragged_cost.py --out results/ragged_cost.json > results/ragged_cost.txt
-    cat results/ragged_cost.txt
+    ragged_cost.py --out results/ragged_cost.json
 fi
 
-# What each reference can be judged on at all, which is a ceiling on any recall figure and a
-# property of the database rather than of either tool. One rule for every dataset, so that the
-# protocol's table is computed one way.
-step "judgeability of every reference, by one rule"
-dataset_shape.py --convention gtdb --fasta "$ALN" --tax "$TAX" \
-    --out results/shape_gtdb_arc2k.json
+# What the archaeal reference can be judged on at all, which verify_manifests checks against
+# assets/datasets.yml and data/gtdb/dataset_table.json.
+step "judgeability of the archaeal reference"
 dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_arc1200.aligned.fasta \
     --tax data/gtdb/gtdb_arc1200.tax --out results/shape_gtdb_arc1200.json
 
@@ -439,9 +371,7 @@ dataset_shape.py --convention gtdb --fasta data/gtdb/gtdb_arc1200.aligned.fasta 
 step "every published recall and collateral count, recomputed by a second route"
 verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --summary epang_T8_K25__rep1=results/grid_summary_epang_T8_K25.json \
-    --summary epang_T8_K25_tree__rep1=results/grid_summary_epang_T8_K25_tree.json \
     --summary epang_T8_K5__rep1=results/grid_summary_epang_T8_K5.json \
-    --summary epang_T8_K5_tree__rep1=results/grid_summary_epang_T8_K5_tree.json \
     --summary upstream_raxml_T8__rep1=results/grid_summary_upstream_raxml_T8.json
 # The same check over the other two injection experiments, which have the same record shape. Error
 # kind 6's cells carry no k, which crashed this gate until it matched cells on the fields they have.

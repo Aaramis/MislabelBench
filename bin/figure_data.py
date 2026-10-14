@@ -43,26 +43,24 @@ def staged_rows():
     The rounds are no longer exclusive -- an exclusive job is charged all 510 cores of the node
     against a QOS cap of 600, so two shards could never both have it -- so the quantity that bounds
     the interference is the spread over replicates, and the panel has to be read off all of them
-    rather than off one. `results/staged_scaling_f25.txt` and `..._f25_r2.txt` are both rounds of
-    f25; the glob takes either shape, so a single-run round still plots.
+    rather than off one.
     """
     rows = []
     for fpj in (25, 13, 7):
-        # Replicates when there are any, and then only replicates. Pooling them with the
-        # unsuffixed round would average across dates, and the dates do not agree: the same cell on
+        # Only the replicate rounds. Pooling them with the earlier unsuffixed round would average
+        # across dates, and the dates do not agree: the same cell on
         # the same node with a byte-identical .mis took 194.5 s for its placement on 5 October and
         # 237.0 and 243.4 s in two rounds minutes apart on 8 October. Within a session the spread is
         # 2.7 %, across sessions 23 %, because the node is shared and the QOS will not let a timed
         # task have it alone. A mean over both dates would be a number from no machine.
-        files = sorted(ROOT.glob(f"results/staged_scaling_f{fpj}_r*.txt")) \
-            or sorted(ROOT.glob(f"results/staged_scaling_f{fpj}.txt"))
+        files = sorted(ROOT.glob(f"results/staged_scaling_f{fpj}_r*.txt"))
         reps = []
         for f in files:
             ln = f.read_text().splitlines()[1].split()
             reps.append({"shards": int(ln[1]), "ref": float(ln[2]), "tasks": float(ln[3]),
                          "place": float(ln[4]), "spread": float(ln[5]), "score": float(ln[6])})
         if not reps:
-            raise SystemExit(f"no results/staged_scaling_f{fpj}*.txt to read")
+            raise SystemExit(f"no results/staged_scaling_f{fpj}_r*.txt to read")
         totals = [r["ref"] + r["tasks"] + r["place"] + r["score"] for r in reps]
         row = {k: st.median(r[k] for r in reps) for k in ("ref", "tasks", "place", "spread", "score")}
         row["total_min"], row["total_max"] = min(totals), max(totals)
@@ -79,9 +77,9 @@ def upset_counts(floor):
     """Mean per dataset of every way the two tools can judge a sequence, split by what the sequence is:
     flagged by SATIVA on the unmodified database (baseline), an injected error, or an untouched
     sequence that neither of those covers. SATIVA's baseline is the reference for both tools."""
-    import background_stability as bs
+    import mis_flags
     cond = lambda c: f"gtdb_arc2k__{c}__rep1/gtdb_arc2k__{c}__rep1.mis"
-    base = set(bs.flagged(ROOT / "results/baseline2k/runs" / cond("upstream_raxml_T8"), floor))
+    base = set(mis_flags.flagged(ROOT / "results/baseline2k/runs" / cond("upstream_raxml_T8"), floor))
     out, n, per = collections.Counter(), 0, []
     for d in sorted((ROOT / "data/injected").glob("inj_*")):
         cell = d.name
@@ -89,8 +87,8 @@ def upset_counts(floor):
             continue
         runs = ROOT / "results/grid_fork/runs"
         inj = set(json.loads((d / f"{cell}.truth.json").read_text())["injected"])
-        u = set(bs.flagged(runs / f"{cell}__upstream_raxml_T8__rep1/{cell}__upstream_raxml_T8__rep1.mis", floor))
-        e = set(bs.flagged(runs / f"{cell}__epang_T8_K25__rep1/{cell}__epang_T8_K25__rep1.mis", floor))
+        u = set(mis_flags.flagged(runs / f"{cell}__upstream_raxml_T8__rep1/{cell}__upstream_raxml_T8__rep1.mis", floor))
+        e = set(mis_flags.flagged(runs / f"{cell}__epang_T8_K25__rep1/{cell}__epang_T8_K25__rep1.mis", floor))
         n += 1
         here = collections.Counter()
         for seq in base | inj | u | e:

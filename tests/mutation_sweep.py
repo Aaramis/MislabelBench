@@ -88,9 +88,8 @@ def inside(spans, offset):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("target", help="script to mutate, e.g. bin/grove_taxonomy.py")
-    # More than one, because a script's parsing and its arithmetic are tested in different modules
-    # here: conflict_enrichment.py has its tail in tests.test_scoring and its .mis reading in
-    # tests.test_parsing, and sweeping it against either alone reports survivors the other kills.
+    # More than one, because a script's parsing and its arithmetic can be tested in different modules,
+    # and sweeping it against either alone reports survivors the other kills.
     p.add_argument("tests", nargs="+", help="test modules to run, e.g. tests.test_scoring")
     args = p.parse_args()
 

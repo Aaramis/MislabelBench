@@ -76,15 +76,6 @@ def main():
         fh.write("\t".join(cols) + "\n")
         for r in rows:
             fh.write("\t".join(str(r[c]) for c in cols) + "\n")
-    Path(str(out) + ".json").write_text(json.dumps({
-        "n_cases": len(rows),
-        "fork_raxml_agrees_with_upstream": len(same),
-        "fork_raxml_comparable": len(both),
-        "fork_epang_wins_alone": [{"sweep": r["sweep"], "case": r["case"],
-                                   "n_seqs": r["n_seqs"],
-                                   "n_wrong_labels": r["n_wrong_labels"]} for r in won],
-    }, indent=2) + "\n")
-
     print(f"{len(rows)} cases")
     print(f"  the fork driving RAxML agrees with upstream in {len(same)} of {len(both)}")
     print(f"  the fork driving EPA-ng flags where upstream misses in {len(won)}:")

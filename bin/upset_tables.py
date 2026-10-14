@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-import background_stability as bs
+import mis_flags
 
 ROOT = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 RUNS = ROOT / "results/grid_fork/runs"
@@ -27,11 +27,11 @@ for d in sorted((ROOT / "data/injected").glob("inj_*")):
 
 print("class = kind, flagged by SATIVA, flagged by SATIVA-epang; mean per dataset\n")
 for floor in (0.0, 0.511):
-    base = set(bs.flagged(BASE, floor))
+    base = set(mis_flags.flagged(BASE, floor))
     here = collections.defaultdict(list)
     for name, rate, dist, inj in cells:
-        u = set(bs.flagged(RUNS / COND(f"{name}__upstream_raxml_T8__rep1"), floor))
-        e = set(bs.flagged(RUNS / COND(f"{name}__epang_T8_K25__rep1"), floor))
+        u = set(mis_flags.flagged(RUNS / COND(f"{name}__upstream_raxml_T8__rep1"), floor))
+        e = set(mis_flags.flagged(RUNS / COND(f"{name}__epang_T8_K25__rep1"), floor))
         c = collections.Counter()
         for s in base | inj | u | e:
             kind = "baseline" if s in base and s not in inj else "injected" if s in inj else "collateral"

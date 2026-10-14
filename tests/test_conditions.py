@@ -3,9 +3,9 @@
 
 The runs directory holds one subdirectory per (cell, condition). While a single condition had been
 run, globbing `*/*.mis` under it was correct. Once four fold orders and the comparator shared it, the
-same glob silently mixed them: background_stability.py reported 772 cells where 180 existed, and the
-committed table would have been replaced by an average over conditions that answer different
-questions. These tests put two conditions in one directory and insist each script sees one.
+same glob silently mixed them: a summary reported 772 cells where 180 existed, replacing a table by
+an average over conditions that answer different questions. These tests put two conditions in one
+directory and insist each script sees one.
 
 The other half is the sign test in paired_conditions.py, which reads the same directory twice and is
 the only statistic in the repo that compares conditions to each other.
@@ -71,20 +71,6 @@ class Fixture(unittest.TestCase):
 
 
 class ConditionSelection(Fixture):
-
-    def test_background_stability_counts_cells_once_per_condition(self):
-        out = self.tmp / "bg.tsv"
-        r = run("background_stability.py", "--baseline", self.baseline, "--runs", self.runs,
-                "--injected-dir", self.inj, "--condition", "A", "--out", out)
-        self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("2 cells", r.stdout, "two cells exist per condition, not four")
-        self.assertEqual(len(out.read_text().strip().splitlines()), 3, "a header and two rows")
-
-    def test_condition_is_required_so_the_mixture_cannot_happen_by_default(self):
-        r = run("background_stability.py", "--baseline", self.baseline, "--runs", self.runs,
-                "--injected-dir", self.inj, "--out", self.tmp / "bg.tsv")
-        self.assertNotEqual(r.returncode, 0)
-        self.assertIn("condition", r.stderr.lower())
 
     def test_detection_law_sees_one_condition(self):
         out = self.tmp / "law.json"

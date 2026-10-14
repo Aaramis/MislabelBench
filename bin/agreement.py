@@ -70,17 +70,7 @@ def main():
         print(f"    the whole proposed path   {same_path}/{len(both)} "
               f"({100*same_path/len(both):.1f}%)")
 
-    # The one-sided flags as rows, not as two counts. The counts were all that was written, so the
-    # 51 and 119 of the 7 051-sequence baseline had no per-sequence record anywhere, and the question
-    # "which sequences, at what confidence" -- the one the co-author asked -- had to be answered by
-    # rereading two .mis files by hand. Everything below was already in memory.
     if args.out:
-        rows = [f"side\tsequence\tlevel\tproposed\tpath\tconfidence"]
-        for side, names, src in ((f"{args.label_a}_only", only_a, A), (f"{args.label_b}_only", only_b, B)):
-            rows += [f"{side}\t{n}\t{src[n][0]}\t{src[n][1]}\t{src[n][2]}\t{src[n][3]}"
-                     for n in sorted(names)]
-        Path(args.out).with_name(Path(args.out).stem + "_disagreements.tsv").write_text(
-            "\n".join(rows) + "\n")
         Path(args.out).write_text(json.dumps({
             "a": args.a, "b": args.b,
             "n_a": len(A), "n_b": len(B), "both": len(both),

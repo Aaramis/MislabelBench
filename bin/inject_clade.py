@@ -16,9 +16,8 @@ rather than against the whole database, because that is the comparison the quest
     recipient   mean identity from those members to the members of the taxon whose label they get
     separation  within - recipient, so a high value is a clade that can anchor itself
 
-Measured on the alignment, over columns where both sequences have a base, which is the same rule
-bin/cluster_conflict.py uses. All-against-all would be 3 billion character comparisons in pure
-python; against the recipient alone it is a few hundred pairs and is the quantity in the hypothesis.
+Measured on the alignment, over columns where both sequences have a base. All-against-all would be
+3 billion character comparisons in pure python; against the recipient alone it is a few hundred pairs and is the quantity in the hypothesis.
 
 The hard case the protocol names -- "a wrong label inside the correct genus" -- is `--distance
 species`, where the clade keeps its genus and is given a sibling species. The easy end is
