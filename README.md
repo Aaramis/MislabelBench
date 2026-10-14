@@ -7,7 +7,7 @@ are therefore known, and everything else is real. Seven error types cover a sing
 sequences sharing one wrong label, a wrong species in the right genus, a whole taxon misnamed, incomplete
 lineages, sequences from another domain and chimeras. The core is 180 datasets, which vary the distance
 between the true and the false label, the number of sequences carrying it, the share of the database
-altered and the seed. Two controls on simulated sequences, one of them on a RAxML Grove tree, check what
+altered and the seed. A control on sequences simulated along a RAxML Grove tree checks what
 a real database cannot, and one bacterial order checks that the findings hold on another domain.
 
 It was built to compare [SATIVA](https://github.com/amkozlov/sativa) (Kozlov *et al.* 2016) with
@@ -31,7 +31,7 @@ Nothing below needs a cluster or a container. Python 3.12 and the standard libra
 ```bash
 git clone https://github.com/Aaramis/MislabelBench && cd MislabelBench
 python3 -m unittest discover -s tests          # the analysis layer's tests
-for g in make_grid make_foreign make_clade make_simulation; do bash slurm/$g.sh; done
+for g in make_grid make_foreign make_clade; do bash slurm/$g.sh; done
 bin/analyses.sh                                # rebuild every table from the committed runs, then run every check
 ```
 

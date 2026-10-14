@@ -26,7 +26,6 @@ container nor the network, and take a couple of minutes.
 bash slurm/make_grid.sh                        # the injection grid, 180 cells
 bash slurm/make_foreign.sh                     # error kind 6, foreign sequences
 bash slurm/make_clade.sh                       # error kind 3, whole-taxon relabelling
-bash slurm/make_simulation.sh                  # simulated control, 37 cells
 bash slurm/make_chimera.sh                     # chimeras
 bash slurm/make_ragged.sh                      # error kind 5, ragged lineages
 bash slurm/make_width.sh                       # the memory law against alignment width

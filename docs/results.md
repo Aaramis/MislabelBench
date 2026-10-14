@@ -462,27 +462,8 @@ See `results/foreign_summary_*.json` and `results/foreign_score_vs_flag_*.json`.
 
 **A control where every label is certain.** Injection leaves one hole in itself: the sequences it did not
 touch are only assumed correct, so a flag on one of them cannot be called a false positive. A simulated
-reference closes it, with sequences evolved along a tree that *is* the taxonomy, 864 of them. The answer
-is that **neither tool flags anything**: 0 of 864 for the fork and 0 for upstream, against 93 and 92 of
-2 023 on the real set. So the 4.6 % on real data is the reference's own content and not noise the method
-generates.
-
-Recall there is **1.000 at *k*=1** for the fork at every distance, and 0.992 for upstream, with no
-collateral flags from either, against 0.746 and 133 collateral on the real grid, so that gap is the reference's difficulty rather than the method's ceiling.
-And the surviving-ratio law reproduces out of sample, which is the stronger result: **1.000, 0.990, 0.822,
-0.000** across the ratio bands against the archaeal **0.867, 0.600, 0.327, 0.110, 0.011**. Both are monotone,
-both collapse to nothing at the top of the range, and they are offset by exactly the heterogeneity a simple
-model cannot reproduce. The law is therefore a statement about leave-one-out and not about GTDB.
-
-**And it is here, where every label is certain, that the two tools separate.** With upstream's arm
-complete at three seeds, the paired comparison has nine cells per *k*, and at *k*=3
-(half of each group relabelled together) the fork detects more in **9 cells of 9**, recall 0.822 against
-0.657, exact sign test **p = 0.0039**. That is the floor of the test at nine pairs, which is the point:
-at three pairs the floor was 0.25 and no outcome could have been significant, which is why the control
-was given three seeds rather than one. At *k*=1 and *k*=2 both tools are near perfect and the difference
-is not testable; at *k*=5 neither detects anything. So the claim that the fork finds
-shared mislabels upstream misses holds in the one setting where the ground truth is not an assumption,
-and it holds at exactly the *k* where the design predicts the margin is visible.
-See `results/simulated_summary_*.json`, `results/detection_law_simulated_*.json` and
-`results/paired_simulated_upstream_vs_epang_T8_K25.json`.
+reference closes it, with sequences evolved along an empirical RAxML Grove tree that *is* the taxonomy.
+The summaries, the surviving-ratio law and the paired comparison of the two tools are in
+`results/grove_simulated_summary_*.json`, `results/detection_law_grove_simulated_*.json` and
+`results/paired_grove_simulated_upstream_vs_epang_T8_K25.json`.
 

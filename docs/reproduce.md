@@ -25,12 +25,11 @@ Each script writes into `results/<name>/`. The resources are the request in the 
 | `slurm/make_grid.sh` | the 180 injected cells (kinds 1, 2 and 4) | nothing |
 | `slurm/make_foreign.sh` | 9 cells of foreign sequences (kind 6) | nothing |
 | `slurm/make_clade.sh` | 9 cells with a whole taxon relabelled (kind 3) | nothing |
-| `slurm/make_simulation.sh` | the simulated control, 37 cells | nothing |
 | `slurm/make_chimera.sh` | 36 chimera cells (kind 7) | nothing |
 | `slurm/make_ragged.sh` | the ragged-lineage cells (kind 5) | nothing |
 | `slurm/make_width.sh` | the 2023-sequence set at five alignment widths | nothing |
 | `slurm/make_grid_bac.sh` | the 15 cells of the bacterial replication | `slurm/fetch_bacterial_clade.sh` |
-| `slurm/fetch_grove.sh`, `make_grove_simulation.sh` | the control on a RAxML Grove tree | network, about 140 MB |
+| `slurm/fetch_grove.sh`, `make_grove_simulation.sh` | the simulated control on a RAxML Grove tree | network, about 140 MB |
 
 The base sets (GTDB r226 archaea, alignment on Rfam RF01959) are committed under `data/gtdb/`. The
 download and the filtering are in `bin/prepare_gtdb.py`, and every source is pinned by sha256 in
@@ -53,7 +52,6 @@ tables.
 | `kind3.sh` | kind 3, whole taxa relabelled | `clade/`, `clade_detection_*.json` |
 | `chimera.sh` | kind 7, chimeras | `chimera/`, `chimera_detection_*.json` |
 | `ragged_grid.sh` | kind 5, ragged lineages | `ragged/`, `ragged_cost.json` |
-| `simulation.sh` | the simulated control | `simulated/` |
 | `grove_simulation.sh` | the control on a Grove tree | `grove_simulated/` |
 | `bac.sh` | the bacterial replication | `grid_bac/`, `grid_summary_bac_*.json` |
 | `sizes.sh`, `scaling.sh` | time and memory against reference size | `sizes/`, `scaling/`, `resource_usage.txt` |

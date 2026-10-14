@@ -65,5 +65,5 @@ Timing runs follow the rules in [cluster.md](cluster.md): one CPU model, nothing
 ## Please report
 
 Run on the 180 injected cells and on the control with a simulated reference
-(`data/simulated`, `data/grove_sim`), and report recall at a stated threshold together with the extra
+(`data/grove_sim`), and report recall at a stated threshold together with the extra
 flags on the unmodified database. Recall alone rewards a tool that flags everything.

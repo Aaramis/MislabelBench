@@ -13,7 +13,7 @@ the largest experiments are in the release archive, not in git.
 | `grid_summary_*.json`, `detection_law_*.json`, `paired_*.json` | recall tables built from `grid_fork/` | `bin/analyses.sh` |
 | `kaxis/`, `ksweep/` | the *k* axis and the *K* sweep | `kaxis_upstream.sh`, `ksweep.sh` |
 | `clade/`, `foreign/`, `chimera/`, `ragged/` | the other error types | `kind3.sh`, `foreign.sh`, `chimera.sh`, `ragged_grid.sh` |
-| `simulated/`, `grove_simulated/` | the two controls | `simulation.sh`, `grove_simulation.sh` |
+| `grove_simulated/` | the simulated control | `grove_simulation.sh` |
 | `grid_bac/` | the bacterial replication | `bac.sh` |
 | `sizes/`, `scaling/`, `threads/`, `memstep_*`, `width/` | time and memory against size, threads and width | `sizes.sh`, `scaling.sh`, `threads.sh`, `memstep.sh`, `width.sh` |
 | `staged_*` | the four-stage run on one and several nodes | `staged_timed.sh`, `staged_nodes.sh`, `staged_check.sh` |
