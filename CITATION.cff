@@ -2,7 +2,8 @@ cff-version: 1.2.0
 message: "If you use MislabelBench or its results, please cite it as below, and the SATIVA-epang article."
 title: "MislabelBench: a benchmark of taxonomic mislabel detection with known injected errors"
 type: software
-version: "1.0"
+version: "1.1"
+date-released: "2026-10-14"
 doi: "10.5281/zenodo.23371116"
 license: MIT
 repository-code: "https://github.com/Aaramis/MislabelBench"
@@ -27,12 +28,12 @@ authors:
   - family-names: Lundin
     given-names: Daniel
     orcid: "https://orcid.org/0000-0002-8779-6464"
-  - family-names: Stamatakis
-    given-names: Alexandros
-    orcid: "https://orcid.org/0000-0003-0353-0691"
   - family-names: Zucker
     given-names: Jean-Daniel
     orcid: "https://orcid.org/0000-0002-5597-7922"
+  - family-names: Stamatakis
+    given-names: Alexandros
+    orcid: "https://orcid.org/0000-0003-0353-0691"
   - family-names: Belda
     given-names: Eugeni
     orcid: "https://orcid.org/0000-0003-4307-5072"

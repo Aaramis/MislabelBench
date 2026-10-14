@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1 (2026)
+
+Tidying of the repository after the first release. No table, figure or number of the application note
+changes: `bin/analyses.sh` rebuilds all 59 tables identically.
+
+- 7,425 tracked files become 5,093. Removed: 1,936 run logs that no check reads, the UNITE fungal
+  reference, a simulated control made by hand (the RAxML Grove one stays), the 50 alignments and trees of
+  `results/shared_reference` (its summary and the three `.mis` stay), and 28 derived tables that the
+  supplement does not use, with the scripts that built them.
+- `slurm/` is grouped into `data/`, `detection/`, `timing/` and `checks/`, and `bin/` into `data/`,
+  `analysis/`, `verify/`, `figures/`, `timing/` and `ops/`. Every path in the documents, the tests and
+  the continuous integration follows.
+- The continuous integration runs the trace-table and document-path checks as two separate steps.
+- Author order in `CITATION.cff` and `.zenodo.json`: Gardette, Lundin, Zucker, Stamatakis, Belda.
+
 ## 1.0 (2026)
 
 First release. The repository is the evidence behind the SATIVA-epang application note.
@@ -12,7 +27,7 @@ First release. The repository is the evidence behind the SATIVA-epang applicatio
 - `bin/analyses.sh` rebuilds every table and runs every check.
 - Code under MIT, data and results under CC BY-SA 4.0.
 
-**Correction of the first version.** The first public state of this repository (branch `main` before this
+**Correction of the first version.** The first public state of this repository (before this
 release) reported, on ITS data with one replicate per scenario, that SATIVA finds 28 of 33 injected
 errors and SATIVA-epang 33 of 33, and that every miss comes from several sequences sharing one wrong
 label. The 180-dataset grid does not bear that out. Recall falls with the number of sequences sharing
