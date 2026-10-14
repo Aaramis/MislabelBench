@@ -59,7 +59,7 @@ tables.
 | `sizes.sh`, `scaling.sh` | time and memory against reference size | `sizes/`, `scaling/`, `resource_usage.txt` |
 | `threads.sh` | the thread sweep | `threads/` |
 | `memstep.sh`, `width.sh` | the memory law, against size and alignment width | `memstep_*/`, `width/`, `memory_width.json` |
-| `staged_timed.sh`, `staged_nodes.sh`, `staged_check.sh` | the four-stage run, distributed over shards | `staged_*/`, `scaling_summary.txt` |
+| `staged_timed.sh`, `staged_nodes.sh`, `staged_check.sh` | the four-stage run, distributed over shards | `staged_*/`, `staged_scaling_*.txt` |
 | `placements.sh`, `placements_upstream.sh` | placements of both engines on one cell, for the engine comparison | `placements_*/` |
 | `minimal_case.sh` | the smallest dataset where the tools disagree | `minimal_case/` |
 | `determinism.sh` | the same cell and seed twice | `determinism/` |

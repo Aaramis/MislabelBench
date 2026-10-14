@@ -81,8 +81,7 @@ So the design above stands as written, with **12 MB staged per fold**.
 ## What the shard-shaped version actually measures
 
 The `srun` fan-out was run on this dataset, three replicates per node count. Every spread quoted
-here and in `results/scaling_summary.txt` is max minus min over those three, not a standard
-deviation. `bin/scaling_summary.py` computes the range.
+here is max minus min over those three, not a standard deviation.
 
 | N | placement, mean and spread | total |
 |---|---|---|

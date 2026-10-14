@@ -262,14 +262,6 @@ p = 0.000145 and p = 7.6e-06 against a Bonferroni threshold of 0.05/15 = 0.0033,
 more than an order of magnitude. The *k*=3 effects in the same family, p = 0.0064 and 0.0025, do not
 clear it as decisively and are not claimed here.
 
-**The baseline is not a fixed reference point.** Reporting flags added above the un-injected
-baseline assumes the pre-existing flags stay put. They do not: injecting a wrong label moves a
-sequence in the tree and changes the placement of its neighbours. Over the 180 cells, against a
-baseline of 93 flags, a typical cell **loses 11 of them** (12 %, up to 21) while gaining 29 (31 %, up
-to 70). So the churn is about 40 flags where the net change is 18, and a count of added flags
-describes the smaller half of what injection does to the background. The figures are in
-`results/background_stability.tsv`, reported in both directions because 12 % is not a rounding error on a baseline.
-
 **And they fall where the injection landed.** Scattered collateral would mean injection destabilises
 the whole tree rather than its neighbourhood, so a locality measure sits beside the collateral
 count. Of 5 917 collateral flags, **4 623, or 78.1 %, lie in a clade the injection touched**, and
@@ -451,7 +443,7 @@ numbers that matter beyond the drop: SATIVA accepts ragged lineages too, and the
 it costs the old one. Flags on untouched sequences fall as well, 1 905 to 1 591 and 1 869 to 1 627, which
 is expected and reported beside the recall because a lineage that stops at genus cannot be flagged below
 it, and reporting only recall would let that pass for detection. See `bin/ragged_cost.py` and
-`results/ragged_cost.txt`.
+`results/ragged_cost.json`.
 
 **Kind 6, a foreign sequence under a plausible label**, is detected almost always: bacterial donors given
 archaeal lineages are flagged at **1.000, 0.967 and 0.941** by the fork across the three injection rates
@@ -494,12 +486,3 @@ and it holds at exactly the *k* where the design predicts the margin is visible.
 See `results/simulated_summary_*.json`, `results/detection_law_simulated_*.json` and
 `results/paired_simulated_upstream_vs_epang_T8_K25.json`.
 
-**Whether the fork's extra flags are better or noisier**, which the agreement control raises and cannot
-settle. The un-injected set offers one piece of truth: 54 groups of byte-identical sequences carrying
-conflicting labels, 265 sequences of which at least one member must be wrong, 3.76 % of the database.
-Calls the two tools agree on are enriched **1.9-fold** in those groups, p = 0.002, so both are finding
-something real. Upstream's 51 unique calls are enriched **4.2-fold**, p = 0.0006. The fork's 119 unique
-calls sit at **0.89**, 4 observed against 4.5 expected, p = 0.66, which is the background rate, and a tight null
-rather than a small-sample shrug. On this measure upstream's extra flags are the better targeted. The
-evidence is weak per sequence, since group membership says one member is wrong and not which, but it is
-weak in the same way for both tools. See `results/conflict_enrichment.json`.
