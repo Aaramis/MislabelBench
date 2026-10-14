@@ -3,17 +3,17 @@ Developed by Bui Quang Minh, James Barbetti, Nguyen Lam Tung,
 Olga Chernomor, Heiko Schmidt, Dominik Schrempf, Michael Woodhams, Ly Trong Nhan.
 
 Host:    cpu-node-21 (AVX2, FMA3, 251 GB RAM)
-Command: /shared/home/agardette/bench/data/grove/scripts/tools/iqtree-2.2.0-beta-Linux/bin/iqtree2 --alisim /shared/home/agardette/bench/data/grove_sim/raw/71741/seq_0.part0.fasta -m GTR{1.233906/2.547923/1.502573/0.894541/3.314076/1.000000}+F{0.253377/0.205290/0.293039/0.248294}+G{0.570792}+I{0.150935} -t /shared/home/agardette/bench/data/grove_sim/raw/71741/tree_best.newick --length 1778 -af fasta --seqtype DNA --no-export-sequence-wo-gaps --seed 42
+Command: $BENCH_ROOT/data/grove/scripts/tools/iqtree-2.2.0-beta-Linux/bin/iqtree2 --alisim $BENCH_ROOT/data/grove_sim/raw/71741/seq_0.part0.fasta -m GTR{1.233906/2.547923/1.502573/0.894541/3.314076/1.000000}+F{0.253377/0.205290/0.293039/0.248294}+G{0.570792}+I{0.150935} -t $BENCH_ROOT/data/grove_sim/raw/71741/tree_best.newick --length 1778 -af fasta --seqtype DNA --no-export-sequence-wo-gaps --seed 42
 Seed:    42 (Using SPRNG - Scalable Parallel Random Number Generator)
 Time:    Fri Oct  9 21:21:09 2026
 Kernel:  AVX+FMA - 1 threads (4 CPU cores detected)
 
 [Alignment Simulator] Executing
- - Tree filepath: /shared/home/agardette/bench/data/grove_sim/raw/71741/tree_best.newick
+ - Tree filepath: $BENCH_ROOT/data/grove_sim/raw/71741/tree_best.newick
  - Length of output sequences: 1778
  - Model: GTR{1.233906/2.547923/1.502573/0.894541/3.314076/1.000000}+F{0.253377/0.205290/0.293039/0.248294}+G{0.570792}+I{0.150935}
  - Number of output datasets: 1
-An alignment has just been exported to /shared/home/agardette/bench/data/grove_sim/raw/71741/seq_0.part0.fasta.fa
+An alignment has just been exported to $BENCH_ROOT/data/grove_sim/raw/71741/seq_0.part0.fasta.fa
 SUBSTITUTION PROCESS
 --------------------
 

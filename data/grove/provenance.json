@@ -27,7 +27,7 @@
   ],
   "n_trees": 127329,
   "interpreter": {
-    "path": "/shared/home/agardette/bench/data/grove/env/bin/python",
+    "path": "env/bin/python",
     "python": "Python 3.12.12",
     "requirements": "env-requirements.txt"
   }

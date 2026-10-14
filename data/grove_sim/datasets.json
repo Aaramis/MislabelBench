@@ -1,5 +1,5 @@
 {
-  "source": "RAxMLGrove tree, AliSim along it, taxonomy from the tree (Protocol 2.1)",
+  "source": "RAxMLGrove tree, AliSim along it, taxonomy from the tree",
   "tree": {
     "TREE_ID": "71741",
     "NUM_TAXA": 400,
@@ -30,7 +30,7 @@
     "criteria": "p.DATA_TYPE = 'DNA' and t.OVERALL_NUM_PARTITIONS = 1 and t.NUM_TAXA between 400 and 2100 and p.NUM_ALIGNMENT_SITES between 1200 and 1800 and p.MODEL = 'GTR' and p.RATE_STR != 'None' and p.ALPHA != 'None' and p.STATIONARY_FREQ_STR != 'None'"
   },
   "taxonomy": {
-    "tree": "/shared/home/agardette/bench/data/grove_sim/raw/71741/tree_best.newick",
+    "tree": "tree_best.newick",
     "tree_sha256": "a05985fcb130d59636de64c1c9e7a1da37381147e0254b7d5c34b52a99414c67",
     "rule": "rank r of 7 is the partition into round(m ** (r/8)) clades, splitting the shallowest branchings first",
     "n_tips": 400,

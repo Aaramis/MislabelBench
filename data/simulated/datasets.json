@@ -1,5 +1,5 @@
 {
-  "source": "simulated under Jukes-Cantor, labels certain by construction (Protocol 2.1)",
+  "source": "simulated under Jukes-Cantor, labels certain by construction",
   "datasets": [
     {
       "name": "sim",
