@@ -1,66 +1,44 @@
-# Inputs
+# data/
 
-What is here is what cannot be regenerated without the cluster, plus everything small. What is not
-here is regenerable, and that claim is checked rather than asserted.
+Base datasets, injected ground truth and manifests. [docs/data.md](../docs/data.md) says where each
+source comes from and how a dataset is built.
 
-## Kept
+## Committed
 
-| | |
+| path | content |
 |---|---|
-| `gtdb/gtdb_arc*.fasta`, `gtdb/gtdb_arc*.tax` | the archaeal base datasets and their size subsets. `gtdb_arc1200.aligned.fasta` is the Infernal alignment, which costs an hour and a covariance model to rebuild |
-| `gtdb/RF01959.cm` | the Rfam covariance model the alignment uses, so the alignment step does not depend on Rfam staying reachable |
-| `gtdb/*.subset.json`, `gtdb/datasets*.json` | which sequences each subset took and with which seed |
-| `bacteria/donor_pool.*` | the bacterial donors for the foreign-sequence condition, aligned against the same model |
-| `injected/*/\*.truth.json`, `foreign/*/\*.truth.json` | the ground truth every detection number is scored against |
-| `injected/datasets.json`, `foreign/datasets.json` | the manifests the harness reads |
+| `gtdb/gtdb_arc*.fasta`, `gtdb/gtdb_arc*.tax` | the archaeal base sets and their size subsets. `gtdb_arc1200.aligned.fasta` is the Infernal alignment, an hour of work and a covariance model to rebuild |
+| `gtdb/RF01959.cm` | the Rfam covariance model, so the alignment does not depend on Rfam staying reachable |
+| `gtdb/*.subset.json`, `gtdb/datasets*.json` | which sequences each subset took, with which seed, and the manifests the workflow reads |
+| `bacteria/donor_pool.*` | the bacterial donors for the foreign-sequence cells, aligned on the same model |
+| `*/*/*.truth.json` | what was injected in each dataset. Every detection number is scored against it |
+| `*/datasets.json` | the manifest of each family of datasets |
+| `clade/`, `simulated/`, `grove_sim/`, `grove/` | small enough to keep whole |
 
-## Not kept
+## Regenerated
 
-**`raw/ssu_all_r226.fna.gz`**, 73 MB. Fetched by URL with its sha256 recorded in
-`assets/datasets.yml`, which is a stronger guarantee than a copy in git.
+These are rebuilt from their seeds, without a cluster, a container or the network.
 
-**The per-cell `warn.txt`**, one per generated cell. Each generator redirects its stderr there, and
-225 of them were committed -- every one empty, while a full regeneration writes a real note into
-**90 of the 180 injected cells**: whole groups of *k* cannot be split, so a cell asked for 101
-injections at rate 0.05 and *k*=10 gets 110, an effective 5.44 %. A committed file asserting that no
-cell warned, where half of them do, is worse than no file. The note is a transcript of a run; the
-record is `truth.json`, which carries `n_requested`, `n_injected` and `rate_effective` for every cell
-and is checked by `verify_injection.py`.
+| generator | rebuilds |
+|---|---|
+| `slurm/make_grid.sh` | the `.tax` of the 180 injected datasets and their `.fasta` links |
+| `slurm/make_foreign.sh` | the nine foreign-sequence datasets |
+| `slurm/make_clade.sh`, `slurm/make_simulation.sh` | refresh the links of the committed clade and simulated datasets |
+| `slurm/make_chimera.sh`, `make_ragged.sh`, `make_width.sh`, `make_grid_bac.sh` | the chimera, ragged, width and bacterial datasets |
 
-**`*.pfam`**, 23 MB. The Pfam-format output of `cmalign`; `*.aligned.fasta` is the same alignment in
-the form everything downstream reads.
+An injected dataset's `.fasta` is a symlink to `data/gtdb/gtdb_arc2k.fasta`, since injection rewrites a
+taxonomy and never an alignment. The links are relative.
 
-**The per-cell `.tax` and `.fasta` of the 180 injected cells**, 58 MB of `.tax` and 180 symlinks. Each is the base taxonomy with
-a few hundred labels rewritten, and `slurm/make_grid.sh` rebuilds all 180 from their seeds in under
-a minute with no cluster and no container. The alignment is shared, so each cell's `.fasta` was only
-ever a symlink to the base.
+`bin/verify_regeneration.py` builds the first four generators' output in a scratch tree and compares
+every file, symlinks by target, with the committed one. `bin/verify_manifests.py` checks that each
+manifest describes its files: sequence counts, one alignment width, no absolute path. Both run in
+`bin/analyses.sh`.
 
-Checked, because "reproducible from the seed" is the sort of claim that is usually almost true:
-regenerating the grid on macOS under python 3.14 gives `.tax` files whose md5 matches the python
-3.12 Linux ones byte for byte, and `truth.json` files identical in all 180 cells. The only
-field that moved was
-`source`, which recorded the absolute path of the input and therefore could not match between two
-machines; it now records the input's name and sha256, which can.
+## Not committed
 
-That check named the `.tax` and the `truth.json` and stopped there, which is narrower than what it is
-used to license: a cell also carries a `.fasta`, and that is the file SATIVA reads. It is now
-`bin/verify_regeneration.py`, run by `bin/analyses.sh` rather than by hand: a root holding nothing but
-the kept inputs above, the four generators run into it, and every file they write compared with this
-tree's. **719 files, 719 identical**, in 18 seconds, no cluster and no container. Counting only what
-the experiments themselves consist of, without the manifests and the ground truth, that is
-**481 files -- 360 injected, 18 foreign, 27 clade, 76 simulated**.
-
-It is run that way because the way it was run before could not work. It was run from a fresh clone
-"with nothing but the generators", and a fresh clone is where two of the four experiments are not
-regenerated at all: the clade and simulated cells **are** committed, every generator skips a cell whose
-`.tax` is already there, so for 103 of those files the check compared git's content with itself. Their
-reproducibility was unmeasured until the cells were deleted and rebuilt, which they now are, in a tree
-that is not this one. They do come back byte for byte.
-
-The caveat that keeps the number honest: **225 of the 235 regenerated `.fasta` are symlinks** to a base
-alignment, because injection rewrites a taxonomy and never an alignment. A link is therefore compared by
-its target and not by the bytes it points at -- comparing those compares one file with itself, which is
-how 45 committed links stayed absolute and unnoticed, naming
-`/Users/auguste/Documents/git/sativa-epang-benchmark` in every clone on every other machine. The ten
-real `.fasta` are the nine foreign cells and the simulated reference, and those are where a content
-comparison bites.
+- `raw/ssu_all_r226.fna.gz`, 73 MB. It is fetched by URL and its sha256 is in `assets/datasets.yml`.
+- `*.pfam`, the Pfam-format output of `cmalign`. `*.aligned.fasta` is the same alignment in the form
+  everything downstream reads.
+- `warn.txt`, the notes a generator writes about a dataset. The record is `truth.json`, which holds
+  `n_requested`, `n_injected` and `rate_effective`. For example, a request for 101 injections at
+  *k* = 10 gives 110, because groups of *k* cannot be split.

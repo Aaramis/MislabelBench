@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use MislabelBench or its results, please cite it as below, and the SATIVA-epang article."
+title: "MislabelBench: a benchmark of taxonomic mislabel detection with known injected errors"
+type: software
+version: "1.0"
+license: MIT
+repository-code: "https://github.com/Aaramis/MislabelBench"
+url: "https://github.com/Aaramis/MislabelBench"
+abstract: >-
+  180 datasets built on GTDB r226 archaeal 16S rRNA with a known number of injected
+  taxonomic label errors of seven kinds, a simulated control, and a Nextflow workflow
+  that scores SATIVA and SATIVA-epang on them. Code under MIT, data under CC BY-SA 4.0.
+keywords:
+  - taxonomy
+  - mislabelled sequences
+  - phylogenetic placement
+  - benchmark
+  - reference databases
+  - EPA-ng
+  - nextflow
+authors:
+  - family-names: Gardette
+    given-names: Auguste
+    orcid: "https://orcid.org/0009-0009-7635-8344"
+    affiliation: "IRD, Sorbonne Université, UMMISCO"
+  - family-names: Belda
+    given-names: Eugeni
+    orcid: "https://orcid.org/0000-0003-4307-5072"
+  - family-names: Zucker
+    given-names: Jean-Daniel
+    orcid: "https://orcid.org/0000-0002-5597-7922"
+  - family-names: Lundin
+    given-names: Daniel
+    orcid: "https://orcid.org/0000-0002-8779-6464"
+  - family-names: Stamatakis
+    given-names: Alexandros
+    orcid: "https://orcid.org/0000-0003-0353-0691"

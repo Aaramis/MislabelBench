@@ -1,725 +1,104 @@
-# sativa-epang-benchmark
-
-Does replacing SATIVA's placement engine with EPA-ng change its answers, and what does it cost?
-
-SATIVA (Kozlov *et al.* 2016) finds mislabelled sequences in a taxonomic reference by removing each
-one and placing it back into a tree built without it. Its leave-one-out uses RAxML, which bounds it
-to a few thousand sequences. [sativa-epang](https://github.com/Aaramis/sativa-epang) replaces the
-placement engine with EPA-ng (Barbera *et al.* 2019) and splits the leave-one-out into stages a
-workflow manager can distribute. The classification rule is upstream's, unchanged.
-
-This is a benchmark of that modification, not a new method.
-
-The paper's figure is `results/candidates/figure3.svg`, built by `bin/paper_figure.py` from the committed tables:
-wall clock against reference size for both tools, the stages at one, two and four nodes, the exclusion
-column against confidence as a filter, and recall against *k*. It is written as SVG directly rather than
-with a plotting library, so that the analysis layer keeps importing nothing outside the standard library
-and so that the figure can be checked byte for byte like every other record here. Every value it draws is
-also in `results/figure1_values.tsv`.
-
-## What it measures, and what it found
-
-Numbers below are medians over replicates on one pinned CPU model. GTDB r226 archaeal 16S, 7 051
-sequences for the headline and a 2 023-sequence subset drawn by whole taxa for the grid.
-
-**Speed.** 262.4 s against 2 983.6 s on the full set: **11.4x** in wall clock, medians over 4 fork
-replicates and 4 upstream. The more useful figure is **16.4x** in **CPU time**, because upstream
-saturates the eight threads it is given, 7.97 of 8, while the fork uses 5.54. It was 7 fork
-replicates, 263.4 s and 11.3x until finding 152: three of the seven came from the staged experiments,
-whose whole-run control is submitted 48 ms before a stage that builds the same reference tree, and
-their reference stage takes 71 s against 42.5 in a run that has the machine to itself. On the 2 023-sequence
-subset, 7 replicates each, the pair is **16.5x and 29.7x**. At 402 sequences the fork uses 3.09 of 8
-threads, so on a small reference it should be given fewer. Every figure here is a row or a line of
-`results/resource_usage.txt`, which `bin/analyses.sh` rebuilds; read it rather than this paragraph if
-the two ever disagree. They did: this said 262, 2 950, 11.2x, and **19.3x and 35.3x** for the subset,
-the last pair taken from one replicate before the others had run and 17 % and 19 % above the medians
-that replaced it.
-
-**Memory.** The question this file opens with has two halves and only one of them was answered here
-until now. At 7 051 sequences the fork's process-tree peak is **36 147 MB against upstream's 727**, a
-factor of **49.7**; by largest single process it is 9 396 against 603, a factor of 15.6. The peak was
-36 250 and the factor 49.8 until nine more whole runs of that size were measured on 8 October, which
-moved the median by 0.3 %: the paragraph below says to read the table rather than this one when the two
-disagree, and they had. Both are
-printed because they answer different questions -- `ru_maxrss` is what one process needs, the tree is
-what the machine needs -- and the gap between them appears exactly where concurrency does: **1.07x at
-one thread, 3.55x at eight**.
-
-The fork's footprint is proportional to its reference, **4.47 to 5.14 MB per sequence at eight threads
-across a seventeen-fold size range and 1.15 at one**, where upstream's converges to 0.108. That gap
-between the two thread counts is the finding: the per-sequence cost is a property of how many placements
-the tool runs at once, not of the reference.
-
-| sequences | one thread | eight threads | ratio |
-|---|---|---|---|
-| 402 | 1.18 | 4.59 | 3.88 |
-| 2 023 | 1.11 | 4.61 | 4.14 |
-| 7 051 | 1.15 | 5.13 | 4.47 |
-
-**At one thread the law is flat over a seventeen-fold range** -- 1.18, 1.12, 1.11, 1.15 at 402, 801, 2 023
-and 7 051 sequences, three runs each and every one of the four reproducible to the megabyte -- while
-at eight it is 4.59, 4.47 and 4.61 at 402, 801 and 2 023 sequences and then 5.06, 5.12, 5.14 and 5.13 at
-2 507, 3 001, 4 001 and 7 051. So the rise exists only with concurrency and it is complete between 2 023
-and 2 507. The eight-thread peak is **4.35 to 4.51 times** the one-thread peak at 7 051 sequences against
-the four placements the tool runs side by side: the work costs 1.15 MB per sequence and the rest is the
-price of doing it four times at once, which is the half of the advice this file opens with.
-
-**The 1.15 MB carries an alignment width, and the width is half of it.** Measured on the same 2,023
-sequences at 300, 600, 900, 1,200 and 1,478 columns (`slurm/width.sh`, `results/memory_width.json`),
-the largest process's peak is linear in columns: 974 MB + 0.389 kB per sequence and per column at one
-thread, 922 MB + 0.583 kB at eight, residuals under 13 MB. Per sequence and per placement that is
-0.48 MB independent of the width plus 0.39 kB per column, 1.04 MB at 1,478 columns; doubling the
-alignment adds 55 % at one thread and 65 % at eight, not 100 %. The width-independent part scales
-with the sequences, since at fixed width the per-sequence peak is flat from 402 to 7,051. Every
-archaeal alignment here is 1,478 columns (cmalign --matchonly on RF01959), which is why the width
-never showed; the bacterial 1,533 and the Grove 1,778 agree with the line.
-
-One thread is also the only reproducible figure, and it is reproducible to the megabyte: three runs give
-**2 253 MB exactly** at 2 023 sequences and **8 090 MB exactly** at 7 051. At eight threads nine runs at
-2 023 spread 8 294 to 9 830, 18 %, and at sixteen three runs spread 6 554 to 9 216, 41 %. What the peak
-measures is how many placements were live at the same moment, which is a scheduling accident, and 801
-sequences is the case where it can be counted. Three eight-thread runs of identical work, 16 to 18 s each
-and the same 148 MB read, report 3.5, 3.8 and **1.1 GB**, with virtual memory a third as well. One thread
-at that size gives **899 MB in all three runs**, so in units of a single placement those three
-eight-thread runs are **3.99, 4.33 and 1.25**: four placements live at the high-water moment, four, and
-one. So a thread count is a precision choice as much as a memory one, and the figures above are medians
-for that reason.
-
-Take 5.13 for a large reference at eight threads. Read medians and not runs: this paragraph claimed a step
-and then a slope, both from one run at one new size, before `slurm/memstep.sh` had three at 3 001 -- 4.88,
-5.12, 5.15 -- and the eight runs at 2 023 spread 4.10 to 4.86. That is the number a user needs,
-because it is a ceiling rather than a slowdown: **64 GB holds 14 227 sequences at eight threads and
-58 850 at one**. So threads buy speed and are paid for in memory, which is the other half of the
-advice the paragraph above ends on -- on a small machine, give the fork fewer.
-
-Both the speed and the memory factors are measured against a comparator that is **not doing the same
-arithmetic**: above 402 sequences upstream builds its reference under GTRCAT and the fork under
-GTRGAMMA, four rate categories against one, because the two ship different `sativa.cfg` files. So the
-speed ratios are conservative and the memory ratio is inflated, and neither is like for like. How much
-that is worth was measured rather than argued, by giving the fork upstream's own reference file with
-`-r`: the rate model is worth **-0.019** of recall and the placement engine **+0.284** on the same
-cell. The qualification belongs on the ratios; it does not touch the detection result. Same table, same rule:
-read `results/resource_usage.txt` rather than this paragraph if the two disagree. They did, by a
-factor of four, until the staged runs' per-stage tasks stopped being pooled with the whole runs.
-
-**The harness was validated against version 1, which has since been removed.** The plan's first
-milestone asked for the new harness to land on version 1's figure of ~109 s for upstream at one thread.
-It did not: on an exclusive epyc-9754 with the model pinned it measured **135.8 s, spread 0.9 s over
-three replicates**, against 109.0 s on a 32-core workstation. The measurement is tight, so the 24 % was
-the hardware and not the harness — single-threaded RAxML is bound by per-core speed and a 128-core part
-is not where that is found.
-
-Seconds from two machines cannot be compared; the answer can, and it was identical: `a1aa0f35…`, 48
-flags, in all three replicates and in all three of version 1's. Version 1 ran sativa 0.9.3 from a
-hand-built conda environment, this runs bioconda sativa 0.9.3 in a container pinned by build string, and
-the two produced the same `.mis` to the byte.
-
-Version 1 and its ITS datasets have since been removed, so this is a measurement that was performed and
-recorded here, not a check that still stands: the job script, the n800 dataset it ran on and the version 1
-runs it compared against are all gone. Its three run records went with them rather than being left for a
-gate to report as belonging to no script, which is what `bin/verify_timing_flags.py` had begun doing.
-
-**Determinism, across CPU architectures and not only across runs.** The same cell and the same seed
-produce a byte-identical `.mis` on hardware nine years apart, on three CPU models, and on a cluster
-that was destroyed and rebuilt from this repository in between. Four independent productions of
-`inj_species_r0.05_k3_s1` under `epang_T8_K25`, each a separate Slurm job with its own work
-directory:
-
-| run | node | CPU | wall | md5 of the `.mis` |
-|---|---|---|---|---|
-| grid cell | cpu-node-123 | AMD EPYC 9754 | 38.0 s | `b41934ad…` |
-| determinism, 2 Oct | cpu-node-37 | Intel Xeon E5-2695 v3 | 66.0 s | `b41934ad…` |
-| determinism, rerun | cpu-node-16 | Intel Xeon E5-2695 v3 | 56.3 s | `b41934ad…` |
-| determinism, rebuilt cluster | cpu-node-104 | AMD EPYC 7662 | 47.7 s | `b41934ad…` |
-
-And 42 more cells, which were run twice before anyone thought to compare them. `results/kaxis` and
-`results/ksweep` are earlier, smaller runs of cells the 180-cell grid also covers, so each of their 42
-run directories has a counterpart computed by a different Slurm job at a different time. All 42 `.mis`
-are byte-identical to that counterpart, and **no pair shares a wall time** -- the widest is 731.8 s
-against 526.2 s, 39 % apart -- so they are separate executions and not copies.
-`bin/verify_duplicate_runs.py` is the check; it is not a separate result, and the grid is where those
-cells' numbers are reported.
-
-A 1.7-fold spread in seconds and the same 161 flags to the byte. The last row is the one that tests
-more than the tool: the cluster it ran on had been deleted and rebuilt from this repository, with the
-containers pulled again from their recipes, and it returned the same file. Two of the three rows are records you
-can open: the grid cell and the rerun. The 2 October row is not -- `determinism.sh` opens by clearing
-its own output directory, so its successor wiped that run's `.mis`, and what survives is
-`results/pipeline_info/trace-determinism.txt` giving the task 1m 9s against the rerun's 58.7 s. The
-cross-vendor claim does not rest on it: the surviving determinism record is the Intel one,
-`cpu-node-16`, and the grid cell is `cpu-node-123`, which Slurm reports as `epyc-9754`. That record
-carries no `cpu_model` of its own, which is the gap `bin/verify_runs.py` reports on every run. `slurm/determinism.sh` is what
-re-runs it, and it is also the only check that exercises the pipeline rather than the analysis layer:
-`bin/analyses.sh` rebuilds every number from the run directories and never invokes Nextflow.
-
-**Reproducibility of the timings themselves.** The fork varies by 1 % across two nodes of the same
-model. Upstream agrees to 0.7 s on one node and differs by a third between two, which is why every
-number here is a median over replicates and why `run.json` records the CPU model.
-
-**Detection, and a claim an earlier version of this benchmark does not support.** The first version,
-on ITS data with one replicate per scenario, reported that upstream found 28 of 33 injected mislabels
-and the fork 33, and attributed every miss to several
-sequences sharing one wrong label, which "a strict leave-one-out cannot see and a fold can". A
-180-cell grid does not bear that out. Recall falls with the number of sequences sharing the wrong
-label, *k*, for both tools alike: 0.94 at *k*=1 to 0.13 at *k*=10. What predicts detection is not *k*
-and not the fold count but the proportion of a sequence's surviving relatives that carry the wrong
-label, and recall runs 0.87 down to 0.01 across that range.
-
-**What the fork does find, which the first version missed.** On the complete 180-cell grid the fork detects
-more than upstream at intermediate *k*:
-
-| *k* | cells | mean difference | fork better | upstream better | tied | sign test |
-|---|---|---|---|---|---|---|
-| 1 | 36 | +0.006 | 14 | 5 | 17 | 0.064 |
-| 2 | 36 | **+0.240** | 34 | **0** | 2 | 1.2e-10 |
-| 3 | 36 | +0.152 | 34 | **0** | 2 | 1.2e-10 |
-| 5 | 36 | +0.104 | 28 | 1 | 7 | 1.1e-07 |
-| 10 | 36 | +0.005 | 9 | 2 | 25 | 0.065 |
-
-At *k*=2 and *k*=3 no cell of the 36 favours upstream. Over the whole grid the fork is better in
-119 cells, upstream in 8, and the two tie in 53.
-
-Both ends are flat for opposite reasons: *k*=1 is a ceiling, where one relabelled sequence per group
-leaves the rest of the group correct and both tools detect 0.92 and 0.94, and *k*=10 is a floor,
-0.12 and 0.13.
-
-Where the two disagree on an injected sequence, across all 11 178 injections, the fork alone is
-right 1 243 times against upstream's 115. That ratio is the wrong thing to quote alone, so: both
-tools find 4 203, **neither finds 5 617 — half of every mislabel injected**. The fork finds 48.7 %
-of them and upstream 38.6 %. The gap between the tools is real and smaller than the gap between
-either tool and the truth.
-
-**The obvious objection, answered: the fork does not simply flag more.** It raises **25 772 flags
-against upstream's 23 758, 8.5 % more**, and finds **26.1 % more injected errors**. The extra calls
-are therefore better than its average call, not worse: of the flags the fork raises and upstream does
-not, **26.5 % are injected mislabels**, against 19.9 % of the flags both raise and **4.3 % of
-upstream's own unique flags**. A tool that gained recall by lowering a threshold would show the
-opposite, its unique calls being poorer than its agreed ones. `results/disagreement_truth.json`, whose
-script prints the same shares per taxonomic distance.
-
-**And the cause is the engine, not the fold scheme.** `epang_T8_Kexact` places one sequence per
-fold, which is upstream's own leave-one-out protocol run through EPA-ng, so it separates the two
-changes. On two *k*=2 cells the engine with the folds removed is worth +0.284 and +0.177, while the
-fold scheme with the engine held fixed is worth −0.020 and 0.000.
-
-**And the engine's share decays with *k*, while the fold scheme contributes nothing at any *k*.** Two
-more cells at the same distance and rate complete the axis:
-
-| *k* | upstream | strict leave-one-out | 25 folds | engine | fold scheme |
-|---|---|---|---|---|---|
-| 1 | 0.921 | 0.960 | 0.960 | **+0.040** | 0.000 |
-| 2 (seed 1) | 0.402 | 0.686 | 0.667 | **+0.284** | −0.020 |
-| 2 (seed 2) | 0.471 | 0.647 | 0.647 | **+0.177** | 0.000 |
-| 3 | 0.343 | 0.490 | 0.490 | **+0.147** | 0.000 |
-| 5 | 0.114 | 0.229 | 0.229 | **+0.114** | 0.000 |
-| 10 | 0.182 | 0.200 | 0.200 | **+0.018** | 0.000 |
-
-So the whole of the fork's advantage is the placement engine, and it rises from +0.040 at *k*=1 to
-+0.28 at *k*=2 before decaying through +0.147 at *k*=3 and +0.114 at *k*=5 to +0.018 at *k*=10. The
-axis is complete at family distance and rate 0.05: six cells, every value of *k* the grid uses, and the
-fold scheme's share is 0.000 in all six.
-
-**And "the engine" means the engine, not the rate model and not the fork's scoring code.** Above 500
-sequences upstream builds its reference under GTRCAT and the fork under GTRGAMMA, because
-`sativa.cfg` sets `raxml_model=auto` in one and `GTRGAMMA` in the other while the rule they share
-switches at 500; a second difference nobody had noticed and which `slurm/shared_reference.sh` removes: upstream builds the
-reference, the fork's staged leave-one-out places against that same file, and the borrowed arm's own
-record says GTRCAT. On `inj_family_r0.05_k2_s1` recall is then **0.402 for upstream, 0.686 for the fork
-on upstream's reference, 0.667 for the fork on its own** -- the engine worth +0.284 with model and tree
-held identical, the rate model worth -0.019. The two differ in two things at
-once, so a third arm was run: the fork with `SATIVA_L1O_ENGINE=raxml`, the same codebase driving the
-other engine. Over the campaign's 82 cases it agrees with upstream **78 times out of 78** where both
-arms ran, and of those 82 cases exactly **one** has the fork driving EPA-ng flagging where upstream
-misses: the cell itself, 2 023 sequences and 102 wrong labels. `bin/minimal_case_summary.py` reads this
-back out of the arms' `.mis` files rather than out of the tables the runs wrote.
-
-That sweep also says what the advantage is not. Cut the sequence out into a reference of its own, from
-2 023 sequences down to 22, and all three arms flag it at the same confidence to three decimals. Put it
-back on the whole reference with one wrong label and all three flag it; with two, all three miss it;
-with ten, all three miss it; only at the cell's full 102 does the fork flag it alone. So the fork is not
-better at placing hard sequences, it is better on a reference whose labels are already wrong.
-
-Where that changes is now measured, one wrong-label count at a time on the whole reference:
-
-| wrong labels | SATIVA | fork, EPA-ng | fork, RAxML |
-|---|---|---|---|
-| 1 | FLAG 1.000 | FLAG 1.000 | FLAG 1.000 |
-| 2, 10, **20** | miss | miss | miss |
-| **40** | miss | **FLAG 1.000** | **miss** |
-| **60** | miss | **FLAG 1.000** | **miss** |
-| **80** | miss | **FLAG 1.000** | **miss** |
-| 102 | miss | **FLAG 1.000** | miss |
-
-So the fork starts finding this sequence between **20 and 40** wrong labels in its reference, and at 40,
-60 and 80 alike the third arm says what does it: the same codebase driving RAxML misses where driving EPA-ng
-flags, so the cause is the engine and not the scoring, as it is at 102. The advantage is not a better
-placement of a hard sequence, it is a placement that survives a reference whose labels are already wrong,
-and it needs a certain amount of wrongness before it appears at all. One sequence is one sequence, and
-what the grid adds to it is the 82-case campaign where fork_raxml agrees with upstream 78 times out of 78.
-`results/minimal_case/ramp_counts_bracket/` holds the 20, `ramp2_n40/` and `ramp2_n60/` the rest.
-The one axis that is now ruled out is how much reference surrounds the sequence: at a single wrong
-label, outgroups of 20, 30, 50 and 70 sequences all give the same verdict from all three arms at
-1.000 to three decimals (`outgroup_small`), so the transition is in the labels and not in the size.
-`results/minimal_case/` holds all sixteen sweeps, 91 cases in `results/minimal_case_summary.tsv`. That is what the surviving-label account predicts: by *k*=10 the carriers that remain
-confirm the wrong label whichever engine places against them.
-
-The fold column needs one qualification. It compares twenty-five folds against strict leave-one-out and
-finds **exactly zero at every *k* measured**. Five folds is a different matter: it sits above both at
-*k*=5 (**0.248**) and *k*=10 (**0.227**), which is the same effect the fold sweep found across the grid.
-Batching does nothing until the batches are large, and then it adds a little at high *k*.
-
-The same conclusion falls out of the whole grid rather than two cells, by testing the mechanism the
-fold scheme would have to work through. If the fork's advantage came from a co-carrier leaving with
-its target when a fold is removed, the gain would track
-P = 1 − (1 − 1/K)^(*k*−1), and it does not: P predicts **+0.022 at *k*=2 where the gap is +0.240**,
-eleven times larger, and **+0.257 at *k*=10 where the gap is +0.005**. The second test is sharper
-still, because it moves P without moving anything else -- running five folds instead of twenty-five
-raises P at *k*=2 from 0.04 to 0.20 and recall falls by 0.011, the wrong way. `results/fold_mechanism.json`.
-
-The fold scheme does something, but only at the highest *k* and only a little. Comparing conditions
-cell by cell at *k*=10: five folds instead of twenty-five gains 0.035 and is better in 17 of the 18
-cells where the two differ; dealing the folds in tree order instead of by sequence name removes 0.036
-and is worse in 18 of 18. At *k*=1 a larger fold costs accuracy instead, because it takes more of a
-sequence's true relatives with it.
-
-Two checks stand behind those two sentences. The fold-order conditions differ from their base
-conditions in **180 cells of 180** -- the `.mis` files are not byte-identical anywhere -- so
-`SATIVA_EPANG_FOLD_ORDER` does reach the container and the comparison is not a condition against
-itself, which `run.json` could not have told you since it records what was declared. And the three
-paired comparisons of this family are 15 tests together, so the two claims above are stated at
-p = 0.000145 and p = 7.6e-06 against a Bonferroni threshold of 0.05/15 = 0.0033, which both clear by
-more than an order of magnitude. The *k*=3 effects in the same family, p = 0.0064 and 0.0025, do not
-clear it as decisively and are not claimed here.
-
-**The baseline is not a fixed reference point.** Reporting flags added above the un-injected
-baseline assumes the pre-existing flags stay put. They do not: injecting a wrong label moves a
-sequence in the tree and changes the placement of its neighbours. Over the 180 cells, against a
-baseline of 93 flags, a typical cell **loses 11 of them** (12 %, up to 21) while gaining 29 (31 %, up
-to 70). So the churn is about 40 flags where the net change is 18, and a count of added flags
-describes the smaller half of what injection does to the background.
-
-**And they fall where the injection landed.** 2.4 asks for a locality measure beside the collateral
-count, because scattered collateral would mean injection destabilises the whole tree rather than its
-neighbourhood. Of 5 917 collateral flags, **4 623, or 78.1 %, lie in a clade the injection touched**, and
-the share tracks the distance injected: 95.4 % at phylum down to 58.0 % at species. So the effect is
-local and explainable, more so the coarser the error. `results/collateral_locality.txt`.
-
-That is the measurement behind Q6 of the protocol, which asks whether reporting both directions is
-the right rule. It is reported in both directions here, `results/background_stability.tsv`, because
-the answer turned out to matter: 12 % is not a rounding error on a baseline.
-
-**What the fork's new column is worth, which is not what it looks like.** `OriginalLabelExclusion` is
-the ninth `.mis` column and the fork's own addition, and the protocol asks for recall against it as well
-as against `Confidence`. It is not a better score and the paper must not claim it is. **99.0 % of the
-grid's 25 772 flags have exclusion >= 0.99**, so the column is saturated: no threshold on it brings the
-calls on untouched sequences below 19 809 of 20 326, where a threshold on confidence reaches 10 320.
-One column filters and the other does not.
-
-What it does settle is a third of the calls. **8 057 flags, 31.3 % of them, sit at confidence exactly
-0.510** — a point mass, not a cluster: 305 flags lie at 0.509 and 85 at 0.511, against a background two
-orders of magnitude below. That value is what `parent_lhw_coeff` produces when the declared taxon holds
-no placement weight at all, and **every one of the 8 057 carries exclusion >= 0.99**, which is the column
-saying so independently. Without it a user reading confidence alone down-weights a third of the fork's
-calls because of a stem geometry rather than because of the evidence. Both readings are right about
-different questions, and that is the honest claim about the column: it explains calls, it does not rank
-them. Every figure here is in `results/column_comparison.json`, with
-`results/stem_flags.txt` and `results/threshold_holdout.json` beside it.
-
-The practical consequence is to run with `-C` above 0.51, and a held-out selection reaches it without
-being told: fitting on seed 1's 60 cells and reporting on the other 120, the tightest reachable budget
-picks **0.511** — immediately above the stem value — and held-out collateral falls from 3 960 to 1 656,
-a 58 % cut, for 4.0 points of recall. At the same budgets the exclusion column has no threshold to offer
-at all: "budget unreachable" at 27.9 collateral flags per cell and below, where confidence still has one.
-That is the same conclusion as the saturation above, by a route that never looks at the column's
-distribution.
-
-**Agreement with upstream, the non-regression control, and what it actually returns.** On the
-un-injected sets the two tools share **82 of 103** flags at 2 023 sequences, Jaccard **0.80**, and
-**350 of 520** at 7 051, Jaccard **0.67**. The fork flags more and increasingly so with size: 93
-against 92 at 2 023, which is level, and 469 against 401 at 7 051, **17 % more**. Where both flag the
-same sequence they name the same wrong rank **95.1 %** and **98.3 %** of the time; they propose the
-same replacement **lineage** -- the whole path, which is the strict reading -- **85.4 %** and
-**79.7 %**, and the same replacement **label at the flagged rank alone 90.2 %** and **90.9 %**. Both
-statistics are in `results/agreement_*.json` as `agree_path` and `agree_label`, and they are named here
-because "they agree on what they propose" is two different numbers.
-
-That is weaker than "an unchanged decision rule" invites a reader to expect, and the explanation is not
-in the rule: the classification, the branch labelling and the confidence are upstream's, unchanged, and
-what differs is the placements handed to them.
-
-**What the marker cannot be asked, and where that bites.** The 7 051-sequence set contains 847
-groups of byte-identical alignment rows, and **54 of them carry conflicting labels** — 7 disagreeing
-first at phylum, 6 at class, 1 at order, 2 at family, 5 at genus, 33 at species, with 52 of the 54
-identical in the unaligned release too. An identical 16S under two phylum labels means the marker
-cannot separate those organisms, so no method placing it can either. That is a ceiling on
-detectability and it belongs to the database, not to either tool.
-
-It bounds the agreement figures above, which are measured on that set. It does **not** bound the
-grid: the 2 023-sequence subset the grid runs on has 241 identical groups and **3 conflicting, none
-above genus**. Three is what chance gives — 54 groups surviving a 29 % subsample at both members is
-4.4 expected — so the recall figures are not limited by this, and the ceiling has to be quoted
-against the set it was measured on.
-
-**Distribution, which is the one thing upstream cannot do at any price.** Upstream places folds only
-inside its own process. The fork splits the leave-one-out into four stages and the harness runs them
-as separate Slurm jobs, one per group of folds. On 7 051 sequences, 25 folds, one replicate each:
-
-| shards | folds per shard | placement | speedup | vs shards | ceiling | vs ceiling | end-to-end span |
-|---|---|---|---|---|---|---|---|
-| 1 | 25 | 194.5 s | 1.00 | — | 1.00 | — | 374 s |
-| 2 | 13, 12 | 111.2 s | 1.75 | 87 % | 1.92 | 91.0 % | 320 s |
-| 4 | 7, 6, 6, 6 | 56.4 s | 3.45 | 86 % | 3.57 | 96.6 % | 314 s |
-
-Efficiency against the shard count is the conventional figure and it is the wrong one to read alone
-here. 25 folds over 4 shards split 7, 6, 6, 6, the step ends when the shard holding 7 ends, and no
-distribution however free beats 25/7 = 3.57. So the 86 % is mostly the arithmetic of 25 not dividing
-by 4: against what the split allows the placement distributes at 96.6 %, and the shards finish within
-0.6 s of each other where the `srun` version produced one straggler per allocation at 124 to 258 s
-against its own 56 to 62. Three things then have to be said together: the distribution is very nearly
-free, the fold count caps what it can buy, and the end-to-end wall clock saturates near 314 s because
-Nextflow's scheduling and staging grow with the task count, reaching 163 s at four shards. At one
-shard the pipeline agrees with the `srun` version to 0.6 %, which is what shows it does the same work.
-
-**Why the *k* axis is not an independent variable.** Injecting *k* sequences from one taxon needs a
-taxon with at least *k*+1 members, so raising *k* shrinks the eligible pool and shifts it towards
-large taxa: at species distance 319 taxa qualify at *k*=1 and 31 at *k*=10. The donor groups actually
-used follow:
-
-| *k* | donor groups | median size | share of the group relabelled |
-|---|---|---|---|
-| 1 | 2 178 | 3 | 0.34 |
-| 2 | 1 098 | 4 | 0.44 |
-| 3 | 738 | 6 | 0.47 |
-| 5 | 450 | 9 | 0.54 |
-| 10 | 234 | 14 | **0.67** |
-
-Every column of that table is in `by_k` of `results/detection_law_*.json`, weighted by injected
-sequence and not by taxon: at *k*=5 the median donor group holds 9 members per injected sequence and 10
-per distinct taxon, and the share is the mean of *k*/size over injections.
-
-So *k* is a proxy for the share of a sequence's relatives that carry the wrong label, which is the
-quantity that predicts detection. The two cannot be separated in this design — holding group size
-fixed while varying *k* would leave 31 taxa to draw from — and that is why the result is reported
-against the surviving-label ratio and not against *k*. The *k* table above is the same axis seen
-twice, which is also why recall falls from 0.92 to 0.13 along it.
-
-**Where those failures belong.** At *k*=10, 92 % of the sequences leave-one-out misses still have a
-correctly labelled neighbour above 99 % identity, so a label conflict inside a cluster catches them
-without any placement. That is a pipeline-level check rather than a tool-level one.
-
-**The other four error kinds, which the typology asks for separately.** Kinds 1 and 2 are the grid
-above. The protocol lists four more, each failing for a different reason, and each is reported here
-rather than left in the decision log.
-
-**Kind 3, a whole taxon misannotated**, removes leave-one-out's usual handle: with every member
-relabelled, nothing correct remains to confirm the label. Over 54 clades and 226 sequences recall is
-**0.097 for the fork and 0.062 for upstream**, and what governs it is not what the protocol expected. A
-clade that can be told apart from the taxon it was mislabelled as is *not* the detectable case — the
-variable is cohesion within the clade, and it runs the other way:
-
-| | fork | upstream |
-|---|---|---|
-| members nearly identical, 39 clades, 167 sequences | 0.012 | **0.000** |
-| diffuse clade, 15 clades, 59 sequences | 0.339 | 0.237 |
-
-Not one of upstream's 167 sequences in a cohesive clade is detected. The reason is that the clade's
-members are each other's nearest neighbours and all now carry the wrong label, so removing one leaves the
-rest confirming it — kind 2's mechanism with *k* equal to the whole taxon. A compact clade does not anchor
-itself against a wrong label; it anchors the wrong label. The two tools differ by 8 sequences in 226,
-which this design cannot call: 50 of 54 clades tie at zero and a sign test over the 4 untied pairs cannot
-report below 0.125.
-
-Three things keep that from being read as more than it is. The 0.99 cut in the table was chosen after
-looking at the gradient, so it describes rather than tests; the test that chooses nothing is the median
-split, where the low half of clades by cohesion reaches **0.1695** against **0.0185** for the high half,
-Fisher **p = 7.9e-05**, and upstream **0.1186** against **0.0000**, **p = 9.6e-05**. Separation is not
-inert either — split at its own median it gives 0.1835 against 0.0171 — but the two variables correlate
-at **r = +0.55** across the 54 clades, and by quintile only cohesion has a threshold: **0.53, 0.05, 0.00,
-0.05, 0.00** as cohesion rises, against separation's gentler **0.16, 0.18, 0.12, 0.00, 0.04**. So the
-protocol's variable sorts because it travels with cohesion, not on its own account. Both gradients are in
-the record as `by_separation` and `by_within`. `results/clade_detection_*.json`.
-
-**Kind 4 tests resolution rather than detection.** It asks a second question of every cell the grid
-already ran: when a mislabel is detected, is it *named* at the rank the injection moved, or is a higher
-rank blamed? Kind 4 proper, correct to genus and wrong at species only, is the shallowest row of the
-table below rather than a separate experiment, which is also why the table spans all six distances. The
-answer improves with distance, pooled over the grid's sequences:
-
-| distance | detected | named at the right rank | resolution |
-|---|---|---|---|
-| species | 690 | 619 | **0.897** |
-| genus | 917 | 863 | 0.941 |
-| family | 971 | 948 | 0.976 |
-| order | 975 | 948 | 0.972 |
-| class | 962 | 932 | 0.969 |
-| phylum | 931 | 927 | **0.996** |
-
-So a rank-depth error costs about a tenth of the detections at the shallowest distance and almost nothing
-at the deepest, and at phylum every detection names phylum for every *k* >= 2.
-
-Pooled over sequences, and the statistic is worth naming because the obvious alternative disagrees:
-averaging each cell's ratio gives 0.82 at species rather than 0.897, since it weights a rate-0.01 cell
-with a handful of detections the same as a rate-0.05 cell with ten times as many.
-`recall_at_injected_rank_mean` in every grid summary carries the per-cell figure.
-
-**Kind 5, incomplete lineages**, is a robustness case rather than a detection one, and it splits. Lineages
-of unequal depth are accepted: a file with a quarter truncated to genus and a quarter to family runs
-through and flags 11. An **empty** lineage is not: it raises `IndexError` in
-`epac/taxonomy_util.py` line 337 while loading the taxonomy, before any placement. Both of the untrimmed
-forms a placeholder-only lineage used to take — `d__;p__;…` and `;;;;;;` — run and flag 14, so what
-breaks the tool is the trimming rather than the missing information. That matters for
-nf-core/taxmarker#40, which produces the trimmed form. `results/ragged_check/`, `results/before_after/`.
-
-Accepting ragged lineages is not the same as detecting as well on them, and the cost is now measured
-rather than left open. The grid's own fifteen cells at family distance and rate 0.05 were rebuilt with a
-quarter of the **untouched** lineages cut to genus and a quarter to family, the injected sequences
-keeping their full lineage so the truth file is the cell's own, byte for byte. Both tools lose recall and
-neither fails:
-
-| | full lineages | ragged | delta |
-|---|---|---|---|
-| sativa-epang | 0.531 | 0.440 | **-0.092** |
-| SATIVA | 0.420 | 0.368 | **-0.052** |
-
-The sign holds in 15 of 15 cells for the fork and 14 of 15 for upstream, so it is not one seed. The two
-numbers that matter beyond the drop: SATIVA accepts ragged lineages too, which `slurm/ragged_check.sh`
-never tested because it only ever ran the fork; and the gap between the tools narrows from **+0.111 to
-+0.072**, a third of the advantage, so a reference whose labels stop early costs the new engine more than
-it costs the old one. Flags on untouched sequences fall as well, 1 905 to 1 591 and 1 869 to 1 627, which
-is expected and reported beside the recall because a lineage that stops at genus cannot be flagged below
-it, and reporting only recall would let that pass for detection. `bin/ragged_cost.py`,
-`results/ragged_cost.txt`.
-
-**Kind 6, a foreign sequence under a plausible label**, is detected almost always: bacterial donors given
-archaeal lineages are flagged at **1.000, 0.967 and 0.941** by the fork across the three injection rates
-and 1.000, 0.933 and 0.957 by upstream. The protocol's caveat was that poor alignment rather than
-placement might be doing the work, and it is not: within the donor pool the alignment score does not
-separate the flagged from the escaped, medians 1009.14 against 1009.16 bits, and below the 5th percentile
-of score 20 donors are flagged and 0 escape where 19.0 flagged is what independence predicts. The
-escapees are not the badly aligned ones; they are the ones whose archaeal label happens to be shared with
-another donor, which is kind 2 arriving by accident — and that accounts for the whole of it. A donor whose
-archaeal label is its own is flagged **299 times in 299** by the fork; one sharing its label with another
-donor, **74 of 94**, Fisher **p = 7.0e-14**. So every one of the fork's twenty misses is a donor with a
-confederate. The same split holds for upstream, which makes it a property of leave-one-out rather than of
-either tool: **298 of 299** against **78 of 94**, **p = 5.5e-10**, with its one isolated escapee the only
-kind 6 miss this explanation does not cover. Both strata are in the record as `by_label_sharing`.
-`results/foreign_summary_*.json`, `results/foreign_score_vs_flag_*.json`.
-
-**A control where every label is certain.** Injection leaves one hole in itself: the sequences it did not
-touch are only assumed correct, so a flag on one of them cannot be called a false positive. A simulated
-reference closes it — sequences evolved along a tree that *is* the taxonomy, 864 of them — and the answer
-is that **neither tool flags anything**: 0 of 864 for the fork and 0 for upstream, against 93 and 92 of
-2 023 on the real set. So the 4.6 % on real data is the reference's own content and not noise the method
-generates.
-
-Recall there is **1.000 at *k*=1** for the fork at every distance, and 0.992 for upstream, with no
-collateral flags from either, against 0.746 and 133 collateral on the real grid, so that gap is the reference's difficulty rather than the method's ceiling.
-And the surviving-ratio law reproduces out of sample, which is the stronger result: **1.000, 0.990, 0.822,
-0.000** across the ratio bands against the archaeal **0.867, 0.600, 0.327, 0.110, 0.011** — monotone on
-both, collapsing to nothing at the top of the range on both, offset by exactly the heterogeneity a simple
-model cannot reproduce. The law is therefore a statement about leave-one-out and not about GTDB.
-
-**And it is here, where every label is certain, that the two tools separate.** With upstream's arm now
-complete at three seeds, the paired comparison has nine cells per *k* instead of three, and at *k*=3 --
-half of each group relabelled together -- the fork detects more in **9 cells of 9**, recall 0.822 against
-0.657, exact sign test **p = 0.0039**. That is the floor of the test at nine pairs, which is the point:
-at three pairs the floor was 0.25 and no outcome could have been significant, which is why the control
-was given three seeds rather than one. At *k*=1 and *k*=2 both tools are near perfect and the difference
-is not testable; at *k*=5 neither detects anything. So the protocol's claim in 2.2 -- that the fork finds
-shared mislabels upstream misses -- holds in the one setting where the ground truth is not an assumption,
-and it holds at exactly the *k* where the design predicts the margin is visible.
-`results/simulated_summary_*.json`, `results/detection_law_simulated_*.json`,
-`results/paired_simulated_upstream_vs_epang_T8_K25.json`.
-
-**Whether the fork's extra flags are better or noisier**, which the agreement control raises and cannot
-settle. The un-injected set offers one piece of truth: 54 groups of byte-identical sequences carrying
-conflicting labels, 265 sequences of which at least one member must be wrong, 3.76 % of the database.
-Calls the two tools agree on are enriched **1.9-fold** in those groups, p = 0.002, so both are finding
-something real. Upstream's 51 unique calls are enriched **4.2-fold**, p = 0.0006. The fork's 119 unique
-calls sit at **0.89**, 4 observed against 4.5 expected, p = 0.66 — the background rate, and a tight null
-rather than a small-sample shrug. On this measure upstream's extra flags are the better targeted. The
-evidence is weak per sequence, since group membership says one member is wrong and not which, but it is
-weak in the same way for both tools. `results/conflict_enrichment.json`.
-
-## Using the tool
-
-Everything below is the invocation this benchmark actually runs, taken from `modules/local/*/main.nf`
-rather than written out beside it, because a usage note that is not the executed command is the sort
-of thing that goes quietly wrong. `ext.args` is the same for every condition and holds
-`-m ultrafast -C 0.4 -x BAC -p 42 -S`.
-
-The whole leave-one-out in one process, which is upstream's interface unchanged except for the
-environment:
+# MislabelBench
+
+A benchmark for tools that find mislabelled sequences in a taxonomic reference database.
+
+It starts from a real database, GTDB r226 archaeal 16S rRNA, and changes labels on purpose. The errors
+are therefore known, and everything else is real. Seven error types cover a single wrong label, several
+sequences sharing one wrong label, a wrong species in the right genus, a whole taxon misnamed, incomplete
+lineages, sequences from another domain and chimeras. The core is 180 datasets, which vary the distance
+between the true and the false label, the number of sequences carrying it, the share of the database
+altered and the seed. Two controls on simulated sequences, one of them on a RAxML Grove tree, check what
+a real database cannot, and one bacterial order checks that the findings hold on another domain.
+
+It was built to compare [SATIVA](https://github.com/amkozlov/sativa) (Kozlov *et al.* 2016) with
+[SATIVA-epang](https://github.com/Aaramis/sativa-epang), the same method with EPA-ng
+(Barbera *et al.* 2019) as the placement engine. Any other method can be scored on the same data, see
+[docs/adding-a-method.md](docs/adding-a-method.md).
+
+## What it found
+
+SATIVA-epang runs about 11 times faster than SATIVA on 7 051 sequences, and its leave-one-out can be
+split in independent batches across machines. The price is memory, about 36 GB against less than 1 GB at
+eight threads. On datasets with 5 % of the labels changed it finds 28 % more of the injected errors,
+more in 119 of the 180 datasets, fewer in 8. The gain comes from the case where several sequences share
+the same wrong label. More than half of the errors escape both tools. Numbers, tables and the
+reasoning are in [docs/results.md](docs/results.md) and in the paper's supplement.
+
+## Quick start
+
+Nothing below needs a cluster or a container. Python 3.12 and the standard library are enough.
 
 ```bash
-export SATIVA_L1O_ENGINE=epang      # or raxml, to drive the same code with the old engine
-export SATIVA_EPANG_FOLDS=25        # sequences are removed and placed 25 folds at a time
-export SATIVA_EPANG_FOLD_ORDER=tree # optional; default is 'name', see below
-sativa-epang -s aln.fasta -t taxonomy.tax -T 8 -n myrun -m ultrafast -C 0.4 -x BAC -p 42 -S
-```
-
-`SATIVA_EPANG_FOLDS` is capped at the number of leaves, so any value above *n* gives one sequence per
-fold, which is the strict leave-one-out and what `epang_T8_Kexact` uses.
-`SATIVA_EPANG_FOLD_ORDER=tree` deals the folds by traversal instead of by name; left unset, the
-tool's own default stands. Both are measured here and neither changes which sequences are flagged by
-more than the fold count implies.
-
-The same run as four stages, which is what lets the placement cross machines. Each stage is a
-separate process and the first three write what the next one reads. Allows rather than demonstrates:
-in every round measured here the scheduler put all the shards on one node, which
-`pipeline_info/shard_nodes.tsv` records and `DISTRIBUTION.md` discusses.
-
-```bash
-sativa-epang -s aln.fasta -t taxonomy.tax -T 8 -n run -o . <args> -stage reference
-sativa-epang -r run.refjson -T 8 -n run -o . -stage loo-tasks
-sativa-epang -stage loo-place -taskdir $PWD/run.l1o_tasks -T 8 -folds 0/4   # and 1/4, 2/4, 3/4
-sativa-epang -r run.refjson -T 8 -n run -o . <args> -stage loo-score -taskdir $PWD/run.l1o_tasks
-```
-
-Only `loo-place` divides. `-folds i/N` is a stride over the fold list in the task directory's
-`manifest.json`, so the N invocations partition the folds and can run anywhere that can read the
-directory; `DISTRIBUTION.md` is about what that costs and where it stops paying. The reference build
-does not divide, which is what bounds the gain.
-
-The output is upstream's `.mis` with one column added, `OriginalLabelExclusion`: one minus the
-placement weight that fell inside the declared taxon. It answers the question `Confidence` does not,
-which is how much evidence there is *against* the declared label rather than for the proposed one.
-What it is good for, and what it is not, is in the README section above and in the paper's
-supplement.
-
-## Running it
-
-Everything runs as a Nextflow workflow with each tool pinned by container and build string, and each
-dataset by sha256 (`assets/datasets.yml`). There is no conda environment to build.
-
-```bash
-export BENCH_ROOT=/path/to/a/working/copy      # defaults to $HOME/bench
-bash slurm/make_grid.sh                        # the injection grid, 180 cells, from their seeds
-bash slurm/make_foreign.sh                     # error kind 6, nine cells of foreign sequences
-bash slurm/make_clade.sh                       # error kind 3, nine whole-taxon relabellings
-bash slurm/make_simulation.sh                  # 2.1's control, 37 cells on a simulated reference
-slurm/submit.sh slurm/fetch_grove.sh           # RAxMLGrove, pinned by sha256 and by commit
-slurm/submit.sh slurm/make_grove_simulation.sh # the same control on an empirical tree, 37 cells
-slurm/submit.sh slurm/baseline.sh              # both tools on the un-injected database, timed
-slurm/submit.sh slurm/grid_fork.sh             # one condition over the grid
-bin/analyses.sh                                # rebuild every table in results/ from the runs
+git clone https://github.com/Aaramis/MislabelBench && cd MislabelBench
 python3 -m unittest discover -s tests          # the analysis layer's tests
-nextflow run . -stub-run -profile stub_test \
-  --datasets_json data/gtdb/datasets2k.json \
-  --datasets gtdb_arc2k --conditions epang_T8_K25 --staged true   # the workflow itself, no container
+for g in make_grid make_foreign make_clade make_simulation; do bash slurm/$g.sh; done
+bin/analyses.sh                                # rebuild every table from the committed runs, then run every check
 ```
 
-The last one needs only a JVM and takes under a second: `-stub-run` replaces every tool with a few
-`touch` commands, so it exercises the grid, the joins and the shard split and nothing else. It is how
-finding 153 was verified. One caveat it is worth knowing before being surprised by it: a stub run still
-honours the `cpus` and `memory` directives, and this pipeline asks 8 MB per sequence, so a cell above
-about 4 000 sequences will not start on a laptop. Add `-c` with a smaller `process.memory` when the
-point is the dataflow.
-
-The four generators come first because most of the cells they make are not in the repository: they are
-the base taxonomy with a few hundred labels rewritten, or the same alignment with donors added, and
-rebuilding every one from its seed takes a couple of minutes and needs neither cluster nor container
-nor network. The clade and simulated cells are the exception -- they are committed, being small and
-being two experiments' ground truth -- so `make_clade.sh` and `make_simulation.sh` rebuild nothing on a
-fresh clone. Run them anyway: each cell's alignment is a symlink, and the two scripts refresh those
-even for a cell they skip, which is what makes a clone's links point inside the clone. All four are listed because running only the first is not enough and does not fail
-gracefully: `bin/analyses.sh` reaches its truth checks and exits 1 on nine foreign datasets whose
-`.fasta` was never built, after doing twenty-three steps of work. [`data/README.md`](data/README.md) says what is kept
-and what is regenerated, with the check that the regenerated cells come back byte-identical.
-
-The fifth generator is the odd one out and is listed after the other four for that reason. The
-simulated control exists because a flag on an untouched sequence is a false positive only where every
-label is certain, and its tree was chosen by hand, which a co-author objected to. `make_grove_simulation.sh`
-rebuilds the same control on a tree, a substitution model and a missing-data pattern drawn from
-RAxMLGrove, with the taxonomy a deterministic function of the tree (`bin/grove_taxonomy.py`). Unlike the
-other four it is not self-contained: it needs the 140 MB database that `fetch_grove.sh` pins, network
-access to fetch the chosen dataset from GitHub, the Linux simulator that ships inside the pinned scripts,
-and an interpreter with biopython and scikit-optimize, which `GROVE_PY` points at. Run both controls, not
-one: the hand-made reference is regular on purpose and the pair is what separates the method from the
-data's realism.
-
-`bin/restore_cluster.sh` rebuilds a cluster working copy from this repository: code, the kept
-datasets, every generated cell from its seed, and the two container images. `--dry-run` prints the plan
-without touching anything, and it refuses to run against a `~/bench` that already holds results. It
-exists because a cleanup command of mine deleted the cluster home directory and nothing here knew how to
-put it back; nothing was lost, which is what committing `results/` was for.
-
-`slurm/submit.sh` excludes the nodes recorded in `slurm/bad_nodes.txt`, which the jobs themselves
-append to when they land on one without singularity. Every path in every job script hangs off
-`BENCH_ROOT`, so a copy of this repo runs from anywhere.
-
-Two rules the scripts enforce, both learned by getting them wrong first.
-
-**A timed run pins the CPU model.** The cluster mixes four generations and the oldest is about half
-the per-core speed of the newest, so `--constraint` is not optional and `cpu_model` goes into
-`run.json` — into 641 of the 949 records, the rest predating the field. Five of those are trusted
-runs, and `verify_runs.py` says so every time it runs; the four baselines among them report
-`cpu-node-123`, which Slurm reports as `epyc-9754`, the model their script asked for. Untimed runs,
-which answer detection questions, do not pin at all.
-
-The machine a record names is now the one that ran the tool. `host` and `cpu_model` used to be read by
-`COLLECTRUN` from its own `/proc/cpuinfo`, and `COLLECTRUN` is a separate process: under `-profile ifb`
-it is a separate Slurm job placed on its own node. No committed record is known to be wrong, because
-twenty of the twenty-one job scripts run `-profile singularity`, the local executor inside one
-allocation, where every task is on the allocation's node; the one script on `ifb` has tool and collector
-alike on `cpu-node-121` in all three of its rounds. `bin/_timeit.py` reports its host and model from
-inside the tool's task anyway and `collect_run.py` prefers them, falling back to its own for the records
-made before it did, because a field should be measured where the thing it describes happens.
-
-**No run takes the node, timed ones included.** `--exclusive` is charged the whole node, 510 cores on
-an epyc-9754, against a QOS that caps a user at `cpu=600,mem=2000G`. One exclusive task fits only
-while nothing else of ours runs, two are 1 020 cores and four are 2 040, so the distributed rounds
-cannot be made exclusive and were not. It was tried: the three staged rounds carried
-`--constraint=epyc-9754 --exclusive` for a day and their stages sat on `QOSMaxCpuPerUserLimit` until
-they were cancelled. What bounds the interference instead is the spread over replicates.
-
-**A timed run has the harness to itself.** `executor.queueSize = 1` when `params.timed`, which is
-the only cap Nextflow applies across processes: `maxForks` is per process, so setting it through a
-label let one SATIVA and one SATIVAEPANG run side by side, as the baseline trace shows them doing
-for 38 seconds. The allocation was six times larger than the two of them needed, so no published
-number moved, which is luck and not a guarantee.
-
-**A run that is not trusted says so.** `--timing_trusted false` is recorded in `run.json`, and no
-figure reads seconds from a run that carries it.
+The 180 datasets are rebuilt from their seeds in about a minute. `bin/analyses.sh` exits 0 when every
+table matches its runs and every check passes. To rerun the experiments themselves, see
+[docs/cluster.md](docs/cluster.md), and for the map from each result in the paper to its script,
+[docs/reproduce.md](docs/reproduce.md).
 
 ## Layout
 
+| path | content |
+|---|---|
+| `data/` | base datasets, alignments, injected ground truth, manifests. See [docs/data.md](docs/data.md) |
+| `results/` | every run and every table built from them. See [results/README.md](results/README.md) |
+| `bin/` | preparation, injection, scoring, analysis and the `verify_*` checks. `analyses.sh` runs them all |
+| `slurm/` | one script per experiment, plus `make_*.sh` generators |
+| `main.nf`, `modules/`, `conf/`, `nextflow.config` | the Nextflow workflow, one container per tool |
+| `assets/` | `datasets.yml` (every source with URL and sha256) and `containers.yml` (every image with digest) |
+| `tests/` | unit tests and a stub run of the workflow |
+| `docs/` | usage, cluster, data, results, reproduction, distribution |
+
+## The seven error types
+
+| kind | what is changed | datasets |
+|---|---|---|
+| 1 | one sequence gets a wrong label | the grid, *k* = 1 |
+| 2 | *k* sequences share the same wrong label | the grid, *k* = 2 to 10 |
+| 3 | a whole taxon is renamed | `data/clade/` |
+| 4 | right genus, wrong species | the grid, species distance |
+| 5 | lineages of other sequences are cut short | `data/ragged/` |
+| 6 | a bacterial sequence gets an archaeal label | `data/foreign/` |
+| 7 | a chimera of two sequences carries one parent's label | `data/chimera/` |
+
+In the grid, the label is wrong at six taxonomic distances from the true one, from species to phylum,
+for 1 % or 5 % of the database, with *k* sequences per wrong label and three seeds. Each dataset ships
+a `truth.json` that records what was changed. A tool must not read it.
+
+## Scoring a method
+
+A method reads an alignment and a taxonomy and writes a SATIVA-style `.mis` table. Scoring needs one
+command.
+
+```bash
+python3 bin/score_injection.py --truth data/injected/inj_class_r0.01_k1_s1/inj_class_r0.01_k1_s1.truth.json \
+  --mis my_method.mis --out score.json
 ```
-main.nf  nextflow.config  conf/        the harness: grid as channel combines, one container per tool
-modules/local/                         sativa, sativaepang, collectrun, alignssu, and the four
-                                       staged stages: reference, lootasks, looplace, looscore
-bin/                                   preparation, injection, scoring, analysis; analyses.sh runs them all
-slurm/                                 one script per measurement, plus prelude.sh and submit.sh
-tests/                                 unittest over the scripts that turn runs into numbers
-assets/datasets.yml                    every source with version, DOI, URL, date and sha256
-data/                                  the base datasets and the injected ground truth; see data/README.md
-results/                               the measured runs and the tables built from them
-results/candidates/                    the Application Note's figure3.svg, its values table and its
-                                       draft caption, with the panels it was chosen from beside it
-results/figure1.svg                    an earlier composition, kept because REVIEW.md cites it
-```
 
-`results/` is tracked: the runs are the evidence, and the tables are rebuilt from them by
-`bin/analyses.sh`, so a change to any script shows up as a diff rather than as a number nobody can
-re-derive. That sentence was false until the 949 run directories behind the version 2 tables were
-brought back from the cluster — only `run.json` had been kept for them, and every detection number
-is computed from the `.mis` beside it. 949 was the count on the day that was fixed; the repository
-holds **1 371** run records now, and the figure is left as it was rather than silently updated because
-the sentence is about an event. `results/pipeline_info/` holds one Nextflow trace per
-submission, with its gaps listed.
+[docs/adding-a-method.md](docs/adding-a-method.md) gives the file formats and how to put a method
+inside the workflow. To run SATIVA-epang itself, see [docs/usage.md](docs/usage.md).
 
-**[`DISTRIBUTION.md`](DISTRIBUTION.md)** is the distributed leave-one-out: what a fold task
-directory actually contains, why the fan-out is one task per group of folds and not per shard or per
-fold, and the measurements on both the `srun` version and the pipeline.
+## Reproducibility
 
-**[`REVIEW.md`](REVIEW.md)** is a pass over every part of this repository looking for defects rather
-than confirming that it works. Each finding says how it was found and how the fix was checked, grouped
-by whether it had produced a wrong number, was latent, or was introduced by the review itself. It also
-lists what was checked and found correct, and what it does not cover.
+Every tool runs in a container pinned by tag and registry digest, and every input is pinned by sha256.
+The datasets are deterministic from their seeds, and `bin/verify_regeneration.py` checks that a rebuild
+is byte-identical to the committed files. At fixed dataset and seed the workflow gives the same `.mis` on
+three CPU models. Timed runs pin one CPU model and the seconds are comparable only within it.
 
-No count is quoted here. There were three in this paragraph -- findings, those that moved a number, and
-defects the review introduced -- and all three had drifted, which is the defect the report records most
-often. `bin/review_coverage.py` prints which files it never names, and
-`grep -cE '^\*\*[0-9]+\. ' REVIEW.md` counts the findings. The pattern matters: a looser one counts
-`**19.2 MB**` as a finding and a stricter one misses every finding whose first word is in backticks.
+## Licence
 
+Code is under the [MIT licence](LICENSE). Data, results and documentation are under
+[CC BY-SA 4.0](LICENSE-DATA), which follows the GTDB sequences they derive from. Upstream terms for each
+source are in [docs/data.md](docs/data.md).
+
+## Citation
+
+If you use the benchmark, cite the paper and the archived release. [CITATION.cff](CITATION.cff) holds the
+reference.
+
+The release is archived on Zenodo. The code is at DOI 10.5281/zenodo.XXXXXXX and the full runs, with
+the placement files that are too large for git, are at DOI 10.5281/zenodo.YYYYYYY.

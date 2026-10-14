@@ -1,0 +1,46 @@
+{
+  "title": "MislabelBench: a benchmark of taxonomic mislabel detection with known injected errors",
+  "upload_type": "software",
+  "description": "<p>180 datasets built on GTDB r226 archaeal 16S rRNA with a known number of injected taxonomic label errors of seven kinds, a simulated control, and a Nextflow workflow that scores SATIVA and SATIVA-epang on them. Every table of the SATIVA-epang application note is regenerated from this repository. Code under MIT, data and results under CC BY-SA 4.0.</p>",
+  "creators": [
+    {
+      "name": "Gardette, Auguste",
+      "orcid": "0009-0009-7635-8344",
+      "affiliation": "IRD, Sorbonne Université, UMMISCO"
+    },
+    {
+      "name": "Belda, Eugeni",
+      "orcid": "0000-0003-4307-5072"
+    },
+    {
+      "name": "Zucker, Jean-Daniel",
+      "orcid": "0000-0002-5597-7922"
+    },
+    {
+      "name": "Lundin, Daniel",
+      "orcid": "0000-0002-8779-6464"
+    },
+    {
+      "name": "Stamatakis, Alexandros",
+      "orcid": "0000-0003-0353-0691"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "taxonomy",
+    "mislabelled sequences",
+    "phylogenetic placement",
+    "benchmark",
+    "reference databases",
+    "EPA-ng",
+    "SATIVA",
+    "nextflow"
+  ],
+  "related_identifiers": [
+    {
+      "relation": "references",
+      "identifier": "https://github.com/Aaramis/sativa-epang",
+      "scheme": "url"
+    }
+  ]
+}
