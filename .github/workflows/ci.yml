@@ -16,7 +16,7 @@ jobs:
         run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests
       - name: Regenerate the datasets from their seeds
         run: |
-          for g in make_grid make_foreign make_clade make_simulation; do bash slurm/$g.sh; done
+          for g in make_grid make_foreign make_clade make_simulation make_chimera make_ragged make_width make_grid_bac; do bash slurm/$g.sh; done
       - name: Manifests, regeneration, trace table, document paths
         run: |
           python3 bin/verify_manifests.py

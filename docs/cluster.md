@@ -19,7 +19,7 @@ run against a directory that already holds results.
 
 ## Order
 
-The first five scripts regenerate the datasets from their seeds. They need neither the cluster nor a
+The first eight scripts regenerate the datasets from their seeds. They need neither the cluster nor a
 container nor the network, and take a couple of minutes.
 
 ```bash
@@ -28,6 +28,9 @@ bash slurm/make_foreign.sh                     # error kind 6, foreign sequences
 bash slurm/make_clade.sh                       # error kind 3, whole-taxon relabelling
 bash slurm/make_simulation.sh                  # simulated control, 37 cells
 bash slurm/make_chimera.sh                     # chimeras
+bash slurm/make_ragged.sh                      # error kind 5, ragged lineages
+bash slurm/make_width.sh                       # the memory law against alignment width
+bash slurm/make_grid_bac.sh                    # bacterial replication
 ```
 
 Run all of them. `bin/analyses.sh` stops at its truth checks if a dataset was never built.
