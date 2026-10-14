@@ -21,7 +21,8 @@ jobs:
         run: |
           python3 bin/verify_manifests.py
           python3 bin/verify_regeneration.py
-          python3 bin/verify_trace_table.py          python3 bin/verify_doc_paths.py
+          python3 bin/verify_trace_table.py
+          python3 bin/verify_doc_paths.py
   workflow:
     runs-on: ubuntu-latest
     steps:
