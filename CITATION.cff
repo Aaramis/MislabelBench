@@ -3,6 +3,7 @@ message: "If you use MislabelBench or its results, please cite it as below, and 
 title: "MislabelBench: a benchmark of taxonomic mislabel detection with known injected errors"
 type: software
 version: "1.0"
+doi: "10.5281/zenodo.23371116"
 license: MIT
 repository-code: "https://github.com/Aaramis/MislabelBench"
 url: "https://github.com/Aaramis/MislabelBench"
