@@ -1,0 +1,17 @@
+family	datasets	mean_diff	ci_low	ci_high	epang_better	sativa_better	ties	sign_p	wilcoxon_p	wilcoxon_p_holm
+Sequence from another domain	9	0.0056	-0.0221	0.0456	1	3	5	0.62	0.88	1
+Lineage stopping early	15	0.0730	0.0351	0.1136	11	1	3	0.0063	0.0015	0.016
+Whole taxon misnamed	9	0.0394	0.0101	0.0693	4	0	5	0.12	0.12	1
+Chimeras, all	36	0.0167	-0.0014	0.0347	15	5	16	0.041	0.072	0.72
+Chimeras, genus	9	0.0222	-0.0111	0.0611	4	2	3	0.69	0.53	1
+Chimeras, family	9	0.0056	-0.0389	0.0444	3	1	5	0.62	0.75	1
+Chimeras, order	9	0.0222	-0.0222	0.0611	5	2	2	0.45	0.47	1
+Chimeras, phylum	9	0.0167	0.0000	0.0333	3	0	6	0.25	0.25	1
+Single mislabelled sequence (k = 1)	36	0.0063	-0.0017	0.0144	14	5	17	0.064	0.15	1
+Right genus, wrong species	30	0.0513	0.0272	0.0784	18	3	9	0.0015	0.00011	0.0013
+Recall by k, k = 1	36	0.0063	-0.0017	0.0141	14	5	17	0.064	0.15	1
+Recall by k, k = 2	36	0.2401	0.2001	0.2819	34	0	2	1.2e-10	1.2e-10	1.7e-09
+Recall by k, k = 3	36	0.1522	0.1215	0.1858	34	0	2	1.2e-10	1.2e-10	1.7e-09
+Recall by k, k = 5	36	0.1037	0.0750	0.1330	28	1	7	1.1e-07	1.7e-07	2.2e-06
+Recall by k, k = 10	36	0.0047	-0.0011	0.0111	9	2	25	0.065	0.11	1
+Recall by k, all 180 datasets	180	0.1014	0.0840	0.1196	119	8	53	1.7e-26	1.1e-28	1.8e-27

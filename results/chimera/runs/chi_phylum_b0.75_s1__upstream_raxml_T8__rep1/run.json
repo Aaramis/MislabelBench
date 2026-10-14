@@ -34,7 +34,7 @@
     "-n",
     "chi_phylum_b0.75_s1__upstream_raxml_T8__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/chimera/work/87/b87b6df34b8ac482ea9a37b8601a9f/tmp",
+    "$BENCH_ROOT/.nf/chimera/work/87/b87b6df34b8ac482ea9a37b8601a9f/tmp",
     "-m",
     "ultrafast",
     "-C",

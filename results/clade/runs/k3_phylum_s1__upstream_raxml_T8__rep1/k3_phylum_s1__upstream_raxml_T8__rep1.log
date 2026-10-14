@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s k3_phylum_s1.fasta -t k3_phylum_s1.tax -T 8 -n k3_phylum_s1__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/kind3/work/f2/0cb037b596b80d8eceb0b3ec077fdc/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s k3_phylum_s1.fasta -t k3_phylum_s1.tax -T 8 -n k3_phylum_s1__upstream_raxml_T8__rep1 -tmpdir $BENCH_ROOT/.nf/kind3/work/f2/0cb037b596b80d8eceb0b3ec077fdc/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -59,8 +59,8 @@ Species     :	15
 
 Total mislabels: 87 / 4.30 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/kind3/work/f2/0cb037b596b80d8eceb0b3ec077fdc/run/k3_phylum_s1__upstream_raxml_T8__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/kind3/work/f2/0cb037b596b80d8eceb0b3ec077fdc/run/k3_phylum_s1__upstream_raxml_T8__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/kind3/work/f2/0cb037b596b80d8eceb0b3ec077fdc/run/k3_phylum_s1__upstream_raxml_T8__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/kind3/work/f2/0cb037b596b80d8eceb0b3ec077fdc/run/k3_phylum_s1__upstream_raxml_T8__rep1.log
 
 Analysis completed successfully, elapsed time: 1313 seconds (15s reftree, 1298s leave-one-out)
 

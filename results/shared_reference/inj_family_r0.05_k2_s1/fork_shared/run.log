@@ -22,8 +22,8 @@ Species     :	31
 
 Total mislabels: 197 / 9.74 %
 
-Results were saved to: /shared/home/agardette/bench/results/shared_reference/inj_family_r0.05_k2_s1/fork_shared/run.mis
-Execution log was saved to: /shared/home/agardette/bench/results/shared_reference/inj_family_r0.05_k2_s1/fork_shared/run.log
+Results were saved to: $BENCH_ROOT/results/shared_reference/inj_family_r0.05_k2_s1/fork_shared/run.mis
+Execution log was saved to: $BENCH_ROOT/results/shared_reference/inj_family_r0.05_k2_s1/fork_shared/run.log
 
 Analysis completed successfully, elapsed time: 5 seconds (0s reftree, 5s leave-one-out)
 

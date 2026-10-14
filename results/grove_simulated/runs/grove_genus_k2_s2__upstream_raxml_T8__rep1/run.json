@@ -34,7 +34,7 @@
     "-n",
     "grove_genus_k2_s2__upstream_raxml_T8__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/tmp",
+    "$BENCH_ROOT/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/tmp",
     "-m",
     "ultrafast",
     "-C",

@@ -35,7 +35,7 @@
     "-n",
     "grove_genus_k5_s3__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/grove_simulation/work/63/1eee0e4b3b2fa41fc370e4427b8ded/tmp",
+    "$BENCH_ROOT/.nf/grove_simulation/work/63/1eee0e4b3b2fa41fc370e4427b8ded/tmp",
     "-m",
     "ultrafast",
     "-C",

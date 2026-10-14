@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_order_r0.01_k1_s1.fasta -t inj_order_r0.01_k1_s1.tax -T 8 -n inj_order_r0.01_k1_s1__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/work/64/977243ec21a412be475529903a9d0f/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_order_r0.01_k1_s1.fasta -t inj_order_r0.01_k1_s1.tax -T 8 -n inj_order_r0.01_k1_s1__epang_T8_K25__rep1 -tmpdir $BENCH_ROOT/work/64/977243ec21a412be475529903a9d0f/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -48,8 +48,8 @@ WARNING: 4 indistinguishable taxa have been merged into 2 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/work/64/977243ec21a412be475529903a9d0f/tmp/inj_order_r0.01_k1_s1__epang_T8_K25__rep1_1790925588873/RAxML_info.mfresolv_inj_order_r0.01_k1_s1__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/work/64/977243ec21a412be475529903a9d0f/tmp/inj_order_r0.01_k1_s1__epang_T8_K25__rep1_1790925588873/epang_l1out_seq_inj_order_r0.01_k1_s1__epang_T8_K25__rep1 (0.4s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/work/64/977243ec21a412be475529903a9d0f/tmp/inj_order_r0.01_k1_s1__epang_T8_K25__rep1_1790925588873/RAxML_info.mfresolv_inj_order_r0.01_k1_s1__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/work/64/977243ec21a412be475529903a9d0f/tmp/inj_order_r0.01_k1_s1__epang_T8_K25__rep1_1790925588873/epang_l1out_seq_inj_order_r0.01_k1_s1__epang_T8_K25__rep1 (0.4s)
 [epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 23.7s)
 [epang-l1o] placements produits: 2022 (K=25 folds, remap 0.7s)
 [epang-l1o] timing: fold prep 0.4s, epa-ng 23.7s, remap 0.7s, elapsed 24.7s
@@ -66,8 +66,8 @@ Species     :	17
 
 Total mislabels: 117 / 5.78 %
 
-Results were saved to: /shared/home/agardette/bench/work/64/977243ec21a412be475529903a9d0f/run/inj_order_r0.01_k1_s1__epang_T8_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/work/64/977243ec21a412be475529903a9d0f/run/inj_order_r0.01_k1_s1__epang_T8_K25__rep1.log
+Results were saved to: $BENCH_ROOT/work/64/977243ec21a412be475529903a9d0f/run/inj_order_r0.01_k1_s1__epang_T8_K25__rep1.mis
+Execution log was saved to: $BENCH_ROOT/work/64/977243ec21a412be475529903a9d0f/run/inj_order_r0.01_k1_s1__epang_T8_K25__rep1.log
 
 Analysis completed successfully, elapsed time: 38 seconds (10s reftree, 28s leave-one-out)
 

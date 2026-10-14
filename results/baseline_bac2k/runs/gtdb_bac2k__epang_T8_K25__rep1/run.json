@@ -35,7 +35,7 @@
     "-n",
     "gtdb_bac2k__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/baseline_bac2k/work/c9/7d54d41f41c9a051bee18b9774c353/tmp",
+    "$BENCH_ROOT/.nf/baseline_bac2k/work/c9/7d54d41f41c9a051bee18b9774c353/tmp",
     "-m",
     "ultrafast",
     "-C",

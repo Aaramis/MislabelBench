@@ -34,7 +34,7 @@
     "-n",
     "gtdb_bac_lachnospirales__upstream_raxml_T8__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/baseline_bac/work/a7/b70b0892da5002a1e7056ca7d0e4a3/tmp",
+    "$BENCH_ROOT/.nf/baseline_bac/work/a7/b70b0892da5002a1e7056ca7d0e4a3/tmp",
     "-m",
     "ultrafast",
     "-C",

@@ -35,7 +35,7 @@
     "-n",
     "gtdb_bac_lachnospirales__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/baseline_bac/work/ab/1c20ae2b3b5d186bd534c88bcac0eb/tmp",
+    "$BENCH_ROOT/.nf/baseline_bac/work/ab/1c20ae2b3b5d186bd534c88bcac0eb/tmp",
     "-m",
     "ultrafast",
     "-C",

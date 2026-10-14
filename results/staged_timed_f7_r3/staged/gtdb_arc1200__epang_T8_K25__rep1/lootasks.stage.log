@@ -6,11 +6,11 @@ SATIVA was called as follows:
 
 /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r run.refjson -T 8 -n run -o . -stage loo-tasks
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.model
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.model
 [epang-l1o] wrote 25 fold tasks to ./run.l1o_tasks (1.5s)
 
-25 leave-one-out folds written to: /shared/home/agardette/bench/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.l1o_tasks
+25 leave-one-out folds written to: $BENCH_ROOT/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.l1o_tasks
 Place them (any scheduler, one EPA-ng per fold directory), then:
-  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.refjson -n run -o /shared/home/agardette/bench/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4 -stage loo-score -taskdir /shared/home/agardette/bench/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.l1o_tasks
+  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r $BENCH_ROOT/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.refjson -n run -o $BENCH_ROOT/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4 -stage loo-score -taskdir $BENCH_ROOT/.nf/staged_timed_f7_r3/work/62/885f4a82ca64efa2bc49f32b417be4/run.l1o_tasks
 
 

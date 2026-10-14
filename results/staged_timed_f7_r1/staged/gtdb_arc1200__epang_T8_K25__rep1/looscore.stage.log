@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r run.refjson -T 8 -n run -o . -C 0.4 -S -stage loo-score -taskdir /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/7a/639f6064bee8589f45efa69da85a21/run.l1o_tasks
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r run.refjson -T 8 -n run -o . -C 0.4 -S -stage loo-score -taskdir $BENCH_ROOT/.nf/staged_timed_f7_r1/work/7a/639f6064bee8589f45efa69da85a21/run.l1o_tasks
 
 Running the leave-one-sequence-out test...
 
@@ -22,8 +22,8 @@ Species     :	195
 
 Total mislabels: 469 / 6.65 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/7a/639f6064bee8589f45efa69da85a21/run.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/7a/639f6064bee8589f45efa69da85a21/run.log
+Results were saved to: $BENCH_ROOT/.nf/staged_timed_f7_r1/work/7a/639f6064bee8589f45efa69da85a21/run.mis
+Execution log was saved to: $BENCH_ROOT/.nf/staged_timed_f7_r1/work/7a/639f6064bee8589f45efa69da85a21/run.log
 
 Analysis completed successfully, elapsed time: 22 seconds (0s reftree, 21s leave-one-out)
 

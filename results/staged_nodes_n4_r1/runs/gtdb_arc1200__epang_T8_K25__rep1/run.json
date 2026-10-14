@@ -35,7 +35,7 @@
     "-n",
     "gtdb_arc1200__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/staged_nodes_n4_r1/work/2e/025be2e0372be7784d68cade541b73/tmp",
+    "$BENCH_ROOT/.nf/staged_nodes_n4_r1/work/2e/025be2e0372be7784d68cade541b73/tmp",
     "-m",
     "ultrafast",
     "-C",

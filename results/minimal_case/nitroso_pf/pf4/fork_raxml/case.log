@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf4/fork_raxml/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir $BENCH_ROOT/results/minimal_case/nitroso_pf/pf4/fork_raxml/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -40,8 +40,8 @@ Genus       :	1
 
 Total mislabels: 2 / 6.45 %
 
-Results were saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf4/fork_raxml/case.mis
-Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf4/fork_raxml/case.log
+Results were saved to: $BENCH_ROOT/results/minimal_case/nitroso_pf/pf4/fork_raxml/case.mis
+Execution log was saved to: $BENCH_ROOT/results/minimal_case/nitroso_pf/pf4/fork_raxml/case.log
 
 Analysis completed successfully, elapsed time: 2 seconds (0s reftree, 2s leave-one-out)
 

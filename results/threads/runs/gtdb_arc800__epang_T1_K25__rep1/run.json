@@ -35,7 +35,7 @@
     "-n",
     "gtdb_arc800__epang_T1_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/threads_gtdb_arc800/work/a5/48c73ec62ea187fa04574bb388a868/tmp",
+    "$BENCH_ROOT/.nf/threads_gtdb_arc800/work/a5/48c73ec62ea187fa04574bb388a868/tmp",
     "-m",
     "ultrafast",
     "-C",

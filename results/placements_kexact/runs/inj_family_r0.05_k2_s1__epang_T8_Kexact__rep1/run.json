@@ -35,7 +35,7 @@
     "-n",
     "inj_family_r0.05_k2_s1__epang_T8_Kexact__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/placements_kexact/work/74/6f128e735497af768cbcc49fa95854/tmp",
+    "$BENCH_ROOT/.nf/placements_kexact/work/74/6f128e735497af768cbcc49fa95854/tmp",
     "-m",
     "ultrafast",
     "-C",

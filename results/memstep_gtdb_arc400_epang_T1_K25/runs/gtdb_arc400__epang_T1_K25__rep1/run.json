@@ -35,7 +35,7 @@
     "-n",
     "gtdb_arc400__epang_T1_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/tmp",
+    "$BENCH_ROOT/.nf/memstep_gtdb_arc400_epang_T1_K25/work/8b/f63a2c5366ffa5e59321c9deb0fabc/tmp",
     "-m",
     "ultrafast",
     "-C",

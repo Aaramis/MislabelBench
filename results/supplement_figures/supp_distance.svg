@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="830" height="330" viewBox="0 0 830 330" font-family="Helvetica,Arial,sans-serif"><rect width="830" height="330" fill="#fff"/><text x="16.0" y="30.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">A</text>
+<text x="424.0" y="30.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">B</text>
+<rect x="62" y="56" width="340" height="210" fill="#fafafa"/>
+<line x1="90.3" y1="266" x2="90.3" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="90.3" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">species</text>
+<rect x="118.7" y="56" width="56.7" height="210" fill="#efefef"/>
+<line x1="118.7" y1="56" x2="118.7" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="147.0" y1="266" x2="147.0" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="147.0" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">genus</text>
+<line x1="175.3" y1="56" x2="175.3" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="203.7" y1="266" x2="203.7" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="203.7" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">family</text>
+<rect x="232.0" y="56" width="56.7" height="210" fill="#efefef"/>
+<line x1="232.0" y1="56" x2="232.0" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="260.3" y1="266" x2="260.3" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="260.3" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">order</text>
+<line x1="288.7" y1="56" x2="288.7" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="317.0" y1="266" x2="317.0" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="317.0" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">class</text>
+<rect x="345.3" y="56" width="56.7" height="210" fill="#efefef"/>
+<line x1="345.3" y1="56" x2="345.3" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="373.7" y1="266" x2="373.7" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="373.7" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">phylum</text>
+<line x1="62" y1="266.0" x2="402" y2="266.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="266.0" x2="62" y2="266.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="269.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0</text>
+<line x1="62" y1="196.0" x2="402" y2="196.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="196.0" x2="62" y2="196.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="199.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">20</text>
+<line x1="62" y1="126.0" x2="402" y2="126.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="126.0" x2="62" y2="126.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="129.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">40</text>
+<line x1="62" y1="56.0" x2="402" y2="56.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="56.0" x2="62" y2="56.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="59.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">60</text>
+<text x="232.0" y="302.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle">Distance of the wrong label</text>
+<path d="M84.3,169.4 L141.0,120.3 L197.7,90.3 L254.3,88.0 L311.0,86.6 L367.7,92.3" fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M84.3,165.2 L88.5,169.4 L84.3,173.6 L80.1,169.4 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M141.0,116.1 L145.2,120.3 L141.0,124.5 L136.8,120.3 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M197.7,86.1 L201.9,90.3 L197.7,94.5 L193.5,90.3 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M254.3,83.8 L258.5,88.0 L254.3,92.2 L250.1,88.0 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M311.0,82.4 L315.2,86.6 L311.0,90.8 L306.8,86.6 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M367.7,88.1 L371.9,92.3 L367.7,96.5 L363.5,92.3 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M96.3,181.9 L153.0,153.9 L209.7,127.0 L266.3,130.0 L323.0,131.7 L379.7,130.4" fill="none" stroke="#c1462c" stroke-width="1.4" stroke-dasharray="5 2"/>
+<path d="M96.3,177.7 L100.5,181.9 L96.3,186.1 L92.1,181.9 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M153.0,149.7 L157.2,153.9 L153.0,158.1 L148.8,153.9 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M209.7,122.8 L213.9,127.0 L209.7,131.2 L205.5,127.0 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M266.3,125.8 L270.5,130.0 L266.3,134.2 L262.1,130.0 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M323.0,127.5 L327.2,131.7 L323.0,135.9 L318.8,131.7 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M379.7,126.2 L383.9,130.4 L379.7,134.6 L375.5,130.4 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<rect x="62" y="56" width="340" height="210" fill="none" stroke="#444" stroke-width="0.8"/>
+<text x="24.0" y="161.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 24.0 161.0)">Wrong labels found (%)</text>
+<rect x="470" y="56" width="330" height="210" fill="#fafafa"/>
+<line x1="497.5" y1="266" x2="497.5" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="497.5" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">species</text>
+<rect x="525.0" y="56" width="55.0" height="210" fill="#efefef"/>
+<line x1="525.0" y1="56" x2="525.0" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="552.5" y1="266" x2="552.5" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="552.5" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">genus</text>
+<line x1="580.0" y1="56" x2="580.0" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="607.5" y1="266" x2="607.5" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="607.5" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">family</text>
+<rect x="635.0" y="56" width="55.0" height="210" fill="#efefef"/>
+<line x1="635.0" y1="56" x2="635.0" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="662.5" y1="266" x2="662.5" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="662.5" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">order</text>
+<line x1="690.0" y1="56" x2="690.0" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="717.5" y1="266" x2="717.5" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="717.5" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">class</text>
+<rect x="745.0" y="56" width="55.0" height="210" fill="#efefef"/>
+<line x1="745.0" y1="56" x2="745.0" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="772.5" y1="266" x2="772.5" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="772.5" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">phylum</text>
+<line x1="470" y1="266.0" x2="800" y2="266.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="466" y1="266.0" x2="470" y2="266.0" stroke="#444" stroke-width="0.8"/>
+<text x="463.0" y="269.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0</text>
+<line x1="470" y1="213.5" x2="800" y2="213.5" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="466" y1="213.5" x2="470" y2="213.5" stroke="#444" stroke-width="0.8"/>
+<text x="463.0" y="216.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">10</text>
+<line x1="470" y1="161.0" x2="800" y2="161.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="466" y1="161.0" x2="470" y2="161.0" stroke="#444" stroke-width="0.8"/>
+<text x="463.0" y="164.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">20</text>
+<line x1="470" y1="108.5" x2="800" y2="108.5" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="466" y1="108.5" x2="470" y2="108.5" stroke="#444" stroke-width="0.8"/>
+<text x="463.0" y="111.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">30</text>
+<line x1="470" y1="56.0" x2="800" y2="56.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="466" y1="56.0" x2="470" y2="56.0" stroke="#444" stroke-width="0.8"/>
+<text x="463.0" y="59.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">40</text>
+<text x="635.0" y="302.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle">Distance of the wrong label</text>
+<path d="M491.5,149.4 L546.5,136.8 L601.5,128.4 L656.5,123.7 L711.5,116.4 L766.5,129.5" fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M491.5,145.2 L495.7,149.4 L491.5,153.6 L487.3,149.4 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M546.5,132.7 L550.7,136.8 L546.5,141.0 L542.3,136.8 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M601.5,124.2 L605.7,128.4 L601.5,132.6 L597.3,128.4 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M656.5,119.5 L660.7,123.7 L656.5,127.9 L652.3,123.7 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M711.5,112.2 L715.7,116.4 L711.5,120.6 L707.3,116.4 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M766.5,125.3 L770.7,129.5 L766.5,133.7 L762.3,129.5 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M503.5,159.9 L558.5,130.5 L613.5,132.7 L668.5,119.0 L723.5,113.2 L778.5,129.5" fill="none" stroke="#c1462c" stroke-width="1.4" stroke-dasharray="5 2"/>
+<path d="M503.5,155.8 L507.7,159.9 L503.5,164.1 L499.3,159.9 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M558.5,126.3 L562.7,130.5 L558.5,134.7 L554.3,130.5 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M613.5,128.5 L617.7,132.7 L613.5,136.8 L609.3,132.7 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M668.5,114.8 L672.7,119.0 L668.5,123.2 L664.3,119.0 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M723.5,109.0 L727.7,113.2 L723.5,117.4 L719.3,113.2 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<path d="M778.5,125.3 L782.7,129.5 L778.5,133.7 L774.3,129.5 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<rect x="470" y="56" width="330" height="210" fill="none" stroke="#444" stroke-width="0.8"/>
+<text x="432.0" y="161.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 432.0 161.0)">Collateral flags per dataset</text>
+<path d="M62.0,21.8 L66.2,26.0 L62.0,30.2 L57.8,26.0 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<text x="70.0" y="29.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA-epang</text>
+<path d="M162.0,21.8 L166.2,26.0 L162.0,30.2 L157.8,26.0 Z" fill="#c1462c" stroke="#fff" stroke-width="1.1"/>
+<text x="170.0" y="29.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="start">SATIVA</text></svg>

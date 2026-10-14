@@ -35,7 +35,7 @@
     "-n",
     "inj_species_r0.05_k5_s1__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/placements_k25/work/f5/60e4b96bc53b9bbb6b6e491848cffd/tmp",
+    "$BENCH_ROOT/.nf/placements_k25/work/f5/60e4b96bc53b9bbb6b6e491848cffd/tmp",
     "-m",
     "ultrafast",
     "-C",

@@ -1,0 +1,166 @@
+figure	panel	series	x	y
+kinds	gain	Sequence from another domain | mean, ci low, ci high, p	0.0056	-0.0221	0.0456	0.88
+kinds	A	SATIVA-epang | Sequence from another domain | mean	0.9691	9
+kinds	A	SATIVA | Sequence from another domain | mean	0.9635	9
+kinds	gain	Single mislabelled sequence | mean, ci low, ci high, p	0.0063	-0.0017	0.0144	0.15
+kinds	A	SATIVA-epang | Single mislabelled sequence | mean	0.9320	36
+kinds	A	SATIVA | Single mislabelled sequence | mean	0.9257	36
+kinds	gain	Right genus, wrong species | mean, ci low, ci high, p	0.0513	0.0272	0.0784	0.00011
+kinds	A	SATIVA-epang | Right genus, wrong species | mean	0.3619	30
+kinds	A	SATIVA | Right genus, wrong species | mean	0.3106	30
+kinds	gain	Lineage stopping early | mean, ci low, ci high, p	0.0730	0.0351	0.1136	0.0015
+kinds	A	SATIVA-epang | Lineage stopping early | mean	0.4467	15
+kinds	A	SATIVA | Lineage stopping early | mean	0.3737	15
+kinds	gain	Whole taxon misnamed | mean, ci low, ci high, p	0.0394	0.0101	0.0693	0.12
+kinds	A	SATIVA-epang | Whole taxon misnamed | mean	0.0995	9
+kinds	A	SATIVA | Whole taxon misnamed | mean	0.0600	9
+kinds	gain	Chimeras | mean, ci low, ci high, p	0.0167	-0.0014	0.0347	0.072
+kinds	A	SATIVA-epang | Chimeras | mean	0.4042	36
+kinds	A	SATIVA | Chimeras | mean	0.3875	36
+chimera	A	SATIVA-epang | Genus	0.25	0.9000
+chimera	A	SATIVA-epang | Genus	0.5	0.3333
+chimera	A	SATIVA-epang | Genus	0.75	0.0000
+chimera	A	SATIVA-epang | Family	0.25	0.9500
+chimera	A	SATIVA-epang | Family	0.5	0.1500
+chimera	A	SATIVA-epang | Family	0.75	0.0000
+chimera	A	SATIVA-epang | Order	0.25	0.9833
+chimera	A	SATIVA-epang | Order	0.5	0.3167
+chimera	A	SATIVA-epang | Order	0.75	0.0333
+chimera	A	SATIVA-epang | Phylum	0.25	0.9833
+chimera	A	SATIVA-epang | Phylum	0.5	0.1833
+chimera	A	SATIVA-epang | Phylum	0.75	0.0167
+chimera	B	SATIVA | Genus	0.25	0.8167
+chimera	B	SATIVA | Genus	0.5	0.3333
+chimera	B	SATIVA | Genus	0.75	0.0167
+chimera	B	SATIVA | Family	0.25	0.9000
+chimera	B	SATIVA | Family	0.5	0.1833
+chimera	B	SATIVA | Family	0.75	0.0000
+chimera	B	SATIVA | Order	0.25	0.9833
+chimera	B	SATIVA | Order	0.5	0.2833
+chimera	B	SATIVA | Order	0.75	0.0000
+chimera	B	SATIVA | Phylum	0.25	0.9833
+chimera	B	SATIVA | Phylum	0.5	0.1500
+chimera	B	SATIVA | Phylum	0.75	0.0000
+recall_by_k	A	SATIVA-epang	1	0.9320
+recall_by_k	A	SATIVA	1	0.9257
+recall_by_k	A	SATIVA-epang	2	0.6066
+recall_by_k	A	SATIVA	2	0.3665
+recall_by_k	A	SATIVA-epang	3	0.4844
+recall_by_k	A	SATIVA	3	0.3322
+recall_by_k	A	SATIVA-epang	5	0.2956
+recall_by_k	A	SATIVA	5	0.1919
+recall_by_k	A	SATIVA-epang	10	0.0948
+recall_by_k	A	SATIVA	10	0.0902
+recall_by_k	B	ci low, ci high	1	-0.0017	0.0141
+recall_by_k	B	mean difference	1	0.0063
+recall_by_k	B	ci low, ci high	2	0.2001	0.2819
+recall_by_k	B	mean difference	2	0.2401
+recall_by_k	B	ci low, ci high	3	0.1215	0.1858
+recall_by_k	B	mean difference	3	0.1522
+recall_by_k	B	ci low, ci high	5	0.0750	0.1330
+recall_by_k	B	mean difference	5	0.1037
+recall_by_k	B	ci low, ci high	10	-0.0011	0.0111
+recall_by_k	B	mean difference	10	0.0047
+simulated	no confidence threshold | family	SATIVA-epang | k=1	1.0000
+simulated	no confidence threshold | family	SATIVA-epang | k=2	0.8667
+simulated	no confidence threshold | family	SATIVA-epang | k=3	0.5238
+simulated	no confidence threshold | family	SATIVA-epang | k=5	0.3333
+simulated	no confidence threshold | family	SATIVA | k=1	1.0000
+simulated	no confidence threshold | family	SATIVA | k=2	0.6000
+simulated	no confidence threshold | family	SATIVA | k=3	0.4762
+simulated	no confidence threshold | family	SATIVA | k=5	0.3333
+simulated	no confidence threshold | genus	SATIVA-epang | k=1	0.9833
+simulated	no confidence threshold | genus	SATIVA-epang | k=2	0.7500
+simulated	no confidence threshold | genus	SATIVA-epang | k=3	0.5873
+simulated	no confidence threshold | genus	SATIVA-epang | k=5	0.3000
+simulated	no confidence threshold | genus	SATIVA | k=1	0.9833
+simulated	no confidence threshold | genus	SATIVA | k=2	0.6833
+simulated	no confidence threshold | genus	SATIVA | k=3	0.4603
+simulated	no confidence threshold | genus	SATIVA | k=5	0.3000
+simulated	no confidence threshold | species	SATIVA-epang | k=1	0.9333
+simulated	no confidence threshold | species	SATIVA-epang | k=2	0.6667
+simulated	no confidence threshold | species	SATIVA-epang | k=3	0.3492
+simulated	no confidence threshold | species	SATIVA-epang | k=5	0.4833
+simulated	no confidence threshold | species	SATIVA | k=1	0.9500
+simulated	no confidence threshold | species	SATIVA | k=2	0.5667
+simulated	no confidence threshold | species	SATIVA | k=3	0.3333
+simulated	no confidence threshold | species	SATIVA | k=5	0.4500
+simulated	threshold 0.511 | family	SATIVA-epang | k=1	1.0000
+simulated	threshold 0.511 | family	SATIVA-epang | k=2	0.7833
+simulated	threshold 0.511 | family	SATIVA-epang | k=3	0.5238
+simulated	threshold 0.511 | family	SATIVA-epang | k=5	0.3333
+simulated	threshold 0.511 | family	SATIVA | k=1	1.0000
+simulated	threshold 0.511 | family	SATIVA | k=2	0.5667
+simulated	threshold 0.511 | family	SATIVA | k=3	0.4762
+simulated	threshold 0.511 | family	SATIVA | k=5	0.3333
+simulated	threshold 0.511 | genus	SATIVA-epang | k=1	0.9333
+simulated	threshold 0.511 | genus	SATIVA-epang | k=2	0.6667
+simulated	threshold 0.511 | genus	SATIVA-epang | k=3	0.5873
+simulated	threshold 0.511 | genus	SATIVA-epang | k=5	0.3000
+simulated	threshold 0.511 | genus	SATIVA | k=1	0.8833
+simulated	threshold 0.511 | genus	SATIVA | k=2	0.6333
+simulated	threshold 0.511 | genus	SATIVA | k=3	0.4603
+simulated	threshold 0.511 | genus	SATIVA | k=5	0.3000
+simulated	threshold 0.511 | species	SATIVA-epang | k=1	0.4833
+simulated	threshold 0.511 | species	SATIVA-epang | k=2	0.3167
+simulated	threshold 0.511 | species	SATIVA-epang | k=3	0.3175
+simulated	threshold 0.511 | species	SATIVA-epang | k=5	0.4667
+simulated	threshold 0.511 | species	SATIVA | k=1	0.3833
+simulated	threshold 0.511 | species	SATIVA | k=2	0.2667
+simulated	threshold 0.511 | species	SATIVA | k=3	0.2540
+simulated	threshold 0.511 | species	SATIVA | k=5	0.4500
+bacterial	A	SATIVA-epang	1	0.9967
+bacterial	A	SATIVA	1	0.9933
+bacterial	A	SATIVA-epang	2	0.8433
+bacterial	A	SATIVA	2	0.5267
+bacterial	A	SATIVA-epang	3	0.6373
+bacterial	A	SATIVA	3	0.4281
+bacterial	A	SATIVA-epang	5	0.3667
+bacterial	A	SATIVA	5	0.3600
+bacterial	A	SATIVA-epang	10	0.3067
+bacterial	A	SATIVA	10	0.2833
+bacterial	B	mean difference | archaea mean difference	1	0.0033	0.0063
+bacterial	B	mean difference | archaea mean difference	2	0.3167	0.2401
+bacterial	B	mean difference | archaea mean difference	3	0.2092	0.1522
+bacterial	B	mean difference | archaea mean difference	5	0.0067	0.1037
+bacterial	B	mean difference | archaea mean difference	10	0.0233	0.0047
+distance	A	SATIVA-epang	species	27.60
+distance	A	SATIVA-epang	genus	41.63
+distance	A	SATIVA-epang	family	50.19
+distance	A	SATIVA-epang	order	50.87
+distance	A	SATIVA-epang	class	51.25
+distance	A	SATIVA-epang	phylum	49.62
+distance	A	SATIVA	species	24.04
+distance	A	SATIVA	genus	32.02
+distance	A	SATIVA	family	39.71
+distance	A	SATIVA	order	38.85
+distance	A	SATIVA	class	38.37
+distance	A	SATIVA	phylum	38.75
+distance	B	SATIVA-epang	species	22.20
+distance	B	SATIVA-epang	genus	24.60
+distance	B	SATIVA-epang	family	26.20
+distance	B	SATIVA-epang	order	27.10
+distance	B	SATIVA-epang	class	28.50
+distance	B	SATIVA-epang	phylum	26.00
+distance	B	SATIVA	species	20.20
+distance	B	SATIVA	genus	25.80
+distance	B	SATIVA	family	25.40
+distance	B	SATIVA	order	28.00
+distance	B	SATIVA	class	29.10
+distance	B	SATIVA	phylum	26.00
+staged\tspeedup\tsp_place\t1\t1.00
+staged\tspeedup\tsp_place\t2\t1.96
+staged\tspeedup\tsp_place\t4\t3.65
+staged\tspeedup\tsp_total\t1\t1.00
+staged\tspeedup\tsp_total\t2\t1.59
+staged\tspeedup\tsp_total\t4\t2.30
+memory_width	A	1 thread	300	1191.5
+memory_width	A	1 thread	600	1448.0
+memory_width	A	1 thread	900	1672.2
+memory_width	A	1 thread	1200	1896.0
+memory_width	A	1 thread	1478	2103.1
+memory_width	A	8 threads	300	1263.6
+memory_width	A	8 threads	600	1618.5
+memory_width	A	8 threads	900	1956.0
+memory_width	A	8 threads	1200	2308.2
+memory_width	A	8 threads	1478	2620.1

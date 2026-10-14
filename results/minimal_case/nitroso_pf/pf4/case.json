@@ -7,7 +7,7 @@
   "n_seqs": 31,
   "n_outgroup": 10,
   "alignment_width": 1478,
-  "source_alignment": "/shared/home/agardette/bench/data/gtdb/gtdb_arc2k.fasta",
-  "source_taxonomy": "/shared/home/agardette/bench/data/gtdb/gtdb_arc2k.tax",
+  "source_alignment": "$BENCH_ROOT/data/gtdb/gtdb_arc2k.fasta",
+  "source_taxonomy": "$BENCH_ROOT/data/gtdb/gtdb_arc2k.tax",
   "per_family": 4
 }

@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/sweep64/GB_GCA_002497065.1_DAMK01000045.1__pf0_og10/upstream_raxml/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir $BENCH_ROOT/results/minimal_case/sweep64/GB_GCA_002497065.1_DAMK01000045.1__pf0_og10/upstream_raxml/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -41,8 +41,8 @@ Species     :	3
 
 Total mislabels: 7 / 7.29 %
 
-Results were saved to: /shared/home/agardette/bench/results/minimal_case/sweep64/GB_GCA_002497065.1_DAMK01000045.1__pf0_og10/upstream_raxml/case.mis
-Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/sweep64/GB_GCA_002497065.1_DAMK01000045.1__pf0_og10/upstream_raxml/case.log
+Results were saved to: $BENCH_ROOT/results/minimal_case/sweep64/GB_GCA_002497065.1_DAMK01000045.1__pf0_og10/upstream_raxml/case.mis
+Execution log was saved to: $BENCH_ROOT/results/minimal_case/sweep64/GB_GCA_002497065.1_DAMK01000045.1__pf0_og10/upstream_raxml/case.log
 
 Analysis completed successfully, elapsed time: 7 seconds (1s reftree, 6s leave-one-out)
 

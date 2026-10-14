@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir $BENCH_ROOT/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -41,8 +41,8 @@ WARNING: 2 indistinguishable taxa have been merged into 1 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/tmp/case_1791390459477/RAxML_info.mfresolv_case
-[epang-l1o] wrote 203 fold tasks to /shared/home/agardette/bench/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/tmp/case_1791390459477/epang_l1out_seq_case (0.5s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/tmp/case_1791390459477/RAxML_info.mfresolv_case
+[epang-l1o] wrote 203 fold tasks to $BENCH_ROOT/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/tmp/case_1791390459477/epang_l1out_seq_case (0.5s)
 [epang-l1o] placed 203/203 folds (4 at a time, 2 threads each, 31.4s)
 [epang-l1o] placements produits: 203 (K=203 folds, remap 0.5s)
 [epang-l1o] timing: fold prep 0.5s, epa-ng 31.4s, remap 0.5s, elapsed 32.4s
@@ -57,8 +57,8 @@ Species     :	1
 
 Total mislabels: 7 / 3.45 %
 
-Results were saved to: /shared/home/agardette/bench/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/case.mis
-Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/case.log
+Results were saved to: $BENCH_ROOT/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/case.mis
+Execution log was saved to: $BENCH_ROOT/results/minimal_case/gtdb_arc2k/GB_GCA_003352285.1_QQVN01000005.1__pf0_og30/fork_epang/case.log
 
 Analysis completed successfully, elapsed time: 37 seconds (2s reftree, 35s leave-one-out)
 

@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc800.fasta -t gtdb_arc800.tax -T 1 -n gtdb_arc800__epang_T1_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc800.fasta -t gtdb_arc800.tax -T 1 -n gtdb_arc800__epang_T1_K25__rep1 -tmpdir $BENCH_ROOT/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -32,8 +32,8 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/tmp/gtdb_arc800__epang_T1_K25__rep1_1791474026950/RAxML_info.mfresolv_gtdb_arc800__epang_T1_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/tmp/gtdb_arc800__epang_T1_K25__rep1_1791474026950/epang_l1out_seq_gtdb_arc800__epang_T1_K25__rep1 (0.1s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/tmp/gtdb_arc800__epang_T1_K25__rep1_1791474026950/RAxML_info.mfresolv_gtdb_arc800__epang_T1_K25__rep1
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/tmp/gtdb_arc800__epang_T1_K25__rep1_1791474026950/epang_l1out_seq_gtdb_arc800__epang_T1_K25__rep1 (0.1s)
 [epang-l1o] placed 25/25 folds (1 at a time, 1 threads each, 44.7s)
 [epang-l1o] placements produits: 800 (K=25 folds, remap 0.2s)
 [epang-l1o] timing: fold prep 0.1s, epa-ng 44.7s, remap 0.2s, elapsed 45.1s
@@ -50,8 +50,8 @@ Species     :	4
 
 Total mislabels: 30 / 3.75 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/run/gtdb_arc800__epang_T1_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/run/gtdb_arc800__epang_T1_K25__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/run/gtdb_arc800__epang_T1_K25__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/memstep_gtdb_arc800_epang_T1_K25/work/e7/28839886ae685d79c2397357cc7e8a/run/gtdb_arc800__epang_T1_K25__rep1.log
 
 Analysis completed successfully, elapsed time: 60 seconds (13s reftree, 47s leave-one-out)
 

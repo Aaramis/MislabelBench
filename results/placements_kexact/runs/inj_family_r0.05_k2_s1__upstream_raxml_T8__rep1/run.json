@@ -34,7 +34,7 @@
     "-n",
     "inj_family_r0.05_k2_s1__upstream_raxml_T8__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/placements_kexact/work/14/3d67f98a18c19597db54c1a468b725/tmp",
+    "$BENCH_ROOT/.nf/placements_kexact/work/14/3d67f98a18c19597db54c1a468b725/tmp",
     "-m",
     "ultrafast",
     "-C",

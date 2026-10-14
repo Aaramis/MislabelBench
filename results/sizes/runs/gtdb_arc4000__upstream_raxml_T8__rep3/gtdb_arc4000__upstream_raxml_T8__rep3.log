@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s gtdb_arc4000.fasta -t gtdb_arc4000.tax -T 8 -n gtdb_arc4000__upstream_raxml_T8__rep3 -tmpdir /shared/home/agardette/bench/.nf/sizes/work/0e/f3da2f5ba072a287d25586a3424ba5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s gtdb_arc4000.fasta -t gtdb_arc4000.tax -T 8 -n gtdb_arc4000__upstream_raxml_T8__rep3 -tmpdir $BENCH_ROOT/.nf/sizes/work/0e/f3da2f5ba072a287d25586a3424ba5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -102,8 +102,8 @@ Species     :	62
 
 Total mislabels: 208 / 5.20 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/sizes/work/0e/f3da2f5ba072a287d25586a3424ba5/run/gtdb_arc4000__upstream_raxml_T8__rep3.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/sizes/work/0e/f3da2f5ba072a287d25586a3424ba5/run/gtdb_arc4000__upstream_raxml_T8__rep3.log
+Results were saved to: $BENCH_ROOT/.nf/sizes/work/0e/f3da2f5ba072a287d25586a3424ba5/run/gtdb_arc4000__upstream_raxml_T8__rep3.mis
+Execution log was saved to: $BENCH_ROOT/.nf/sizes/work/0e/f3da2f5ba072a287d25586a3424ba5/run/gtdb_arc4000__upstream_raxml_T8__rep3.log
 
 Analysis completed successfully, elapsed time: 1344 seconds (12s reftree, 1332s leave-one-out)
 

@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s sim_species_k5_s1.fasta -t sim_species_k5_s1.tax -T 8 -n sim_species_k5_s1__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s sim_species_k5_s1.fasta -t sim_species_k5_s1.tax -T 8 -n sim_species_k5_s1__epang_T8_K25__rep1 -tmpdir $BENCH_ROOT/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -32,8 +32,8 @@ SATIVA was called as follows:
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/tmp/sim_species_k5_s1__epang_T8_K25__rep1_1791113005342/RAxML_info.mfresolv_sim_species_k5_s1__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/tmp/sim_species_k5_s1__epang_T8_K25__rep1_1791113005342/epang_l1out_seq_sim_species_k5_s1__epang_T8_K25__rep1 (0.3s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/tmp/sim_species_k5_s1__epang_T8_K25__rep1_1791113005342/RAxML_info.mfresolv_sim_species_k5_s1__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/tmp/sim_species_k5_s1__epang_T8_K25__rep1_1791113005342/epang_l1out_seq_sim_species_k5_s1__epang_T8_K25__rep1 (0.3s)
 [epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 22.1s)
 [epang-l1o] placements produits: 864 (K=25 folds, remap 0.7s)
 [epang-l1o] timing: fold prep 0.3s, epa-ng 22.1s, remap 0.7s, elapsed 23.0s
@@ -41,8 +41,8 @@ Mislabeled sequences by rank:
 
 Total mislabels: 0 / 0.00 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/run/sim_species_k5_s1__epang_T8_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/run/sim_species_k5_s1__epang_T8_K25__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/run/sim_species_k5_s1__epang_T8_K25__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/simulation/work/ea/c36035d561d5c6ac3a9bbe560ba91a/run/sim_species_k5_s1__epang_T8_K25__rep1.log
 
 Analysis completed successfully, elapsed time: 44 seconds (20s reftree, 23s leave-one-out)
 

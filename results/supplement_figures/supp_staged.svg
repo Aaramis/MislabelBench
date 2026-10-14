@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="330" viewBox="0 0 440 330" font-family="Helvetica,Arial,sans-serif"><rect width="440" height="330" fill="#fff"/><rect x="62" y="56" width="340" height="210" fill="#fafafa"/>
+<line x1="118.7" y1="266" x2="118.7" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="118.7" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">1</text>
+<rect x="175.3" y="56" width="113.3" height="210" fill="#efefef"/>
+<line x1="175.3" y1="56" x2="175.3" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="232.0" y1="266" x2="232.0" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="232.0" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">2</text>
+<line x1="288.7" y1="56" x2="288.7" y2="266" stroke="#cfcfcf" stroke-width="0.8"/>
+<line x1="345.3" y1="266" x2="345.3" y2="270" stroke="#444" stroke-width="0.8"/>
+<text x="345.3" y="282.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">4</text>
+<line x1="62" y1="266.0" x2="402" y2="266.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="266.0" x2="62" y2="266.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="269.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0</text>
+<line x1="62" y1="222.2" x2="402" y2="222.2" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="222.2" x2="62" y2="222.2" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="225.2" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1</text>
+<line x1="62" y1="178.5" x2="402" y2="178.5" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="178.5" x2="62" y2="178.5" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="181.5" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">2</text>
+<line x1="62" y1="134.8" x2="402" y2="134.8" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="134.8" x2="62" y2="134.8" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="137.8" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">3</text>
+<line x1="62" y1="91.0" x2="402" y2="91.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="91.0" x2="62" y2="91.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="94.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">4</text>
+<text x="232.0" y="302.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle">Number of batches</text>
+<text x="24.0" y="161.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 24.0 161.0)">Speedup</text>
+<line x1="62" y1="82.2" x2="402" y2="82.2" stroke="#666" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="396.0" y="77.2" font-size="12.0" fill="#555" font-weight="normal" text-anchor="end">limit of the whole run, 4.20</text>
+<path d="M118.7,222.2 L232.0,178.5 L345.3,91.0" fill="none" stroke="#b0b0b0" stroke-width="1.2"/>
+<circle cx="118.7" cy="222.2" r="3.4" fill="#fff" stroke="#999" stroke-width="1"/>
+<circle cx="232.0" cy="178.5" r="3.4" fill="#fff" stroke="#999" stroke-width="1"/>
+<circle cx="345.3" cy="91.0" r="3.4" fill="#fff" stroke="#999" stroke-width="1"/>
+<path d="M118.7,222.2 L232.0,180.2 L345.3,106.3" fill="none" stroke="#000000" stroke-width="1.4"/>
+<path d="M118.7,218.1 L122.9,222.2 L118.7,226.4 L114.5,222.2 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<path d="M232.0,176.1 L236.2,180.2 L232.0,184.4 L227.8,180.2 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<text x="223.0" y="171.2" font-size="12.0" fill="#000000" font-weight="normal" text-anchor="end">1.96 (98%)</text>
+<path d="M345.3,102.1 L349.5,106.3 L345.3,110.5 L341.1,106.3 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<text x="353.3" y="100.3" font-size="12.0" fill="#000000" font-weight="normal" text-anchor="start">3.65 (91%)</text>
+<path d="M118.7,222.2 L232.0,196.4 L345.3,165.4" fill="none" stroke="#8a8a8a" stroke-width="1.4"/>
+<path d="M118.7,218.1 L122.9,222.2 L118.7,226.4 L114.5,222.2 Z" fill="#8a8a8a" stroke="#fff" stroke-width="1.1"/>
+<path d="M232.0,192.2 L236.2,196.4 L232.0,200.6 L227.8,196.4 Z" fill="#8a8a8a" stroke="#fff" stroke-width="1.1"/>
+<text x="240.0" y="210.4" font-size="12.0" fill="#666" font-weight="normal" text-anchor="start">1.59 (80%)</text>
+<path d="M345.3,161.2 L349.5,165.4 L345.3,169.6 L341.1,165.4 Z" fill="#8a8a8a" stroke="#fff" stroke-width="1.1"/>
+<text x="353.3" y="179.4" font-size="12.0" fill="#666" font-weight="normal" text-anchor="start">2.30 (57%)</text>
+<rect x="62" y="56" width="340" height="210" fill="none" stroke="#444" stroke-width="0.8"/>
+<path d="M66.0,21.8 L70.2,26.0 L66.0,30.2 L61.8,26.0 Z" fill="#000000" stroke="#fff" stroke-width="1.1"/>
+<text x="74.0" y="29.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">placement</text>
+<path d="M148.0,21.8 L152.2,26.0 L148.0,30.2 L143.8,26.0 Z" fill="#8a8a8a" stroke="#fff" stroke-width="1.1"/>
+<text x="156.0" y="29.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">whole run</text>
+<circle cx="226" cy="26" r="3.2" fill="#999" fill-opacity="0.75"/>
+<text x="234.0" y="29.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="start">ideal</text></svg>

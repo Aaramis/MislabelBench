@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc1200.aligned.fasta -t gtdb_arc1200.tax -T 8 -n run -o . -tmpdir /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S -stage reference
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc1200.aligned.fasta -t gtdb_arc1200.tax -T 8 -n run -o . -tmpdir $BENCH_ROOT/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S -stage reference
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -189,9 +189,9 @@ WARNING: 46 indistinguishable taxa have been merged into 22 clusters.
 *** STEP 2: Searching for mislabels ***
 
 
-Reference written to: /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/run.refjson
-Model written to:     /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/run.model
+Reference written to: $BENCH_ROOT/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/run.refjson
+Model written to:     $BENCH_ROOT/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/run.model
 Next:
-  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/run.refjson -n run -o /shared/home/agardette/bench/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11 -stage loo-tasks
+  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r $BENCH_ROOT/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11/run.refjson -n run -o $BENCH_ROOT/.nf/staged_timed_f7_r1/work/1b/843576027d6a012e40a3dc4f5f1c11 -stage loo-tasks
 
 

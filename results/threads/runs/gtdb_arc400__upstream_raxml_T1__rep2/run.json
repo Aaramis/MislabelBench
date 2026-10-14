@@ -34,7 +34,7 @@
     "-n",
     "gtdb_arc400__upstream_raxml_T1__rep2",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/threads_gtdb_arc400/work/ec/87f41fc3d18fd062ce772c44585aec/tmp",
+    "$BENCH_ROOT/.nf/threads_gtdb_arc400/work/ec/87f41fc3d18fd062ce772c44585aec/tmp",
     "-m",
     "ultrafast",
     "-C",

@@ -1,4 +1,4 @@
-aldiscore @ file:///shared/home/agardette/bench/data/aldiscore/src
+aldiscore @ file://$BENCH_ROOT/data/aldiscore/src
 biopython==1.88
 cloudpickle==3.1.2
 joblib==1.6.0

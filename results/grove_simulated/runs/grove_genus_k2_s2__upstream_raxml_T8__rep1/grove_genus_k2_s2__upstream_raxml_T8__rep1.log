@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s grove_genus_k2_s2.fasta -t grove_genus_k2_s2.tax -T 8 -n grove_genus_k2_s2__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s grove_genus_k2_s2.fasta -t grove_genus_k2_s2.tax -T 8 -n grove_genus_k2_s2__upstream_raxml_T8__rep1 -tmpdir $BENCH_ROOT/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -83,8 +83,8 @@ Species     :	6
 
 Total mislabels: 27 / 6.75 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/run/grove_genus_k2_s2__upstream_raxml_T8__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/run/grove_genus_k2_s2__upstream_raxml_T8__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/run/grove_genus_k2_s2__upstream_raxml_T8__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/grove_simulation/work/d4/bd153b64873532208aa04456cde2a7/run/grove_genus_k2_s2__upstream_raxml_T8__rep1.log
 
 Analysis completed successfully, elapsed time: 177 seconds (5s reftree, 173s leave-one-out)
 

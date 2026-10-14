@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir $BENCH_ROOT/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -55,8 +55,8 @@ WARNING: 6 indistinguishable taxa have been merged into 3 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp/case_1791212627651/RAxML_info.mfresolv_case
-[epang-l1o] wrote 2023 fold tasks to /shared/home/agardette/bench/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp/case_1791212627651/epang_l1out_seq_case (24.8s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp/case_1791212627651/RAxML_info.mfresolv_case
+[epang-l1o] wrote 2023 fold tasks to $BENCH_ROOT/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/tmp/case_1791212627651/epang_l1out_seq_case (24.8s)
 [epang-l1o] placed 2023/2023 folds (4 at a time, 2 threads each, 5517.2s)
 [epang-l1o] placements produits: 2023 (K=2023 folds, remap 134.1s)
 [epang-l1o] timing: fold prep 24.8s, epa-ng 5517.5s, remap 134.1s, elapsed 5676.5s
@@ -73,8 +73,8 @@ Species     :	14
 
 Total mislabels: 104 / 5.14 %
 
-Results were saved to: /shared/home/agardette/bench/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/case.mis
-Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/case.log
+Results were saved to: $BENCH_ROOT/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/case.mis
+Execution log was saved to: $BENCH_ROOT/results/minimal_case/ramp10_m32/GB_GCA_003352285.1_QQVN01000005.1__pf0_og999999_n10/fork_epang/case.log
 
 Analysis completed successfully, elapsed time: 5741 seconds (25s reftree, 5717s leave-one-out)
 

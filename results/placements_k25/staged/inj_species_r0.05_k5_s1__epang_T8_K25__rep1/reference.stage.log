@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_species_r0.05_k5_s1.fasta -t inj_species_r0.05_k5_s1.tax -T 8 -n run -o . -tmpdir /shared/home/agardette/bench/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S -stage reference
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_species_r0.05_k5_s1.fasta -t inj_species_r0.05_k5_s1.tax -T 8 -n run -o . -tmpdir $BENCH_ROOT/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S -stage reference
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -89,9 +89,9 @@ WARNING: 16 indistinguishable taxa have been merged into 8 clusters.
 *** STEP 2: Searching for mislabels ***
 
 
-Reference written to: /shared/home/agardette/bench/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/run.refjson
-Model written to:     /shared/home/agardette/bench/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/run.model
+Reference written to: $BENCH_ROOT/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/run.refjson
+Model written to:     $BENCH_ROOT/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/run.model
 Next:
-  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/run.refjson -n run -o /shared/home/agardette/bench/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196 -stage loo-tasks
+  /usr/local/share/sativa-epang-0.10.2-0/sativa.py -r $BENCH_ROOT/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196/run.refjson -n run -o $BENCH_ROOT/.nf/placements_k25/work/85/131f612170126fd25d96c369e66196 -stage loo-tasks
 
 

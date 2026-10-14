@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s w0300.fasta -t w0300.tax -T 8 -n w0300__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s w0300.fasta -t w0300.tax -T 8 -n w0300__epang_T8_K25__rep1 -tmpdir $BENCH_ROOT/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -149,8 +149,8 @@ WARNING: 35 indistinguishable taxa have been merged into 16 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/tmp/w0300__epang_T8_K25__rep1_1791639160718/RAxML_info.mfresolv_w0300__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/tmp/w0300__epang_T8_K25__rep1_1791639160718/epang_l1out_seq_w0300__epang_T8_K25__rep1 (0.3s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/tmp/w0300__epang_T8_K25__rep1_1791639160718/RAxML_info.mfresolv_w0300__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/tmp/w0300__epang_T8_K25__rep1_1791639160718/epang_l1out_seq_w0300__epang_T8_K25__rep1 (0.3s)
 [epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 11.6s)
 [epang-l1o] placements produits: 2023 (K=25 folds, remap 0.9s)
 [epang-l1o] timing: fold prep 0.3s, epa-ng 11.6s, remap 0.9s, elapsed 12.8s
@@ -167,8 +167,8 @@ Species     :	16
 
 Total mislabels: 86 / 4.25 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/run/w0300__epang_T8_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/run/w0300__epang_T8_K25__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/run/w0300__epang_T8_K25__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/width/work/22/f463d934b0fead76e7eeb8c9bdfaa1/run/w0300__epang_T8_K25__rep1.log
 
 Analysis completed successfully, elapsed time: 21 seconds (6s reftree, 15s leave-one-out)
 

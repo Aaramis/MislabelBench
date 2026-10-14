@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="530" height="340" viewBox="0 0 530 340" font-family="Helvetica,Arial,sans-serif"><rect width="530" height="340" fill="#fff"/><rect x="80" y="30" width="400" height="240" fill="#fafafa"/>
+<line x1="80" y1="270.0" x2="480" y2="270.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="270.0" x2="80" y2="270.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="273.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">0</text>
+<line x1="80" y1="230.0" x2="480" y2="230.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="230.0" x2="80" y2="230.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="233.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">500</text>
+<line x1="80" y1="190.0" x2="480" y2="190.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="190.0" x2="80" y2="190.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="193.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1 000</text>
+<line x1="80" y1="150.0" x2="480" y2="150.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="150.0" x2="80" y2="150.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="153.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">1 500</text>
+<line x1="80" y1="110.0" x2="480" y2="110.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="110.0" x2="80" y2="110.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="113.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">2 000</text>
+<line x1="80" y1="70.0" x2="480" y2="70.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="70.0" x2="80" y2="70.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="73.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">2 500</text>
+<line x1="80" y1="30.0" x2="480" y2="30.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="76" y1="30.0" x2="80" y2="30.0" stroke="#444" stroke-width="0.8"/>
+<text x="73.0" y="33.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="end">3 000</text>
+<line x1="105.0" y1="270" x2="105.0" y2="274" stroke="#444" stroke-width="0.8"/>
+<text x="105.0" y="286.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">300</text>
+<line x1="180.0" y1="270" x2="180.0" y2="274" stroke="#444" stroke-width="0.8"/>
+<text x="180.0" y="286.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">600</text>
+<line x1="255.0" y1="270" x2="255.0" y2="274" stroke="#444" stroke-width="0.8"/>
+<text x="255.0" y="286.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">900</text>
+<line x1="330.0" y1="270" x2="330.0" y2="274" stroke="#444" stroke-width="0.8"/>
+<text x="330.0" y="286.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">1200</text>
+<line x1="405.0" y1="270" x2="405.0" y2="274" stroke="#444" stroke-width="0.8"/>
+<text x="405.0" y="286.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle">1500</text>
+<path d="M105.0,270.0 L105.0,196.2 L399.5,196.2 L399.5,270.0 Z" fill="#cfcfcf" fill-opacity="0.55"/>
+<path d="M105.0,196.2 L399.5,196.2 L399.5,56.8 L105.0,167.9 Z" fill="#6f8fa8" fill-opacity="0.30"/>
+<path d="M105.0,270.0 L105.0,192.1 L399.5,192.1 L399.5,270.0 Z" fill="#cfcfcf" fill-opacity="0.55"/>
+<path d="M105.0,192.1 L399.5,192.1 L399.5,99.0 L105.0,173.2 Z" fill="#6f8fa8" fill-opacity="0.30"/>
+<line x1="105.0" y1="173.2" x2="399.5" y2="99.0" stroke="#8a8a8a" stroke-width="1.5" stroke-dasharray="5 2"/>
+<circle cx="105.0" cy="174.7" r="3.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.8"/>
+<circle cx="180.0" cy="154.2" r="3.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.8"/>
+<circle cx="255.0" cy="136.2" r="3.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.8"/>
+<circle cx="330.0" cy="118.3" r="3.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.8"/>
+<circle cx="399.5" cy="101.8" r="3.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.8"/>
+<text x="407.5" y="102.0" font-size="13.6" fill="#8a8a8a" font-weight="normal" text-anchor="start">1 thread</text>
+<line x1="105.0" y1="167.9" x2="399.5" y2="56.8" stroke="#000000" stroke-width="1.5"/>
+<circle cx="105.0" cy="168.9" r="3.3" fill="#000000" stroke="#fff" stroke-width="0.8"/>
+<circle cx="180.0" cy="140.5" r="3.3" fill="#000000" stroke="#fff" stroke-width="0.8"/>
+<circle cx="255.0" cy="113.5" r="3.3" fill="#000000" stroke="#fff" stroke-width="0.8"/>
+<circle cx="330.0" cy="85.3" r="3.3" fill="#000000" stroke="#fff" stroke-width="0.8"/>
+<circle cx="399.5" cy="60.4" r="3.3" fill="#000000" stroke="#fff" stroke-width="0.8"/>
+<text x="407.5" y="59.8" font-size="13.6" fill="#000000" font-weight="normal" text-anchor="start">8 threads</text>
+<text x="255.0" y="236.1" font-size="13.6" fill="#000" font-weight="normal" text-anchor="middle">independent of width, about 950 MB</text>
+<text x="205.0" y="170.6" font-size="13.6" fill="#34566e" font-weight="normal" text-anchor="middle">grows with width</text>
+<rect x="80" y="30" width="400" height="240" fill="none" stroke="#444" stroke-width="0.8"/>
+<text x="280.0" y="306.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle">Alignment width (columns)</text>
+<text x="28.0" y="150.0" font-size="15.2" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 28.0 150.0)">Peak memory (MB)</text></svg>

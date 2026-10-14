@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf0/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s case.fasta -t case.tax -T 8 -n case -tmpdir $BENCH_ROOT/results/minimal_case/nitroso_pf/pf0/fork_epang/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -41,8 +41,8 @@ WARNING: 2 indistinguishable taxa have been merged into 1 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf0/fork_epang/tmp/case_1791206366883/RAxML_info.mfresolv_case
-[epang-l1o] wrote 183 fold tasks to /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf0/fork_epang/tmp/case_1791206366883/epang_l1out_seq_case (0.5s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/results/minimal_case/nitroso_pf/pf0/fork_epang/tmp/case_1791206366883/RAxML_info.mfresolv_case
+[epang-l1o] wrote 183 fold tasks to $BENCH_ROOT/results/minimal_case/nitroso_pf/pf0/fork_epang/tmp/case_1791206366883/epang_l1out_seq_case (0.5s)
 [epang-l1o] placed 183/183 folds (4 at a time, 2 threads each, 17.0s)
 [epang-l1o] placements produits: 183 (K=183 folds, remap 0.3s)
 [epang-l1o] timing: fold prep 0.5s, epa-ng 17.0s, remap 0.3s, elapsed 17.8s
@@ -57,8 +57,8 @@ Species     :	1
 
 Total mislabels: 5 / 2.73 %
 
-Results were saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf0/fork_epang/case.mis
-Execution log was saved to: /shared/home/agardette/bench/results/minimal_case/nitroso_pf/pf0/fork_epang/case.log
+Results were saved to: $BENCH_ROOT/results/minimal_case/nitroso_pf/pf0/fork_epang/case.mis
+Execution log was saved to: $BENCH_ROOT/results/minimal_case/nitroso_pf/pf0/fork_epang/case.log
 
 Analysis completed successfully, elapsed time: 21 seconds (1s reftree, 20s leave-one-out)
 

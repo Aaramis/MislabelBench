@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r /shared/home/agardette/bench/results/scaling/N4_c140_r2/run.refjson -C 0.4 -S -n run -o /shared/home/agardette/bench/results/scaling/N4_c140_r2 -T 8 -stage loo-score -taskdir /shared/home/agardette/bench/results/scaling/N4_c140_r2/run.l1o_tasks
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -r $BENCH_ROOT/results/scaling/N4_c140_r2/run.refjson -C 0.4 -S -n run -o $BENCH_ROOT/results/scaling/N4_c140_r2 -T 8 -stage loo-score -taskdir $BENCH_ROOT/results/scaling/N4_c140_r2/run.l1o_tasks
 
 Running the leave-one-sequence-out test...
 
@@ -22,8 +22,8 @@ Species     :	19
 
 Total mislabels: 93 / 4.60 %
 
-Results were saved to: /shared/home/agardette/bench/results/scaling/N4_c140_r2/run.mis
-Execution log was saved to: /shared/home/agardette/bench/results/scaling/N4_c140_r2/run.log
+Results were saved to: $BENCH_ROOT/results/scaling/N4_c140_r2/run.mis
+Execution log was saved to: $BENCH_ROOT/results/scaling/N4_c140_r2/run.log
 
 Analysis completed successfully, elapsed time: 5 seconds (0s reftree, 5s leave-one-out)
 

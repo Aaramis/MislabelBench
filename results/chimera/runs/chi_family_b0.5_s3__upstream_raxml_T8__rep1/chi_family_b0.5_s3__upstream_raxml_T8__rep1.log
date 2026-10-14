@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s chi_family_b0.5_s3.fasta -t chi_family_b0.5_s3.tax -T 8 -n chi_family_b0.5_s3__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/chimera/work/82/cb41fe1752fbf0a386a197acece0b5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s chi_family_b0.5_s3.fasta -t chi_family_b0.5_s3.tax -T 8 -n chi_family_b0.5_s3__upstream_raxml_T8__rep1 -tmpdir $BENCH_ROOT/.nf/chimera/work/82/cb41fe1752fbf0a386a197acece0b5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -59,8 +59,8 @@ Species     :	13
 
 Total mislabels: 93 / 4.55 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/chimera/work/82/cb41fe1752fbf0a386a197acece0b5/run/chi_family_b0.5_s3__upstream_raxml_T8__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/chimera/work/82/cb41fe1752fbf0a386a197acece0b5/run/chi_family_b0.5_s3__upstream_raxml_T8__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/chimera/work/82/cb41fe1752fbf0a386a197acece0b5/run/chi_family_b0.5_s3__upstream_raxml_T8__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/chimera/work/82/cb41fe1752fbf0a386a197acece0b5/run/chi_family_b0.5_s3__upstream_raxml_T8__rep1.log
 
 Analysis completed successfully, elapsed time: 1278 seconds (15s reftree, 1263s leave-one-out)
 

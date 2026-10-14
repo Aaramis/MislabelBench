@@ -35,7 +35,7 @@
     "-n",
     "grove_species_k1_s2__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/grove_simulation/work/47/36dfd8a7ea59f7c9ead4ec121472e0/tmp",
+    "$BENCH_ROOT/.nf/grove_simulation/work/47/36dfd8a7ea59f7c9ead4ec121472e0/tmp",
     "-m",
     "ultrafast",
     "-C",

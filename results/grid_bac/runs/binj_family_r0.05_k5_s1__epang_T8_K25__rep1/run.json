@@ -35,7 +35,7 @@
     "-n",
     "binj_family_r0.05_k5_s1__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/grid_bac/work/a8/2353f2e32f6a6c3115084bb6986aa4/tmp",
+    "$BENCH_ROOT/.nf/grid_bac/work/a8/2353f2e32f6a6c3115084bb6986aa4/tmp",
     "-m",
     "ultrafast",
     "-C",

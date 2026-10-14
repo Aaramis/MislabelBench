@@ -1,0 +1,5 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	memory	peak_rss	peak_vmem	rchar	wchar	container	hostname
+2	c0/94ff35	255177	SATIVA (gtdb_arc1200/upstream_raxml_T8/rep1)	COMPLETED	0	2026-10-12 22:25:52.270	56m 11s	56m 10s	798.3%	4 GB	727.7 MB	903.9 MB	178 MB	4.8 GB	$HOME/.singularity_cache/depot.galaxyproject.org-singularity-sativa-0.9.3--py312h031d066_0.img	-
+1	05/5ad3c9	282946	SATIVAEPANG (gtdb_arc1200/epang_T8_K25/rep1)	COMPLETED	0	2026-10-12 23:22:03.352	4m 26s	4m 25s	608.4%	57.1 GB	35.3 GB	36.1 GB	1.1 GB	359.5 MB	$HOME/.singularity_cache/depot.galaxyproject.org-singularity-sativa-epang-0.10.2--py314hab16a5f_0.img	-
+3	fd/4ef7cb	292055	COLLECTRUN (gtdb_arc1200/upstream_raxml_T8/rep1)	COMPLETED	0	2026-10-12 23:26:29.241	2s	2s	29.9%	2 GB	21.6 MB	25.7 MB	2.7 MB	176.6 KB	$HOME/.singularity_cache/depot.galaxyproject.org-singularity-python-3.12.12.img	-
+4	ac/337590	292314	COLLECTRUN (gtdb_arc1200/epang_T8_K25/rep1)	COMPLETED	0	2026-10-12 23:26:31.289	849ms	1s	58.3%	2 GB	9.2 MB	16.2 MB	2.8 MB	206.1 KB	$HOME/.singularity_cache/depot.galaxyproject.org-singularity-python-3.12.12.img	-

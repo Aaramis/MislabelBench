@@ -1,0 +1,1 @@
+{"wall_sec": 56.24, "returncode": 0, "timed_out": false, "max_rss_mb": 8986.5, "user_cpu_sec": 258.23, "sys_cpu_sec": 29.18, "cmd": ["sativa-epang", "-stage", "loo-place", "-taskdir", "$BENCH_ROOT/.nf/staged_nodes_n4_r4/work/ee/423152b391491735b713388d9fae2d/taskdir", "-T", "8", "-folds", "1/4"], "host": "cpu-node-120", "cpu_model": "AMD EPYC 9754 128-Core Processor"}

@@ -35,7 +35,7 @@
     "-n",
     "inj_family_r0.05_k10_s1__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/placements_k25/work/0a/a9b099d870993fd496f6ffb53baf0a/tmp",
+    "$BENCH_ROOT/.nf/placements_k25/work/0a/a9b099d870993fd496f6ffb53baf0a/tmp",
     "-m",
     "ultrafast",
     "-C",

@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_phylum_r0.05_k3_s2.fasta -t inj_phylum_r0.05_k3_s2.tax -T 8 -n inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/work/8d/385d64c1a496d961de1a0f9bc7f2c4/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_phylum_r0.05_k3_s2.fasta -t inj_phylum_r0.05_k3_s2.tax -T 8 -n inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1 -tmpdir $BENCH_ROOT/work/8d/385d64c1a496d961de1a0f9bc7f2c4/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -90,8 +90,8 @@ WARNING: 16 indistinguishable taxa have been merged into 8 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/work/8d/385d64c1a496d961de1a0f9bc7f2c4/tmp/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1_1790928677210/RAxML_info.mfresolv_inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/work/8d/385d64c1a496d961de1a0f9bc7f2c4/tmp/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1_1790928677210/epang_l1out_seq_inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1 (0.4s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/work/8d/385d64c1a496d961de1a0f9bc7f2c4/tmp/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1_1790928677210/RAxML_info.mfresolv_inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/work/8d/385d64c1a496d961de1a0f9bc7f2c4/tmp/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1_1790928677210/epang_l1out_seq_inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1 (0.4s)
 [epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 23.4s)
 [epang-l1o] placements produits: 2021 (K=25 folds, remap 0.7s)
 [epang-l1o] timing: fold prep 0.4s, epa-ng 23.4s, remap 0.7s, elapsed 24.5s
@@ -108,8 +108,8 @@ Species     :	31
 
 Total mislabels: 180 / 8.90 %
 
-Results were saved to: /shared/home/agardette/bench/work/8d/385d64c1a496d961de1a0f9bc7f2c4/run/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/work/8d/385d64c1a496d961de1a0f9bc7f2c4/run/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1.log
+Results were saved to: $BENCH_ROOT/work/8d/385d64c1a496d961de1a0f9bc7f2c4/run/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1.mis
+Execution log was saved to: $BENCH_ROOT/work/8d/385d64c1a496d961de1a0f9bc7f2c4/run/inj_phylum_r0.05_k3_s2__epang_T8_K25__rep1.log
 
 Analysis completed successfully, elapsed time: 38 seconds (11s reftree, 27s leave-one-out)
 

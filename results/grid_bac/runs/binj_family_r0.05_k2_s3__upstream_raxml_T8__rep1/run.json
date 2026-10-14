@@ -34,7 +34,7 @@
     "-n",
     "binj_family_r0.05_k2_s3__upstream_raxml_T8__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/grid_bac/work/2f/ff762060c7cc9a9c6df3ff17923018/tmp",
+    "$BENCH_ROOT/.nf/grid_bac/work/2f/ff762060c7cc9a9c6df3ff17923018/tmp",
     "-m",
     "ultrafast",
     "-C",

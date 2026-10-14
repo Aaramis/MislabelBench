@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s aln.fasta -t tax.tsv -T 8 -n run -tmpdir /shared/home/agardette/bench/results/shared_reference/inj_family_r0.05_k2_s1/upstream/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s aln.fasta -t tax.tsv -T 8 -n run -tmpdir $BENCH_ROOT/results/shared_reference/inj_family_r0.05_k2_s1/upstream/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -101,8 +101,8 @@ Species     :	18
 
 Total mislabels: 170 / 8.40 %
 
-Results were saved to: /shared/home/agardette/bench/results/shared_reference/inj_family_r0.05_k2_s1/upstream/run.mis
-Execution log was saved to: /shared/home/agardette/bench/results/shared_reference/inj_family_r0.05_k2_s1/upstream/run.log
+Results were saved to: $BENCH_ROOT/results/shared_reference/inj_family_r0.05_k2_s1/upstream/run.mis
+Execution log was saved to: $BENCH_ROOT/results/shared_reference/inj_family_r0.05_k2_s1/upstream/run.log
 
 Analysis completed successfully, elapsed time: 1454 seconds (19s reftree, 1435s leave-one-out)
 

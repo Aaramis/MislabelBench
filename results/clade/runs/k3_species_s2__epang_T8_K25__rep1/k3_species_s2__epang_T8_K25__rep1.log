@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s k3_species_s2.fasta -t k3_species_s2.tax -T 8 -n k3_species_s2__epang_T8_K25__rep1 -tmpdir /shared/home/agardette/bench/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s k3_species_s2.fasta -t k3_species_s2.tax -T 8 -n k3_species_s2__epang_T8_K25__rep1 -tmpdir $BENCH_ROOT/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -48,8 +48,8 @@ WARNING: 4 indistinguishable taxa have been merged into 2 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/tmp/k3_species_s2__epang_T8_K25__rep1_1791108194407/RAxML_info.mfresolv_k3_species_s2__epang_T8_K25__rep1
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/tmp/k3_species_s2__epang_T8_K25__rep1_1791108194407/epang_l1out_seq_k3_species_s2__epang_T8_K25__rep1 (0.9s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/tmp/k3_species_s2__epang_T8_K25__rep1_1791108194407/RAxML_info.mfresolv_k3_species_s2__epang_T8_K25__rep1
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/tmp/k3_species_s2__epang_T8_K25__rep1_1791108194407/epang_l1out_seq_k3_species_s2__epang_T8_K25__rep1 (0.9s)
 [epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 57.7s)
 [epang-l1o] placements produits: 2021 (K=25 folds, remap 2.3s)
 [epang-l1o] timing: fold prep 0.9s, epa-ng 57.7s, remap 2.3s, elapsed 60.9s
@@ -66,8 +66,8 @@ Species     :	17
 
 Total mislabels: 94 / 4.65 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/run/k3_species_s2__epang_T8_K25__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/run/k3_species_s2__epang_T8_K25__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/run/k3_species_s2__epang_T8_K25__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/kind3/work/1f/4d93342590c2aa8ae9eb964d9d9b94/run/k3_species_s2__epang_T8_K25__rep1.log
 
 Analysis completed successfully, elapsed time: 93 seconds (27s reftree, 66s leave-one-out)
 

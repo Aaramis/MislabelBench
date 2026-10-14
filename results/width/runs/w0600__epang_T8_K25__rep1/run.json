@@ -35,7 +35,7 @@
     "-n",
     "w0600__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/width/work/5d/eb712a870cd8426ba693687c3d907b/tmp",
+    "$BENCH_ROOT/.nf/width/work/5d/eb712a870cd8426ba693687c3d907b/tmp",
     "-m",
     "ultrafast",
     "-C",

@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_family_r0.05_k10_s1.fasta -t inj_family_r0.05_k10_s1.tax -T 8 -n inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1 -tmpdir /shared/home/agardette/bench/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_family_r0.05_k10_s1.fasta -t inj_family_r0.05_k10_s1.tax -T 8 -n inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1 -tmpdir $BENCH_ROOT/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -97,8 +97,8 @@ WARNING: 18 indistinguishable taxa have been merged into 9 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/tmp/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1_1791191398626/RAxML_info.mfresolv_inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1
-[epang-l1o] wrote 2023 fold tasks to /shared/home/agardette/bench/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/tmp/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1_1791191398626/epang_l1out_seq_inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1 (29.6s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/tmp/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1_1791191398626/RAxML_info.mfresolv_inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1
+[epang-l1o] wrote 2023 fold tasks to $BENCH_ROOT/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/tmp/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1_1791191398626/epang_l1out_seq_inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1 (29.6s)
 [epang-l1o] placed 2023/2023 folds (4 at a time, 2 threads each, 4146.9s)
 [epang-l1o] placements produits: 2021 (K=2023 folds, remap 53.2s)
 [epang-l1o] timing: fold prep 29.6s, epa-ng 4146.9s, remap 53.2s, elapsed 4229.7s
@@ -115,8 +115,8 @@ Species     :	22
 
 Total mislabels: 131 / 6.48 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/run/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/run/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/run/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/kexact_k2/work/ff/147af63075ed8c027fdf55a676ae59/run/inj_family_r0.05_k10_s1__epang_T8_Kexact__rep1.log
 
 Analysis completed successfully, elapsed time: 4276 seconds (10s reftree, 4266s leave-one-out)
 

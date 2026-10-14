@@ -3,7 +3,7 @@ By A.Kozlov and J.Zhang, the Exelixis Lab. Based on RAxML 8.2.3 by A.Stamatakis.
 
 SATIVA was called as follows:
 
-/usr/local/bin/sativa.py -s rag_inj_family_r0.05_k5_s1.fasta -t rag_inj_family_r0.05_k5_s1.tax -T 8 -n rag_inj_family_r0.05_k5_s1__upstream_raxml_T8__rep1 -tmpdir /shared/home/agardette/bench/.nf/ragged/work/1c/654a9b4606579a5ece5df9f5a63186/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/bin/sativa.py -s rag_inj_family_r0.05_k5_s1.fasta -t rag_inj_family_r0.05_k5_s1.tax -T 8 -n rag_inj_family_r0.05_k5_s1__upstream_raxml_T8__rep1 -tmpdir $BENCH_ROOT/.nf/ragged/work/1c/654a9b4606579a5ece5df9f5a63186/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -486,8 +486,8 @@ Species     :	9
 
 Total mislabels: 143 / 7.07 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/ragged/work/1c/654a9b4606579a5ece5df9f5a63186/run/rag_inj_family_r0.05_k5_s1__upstream_raxml_T8__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/ragged/work/1c/654a9b4606579a5ece5df9f5a63186/run/rag_inj_family_r0.05_k5_s1__upstream_raxml_T8__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/ragged/work/1c/654a9b4606579a5ece5df9f5a63186/run/rag_inj_family_r0.05_k5_s1__upstream_raxml_T8__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/ragged/work/1c/654a9b4606579a5ece5df9f5a63186/run/rag_inj_family_r0.05_k5_s1__upstream_raxml_T8__rep1.log
 
 Analysis completed successfully, elapsed time: 719 seconds (7s reftree, 712s leave-one-out)
 

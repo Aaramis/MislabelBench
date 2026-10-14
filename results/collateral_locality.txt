@@ -1,4 +1,5 @@
 collateral flags: 5917, of which 4623 (78.1%) lie in a clade the injection touched
+baseline flags kept: 14409, of which 5661 (39.3%) lie in a clade the injection touched
   phylum      949/995    95.4%
   class       911/1039   87.7%
   order       711/977    72.8%

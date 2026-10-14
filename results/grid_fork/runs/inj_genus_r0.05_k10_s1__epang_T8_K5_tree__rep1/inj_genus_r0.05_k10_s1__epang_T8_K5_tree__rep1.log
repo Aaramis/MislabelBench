@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_genus_r0.05_k10_s1.fasta -t inj_genus_r0.05_k10_s1.tax -T 8 -n inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1 -tmpdir /shared/home/agardette/bench/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s inj_genus_r0.05_k10_s1.fasta -t inj_genus_r0.05_k10_s1.tax -T 8 -n inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1 -tmpdir $BENCH_ROOT/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -83,8 +83,8 @@ WARNING: 14 indistinguishable taxa have been merged into 7 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/tmp/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1_1790943416725/RAxML_info.mfresolv_inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1
-[epang-l1o] wrote 5 fold tasks to /shared/home/agardette/bench/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/tmp/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1_1790943416725/epang_l1out_seq_inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1 (0.2s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/tmp/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1_1790943416725/RAxML_info.mfresolv_inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1
+[epang-l1o] wrote 5 fold tasks to $BENCH_ROOT/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/tmp/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1_1790943416725/epang_l1out_seq_inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1 (0.2s)
 [epang-l1o] placed 5/5 folds (4 at a time, 2 threads each, 9.1s)
 [epang-l1o] placements produits: 2022 (K=5 folds, remap 0.3s)
 [epang-l1o] timing: fold prep 0.2s, epa-ng 9.1s, remap 0.3s, elapsed 9.6s
@@ -101,8 +101,8 @@ Species     :	19
 
 Total mislabels: 129 / 6.38 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/run/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/run/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1.log
+Results were saved to: $BENCH_ROOT/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/run/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1.mis
+Execution log was saved to: $BENCH_ROOT/.nf/grid_k5/work/b4/716c8dd9778a13876ba0be91ea9f7f/run/inj_genus_r0.05_k10_s1__epang_T8_K5_tree__rep1.log
 
 Analysis completed successfully, elapsed time: 23 seconds (11s reftree, 13s leave-one-out)
 

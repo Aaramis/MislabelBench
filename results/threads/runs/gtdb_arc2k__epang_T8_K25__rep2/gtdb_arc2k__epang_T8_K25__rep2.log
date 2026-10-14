@@ -4,7 +4,7 @@ Placement by EPA-ng (Barbera et al. 2019). Fork: https://github.com/Aaramis/sati
 
 SATIVA was called as follows:
 
-/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc2k.fasta -t gtdb_arc2k.tax -T 8 -n gtdb_arc2k__epang_T8_K25__rep2 -tmpdir /shared/home/agardette/bench/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
+/usr/local/share/sativa-epang-0.10.2-0/sativa.py -s gtdb_arc2k.fasta -t gtdb_arc2k.tax -T 8 -n gtdb_arc2k__epang_T8_K25__rep2 -tmpdir $BENCH_ROOT/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/tmp -m ultrafast -C 0.4 -x BAC -p 42 -S
 
 *** STEP 1: Building the reference tree using provided alignment and taxonomic annotations ***
 
@@ -48,8 +48,8 @@ WARNING: 4 indistinguishable taxa have been merged into 2 clusters.
 
 Running the leave-one-sequence-out test...
 
-[epang-l1o] EPA-ng model: /shared/home/agardette/bench/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/tmp/gtdb_arc2k__epang_T8_K25__rep2_1790950840200/RAxML_info.mfresolv_gtdb_arc2k__epang_T8_K25__rep2
-[epang-l1o] wrote 25 fold tasks to /shared/home/agardette/bench/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/tmp/gtdb_arc2k__epang_T8_K25__rep2_1790950840200/epang_l1out_seq_gtdb_arc2k__epang_T8_K25__rep2 (0.3s)
+[epang-l1o] EPA-ng model: $BENCH_ROOT/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/tmp/gtdb_arc2k__epang_T8_K25__rep2_1790950840200/RAxML_info.mfresolv_gtdb_arc2k__epang_T8_K25__rep2
+[epang-l1o] wrote 25 fold tasks to $BENCH_ROOT/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/tmp/gtdb_arc2k__epang_T8_K25__rep2_1790950840200/epang_l1out_seq_gtdb_arc2k__epang_T8_K25__rep2 (0.3s)
 [epang-l1o] placed 25/25 folds (4 at a time, 2 threads each, 23.6s)
 [epang-l1o] placements produits: 2021 (K=25 folds, remap 0.7s)
 [epang-l1o] timing: fold prep 0.3s, epa-ng 23.6s, remap 0.7s, elapsed 24.5s
@@ -66,8 +66,8 @@ Species     :	19
 
 Total mislabels: 93 / 4.60 %
 
-Results were saved to: /shared/home/agardette/bench/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/run/gtdb_arc2k__epang_T8_K25__rep2.mis
-Execution log was saved to: /shared/home/agardette/bench/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/run/gtdb_arc2k__epang_T8_K25__rep2.log
+Results were saved to: $BENCH_ROOT/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/run/gtdb_arc2k__epang_T8_K25__rep2.mis
+Execution log was saved to: $BENCH_ROOT/.nf/threads/work/0a/db5519e10c9314a153f3b28497fad5/run/gtdb_arc2k__epang_T8_K25__rep2.log
 
 Analysis completed successfully, elapsed time: 38 seconds (11s reftree, 28s leave-one-out)
 

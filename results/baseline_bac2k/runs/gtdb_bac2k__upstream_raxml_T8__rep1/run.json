@@ -34,7 +34,7 @@
     "-n",
     "gtdb_bac2k__upstream_raxml_T8__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/baseline_bac2k/work/86/a8ef38f6e8186792c9ec3a12b7deb4/tmp",
+    "$BENCH_ROOT/.nf/baseline_bac2k/work/86/a8ef38f6e8186792c9ec3a12b7deb4/tmp",
     "-m",
     "ultrafast",
     "-C",

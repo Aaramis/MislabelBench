@@ -35,7 +35,7 @@
     "-n",
     "chi_family_b0.25_s1__epang_T8_K25__rep1",
     "-tmpdir",
-    "/shared/home/agardette/bench/.nf/chimera/work/4f/3e7d6951b79a5e97018f81ed712cd1/tmp",
+    "$BENCH_ROOT/.nf/chimera/work/4f/3e7d6951b79a5e97018f81ed712cd1/tmp",
     "-m",
     "ultrafast",
     "-C",

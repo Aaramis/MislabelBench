@@ -1,0 +1,54 @@
+panel	series	x	y
+B	runtime_s_SATIVA-epang	402	9.6
+B	runtime_s_SATIVA	402	78.8
+B	runtime_s_SATIVA-epang	801	16.1
+B	runtime_s_SATIVA	801	237.8
+B	runtime_s_SATIVA-epang	2023	38.5
+B	runtime_s_SATIVA	2023	635.6
+B	runtime_s_SATIVA-epang	4001	129.0
+B	runtime_s_SATIVA	4001	1343.9
+B	runtime_s_SATIVA-epang	7051	262.5
+B	runtime_s_SATIVA	7051	2983.6
+B	peak_mb_SATIVA-epang	402	1843.0
+B	peak_mb_SATIVA	402	148.0
+B	peak_mb_SATIVA-epang	801	3584.0
+B	peak_mb_SATIVA	801	113.0
+B	peak_mb_SATIVA-epang	2023	9421.0
+B	peak_mb_SATIVA	2023	209.0
+B	peak_mb_SATIVA-epang	4001	20582.0
+B	peak_mb_SATIVA	4001	391.0
+B	peak_mb_SATIVA-epang	7051	36147.0
+B	peak_mb_SATIVA	7051	727.0
+C	ref	1	51.2
+C	tasks	1	2.0
+C	place	1	237.0
+C	score	1	20.8
+C	ref	2	52.9
+C	tasks	2	2.2
+C	place	2	121.0
+C	score	2	20.9
+C	ref	4	45.7
+C	tasks	4	2.1
+C	place	4	64.9
+C	score	4	22.2
+D	baseline_both	0.511	44.04
+D	baseline_SATIVA-epang only	0.511	2.03
+D	baseline_SATIVA only	0.511	2.07
+D	baseline_neither	0.511	2.09
+D	injected_both	0.511	35.83
+D	injected_SATIVA-epang only	0.511	11.14
+D	injected_SATIVA only	0.511	0.83
+D	injected_neither	0.511	56.19
+D	collateral_both	0.511	16.80
+D	collateral_SATIVA-epang only	0.511	8.97
+D	collateral_SATIVA only	0.511	9.00
+E	upstream_raxml_T8	0.1	0.7853
+E	upstream_raxml_T8	0.30000000000000004	0.4401
+E	upstream_raxml_T8	0.5	0.1638
+E	upstream_raxml_T8	0.7	0.0805
+E	upstream_raxml_T8	0.9	0.0048
+E	epang_T8_K25	0.1	0.8666
+E	epang_T8_K25	0.30000000000000004	0.6001
+E	epang_T8_K25	0.5	0.3271
+E	epang_T8_K25	0.7	0.1104
+E	epang_T8_K25	0.9	0.0111

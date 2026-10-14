@@ -1,7 +1,7 @@
-excluded 15 trusted runs from the staged experiments, whose whole-run control shares its node with the stages
+excluded 16 trusted runs from the staged experiments, whose whole-run control shares its node with the stages
 dataset       condition             n      wall  cores    CPU-s  core-h
-gtdb_arc1200  epang_T8_K25          4     262.4   5.54     1451    0.40
-gtdb_arc1200  upstream_raxml_T8     4    2983.6   7.97    23796    6.61
+gtdb_arc1200  epang_T8_K25          4     262.5   5.54     1451    0.40
+gtdb_arc1200  upstream_raxml_T8     4    2983.6   7.98    23796    6.61
 gtdb_arc2k    epang_T16_K25         3      29.8   6.44      191    0.05
 gtdb_arc2k    epang_T1_K25          3     151.9   1.00      152    0.04
 gtdb_arc2k    epang_T8_K25          7      38.5   4.49      170    0.05
@@ -37,7 +37,7 @@ size gradient, both tools at 8 threads: medians, and the pair of speedups
        801     16.1     237.8    14.8    30.2        3.92      7.94
       2023     38.5     635.6    16.5    29.7        4.49      7.97
       4001    129.0    1343.9    10.4    15.5        5.34      7.97
-      7051    262.4    2983.6    11.4    16.4        5.54      7.97
+      7051    262.5    2983.6    11.4    16.4        5.54      7.98
 
 thread axis at 2023 sequences: what each tool does with the threads it is given
 tool         T     wall   cores  speedup vs T1  efficiency
@@ -72,5 +72,5 @@ fork         1    7051         1.15      57,122     1,827,904
 fork         8    7051         5.13      12,783       409,077
 fork        16    2023         4.15      15,789       505,256
 upstream     1    2023         0.10     646,728    20,695,309
-upstream     8    7051         0.10     635,443    20,334,184
+upstream     8    7051         0.10     635,399    20,332,786
 upstream    16    2023         0.11     610,402    19,532,866
