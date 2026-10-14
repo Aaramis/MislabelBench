@@ -22,7 +22,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from dataset_shape import RANKS_GTDB, UNRESOLVED_GTDB, make_is_unresolved
+from dataset_shape import RANKS_GTDB, is_unresolved
 
 TARGET_N = 7051
 TARGET_JUDG = 72.7
@@ -37,7 +37,6 @@ def main():
     p.add_argument("--out")
     args = p.parse_args()
 
-    is_unresolved = make_is_unresolved(UNRESOLVED_GTDB, False)
     rank_idx = [RANKS_GTDB.index(r) for r in args.ranks.split(",")]
     # Per candidate clade: sequence count, count over the length filter, and the species and genus
     # label counts among the long ones, which is what judgeability is computed from.

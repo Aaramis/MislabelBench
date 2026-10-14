@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read one field out of assets/datasets.yml, so the fetch scripts stop copying it.
 
-    dataset_field.py unite_fungi sha256
+    dataset_field.py gtdb_archaea_ssu sha256
     dataset_field.py gtdb_archaea_ssu url
 
 The manifest is the record of where every input came from, and until now nothing read it: the two

@@ -11,7 +11,7 @@
 # "a stronger guarantee than a copy in git". That guarantees the input. Nothing has ever checked
 # that the files everything here rests on follow from it -- and the archaeal set is the only one of
 # the three datasets with no counts sidecar, so there was no build record either, while the
-# bacterial donor pool and both UNITE subsets have one.
+# bacterial donor pool has one.
 #
 # Rebuilds gtdb_arc1200 from the release with the parameters the manifest records and compares,
 # byte for byte, against the committed files.

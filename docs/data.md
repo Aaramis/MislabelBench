@@ -8,7 +8,6 @@
 | Rfam covariance models | 15.1 | RF01959 (archaea) and RF00177 (bacteria), the alignment model | CC0 |
 | Infernal | 1.1.5 | `cmalign` and `cmfetch`, run from a container | BSD-3-Clause |
 | RAxML Grove | database of 2026, tree 71741 | the tree and model of the simulated control | none stated upstream |
-| UNITE | v10.0 | a fungal reference, used only to count how many sequences are judgeable (`bin/prepare_unite.py`) | CC BY-SA 4.0 |
 
 `assets/datasets.yml` gives each source's URL, sha256, download date, record counts and the rule that
 selects sequences. `bin/verify_inputs.py` and `bin/verify_manifests.py` check the files in `data/`

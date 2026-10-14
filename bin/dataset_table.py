@@ -24,7 +24,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from dataset_shape import RANKS_GTDB, UNRESOLVED_GTDB, make_is_unresolved
+from dataset_shape import RANKS_GTDB, is_unresolved
 
 
 def rows_of(path, clade):
@@ -79,7 +79,6 @@ def main():
     p.add_argument("--out")
     args = p.parse_args()
 
-    is_unresolved = make_is_unresolved(UNRESOLVED_GTDB, False)
     table = {}
     if args.ssu_reps:
         table["ssu_reps"] = shape(rows_of(args.ssu_reps, args.clade), is_unresolved)

@@ -11,17 +11,14 @@ The code (everything else) is under the MIT licence, see LICENSE.
 
 Why ShareAlike
 --------------
-The benchmark datasets are built from GTDB release 226 (and, for one replicate,
-UNITE v10.0), both published under CC BY-SA 4.0. A derived dataset must carry the
-same licence, so the whole data tree does.
+The benchmark datasets are built from GTDB release 226, published under CC BY-SA 4.0. A derived
+dataset must carry the same licence, so the whole data tree does.
 
 Upstream sources and their terms
 --------------------------------
 GTDB r226       CC BY-SA 4.0
                 Parks DH et al. GTDB: an ongoing census of bacterial and archaeal
                 diversity. Nucleic Acids Res (2022). https://gtdb.ecogenomic.org
-UNITE v10.0     CC BY-SA 4.0
-                doi:10.15156/BIO/3301229
 Rfam 15.1       CC0 (public domain dedication)
                 Covariance models RF01959 (archaeal SSU) and RF00177 (bacterial SSU).
                 Ontiveros-Palacios N et al. Nucleic Acids Res (2025).

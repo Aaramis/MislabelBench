@@ -15,12 +15,6 @@
 #                                 bin/verify_manifests.py holds this file to it)
 #   gtdb_arc2k, the grid's set  :  2023 sequences -> 74.9 %
 #   gtdb_arc1200, the headline  :  7051 sequences -> 72.7 %
-#   UNITE v10.0 RefS            : 20295 sequences ->  4.3 %
-#   UNITE v10.0 RepS, secondary : 81842 sequences -> 10.9 %
-#
-# The two UNITE rows were published as 8.5 % and 85.7 % until the unresolved-label forms were
-# counted properly; see unite_fungi below. RepS is still the right choice of the two and by a much
-# smaller margin than it looked, and 10.9 % is a weak instrument rather than a strong one.
 #
 # The primary sets were checked for the same defect and do not have it. GTDB writes an unnamed
 # species per cluster -- s__JAJYEA01 sp021809545, 595 such labels over 1235 sequences at 2023, the
@@ -201,59 +195,3 @@ datasets:
     # bin/grove_select.py's criteria and candidate count are in data/grove/tree.json; the
     # simulator is the AliSim shipped inside the pinned scripts repository.
     citation: "Höhler D et al. RAxML Grove: an empirical phylogenetic tree database. Bioinformatics 38(6):1741 (2022)"
-
-  unite_fungi:
-    description: UNITE general FASTA release for Fungi, RepS subset
-    release: v10.0 (2025-02-19)
-    doi: 10.15156/BIO/3301229
-    url: https://s3.hpc.ut.ee/plutof-public/original/9489f7bc-7cc1-4e0a-84dc-c732476b9acd.tgz
-    sha256: a340864f947c517b671f1054a261e613a6619ef88dd8000de1699f5e1f21413b
-    downloaded: 2026-10-01
-    member: sh_general_release_dynamic_19.02.2025.fasta
-    licence: CC BY-SA 4.0
-    # Field 4 of the '|'-separated header is the subset marker.
-    select: "header field 4 == reps"
-    counts:
-      in_release: 102137
-      refs: 16120
-      refs_singleton: 4175
-      reps: 81842
-    # Two denominators, because one of them alone is wrong and was published. UNITE marks an
-    # unresolved rank with a form of its own at each level -- Ascomycota_phy_Incertae_sedis,
-    # ..._cls_, ..._ord_, ..._fam_, Ascomycota_gen_Incertae_sedis, and Cortinarius_sp at species,
-    # plus bare GS codes at class and order. A sequence labelled Tomentella_sp shares that label
-    # with 2726 others and is not thereby known to be the same species as any of them, so
-    # leave-one-out judging one against another is not judging a species label at all. The 62129
-    # below is every such sequence at species, spread over many X_sp labels and not one group:
-    # the largest are Tomentella_sp at 2727, Ascomycota_sp at 2336 and Fungi_sp at 1666. This
-    # comment named 62128 siblings of one label, which is the total mistaken for a group.
-    #
-    # That this is the whole of the difference was checked and not inferred: scoring the same file
-    # with every label taken as resolved returns 98.2 % at genus and 85.7 % at species, which are
-    # the two figures that were published, reproduced to the decimal.
-    #
-    # of_labelled is among sequences with a resolved label at the rank; of_all is out of all 81842,
-    # which is the ceiling any recall figure has to be read against. Measured by
-    # bin/dataset_shape.py, whose counts reproduce the label inventory exactly.
-    # The RefS subset of the same release, measured the same way, as the comparison that chose
-    # RepS. The rule reproduces the published 90.6 % at genus exactly, which is the reason to
-    # believe it where it corrects the others: species was published as 8.5 % and is 4.5 % of
-    # labelled sequences, 4.3 % of all 20295.
-    refs_judgeable_pct:
-      genus:   {of_labelled: 90.6, of_all: 89.7, unresolved: 206}
-      species: {of_labelled: 4.5,  of_all: 4.3,  unresolved: 971}
-    judgeable_pct:
-      phylum:  {of_labelled: 100.0, of_all: 97.7, unresolved: 1846}
-      class:   {of_labelled: 100.0, of_all: 90.4, unresolved: 7828}
-      order:   {of_labelled: 100.0, of_all: 86.1, unresolved: 11332}
-      family:  {of_labelled: 99.8,  of_all: 71.7, unresolved: 23016}
-      genus:   {of_labelled: 97.4,  of_all: 59.9, unresolved: 31482}
-      species: {of_labelled: 45.3,  of_all: 10.9, unresolved: 62129}
-    # ITS is not as length-variable as its reputation: 421 to 666 nt between the 5th and 95th
-    # percentiles, a ratio of 1.58, median 524. So an alignment of this set is not mostly gap.
-    # That bounds one failure mode and not the other -- equal length is not homology, and ITS has
-    # no conserved structure to align against the way 16S has a covariance model.
-    length_nt: {min: 140, p5: 421, median: 524, p95: 666, max: 1491, p95_over_p5: 1.58}
-    lineages: all 7 ranks deep, none empty
-    sha256_rechecked: 2026-10-03, unchanged
-    status: secondary, needs an alignment step; ITS alignment is contested, see the protocol

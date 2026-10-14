@@ -188,9 +188,7 @@ def check_provenance(problems):
 
     # A declared count against the file it describes.
     for key, path, what in (
-            ("judgeable_pct_after_length", "results/shape_gtdb_arc1200.json", "the archaeal set"),
-            ("judgeable_pct", "data/unite/unite_shape.json", "UNITE RepS"),
-            ("refs_judgeable_pct", "data/unite/unite_refs_shape.json", "UNITE RefS")):
+            ("judgeable_pct_after_length", "results/shape_gtdb_arc1200.json", "the archaeal set"),):
         want = _block(text, key) or _block(text, key, r"\{of_labelled:\s*([0-9.]+)")
         have = shape(path)
         if not want or not have:
