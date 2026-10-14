@@ -119,8 +119,8 @@ class PairedComparison(Fixture):
         self.assertAlmostEqual(sign_test(0, 10), 2 * 0.5 ** 10, places=12)
         self.assertEqual(sign_test(5, 10), 1.0)
         self.assertEqual(sign_test(0, 0), 1.0)
-        # Three of three is 0.25 and nine of nine is 0.0039: the two numbers make_simulation.sh
-        # quotes as the reason it runs three injection seeds instead of one.
+        # Three of three is 0.25 and nine of nine is 0.0039: with one seed a sign test cannot report
+        # below 0.5, which is why the grid runs three injection seeds.
         self.assertAlmostEqual(sign_test(3, 3), 0.25, places=12)
         self.assertAlmostEqual(sign_test(9, 9), 2 / 512, places=12)
         self.assertAlmostEqual(sign_test(1, 5), 2 * 6 / 32, places=12)

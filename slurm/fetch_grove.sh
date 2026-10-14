@@ -5,24 +5,16 @@
 #SBATCH --time=2:00:00
 #SBATCH --output=%x-%j.log
 #
-# RAxMLGrove: empirical trees and model parameter estimates, to replace the simulated reference's
-# hand-picked tree.
+# RAxMLGrove: empirical trees and model parameter estimates for the simulated control.
 #
 # Why this arrives at all. The simulated reference is the control that closes the one
 # hole injection leaves: there, every label is correct by construction, so a flag on an untouched
 # sequence is a false positive in the strict sense. A co-author's comment on that paragraph asked how
-# the tree and the parameters are chosen, and the honest answer was "by hand": a balanced 3,2,2,2,2,3
-# branching, branch lengths fixed per rank, Jukes-Cantor, no gaps. Zero flags on a reference that
-# regular is weak evidence that zero flags would appear on a realistic one.
+# the tree and the parameters are chosen, and a hand-made tree has no answer but "by hand".
 #
 # What this buys that irregularity drawn by us would not: a citable provenance. "Topologies and model
 # parameters drawn from RAxMLGrove" closes the question; "branch lengths drawn from a distribution we
 # chose" invites it again one level down.
-#
-# It reverses a decision this repository records. bin/simulate_reference.py argues for forty lines of
-# Jukes-Cantor rather than a pinned container, on the grounds that what matters is a model a reader can
-# check. That argument is about a reader; the objection is a reviewer's, and a hand-made tree
-# leaves the choice of tree and parameters open.
 #
 # Two sources, both pinned. The scripts are a git repository, so the commit is the pin; the database is
 # a file, so the sha256 is. Both go into the provenance record, with the size and the date, the way

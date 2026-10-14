@@ -4,8 +4,8 @@
 data/README.md's central claim is that what is not committed is regenerable, "and that claim is
 checked rather than asserted". It was asserted. The check behind it was run by hand, from a fresh
 clone, with nothing but the generators -- and a fresh clone is exactly where it cannot work for two
-of the four experiments: the clade and simulated cells are committed, every generator skips a cell
-whose .tax is already there, so for 103 of the 481 files the comparison compared git's content to
+of the experiments: the clade cells are committed, every generator skips a cell
+whose .tax is already there, so for those files the comparison compared git's content to
 itself. Their reproducibility was unmeasured until this script measured it.
 
 It also hid a defect of its own. The 225 cell alignments are symlinks, and the claim made for them
@@ -15,7 +15,7 @@ an absolute path on the author's machine, so every clone on another machine had 
 dangling alignments that no documented command repaired. A link is compared here by its target, which
 is what makes that visible.
 
-So: build a root holding only what is kept, run the four generators into it, and compare every file
+So: build a root holding only what is kept, run the generators into it, and compare every file
 they write against this tree's. Nothing in this tree is touched -- the kept inputs are copied rather
 than linked, because make_foreign.sh writes into data/bacteria on the branch that aligns the donors.
 
@@ -42,9 +42,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-GENERATED = ("injected", "foreign", "clade", "simulated")
+GENERATED = ("injected", "foreign", "clade")
 SUBSETS = "data/gtdb/*.subset.json"
-GENERATORS = ("make_grid.sh", "make_foreign.sh", "make_clade.sh", "make_simulation.sh")
+GENERATORS = ("make_grid.sh", "make_foreign.sh", "make_clade.sh")
 KEPT = ("data/gtdb", "data/bacteria")
 
 

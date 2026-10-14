@@ -5,10 +5,10 @@
 #SBATCH --time=4:00:00
 #SBATCH --output=%x-%j.log
 #
-# The simulated-reference control, rebuilt on a RAxMLGrove tree instead of a hand-made one.
+# The simulated-reference control, on a RAxMLGrove tree.
 #
-# What it replaces and why: a co-author asked how the simulated reference's tree
-# and parameters are chosen, and the honest answer was "by hand". Here the topology, the substitution
+# Why: a co-author asked how the simulated reference's tree
+# and parameters are chosen. Here the topology, the substitution
 # model, its rates and base frequencies, the alpha of the gamma, the alignment width and the empirical
 # missing-data pattern all come out of the database, and the tree is picked by bin/grove_select.py
 # from stated requirements. Nothing in this file chooses a number that affects the data.
@@ -86,7 +86,7 @@ RAW="$OUT/raw/$TREE_ID"
 # that taxon's whole partition with the blank symbol. On a single-partition dataset -- which is what
 # the criteria ask for, because our references are single-marker -- the only two things it can do are
 # nothing at all and blanking an entire sequence. It cannot produce a within-sequence gap pattern. So
-# this alignment has no gaps, exactly like the hand-made control's, and the control's claim is about
+# this alignment has no gaps, and the control's claim is about
 # the topology and the substitution model, not about the alignment. The alternative was to drop the
 # single-partition requirement and take a concatenation's genuine per-gene missing data, which was
 # rejected: it would make the simulated reference differ from the real ones in a second way in order

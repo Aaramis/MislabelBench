@@ -165,15 +165,9 @@ for cond in epang_T8_K25 upstream_raxml_T8; do
     fi
 done
 
-# The simulated control. The un-injected cell is the one number the injected grid cannot give:
-# on simulated data a flag on an untouched sequence is a false positive outright, because the
-# taxonomy is the tree.
-#
-# There are two such controls now, the hand-made reference and the RAxMLGrove one, and they take the
-# same three analyses. Written once as a function rather than copied, because the comment below
-# records what copying cost here already: the law and the paired test sat outside the loops that read
-# the archaeal grid, so two committed records went on describing twelve cells after the set grew to
-# thirty-six. A second copy would have been a second chance to make that mistake.
+# The simulated control, on a RAxMLGrove tree. The un-injected cell is the one number the injected
+# grid cannot give: on simulated data a flag on an untouched sequence is a false positive outright,
+# because the taxonomy is the tree.
 control_analyses() {
     local data="$1" res="$2" base="$3" label="$4" cond n total b
     step "${label}: recall where every label is certain, and a strict false-positive rate"
@@ -209,9 +203,7 @@ control_analyses() {
     fi
 }
 
-control_analyses data/simulated results/simulated sim simulated
-# The second control, on an empirical tree. Absent until slurm/grove_simulation.sh has run, which the
-# guards above report rather than fail on.
+# Absent until slurm/grove_simulation.sh has run, which the guards above report rather than fail on.
 control_analyses data/grove_sim results/grove_simulated grove grove_simulated
 # And the promise the control rests on, re-checked on the committed files rather than trusted from
 # the day they were generated: every label is a clade of the tree the sequences evolved along.
@@ -373,13 +365,10 @@ verify_recall_independently.py --injected-dir "$INJ" --runs-dir "$RUNS" \
     --summary epang_T8_K25__rep1=results/grid_summary_epang_T8_K25.json \
     --summary epang_T8_K5__rep1=results/grid_summary_epang_T8_K5.json \
     --summary upstream_raxml_T8__rep1=results/grid_summary_upstream_raxml_T8.json
-# The same check over the other two injection experiments, which have the same record shape. Error
+# The same check over the other injection experiments, which have the same record shape. Error
 # kind 6's cells carry no k, which crashed this gate until it matched cells on the fields they have.
-verify_recall_independently.py --injected-dir data/simulated --runs-dir results/simulated/runs \
-    --summary epang_T8_K25__rep1=results/simulated_summary_epang_T8_K25.json \
-    --summary upstream_raxml_T8__rep1=results/simulated_summary_upstream_raxml_T8.json
-# Guarded, unlike the three above, because this control's runs do not exist yet and an absent summary
-# is not a disagreement.
+# The Grove control is guarded, unlike the others, because its runs may not exist yet and an absent
+# summary is not a disagreement.
 if [ -s results/grove_simulated_summary_epang_T8_K25.json ]; then
     verify_recall_independently.py --injected-dir data/grove_sim --runs-dir results/grove_simulated/runs \
         --summary epang_T8_K25__rep1=results/grove_simulated_summary_epang_T8_K25.json \

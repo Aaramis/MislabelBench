@@ -16,15 +16,10 @@ nf_launch_dir grove_simulation
 
 echo "running on $(hostname)"
 
-# The same control as slurm/simulation.sh, on the RAxMLGrove reference instead of the hand-made one:
-# an empirical topology, the database's own substitution model and alpha, and the source alignment's
-# own missing-data pattern. It reverses the earlier choice of a hand-made tree.
+# The simulated control, on the RAxMLGrove reference: an empirical topology, the database's own
+# substitution model and alpha, and the source alignment's own missing-data pattern.
 #
-# Run beside the hand-made one rather than instead of it. The pair is the measurement: if the fork
-# and SATIVA agree on the regular reference and part ways on the empirical one, the difference is in
-# the data's realism and nowhere else, which is exactly the co-author's objection.
-#
-# Both tools, for the reason simulation.sh gives: the control is about the method, not the fork.
+# Both tools, because the control is about the method, not the fork.
 nextflow run "$BENCH_ROOT" -profile singularity -resume \
   --datasets_json "$BENCH_ROOT/data/grove_sim/datasets.json" \
   --datasets all \

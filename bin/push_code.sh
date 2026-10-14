@@ -71,7 +71,7 @@ rsync -a --exclude='._*' --exclude='bad_nodes.txt' --relative \
 # Sent only when the cluster has none, so a fresh ~/bench inherits what is known and an existing one
 # keeps what it has learned. bin/repatriate.sh brings the union back the other way.
 [ ! -f slurm/bad_nodes.txt ] || rsync -a --ignore-existing slurm/bad_nodes.txt "$REMOTE:~/bench/slurm/"
-for d in injected clade simulated chimera; do
+for d in injected clade chimera; do
     rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='datasets.json' \
           --exclude='*' "data/$d/" "$REMOTE:~/bench/data/$d/"
 done
@@ -85,5 +85,5 @@ rsync -a --exclude='._*' --include='*/' --include='*.truth.json' --include='data
 # something real: eighteen AppleDouble forks landed here once and the timing-flag gate died on one of
 # them before reading a record.
 ssh "${REMOTE%%:*}" 'cd ~/bench && n=$(find main.nf nextflow.config conf modules bin slurm assets \
-    tests data/injected data/clade data/simulated data/foreign -name "._*" 2>/dev/null | wc -l) \
+    tests data/injected data/clade data/foreign -name "._*" 2>/dev/null | wc -l) \
     && echo "AppleDouble files left behind: $n" && [ "$n" = "0" ]'

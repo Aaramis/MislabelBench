@@ -55,7 +55,7 @@ fi
 # `mkdir "~/bench/data/injected" failed: No such file or directory`. Found on the first real run,
 # because the local replay of the delivery created its own target directory and so could not.
 echo "== 1b. the directory skeleton, which rsync will not create for itself"
-run ssh "$HOST" 'mkdir -p ~/bench/data/injected ~/bench/data/foreign ~/bench/data/clade ~/bench/data/simulated ~/bench/results'
+run ssh "$HOST" 'mkdir -p ~/bench/data/injected ~/bench/data/foreign ~/bench/data/clade ~/bench/results'
 
 echo "== 2. code, which is what push_code.sh already sends"
 run bash bin/push_code.sh "$REMOTE"
@@ -69,7 +69,7 @@ run rsync -a --exclude='._*' data/gtdb data/bacteria "$REMOTE:~/bench/data/"
 echo "== 4. the generated cells, rebuilt on the cluster from their seeds"
 # Not copied: they are 92 MB and they regenerate in a couple of minutes from committed truth files,
 # which the clone test checks byte for byte on every run of bin/analyses.sh.
-for g in make_grid make_foreign make_clade make_simulation; do
+for g in make_grid make_foreign make_clade; do
     run ssh "$HOST" "cd ~/bench && BENCH_ROOT=\$PWD bash slurm/${g}.sh"
 done
 
