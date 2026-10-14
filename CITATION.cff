@@ -24,15 +24,15 @@ authors:
     given-names: Auguste
     orcid: "https://orcid.org/0009-0009-7635-8344"
     affiliation: "IRD, Sorbonne Université, UMMISCO"
-  - family-names: Belda
-    given-names: Eugeni
-    orcid: "https://orcid.org/0000-0003-4307-5072"
-  - family-names: Zucker
-    given-names: Jean-Daniel
-    orcid: "https://orcid.org/0000-0002-5597-7922"
   - family-names: Lundin
     given-names: Daniel
     orcid: "https://orcid.org/0000-0002-8779-6464"
   - family-names: Stamatakis
     given-names: Alexandros
     orcid: "https://orcid.org/0000-0003-0353-0691"
+  - family-names: Zucker
+    given-names: Jean-Daniel
+    orcid: "https://orcid.org/0000-0002-5597-7922"
+  - family-names: Belda
+    given-names: Eugeni
+    orcid: "https://orcid.org/0000-0003-4307-5072"
