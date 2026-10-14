@@ -404,11 +404,13 @@ if ls results/placements_*/placements/*/*/*.jplace >/dev/null 2>&1; then
                 --out "results/placement_locality/$name.json" > /dev/null
         fi
     done
-    pair=results/placement_locality/inj_family_r0.05_k2_s1
-    if [ -f "${pair}__upstream_raxml_T8__rep1.json" ] && [ -f "${pair}__epang_T8_Kexact__rep1.json" ]; then
-        placement_comparison.py --upstream "${pair}__upstream_raxml_T8__rep1.json" \
-            --fork "${pair}__epang_T8_Kexact__rep1.json" --out results/placement_comparison.tsv > /dev/null
-    fi
+fi
+# From the committed records, so it also runs where the jplace files are absent.
+pair=results/placement_locality/inj_family_r0.05_k2_s1
+if [ -f "${pair}__upstream_raxml_T8__rep1.json" ] && [ -f "${pair}__epang_T8_Kexact__rep1.json" ]; then
+    step "the engine tie: upstream and the fork on the same cell"
+    placement_comparison.py --upstream "${pair}__upstream_raxml_T8__rep1.json" \
+        --fork "${pair}__epang_T8_Kexact__rep1.json" --out results/placement_comparison.tsv > /dev/null
 fi
 
 # What an incomplete lineage costs detection. The ragged cells are the grid's own at family distance

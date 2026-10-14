@@ -37,7 +37,7 @@ def main():
     started = marker.stat().st_mtime
 
     tables = sorted(f for f in Path(args.results).iterdir()
-                    if f.is_file() and not f.name.startswith("."))
+                    if f.is_file() and not f.name.startswith(".") and f.suffix != ".md")
     stale = [f for f in tables if f.stat().st_mtime < started]
 
     # An empty results/ would otherwise pass silently, which is the shape of gate this repository
