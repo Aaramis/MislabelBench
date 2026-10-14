@@ -1,1 +1,0 @@
-(a) The method, one row per version. Only the placement step differs: n placements against n/K. (b) runtime against reference size, both tools. (c) recall against the share of surviving relatives carrying the wrong label. (d) What an injected error is: k sequences of one group given a neighbouring taxon's label at a chosen rank.
