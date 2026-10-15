@@ -211,19 +211,19 @@ def panel_c(y0=222, ph=118):
 
 
 def panel_d(y0=424, ph=118):
-    counts, quart = fd.upset_counts(FLOOR)
+    shares, quart, sizes = fd.upset_counts(FLOOR)
     groups = (("baseline", "Initial flags"), ("injected", "Injected errors"), ("collateral", "Collateral flags"))
     order = ((True, True, GREY, "both"), (False, True, mf.FORK, "SATIVA-epang only"),
              (True, False, mf.UP, "SATIVA only"), (False, False, "#fff", "neither"))
     x0, pitch, bw, gap = 62, 30, 22, 12
     pw = 11 * pitch + 3 * gap
-    ax = Ax(x0, y0, pw, ph, (0, 1), (0, 70))
-    o = frame(ax, [], [0, 20, 40, 60], "", "Sequences per dataset", letter=(14, "D"))
+    ax = Ax(x0, y0, pw, ph, (0, 1), (0, 100))
+    o = frame(ax, [], [0, 25, 50, 75, 100], "", "Share (%)", letter=(14, "D"))
     x = x0 + gap / 2
     for kind, title in groups:
         gx0 = x
         for ts, es, colour, label in (order[:3] if kind == "collateral" else order):
-            v = counts.get((kind, ts, es), 0.0)
+            v = shares.get((kind, ts, es), 0.0)
             q1, q3 = quart.get((kind, ts, es), (0, 0))
             cx = x + pitch / 2
             hollow = colour == "#fff"
@@ -235,6 +235,8 @@ def panel_d(y0=424, ph=118):
             x += pitch
         o.append(f'<line x1="{gx0 + 4}" y1="{ax.y0 + ph + 8}" x2="{x - 4}" y2="{ax.y0 + ph + 8}" stroke="{GREY}" stroke-width="1.6"/>')
         o.append(mf.txt((gx0 + x) / 2, ax.y0 + ph + 22, title, size=7.5))
+        o.append(mf.txt((gx0 + x) / 2, ax.y0 + ph + 34, f"n = {sizes[kind]:.0f}", size=6.5))
+        VALUES.append(f"D\t{kind}_n\t{FLOOR}\t{sizes[kind]:.2f}")
         x += gap
     lx = x0
     for label, colour in (("both tools", GREY), ("SATIVA-epang only", mf.FORK), ("SATIVA only", mf.UP), ("neither", "#fff")):

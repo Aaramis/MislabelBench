@@ -284,57 +284,63 @@
 <line x1="62" y1="542.0" x2="428" y2="542.0" stroke="#e4e4e4" stroke-width="0.6"/>
 <line x1="58" y1="542.0" x2="62" y2="542.0" stroke="#444" stroke-width="0.8"/>
 <text x="55.0" y="545.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">0</text>
-<line x1="62" y1="508.3" x2="428" y2="508.3" stroke="#e4e4e4" stroke-width="0.6"/>
-<line x1="58" y1="508.3" x2="62" y2="508.3" stroke="#444" stroke-width="0.8"/>
-<text x="55.0" y="511.3" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">20</text>
-<line x1="62" y1="474.6" x2="428" y2="474.6" stroke="#e4e4e4" stroke-width="0.6"/>
-<line x1="58" y1="474.6" x2="62" y2="474.6" stroke="#444" stroke-width="0.8"/>
-<text x="55.0" y="477.6" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">40</text>
-<line x1="62" y1="440.9" x2="428" y2="440.9" stroke="#e4e4e4" stroke-width="0.6"/>
-<line x1="58" y1="440.9" x2="62" y2="440.9" stroke="#444" stroke-width="0.8"/>
-<text x="55.0" y="443.9" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">60</text>
+<line x1="62" y1="512.5" x2="428" y2="512.5" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="512.5" x2="62" y2="512.5" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="515.5" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">25</text>
+<line x1="62" y1="483.0" x2="428" y2="483.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="483.0" x2="62" y2="483.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="486.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">50</text>
+<line x1="62" y1="453.5" x2="428" y2="453.5" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="453.5" x2="62" y2="453.5" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="456.5" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">75</text>
+<line x1="62" y1="424.0" x2="428" y2="424.0" stroke="#e4e4e4" stroke-width="0.6"/>
+<line x1="58" y1="424.0" x2="62" y2="424.0" stroke="#444" stroke-width="0.8"/>
+<text x="55.0" y="427.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="end">100</text>
 <rect x="62" y="424" width="366" height="118" fill="none" stroke="#444" stroke-width="0.8"/>
-<text x="22.0" y="483.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 22.0 483.0)">Sequences per dataset</text>
+<text x="22.0" y="483.0" font-size="12.8" fill="#000" font-weight="normal" text-anchor="middle" transform="rotate(-90 22.0 483.0)">Share (%)</text>
 <text x="14.0" y="410.0" font-size="19.2" fill="#000" font-weight="bold" text-anchor="start">D</text>
-<rect x="72.0" y="467.8" width="22" height="74.2" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
-<path d="M83.0 468.2V467.5M80.0 468.2h6M80.0 467.5h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="83.0" y="463.5" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">44</text>
-<rect x="102.0" y="538.6" width="22" height="3.4" fill="#000000" stroke="#fff" stroke-width="0.6"/>
-<path d="M113.0 539.1V538.1M110.0 539.1h6M110.0 538.1h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="113.0" y="534.1" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">2</text>
-<rect x="132.0" y="538.5" width="22" height="3.5" fill="#c1462c" stroke="#fff" stroke-width="0.6"/>
-<path d="M143.0 538.9V538.2M140.0 538.9h6M140.0 538.2h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="143.0" y="534.2" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">2</text>
-<rect x="162.0" y="538.5" width="22" height="3.5" fill="#fff" stroke="#000000" stroke-width="1.1"/>
-<path d="M173.0 539.1V538.1M170.0 539.1h6M170.0 538.1h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="173.0" y="534.1" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">2</text>
+<rect x="72.0" y="438.5" width="22" height="103.5" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
+<path d="M83.0 439.2V437.8M80.0 439.2h6M80.0 437.8h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="83.0" y="433.8" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">88</text>
+<rect x="102.0" y="537.2" width="22" height="4.8" fill="#000000" stroke="#fff" stroke-width="0.6"/>
+<path d="M113.0 537.9V536.6M110.0 537.9h6M110.0 536.6h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="113.0" y="532.6" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">4</text>
+<rect x="132.0" y="537.1" width="22" height="4.9" fill="#c1462c" stroke="#fff" stroke-width="0.6"/>
+<path d="M143.0 537.7V536.7M140.0 537.7h6M140.0 536.7h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="143.0" y="532.7" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">4</text>
+<rect x="162.0" y="537.1" width="22" height="4.9" fill="#fff" stroke="#000000" stroke-width="1.1"/>
+<path d="M173.0 538.0V536.5M170.0 538.0h6M170.0 536.5h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="173.0" y="532.5" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">4</text>
 <line x1="72.0" y1="550" x2="184.0" y2="550" stroke="#8a8a8a" stroke-width="1.6"/>
 <text x="128.0" y="564.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="middle">Initial flags</text>
-<rect x="204.0" y="481.6" width="22" height="60.4" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
-<path d="M215.0 483.6V478.9M212.0 483.6h6M212.0 478.9h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="215.0" y="474.9" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">36</text>
-<rect x="234.0" y="523.2" width="22" height="18.8" fill="#000000" stroke="#fff" stroke-width="0.6"/>
-<path d="M245.0 524.4V521.6M242.0 524.4h6M242.0 521.6h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="245.0" y="517.6" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">11</text>
-<rect x="264.0" y="540.6" width="22" height="1.4" fill="#c1462c" stroke="#fff" stroke-width="0.6"/>
-<path d="M275.0 541.0V540.3M272.0 541.0h6M272.0 540.3h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="275.0" y="536.3" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">&lt;1</text>
-<rect x="294.0" y="447.3" width="22" height="94.7" fill="#fff" stroke="#000000" stroke-width="1.1"/>
-<path d="M305.0 451.8V444.3M302.0 451.8h6M302.0 444.3h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="305.0" y="440.3" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">56</text>
+<text x="128.0" y="576.0" font-size="10.4" fill="#000" font-weight="normal" text-anchor="middle">n = 50</text>
+<rect x="204.0" y="501.3" width="22" height="40.7" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
+<path d="M215.0 502.1V499.0M212.0 502.1h6M212.0 499.0h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="215.0" y="495.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">34</text>
+<rect x="234.0" y="529.4" width="22" height="12.6" fill="#000000" stroke="#fff" stroke-width="0.6"/>
+<path d="M245.0 530.0V528.1M242.0 530.0h6M242.0 528.1h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="245.0" y="524.1" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">11</text>
+<rect x="264.0" y="541.1" width="22" height="0.9" fill="#c1462c" stroke="#fff" stroke-width="0.6"/>
+<path d="M275.0 541.4V540.9M272.0 541.4h6M272.0 540.9h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="275.0" y="536.9" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">&lt;1</text>
+<rect x="294.0" y="478.2" width="22" height="63.8" fill="#fff" stroke="#000000" stroke-width="1.1"/>
+<path d="M305.0 481.9V477.1M302.0 481.9h6M302.0 477.1h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="305.0" y="473.1" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">54</text>
 <line x1="204.0" y1="550" x2="316.0" y2="550" stroke="#8a8a8a" stroke-width="1.6"/>
 <text x="260.0" y="564.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="middle">Injected errors</text>
-<rect x="336.0" y="513.7" width="22" height="28.3" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
-<path d="M347.0 514.0V513.1M344.0 514.0h6M344.0 513.1h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="347.0" y="509.1" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">17</text>
-<rect x="366.0" y="526.9" width="22" height="15.1" fill="#000000" stroke="#fff" stroke-width="0.6"/>
-<path d="M377.0 529.2V525.6M374.0 529.2h6M374.0 525.6h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="377.0" y="521.6" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">9</text>
-<rect x="396.0" y="526.8" width="22" height="15.2" fill="#c1462c" stroke="#fff" stroke-width="0.6"/>
-<path d="M407.0 528.8V525.6M404.0 528.8h6M404.0 525.6h6" stroke="#000" stroke-width="0.8" fill="none"/>
-<text x="407.0" y="521.6" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">9</text>
+<text x="260.0" y="576.0" font-size="10.4" fill="#000" font-weight="normal" text-anchor="middle">n = 104</text>
+<rect x="336.0" y="485.0" width="22" height="57.0" fill="#8a8a8a" stroke="#fff" stroke-width="0.6"/>
+<path d="M347.0 486.0V482.7M344.0 486.0h6M344.0 482.7h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="347.0" y="478.7" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">48</text>
+<rect x="366.0" y="511.6" width="22" height="30.4" fill="#000000" stroke="#fff" stroke-width="0.6"/>
+<path d="M377.0 513.2V505.7M374.0 513.2h6M374.0 505.7h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="377.0" y="501.7" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">26</text>
+<rect x="396.0" y="511.5" width="22" height="30.5" fill="#c1462c" stroke="#fff" stroke-width="0.6"/>
+<path d="M407.0 516.6V512.0M404.0 516.6h6M404.0 512.0h6" stroke="#000" stroke-width="0.8" fill="none"/>
+<text x="407.0" y="507.5" font-size="11.2" fill="#000" font-weight="normal" text-anchor="middle">26</text>
 <line x1="336.0" y1="550" x2="418.0" y2="550" stroke="#8a8a8a" stroke-width="1.6"/>
 <text x="377.0" y="564.0" font-size="12.0" fill="#000" font-weight="normal" text-anchor="middle">Collateral flags</text>
+<text x="377.0" y="576.0" font-size="10.4" fill="#000" font-weight="normal" text-anchor="middle">n = 35</text>
 <rect x="62" y="403" width="10" height="9" fill="#8a8a8a" stroke="#8a8a8a" stroke-width="0.9"/>
 <text x="76.0" y="410.0" font-size="11.2" fill="#000" font-weight="normal" text-anchor="start">both tools</text>
 <rect x="146.0" y="403" width="10" height="9" fill="#000000" stroke="#000000" stroke-width="0.9"/>

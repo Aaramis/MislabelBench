@@ -31,17 +31,20 @@ C	ref	4	45.7
 C	tasks	4	2.1
 C	place	4	64.9
 C	score	4	22.2
-D	baseline_both	0.511	44.04
-D	baseline_SATIVA-epang only	0.511	2.03
-D	baseline_SATIVA only	0.511	2.07
-D	baseline_neither	0.511	2.09
-D	injected_both	0.511	35.83
-D	injected_SATIVA-epang only	0.511	11.14
-D	injected_SATIVA only	0.511	0.83
-D	injected_neither	0.511	56.19
-D	collateral_both	0.511	16.80
-D	collateral_SATIVA-epang only	0.511	8.97
-D	collateral_SATIVA only	0.511	9.00
+D	baseline_both	0.511	87.68
+D	baseline_SATIVA-epang only	0.511	4.05
+D	baseline_SATIVA only	0.511	4.11
+D	baseline_neither	0.511	4.16
+D	baseline_n	0.511	50.23
+D	injected_both	0.511	34.46
+D	injected_SATIVA-epang only	0.511	10.72
+D	injected_SATIVA only	0.511	0.80
+D	injected_neither	0.511	54.03
+D	injected_n	0.511	104.00
+D	collateral_both	0.511	48.32
+D	collateral_SATIVA-epang only	0.511	25.79
+D	collateral_SATIVA only	0.511	25.89
+D	collateral_n	0.511	34.77
 E	upstream_raxml_T8	0.1	0.7853
 E	upstream_raxml_T8	0.30000000000000004	0.4401
 E	upstream_raxml_T8	0.5	0.1638

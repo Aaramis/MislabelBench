@@ -74,9 +74,11 @@ def staged_rows():
 
 
 def upset_counts(floor):
-    """Mean per dataset of every way the two tools can judge a sequence, split by what the sequence is:
+    """Share, in percent, of every way the two tools can judge a sequence, split by what the sequence is:
     flagged by SATIVA on the unmodified database (baseline), an injected error, or an untouched
-    sequence that neither of those covers. SATIVA's baseline is the reference for both tools."""
+    sequence that neither of those covers. SATIVA's baseline is the reference for both tools. Each
+    kind sums to 100, and the range is over the three seeds of the per-dataset share. The third value
+    is the mean number of sequences of each kind per dataset."""
     import mis_flags
     cond = lambda c: f"gtdb_arc2k__{c}__rep1/gtdb_arc2k__{c}__rep1.mis"
     base = set(mis_flags.flagged(ROOT / "results/baseline2k/runs" / cond("upstream_raxml_T8"), floor))
@@ -96,11 +98,14 @@ def upset_counts(floor):
             out[(kind, seq in u, seq in e)] += 1
             here[(kind, seq in u, seq in e)] += 1
         per.append((cell.rsplit("_", 1)[1], here))
+    total = collections.Counter()
+    for (kind, _, _), v in out.items():
+        total[kind] += v
     quart = {}
     for k in out:
         by_seed = collections.defaultdict(list)
         for seed, h in per:
-            by_seed[seed].append(h[k])
+            by_seed[seed].append(100 * h[k] / sum(v for (kind, _, _), v in h.items() if kind == k[0]))
         means = [sum(v) / len(v) for v in by_seed.values()]
         quart[k] = (min(means), max(means))
-    return {k: v / n for k, v in out.items()}, quart
+    return {k: 100 * v / total[k[0]] for k, v in out.items()}, quart, {kind: v / n for kind, v in total.items()}

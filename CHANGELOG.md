@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+- Panel D of the paper figure (`results/figure3.svg`) shows the share of each group (initial flags, injected errors,
+  collateral flags), each summing to 100, instead of the mean number of sequences per dataset. The mean number per
+  group is printed under its title and written to `results/figure3_values.tsv`. The counts per dataset are still in
+  `results/upset_tables.txt`. No other table, figure or number changes.
+
 ## 1.1 (2026)
 
 Tidying of the repository after the first release. No table, figure or number of the application note
